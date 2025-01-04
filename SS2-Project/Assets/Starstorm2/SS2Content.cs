@@ -292,13 +292,35 @@ namespace SS2
 
             public static ItemDef MoltenCoin;
 
+            public static ItemDef MultiElite;
+
             public static ItemDef Nanobots;
 
             public static ItemDef Needles;
 
             public static ItemDef NemBossHelper;
 
+            public static ItemDef NoSelfDamage;
+
             public static ItemDef PoisonousGland;
+
+            public static ItemDef ShardEarth;
+
+            public static ItemDef ShardFire;
+
+            public static ItemDef ShardGold;
+
+            public static ItemDef ShardIce;
+
+            public static ItemDef ShardLightning;
+
+            public static ItemDef ShardPoison;
+
+            public static ItemDef ShardScav;
+
+            public static ItemDef ShardStorm;
+
+            public static ItemDef ShardVoid;
 
             public static ItemDef VoidRock;
 
@@ -402,6 +424,27 @@ namespace SS2
             public static ItemDef WeatherRadio;
             public static ItemDef PrimalBirthright;
             public static ItemDef LuckyPup;
+
+            //blessings
+            public static ItemDef Bleedout;
+            public static ItemDef EliteDamageBonus;
+            public static ItemDef DebuffMissiles;
+            public static ItemDef HitList;
+            public static ItemDef ItemOnBossKill;
+            public static ItemDef ItemOnEliteKill;
+            public static ItemDef MaxHpOnKill;
+            public static ItemDef OptionFromChest;
+            public static ItemDef ScrapFromChest;
+            public static ItemDef ShellPiece;
+            public static ItemDef ShieldGate;
+            public static ItemDef SnakeEyes;
+
+            public static ItemDef ShellPieceConsumed;
+
+            public static ItemDef StackSnakeEyes;
+            public static ItemDef StackMaxHpOnKill;
+            public static ItemDef StackShieldGate;
+            public static ItemDef StackHitList;
         }
 
         public static class Equipments
@@ -463,6 +506,10 @@ namespace SS2
 
             public static BuffDef BuffBlastKnucklesCharge;
 
+            public static BuffDef BuffBleedout;
+
+            public static BuffDef BuffBleedoutReady;
+
             public static BuffDef BuffBackThruster;
 
             public static BuffDef BuffUniversalCharger;
@@ -491,6 +538,8 @@ namespace SS2
 
             public static BuffDef bdHakai;
 
+            public static BuffDef BuffHitListMark;
+
             public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
@@ -499,7 +548,7 @@ namespace SS2
 
             public static BuffDef BuffJetBootsCooldown;
 
-            public static BuffDef BuffJetBootsReady;
+            public static BuffDef BuffJetBootsReady;        
 
             public static BuffDef BuffCoffeeBag;
 
@@ -518,6 +567,8 @@ namespace SS2
             public static BuffDef BuffSigilStack;
 
             public static BuffDef BuffStickyOverloader;
+
+            public static BuffDef BuffSuperLightningOrb;
 
             public static BuffDef BuffKickflip;
 
@@ -703,6 +754,7 @@ namespace SS2
         {
             public static ItemTierDef Sibylline;
 
+            public static ItemTierDef Curio;
             //public static ItemTierDef Relic;
         }
     }

@@ -35,7 +35,7 @@ namespace SS2.Items
 
             if (body.HasBuff(SS2Content.Buffs.bdUltraBuff) && !body.HasBuff(SS2Content.Buffs.bdUltra))
             {
-                args.baseRegenAdd += body.maxHealth *= 0.05f;
+                //args.baseRegenAdd += body.maxHealth *= 0.05f;
                 args.moveSpeedMultAdd += 0.2f;
                 args.damageMultAdd += 0.1f;
 

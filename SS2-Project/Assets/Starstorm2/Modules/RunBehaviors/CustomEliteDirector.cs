@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement;
 using static RoR2.CombatDirector;
 using R2API;
 using UnityEngine.Networking;
+using R2API.Networking.Interfaces;
 namespace SS2.Components
 {
     //This is a basic director for a custom elite to attempt to spawn.
@@ -43,25 +44,32 @@ namespace SS2.Components
         // 5 ish credits per second, up to 10 per second giga late game.
         public float directorTickInterval = 4f;
         [Header("Elite Director Values")]
-        public float minEliteCreditPerTick = 10f;
-        public float maxEliteCreditPerTick = 30f;
+        public float minEliteCreditPerSecond = 2f;
+        public float maxEliteCreditPerSecond = 5f;
+        public float initialCredits = 12f;
         private List<StackableAffix> allElites = new List<StackableAffix>();
         private Xoroshiro128Plus rng;
         private float timer = 0;
-
+        public Xoroshiro128Plus treasureRng { get; private set; }
         public void Awake()
         {
             instance = this; //I guess there will only be one of you after all...        
 
             if (!NetworkServer.active) return;
             rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
-
+            treasureRng = new Xoroshiro128Plus(Run.instance.treasureRng);
             if(EtherealBehavior.instance)
             {
                 allElites.Add(new Ethereal()); // lol what was the point
                 allElites.Add(new Ultra());
             }          
             allElites.Add(new Empyrean());
+
+            for (int i = allElites.Count - 1; i >= 0; i--)
+            {
+                if (allElites[i].IsAvailable())
+                    allElites[i].eliteCredit += initialCredits * Run.instance.difficultyCoefficient; //////////
+            }
 #if DEBUG
             shouldLog = true;
 #endif
@@ -75,8 +83,8 @@ namespace SS2.Components
                 if (timer > directorTickInterval)
                 {
                     timer = 0f;
-                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 16); // arbitrary values. just guessing
-                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerTick, maxEliteCreditPerTick) * multiplier);
+                    float multiplier = Util.Remap(Run.instance.difficultyCoefficient, 0, 500, 1, 6); // arbitrary values. just guessing
+                    float eliteCredit = (rng.RangeFloat(minEliteCreditPerSecond * directorTickInterval, maxEliteCreditPerSecond * directorTickInterval) * multiplier);
                     for (int i = allElites.Count - 1; i >= 0; i--)
                     {
                         if (allElites[i].IsAvailable())
@@ -101,7 +109,13 @@ namespace SS2.Components
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             float totalCost = baseCost;
-            if (body.eliteBuffCount > 0)
+            // yeah im hard coding it whho caresNOT ME thats who
+            if(body.HasBuff(SS2Content.Buffs.BuffAffixSuperFire) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperIce) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperLightning) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperEarth))
+            {
+                totalCost *= 18f;
+                SS2Log.Info($"CharacterBody {body} has a Super Elite buff. Multiplying totalCost by 18 ({baseCost} => {totalCost})");             
+            }
+            else if (body.eliteBuffCount > 0)
             {
                 totalCost *= director.currentActiveEliteTier.costMultiplier;
             }
@@ -223,7 +237,7 @@ namespace SS2.Components
 
     public class Empyrean : StackableAffix
     {
-        public override float EliteCreditCost => 1500f;
+        public override float EliteCreditCost => 1200f;
         public override float CostMultiplier => 22.5f;
         public override bool IsBoss => true;
         public override bool IsAvailable()
@@ -248,19 +262,22 @@ namespace SS2.Components
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
             inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 2500);
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
+            new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 4000);
             inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
             //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
             //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
-            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1); ///
-            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops * extraLoops);
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 15 * extraLoops); // teehee
+            int extraLoops = Mathf.CeilToInt(extraStages / Run.stagesPerLoop);
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraStages * extraLoops * extraLoops * extraLoops * 2); ///
+            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 20 * extraLoops); // teehee
+            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
             // remove level cap
@@ -275,6 +292,8 @@ namespace SS2.Components
                 rewards.expReward *= 30;
                 rewards.goldReward *= 30;
             }
+            // create separate class for drop component. create catalog of super elites somewhere
+            body.gameObject.AddComponent<OnBossKilledServer>().drop = CustomEliteDirector.instance.treasureRng.NextElementUniform(new ItemIndex[] { SS2Content.Items.ShardEarth.itemIndex, SS2Content.Items.ShardFire.itemIndex, SS2Content.Items.ShardIce.itemIndex, SS2Content.Items.ShardLightning.itemIndex }); // hi
             if (body.TryGetComponent(out RigidbodyMotor motor))
             {
                 motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
@@ -291,22 +310,32 @@ namespace SS2.Components
     {
         private static float baseCostMultiplier = 9; // so i can change it easier in game
         private static float baseCostRequirement = 4;
-        private static float baseCreditCost = 300;
-        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
+        private static float baseCreditCost = 360;
+        public override float EliteCreditCost => baseCreditCost;// * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
         public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
         public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.875f, EtherealBehavior.instance.etherealsCompleted-1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0;
+
+        public override bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
+        {
+            return base.CanAfford(baseCost, totalCost, combatDirector) && combatDirector != TeleporterInteraction.instance?.bossDirector; // felt weird for tp bosses to be ethereal without shrine
+        }
         public override void MakeElite(CharacterBody body)
         {
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(100 + (100 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, loopCount * loopCount);
+            int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 300); /////////////////////////////////////////////////////////
+            new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(150 + (150 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + Mathf.RoundToInt(loopCount * loopCount * loopCount * 0.5f));
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted)));
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+            if (body.characterMotor && body.characterMotor.mass < 400) body.characterMotor.mass = 400f;
+            if (body.rigidbody && body.rigidbody.mass < 400) body.rigidbody.mass = 400f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
@@ -322,9 +351,9 @@ namespace SS2.Components
     public class Ultra : StackableAffix
     {
         private static float baseCostMultiplier = 12;
-        private static float baseCostRequirement = 10;
-        private static float baseCreditCost = 1200;
-        public override float EliteCreditCost => baseCreditCost * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
+        private static float baseCostRequirement = 8;
+        private static float baseCreditCost = 1000;
+        public override float EliteCreditCost => baseCreditCost;// * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
         public override float CostMultiplier => baseCostMultiplier * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
         public override float CostRequirement => baseCostRequirement * Mathf.Pow(0.8f, EtherealBehavior.instance.etherealsCompleted - 1);
         public override bool IsAvailable() => EtherealBehavior.instance && EtherealBehavior.instance.etherealsCompleted > 0 && Run.instance.loopClearCount >= 1;
@@ -334,12 +363,17 @@ namespace SS2.Components
             var inventory = body.inventory;
             var ethInstance = EtherealBehavior.instance;
             int loopCount = Mathf.Max(Run.instance.loopClearCount, 1);
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(900f + (450f * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, loopCount * loopCount * 2);
+            int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
+            body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
+            new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients); ////////////////// make a fucking thing for this idiot
+            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(1600f + (800f * ethInstance.etherealsCompleted)));
+            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
             inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
             inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
             inventory.GiveItem(SS2Content.Items.AffixUltra);
-
+            if (body.characterMotor && body.characterMotor.mass < 2000) body.characterMotor.mass = 2000f; 
+            if (body.rigidbody && body.rigidbody.mass < 2000) body.rigidbody.mass = 2000f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
             {
@@ -351,7 +385,37 @@ namespace SS2.Components
                 motor.canTakeImpactDamage = false;
             }
         }
+        
+    }
+    public class OnBossKilledServer : MonoBehaviour, IOnKilledServerReceiver
+    {
+        public ItemIndex drop = ItemIndex.None;
+        public void OnKilledServer(DamageReport damageReport)
+        {
+            PickupIndex drop = PickupCatalog.FindPickupIndex(this.drop);
+            if (drop == PickupIndex.none) return;
+
+            int playerCount = Run.instance.participatingPlayerCount;
+            if (playerCount > 1)
+            {
+                float angle = 360f / (float)playerCount;
+                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                int i = 0;
+                while (i < playerCount)
+                {
+                    PickupDropletController.CreatePickupDroplet(drop, damageReport.victimBody.corePosition, vector);
+                    i++;
+                    vector = rotation * vector;
+                }
+            }
+            else
+            {
+                PickupDropletController.CreatePickupDroplet(drop, damageReport.victimBody.corePosition, Vector3.up * 20f);
+            }
+
+
+        }
     }
 
-    
 }

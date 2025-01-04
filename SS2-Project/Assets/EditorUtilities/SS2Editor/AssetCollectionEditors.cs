@@ -160,7 +160,10 @@ namespace Moonstorm.Starstorm2.Editor
             return false;
         }
     }
-
+    [CustomEditor(typeof(BodyAssetCollection))]
+    public class BodyAssetCollectionEditor : AssetCollectionEditor
+    {
+    }
     [CustomEditor(typeof(SurvivorAssetCollection))]
     public class SurvivorAssetCollectionEditor : AssetCollectionEditor
     {

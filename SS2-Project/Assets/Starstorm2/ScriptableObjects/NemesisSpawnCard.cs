@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
-    public class NemesisSpawnCard : CharacterSpawnCard
+    public class NemesisSpawnCard : CharacterSpawnCard // add IsAvailable() here to check for unlocks or whatever
     {
 
         public NemesisInventory nemesisInventory;
@@ -146,115 +146,6 @@ namespace SS2
             Multiplicative = 0,
             Additive = 1,
             Override = 2,
-        }
-
-        public class SyncBaseStats : INetMessage
-        {
-            NetworkInstanceId bodyNetId;
-            float maxHealth;
-            float regen;
-            float maxShield;
-            float movementSpeed;
-            float acceleration;
-            float jumpPower;
-            float damage;
-            float attackSpeed;
-            float crit;
-            float armor;
-            float visionDistance;
-            int jumpCount;
-
-            public void Serialize(NetworkWriter writer)
-            {
-                writer.Write(bodyNetId);
-                writer.Write(maxHealth);
-                writer.Write(regen);
-                writer.Write(maxShield);
-                writer.Write(movementSpeed);
-                writer.Write(acceleration);
-                writer.Write(jumpPower);
-                writer.Write(damage);
-                writer.Write(attackSpeed);
-                writer.Write(crit);
-                writer.Write(armor);
-                writer.Write(visionDistance);
-                writer.Write(jumpCount);
-            }
-
-            public void Deserialize(NetworkReader reader)
-            {
-                bodyNetId = reader.ReadNetworkId();
-                maxHealth = reader.ReadSingle();
-                regen = reader.ReadSingle();
-                maxShield = reader.ReadSingle();
-                movementSpeed = reader.ReadSingle();
-                acceleration = reader.ReadSingle();
-                jumpPower = reader.ReadSingle();
-                damage = reader.ReadSingle();
-                attackSpeed = reader.ReadSingle();
-                crit = reader.ReadSingle();
-                armor = reader.ReadSingle();
-                visionDistance = reader.ReadSingle();
-                jumpCount = reader.ReadInt32();
-            }
-
-            public void OnReceived()
-            {
-                if (NetworkServer.active)
-                {
-                    return;
-                }
-                GameObject bodyObject = Util.FindNetworkObject(bodyNetId);
-                if(!bodyObject)
-                {
-                    SS2Log.Warning($"{typeof(SyncBaseStats).FullName}: Could not retrieve GameObject with network ID {bodyNetId}");
-                }
-                CharacterBody body = bodyObject.GetComponent<CharacterBody>();
-                if (!body)
-                {
-                    SS2Log.Warning($"{typeof(SyncBaseStats).FullName}: Retrieved GameObject {bodyObject} but the GameObject does not have a CharacterBody");
-                    return;
-                }
-
-                body.baseMaxHealth = maxHealth;
-                body.baseRegen = regen;
-                body.baseMaxShield = maxShield;
-                body.baseMoveSpeed = movementSpeed;
-                body.baseAcceleration = acceleration;
-                body.baseJumpPower = jumpPower;
-                body.baseDamage = damage;
-                body.baseAttackSpeed = attackSpeed;
-                body.baseCrit = crit;
-                body.baseArmor = armor;
-                body.baseVisionDistance = visionDistance;
-                body.baseJumpCount = jumpCount;
-
-                body.PerformAutoCalculateLevelStats();
-                SS2Log.Info($"Synced base stats of {body}");
-            }
-
-            public SyncBaseStats()
-            {
-
-            }
-
-            public SyncBaseStats(CharacterBody body)
-            {
-                NetworkIdentity netID = body.GetComponent<NetworkIdentity>();
-                bodyNetId = netID.netId;
-                maxHealth = body.baseMaxHealth;
-                regen = body.baseRegen;
-                maxShield = body.baseMaxShield;
-                movementSpeed = body.baseMoveSpeed;
-                acceleration = body.baseAcceleration;
-                jumpPower = body.baseJumpPower;
-                damage = body.baseDamage;
-                attackSpeed = body.baseAttackSpeed;
-                crit = body.baseCrit;
-                armor = body.baseArmor;
-                visionDistance = body.baseVisionDistance;
-                jumpCount = body.baseJumpCount;
-            }
-        }
+        }       
     }
 }

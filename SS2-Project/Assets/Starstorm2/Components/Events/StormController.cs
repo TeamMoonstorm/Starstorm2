@@ -80,7 +80,12 @@ namespace SS2.Components
         private float levelPercentComplete;
         public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
         public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
+        [NonSerialized]
         public Run.FixedTimeStamp stormStartTime;
+
+        [NonSerialized]
+        public bool hasStarted;
+
         private EntityStateMachine stateMachine;
 
         [SyncVar]
@@ -90,6 +95,7 @@ namespace SS2.Components
             if (StormController.instance)
             {
                 Debug.LogError("Only one StormController can exist at a time.");
+                Destroy(base.gameObject);
                 return;
             }
             StormController.instance = this;
@@ -101,11 +107,14 @@ namespace SS2.Components
                 StormController.instance = null;
             }
         }
+        private void Awake()
+        {
+            this.stateMachine = base.GetComponent<EntityStateMachine>();
+        }
 
         private void Start()
         {
-            InstantiateEffect();
-            this.stateMachine = base.GetComponent<EntityStateMachine>();
+            InstantiateEffect();         
             this.SetEffectIntensity(this.effectIntensity);
             timeRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
             treasureRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
@@ -186,6 +195,7 @@ namespace SS2.Components
 
         public void OnStormLevelCompleted()
         {
+            hasStarted = true;
             this.stormLevel++;
         }
 

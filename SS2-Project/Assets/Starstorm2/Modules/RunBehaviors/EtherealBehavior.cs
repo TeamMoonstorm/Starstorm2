@@ -28,6 +28,7 @@ namespace SS2
 
         [SyncVar]
         public int etherealsCompleted = 0;
+        public int etherealStagesCompleted;
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
         internal static IEnumerator Init()
@@ -43,11 +44,7 @@ namespace SS2
             //Initialize related prefabs
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
-            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab, portalPrefab });
-
-            //Add teleporter upgrading component to teleporters
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab, portalPrefab });         
             yield return null;
         }
 
@@ -62,13 +59,21 @@ namespace SS2
             run = GetComponentInParent<Run>();
             instance = this;
             Run.ambientLevelCap = defaultLevelCap;
+            Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+        }
+
+        private void OnServerStageComplete(Stage stage)
+        {
+            if (runIsEthereal && stage.sceneDef.sceneType == SceneType.Stage)
+                etherealStagesCompleted++;
         }
 
         private void OnDestroy()
         {
             Run.ambientLevelCap = defaultLevelCap;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
+            Stage.onServerStageComplete -= OnServerStageComplete;
         }
 
         public void OnEtherealTeleporterCharged()
@@ -80,7 +85,7 @@ namespace SS2
         // probably not the right hook but new async stage stuff makes timing a headache so im not going to bother changing it
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
-            orig(self);
+            orig(self);         
             if (self.teleporterInstance && NetworkServer.active)
             {
                 SpawnShrine();               

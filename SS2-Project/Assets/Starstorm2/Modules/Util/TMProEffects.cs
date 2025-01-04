@@ -7,11 +7,12 @@ namespace SS2
 {
     //ty for permission to use this Mystic :)
 
-    //TODO: make not suck and tell mythic
     internal static class TMProEffects
     {
         private static bool enabled = true;
-        public static void Init()
+
+        [SystemInitializer]
+        private static void Init()
         {
             On.RoR2.UI.ChatBox.Start += ChatBox_Start;
             On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;

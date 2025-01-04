@@ -23,13 +23,20 @@ namespace EntityStates.Events
             base.FixedUpdate();
             if (!NetworkServer.active) return;
 
-            if (stormController.stormStartTime.hasPassed)
+            if (!stormController.hasStarted && ShouldCharge() && stormController.stormStartTime.hasPassed)
             {
                 this.stormController.OnStormLevelCompleted();
                 outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
-        }     
+        }
+
+        private bool ShouldCharge()
+        {
+            bool shouldCharge = !TeleporterInteraction.instance;
+            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
+            return shouldCharge;
+        }
 
         public override void OnExit()
         {

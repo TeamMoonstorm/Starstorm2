@@ -84,14 +84,8 @@ namespace SS2
                 DisableShrine(null);
                 waitingForRefresh = true;
 
-                if (TeleporterInteraction.instance)
-                {
-                    TeleporterUpgradeController tuc = TeleporterInteraction.instance.GetComponent<TeleporterUpgradeController>();
-                    if (tuc != null)
-                        tuc.UpdateIsEthereal(true);
-                    else
-                        return;
-                }
+                if (TeleporterUpgradeController.instance)
+                    TeleporterUpgradeController.instance.UpgradeEthereal();
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();
                 Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
