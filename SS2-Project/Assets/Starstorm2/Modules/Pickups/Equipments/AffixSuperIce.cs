@@ -1,7 +1,7 @@
 ﻿using MSU;
 using RoR2;
 using RoR2.ContentManagement;
-
+using UnityEngine;
 namespace SS2.Equipments
 {
     public class AffixSuperIce : SS2EliteEquipment
@@ -9,6 +9,7 @@ namespace SS2.Equipments
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acSuperIce", SS2Bundle.Equipments);
         public override void Initialize()
         {
+            BuffOverlays.AddBuffOverlay(SS2Content.Buffs.BuffAffixSuperIce, SS2Assets.LoadAsset<Material>("matSuperIceOverlay", SS2Bundle.Equipments));
         }
 
         public override bool IsAvailable(ContentPack contentPack)

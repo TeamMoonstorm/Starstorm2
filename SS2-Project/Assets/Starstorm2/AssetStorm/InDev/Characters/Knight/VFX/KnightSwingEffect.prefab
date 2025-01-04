@@ -2676,8 +2676,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2912052622751007359}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.35, z: 0.72}
+  m_LocalScale: {x: 1.15, y: 2.1357, z: 3.1658227}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2099590047141730043}
@@ -5296,6 +5296,7 @@ GameObject:
   - component: {fileID: 755973254260992263}
   - component: {fileID: 2937729749535248126}
   - component: {fileID: 397641511336566222}
+  - component: {fileID: 3193552093867309507}
   m_Layer: 0
   m_Name: KnightSwingEffect
   m_TagString: Untagged
@@ -5310,7 +5311,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4237556790985801160}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5366,7 +5367,7 @@ MonoBehaviour:
   m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackedParticleSystem: {fileID: 0}
+  trackedParticleSystem: {fileID: 7697752567071553626}
 --- !u!114 &397641511336566222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5389,6 +5390,19 @@ MonoBehaviour:
   radius: 20
   scaleShakeRadiusWithLocalScale: 0
   amplitudeTimeDecay: 1
+--- !u!114 &3193552093867309507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4237556790985801160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1897863358, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DontAllowProjectilesToPrematurelyPool: 0
 --- !u!1 &8013293021937260910
 GameObject:
   m_ObjectHideFlags: 0

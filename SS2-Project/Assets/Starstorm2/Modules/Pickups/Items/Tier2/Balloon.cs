@@ -7,7 +7,7 @@ using SS2;
 using UnityEngine;
 
 
-namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
+namespace SS2.Items
 {
     public class Balloon : SS2Item
     {

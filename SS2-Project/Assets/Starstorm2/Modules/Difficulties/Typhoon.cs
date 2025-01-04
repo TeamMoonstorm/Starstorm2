@@ -67,6 +67,7 @@ namespace SS2
                 TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= spawnCapMultiplier;
                 On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
             }
+            run.SetEventFlag("PermanentStorms");
         }
 
         private void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)

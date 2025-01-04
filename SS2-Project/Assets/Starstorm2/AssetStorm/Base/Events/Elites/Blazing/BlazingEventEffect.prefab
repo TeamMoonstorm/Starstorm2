@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7696701780156397122}
   m_RootOrder: 2
@@ -132,6 +133,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: -0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7696701780156397122}
   m_RootOrder: 4
@@ -180,6 +182,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5448150875084019564}
   - {fileID: 7022987197748258970}
@@ -203,6 +206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxPriority: 1
   vfxIntensity: 2
+  DoNotPool: 0
+  DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem:
   - {fileID: 0}
@@ -235,49 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c3ff36cc29787b43aad239d83a6f075, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intensityMultiplier: 1
-  onEffectStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1086673303673133635}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onEndingStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1086673303673133635}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4470935598123668535}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-  onDestroyEffect:
-    m_PersistentCalls:
-      m_Calls: []
+  particleSystem: {fileID: 0}
+  minimumIntensity: 0
+  breakpoints: []
 --- !u!114 &8351128918427556431
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -319,6 +284,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7696701780156397122}
   m_RootOrder: 1
@@ -369,6 +335,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7696701780156397122}
   m_RootOrder: 3
@@ -550,15 +517,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 935e31f336cdea04195b272ac3f2f648, type: 3}
---- !u!4 &5448150875084019564 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8543651029721732279, guid: 935e31f336cdea04195b272ac3f2f648,
-    type: 3}
-  m_PrefabInstance: {fileID: 4398500620670796763}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &5284620962457939524 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 8384615942663466399, guid: 935e31f336cdea04195b272ac3f2f648,
+    type: 3}
+  m_PrefabInstance: {fileID: 4398500620670796763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5448150875084019564 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8543651029721732279, guid: 935e31f336cdea04195b272ac3f2f648,
     type: 3}
   m_PrefabInstance: {fileID: 4398500620670796763}
   m_PrefabAsset: {fileID: 0}

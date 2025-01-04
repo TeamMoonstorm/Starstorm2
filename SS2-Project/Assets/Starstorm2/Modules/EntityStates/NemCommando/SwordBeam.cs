@@ -85,7 +85,9 @@ namespace EntityStates.NemCommando
                     characterBody.AddSpreadBloom(0.33f * recoil);
                     Ray aimRay = GetAimRay();
 
-                    ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), gameObject, damage, 0f, RollCrit(), DamageColorIndex.Default, null, projectileSpeed);
+                    DamageTypeCombo damageType = DamageType.Generic;
+                    damageType.damageSource = DamageSource.Secondary;
+                    ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction), gameObject, damage, 0f, RollCrit(), DamageColorIndex.Default, null, projectileSpeed, damageType);
                 }
             }
         }

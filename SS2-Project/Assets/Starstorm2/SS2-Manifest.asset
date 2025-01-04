@@ -58,14 +58,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Data:
   - {fileID: 114211852988908172}
-  - {fileID: 4961625933286759612}
+  - {fileID: -648994308371041655}
   - {fileID: 114431642618062350}
   - {fileID: 114987763159783732}
   - {fileID: -5363697519406383111}
   - {fileID: 8324102109481770816}
   - {fileID: -4467616490986340797}
+  - {fileID: 4961625933286759612}
   identity: {fileID: 114211852988908172}
   QuickAccess: 1
+--- !u!114 &-648994308371041655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b7e13dda513544419a89926bd12ad8a, type: 3}
+  m_Name: AssemblyDefinitions
+  m_EditorClassIdentifier: 
+  StagingPaths:
+  - <MSUBuildPathPlugins>
+  definitions:
+  - {fileID: 5897886265953266890, guid: f054131d8b8c38f49bfb7567178d0531, type: 3}
 --- !u!114 &114211852988908172
 MonoBehaviour:
   m_ObjectHideFlags: 1

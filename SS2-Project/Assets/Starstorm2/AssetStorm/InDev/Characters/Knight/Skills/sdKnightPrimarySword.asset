@@ -15,7 +15,8 @@ MonoBehaviour:
   skillName: KnightSwordSwing
   skillNameToken: SS2_KNIGHT_PRIMARY_SWORD_NAME
   skillDescriptionToken: SS2_KNIGHT_PRIMARY_SWORD_DESC
-  keywordTokens: []
+  keywordTokens:
+  - SS2_KNGIHT_PRIMARY_SWORD_UPRGADE_TOOLTIP
   icon: {fileID: 21300000, guid: 36240f91ca5a1224fb95cb48f0768bc1, type: 3}
   activationStateMachineName: Weapon
   activationState:
@@ -41,4 +42,4 @@ MonoBehaviour:
   autoHandleLuminousShot: 1
   hideStockCount: 0
   stepCount: 3
-  stepGraceDuration: 0.25
+  stepGraceDuration: 0.2

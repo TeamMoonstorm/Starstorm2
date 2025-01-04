@@ -1,208 +1,167 @@
 ﻿using MSU;
+using MSU.Config;
 using RoR2;
 using RoR2.Skills;
+using SS2;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.Knight
 {
-    public class SpinUtility : BaseKnightMeleeAttack
+    public class SpinUtility : BaseKnightDashMelee
     {
-        public static float swingTimeCoefficient = 1f;
+        public static float swingTimeCoefficient = 1.63f;
         [FormatToken("SS2_KNIGHT_SPECIAL_SPIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SpinUtility().damageCoefficient;
-        public static SkillDef buffedSkillRef;
-        
-        // To disable collision
-        private int _origLayer;
-
-        // Movement variables
-        public new float duration = 0.7f; // prev: 1f
-        public float initialSpeedCoefficient = 6f; // prev: 7, 8, 10f
-        public float finalSpeedCoefficient = 4f; //prev: 5
-        public float hopVelocity = 25f; //prev: 25, 30f
-        public string dodgeSoundString = "";
-        public float dodgeFOV = SS2.Survivors.Knight.dodgeFOV;
-        public float rollSpeed;
-        public Vector3 forwardDirection;
-        public Vector3 previousPosition;
-
-        // Damage
-        public float dmgCoeff = 5.0f;
-
+        private Transform swordPivot;                       //^ew
 
         // Multihit info
-        private float baseFireFrequency = 0.1f;
-        private float fireFrequency;
-        private float fireAge;
+        [SerializeField]
+        //public for hot compile
+        public float baseFireFrequency = 2f;
+        public float fireFrequency;
+        public float fireAge;
+        public float fireInterval;
+        public Transform modelTransform;
+        #region test
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testbaseDuration = 0.69f;
 
-        private void CalculateInitialDirection()
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testminSpeedCoefficient = 2f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testmaxSpeedCoefficient = 4f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testinterruptSpeedCoefficient = 0.4f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testFireFrequency = 5f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testFireFrequencyBoosted = 10f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testDamage = 2f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testDamageBoosted = 4f;
+        #endregion test
+
+        public override void OnEnter()
         {
-            if (inputBank && characterDirection)
-            {
-                forwardDirection = (inputBank.moveVector == Vector3.zero ? characterDirection.forward : inputBank.moveVector).normalized;
-            }
+            #region test
+            baseDuration = testbaseDuration;
+            minSpeedCoefficient = testminSpeedCoefficient;
+            maxSpeedCoefficient = testmaxSpeedCoefficient;
+            interruptSpeedCoefficient = testinterruptSpeedCoefficient;
+            baseFireFrequency = testFireFrequency;
+            damageCoefficient = testDamage;
+            #endregion test
 
-            RecalculateRollSpeed();
+            base.OnEnter();
+            this.attack.damageType.damageSource = DamageSource.Utility;
+            fireFrequency = baseFireFrequency * attackSpeedStat;
+            fireInterval = 1 / fireFrequency;
 
-            if (characterMotor && characterDirection)
-            {
-                characterMotor.velocity.y = 0f;
-                characterMotor.velocity = forwardDirection * rollSpeed;
-            }
+            modelTransform = GetModelTransform();
 
-            Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
-            previousPosition = transform.position - b;
-
-            if (!isGrounded)
-            {
-                SmallHop(characterMotor, hopVelocity);
-            }
+            swordPivot = FindModelChild("HitboxAnchor");
+            swordPivot.rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction);
         }
 
-        private void RecalculateRollSpeed()
+        protected override void ModifyMelee()
         {
-            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
-        }
-
-        private void MoveKnight()
-        {
-            RecalculateRollSpeed();
-
-            if (characterDirection) characterDirection.forward = forwardDirection;
-            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
-
-
-            Vector3 normalized = (transform.position - previousPosition).normalized;
-            if (characterMotor && characterDirection && normalized != Vector3.zero)
-            {
-                Vector3 vector = normalized * rollSpeed;
-                float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
-                vector = forwardDirection * d;
-                vector.y = 0f;
-
-                characterMotor.velocity = vector;
-            }
-            previousPosition = transform.position;
-        }
-
-        private void DisableCharacterMotorCollision()
-        {
-            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-            animator = GetModelAnimator();
-
-            if (characterMotor)
-            {
-                _origLayer = characterMotor.capsuleCollider.gameObject.layer;
-                characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
-                characterMotor.Motor.RebuildCollidableLayers();
-            }
-        }
-
-        private void EnableCharacterMotorCollision()
-        {
-            if (characterMotor)
-            {
-                characterMotor.capsuleCollider.gameObject.layer = _origLayer;
-                characterMotor.Motor.RebuildCollidableLayers();
-            }
-
-            characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
-        }
-
-        private void SetupHitbox()
-        {
-            hitboxGroupName = "BigHitbox";
-
-            damageType = DamageType.Generic;
-            damageCoefficient = dmgCoeff;
-            procCoefficient = 1f;
-            pushForce = 400f;
-            bonusForce = Vector3.forward;
-            baseDuration = 1f;
-
-            //0-1 multiplier of baseduration, used to time when the hitbox is out (usually based on the run time of the animation)
-            //for example, if attackStartPercentTime is 0.5, the attack will start hitting halfway through the ability. if baseduration is 3 seconds, the attack will start happening at 1.5 seconds
-            attackStartPercentTime = 0.1f;
-            attackEndPercentTime = 0.7f;
-
-            //this is the point at which the attack can be interrupted by itself, continuing a combo
-            earlyExitPercentTime = 0.5f;
-
-            hitStopDuration = 0.012f;
-            attackRecoil = 0.5f;
-            hitHopVelocity = 9f;
-
-            swingSoundString = "NemmandoSwing";
-            hitSoundString = "";
-            muzzleString = "SwingCenter";
-            playbackRateParam = "Util.Hitbox";
             swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
             hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
         }
 
-        private void MultiHitAttack()
+        protected override void FireAttack()
         {
-            fireAge += Time.fixedDeltaTime;
-            base.characterBody.SetAimTimer(2f);
-            attackSpeedStat = base.characterBody.attackSpeed;
-            fireFrequency = baseFireFrequency * attackSpeedStat;
-
-            if (fireAge >= 1f / fireFrequency && base.isAuthority)
+            if (!inHitPause)
             {
-                fireAge = 0f;
+                fireAge += Time.fixedDeltaTime;
+            }
+
+            List<HurtBox> hurtBoxes = new List<HurtBox>();
+
+
+            while ((fireAge >= fireInterval))
+            {
+                fireAge -= fireInterval;
                 attack.ResetIgnoredHealthComponents();
-                attack.isCrit = base.characterBody.RollCrit();
-                attack.Fire();
-            }
-        }
+                hurtBoxes.Clear();
+                PlaySwingEffect();
 
-        public override void OnEnter()
-        {
-            if (base.isAuthority)
-            {
-                DisableCharacterMotorCollision();
-                CalculateInitialDirection();
-                SetupHitbox();
-
-                base.OnEnter();
-            }
-        }
-
-        public override void FixedUpdate()
-        {
-            if (base.isAuthority)
-            {
-                base.FixedUpdate();
-                MoveKnight();
-                MultiHitAttack();
-
-                if (fixedAge >= duration)
+                if (isAuthority && attack.Fire(hurtBoxes))
                 {
-                    outer.SetNextStateToMain();
-                    return;
+                    for (int i = 0; i < hurtBoxes.Count; i++)
+                    {
+                        PushVictim(hurtBoxes[i]);
+                    }
+                    OnHitEnemyAuthority();
                 }
             }
         }
 
-
-        public override void OnExit()
+        //public for hot compile
+        public void PushVictim(HurtBox hurtBox)
         {
-            if (base.isAuthority)
+            if (hurtBox.healthComponent.body == null)
+                return;
+
+            float sizeMultiplier = 1;
+            switch (hurtBox.healthComponent.body.hullClassification)
             {
-                if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
-                EnableCharacterMotorCollision();
-                base.OnExit();
-            }   
+                default:
+                case HullClassification.Human:
+                    break;
+                case HullClassification.Golem:
+                    sizeMultiplier = 0.5f;
+                    break;
+                case HullClassification.BeetleQueen:
+                    sizeMultiplier = 0.2f;
+                    break;
+            }
+
+            Vector3 hurtboxPos = hurtBox.healthComponent.transform.position;
+            float z = modelTransform.InverseTransformPoint(hurtboxPos).z;
+
+            //0 to 1 based on how far the enemy is in front of or behind, with 0 being furthest in front
+            float positionMultiplier = Mathf.InverseLerp(8, -8, z);
+            PhysForceInfo physInfo = new PhysForceInfo()
+            {
+                massIsOne = true,
+                disableAirControlUntilCollision = true,
+                ignoreGroundStick = true,                               //presto!
+                force = forwardDirection * ((rollSpeed * fireInterval * 6f) + (positionMultiplier * 3)) * sizeMultiplier,
+            };
+
+            if (hurtBox.healthComponent.body.characterMotor)
+            {
+                hurtBox.healthComponent.body.characterMotor.velocity = Vector3.zero;
+                hurtBox.healthComponent.body.characterMotor.ApplyForceImpulse(physInfo);
+                //should probably just set velocity instead of setting to zero and applying impulse, but the disableaircontrol and ignoregroundstick are useful
+            }
+            if(hurtBox.healthComponent.TryGetComponent(out RigidbodyMotor motor))
+            {
+                physInfo.disableAirControlUntilCollision = false;
+                motor.rigid.velocity = Vector3.zero;
+                motor.ApplyForceImpulse(physInfo);
+            }
         }
 
         public override void PlayAttackAnimation()
         {
-            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, 0.15f);   
+            PlayCrossfade("FullBody, Override", "Utility", "Utility.playbackRate", duration * swingTimeCoefficient, duration * 0.15f);   
         }
 
-        public override InterruptPriority GetMinimumInterruptPriority()
+        public override void OnExit()
         {
-            return InterruptPriority.Skill;
+            base.OnExit();
+
+            swordPivot.transform.localRotation = Quaternion.identity;
         }
     }
 }
