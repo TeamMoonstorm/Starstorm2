@@ -8,6 +8,11 @@ using UnityEngine;
 
 namespace EntityStates.Nuke
 {
+    /// <summary>
+    /// Alt utility of nucleator's fire state. Less potent than <see cref="FireFissionImpulse"/>, but can damage enemies.
+    /// <br></br>
+    /// See <see cref="ChargeLaunch"/>
+    /// </summary>
     public class FireFusionLaunch : BaseNukeUtilityState
     {
         public static float awayForceMagnitude;
@@ -25,7 +30,7 @@ namespace EntityStates.Nuke
         public override void OnEnter()
         {
             base.OnEnter();
-            if (characterMotor) //Nasty fucking hack
+            if (characterMotor) //Nasty fucking hack, i wanted nucleator to go thru all enemies... this works but i hate it honestly.
             {
                 _origLayer = characterMotor.capsuleCollider.gameObject.layer;
                 characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
