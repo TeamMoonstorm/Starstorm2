@@ -65,7 +65,7 @@ namespace SS2.Modules
             
             if (body && body.modelLocator && body.modelLocator.modelBaseTransform && body.baseNameToken == "TOOLBOT_BODY_NAME")
             {
-                ModelSkinController msc = body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>()
+                ModelSkinController msc = body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>();
                 //Debug.Log("is toolbot");
                 if (msc && msc.skins[body.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
                 {
