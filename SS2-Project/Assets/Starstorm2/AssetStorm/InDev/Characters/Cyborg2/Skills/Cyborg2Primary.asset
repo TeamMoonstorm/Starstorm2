@@ -9,14 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 1348642413, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: Cyborg2Primary
   m_EditorClassIdentifier: 
   skillName: FireCannon
   skillNameToken: SS2_CYBORG2_PRIMARY_CANNON_NAME
   skillDescriptionToken: SS2_CYBORG2_PRIMARY_CANNON_DESCRIPTION
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 10825e9d7f2cb3c4abcfde5746b26c78, type: 3}
+  icon: {fileID: 21300000, guid: f1daaefc4d0e98d4096e8e64b8e695d9, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Cyborg2.Unmaker, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -27,6 +27,8 @@ MonoBehaviour:
   rechargeStock: 0
   requiredStock: 0
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,3 +38,7 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
+  stepCount: 2
+  stepGraceDuration: 0.5

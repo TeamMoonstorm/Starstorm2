@@ -16,7 +16,9 @@ namespace SS2.Monsters
         {
             if (SS2Main.ChristmasTime)
             {
-                ChristmasTime();
+                SpecialEventPickup pickup = SpecialEventPickup.AddAndSetupComponent(CharacterPrefab.GetComponent<CharacterBody>());
+                pickup.contextToken = "SS2_INTERACTABLE_SANTAHAT_CONTEXT";
+                SS2Main.Instance.StartCoroutine(AwaitForLoad(pickup));
             }
         }
 
@@ -24,7 +26,8 @@ namespace SS2.Monsters
         {
             return true;
         }
-        private void ChristmasTime()
+
+        private IEnumerator AwaitForLoad(SpecialEventPickup pickup)
         {
             CharacterPrefab.GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial = SS2Assets.LoadAsset<Material>("matSantaHat", SS2Bundle.Items);
             CharacterPrefab.GetComponent<CharacterBody>().doNotReassignToTeamBasedCollisionLayer = true; // idk what the layers do but it breaks the itneraction if switched

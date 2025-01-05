@@ -21,11 +21,44 @@
       },
       "hash": "9501deb9cb6b62d45cfa56f0c5629e3c8366d1f7"
     },
+    "com.thetimesweeper.henryeditortools": {
+      "version": "https://github.com/TheTimeSweeper/HenryEditorTools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "3b769b0778b86c404acb86956d1bcca4cdf1f764"
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.assetbundlebrowser": {
+      "version": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ad2a81ec3068eafd48753df1825a8dd7201ce60c"
+    },
+    "com.unity.burst": {
+      "version": "1.8.18",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "file:com.unity.collections",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      }
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
@@ -48,6 +81,13 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer-hlapi": {
@@ -100,18 +140,19 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.yasirkula.assetusagedetector": {
+      "version": "https://github.com/yasirkula/UnityAssetUsageDetector.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "962f6e04d4261f4ce6e687a1c06de9bbb3ca28f1"
+    },
     "jace-locationsofprecipitation": {
       "version": "https://github.com/JaceDaDorito/jace-locationsofprecipitation.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "d23f3e51b5cb701b7fa923762bedc4de0f2ad926"
-    },
-    "kingenderbrine-propersave": {
-      "version": "file:ProperSave",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "mmhook-assemblies": {
       "version": "file:mmhook-assemblies",
@@ -133,6 +174,12 @@
     },
     "riskofthunder-bepinex_gui": {
       "version": "file:BepInEx_GUI",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-burstsofrain": {
+      "version": "file:BurstsOfRain",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -329,6 +376,13 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-ror2_thunder_burster": {
+      "version": "https://github.com/risk-of-thunder/RoR2ThunderBurster.git#0.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9cbfd8c807e887111227b98f2803991c653d4717"
+    },
     "riskofthunder-ror2bepinexpack": {
       "version": "file:RoR2BepInExPack",
       "depth": 0,
@@ -336,20 +390,20 @@
       "dependencies": {}
     },
     "riskofthunder-ror2editorkit": {
-      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git#5.3.0",
+      "version": "https://github.com/risk-of-thunder/RoR2EditorKit.git",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "64ee4623983d93b9742cb8b89f07c161a637d00a"
+      "hash": "3373df696da00fa01a2768907554c5752a1141a9"
     },
     "riskofthunder-ror2importextensions": {
-      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.0",
+      "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.1",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "d101e5d64337681ec17093f88fb1ea01d07a55f4"
+      "hash": "b8704d045fd4c32e83778bf3e1792d6e0cf76e00"
     },
     "rune580-risk_of_options": {
       "version": "file:Risk_Of_Options",
@@ -368,7 +422,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "e99a3b160615f5c9d79e4412bb9087124f2ec637"
+      "hash": "eec5a07ccc64a6a05c5c473224329ace8beb701e"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

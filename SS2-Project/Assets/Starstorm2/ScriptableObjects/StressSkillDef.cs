@@ -3,6 +3,7 @@ using UnityEngine;
 using JetBrains.Annotations;
 using RoR2;
 using SS2.Components;
+using EntityStates;
 
 namespace SS2
 {

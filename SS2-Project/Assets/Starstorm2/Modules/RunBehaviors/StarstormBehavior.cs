@@ -1,6 +1,7 @@
 ﻿
 using R2API;
 using RoR2;
+using SS2.Monsters;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -15,6 +16,7 @@ namespace SS2.Components
 
         public static GameObject directorPrefab;
         public GameObject directorInstance;
+        public Xoroshiro128Plus voidshopRng; // for persistent chests
 
         [MSU.AsyncAssetLoad]
         internal static IEnumerator Init()
@@ -26,6 +28,10 @@ namespace SS2.Components
         private void Awake()
         {
             run = GetComponentInParent<Run>();
+            if(ClayMonger.manager)
+            {
+                Instantiate(ClayMonger.manager, transform);
+            }
         }
 
         private void Start()
@@ -33,6 +39,7 @@ namespace SS2.Components
             instance = this;
             On.RoR2.SceneDirector.Start += SceneDirector_Start; /////// fuck OFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             base.transform.SetParent(Run.instance.transform);
+            voidshopRng = new Xoroshiro128Plus(Run.instance.runRNG.nextUlong);
         }
 
         private void OnDestroy()

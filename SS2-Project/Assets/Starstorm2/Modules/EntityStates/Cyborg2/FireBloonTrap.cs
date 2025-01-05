@@ -32,7 +32,7 @@ namespace EntityStates.Cyborg2
 
 			base.OnEnter();
 			StartAimMode();
-			//anim
+			base.PlayAnimation("Gesture, Override", "FireBox");
 		}
 
 		public override void UpdateTrajectoryInfo(out AimThrowableBase.TrajectoryInfo dest)
