@@ -29,7 +29,7 @@ namespace SS2
     {
         public const string GUID = "com.TeamMoonstorm";
         public const string MODNAME = "Starstorm 2";
-        public const string VERSION = "0.6.10";
+        public const string VERSION = "0.6.16";
 
         internal static SS2Main Instance { get; private set; }
 
@@ -40,6 +40,8 @@ namespace SS2
         public static bool ProperSaveInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
         internal static bool ChileanIndependenceWeek { get; private set; }
+        internal static bool RamadanTarWeek { get; private set; }
+
         internal static event Action onFixedUpdate;
         public void Awake()
         {
@@ -64,17 +66,18 @@ namespace SS2
 
         private void SetSpecialEventBooleans()
         {
+            // TODO: double check these still work
             //N: Funny method i wrote that makes both Runshroom's Santa Hat and Clay Monger's Lucky Pup events last an entire week, said week is the week where the "special day" lands. so even if christmas lands on a sunday, all previous days will count as the Christmas time event.
+            //B: Yeah I added support for Ramadan that we joked about with Timesweeper and Dotflare, lets see how long until people notice 
             ChristmasTime = SS2Util.DoesTodayLandWithinASpecificDaysWeek(25, 12);
             ChileanIndependenceWeek = SS2Util.DoesTodayLandWithinASpecificDaysWeek(18, 9);
+            RamadanTarWeek = SS2Util.DoesTodayLandWithinASpecificDaysWeek(10, 3); // Technically not accurate because of differences between Gregorian / Islamic cal
         }
 
         private void FixedUpdate()
         {
             onFixedUpdate?.Invoke();
         }
-
-
 
         private void Start()
         {
