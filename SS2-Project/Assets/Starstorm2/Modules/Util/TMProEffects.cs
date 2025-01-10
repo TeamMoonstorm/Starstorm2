@@ -11,8 +11,7 @@ namespace SS2
     {
         private static bool enabled = true;
 
-        [SystemInitializer]
-        private static void Init()
+        public static void Init()
         {
             On.RoR2.UI.ChatBox.Start += ChatBox_Start;
             On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;

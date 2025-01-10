@@ -14,8 +14,7 @@ namespace SS2
     {
         volatile static bool areWeCurrentlyInHell = false;
 
-        [SystemInitializer]
-        private static void Hook()
+        public static void Hook()
         {
             IL.RoR2.Util.GetBestBodyName += BodyNameIL;
         }
