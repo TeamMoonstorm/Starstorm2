@@ -32,6 +32,50 @@ Transform:
   m_Father: {fileID: 5657786623147497647}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!1 &691411243167249649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5039503672671662570}
+  - component: {fileID: 5863758583942794000}
+  m_Layer: 0
+  m_Name: HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5039503672671662570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691411243167249649}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 3.81, z: 2.12}
+  m_LocalScale: {x: 2.46, y: 6.62, z: 5.35}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1172859274282363938}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5863758583942794000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691411243167249649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5817259855816067965
 GameObject:
   m_ObjectHideFlags: 0
@@ -1113,7 +1157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes: []
-  mainHurtBox: {fileID: 0}
+  mainHurtBox: {fileID: 4436973179442941988}
   bullseyeCount: 0
 --- !u!114 &8412132668409290819
 MonoBehaviour:
@@ -1143,6 +1187,21 @@ MonoBehaviour:
   aimType: 0
   enableAimWeight: 0
   UseTransformedAimVector: 0
+--- !u!114 &3419073007349505658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949220704049116824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: StabStab
+  hitBoxes:
+  - {fileID: 5863758583942794000}
 --- !u!4 &3415961212057965156 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4083501151425157549, guid: 45cdde6a1d369144e8e933597024b1a1,

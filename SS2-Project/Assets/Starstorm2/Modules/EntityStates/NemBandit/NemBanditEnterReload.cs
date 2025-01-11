@@ -10,7 +10,7 @@ namespace EntityStates.NemBandit
         {
             get
             {
-                return baseDuration;
+                return baseDuration / (characterBody.hasCloakBuff ? 2f : 1f);
             }
         }
 

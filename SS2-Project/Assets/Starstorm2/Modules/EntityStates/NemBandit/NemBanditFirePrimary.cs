@@ -9,7 +9,7 @@ namespace EntityStates.NemBandit
     {	
 		public override void OnEnter()
 		{
-			minimumDuration = tempMinimumBaseDuration / attackSpeedStat;
+			minimumDuration = minimumBaseDuration / attackSpeedStat;
 			base.OnEnter();
 		}
 
@@ -33,7 +33,5 @@ namespace EntityStates.NemBandit
 		protected float minimumDuration;
 		[SerializeField]
 		public float additiveMashBloomValue;
-
-		public static float tempMinimumBaseDuration = 0.3f;
 	}
 }

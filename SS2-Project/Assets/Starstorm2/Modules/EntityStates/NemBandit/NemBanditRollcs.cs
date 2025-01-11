@@ -7,10 +7,11 @@ using UnityEngine.Networking;
 
 namespace EntityStates.NemBandit
 {
+    //Need to split this into two states
     public class NemBanditRoll : BaseSkillState
     {
-        public static float duration = 0.5f;
-        public static float buffDuration = 2f;
+        public static float duration = 5f;
+        public static float rollDuration = 0.5f;
         public static float initialSpeedCoefficient = 5f;
         public static float finalSpeedCoefficient = 2.5f;
 
@@ -49,45 +50,18 @@ namespace EntityStates.NemBandit
             Vector3 b = characterMotor ? characterMotor.velocity : Vector3.zero;
             previousPosition = transform.position - b;
 
+            if (characterBody)
+            {
+                if (NetworkServer.active)
+                {
+                    characterBody.AddBuff(RoR2Content.Buffs.Cloak);
+                    characterBody.AddBuff(RoR2Content.Buffs.CloakSpeed);
+                }
+                characterBody.onSkillActivatedAuthority += CharacterBody_onSkillActivatedAuthority;
+            }
+
             PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
             Util.PlaySound(dodgeSoundString, gameObject);
-
-            if (NetworkServer.active)
-            {
-                characterBody.AddTimedBuff(RoR2Content.Buffs.Cloak, buffDuration);
-            }
-        }
-
-        private void RecalculateRollSpeed()
-        {
-            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / duration);
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            RecalculateRollSpeed();
-
-            if (characterDirection) characterDirection.forward = forwardDirection;
-            if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / duration);
-
-            Vector3 normalized = (transform.position - previousPosition).normalized;
-            if (characterMotor && characterDirection && normalized != Vector3.zero)
-            {
-                Vector3 vector = normalized * rollSpeed;
-                float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
-                vector = forwardDirection * d;
-                vector.y = 0f;
-
-                characterMotor.velocity = vector;
-            }
-            previousPosition = transform.position;
-
-            if (isAuthority && fixedAge >= duration)
-            {
-                outer.SetNextStateToMain();
-                return;
-            }
         }
 
         public override void OnExit()
@@ -96,6 +70,62 @@ namespace EntityStates.NemBandit
             base.OnExit();
 
             characterMotor.disableAirControlUntilCollision = false;
+
+            if (characterBody)
+            {
+                characterBody.onSkillActivatedAuthority -= CharacterBody_onSkillActivatedAuthority;
+                if (NetworkServer.active)
+                {
+                    characterBody.RemoveBuff(RoR2Content.Buffs.Cloak);
+                    characterBody.RemoveBuff(RoR2Content.Buffs.CloakSpeed);
+                }
+            }
+            base.OnExit();
+        }
+
+        private void CharacterBody_onSkillActivatedAuthority(GenericSkill obj)
+        {
+            if (fixedAge <= rollDuration && obj.skillDef.isCombatSkill)
+            {
+                outer.SetNextStateToMain();
+            }
+        }
+
+        private void RecalculateRollSpeed()
+        {
+            rollSpeed = moveSpeedStat * Mathf.Lerp(initialSpeedCoefficient, finalSpeedCoefficient, fixedAge / rollDuration);
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (fixedAge <= rollDuration)
+            {
+                RecalculateRollSpeed();
+
+                if (characterDirection) characterDirection.forward = forwardDirection;
+                if (cameraTargetParams) cameraTargetParams.fovOverride = Mathf.Lerp(dodgeFOV, 60f, fixedAge / rollDuration);
+
+                Vector3 normalized = (transform.position - previousPosition).normalized;
+                if (characterMotor && characterDirection && normalized != Vector3.zero)
+                {
+                    Vector3 vector = normalized * rollSpeed;
+                    float d = Mathf.Max(Vector3.Dot(vector, forwardDirection), 0f);
+                    vector = forwardDirection * d;
+                    vector.y = 0f;
+
+                    characterMotor.velocity = vector;
+                }
+                previousPosition = transform.position;
+            }
+            
+
+            if (isAuthority && fixedAge >= duration)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
         }
 
         public override void OnSerialize(NetworkWriter writer)
