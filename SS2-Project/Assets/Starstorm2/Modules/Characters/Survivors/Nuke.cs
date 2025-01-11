@@ -67,6 +67,15 @@ namespace SS2.Survivors
 
             //reduce armor
             args.armorAdd -= sicknessBuffCount * 5;
+
+            // The buff behavior for Nuke's surge special
+            // Lets give Nuke a small little treat for the special
+            if (sender.HasBuff(SS2Content.Buffs.bdNukeSpecial))
+            {
+                args.attackSpeedMultAdd += 0.1f;
+                args.damageMultAdd += 0.1f;
+                args.moveSpeedMultAdd += 0.1f;
+            }
         }
 
         private void FindAndInitAssets()

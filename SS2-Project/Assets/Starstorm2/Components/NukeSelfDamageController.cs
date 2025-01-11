@@ -166,8 +166,9 @@ namespace SS2.Components
             //Update the animator's charge value, use the crosshair charge as that one goes from 0 to 1
             if(nukeAnimator)
             {
+                // TODO: Re-enable
                 //FIXME: Create a hash for "charge" then use the hash instead.
-                nukeAnimator.SetFloat("charge", _crosshairChargeRemap);
+                //nukeAnimator.SetFloat("charge", _crosshairChargeRemap);
             }
         }
 

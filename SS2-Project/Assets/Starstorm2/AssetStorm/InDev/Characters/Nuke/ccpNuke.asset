@@ -24,20 +24,20 @@ MonoBehaviour:
       value: 0.1
       alpha: 0
     pivotVerticalOffset:
-      value: 1.37
+      value: 1.8
       alpha: 1
     idealLocalCameraPos:
-      value: {x: 0, y: 0, z: -11}
+      value: {x: 0, y: 0, z: -5}
       alpha: 1
     fov:
-      value: 0
+      value: 10
       alpha: 0
     isFirstPerson:
       value: 0
       alpha: 0
     overrideFirstPersonFadeDuration: 0
-  minPitch: 0
-  maxPitch: 0
-  wallCushion: 0
-  pivotVerticalOffset: 0
-  standardLocalCameraPos: {x: 0, y: 0, z: 0}
+  minPitch: -70
+  maxPitch: 70
+  wallCushion: 0.1
+  pivotVerticalOffset: 1.37
+  standardLocalCameraPos: {x: 0, y: 0, z: -11}
