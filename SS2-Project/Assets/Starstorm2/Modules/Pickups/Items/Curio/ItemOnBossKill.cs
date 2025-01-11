@@ -7,7 +7,7 @@ namespace SS2.Items
     public sealed class ItemOnBossKill : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("ItemOnBossKill", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => true;
+        public override bool IsAvailable(ContentPack contentPack) => false;
         private static BossDropTable dropTable;
         private static Xoroshiro128Plus dropRng;
         public override void Initialize()

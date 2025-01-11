@@ -7,7 +7,7 @@ namespace SS2.Items
     public sealed class ItemOnEliteKill : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("ItemOnEliteKill", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => true;
+        public override bool IsAvailable(ContentPack contentPack) => false;
         private static BasicPickupDropTable dropTable;
         private static Xoroshiro128Plus dropRng;
         public override void Initialize()

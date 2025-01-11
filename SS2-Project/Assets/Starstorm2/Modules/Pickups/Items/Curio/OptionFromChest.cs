@@ -10,7 +10,7 @@ namespace SS2.Items
     public sealed class OptionFromChest : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("OptionFromChest", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => true;
+        public override bool IsAvailable(ContentPack contentPack) => false;
 
         private static GameObject optionPrefab;
         public override void Initialize()

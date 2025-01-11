@@ -9,7 +9,7 @@ namespace SS2.Items
     public sealed class ShieldGate : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShieldGate", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => true;
+        public override bool IsAvailable(ContentPack contentPack) => false;
         public static GameObject orbEffect;
         public override void Initialize()
         {
