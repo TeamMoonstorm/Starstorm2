@@ -195,11 +195,11 @@ MonoBehaviour:
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 220
+  baseMaxHealth: 250
   baseRegen: 1
   baseMaxShield: 0
-  baseMoveSpeed: 7
-  baseAcceleration: 80
+  baseMoveSpeed: 8
+  baseAcceleration: 85
   baseJumpPower: 15
   baseDamage: 12
   baseAttackSpeed: 1
@@ -209,7 +209,7 @@ MonoBehaviour:
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.35
   autoCalculateLevelStats: 1
-  levelMaxHealth: 66
+  levelMaxHealth: 75
   levelRegen: 0.2
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -218,14 +218,16 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
+  amputatedMaxHealth: 0
+  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
-  solitudeLevelCount: 0
+  boostAllStatsDisplay: {fileID: 0}
+  currentGrowthNectarBuffCount: 0
+  maxGrowthNectarBuffCount: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
   spreadBloomCurve:
@@ -255,10 +257,14 @@ MonoBehaviour:
   _defaultCrosshairPrefab: {fileID: 4065240185429966408, guid: 1de6b0ea1b76e764fa374440d963b981,
     type: 3}
   hideCrosshair: 0
-  increasePrimaryDamageEffectUpdater: {fileID: 0}
-  protectFromOneShot: 0
-  hasTeleported: 0
+  canAddIncrasePrimaryDamage: 0
+  knockBackFinGroundedTimer: 0
+  runicLensPosition: {x: 0, y: 0, z: 0}
+  meteorVictimBody: {fileID: 0}
+  runicLensStartTime: 0
+  runicLensImpactTime: 0
   runicLensMeteorReady: 0
+  spawnedPickupCount: 0
   aimOriginTransform: {fileID: 2035198859716438208}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 3ca7a9e7bf17dcb40a2fb38197af9596, type: 3}
@@ -508,6 +514,7 @@ MonoBehaviour:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
+  useHangtimeGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &4256054803697361099
@@ -536,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 11400000, guid: b3d312efb034b2444af75deb0bc00dd2, type: 2}
+  cameraParams: {fileID: 11400000, guid: 90a717d3151455c49940b98aad52ab14, type: 2}
   cameraPivotTransform: {fileID: 8684971115604686679}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -575,6 +582,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0

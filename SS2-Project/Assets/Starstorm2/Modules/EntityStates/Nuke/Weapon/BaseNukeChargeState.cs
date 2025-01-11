@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
-using RoR2;
-using MSU;
+﻿using UnityEngine;
 using SS2.Components;
 using SS2;
 using IChargeableState = SS2.Survivors.Nuke.IChargeableState;
@@ -31,14 +24,14 @@ namespace EntityStates.Nuke
         /// </summary>
         public NukeSelfDamageController selfDamageController { get; private set; }
 
-        public float currentCharge { get; protected set; }
+        public float currentCharge { get; protected set; } = 0.0f;
 
         float IChargeableState.startingChargeCoefficient => _startingChargeCoefficient;
         float IChargeableState.chargeCoefficientSoftCap => _chargeCoefficientSoftCap;
 
         float IChargeableState.chargeCoefficientHardCap => _chargeCoefficientHardCap;
 
-        private float _chargeGain;
+        private float _chargeGain = 1f;
         public override void OnEnter()
         {
             base.OnEnter();

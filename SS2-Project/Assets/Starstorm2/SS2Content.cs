@@ -141,8 +141,8 @@ namespace SS2
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
-                EtherealBehavior.Init,
-                //RulebookEnabler.Init,
+                //EtherealBehavior.Init,
+                RulebookEnabler.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();

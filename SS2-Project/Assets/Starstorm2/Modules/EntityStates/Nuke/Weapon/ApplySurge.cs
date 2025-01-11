@@ -1,10 +1,5 @@
 ﻿using SS2;
-using RoR2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 namespace EntityStates.Nuke
 {
@@ -19,7 +14,11 @@ namespace EntityStates.Nuke
             base.OnEnter();
             _duration = baseDuration / attackSpeedStat;
             PlayAnimation("UpperBody, Override", "ApplySurge", "applySurge.playbackRate", _duration);
-            characterBody.AddTimedBuff(SS2Content.Buffs.bdNukeSpecial, 10f);
+
+            if (NetworkServer.active && base.isAuthority)
+            {
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdNukeSpecial, 11f);
+            }
         }
 
         public override void FixedUpdate()
