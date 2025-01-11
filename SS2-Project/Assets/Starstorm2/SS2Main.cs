@@ -33,11 +33,15 @@ namespace SS2
 
         internal static SS2Main Instance { get; private set; }
 
+        // Mod Compat 
         public static bool ScepterInstalled { get; private set; }
         public static bool RiskyModInstalled { get; private set; }
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
         public static bool ProperSaveInstalled { get; private set; }
+        public static bool EnforcerInstalled { get; private set; }
+
+        // Holiday events
         internal static bool ChristmasTime { get; private set; }
         internal static bool ChileanIndependenceWeek { get; private set; }
         internal static bool RamadanTarWeek { get; private set; }
@@ -92,6 +96,7 @@ namespace SS2
             GOTCEInstalled = MSUtil.IsModInstalled("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
             StageAestheticInstalled = MSUtil.IsModInstalled("com.HIFU.StageAesthetic");
             ProperSaveInstalled = MSUtil.IsModInstalled("com.KingEnderBrine-ProperSave");
+            EnforcerInstalled = MSUtil.IsModInstalled("com.EnforcerGang-Enforcer");
         }
 
         //We need to explicitly tell the Burst system to load our assembly containing our bursted jobs.
