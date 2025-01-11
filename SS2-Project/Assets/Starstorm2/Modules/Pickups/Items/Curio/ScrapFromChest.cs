@@ -11,7 +11,7 @@ namespace SS2.Items
     public sealed class ScrapFromChest : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("ScrapFromChest", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => true;
+        public override bool IsAvailable(ContentPack contentPack) => false;
 
         public override void Initialize()
         {
