@@ -35,7 +35,11 @@ namespace EntityStates.Engi
         [SerializeField]
         public static float procCoeff = 0.3f;
         [SerializeField]
-        public static float fireFrequency = 4f;
+        public static float tickRate = 6f;
+        [SerializeField]
+        public static float baseMinimumDuration = 2f;
+
+        private float minimumDuration;
 
         private float fireTimer;
         private Transform modelTransform;
@@ -57,6 +61,7 @@ namespace EntityStates.Engi
         public override void OnEnter()
         {
             base.OnEnter();
+            minimumDuration = baseMinimumDuration / attackSpeedStat;
             Ray aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
             PlayAnimation(animationLayerName, animationStateName);
@@ -94,16 +99,13 @@ namespace EntityStates.Engi
         {
             base.FixedUpdate();
 
-            Util.PlaySound("Stop_engi_R_walkingTurret_laser_loop", base.gameObject);
-
             Ray aimRay = base.GetAimRay();
-            base.StartAimMode(aimRay, 2f, false);
+            StartAimMode(aimRay, 2f, false);
 
-            fireTimer += Time.fixedDeltaTime;
-            float frequencyAdjusted = fireFrequency * base.characterBody.attackSpeed;
-            float interval = 1f / frequencyAdjusted;
-            if (fireTimer > interval)
+            fireTimer -= Time.fixedDeltaTime;
+            if (fireTimer <= 0)
             {
+                fireTimer = 1f / tickRate / attackSpeedStat;
                 ++counter;
                 FireLasers(aimRay);
                 fireTimer = 0f;
@@ -122,16 +124,13 @@ namespace EntityStates.Engi
                 rightLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
             }
 
-            if (this.isAuthority && !inputBank.skill1.down)
+            if (((fixedAge >= minimumDuration && !IsKeyDownAuthority()) || characterBody.isSprinting) && isAuthority)
             {
                 this.outer.SetNextStateToMain();
                 return;
             }
 
-            if (counter >= 8)
-            {
-                counter = 0;
-            }
+            counter = counter % 8;
         }
 
         protected Vector3 GetBeamEndPoint(Ray aimRay)

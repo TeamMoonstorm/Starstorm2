@@ -100,7 +100,7 @@ namespace SS2.Survivors
                 SpeedParam = laserFocusPlaybackRate.Name,
                 WriteDefaultValues = true,
                 Name = "SS2-ChargeLaserFocus",
-                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserStart", SS2Bundle.Indev)
+                Clip = assetCollection.FindAsset<AnimationClip>("EngiArmature_laserStart")
             };
 
             State idleState = new State
@@ -110,7 +110,7 @@ namespace SS2.Survivors
                 SpeedParam = laserFocusPlaybackRate.Name,
                 WriteDefaultValues = true,
                 Name = "SS2-IdleLaserFocus",
-                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserIdle", SS2Bundle.Indev)
+                Clip = assetCollection.FindAsset<AnimationClip>("EngiArmature_laserIdle")
             };
 
             State bapState = new State
@@ -120,7 +120,7 @@ namespace SS2.Survivors
                 SpeedParam = laserFocusPlaybackRate.Name,
                 WriteDefaultValues = true,
                 Name = "SS2-BapLaserFocus",
-                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserBap", SS2Bundle.Indev)
+                Clip = assetCollection.FindAsset<AnimationClip>("EngiArmature_laserBap")
             };
 
             State exitState = new State
@@ -130,7 +130,7 @@ namespace SS2.Survivors
                 SpeedParam = laserFocusPlaybackRate.Name,
                 WriteDefaultValues = true,
                 Name = "SS2-ExitLaserFocus",
-                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserExit", SS2Bundle.Indev)
+                Clip = assetCollection.FindAsset<AnimationClip>("EngiArmature_laserEnd")
             };
             var exitTransition = new Transition
             {
