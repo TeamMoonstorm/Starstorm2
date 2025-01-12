@@ -16,8 +16,12 @@ namespace SS2.Survivors
         public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit2", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
-        public static BuffDef _bdBanditTranquilizer;
-        public static BuffDef _bdBanditSleep;
+        public static BuffDef _bdBanditTranquilizer = SS2Content.Buffs.bdBanditTranquilizer;
+        public static BuffDef _bdBanditSleep = SS2Content.Buffs.bdBanditSleep;
+
+        public static GameObject tranqMuzzleFlashPrefab;
+        public static GameObject tranqTracerEffectPrefab;
+        public static GameObject tranqHitEffectPrefab;
 
         public static float tranqDuration = 5f;
         public static float _confuseSlowAmount = 0.2f;
@@ -29,15 +33,15 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            _bdBanditTranquilizer = assetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
-            _bdBanditSleep = assetCollection.FindAsset<BuffDef>("bdBanditSleep");
-
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
 
             SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
 
             GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
+            tranqMuzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/MuzzleflashBandit2.prefab").WaitForCompletion();
+            tranqTracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/TracerBandit2Rifle.prefab").WaitForCompletion();
+            tranqHitEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/HitsparkBandit.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = banditBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;

@@ -88,10 +88,25 @@ namespace EntityStates.CloneDrone
 
         public bool IsWhitelistTier(PickupDef pickupDef)
         {
-            if (pickupTier == ItemTier.Tier1 || pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidTier1 || pickupTier == ItemTier.VoidTier2 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.VoidBoss)
-                return true;
-            else
+            if (pickupTier == ItemTier.Boss) 
+            {
+                Debug.Log(pickupDef);
+
+                if (PickupCatalog.FindPickupIndex(pickupDef.artifactIndex) == PickupIndex.none)
+                {
+                    return true;
+                }
+
                 return false;
+            }
+            else if (pickupTier == ItemTier.Tier1 || pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.VoidTier1 || pickupTier == ItemTier.VoidTier2 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.VoidBoss)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            } 
         }
 
         public override void OnExit()
