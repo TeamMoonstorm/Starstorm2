@@ -106,5 +106,21 @@ namespace SS2
                 setStateOnHurt.idleStateMachine = setStateOnHurt.idleStateMachine.Append(entityStateMachine).ToArray();
             }
         }
+
+        /// <summary>
+        /// Avoid using this if possible, but it lets you create a Buff via code if BuffDef scriptable object is not working via Unity
+        /// </summary>
+        public static BuffDef CreateBuff(string buffName, Sprite buffIcon, Color buffColor, bool canStack, bool isDebuff)
+        {
+            BuffDef buffDef = ScriptableObject.CreateInstance<BuffDef>();
+            buffDef.name = buffName;
+            buffDef.buffColor = buffColor;
+            buffDef.canStack = canStack;
+            buffDef.isDebuff = isDebuff;
+            buffDef.eliteDef = null;
+            buffDef.iconSprite = buffIcon;
+
+            return buffDef;
+        }
     }
 }

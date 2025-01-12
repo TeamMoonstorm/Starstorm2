@@ -8,16 +8,17 @@ using RoR2.Skills;
 using RoR2.ContentManagement;
 using R2API;
 using UnityEngine.Networking;
+using System.Linq;
 
 namespace SS2.Survivors
 {
     public class Bandit : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit2", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
-        public static BuffDef _bdBanditTranquilizer;
-        public static BuffDef _bdBanditSleep;
+        public static BuffDef bdBanditTranquilizer;
+        public static BuffDef bdBanditSleep;
 
         public static GameObject tranqMuzzleFlashPrefab;
         public static GameObject tranqTracerEffectPrefab;
@@ -34,9 +35,11 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
+            Sprite texSleepIcon = assetCollection.FindAsset<Sprite>("texSleepIcon");
+            Sprite texTranqIcon = assetCollection.FindAsset<Sprite>("texTranqDebuff");
 
-            _bdBanditTranquilizer = SS2Content.Buffs.bdBandit2Tranq;
-            _bdBanditSleep = SS2Content.Buffs.bdBandit2Sleep;
+            //bdBanditTranquilizer = CreateBuff("bdBanditTranquilizer", texTranqIcon, Color.white, true, true);
+            //bdBanditSleep = CreateBuff("bdBanditSleep", texSleepIcon, Color.white, true, true);
 
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
@@ -50,6 +53,12 @@ namespace SS2.Survivors
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
 
             AddSkill(skillFamilyPrimary, sdTranquilizerGun);
+
+            Debug.Log("DEBUGGER Is texSleepIcon null?");
+            Debug.Log(texSleepIcon);
+
+            Debug.Log("DEBUGGER Is texTranqIcon null?");
+            Debug.Log(texTranqIcon);
         }
 
         private void RegisterTranquilizer()
@@ -60,10 +69,10 @@ namespace SS2.Survivors
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (sender.HasBuff(_bdBanditTranquilizer))
+            if (sender.HasBuff(SS2Content.Buffs.bdBandit2Tranq))
             {
                 // TODO: Might need to do some sort of scaling, but this works for now.
-                var buffCount = sender.GetBuffCount(_bdBanditTranquilizer);
+                var buffCount = sender.GetBuffCount(SS2Content.Buffs.bdBandit2Tranq);
                 args.moveSpeedMultAdd -= Math.Min(_confuseSlowAmount * buffCount, _maxDebuffAmount);
                 args.attackSpeedMultAdd -= Math.Min(_confuseAttackSpeedSlowAmount * buffCount, _maxDebuffAmount);
 
@@ -72,13 +81,13 @@ namespace SS2.Survivors
                     if (NetworkServer.active)
                     {
                         // TODO: half sleep on bosses
-                        sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
-                        sender.RemoveBuff(_bdBanditTranquilizer);
+                        sender.AddTimedBuff(SS2Content.Buffs.bdBandit2Sleep, _sleepDuration);
+                        sender.RemoveBuff(SS2Content.Buffs.bdBandit2Tranq);
                     }
                 }
             }
 
-            if (sender.HasBuff((_bdBanditSleep)))
+            if (sender.HasBuff((SS2Content.Buffs.bdBandit2Sleep)))
             {
                 // Stun the enemy, thanks orbeez for the code
                 SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
@@ -97,11 +106,15 @@ namespace SS2.Survivors
 
             if (DamageAPI.HasModdedDamageType(damageInfo, TranqDamageType))
             {
-                victimBody.AddTimedBuffAuthority(_bdBanditTranquilizer.buffIndex, tranqDuration);
+                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdBandit2Tranq.buffIndex, tranqDuration);
             }
         }
         public override void ModifyContentPack(ContentPack contentPack)
         {
+            // TODO: Add but I forget the [] syntax for C#, fuck this language and im tired
+            //contentPack.buffDefs.Append(bdBanditTranquilizer);
+            //contentPack.buffDefs.Append(bdBanditSleep);
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
