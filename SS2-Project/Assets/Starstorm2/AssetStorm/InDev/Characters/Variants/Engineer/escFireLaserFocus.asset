@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escFireLaserFocus
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Engi.FireLaserFocus, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: muzzleflashEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1968089659388908, guid: 9686e4cea1742cd468a8917fe9f2ac16,
+          type: 3}
+    - fieldName: maxDistance
+      fieldValue:
+        stringValue: 25
+        objectValue: {fileID: 0}
+    - fieldName: force
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: bulletCount
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: animationLayerName
+      fieldValue:
+        stringValue: Gesture, Additive
+        objectValue: {fileID: 0}
+    - fieldName: animationStateName
+      fieldValue:
+        stringValue: SS2-IdleLaserFocus
+        objectValue: {fileID: 0}
+    - fieldName: animationBapStateName
+      fieldValue:
+        stringValue: SS2-BapLaserFocus
+        objectValue: {fileID: 0}
+    - fieldName: animationExitStateName
+      fieldValue:
+        stringValue: SS2-ExitLaserFocus
+        objectValue: {fileID: 0}
+    - fieldName: 'trajectoryAimAssistMultiplier '
+      fieldValue:
+        stringValue: .75
+        objectValue: {fileID: 0}
+    - fieldName: damageCoeff
+      fieldValue:
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: fireFrequency
+      fieldValue:
+        stringValue: 4
+        objectValue: {fileID: 0}

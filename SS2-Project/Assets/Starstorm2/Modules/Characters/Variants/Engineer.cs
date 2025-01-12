@@ -8,12 +8,17 @@ using UnityEngine.AddressableAssets;
 using UnityEngine;
 using static R2API.DamageAPI;
 using R2API;
+using Path = System.IO.Path;
+using R2API.Models;
+using System.Collections.Generic;
 
 namespace SS2.Survivors
 {
     public class Engineer : SS2VanillaSurvivor
     {
         public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acEngineer", SS2Bundle.Indev);
+        private static string RuntimePath = Path.Combine(Addressables.RuntimePath, "StandaloneWindows64");
+        private static string AnimationPath = Path.Combine(Path.GetDirectoryName(SS2Main.Instance.Info.Location), "assetbundles", "ss2dev");
 
         public static ModdedDamageType EngiFocusDamage { get; private set; }
         public static ModdedDamageType EngiFocusDamageProc { get; private set; }
@@ -23,14 +28,20 @@ namespace SS2.Survivors
         public static GameObject engiPrefabExplosion;
         public override void Initialize()
         {
-            //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
+            GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
+            string engi = Path.Combine(RuntimePath, "ror2-base-engi_text_assets_all.bundle");
+            var runtimeEngi = Addressables.LoadAssetAsync<RuntimeAnimatorController>("RoR2/Base/Engi/animEngi.controller").WaitForCompletion();
+            AnimatorModifications engiMods = new AnimatorModifications(SS2Main.Instance.Info.Metadata);
+
+            List<State> states = SetupEngiLaserStates();
+            engiMods.NewStates.Add("Gesture, Additive", states);
+            AnimationsAPI.AddModifications(engi, runtimeEngi, engiMods);
+            var animEngi = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion().GetComponentInChildren<Animator>();
+            AnimationsAPI.AddAnimatorController(animEngi, runtimeEngi);
 
             SkillDef sdLaserFocus = assetCollection.FindAsset<SkillDef>("sdLaserFocus");
             SkillDef sdRapidDisplacement = assetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
             SkillDef sdQuantumTranslocator = assetCollection.FindAsset<SkillDef>("sdQuantumTranslocator");
-
-            GameObject engiBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/EngiBody.prefab").WaitForCompletion();
-
 
             var modelTransform = engiBodyPrefab.GetComponent<ModelLocator>().modelTransform;
             GameObject groundbox = assetCollection.FindAsset<GameObject>("HitboxGround");
@@ -55,20 +66,7 @@ namespace SS2.Survivors
             hbg2.hitBoxes = new HitBox[1];
             hbg2.hitBoxes[0] = hopbox.GetComponent<HitBox>();
 
-            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(); //= PrefabAPI.InstantiateClone(Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion(), "engiDashExplosion");
-                                                                                                                                                //GameObject.Destroy(engiPrefabExplosion.GetComponent<EffectComponent>());
-
-            //engiExplosionLeft = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("LeftExplosion");
-            //engiExplosionRight = survivorAssetCollection.FindAsset<GameObject>("EngiConcussionExplosion").InstantiateClone("RightExplosion");
-            //engiExplosionLeft.transform.parent = modelTransform;
-            //engiExplosionRight.transform.parent = modelTransform;
-            //
-            //engiExplosionLeft.transform.localPosition = new Vector3(-.325f, 2.1f, -.7f);
-            //engiExplosionRight.transform.localPosition = new Vector3(.325f, 2.1f, -.7f);
-            //engiExplosionLeft.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            //engiExplosionRight.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            //engiExplosionLeft.SetActive(false);
-            //engiExplosionRight.SetActive(false);
+            engiPrefabExplosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Junk/Engi/EngiConcussionExplosion.prefab").WaitForCompletion();
 
             SkillLocator skillLocator = engiBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
@@ -86,6 +84,69 @@ namespace SS2.Survivors
             On.RoR2.EffectComponent.Start += StopDoingThat;
         }
 
+        private List<State> SetupEngiLaserStates()
+        {
+            Parameter laserFocusPlaybackRate = new Parameter
+            {
+                Type = ParameterType.Float,
+                Name = "LaserFocus.playbackRate",
+                Value = 0f
+            };
+
+            State chargeState = new State
+            {
+                ClipBundlePath = AnimationPath,
+                Speed = 1,
+                SpeedParam = laserFocusPlaybackRate.Name,
+                WriteDefaultValues = true,
+                Name = "SS2-ChargeLaserFocus",
+                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserStart", SS2Bundle.Indev)
+            };
+
+            State idleState = new State
+            {
+                ClipBundlePath = AnimationPath,
+                Speed = 1,
+                SpeedParam = laserFocusPlaybackRate.Name,
+                WriteDefaultValues = true,
+                Name = "SS2-IdleLaserFocus",
+                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserIdle", SS2Bundle.Indev)
+            };
+
+            State bapState = new State
+            {
+                ClipBundlePath = AnimationPath,
+                Speed = 1,
+                SpeedParam = laserFocusPlaybackRate.Name,
+                WriteDefaultValues = true,
+                Name = "SS2-BapLaserFocus",
+                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserBap", SS2Bundle.Indev)
+            };
+
+            State exitState = new State
+            {
+                ClipBundlePath = AnimationPath,
+                Speed = 1,
+                SpeedParam = laserFocusPlaybackRate.Name,
+                WriteDefaultValues = true,
+                Name = "SS2-ExitLaserFocus",
+                Clip = SS2Assets.LoadAsset<AnimationClip>("EngiArmature_laserExit", SS2Bundle.Indev)
+            };
+            var exitTransition = new Transition
+            {
+                DestinationStateName = "Empty 0",
+                TransitionDuration = .2f,
+                ExitTime = 0.9f,
+                HasExitTime = true
+            };
+            exitState.Transitions.Add(exitTransition);
+
+
+            return new List<State> { chargeState, exitState, idleState, bapState };
+        }
+
+
+
         private void StopDoingThat(On.RoR2.EffectComponent.orig_Start orig, EffectComponent self)
         {
 
@@ -100,27 +161,27 @@ namespace SS2.Survivors
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            var dmg = damageInfo.HasModdedDamageType(EngiFocusDamage);
-            var proc = damageInfo.HasModdedDamageType(EngiFocusDamageProc);
+            bool dmg = damageInfo.HasModdedDamageType(EngiFocusDamage);
+            bool proc = damageInfo.HasModdedDamageType(EngiFocusDamageProc);
+
+            int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
             if (dmg || proc)
             {
-                int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-                if (proc && count < 5)
-                {
-                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
-                    self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
-
-                }
-                else if (proc)
-                {
-                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
-                }
-
                 if (count > 0)
                 {
                     damageInfo.damage *= 1 + (count * .15f);
                 }
             }
+
+            if (proc)
+            {
+                SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
+                if (count < 5)
+                {
+                    self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
+                }
+            }
+
             orig(self, damageInfo);
         }
 

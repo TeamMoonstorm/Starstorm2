@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9057f7f601990a4883b2cb295c4f43e, type: 3}
   m_Name: ThunderKitSettings
   m_EditorClassIdentifier: 
-  FirstLoad: 0
+  FirstLoad: 1
   ShowOnStartup: 1
   GameExecutable: Risk of Rain 2.exe
   GamePath: C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2
@@ -27,10 +27,12 @@ MonoBehaviour:
   CachedImageCount: 0
   CacheSize: 0
   MarkdownOpenMode: 1
-  SelectedPipeline: {fileID: 0}
-  SelectedManifest: {fileID: 0}
+  SelectedPipeline: {fileID: 11400000, guid: c70d90cbc35888246b6ef515737d447c, type: 2}
+  SelectedManifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
+    type: 2}
   QuickAccessPipelines:
   - {fileID: 11400000, guid: 00bbc80fe004c7b4ca79ec7027dd4858, type: 2}
+  - {fileID: 11400000, guid: c70d90cbc35888246b6ef515737d447c, type: 2}
   - {fileID: 11400000, guid: d424f9d32be64004b8e7493770703b56, type: 2}
   - {fileID: 11400000, guid: 1eeec3fcc15b1ab42bdba19f1f5d5b36, type: 2}
   - {fileID: 11400000, guid: 69869c9c0aafac241bffcb52a0be3d10, type: 2}

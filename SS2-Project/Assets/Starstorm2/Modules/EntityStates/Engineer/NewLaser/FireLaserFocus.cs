@@ -10,30 +10,36 @@ using R2API;
 
 namespace EntityStates.Engi
 {
-    public class LaserFocus : BaseSkillState
+    public class FireLaserFocus : BaseSkillState
     {
         [SerializeField]
+        public GameObject muzzleflashEffectPrefab;
+        [SerializeField]
+        public float maxDistance = 25f;
+        [SerializeField]
+        public float force;
+        [SerializeField]
+        public uint bulletCount;
+        [SerializeField]
+        public string animationLayerName;
+        [SerializeField]
+        public string animationStateName;
+        [SerializeField]
+        public string animationBapStateName;
+        [SerializeField]
+        public string animationExitStateName;
+        [SerializeField]
+        public float trajectoryAimAssistMultiplier = 0.75f;
+        [SerializeField]
         public static float damageCoeff = .75f;
-
         [SerializeField]
         public static float procCoeff = 0.3f;
-
         [SerializeField]
         public static float fireFrequency = 4f;
 
-        [SerializeField]
-        public static float maxDistance = 25f;
-
-        public float baseDuration = 1f;
-        private float duration;
         private float fireTimer;
         private Transform modelTransform;
         private float counter = 0;
-        //MuzzleLeft
-        //MuzzleRight
-
-        //public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
-        //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
         public GameObject hitsparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Hitspark1.prefab").WaitForCompletion();
         public GameObject hitsparkPrefab2 = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/HitsparkRailgunnerPistol.prefab").WaitForCompletion();
@@ -53,13 +59,14 @@ namespace EntityStates.Engi
             base.OnEnter();
             Ray aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
-
-            this.PlayAnimation("Gesture, Additive", "ChargeGrenades");
-
+            PlayAnimation(animationLayerName, animationStateName);
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
+
             fireTimer = 0;
             counter = 0;
             modelTransform = base.GetModelTransform();
+
+            //Creates laser
             if (modelTransform)
             {
                 ChildLocator component = this.modelTransform.GetComponent<ChildLocator>();
@@ -82,7 +89,7 @@ namespace EntityStates.Engi
                 }
             }
         }
-        
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -93,9 +100,9 @@ namespace EntityStates.Engi
             base.StartAimMode(aimRay, 2f, false);
 
             fireTimer += Time.fixedDeltaTime;
-            float fireRate = fireFrequency * base.characterBody.attackSpeed;
-            float rateAdjusted = 1f / fireRate;
-            if (fireTimer > rateAdjusted)
+            float frequencyAdjusted = fireFrequency * base.characterBody.attackSpeed;
+            float interval = 1f / frequencyAdjusted;
+            if (fireTimer > interval)
             {
                 ++counter;
                 FireLasers(aimRay);
@@ -108,14 +115,14 @@ namespace EntityStates.Engi
                 leftLaserInstance.transform.rotation = muzzleLeft.rotation;
                 leftLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
             }
-            if(rightLaserInstance && rightLaserInstanceEnd)
+            if (rightLaserInstance && rightLaserInstanceEnd)
             {
                 rightLaserInstance.transform.position = muzzleRight.position;
                 rightLaserInstance.transform.rotation = muzzleRight.rotation;
                 rightLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
             }
 
-            if (this.isAuthority &&!inputBank.skill1.down)
+            if (this.isAuthority && !inputBank.skill1.down)
             {
                 this.outer.SetNextStateToMain();
                 return;
@@ -131,7 +138,7 @@ namespace EntityStates.Engi
         {
             Vector3 point = aimRay.GetPoint(maxDistance);
             RaycastHit raycastHit;
-            
+
             if (Util.CharacterRaycast(base.gameObject, aimRay, out raycastHit, maxDistance, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
             {
                 point = raycastHit.point;
@@ -139,25 +146,26 @@ namespace EntityStates.Engi
             return point;
         }
 
+        //Never move origin of bullet
         private void FireLasers(Ray aimRay)
         {
             var isCrit = base.RollCrit();
 
             if (base.isAuthority)
             {
-                var bulletLeft = new BulletAttack {
+                var bullet = new BulletAttack
+                {
                     owner = base.gameObject,
                     weapon = base.gameObject,
-                    origin = muzzleLeft.position,
+                    origin = aimRay.origin,
                     aimVector = aimRay.direction,
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
-                    bulletCount = 1U,
+                    bulletCount = this.bulletCount,
                     procCoefficient = procCoeff,
                     damage = (base.characterBody.damage * damageCoeff) / 2,
-                    force = 0,
+                    force = this.force,
                     falloffModel = BulletAttack.FalloffModel.None,
-                    muzzleName = "MuzzleLeft",
                     hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
                     isCrit = isCrit,
                     HitEffectNormal = false,
@@ -166,52 +174,18 @@ namespace EntityStates.Engi
                     radius = 0.6f
                 };
 
-                var bulletRight = new BulletAttack{
-                    owner = base.gameObject,
-                    weapon = base.gameObject,
-                    origin = muzzleRight.position,
-                    aimVector = aimRay.direction,
-                    minSpread = 0f,
-                    maxSpread = base.characterBody.spreadBloomAngle,
-                    bulletCount = 1U,
-                    procCoefficient = procCoeff,
-                    damage = (base.characterBody.damage * damageCoeff) / 2,
-                    force = 0,
-                    falloffModel = BulletAttack.FalloffModel.None,
-                    muzzleName = "MuzzleRight",
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab,
-                    isCrit = isCrit,
-                    HitEffectNormal = false,
-                    smartCollision = true,
-                    maxDistance = maxDistance,
-                    radius = 0.6f
-                };
-
-                if (counter == 4)
+                DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Engineer.EngiFocusDamage);
+                bullet.Fire();
+                
+                if (counter % 4 == 0)
                 {
-                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamageProc);
-                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamage);
-                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
-                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
-
+                    DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Engineer.EngiFocusDamageProc);
+                    EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, "MuzzleLeft", true);
+                    EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, "MuzzleRight", true);
+                    PlayAnimation(animationLayerName, animationBapStateName);
                 }
-                else if(counter == 8)
-                {
-                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamageProc);
-                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamage);
-                    base.PlayCrossfade("Gesture Left Cannon, Additive", "FireGrenadeLeft", 0.1f);
-                    base.PlayCrossfade("Gesture Right Cannon, Additive", "FireGrenadeRight", 0.1f);
-                }
-                else
-                {
-                    DamageAPI.AddModdedDamageType(bulletLeft, SS2.Survivors.Engineer.EngiFocusDamage);
-                    DamageAPI.AddModdedDamageType(bulletRight, SS2.Survivors.Engineer.EngiFocusDamage);
-
-                }
-
-
-                bulletLeft.Fire();
-                bulletRight.Fire();
+                
+                bullet.Fire();
 
             }
         }
@@ -219,8 +193,8 @@ namespace EntityStates.Engi
         public override void OnExit()
         {
             base.OnExit();
-            Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
-            this.PlayAnimation("Gesture, Additive", "Empty");
+            Util.PlaySound("Play_engi_R_walkingTurret_laser_end", gameObject);
+            PlayAnimation(animationLayerName, animationExitStateName);
 
             if (leftLaserInstance)
                 EntityState.Destroy(leftLaserInstance);
