@@ -650,9 +650,9 @@ namespace SS2
 
             public static BuffDef bdEthereal;
 
-            public static BuffDef bdBanditTranquilizer;
+            public static BuffDef bdBandit2Tranq;
 
-            public static BuffDef bdBanditSleep;
+            public static BuffDef bdBandit2Sleep;
 
             public static BuffDef bdAcridArmorCorrison;
 

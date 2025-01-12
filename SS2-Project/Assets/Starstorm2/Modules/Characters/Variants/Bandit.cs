@@ -13,11 +13,11 @@ namespace SS2.Survivors
 {
     public class Bandit : SS2VanillaSurvivor
     {
-        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit2", SS2Bundle.Indev);
+        public override SS2AssetRequest<VanillaSurvivorAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<VanillaSurvivorAssetCollection>("acBandit", SS2Bundle.Indev);
 
         public static DamageAPI.ModdedDamageType TranqDamageType { get; set; }
-        public static BuffDef _bdBanditTranquilizer = SS2Content.Buffs.bdBanditTranquilizer;
-        public static BuffDef _bdBanditSleep = SS2Content.Buffs.bdBanditSleep;
+        public static BuffDef _bdBanditTranquilizer;
+        public static BuffDef _bdBanditSleep;
 
         public static GameObject tranqMuzzleFlashPrefab;
         public static GameObject tranqTracerEffectPrefab;
@@ -33,10 +33,13 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
+            SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
+
+            _bdBanditTranquilizer = SS2Content.Buffs.bdBandit2Tranq;
+            _bdBanditSleep = SS2Content.Buffs.bdBandit2Sleep;
+
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
-
-            SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
 
             GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
             tranqMuzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/MuzzleflashBandit2.prefab").WaitForCompletion();

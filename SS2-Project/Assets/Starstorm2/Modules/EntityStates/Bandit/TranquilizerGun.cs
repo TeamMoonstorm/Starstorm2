@@ -10,10 +10,6 @@ namespace EntityStates.Bandit
         {
             base.ModifyBullet(bulletAttack);
             bulletAttack.falloffModel = BulletAttack.FalloffModel.None;
-            muzzleFlashPrefab = SS2.Survivors.Bandit.tranqMuzzleFlashPrefab;
-            bulletAttack.tracerEffectPrefab = SS2.Survivors.Bandit.tranqTracerEffectPrefab;
-            bulletAttack.hitEffectPrefab = SS2.Survivors.Bandit.tranqHitEffectPrefab;
-
             bulletAttack.AddModdedDamageType(SS2.Survivors.Bandit.TranqDamageType);
         }
     }
