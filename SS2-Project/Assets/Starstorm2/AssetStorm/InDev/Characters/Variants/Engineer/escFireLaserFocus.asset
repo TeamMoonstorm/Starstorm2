@@ -17,11 +17,6 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: muzzleflashEffectPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1968089659388908, guid: 9686e4cea1742cd468a8917fe9f2ac16,
-          type: 3}
     - fieldName: maxDistance
       fieldValue:
         stringValue: 25
@@ -50,19 +45,33 @@ MonoBehaviour:
       fieldValue:
         stringValue: SS2-ExitLaserFocus
         objectValue: {fileID: 0}
-    - fieldName: 'trajectoryAimAssistMultiplier '
-      fieldValue:
-        stringValue: .75
-        objectValue: {fileID: 0}
     - fieldName: damageCoeff
       fieldValue:
         stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: tickRate
       fieldValue:
-        stringValue: 4
+        stringValue: 8
         objectValue: {fileID: 0}
     - fieldName: baseMinimumDuration
       fieldValue:
         stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: laserPrefab
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 5100350356110037537, guid: b8fe170c9caa516459ff44a72674032d,
+          type: 3}
+    - fieldName: extendedVisualDistance
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitsparkPrefab
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 1318765891592879, guid: 9ea8a9a7856a46b4988b23fe56ac9de4,
+          type: 3}
+    - fieldName: hitsToProcDebuff
+      fieldValue:
+        stringValue: 8
         objectValue: {fileID: 0}

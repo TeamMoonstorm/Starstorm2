@@ -35,7 +35,7 @@ namespace EntityStates.Engi
             GetAimRay();
             PlayCrossfade(animationLayerName, animationStateName, animationPlaybackRateParam, duration, crossfadeDuration);
             characterBody.SetAimTimer(3f);
-            //Util.PlaySound(enterSoundString, base.gameObject);
+            Util.PlaySound(enterSoundString, base.gameObject);
 
            
         }

@@ -13,9 +13,11 @@ namespace EntityStates.Engi
     public class FireLaserFocus : BaseSkillState
     {
         [SerializeField]
-        public GameObject muzzleflashEffectPrefab;
+        public float hitsToProcDebuff = 4f;
         [SerializeField]
         public float maxDistance = 25f;
+        [SerializeField]
+        public float extendedVisualDistance = 10f; //to make the beam feel a bit nicer
         [SerializeField]
         public float force;
         [SerializeField]
@@ -29,8 +31,6 @@ namespace EntityStates.Engi
         [SerializeField]
         public string animationExitStateName;
         [SerializeField]
-        public float trajectoryAimAssistMultiplier = 0.75f;
-        [SerializeField]
         public static float damageCoeff = .75f;
         [SerializeField]
         public static float procCoeff = 0.3f;
@@ -38,31 +38,37 @@ namespace EntityStates.Engi
         public static float tickRate = 6f;
         [SerializeField]
         public static float baseMinimumDuration = 2f;
+        [SerializeField]
+        public static GameObject laserPrefab;
+        [SerializeField]
+        public static GameObject hitsparkPrefab;
 
         private float minimumDuration;
 
         private float fireTimer;
+        private float bapTimer;
         private Transform modelTransform;
         private float counter = 0;
 
-        public GameObject hitsparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Hitspark1.prefab").WaitForCompletion();
-        public GameObject hitsparkPrefab2 = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/HitsparkRailgunnerPistol.prefab").WaitForCompletion();
-        public GameObject laserPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/LaserEngiTurret.prefab").WaitForCompletion();
-
         private GameObject leftLaserInstance;
         private Transform leftLaserInstanceEnd;
+        private ChildLocator leftCL;
+        private AnimateShaderAlpha asaLeft;
+        private Transform muzzleLeft;
 
         private GameObject rightLaserInstance;
         private Transform rightLaserInstanceEnd;
-
-        private Transform muzzleLeft;
+        private ChildLocator rightCL;
         private Transform muzzleRight;
+        private AnimateShaderAlpha asaRight;
+
+        private Ray aimRay;
 
         public override void OnEnter()
         {
             base.OnEnter();
             minimumDuration = baseMinimumDuration / attackSpeedStat;
-            Ray aimRay = base.GetAimRay();
+            aimRay = base.GetAimRay();
             base.StartAimMode(aimRay, 2f, false);
             PlayAnimation(animationLayerName, animationStateName);
             Util.PlaySound("Play_engi_R_walkingTurret_laser_start", base.gameObject);
@@ -82,14 +88,18 @@ namespace EntityStates.Engi
                     {
                         leftLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleLeft.position, muzzleLeft.rotation);
                         leftLaserInstance.transform.parent = transform;
-                        leftLaserInstanceEnd = leftLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        leftCL = leftLaserInstance.GetComponent<ChildLocator>();
+                        leftLaserInstanceEnd = leftCL.FindChild("LaserEnd");
+                        asaLeft = leftCL.FindChild("MainLaser").GetComponent<AnimateShaderAlpha>();
                     }
                     muzzleRight = component.FindChild("MuzzleRight");
                     if (muzzleRight && laserPrefab)
                     {
                         rightLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleRight.position, muzzleRight.rotation);
                         rightLaserInstance.transform.parent = transform;
-                        rightLaserInstanceEnd = rightLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        rightCL = rightLaserInstance.GetComponent<ChildLocator>();
+                        rightLaserInstanceEnd = rightCL.FindChild("LaserEnd");
+                        asaRight = rightCL.FindChild("MainLaser").GetComponent<AnimateShaderAlpha>();
                     }
                 }
             }
@@ -103,25 +113,25 @@ namespace EntityStates.Engi
             StartAimMode(aimRay, 2f, false);
 
             fireTimer -= Time.fixedDeltaTime;
+            bapTimer -= Time.fixedDeltaTime;
             if (fireTimer <= 0)
             {
                 fireTimer = 1f / tickRate / attackSpeedStat;
                 ++counter;
                 FireLasers(aimRay);
-                fireTimer = 0f;
             }
 
             if (leftLaserInstance && leftLaserInstanceEnd)
             {
                 leftLaserInstance.transform.position = muzzleLeft.position;
                 leftLaserInstance.transform.rotation = muzzleLeft.rotation;
-                leftLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
+                leftLaserInstanceEnd.position = aimRay.GetPoint(maxDistance);
             }
             if (rightLaserInstance && rightLaserInstanceEnd)
             {
                 rightLaserInstance.transform.position = muzzleRight.position;
                 rightLaserInstance.transform.rotation = muzzleRight.rotation;
-                rightLaserInstanceEnd.position = GetBeamEndPoint(aimRay);
+                rightLaserInstanceEnd.position = aimRay.GetPoint(maxDistance);
             }
 
             if (((fixedAge >= minimumDuration && !IsKeyDownAuthority()) || characterBody.isSprinting) && isAuthority)
@@ -130,22 +140,11 @@ namespace EntityStates.Engi
                 return;
             }
 
-            counter = counter % 8;
-        }
-
-        protected Vector3 GetBeamEndPoint(Ray aimRay)
-        {
-            Vector3 point = aimRay.GetPoint(maxDistance);
-            RaycastHit raycastHit;
-
-            if (Util.CharacterRaycast(base.gameObject, aimRay, out raycastHit, maxDistance, LayerIndex.world.mask | LayerIndex.entityPrecise.mask, QueryTriggerInteraction.UseGlobal))
-            {
-                point = raycastHit.point;
-            }
-            return point;
+            counter = counter % hitsToProcDebuff;
         }
 
         //Never move origin of bullet
+        //Zenith made me make it so its two instances of damage
         private void FireLasers(Ray aimRay)
         {
             var isCrit = base.RollCrit();
@@ -165,7 +164,6 @@ namespace EntityStates.Engi
                     damage = (base.characterBody.damage * damageCoeff) / 2,
                     force = this.force,
                     falloffModel = BulletAttack.FalloffModel.None,
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
@@ -175,15 +173,18 @@ namespace EntityStates.Engi
 
                 DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Engineer.EngiFocusDamage);
                 bullet.Fire();
-                
-                if (counter % 4 == 0)
+                //Trigger Proc
+                if (counter % hitsToProcDebuff == 0)
                 {
+                    asaLeft.pauseTime = false;
+                    asaLeft.time = 0;
+                    asaRight.pauseTime = false;
+                    asaRight.time = 0;
                     DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Engineer.EngiFocusDamageProc);
-                    EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, "MuzzleLeft", true);
-                    EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, "MuzzleRight", true);
                     PlayAnimation(animationLayerName, animationBapStateName);
+                    bullet.hitEffectPrefab = hitsparkPrefab;
                 }
-                
+
                 bullet.Fire();
 
             }
