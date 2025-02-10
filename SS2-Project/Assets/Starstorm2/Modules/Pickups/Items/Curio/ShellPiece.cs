@@ -8,7 +8,7 @@ namespace SS2.Items
     public sealed class ShellPiece : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acShellPiece", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => false;
+        public override bool IsAvailable(ContentPack contentPack) => true;
         public override void Initialize()
         {
             On.RoR2.CharacterMaster.OnServerStageBegin += OnServerStageBegin;

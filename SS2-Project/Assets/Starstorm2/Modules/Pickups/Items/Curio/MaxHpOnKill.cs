@@ -64,7 +64,7 @@ namespace SS2.Items
     public sealed class MaxHpOnKill : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acMaxHpOnKill", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => false;
+        public override bool IsAvailable(ContentPack contentPack) => true;
         public static GameObject orbEffect;
         public override void Initialize()
         {

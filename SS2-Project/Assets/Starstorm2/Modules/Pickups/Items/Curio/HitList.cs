@@ -11,7 +11,7 @@ namespace SS2.Items
     public sealed class HitList : SS2Item // MAKE IT HIT LIST INSTEAD!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acHitList", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => false;
+        public override bool IsAvailable(ContentPack contentPack) => true;
         static GameObject orbEffect;
         static GameObject markEffect;
         public override void Initialize()
