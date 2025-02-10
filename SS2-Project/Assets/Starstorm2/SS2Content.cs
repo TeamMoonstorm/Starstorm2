@@ -141,7 +141,7 @@ namespace SS2
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
-                //EtherealBehavior.Init,
+                EtherealBehavior.Init,
                 RulebookEnabler.Init,
                 () =>
                 {
