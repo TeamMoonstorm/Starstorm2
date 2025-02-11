@@ -26,7 +26,9 @@ MonoBehaviour:
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
-  stockToConsume: 1
+  stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 1
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 1
@@ -36,6 +38,10 @@ MonoBehaviour:
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 1
-  stressValue: 12
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
+  stressValue: 20
   canCastIfOverstressed: 0
   canCastIfWillOverstress: 0
+  autoHandleAddStress: 1
+  autoHandleOrderQueue: 1

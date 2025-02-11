@@ -1,25 +1,34 @@
 ﻿using RoR2;
 using RoR2.UI;
+using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.UI;
 namespace SS2.Components
 {
     public class NemCaptainSkillIcon : MonoBehaviour
     {
-        public GenericSkill targetSkill;
-        public NemCaptainController ncc;
+        public SkillDef targetSkill;
+        public CharacterBody characterBody;
         public Image iconImage;
         public TooltipProvider tooltipProvider;
         public PlayerCharacterMasterController pcmc;
 
+        public void UpdateSkillRef(SkillDef _targetSkill)
+        {
+            if (_targetSkill)
+            {
+                targetSkill = _targetSkill;
+            }
+        }
+
         private void Update()
         {
-            if (targetSkill)
+            if (targetSkill && characterBody)
             {
                 if (tooltipProvider)
                 {
-                    Color color = targetSkill.characterBody.bodyColor;
-                    SurvivorCatalog.GetSurvivorIndexFromBodyIndex(targetSkill.characterBody.bodyIndex);
+                    Color color = characterBody.bodyColor;
+                    SurvivorCatalog.GetSurvivorIndexFromBodyIndex(characterBody.bodyIndex);
                     float h;
                     float s;
                     float v;

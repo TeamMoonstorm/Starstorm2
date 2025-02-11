@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1537144414, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: sdNemCaptainPrimary
   m_EditorClassIdentifier: 
-  skillName: NemCapPistol
+  skillName: NemCapPistolOld
   skillNameToken: SS2_NEMCAPTAIN_PRIMARY_NAME
   skillDescriptionToken: SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION
   keywordTokens: []
@@ -27,8 +27,10 @@ MonoBehaviour:
   rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 1
+  fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
   cancelSprintingOnActivation: 1
@@ -36,6 +38,8 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
   reloadState:
     _typeName: EntityStates.NemCaptain.ReloadMachinePistol, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null

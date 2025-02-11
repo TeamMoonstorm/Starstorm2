@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60ea9198a83500b4f8c0ac1ceebc3ea4, type: 3}
+  m_Name: sdNemCaptainPrimary2
+  m_EditorClassIdentifier: 
+  skillName: NemCapPistol
+  skillNameToken: SS2_NEMCAPTAIN_PRIMARY_NAME
+  skillDescriptionToken: SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION
+  keywordTokens: []
+  icon: {fileID: 21300000, guid: 1d715936db0c67d4b8ff5140f5213bca, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.NemCaptain.MachinePistol, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  interruptPriority: 1
+  baseRechargeInterval: 3
+  baseMaxStock: 20
+  rechargeStock: 20
+  requiredStock: 1
+  stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
+  resetCooldownTimerOnUse: 1
+  fullRestockOnAssign: 0
+  dontAllowPastMaxStocks: 1
+  beginSkillCooldownOnSkillEnd: 0
+  cancelSprintingOnActivation: 1
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.UI;
+using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2.Components;
@@ -21,16 +22,11 @@ namespace EntityStates.NemCaptain.Weapon
         public PlacementInfo currentPlacementInfo;
 
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
-        private GenericSkill primarySkillSlot;
         private AimAnimator modelAimAnimator;
         private GameObject effectMuzzleInstance;
         private Animator modelAnimator;
         private float timerSinceComplete;
-        private bool beginExit;
-        private GenericSkill originalPrimarySkill;
-        private GenericSkill originalSecondarySkill;
-        private GenericSkill originalUtilitySkill;
-        private GenericSkill originalSpecialSkill;
+
         private BlueprintController blueprints;
         private CameraTargetParams.AimRequest aimRequest;
         private NemCaptainController ncc;
@@ -85,36 +81,8 @@ namespace EntityStates.NemCaptain.Weapon
             if (cameraTargetParams)
                 aimRequest = cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
 
-            //store original skills
-            originalPrimarySkill = skillLocator.primary;
-            Debug.Log("originalPrimarySkill : " + skillLocator.primary.name);
-            originalSecondarySkill = skillLocator.secondary;
-            Debug.Log("originalSecondarySkill : " + skillLocator.secondary.name);
-            originalUtilitySkill = skillLocator.utility;
-            Debug.Log("originalUtilitySkill : " + skillLocator.utility.name);
-            originalSpecialSkill = skillLocator.special;
-            Debug.Log("originalSpecialSkill : " + skillLocator.special.name);
-
-            ncc.cachedPrimary = skillLocator.primary.skillDef;
-            Debug.Log("cachedPrimaryDef : " + skillLocator.primary.skillDef.skillNameToken);
-
-            Debug.Log("stored original skills");
-
-            //set to orders
-            skillLocator.primary = ncc.hand1;
-            skillLocator.secondary = ncc.hand2;
-            skillLocator.utility = ncc.hand3;
-            skillLocator.special = ncc.hand4;
-
-            Debug.Log("hand1 : " + ncc.hand1.name);
-            Debug.Log("hand2 : " + ncc.hand2.name);
-            Debug.Log("hand3 : " + ncc.hand3.name);
-            Debug.Log("hand4 : " + ncc.hand4.name);
-
-            skillLocator.primary.stock = 0;
-            skillLocator.secondary.stock = 0;
-            skillLocator.utility.stock = 0;
-            skillLocator.special.stock = 0;
+            ncc.SetOrderOverrides();
+            
         }
 
         public static PlacementInfo GetPlacementInfo(Ray aimRay, GameObject gameObject)
@@ -156,12 +124,13 @@ namespace EntityStates.NemCaptain.Weapon
             {
                 characterDirection.moveVector = GetAimRay().direction;
             }
-            if (isAuthority && beginExit)
+            if (isAuthority && !inputBank.skill2.down)
             {
+                outer.SetNextStateToMain();
                 timerSinceComplete += Time.fixedDeltaTime;
                 if (timerSinceComplete >= exitDuration)
                 {
-                    outer.SetNextStateToMain();
+                    
                 }
             }
         }
@@ -179,10 +148,7 @@ namespace EntityStates.NemCaptain.Weapon
             {
                 overrideRequest.Dispose();
             }
-            skillLocator.primary = originalPrimarySkill;
-            skillLocator.secondary = originalSecondarySkill;
-            skillLocator.utility = originalUtilitySkill;
-            skillLocator.special = originalSpecialSkill;
+            ncc.UnsetOrderOverrides();
             Debug.Log("reset skills");
             if (blueprints)
             {
