@@ -393,9 +393,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
   - submoduleName: R2API_Items
     description: R2API_Items
     dependedncyID: RiskofThunder-R2API_Items
@@ -403,9 +403,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
   - submoduleName: R2API_Language
     description: R2API_Language
     dependedncyID: RiskofThunder-R2API_Language
@@ -422,10 +422,10 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
     - R2API_Skins
-    - R2API_ContentManagement
   - submoduleName: R2API_LobbyConfig
     description: R2API_LobbyConfig
     dependedncyID: RiskofThunder-R2API_LobbyConfig
@@ -460,9 +460,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
   - submoduleName: R2API_ProcType
     description: R2API_ProcType
     dependedncyID: RiskofThunder-R2API_ProcType
@@ -499,6 +499,15 @@ MonoBehaviour:
     - BepInExPack
     - R2API_Core
     - HookGenPatcher
+  - submoduleName: R2API_Skills
+    description: R2API_Skills
+    dependedncyID: RiskofThunder-R2API_Skills
+    shouldInstall: 1
+    isHardDependency: 0
+    dependencies:
+    - BepInExPack
+    - R2API_Core
+    - HookGenPatcher
   - submoduleName: R2API_Skins
     description: R2API_Skins
     dependedncyID: RiskofThunder-R2API_Skins
@@ -515,9 +524,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
   - submoduleName: R2API_Stages
     description: R2API_Stages
     dependedncyID: RiskofThunder-R2API_Stages
@@ -543,9 +552,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
   - submoduleName: R2API_Unlockable
     description: R2API_Unlockable
     dependedncyID: RiskofThunder-R2API_Unlockable
@@ -553,9 +562,9 @@ MonoBehaviour:
     isHardDependency: 1
     dependencies:
     - BepInExPack
+    - R2API_ContentManagement
     - R2API_Core
     - HookGenPatcher
-    - R2API_ContentManagement
 --- !u!114 &4626964313918207699
 MonoBehaviour:
   m_ObjectHideFlags: 0

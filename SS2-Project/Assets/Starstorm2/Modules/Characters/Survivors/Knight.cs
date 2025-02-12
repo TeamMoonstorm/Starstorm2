@@ -19,7 +19,10 @@ namespace SS2.Survivors
         public static GameObject KnightDroppod;
         public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
+        public static GameObject KnightSpinEffectGust;
+        public static GameObject KnightSpinStartEffect;
         public static GameObject KnightSpinEffect;
+        public static GameObject KnightSpinFinisherEffect;
 
         public static SerializableEntityStateType ShieldStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.Shield));
 
@@ -63,7 +66,9 @@ namespace SS2.Survivors
             BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
+            KnightSpinStartEffect = AssetCollection.FindAsset<GameObject>("KnightSpinStart");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
+            KnightSpinFinisherEffect = AssetCollection.FindAsset<GameObject>("KnightSpinFinisher");
             KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
 
             AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedPrimaryLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarPrimaryReplacementSkill>("RoR2/Base/LunarSkillReplacements/LunarPrimaryReplacement.asset").WaitForCompletion();

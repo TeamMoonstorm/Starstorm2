@@ -6,6 +6,7 @@ using SS2;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 namespace EntityStates.Knight
 {
@@ -23,6 +24,8 @@ namespace EntityStates.Knight
         public float fireFrequency;
         public float fireAge;
         public float fireInterval;
+        public float intervalUntilPlaySpin;
+        public float intervalUntilPlaySpinFinisher;
         public Transform modelTransform;
         #region test
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
@@ -47,7 +50,24 @@ namespace EntityStates.Knight
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testDamageBoosted = 4f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testEffectSpin = 0.115f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float testEffectSpinFinisher = 0.456f;
         #endregion test
+
+        enum SpinEffectState
+        {
+            Null,
+            Start,
+            Spin,
+            Finisher
+        }
+
+        private SpinEffectState currentEffectState;
+        private float effectTimer;
 
         public override void OnEnter()
         {
@@ -58,6 +78,9 @@ namespace EntityStates.Knight
             interruptSpeedCoefficient = testinterruptSpeedCoefficient;
             baseFireFrequency = testFireFrequency;
             damageCoefficient = testDamage;
+
+            intervalUntilPlaySpin = testEffectSpin;
+            intervalUntilPlaySpinFinisher = testEffectSpinFinisher;
             #endregion test
 
             base.OnEnter();
@@ -69,7 +92,36 @@ namespace EntityStates.Knight
 
             swordPivot = FindModelChild("HitboxAnchor");
             swordPivot.rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction);
+
+            //currentEffectState = SpinEffectState.Null;
         }
+
+        /*public override void Update()
+        {
+            base.Update();
+
+            if(!(currentEffectState == SpinEffectState.Null || currentEffectState == SpinEffectState.Finisher))
+            {
+                effectTimer -= Time.deltaTime;
+                if(effectTimer <= 0.0)
+                {
+                    switch (currentEffectState)
+                    {
+                        case SpinEffectState.Start: //transition to spin
+                            currentEffectState = SpinEffectState.Spin;
+                            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
+                            effectTimer = intervalUntilPlaySpinFinisher * duration;
+                            PlaySwingEffect();
+                            break;
+                        case SpinEffectState.Spin: //transition to finisher
+                            currentEffectState = SpinEffectState.Finisher;
+                            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinFinisherEffect;
+                            PlaySwingEffect();
+                            break;
+                    }
+                }
+            }
+        }*/
 
         protected override void ModifyMelee()
         {

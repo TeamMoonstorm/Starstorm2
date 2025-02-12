@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 4a348eef42253f44784ff406dff65f5a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
@@ -92,9 +92,9 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: eb0e12f07abbfd5408e6c793d0f63e44, type: 3}
+        m_Texture: {fileID: 2800000, guid: 189b06ab85897db46a63e371a42bc02f, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 0, y: 1}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -116,7 +116,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 0daf9787db169384eaf5081b42a2edc6, type: 3}
+        m_Texture: {fileID: 2800000, guid: 42677c2cbaa77b14298b58a878dd739a, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SliceAlphaTex:
@@ -129,8 +129,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.359
-    - _AlphaBoost: 1
+    - _AlphaBias: 0.447
+    - _AlphaBoost: 0.99
     - _BlendOp: 0
     - _BlueChannelBias: 0
     - _BlueChannelSmoothness: 0
@@ -156,7 +156,7 @@ Material:
     - _DistortionStrength: 1
     - _DistortionStrengthScaled: 0
     - _DitherOn: 0
-    - _DstBlend: 1
+    - _DstBlend: 10
     - _EliteBrightnessMax: 1
     - _EliteBrightnessMin: 0
     - _EliteIndex: 0
@@ -187,7 +187,7 @@ Material:
     - _GlossyReflections: 1
     - _GreenChannelBias: 0
     - _GreenChannelSmoothness: 0
-    - _InternalSimpleBlendMode: 0
+    - _InternalSimpleBlendMode: 1
     - _InvFade: 0
     - _LightingEnabled: 0
     - _LimbPrimeMask: 1
@@ -218,7 +218,7 @@ Material:
     - _SpecularStrength: 0
     - _SplatmapOn: 0
     - _SplatmapTileScale: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _UVSec: 0
     - _UseUV1On: 0
     - _VertexAlphaOn: 0
@@ -230,7 +230,7 @@ Material:
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
-    - _CutoffScroll: {r: 0, g: 0, b: 8, a: 0}
+    - _CutoffScroll: {r: 50, g: 20, b: 100, a: 0}
     - _EmColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
