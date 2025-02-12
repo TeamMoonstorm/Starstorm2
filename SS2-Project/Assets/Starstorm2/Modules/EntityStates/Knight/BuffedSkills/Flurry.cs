@@ -53,6 +53,5 @@ namespace EntityStates.Knight
                 outer.SetNextStateToMain();
             }
         }
-
     }
 }

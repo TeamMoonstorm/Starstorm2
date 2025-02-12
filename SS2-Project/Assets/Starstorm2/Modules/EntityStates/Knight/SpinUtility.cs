@@ -24,8 +24,6 @@ namespace EntityStates.Knight
         public float fireFrequency;
         public float fireAge;
         public float fireInterval;
-        public float intervalUntilPlaySpin;
-        public float intervalUntilPlaySpinFinisher;
         public Transform modelTransform;
         #region test
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
@@ -50,24 +48,9 @@ namespace EntityStates.Knight
 
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testDamageBoosted = 4f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testEffectSpin = 0.115f;
-
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testEffectSpinFinisher = 0.456f;
         #endregion test
 
-        enum SpinEffectState
-        {
-            Null,
-            Start,
-            Spin,
-            Finisher
-        }
-
-        private SpinEffectState currentEffectState;
-        private float effectTimer;
+        private SS2.Components.KnightSpinVfxController knightSVFXC;
 
         public override void OnEnter()
         {
@@ -78,9 +61,6 @@ namespace EntityStates.Knight
             interruptSpeedCoefficient = testinterruptSpeedCoefficient;
             baseFireFrequency = testFireFrequency;
             damageCoefficient = testDamage;
-
-            intervalUntilPlaySpin = testEffectSpin;
-            intervalUntilPlaySpinFinisher = testEffectSpinFinisher;
             #endregion test
 
             base.OnEnter();
@@ -93,40 +73,7 @@ namespace EntityStates.Knight
             swordPivot = FindModelChild("HitboxAnchor");
             swordPivot.rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction);
 
-            //currentEffectState = SpinEffectState.Null;
-        }
-
-        /*public override void Update()
-        {
-            base.Update();
-
-            if(!(currentEffectState == SpinEffectState.Null || currentEffectState == SpinEffectState.Finisher))
-            {
-                effectTimer -= Time.deltaTime;
-                if(effectTimer <= 0.0)
-                {
-                    switch (currentEffectState)
-                    {
-                        case SpinEffectState.Start: //transition to spin
-                            currentEffectState = SpinEffectState.Spin;
-                            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-                            effectTimer = intervalUntilPlaySpinFinisher * duration;
-                            PlaySwingEffect();
-                            break;
-                        case SpinEffectState.Spin: //transition to finisher
-                            currentEffectState = SpinEffectState.Finisher;
-                            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinFinisherEffect;
-                            PlaySwingEffect();
-                            break;
-                    }
-                }
-            }
-        }*/
-
-        protected override void ModifyMelee()
-        {
-            swingEffectPrefab = SS2.Survivors.Knight.KnightSpinEffect;
-            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
+            knightSVFXC = gameObject.GetComponent<SS2.Components.KnightSpinVfxController>();
         }
 
         protected override void FireAttack()
@@ -144,7 +91,6 @@ namespace EntityStates.Knight
                 fireAge -= fireInterval;
                 attack.ResetIgnoredHealthComponents();
                 hurtBoxes.Clear();
-                PlaySwingEffect();
 
                 if (isAuthority && attack.Fire(hurtBoxes))
                 {
@@ -156,6 +102,8 @@ namespace EntityStates.Knight
                 }
             }
         }
+
+
 
         //public for hot compile
         public void PushVictim(HurtBox hurtBox)
@@ -214,6 +162,7 @@ namespace EntityStates.Knight
             base.OnExit();
 
             swordPivot.transform.localRotation = Quaternion.identity;
+            knightSVFXC.ClearState();
         }
     }
 }

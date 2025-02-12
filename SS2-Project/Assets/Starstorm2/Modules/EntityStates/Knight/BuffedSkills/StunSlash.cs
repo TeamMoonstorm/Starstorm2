@@ -78,6 +78,7 @@ namespace EntityStates.Knight
         {
             base.FixedUpdate();
         }
+
         //handle in parry state
         //public override void OnExit()
         //{
