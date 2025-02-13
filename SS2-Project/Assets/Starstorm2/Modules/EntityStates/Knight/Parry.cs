@@ -18,9 +18,9 @@ namespace EntityStates.Knight
 
         [FormatToken("SS2_KNIGHT_SHIELD_BASH_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new ShieldPunch().damageCoefficient;
-        
+
         // TODO: Make static once you have a replacement
-        public GameObject impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
+        public static GameObject impactEffect;
         public int swingSide;
 
         private GenericSkill primarySkill;
@@ -41,6 +41,7 @@ namespace EntityStates.Knight
 
         public override void OnEnter()
         {
+            impactEffect = SS2.Survivors.Knight.KnightParryEffect;
             baseDuration = testbaseDuration;
             inputtableTime = testInputLockDuration;
 
@@ -60,9 +61,10 @@ namespace EntityStates.Knight
             TryOverrideSkill(utilitySkill, ref buffedUtilitySkillDef);
             TryOverrideSkill(specialSkill, ref buffedSpecialSkillDef);
 
-            EffectData effectData = new EffectData();
-            effectData.origin = this.characterBody.corePosition;
-            EffectManager.SpawnEffect(impactEffect, effectData, transmit: false);
+            //EffectData effectData = new EffectData();
+            //effectData.origin = this.characterBody.corePosition;
+            //EffectManager.SpawnEffect(impactEffect, effectData, transmit: false);
+            EffectManager.SimpleMuzzleFlash(impactEffect, gameObject, "Shield", false);
         }
 
         private void TryOverrideSkill(GenericSkill genericSkill, ref SkillDef buffedSkillDef)
