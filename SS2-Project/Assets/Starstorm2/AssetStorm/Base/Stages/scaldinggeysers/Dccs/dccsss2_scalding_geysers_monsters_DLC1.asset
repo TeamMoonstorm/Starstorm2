@@ -19,22 +19,6 @@ MonoBehaviour:
     cards:
     - spawnCard:
         _asset: {fileID: 0}
-        _address: RoR2/DLC1/MajorAndMinorConstruct/cscMegaConstruct.asset
-        _useDirectReference: 0
-      selectionWeight: 1
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 2
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-    - spawnCard:
-        _asset: {fileID: 0}
         _address: RoR2/Base/ClayBoss/cscClayBoss.asset
         _useDirectReference: 0
       selectionWeight: 2
@@ -102,7 +86,7 @@ MonoBehaviour:
         _useDirectReference: 0
     - spawnCard:
         _asset: {fileID: 0}
-        _address: RoR2/Base/Bell/cscBell.asset
+        _address: RoR2/Base/GreaterWisp/cscGreaterWisp.asset
         _useDirectReference: 0
       selectionWeight: 2
       spawnDistance: 2
@@ -185,7 +169,7 @@ MonoBehaviour:
         _useDirectReference: 0
     - spawnCard:
         _asset: {fileID: 0}
-        _address: RoR2/Base/RoboBallBoss/cscRoboBallMini.asset
+        _address: RoR2/Base/Wisp/cscLesserWisp.asset
         _useDirectReference: 0
       selectionWeight: 3
       spawnDistance: 0
