@@ -217,8 +217,8 @@ MonoBehaviour:
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 110
-  baseRegen: 2.5
+  baseMaxHealth: 160
+  baseRegen: 3
   baseMaxShield: 0
   baseMoveSpeed: 7.2
   baseAcceleration: 80
@@ -231,8 +231,8 @@ MonoBehaviour:
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
-  levelMaxHealth: 33
-  levelRegen: 0.5
+  levelMaxHealth: 48
+  levelRegen: 0.6
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
@@ -544,8 +544,8 @@ MonoBehaviour:
   walkSpeedPenaltyCoefficient: 1
   characterDirection: {fileID: 1301156465497949038}
   muteWalkMotion: 0
-  mass: 100
-  airControl: 0.25
+  mass: 150
+  airControl: 0.35
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0

@@ -137,7 +137,6 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                //Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
