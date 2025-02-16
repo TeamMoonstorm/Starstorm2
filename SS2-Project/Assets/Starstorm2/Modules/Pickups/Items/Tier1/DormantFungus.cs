@@ -62,7 +62,7 @@ namespace SS2.Items
 
             public void FixedUpdate()
             {
-                if (body.isSprinting)
+                if (body && body.characterMotor && body.characterMotor.isGrounded)
                 {
                     if (footstepHandler && sprintTimer > 1f)
                         footstepHandler.enableFootstepDust = true;
