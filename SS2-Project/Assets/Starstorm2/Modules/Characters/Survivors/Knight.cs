@@ -125,7 +125,7 @@ namespace SS2.Survivors
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightShield))
             {
-                args.armorAdd += 200f;
+                args.armorAdd += 400f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
