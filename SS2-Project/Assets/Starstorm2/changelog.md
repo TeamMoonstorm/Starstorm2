@@ -1,4 +1,7 @@
   **Warning: content spoilers below!**
+### 0.6.17
+* General
+    * Fixed Nemesis Mercenary's ModdedDamageType not being registered.
 ### 0.6.16
 * General
     * Merry Chirristmas!
