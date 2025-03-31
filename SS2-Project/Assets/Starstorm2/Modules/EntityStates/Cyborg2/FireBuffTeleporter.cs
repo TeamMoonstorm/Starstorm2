@@ -12,13 +12,13 @@ namespace EntityStates.Cyborg2
 
 		private static float bloom = 0.5f;
 		private static float recoilAmplitude = 7f;
-		private static float baseDuration = 0.6f;
+		private static float baseDuration = 0.5f;
 		private static float earlyExitTime = 0.5f;
 		private static float damageCoefficient = 6f;
-		private static float force = 500f;
-		private static float chargeTime = 0.33f;
+		private static float force = -1400f;
+		private static float chargeTime = 0.21f;
 
-		private static float selfKnockbackForce = 6000f;
+		private static float selfKnockbackForce = 5000f;
 
 		private float duration;
 		private bool hasFired;
@@ -27,7 +27,7 @@ namespace EntityStates.Cyborg2
 			base.OnEnter();
 			this.duration = baseDuration / attackSpeedStat;
 			StartAimMode();
-			//anim
+			base.PlayAnimation("Gesture, Override", "FireTeleporter", "Utility.playbackRate", this.duration);
 		}
 
 		public override void FixedUpdate()

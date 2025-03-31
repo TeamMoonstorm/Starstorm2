@@ -36,6 +36,7 @@ namespace SS2
         public override void Initialize()
         {
             sdd = difficultyDef;
+            EtherealBehavior.AddEtherealDifficulty(sdd.DifficultyIndex, SS2Assets.LoadAsset<SerializableDifficultyDef>("SuperTyphoon", SS2Bundle.Base));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -66,6 +67,7 @@ namespace SS2
                 TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= spawnCapMultiplier;
                 On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
             }
+            run.SetEventFlag("PermanentStorms");
         }
 
         private void CombatDirector_Awake(On.RoR2.CombatDirector.orig_Awake orig, CombatDirector self)

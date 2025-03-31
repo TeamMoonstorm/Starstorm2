@@ -6,7 +6,6 @@ namespace EntityStates.NemMerc
 {
     public class ThrowKnife : BaseSkillState
 	{
-
 		public static GameObject projectilePrefab;
 		public string soundString;
 		public GameObject muzzleEffectPrefab = null;
@@ -99,8 +98,9 @@ namespace EntityStates.NemMerc
 				fireProjectileInfo.force = force;
 				fireProjectileInfo.crit = RollCrit();
 				fireProjectileInfo.speedOverride = autoAimSpeed;
+				fireProjectileInfo.damageTypeOverride = new DamageTypeCombo(DamageType.BleedOnHit, DamageTypeExtended.Generic, DamageSource.Secondary);
 				ProjectileManager.instance.FireProjectile(fireProjectileInfo);
-			}
+            }
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()

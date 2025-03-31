@@ -26,6 +26,8 @@ namespace SS2.Monsters
         }
         private void ChristmasTime()
         {
+            CharacterPrefab.GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial = SS2Assets.LoadAsset<Material>("matSantaHat", SS2Bundle.Items);
+            CharacterPrefab.GetComponent<CharacterBody>().doNotReassignToTeamBasedCollisionLayer = true; // idk what the layers do but it breaks the itneraction if switched
             CharacterPrefab.AddComponent<SantaHatPickup>();
             CharacterPrefab.AddComponent<EntityLocator>().entity = CharacterPrefab;
             CharacterPrefab.AddComponent<Highlight>().targetRenderer = CharacterPrefab.GetComponent<ModelLocator>().modelTransform.GetComponent<CharacterModel>().mainSkinnedMeshRenderer;

@@ -11,6 +11,7 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ValidKeywords:
   - DITHER
+  - FRESNEL_EMISSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -132,7 +133,7 @@ Material:
     - _EliteIndex: 0
     - _EmPower: 1
     - _EnableCutout: 0
-    - _FEON: 0
+    - _FEON: 1
     - _Fade: 1
     - _FadeBias: 0
     - _FlowEmissionStrength: 1

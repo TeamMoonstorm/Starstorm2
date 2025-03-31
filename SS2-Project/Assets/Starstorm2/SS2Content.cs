@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using MSU;
 using RoR2;
+using System.Runtime.CompilerServices;
 
 namespace SS2
 {
@@ -14,6 +15,10 @@ namespace SS2
         public string identifier => SS2Main.GUID;
         public static ReadOnlyContentPack ReadOnlyContentPack => new ReadOnlyContentPack(SS2ContentPack);
         internal static ContentPack SS2ContentPack { get; private set; } = new ContentPack();
+
+        internal static bool loadStaticContentFinished { get; private set; } = false;
+
+        internal static event Action onLoadStaticContentFinished;
 
         internal static ParallelMultiStartCoroutine _parallelPreLoadDispatchers = new ParallelMultiStartCoroutine();
         private static Func<IEnumerator>[] _loadDispatchers;
@@ -44,9 +49,6 @@ namespace SS2
                 while (enumerator?.MoveNext() ?? false) yield return null;
             }
 
-            _parallelPostLoadDispatchers.Start();
-            while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
-
             for (int i = 0; i < _fieldAssignDispatchers.Length; i++)
             {
                 args.ReportProgress(Util.Remap(i + 1, 0f, _fieldAssignDispatchers.Length, 0.95f, 0.99f));
@@ -54,6 +56,12 @@ namespace SS2
 
                 while (enumerator?.MoveNext() ?? false) yield return null;
             }
+
+            _parallelPostLoadDispatchers.Start();
+            while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
+
+            loadStaticContentFinished = true;
+            onLoadStaticContentFinished?.Invoke();
         }
 
         public IEnumerator GenerateContentPackAsync(GetContentPackAsyncArgs args)
@@ -129,11 +137,11 @@ namespace SS2
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,
-                //Components.EtherealBehavior.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
-                //RulebookEnabler.Init,
+                EtherealBehavior.Init,
+                RulebookEnabler.Init,
                 () =>
                 {
                     //new Modules.Scenes().Initialize();
@@ -251,6 +259,8 @@ namespace SS2
 
             public static ItemDef BoostMovespeed;
 
+            public static ItemDef BlastKnuckles;
+
             public static ItemDef CoffeeBag;
 
             public static ItemDef CognationHelper;
@@ -277,11 +287,39 @@ namespace SS2
 
             public static ItemDef Malice;
 
+            public static ItemDef MaxHealthPerMinute;
+
             public static ItemDef MoltenCoin;
+
+            public static ItemDef MultiElite;
+
+            public static ItemDef Nanobots;
 
             public static ItemDef Needles;
 
             public static ItemDef NemBossHelper;
+
+            public static ItemDef NoSelfDamage;
+
+            public static ItemDef PoisonousGland;
+
+            public static ItemDef ShardEarth;
+
+            public static ItemDef ShardFire;
+
+            public static ItemDef ShardGold;
+
+            public static ItemDef ShardIce;
+
+            public static ItemDef ShardLightning;
+
+            public static ItemDef ShardPoison;
+
+            public static ItemDef ShardScav;
+
+            public static ItemDef ShardStorm;
+
+            public static ItemDef ShardVoid;
 
             public static ItemDef VoidRock;
 
@@ -333,6 +371,8 @@ namespace SS2
 
             public static ItemDef ShackledLamp;
 
+            public static ItemDef StickyOverloader;
+
             public static ItemDef StirringSoul;
 
             public static ItemDef Remuneration;
@@ -381,7 +421,29 @@ namespace SS2
 
             // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
+            public static ItemDef PrimalBirthright;
+            public static ItemDef LuckyPup;
 
+            //blessings
+            public static ItemDef Bleedout;
+            public static ItemDef EliteDamageBonus;
+            public static ItemDef DebuffMissiles;
+            public static ItemDef HitList;
+            public static ItemDef ItemOnBossKill;
+            public static ItemDef ItemOnEliteKill;
+            public static ItemDef MaxHpOnKill;
+            public static ItemDef OptionFromChest;
+            public static ItemDef ScrapFromChest;
+            public static ItemDef ShellPiece;
+            public static ItemDef ShieldGate;
+            public static ItemDef SnakeEyes;
+
+            public static ItemDef ShellPieceConsumed;
+
+            public static ItemDef StackSnakeEyes;
+            public static ItemDef StackMaxHpOnKill;
+            public static ItemDef StackShieldGate;
+            public static ItemDef StackHitList;
         }
 
         public static class Equipments
@@ -441,6 +503,12 @@ namespace SS2
 
             public static BuffDef BuffBloodTesterRegen;
 
+            public static BuffDef BuffBlastKnucklesCharge;
+
+            public static BuffDef BuffBleedout;
+
+            public static BuffDef BuffBleedoutReady;
+
             public static BuffDef BuffBackThruster;
 
             public static BuffDef BuffUniversalCharger;
@@ -469,6 +537,8 @@ namespace SS2
 
             public static BuffDef bdHakai;
 
+            public static BuffDef BuffHitListMark;
+
             public static BuffDef BuffGreaterBanner;
 
             public static BuffDef BuffIntoxicated;
@@ -477,13 +547,15 @@ namespace SS2
 
             public static BuffDef BuffJetBootsCooldown;
 
-            public static BuffDef BuffJetBootsReady;
+            public static BuffDef BuffJetBootsReady;        
 
             public static BuffDef BuffCoffeeBag;
 
             public static BuffDef BuffNeedleBuildup;
 
             public static BuffDef BuffNucleatorSpecial;
+
+            public static BuffDef BuffPoisonousGland;
 
             public static BuffDef BuffReactor;
 
@@ -492,6 +564,10 @@ namespace SS2
             public static BuffDef BuffSigil;
 
             public static BuffDef BuffSigilStack;
+
+            public static BuffDef BuffStickyOverloader;
+
+            public static BuffDef BuffSuperLightningOrb;
 
             public static BuffDef BuffKickflip;
 
@@ -539,15 +615,13 @@ namespace SS2
 
             public static BuffDef BuffRiposte;
 
-            public static BuffDef BuffCyborgTeleporter;
-
             public static BuffDef BuffBloonTrap;
 
             public static BuffDef bdOverstress;
 
             public static BuffDef bdNemCapDroneBuff;
 
-            public static BuffDef bdShield;
+            public static BuffDef bdKnightShield;
 
             public static BuffDef bdParry;
 
@@ -575,7 +649,9 @@ namespace SS2
 
             public static BuffDef bdEthereal;
 
-            public static BuffDef bdBanditTranquilizer;
+            public static BuffDef bdBandit2Tranq;
+
+            public static BuffDef bdBandit2Sleep;
 
             public static BuffDef bdAcridArmorCorrison;
 
@@ -622,6 +698,12 @@ namespace SS2
             public static BuffDef bdPyroJet;
 
             public static BuffDef bdOil;
+
+            public static BuffDef bdMongerTar;
+
+            public static BuffDef bdMongerSlippery;
+
+            public static BuffDef bdWardenSurgeBuff;
         }
 
         public static class Elites
@@ -647,8 +729,8 @@ namespace SS2
         public static class Scenes
         {
             public static SceneDef ss2_voidshop;
-
             public static SceneDef ss2_scaldinggeysers;
+            public static SceneDef ss2_slatemines;
         }
         public static class Survivors
         {
@@ -662,6 +744,8 @@ namespace SS2
 
             public static SurvivorDef survivorKnight;
 
+            public static SurvivorDef Warden;
+
             public static SurvivorDef NemMerc;
         }
 
@@ -669,6 +753,7 @@ namespace SS2
         {
             public static ItemTierDef Sibylline;
 
+            public static ItemTierDef Curio;
             //public static ItemTierDef Relic;
         }
     }

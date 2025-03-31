@@ -34,7 +34,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -62,7 +62,7 @@ namespace SS2.Items
 
             public void FixedUpdate()
             {
-                if (body.isSprinting)
+                if (body && body.characterMotor && body.characterMotor.isGrounded)
                 {
                     if (footstepHandler && sprintTimer > 1f)
                         footstepHandler.enableFootstepDust = true;

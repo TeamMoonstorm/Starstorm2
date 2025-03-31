@@ -6,7 +6,7 @@ namespace SS2.Components
 {
     public class SantaHatPickup : MonoBehaviour, IInteractable
     {
-       
+
         public string GetContextString([NotNull] Interactor activator)
         {
             return Language.GetString("SS2_INTERACTABLE_SANTAHAT_CONTEXT");

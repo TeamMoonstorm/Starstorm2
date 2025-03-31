@@ -60,7 +60,8 @@ namespace EntityStates.Nemmando
             speedCoefficient = Util.Remap(charge, 0f, 1f, initialMinSpeedCoefficient, initialMaxSpeedCoefficient);
             recoil = Util.Remap(charge, 0f, 1f, minRecoil, maxRecoil);
 
-            if (GetTeam() == TeamIndex.Monster) speedCoefficient = 0f;
+            // >:3
+            //if (GetTeam() == TeamIndex.Monster) speedCoefficient = 0f; 
 
             childLocator = GetModelChildLocator();
 

@@ -7,6 +7,7 @@ namespace EntityStates.Acrid
 {
     public class CorrodingSpit : BaseSkillState
     {
+        // TODO: Move this to acrid class
         public GameObject effectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/MuzzleflashCroco.prefab").WaitForCompletion();
 
         [SerializeField]
@@ -39,7 +40,7 @@ namespace EntityStates.Acrid
             Util.PlaySound(attackString, base.gameObject);
             AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
             base.characterBody.AddSpreadBloom(bloom);
-            string muzzleName = "MouthMuzzle";
+            string muzzleName = "MouthMuzzle"; // TODO: Move this to acrid class
 
             if (effectPrefab)
             {

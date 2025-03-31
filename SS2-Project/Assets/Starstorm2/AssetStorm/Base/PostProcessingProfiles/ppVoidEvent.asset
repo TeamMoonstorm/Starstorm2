@@ -1,5 +1,54 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5871787687516956276
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2011136271, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: RampFog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  fogIntensity:
+    overrideState: 1
+    value: 0.3
+  fogPower:
+    overrideState: 1
+    value: 1
+  fogZero:
+    overrideState: 1
+    value: -0.01
+  fogOne:
+    overrideState: 1
+    value: 1
+  fogHeightStart:
+    overrideState: 0
+    value: 0
+  fogHeightEnd:
+    overrideState: 0
+    value: 100
+  fogHeightIntensity:
+    overrideState: 0
+    value: 0
+  fogColorStart:
+    overrideState: 1
+    value: {r: 0.1882353, g: 0, b: 0.32156864, a: 1}
+  fogColorMid:
+    overrideState: 1
+    value: {r: 0.26666668, g: 0, b: 0.3764706, a: 1}
+  fogColorEnd:
+    overrideState: 1
+    value: {r: 0.1764706, g: 0, b: 0.3764706, a: 1}
+  skyboxStrength:
+    overrideState: 0
+    value: 0
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16,8 +65,8 @@ MonoBehaviour:
   - {fileID: 114530848090978590}
   - {fileID: 114013959178173942}
   - {fileID: 114617623718873578}
-  - {fileID: 114397434389913660}
   - {fileID: 114347573703623026}
+  - {fileID: -5871787687516956276}
 --- !u!114 &114013959178173942
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -1373,55 +1422,6 @@ MonoBehaviour:
       - 0.5
       - 0.5
       - 0.5
---- !u!114 &114397434389913660
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 534b4b24f223e6d4580fafd6881209c4, type: 3}
-  m_Name: SS2RampFog
-  m_EditorClassIdentifier: 
-  active: 1
-  enabled:
-    overrideState: 1
-    value: 1
-  fogIntensity:
-    overrideState: 1
-    value: 1
-  fogPower:
-    overrideState: 1
-    value: 2
-  fogZero:
-    overrideState: 0
-    value: 0
-  fogOne:
-    overrideState: 1
-    value: 1
-  fogHeightStart:
-    overrideState: 0
-    value: 0
-  fogHeightEnd:
-    overrideState: 0
-    value: 100
-  fogHeightIntensity:
-    overrideState: 0
-    value: 0.5
-  fogColorStart:
-    overrideState: 1
-    value: {r: 0.18742892, g: 0, b: 0.3207547, a: 1}
-  fogColorMid:
-    overrideState: 1
-    value: {r: 0.26541477, g: 0, b: 0.3773585, a: 1}
-  fogColorEnd:
-    overrideState: 1
-    value: {r: 0.17462082, g: 0, b: 0.3773585, a: 1}
-  skyboxStrength:
-    overrideState: 0
-    value: 0.185
 --- !u!114 &114530848090978590
 MonoBehaviour:
   m_ObjectHideFlags: 3

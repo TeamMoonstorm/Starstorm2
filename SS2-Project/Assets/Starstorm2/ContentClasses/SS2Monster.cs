@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using BepInEx;
 
 namespace SS2
 {
@@ -33,7 +35,6 @@ namespace SS2
 
         public abstract SS2AssetRequest<MonsterAssetCollection> AssetRequest { get; }
 
-        
 
         public virtual IEnumerator LoadContentAsync()
         {
@@ -48,6 +49,22 @@ namespace SS2
             CharacterPrefab = AssetCollection.bodyPrefab;
             masterPrefab = AssetCollection.masterPrefab;
             CardProvider = AssetCollection.monsterCardProvider;
+        }
+
+        // Used by monsters with configs that allow you to change what stages they spawn in
+        public void ExpandSpawnableStages(string newStages)
+        {
+            if (newStages.IsNullOrWhiteSpace())
+            {
+                return;
+            }
+
+            string stages = new string(newStages.ToCharArray().Where(c => !System.Char.IsWhiteSpace(c)).ToArray());
+            string[] splitStages = stages.Split(',');
+            foreach (string name in splitStages)
+            {
+               
+            }
         }
 
 

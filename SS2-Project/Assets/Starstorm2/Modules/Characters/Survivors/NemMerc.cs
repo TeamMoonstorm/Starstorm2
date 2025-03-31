@@ -23,8 +23,8 @@ namespace SS2.Survivors
         public static DamageAPI.ModdedDamageType damageType;     
         public override void Initialize()
         {
-            AssetCollection.FindAsset<GameObject>("KnifeProjectile").AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(damageType); ;
             damageType = DamageAPI.ReserveDamageType();
+            AssetCollection.FindAsset<GameObject>("KnifeProjectile").AddComponent<DamageAPI.ModdedDamageTypeHolderComponent>().Add(damageType);
 
             clone = DeployableAPI.RegisterDeployableSlot((self, deployableCountMultiplier) =>
             {

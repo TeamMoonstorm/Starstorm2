@@ -66,70 +66,9 @@ namespace SS2.Interactables
             }
         }
 
-        //This is zombie code, it should be deleted when possible, orig_start fails btw. -N
-        /*private void OverrideItemIcon(On.RoR2.Orbs.ItemTakenOrbEffect.orig_Start orig, RoR2.Orbs.ItemTakenOrbEffect self)
-        {
-            var efc = self.GetComponent<EffectComponent>();
-            bool boolean = efc.effectData.genericBool;
-            uint value = efc.effectData.genericUInt;
-            if (boolean) //regular ItemTakenOrbs have their genericBool set to false, so if it's true, it's supposed to be a drone
-            {
-                var pair = dronePairs[(int)value];
-                var gameobject = BodyCatalog.FindBodyPrefab(pair.Key);
-                var body = gameobject.GetComponent<CharacterBody>();
-
-                Sprite output = null;
-                bool success = droneSpritePairs.TryGetValue(pair.Key, out output);
-                if (!success)
-                {
-                    Texture icon = body.portraitIcon;
-
-                    Rect rect = new Rect(0, 0, icon.width, icon.height);
-                    icon.filterMode = FilterMode.Point;
-                    RenderTexture rt = RenderTexture.GetTemporary(icon.width, icon.height);
-                    rt.filterMode = FilterMode.Point;
-                    RenderTexture.active = rt;
-                    Graphics.Blit(icon, rt);
-                    Texture2D tex2d = new Texture2D((int)rect.width, (int)rect.height, TextureFormat.RGBA32, false);
-                    tex2d.ReadPixels(new Rect(rect.x, icon.height - rect.height - rect.y, rect.width, rect.height), 0, 0);
-                    tex2d.Apply();
-
-                    RenderTexture.active = null;
-                    tex2d.wrapMode = TextureWrapMode.Clamp;
-                    tex2d.filterMode = FilterMode.Bilinear;
-                    output = Sprite.Create(tex2d, new Rect(0, 0, 128, 128), new Vector2(.5f, .5f), 25);
-                    //output.pixelsPerUnit = 25;
-                    output.name = body.portraitIcon.name + "Refabricator";
-
-                    droneSpritePairs.Add(pair.Key, output);
-                }
-
-                self.iconSpriteRenderer.sprite = output;
-
-                Color color = ColorCatalog.GetColor(ColorCatalog.ColorIndex.Tier1Item);
-                self.trailToColor.startColor *= color;
-                self.trailToColor.endColor *= color;
-                for (int i = 0; i < self.particlesToColor.Length; i++)
-                {
-                    ParticleSystem particleSystem = self.particlesToColor[i];
-                    var main = particleSystem.main;
-                    main.startColor = color;
-                    particleSystem.Play();
-                }
-
-                for (int j = 0; j < self.spritesToColor.Length; j++)
-                {
-                    self.spritesToColor[j].color = color;
-                }
-            }
-            else
-            {
-                orig(self);
-            }
-        }*/
-
         private void SetupDroneValueList()
         {
+            // Vanilla Drones
             dronePairs.Add(new KeyValuePair<string, int>("Turret1Body", 35));
             dronePairs.Add(new KeyValuePair<string, int>("Drone1Body", 40)); //gunner
             dronePairs.Add(new KeyValuePair<string, int>("Drone2Body", 40)); //healing
@@ -139,10 +78,14 @@ namespace SS2.Interactables
             dronePairs.Add(new KeyValuePair<string, int>("FlameDroneBody", 100));
             dronePairs.Add(new KeyValuePair<string, int>("MegaDroneBody", 350));
 
+            // SS2 Drones
             dronePairs.Add(new KeyValuePair<string, int>("ShockDroneBody", 40));
             dronePairs.Add(new KeyValuePair<string, int>("CloneDroneBody", 140));
 
+            // Sandswept Drones
+            dronePairs.Add(new KeyValuePair<string, int>("InfernoDroneBody", 50));
 
+            // Vanilla
             droneTripletPairs.Add("Turret1Body", new RefabricatorTriple(new Vector3(0, -0.575f, -.2f), new Vector3(0, 180, 0), new Vector3(.09f, .09f, .09f)));
             droneTripletPairs.Add("Drone1Body", new RefabricatorTriple(new Vector3(0, -0.28f, 0), new Vector3(0, 156, 0), new Vector3(1.475f, 1.475f, 1.475f)));
             droneTripletPairs.Add("Drone2Body", new RefabricatorTriple(new Vector3(0, -0.0125f, 0), new Vector3(0, 0, 0), new Vector3(.355f, .355f, .355f)));
@@ -152,8 +95,12 @@ namespace SS2.Interactables
             droneTripletPairs.Add("FlameDroneBody", new RefabricatorTriple(new Vector3(0.165f, -0.05f, 0), new Vector3(0, 0, 90), new Vector3(0.45f, 0.45f, 0.45f)));
             droneTripletPairs.Add("MegaDroneBody", new RefabricatorTriple(new Vector3(0, -0.025f, 0), new Vector3(0, 0, 0), new Vector3(0.1225f, 0.1225f, 0.1225f)));
 
+            // SS2
             droneTripletPairs.Add("ShockDroneBody", new RefabricatorTriple(new Vector3(.675f, .025f, 0), new Vector3(0, 0, 90), new Vector3(.2f, .2f, .2f)));
             droneTripletPairs.Add("CloneDroneBody", new RefabricatorTriple(new Vector3(0, 0, 0), new Vector3(0, 0, 90), new Vector3(.35f, .35f, .35f)));
+
+            // Sandswept
+            droneTripletPairs.Add("InfernoDroneBody", new RefabricatorTriple(new Vector3(.675f, .025f, 0), new Vector3(0, 0, 90), new Vector3(.2f, .2f, .2f)));
 
         }
 

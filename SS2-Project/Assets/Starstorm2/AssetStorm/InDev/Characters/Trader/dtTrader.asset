@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7574a9dea45a254c860c2c4929f82d8, type: 3}
+  m_Name: dtTrader
+  m_EditorClassIdentifier: 
+  canDropBeReplaced: 1
+  valueBreakpoints:
+  - requiredValue: 0
+    tier1: 0.2
+    tier2: 0.09
+    tier3: 0
+    boss: 0
+    nothing: 0.7
+    shard: 0.01
+  - requiredValue: 25
+    tier1: 0.7
+    tier2: 0.1
+    tier3: 0.01
+    boss: 0
+    nothing: 0.3
+    shard: 0.04
+  - requiredValue: 50
+    tier1: 0.2
+    tier2: 0.5
+    tier3: 0.1
+    boss: 0.1
+    nothing: 0
+    shard: 0.1
+  - requiredValue: 100
+    tier1: 0
+    tier2: 0.1
+    tier3: 0.4
+    boss: 0.25
+    nothing: 0
+    shard: 0.25
+  - requiredValue: 200
+    tier1: 0.01
+    tier2: 0
+    tier3: 0.33
+    boss: 0.33
+    nothing: 0
+    shard: 0.33

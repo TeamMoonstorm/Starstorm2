@@ -23,8 +23,6 @@ namespace SS2.Survivors
         public static GameObject engiPrefabExplosion;
         public override void Initialize()
         {
-            //_buffDefEngiFocused = survivorAssetCollection.FindAsset<BuffDef>("bdEngiFocused");
-
             SkillDef sdLaserFocus = assetCollection.FindAsset<SkillDef>("sdLaserFocus");
             SkillDef sdRapidDisplacement = assetCollection.FindAsset<SkillDef>("sdRapidDisplacement");
             SkillDef sdQuantumTranslocator = assetCollection.FindAsset<SkillDef>("sdQuantumTranslocator");
@@ -76,7 +74,7 @@ namespace SS2.Survivors
             SkillFamily skillFamilySecondary = skillLocator.secondary.skillFamily;
 
             AddSkill(skillFamilyPrimary, sdLaserFocus);
-            //AddSkill(skillFamilyUtility, sdQuantumTranslocator);
+            AddSkill(skillFamilyUtility, sdQuantumTranslocator);
             AddSkill(skillFamilyUtility, sdRapidDisplacement);
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();

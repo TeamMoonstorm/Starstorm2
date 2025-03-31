@@ -73,13 +73,14 @@ namespace EntityStates.Executioner
                     float dmg = damageCoefficient * damageStat;
                     Ray r = GetAimRay();
 
-
+                    DamageTypeCombo damageType = DamageType.Generic;
+                    damageType.damageSource = DamageSource.Primary;
                     BulletAttack bullet = new BulletAttack
                     {
                         aimVector = r.direction,
                         origin = r.origin,
                         damage = damageCoefficient * damageStat,
-                        damageType = DamageType.Generic,
+                        damageType = damageType,
                         damageColorIndex = DamageColorIndex.Default,
                         minSpread = 0f,
                         maxSpread = characterBody.spreadBloomAngle,

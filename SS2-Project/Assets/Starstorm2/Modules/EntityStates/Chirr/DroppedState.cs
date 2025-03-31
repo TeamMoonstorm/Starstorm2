@@ -258,7 +258,9 @@ namespace EntityStates.Chirr
 						blastAttack.procCoefficient = procCoefficient;
 						blastAttack.falloffModel = BlastAttack.FalloffModel.Linear;
 						blastAttack.damageColorIndex = DamageColorIndex.Default;
-						blastAttack.damageType = DamageType.Stun1s;
+						DamageTypeCombo damageType = DamageType.Stun1s;
+						damageType.damageSource = DamageSource.Utility;
+						blastAttack.damageType = damageType;
 						blastAttack.attackerFiltering = AttackerFiltering.Default;
 						//blastAttack.impactEffect = 
 						BlastAttack.Result result = blastAttack.Fire();
