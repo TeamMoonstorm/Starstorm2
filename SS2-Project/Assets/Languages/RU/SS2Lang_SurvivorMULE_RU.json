@@ -1,21 +1,41 @@
 {
-	"strings": {
-		"SS2_MULE_NAME": "МУЛ",
-		"SS2_MULE_SUBTITLE": "ДИРЕКТИВА: ВЫЖИТЬ",
-		"SS2_MULE_DESCRIPTION": "",
-		"SS2_MULE_OUTRO_FLAVOR": "..и он ушёл, выполнив директиву.",
-		"SS2_MULE_OUTRO_FAILURE": "..и он умер.",
-		"SS2_MULE_LORE": "",
+  "strings": {
+    "SS2_MULE_NAME": "МУЛ",
+    "SS2_MULE_SUBTITLE": "Директива: Выжить",
+    "SS2_MULE_DESCRIPTION": "",
+    "SS2_MULE_OUTRO_FLAVOR": "..и он удалился, с перебоями в двигателе, наконец выполнив свою директиву.",
+    "SS2_MULE_OUTRO_FAILURE": "..и он исчез, окончательно выведенный из строя.",
+    "SS2_MULE_LORE": "",
 
-		"SS2_MULE_PASSIVE_DRONE_NAME": "FAIL-SAFE ASSISTANCE",
-		"SS2_MULE_PASSIVE_DRONE_DESC": "Taking damage to below <style=cIsHealth>25% health</style> releases a <style=cIsUtility>personal repair drone</style>, <style=cIsHealing>healing</style> you for <style=cIsHealing>35%</style> of <style=cIsHealing>maximum health</style> and temporarily increasing <style=cIsUtility>armor</style>.",
-		"SS2_MULE_PRIMARY_PUNCH_NAME": "INTERFERENCE REMOVAL",
-		"SS2_MULE_PRIMARY_PUNCH_DESC": "PUNCH THE SHIT OUT OF LIZARDS FOR 280% DAMAGE",
-		"SS2_MULE_SECONDARY_SLAM_NAME": "",
-		"SS2_MULE_SECONDARY_SLAM_DESC": "",
-		"SS2_MULE_UTILITY_SPIN_NAME": "TORQUE CALIBRATION",
-		"SS2_MULE_UTILITY_SPIN_DESC": "",
-		"SS2_MULE_SPECIAL_NET_NAME": "IMMOBILIZE",
-		"SS2_MULE_SPECIAL_NET_DESC": ""
-	}
+    "SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>Разгон</style><style=cSub>Удерживайте кнопку для продления действия навыка, но с увеличением времени перезарядки.</style>",
+    "SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>Разгон</style><style=cSub>Удерживайте кнопку для дополнительной зарядки навыка с увеличением времени перезарядки.</style>",
+
+    "SS2_MULE_PASSIVE_DRONE_NAME": "Аварийный Помощник",
+    "SS2_MULE_PASSIVE_DRONE_DESC": "При падении здоровья ниже <style=cIsHealth>25%</style> активируется <style=cIsHealing>Ремонтный Дрон</style>, восстанавливающий <style=cIsHealing>50%</style> здоровья. Перезарядка: <style=cIsUtility>60</style> секунд.",
+
+    "SS2_MULE_PUNCH_NAME": "Устранение Помех",
+    "SS2_MULE_PUNCH_DESC": "Наносите удары по врагам, нанося <style=cIsDamage>330% урона</style>.",
+    "SS2_MULE_KEYWORD_PUNCH_CALIBRATED": "<style=cKeywordName>Калибровка</style><style=cSub>Мощный удар по земле перед собой с повышенным уроном и ударной волной. (%s уточняется)</style>",
+
+    "SS2_MULE_UPHEAVAL_NAME": "Переворот",
+    "SS2_MULE_UPHEAVAL_DESC": "<style=cIsDamage>Оглушение</style>. Ударьте по земле, поднимая <style=cIsUtility>валун</style> и нанося <style=cIsDamage>450% урона</style>. <style=cIsDamage>Валуны можно ударить, чтобы покатить их.</style>",
+    "SS2_MULE_KEYWORD_UPHEAVAL_CALIBRATED": "<style=cKeywordName>Калибровка</style><style=cSub>Удар по земле, поднимающий до 3 валунов одновременно.</style>",
+
+    "SS2_MULE_OLDPUNCH_NAME": "Центробежный Удар",
+    "SS2_MULE_OLDPUNCH_DESC": "<style=cIsUtility>Разгон</style>. <style=cIsUtility>Оглушение</style>. Замахнитесь и нанесите мощный удар, нанося <style=cIsDamage>280% урона</style>. <style=cIsDamage>Урон умножается на уровень заряда (до 4x)</style>.",
+
+    "SS2_MULE_JUMP_NAME": "Перемещение",
+    "SS2_MULE_JUMP_DESC": "<style=cIsUtility>Удерживайте для заряда</style> мощного прыжка вверх.",
+
+    "SS2_MULE_SPIN_NAME": "Калибровка Крутящего Момента",
+    "SS2_MULE_SPIN_DESC": "<style=cIsUtility>Разгон</style>. Быстро вращайтесь, постепенно увеличивая <style=cIsUtility>скорость передвижения</style> и <style=cIsUtility>броню</style>, нанося <style=cIsDamage>100% урона</style> за оборот.",
+
+    "SS2_MULE_NET_NAME": "Обездвиживание",
+    "SS2_MULE_NET_DESC": "Запустите <style=cIsUtility>сеть</style>, обездвиживая врагов в радиусе <style=cIsUtility>12м</style> от места попадания на <style=cIsUtility>5</style> секунд. <style=cIsUtility>Летающие враги приземляются</style>.",
+
+    "SS2_MULE_CHARGE_NAME": "Калибровка Крутящего Момента",
+    "SS2_MULE_CHARGE_DESC": "<style=cIsUtility>Калибровка</style>. <style=cIsUtility>Удерживайте для заряда</style> и отпустите, чтобы <style=cIsUtility>стремительно броситься вперёд</style> с вращением, нанося <style=cIsDamage>(урон средней-высокой силы, уточняется)% урона</style>.",
+
+    "SS2_MULE_KEYWORD_CALIBRATING": "<style=cKeywordName>Калибровка</style><style=cSub>Можно отменить основной, дополнительной атакой или прыжком для выполнения усиленных «калиброванных» вариантов этих действий.</style>"
+  }
 }
