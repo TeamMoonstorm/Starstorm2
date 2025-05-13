@@ -2,7 +2,7 @@
 
 ### 0.6.19
 * Survivors
-    * An attempt was made to fix Fear's execute threshold.....
+    * Executioner's fear execute is still broken for now. We are working on a more comphrensive fix alongside Jet Boots
 * Items
     * Fixed a bug caused by the new lunar which broke void fields
     * The legendary chest spawned by the new lunar is now blue!!!
