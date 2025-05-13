@@ -43,7 +43,6 @@ namespace SS2.Items
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += TeleporterInteractionPrimalOverride;
             On.RoR2.SceneDirector.PopulateScene += PopulateSceneAddPrimalChest;
             //On.RoR2.SceneDirector.OnServerTeleporterPlaced += OnTeleporterPlacedAddPrimalToken;
-            On.RoR2.SceneDirector.PlaceTeleporter += PlaceTeleporterAddPrimalToken;
             //ObjectivePanelController.collectObjectiveSources -= this.OnCollectObjectiveSources;
 
             var tempChest = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldChest/GoldChest.prefab").WaitForCompletion();
@@ -89,18 +88,8 @@ namespace SS2.Items
                 objectiveType = typeof(PrimalBirthrightObjectiveTracker),
                 source = primalToken
             };
-            
+
             objectiveSourcesList.Add(newObjective);
-        }
-
-        private void PlaceTeleporterAddPrimalToken(On.RoR2.SceneDirector.orig_PlaceTeleporter orig, SceneDirector self)
-        {
-            orig(self);
-            if (self.teleporterInstance)
-            {
-                primalToken = self.teleporterInstance.AddComponent<PrimalPrevention>();
-            }
-
         }
 
         private void TeleporterInteractionPrimalOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)
@@ -149,8 +138,13 @@ namespace SS2.Items
         private void PopulateSceneAddPrimalChest(On.RoR2.SceneDirector.orig_PopulateScene orig, SceneDirector self)
         {
             primalToken = null;
-
+            
             orig(self); //things after orig occur after PlaceTeleporter
+
+            if (self.teleporterInstance)
+            {
+                primalToken = self.teleporterInstance.AddComponent<PrimalPrevention>();
+            }
 
             var sceneDef = SceneCatalog.GetSceneDefForCurrentScene();
             //SS2Log.Warning("Scenedef : " + sceneDef + " | " + sceneDef.sceneType + " | " + sceneDef.allowItemsToSpawnObjects);
