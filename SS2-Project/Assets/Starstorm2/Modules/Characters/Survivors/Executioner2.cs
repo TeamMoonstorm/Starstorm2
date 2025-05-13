@@ -179,22 +179,30 @@ namespace SS2.Survivors
         {
             On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
-            //Prone to breaking when the game updates
             IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
             {
                 bool error = true;
                 ILCursor c = new ILCursor(il);
-                if (c.TryGotoNext(MoveType.After,
-                    x => x.MatchStloc(72)   //num23 = float.NegativeInfinity, stloc53 = Execute Fraction, first instance it is used
-                    ))
+
+                if (c.TryGotoNext(x => x.MatchLdloc(73), x => x.MatchLdcR4(0)))
                 {
-                    if (c.TryGotoNext(MoveType.After,
-                    x => x.MatchLdloc(9)   //flag 5, this is checked before final Execute damage calculations.
-                    ))
+                    c.Index++;
+                    c.Emit(OpCodes.Ldarg_0);//self
+                    c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
                     {
+                        if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
+                        {
+                            if (executeFraction < 0f) executeFraction = 0f;
+                            executeFraction += 0.15f;
+                        }
+                        return executeFraction;
+                    });
+
+                    if (c.TryGotoNext(x => x.MatchLdloc(73)))
+                    {
+                        c.Index++;
                         c.Emit(OpCodes.Ldarg_0);//self
-                        c.Emit(OpCodes.Ldloc, 72);//execute fraction
-                        c.EmitDelegate<Func<HealthComponent, float, float>>((self, executeFraction) =>
+                        c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
                         {
                             if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
                             {
@@ -203,8 +211,6 @@ namespace SS2.Survivors
                             }
                             return executeFraction;
                         });
-                        c.Emit(OpCodes.Stloc, 72);
-
                         error = false;
                     }
                 }
@@ -215,6 +221,7 @@ namespace SS2.Survivors
                 }
 
             };
+
             IL.RoR2.CharacterBody.UpdateAllTemporaryVisualEffects += (il) =>
             {
                 ILCursor c = new ILCursor(il);
