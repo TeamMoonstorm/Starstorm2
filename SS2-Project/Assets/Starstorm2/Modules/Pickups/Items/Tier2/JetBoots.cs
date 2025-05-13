@@ -78,7 +78,7 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Fatal("JetBoots.RecalculateStatsHook: ILHook failed.");
+                //SS2Log.Fatal("JetBoots.RecalculateStatsHook: ILHook failed.");
             }
         }
 
@@ -114,11 +114,13 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Fatal("JetBoots.ProcessJumpHook: ILHook failed.");
+                //SS2Log.Fatal("JetBoots.ProcessJumpHook: ILHook failed.");
             }
         }
         private void DoJumpAuthority(CharacterBody body)
         {
+            //SS2Log.Info("DEBUGGING Entering JetBoots jump authority");
+
             if (!body.characterMotor) return;
 
             body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 0); // dont care FUCK YOU
@@ -150,6 +152,8 @@ namespace SS2.Items
                 EffectManager.SimpleEffect(_muzzleFlashPrefab, muzzle.position, muzzle.rotation, true);
             }
 
+            //SS2Log.Info("DEBUGGING Getting blast position");
+
             EffectManager.SpawnEffect(_explosionEffectPrefab, new EffectData
             {
                 origin = position,
@@ -173,6 +177,8 @@ namespace SS2.Items
                 falloffModel = BlastAttack.FalloffModel.None,
                 losType = BlastAttack.LoSType.NearestHit,
             }.Fire();
+
+            //SS2Log.Info("DEBUGGING Exiting JetBoots jump authority");
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
@@ -202,17 +208,20 @@ namespace SS2.Items
 
             private void Start()
             {
+                //SS2Log.Info("DEBUGGING Entering JetBoots behavior start");
                 if (!this.body.hasEffectiveAuthority) return;
 
                 this.body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 1);
                 canHaveReadyBuff = true;
                 if (this.body.characterMotor)
                 {
+                    //SS2Log.Info("DEBUGGING Adding hit ground authority");
                     this.body.characterMotor.onHitGroundAuthority += (ref CharacterMotor.HitGroundInfo info) =>
                     {
                         // if the jump has been used && the cooldown hasnt been started
                         if (!this.body.HasBuff(SS2Content.Buffs.BuffJetBootsReady) && !this.body.HasBuff(SS2Content.Buffs.BuffJetBootsCooldown))
                         {
+                            //SS2Log.Info("DEBUGGING hitground authority");
                             this.cooldownTimer = 5f;
                             canHaveReadyBuff = true;
                         }
@@ -229,8 +238,11 @@ namespace SS2.Items
                     int stack = Mathf.CeilToInt(cooldownTimer);
                     if (stack <= 0 && canHaveReadyBuff)
                     {
+                        //SS2Log.Info("DEBUGGING Setting buff to 1");
                         body.SetBuffCount(SS2Content.Buffs.BuffJetBootsReady.buffIndex, 1); // :(
                     }
+
+                    //SS2Log.Info("DEBUGGING Setting cooldown buff to " + stack);
                     this.body.SetBuffCount(SS2Content.Buffs.BuffJetBootsCooldown.buffIndex, stack < 0 ? 0 : stack);// dont care stfu fuck you
                 }
             }

@@ -382,6 +382,8 @@ namespace SS2
             // public static ItemDef WickedStaff;
             public static ItemDef WeatherRadio;
 
+            public static ItemDef PrimalBirthright;
+
         }
 
         public static class Equipments
