@@ -5,7 +5,8 @@
     * Recompiled the mod so it works with latest SOTS Update. This should fix issues with NemMerc Teleport and Executioner's fear
     * Increased the spawn weight of Dupe Drones + Drone Refabricator, and increased how many stages they can spawn on
 * Items
-    * Added a new Lunar item from long time SS2 community member YarrowQueen/Resident Providence! The item will tie in nicely with reworked storms coming in a later update :) Enjoy!
+    * Added a new Lunar item from long time SS2 community member Yarrow/Resident Providence! The item will tie in nicely with reworked storms coming in a later update :) Enjoy!
+    * Added a log for Skateboard also from Yarrow
 
 ### 0.6.17
 * General
