@@ -12,10 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d10af29dc523c7243a6e6e3d787aa1d6, type: 3}
   m_Name: midcDroneTable
   m_EditorClassIdentifier: 
-  _serializedCardPairs:
+  serializedCardPairs:
   - stage:
-      Value: 262160
-    stageEnum: 262160
+      Value: 103079477264
     customStageNames: []
     interactableCategory: 8
     customCategoryWeight: 0
@@ -26,10 +25,10 @@ MonoBehaviour:
         _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}
         _address: 
         _useDirectReference: 1
-      selectionWeight: 4
+      selectionWeight: 6
       spawnDistance: 0
       preventOverhead: 0
-      minimumStageCompletions: 3
+      minimumStageCompletions: 2
       requiredUnlockableDef:
         _asset: {fileID: 0}
         _address: 
@@ -39,33 +38,7 @@ MonoBehaviour:
         _address: 
         _useDirectReference: 0
   - stage:
-      Value: 201343008
-    stageEnum: 201343008
-    customStageNames: []
-    interactableCategory: 8
-    customCategoryWeight: 0
-    customCategoryName: 
-    requiredExpansions: []
-    card:
-      spawnCard:
-        _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}
-        _address: 
-        _useDirectReference: 1
-      selectionWeight: 8
-      spawnDistance: 0
-      preventOverhead: 0
-      minimumStageCompletions: 3
-      requiredUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-      forbiddenUnlockableDef:
-        _asset: {fileID: 0}
-        _address: 
-        _useDirectReference: 0
-  - stage:
-      Value: 1073742208
-    stageEnum: 1073742208
+      Value: 137640296482
     customStageNames: []
     interactableCategory: 8
     customCategoryWeight: 0
@@ -79,7 +52,31 @@ MonoBehaviour:
       selectionWeight: 12
       spawnDistance: 0
       preventOverhead: 0
-      minimumStageCompletions: 3
+      minimumStageCompletions: 2
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+  - stage:
+      Value: 3221225856
+    customStageNames: []
+    interactableCategory: 8
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 11400000, guid: 0b5d8345c7c1ceb49b4ef989db60d4ed, type: 2}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 20
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 2
       requiredUnlockableDef:
         _asset: {fileID: 0}
         _address: 
