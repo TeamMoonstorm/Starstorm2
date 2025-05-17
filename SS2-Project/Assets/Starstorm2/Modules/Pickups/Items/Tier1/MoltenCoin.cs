@@ -51,9 +51,11 @@ namespace SS2.Items
                         duration = report.damageInfo.procCoefficient * 4f,
                         damageMultiplier = stack * damageCoeff
                     };
+                    SS2Log.Info("Before Burn");
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
+                    SS2Log.Info("After Burn");
                     DotController.InflictDot(ref dotInfo);
-
+                    SS2Log.Info("After Inflict");
                     body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
