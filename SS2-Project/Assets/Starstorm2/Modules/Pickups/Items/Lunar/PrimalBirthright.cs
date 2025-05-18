@@ -41,6 +41,7 @@ namespace SS2.Items
         {
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += TeleporterInteractionPrimalOverride;
             On.RoR2.SceneDirector.PopulateScene += PopulateSceneAddPrimalChest;
+            On.RoR2.PurchaseInteraction.GetDisplayName += GetDisplayNameAlterPrimalName;
             //On.RoR2.SceneDirector.OnServerTeleporterPlaced += OnTeleporterPlacedAddPrimalToken;
             //ObjectivePanelController.collectObjectiveSources -= this.OnCollectObjectiveSources;
 
@@ -48,10 +49,14 @@ namespace SS2.Items
             indevChest = PrefabAPI.InstantiateClone(tempChest, "PrimalChest");
 
             var pinter = indevChest.GetComponent<PurchaseInteraction>();
-            pinter.displayNameToken = "SS2_BIRTHRIGHT_CHEST_NAME";
+            pinter.displayNameToken = "SS2_BIRTHRIGHT_CHEST_NAME_FORMAT";
             pinter.contextToken = "SS2_BIRTHRIGHT_CHEST_CONTEXT";
 
-            indevChest.AddComponent<PrimalBirthrightObjectiveToken>();
+            var token = indevChest.AddComponent<PrimalBirthrightObjectiveToken>();
+            //token.enabled = false;
+
+            //token.RpcSetToken(false); //unsure if needed
+
 
             //pinter.onPurchase.AddListener(delegate (Interactor interactor ) { OnPurchase(); });
 
@@ -123,13 +128,32 @@ namespace SS2.Items
 
         }
 
+        private string GetDisplayNameAlterPrimalName(On.RoR2.PurchaseInteraction.orig_GetDisplayName orig, PurchaseInteraction self)
+        {
+            var pbot = self.GetComponent<PrimalBirthrightObjectiveToken>();
+            if (pbot)
+            {
+                var intermediate = Language.GetString(self.displayNameToken);
+                
+                if (pbot.masterObject) {
+                    var master = pbot.masterObject;//.GetComponent<CharacterMaster>().GetBody().GetDisplayName();
+                    if(master.GetComponent<CharacterMaster>())
+                    {
+                        var masterName = Util.GetBestMasterName(master.GetComponent<CharacterMaster>());
+                        return intermediate.Replace("{0}", masterName);
+                    }
+                }
+                //intermediate.Replace("{0}", pbot.masterObject.GetComponent<CharacterMaster>().GetBody().GetDisplayName())
+               
+            }
+            return orig(self);
+        }
+
         private void OnPurchaseBirthrightChest(Interactor interactor, PurchaseInteraction pinter)
         {
             var pbot = pinter.GetComponent<PrimalBirthrightObjectiveToken>();
-            SS2Log.Warning("On Purchase Begin2 : " + pinter + " | " + pbot + " | " + interactor);
             if (pbot)
             {
-                SS2Log.Warning("On Purchase Found Objective Token2");
                 pbot.enabled = false;
                 pbot.RpcSetToken(false);
             }
@@ -152,7 +176,8 @@ namespace SS2.Items
             var tc = self.outer.gameObject.GetComponent<PrimalPrevention>();
             if (tc)
             {
-                var listcopy = tc.purchaseInteractions;
+                //var listcopy = tc.purchaseInteractions;
+                var listcopy = PrimalBirthrightObjectiveToken.instanceList;
                 Util.ShuffleList(listcopy);
                 if (birthrightRng == null)
                 {
@@ -161,7 +186,7 @@ namespace SS2.Items
 
                 foreach (var pinter in listcopy)
                 {
-                    if (pinter.Item1.available)
+                    if (pinter)
                     {
                         if (birthrightRng.RangeFloat(0, 1) >= .975f)
                         {
@@ -172,9 +197,11 @@ namespace SS2.Items
                         }
                         else
                         {
+                            var pbot = pinter.GetComponent<PrimalBirthrightObjectiveToken>();
+                            //pbot.masterObject.GetComponent<CharacterMaster>().GetBody();
                             Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
                             {
-                                subjectAsCharacterBody = pinter.Item2.GetBody(),
+                                subjectAsCharacterBody = pbot.masterObject.GetComponent<CharacterMaster>().GetBody(),
                                 baseToken = "SS2_BIRTHRIGHT_UNCLAIMED"
                             });
                         }
@@ -193,65 +220,45 @@ namespace SS2.Items
         private void PopulateSceneAddPrimalChest(On.RoR2.SceneDirector.orig_PopulateScene orig, SceneDirector self)
         {
             primalToken = null;
-            
             orig(self); //things after orig occur after PlaceTeleporter
 
-            if (self.teleporterInstance)
-            {
+            if (self.teleporterInstance){
                 primalToken = self.teleporterInstance.GetComponent<PrimalPrevention>();
                 primalToken.filter = self.teleporterInstance.AddComponent<InteractionProcFilter>();
                 primalToken.filter.shouldAllowOnInteractionBeginProc = false;
-                //self.teleporterInstance.AddComponent<PrimalBirthrightNetBehavior>();
-
             }
 
             var sceneDef = SceneCatalog.GetSceneDefForCurrentScene();
-            //SS2Log.Warning("Scenedef : " + sceneDef + " | " + sceneDef.sceneType + " | " + sceneDef.allowItemsToSpawnObjects);
             if (sceneDef.sceneType == SceneType.Stage && primalToken)
             {
-                if (birthrightRng == null)
-                {
-                    birthrightRng = new Xoroshiro128Plus(Run.instance.seed);
-                }
+                if (birthrightRng == null){ birthrightRng = new Xoroshiro128Plus(Run.instance.seed); }
                 foreach (var player in PlayerCharacterMasterController.instances)
                 {
                     //SS2Log.Info("Found a player with item");
                     int itemCount = player.master.inventory.GetItemCount(SS2Content.Items.PrimalBirthright);
-                    
                     for (int i = 0; i < itemCount; ++i)
                     {
                         var chest = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(indevCard, new DirectorPlacementRule { placementMode = DirectorPlacementRule.PlacementMode.Random }, birthrightRng));
                         //SS2Log.Warning("Chest : " + chest + " | " + chest.name);
-
                         var pinter = chest.GetComponent<PurchaseInteraction>();
                         var behav = chest.GetComponent<ChestBehavior>();
                         if (pinter && behav)
                         {
-                            primalToken.purchaseInteractions.Add((pinter, player.master));
+                            //primalToken.purchaseInteractions.Add((pinter, player.master));
                             pinter.Networkcost = (int)(Run.instance.GetDifficultyScaledCost(pinter.cost) * priceModifier);
 
                             pinter.onPurchase.AddListener(delegate (Interactor interactor)
                             {
                                 this.OnPurchaseBirthrightChest(interactor, pinter);
                             });
-
-                            //SS2Log.Warning("Added " + pinter);
-                            //
-                            //pinter.onPurchase.AddListener(delegate (Interactor interactor) { OnPurchase(); });
-                            //createUI = true;
+                            var objtoken = chest.GetComponent<PrimalBirthrightObjectiveToken>();
+                            objtoken.masterObject = player.master.gameObject;
+                            
+                            //pinter.GetDisplayName
 
                         }
                     }
                 }
-                //if (primalToken && createUI)
-                //{
-                //
-                //    //primalToken.objective = self.teleporterInstance.AddComponent<PrimalBirthrightObjectiveToken>();
-                //
-                //    SS2Log.Error("running Create UI");
-                //
-                //}
-
             }
         }
 
@@ -264,59 +271,42 @@ namespace SS2.Items
 
     public class PrimalPrevention : MonoBehaviour
     {
-        public List<(PurchaseInteraction, CharacterMaster)> purchaseInteractions = new List<(PurchaseInteraction, CharacterMaster)>();
+        //public List<(PurchaseInteraction, CharacterMaster)> purchaseInteractions = new List<(PurchaseInteraction, CharacterMaster)>();
         
         public InteractionProcFilter filter;
         //i swear this makes sense
 
     }
 
-    public class PrimalBirthrightObjectiveToken : NetworkBehaviour
-    {
-        //public static PrimalBirthrightNetBehavior netb;
+    public class PrimalBirthrightObjectiveToken : NetworkBehaviour {
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
         public PurchaseInteraction pinter;
 
+        [SyncVar]
+        public GameObject masterObject;
 
         public void OnEnable()
         {
             pinter = this.gameObject.GetComponent<PurchaseInteraction>();
             instanceList.Add(pinter);
 
-            foreach(var item in instanceList)
-            {
-                SS2Log.Warning("item : " + item);
-            }
-            SS2Log.Error("On Enable Called " + instanceList.Count);
-
             if (instanceList.Count == 1)
             {
                 ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
             }
         }
-
         public void OnDisable()
         {
-            SS2Log.Error("On Disable Called " + instanceList.Count);
-
-            foreach (var item in instanceList)
-            {
-                SS2Log.Warning("item : " + item);
-            }
-
             instanceList.Remove(pinter);
 
-            if(instanceList.Count <= 0)
+            if (instanceList.Count <= 0)
             {
-                SS2Log.Error("Should Disable Objective");
                 ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
 
                 if (PrimalBirthright.primalToken)
                 {
-                    SS2Log.Error("Enable Teleporter");
                     PrimalBirthright.primalToken.filter.shouldAllowOnInteractionBeginProc = true;
                 }
-
             }
         }
 
@@ -326,20 +316,6 @@ namespace SS2.Items
             this.enabled = enable;
         }
 
-        //[ClientRpc]
-        //public void RpcSetUI(bool enable)
-        //{
-        //    if (enable)
-        //    {
-        //        ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
-        //    }
-        //    else
-        //    {
-        //        ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
-        //
-        //    }
-        //}
-
     }
 
 
@@ -347,10 +323,6 @@ namespace SS2.Items
     {
         public override string GenerateString()
         {
-            //foreach(var pair in PrimalBirthright.primalToken.purchaseInteractions)
-            //{
-            //    if (pair.Item1.available) { ++count; }
-            //}
             return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count);
         }
 
@@ -359,38 +331,6 @@ namespace SS2.Items
             return true;
         }
     }
-
-    //public class PrimalBirthrightNetBehavior : NetworkBehaviour
-    //{
-    //
-    //    [ClientRpc]
-    //    public void RpcSetUI(bool enable)
-    //    {
-    //        if (enable){
-    //            ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
-    //        }
-    //        else
-    //        {
-    //            ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
-    //
-    //        }
-    //    }
-    //
-    //}
-    //
-    //public class PrimalBirthrightNetBehaviorReal : NetworkBehaviour
-    //{
-    //
-    //    [ClientRpc]
-    //    public void RpcSetToken(bool enable, PrimalBirthrightObjectiveToken token)
-    //    {
-    //        token.enabled = enable;
-    //
-    //        
-    //    }
-    //
-    //}
-
 }
 
 
