@@ -173,7 +173,7 @@ namespace SS2.Items
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffTerminationFailed);
                 }
-                var timeLimit = token.owner.target.timeLimit;
+                var timeLimit = token.timeLimit;
                 token.owner.target = null; // :)
 
                 var pointerToken = obj.victimBody.transform.Find("TerminationPositionIndicator(Clone)");

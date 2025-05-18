@@ -135,13 +135,9 @@ namespace SS2.Items
             {
                 var intermediate = Language.GetString(self.displayNameToken);
                 
-                if (pbot.masterObject) {
-                    var master = pbot.masterObject;//.GetComponent<CharacterMaster>().GetBody().GetDisplayName();
-                    if(master.GetComponent<CharacterMaster>())
-                    {
-                        var masterName = Util.GetBestMasterName(master.GetComponent<CharacterMaster>());
-                        return intermediate.Replace("{0}", masterName);
-                    }
+                if (pbot.master) 
+                {
+                    return intermediate.Replace("{0}", Util.GetBestMasterName(pbot.master));
                 }
                 //intermediate.Replace("{0}", pbot.masterObject.GetComponent<CharacterMaster>().GetBody().GetDisplayName())
                
@@ -188,27 +184,50 @@ namespace SS2.Items
                 {
                     if (pinter)
                     {
-                        if (birthrightRng.RangeFloat(0, 1) >= .975f)
+                        var pbot = pinter.GetComponent<PrimalBirthrightObjectiveToken>();
+                        if (pbot)
                         {
-                            Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                            if (birthrightRng.RangeFloat(0, 1) >= .975f)
                             {
-                                baseToken = "SS2_BIRTHRIGHT_UNCLAIMED_RARE"
-                            });
-                        }
-                        else
-                        {
-                            var pbot = pinter.GetComponent<PrimalBirthrightObjectiveToken>();
-                            //pbot.masterObject.GetComponent<CharacterMaster>().GetBody();
-                            Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                                Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                                {
+                                    baseToken = "SS2_BIRTHRIGHT_UNCLAIMED_RARE"
+                                });
+                            }
+                            else
                             {
-                                subjectAsCharacterBody = pbot.masterObject.GetComponent<CharacterMaster>().GetBody(),
-                                baseToken = "SS2_BIRTHRIGHT_UNCLAIMED"
-                            });
+                                var body = pbot.master.GetBody();
+                                if (body)
+                                {
+                                    if (body.GetItemCount(SS2Content.Items.PrimalBirthright) <= 0)
+                                    {
+                                        Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                                        {
+                                            subjectAsCharacterBody = pbot.master.GetBody(),
+                                            baseToken = "SS2_BIRTHRIGHT_UNCLAIMED_REMOVED"
+                                        });
+                                    }
+                                    else
+                                    {
+                                        Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
+                                        {
+                                            subjectAsCharacterBody = pbot.master.GetBody(),
+                                            baseToken = "SS2_BIRTHRIGHT_UNCLAIMED"
+                                        });
+                                    }
+                                }
+                                else
+                                {
+                                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                                    {
+                                        baseToken = "SS2_BIRTHRIGHT_UNCLAIMED_DEAD"
+                                    });
+                                }
+                            }
+                            return;
                         }
-                        return;
                     }
                 }
-
                 orig(self, activator);
             }
             else
@@ -251,9 +270,13 @@ namespace SS2.Items
                             {
                                 this.OnPurchaseBirthrightChest(interactor, pinter);
                             });
+
                             var objtoken = chest.GetComponent<PrimalBirthrightObjectiveToken>();
                             objtoken.masterObject = player.master.gameObject;
+                            objtoken.master = player.master;
                             
+                            //objtoken.playername = Util.GetBestMasterName(player.master);
+
                             //pinter.GetDisplayName
 
                         }
@@ -282,9 +305,11 @@ namespace SS2.Items
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
         public PurchaseInteraction pinter;
 
-        [SyncVar]
+        [SyncVar(hook = "SetMaster")]
         public GameObject masterObject;
 
+        public CharacterMaster master;
+        
         public void OnEnable()
         {
             pinter = this.gameObject.GetComponent<PurchaseInteraction>();
@@ -295,6 +320,7 @@ namespace SS2.Items
                 ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
             }
         }
+
         public void OnDisable()
         {
             instanceList.Remove(pinter);
@@ -314,6 +340,11 @@ namespace SS2.Items
         public void RpcSetToken(bool enable)
         {
             this.enabled = enable;
+        }
+
+        public void SetMaster(GameObject masterObj)
+        {
+            master = masterObj.GetComponent<CharacterMaster>();
         }
 
     }

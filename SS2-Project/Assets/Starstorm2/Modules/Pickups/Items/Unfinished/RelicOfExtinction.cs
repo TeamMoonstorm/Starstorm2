@@ -83,10 +83,10 @@ namespace SS2.Items
                         eoh.target = body;
                         eoh.SetStacks();
                         eoh.BeginScale(true);
-                        
                         //extinctionObject.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(base.gameObject, null);
                         return;
                     }
+
                     if (extinctionObject)
                     {
                         var eoh2 = extinctionObject.gameObject.GetComponent<ExtinctionOrbHandler>();
@@ -106,6 +106,7 @@ namespace SS2.Items
     public class ExtinctionOrbHandler : MonoBehaviour
     {
         public CharacterBody target;
+        public Rigidbody rigid;
         public bool shouldExist = true;
 
         float timer = 0;
@@ -115,53 +116,91 @@ namespace SS2.Items
 
         int count = 1;
 
+        public void Start()
+        {
+            rigid = this.GetComponent<Rigidbody>();
+        }
+
+
         public void SetStacks()
         {
             count = target.GetItemCount(SS2Content.Items.RelicOfExtinction);
-            sizeMax = (count - 1) * RelicOfExtinction.scalingRange;
+            sizeMax = RelicOfExtinction.baseRange + ((count - 1) * RelicOfExtinction.scalingRange);
         }
 
         public void FixedUpdate()
         {
-            //var currentPos = this.transform.position;
-            var magnitude = (transform.position - target.corePosition).magnitude;
-            magnitude -= (sizeMax / 2f);
-            transform.position = Vector3.MoveTowards(transform.position, target.corePosition, .01f * magnitude);
-
-            timer += Time.deltaTime;
-
-            if(timer > .1f)
+            if (target)
             {
-                timer = 0;
+                //var currentPos = this.transform.position;
+                var magnitude = (transform.position - target.corePosition).magnitude;
+                var dir = transform.position - target.corePosition;
+                var velocity = dir.normalized * magnitude / 4;
 
-                new BlastAttack
+                if (rigid)
                 {
-                    radius = size * (10f/12f),
-                    baseDamage = 100,
-                    procCoefficient = 0,
-                    crit = false,
-                    damageColorIndex = DamageColorIndex.Item,
-                    attackerFiltering = AttackerFiltering.AlwaysHit,
-                    falloffModel = BlastAttack.FalloffModel.None,
-                    attacker = target.gameObject,
-                    teamIndex = target.teamComponent.teamIndex,
-                    position = transform.position,
-                    //baseForce = 0,
-                    damageType = DamageType.AOE
-
-                }.Fire();
-
-                var newCount = target.GetItemCount(SS2Content.Items.RelicOfExtinction);
-                if (count != newCount)
+                    rigid.velocity = velocity;
+                }
+                else
                 {
-                    SS2Log.Warning("UPdating size " + count + " | " + newCount);
-                    BeginScale(newCount > count);
-                    count = newCount;
+                    rigid = this.GetComponent<Rigidbody>();
+                    SS2Log.Error("Finding rigid in fixedupdate :(");
+                }
 
+
+                //magnitude -= (sizeMax / 2f);
+                //transform.position = Vector3.MoveTowards(transform.position, target.corePosition, .01f * magnitude);
+
+                timer += Time.deltaTime;
+
+                if (timer > .1f)
+                {
+                    timer = 0;
+
+                    new BlastAttack
+                    {
+                        radius = size * (10f / 12f),
+                        baseDamage = 10,
+                        procCoefficient = 0,
+                        crit = false,
+                        damageColorIndex = DamageColorIndex.Item,
+                        attackerFiltering = AttackerFiltering.AlwaysHit,
+                        falloffModel = BlastAttack.FalloffModel.None,
+                        attacker = target.gameObject,
+                        teamIndex = target.teamComponent.teamIndex,
+                        position = transform.position,
+                        //baseForce = 0,
+                        damageType = DamageType.AOE
+
+                    }.Fire();
+
+                    new BlastAttack
+                    {
+                        radius = (size * (10f / 12f)) / 2,
+                        baseDamage = 100,
+                        procCoefficient = 0,
+                        crit = false,
+                        damageColorIndex = DamageColorIndex.Item,
+                        attackerFiltering = AttackerFiltering.AlwaysHit,
+                        falloffModel = BlastAttack.FalloffModel.None,
+                        attacker = target.gameObject,
+                        teamIndex = target.teamComponent.teamIndex,
+                        position = transform.position,
+                        //baseForce = 0,
+                        damageType = DamageType.AOE
+
+                    }.Fire();
+
+                    var newCount = target.GetItemCount(SS2Content.Items.RelicOfExtinction);
+                    if (count != newCount)
+                    {
+                        SS2Log.Warning("UPdating size " + count + " | " + newCount);
+                        BeginScale(newCount > count);
+                        count = newCount;
+
+                    }
                 }
             }
-
-            
         }
 
         public void BeginScale(bool increase)
@@ -173,12 +212,12 @@ namespace SS2.Items
         {
             if (increase)
             {
-                while(size < sizeMax && shouldExist)
+                while (size < sizeMax && shouldExist)
                 {
                     yield return .1f;
-                    
+
                     size += .025f;
-                    
+
                     if (size > sizeMax)
                     {
                         size = sizeMax;
@@ -213,10 +252,9 @@ namespace SS2.Items
                 }
             }
         }
-
     }
-#endif
 
+#endif
 }
 
 
