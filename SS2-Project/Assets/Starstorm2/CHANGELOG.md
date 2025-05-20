@@ -1,5 +1,13 @@
   **Warning: content spoilers below!**
 
+### 0.6.19
+* Survivors
+    * Executioner's fear execute is still broken for now. We are working on a more comphrensive fix alongside Jet Boots
+* Items
+    * Fixed a bug caused by the new lunar which broke void fields
+    * The legendary chest spawned by the new lunar is now blue!!!
+    * It also adds an objective to the sidebar
+
 ### 0.6.18
 * General
     * Recompiled the mod so it works with latest SOTS Update. This should fix issues with NemMerc Teleport and Executioner's fear

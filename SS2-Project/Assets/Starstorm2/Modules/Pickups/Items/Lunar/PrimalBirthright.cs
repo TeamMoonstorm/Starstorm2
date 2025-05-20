@@ -20,6 +20,8 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPrimalBirthright", SS2Bundle.Items);
 
+        public PurchaseEvent OnPurchaseBirthrightChest { get; private set; }
+
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of legendary chests the first stack grants per stage.")]
         [FormatToken("SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC", 0)]
         public static float legendaryCountBase = 1f;
@@ -57,28 +59,11 @@ namespace SS2.Items
 
             //token.RpcSetToken(false); //unsure if needed
 
-
-            //pinter.onPurchase.AddListener(delegate (Interactor interactor ) { OnPurchase(); });
-
-            //pinter.onPurchase.AddListener((interactor) =>
-            //{
-            //    SS2Log.Warning("On Purchase Begin");
-            //
-            //    var pbot = pinter.GetComponent<PrimalBirthrightObjectiveToken>();
-            //    SS2Log.Warning("On Purchase Begin : " + pinter + " | " + pbot);
-            //    if (pbot)
-            //    {
-            //        SS2Log.Warning("On Purchase Found Objective Token");
-            //        pbot.enabled = false;
-            //        pbot.RpcSetToken(false);
-            //    }
-            //});
-
             pinter.onPurchase.AddListener(delegate (Interactor interactor) 
             {
                 this.OnPurchaseBirthrightChest(interactor, pinter);
             });
-
+            
             try
             {
                 var smr = indevChest.transform.Find("mdlGoldChest").Find("GoldChestArmature").Find("GoldChestMesh").gameObject.GetComponent<SkinnedMeshRenderer>(); //hi nebby!!! hii!!! 
@@ -91,8 +76,7 @@ namespace SS2.Items
 
             //indevChest.AddComponent<PrimalBirthrightNetBehaviorReal>();
             //indevChest.AddComponent<PrimalBirthrightNetBehavior>();
-
-
+            
             PrefabAPI.RegisterNetworkPrefab(indevChest);
 
             //var assets = AssetCollection.assets;
@@ -104,7 +88,6 @@ namespace SS2.Items
             UnityEngine.Object[] assets2 = new UnityEngine.Object[1];
             assets2[0] = indevChest;
             AssetCollection.AddAssets(assets2);
-
 
             indevCard = ScriptableObject.CreateInstance<InteractableSpawnCard>();
             indevCard.name = "iscPrimalChest";
@@ -294,8 +277,6 @@ namespace SS2.Items
 
     public class PrimalPrevention : MonoBehaviour
     {
-        //public List<(PurchaseInteraction, CharacterMaster)> purchaseInteractions = new List<(PurchaseInteraction, CharacterMaster)>();
-        
         public InteractionProcFilter filter;
         //i swear this makes sense
 
@@ -362,6 +343,25 @@ namespace SS2.Items
             return true;
         }
     }
+
+    public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
+    {
+        public override string GenerateString()
+        {
+            int count = 0;
+            foreach(var pair in PrimalBirthright.primalToken.purchaseInteractions)
+            {
+                if (pair.Item1.available) { ++count; }
+            }
+            return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), count);
+        }
+
+        public override bool IsDirty()
+        {
+            return true;
+        }
+    }
+
 }
 
 
