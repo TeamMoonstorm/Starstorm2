@@ -1,17 +1,34 @@
 {
-    "strings":
-    {
-        "SS2_PYRO_NAME": "Поджигатель",
-		"SS2_PYRO_SUBTITLE": "The Burninator",
-		"SS2_PYRO_DESCRIPTION": "The Pyro is a survivor who excels in crowd control, torching anything that dares come too close.",
-		"SS2_PYRO_OUTRO_FLAVOR": "..and so he left, chest ready to burst.",
-		"SS2_PYRO_OUTRO_FAILURE": "..and so he vanished, flame expunged.",
+  "strings": {
+    "SS2_PYRO_NAME": "Пиромант",
+    "SS2_PYRO_SUBTITLE": "Профессиональный Экоцид",
+    "SS2_PYRO_DESCRIPTION": "Пиромант - мастер контроля толпы, сжигающий врагов с яростью и точностью.",
+    "SS2_PYRO_OUTRO_FLAVOR": "..и он ушёл, с сердцем, пылающим страстью.",
+    "SS2_PYRO_OUTRO_FAILURE": "..и он исчез, пламя угасло.",
 
-        
-		
-        "SS2_PYRO_SCORCH_NAME": "Scorch",
-		"SS2_PYRO_SCORCH_DESCRIPTION": "<color=#D78326>Heat up</color> by <style=cIsDamage>burning nearby enemies for <style=cIsDamage>60% damage</style>. Hitting enemies with <color=#D78326>high heat</color> <style=cIsDamage>ignites</style> enemies, <style=cIsDamage>dealing damage over time</style>.",
-		"SS2_PYRO_AIRBLAST_NAME": "Heat Wave",
-		"SS2_PYRO_AIRBLAST_DESCRIPTION": "<color=#D78326>30% heat</color>. Fire a burst of flames, <color=#D78326>igniting</color> enemies for <style=cIsDamage>400% damage</style> and <style=cIsUtility>reflecting projectiles</style>. Extra stocks <color=#D78326>reduce heat consumption by 15%</color>."
-    }
+    "SS2_KEYWORD_HEAT": "<style=cKeywordName>Жар</style><style=cSub>Ресурс, получаемый через пассивную и основную атаку, расходуется на другие навыки.",
+    "SS2_KEYWORD_COMBUSTING": "<style=cKeywordName>Возгорание</style><style=cSub>Сбрасывает длительность стаков поджига каждую секунду.",
+    "SS2_KEYWORD_TORCHING": "<style=cKeywordName>Прожигание</style><style=cSub>Наносит в 1.5 раза больше урона с повышенным шансом поджога на конце пламени.",
+
+    "SS2_PYRO_PASSIVE_NAME": "Рождённый в Пламени",
+    "SS2_PYRO_PASSIVE_DESC": "Получайте <color=#D78326>жар</color>, <style=cIsUtility>броню</style> и <style=cIsHealing>регенерацию</style> за каждого горящего врага рядом. Иммунитет к <style=cIsDamage>поджигу</style>.",
+
+    "SS2_PYRO_PRIMARY_NAME": "Опаление",
+    "SS2_PYRO_PRIMARY_DESC": "<style=cIsDamage>Прожигание</style>. <color=#D78326>Накапливайте жар</color>, поджигая врагов на <style=cIsDamage>40% урона</style>. При <color=#D78326>высоком жаре</color> может <style=cIsDamage>поджигать</style>.",
+
+    "SS2_PYRO_SECONDARY_NAME": "Подавляющий Огонь",
+    "SS2_PYRO_SECONDARY_DESC": "<color=#D78326>Тратит 1.5% жару</color> для поджога врагов на <style=cIsDamage>80% урона</style> с отталкиванием. <style=cIsDamage>Усиливается</style> при <color=#D78326>высоком жаре</color>. <style=cIsHealth>В РАЗРАБОТКЕ: Показывать урон в секунду вместо тиков?",
+
+    "SS2_PYRO_SECONDARY_ALT_NAME": "Тепловая Волна",
+    "SS2_PYRO_SECONDARY_ALT_DESC": "<color=#D78326>30% жару</color>. Вспышка пламени, <color=#D78326>поджигающая</color> врагов на <style=cIsDamage>400% урона</style> и <style=cIsUtility>отражающая снаряды</style>. Доп. заряды <color=#D78326>снижают затраты жару на 15%</color>.",
+
+    "SS2_PYRO_UTILITY_NAME": "План Б",
+    "SS2_PYRO_UTILITY_DESC": "Рывок <style=cIsUtility>вперёд</style> за <color=#D78326>35% жару</color>. В воздухе - рывок <style=cIsUtility>вверх</style>. <style=cIsUtility>Удерживайте</style> для замедления падения (<color=#D78326>2% жару</color>/сек).",
+
+    "SS2_PYRO_SPECIAL_NAME": "Устранение Угрозы",
+    "SS2_PYRO_SPECIAL_DESC": "<style=cIsDamage>Поджиг</style>. Огненный шар на <style=cIsDamage>400% урона</style> за <color=#D78326>65% жару</color>. Взрывается, нанося <style=cIsDamage>150%</style> за каждый стак <style=cIsDamage>поджога</style> на цели.",
+
+    "SS2_PYRO_SPECIAL_ALT_NAME": "DM34 \"Истребитель\"",
+    "SS2_PYRO_SPECIAL_ALT_DESC": "<style=cIsDamage>Возгорание</style>. Залп из дробовика на <style=cIsDamage>8x50% урона</style>."
+  }
 }

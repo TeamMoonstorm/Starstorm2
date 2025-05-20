@@ -1,0 +1,74 @@
+{
+  "strings": {
+    "SS2_NEMCOMMANDO_NAME": "Враждебный Коммандо",
+    "SS2_NEMCOMMANDO_SUBTITLE": "Одинокое Эхо",
+    "SS2_NEMCOMMANDO_DESCRIPTION": "Враждебный Коммандо — непредсказуемый боец, способный обратить любую ситуацию в свою пользу.\n\n<color=#CCD3E0>< ! > Одиночный Выстрел эффективен на любой дистанции. Комбинируйте его с Клинком Прекращения в ближнем бою.\n\n< ! > Глубокая Рана — мощный дебафф, который может наносить критические удары и активировать эффекты предметов.\n\n< ! > Ключ к успеху — баланс ближнего и дальнего боя. Тактический Перекат даёт броню для входа и выхода из схватки.\n\n< ! > Дезориентируйте врагов с помощью Подавления — для отступления или внезапной атаки.</color>",
+    "SS2_NEMCOMMANDO_OUTRO_FLAVOR": "..и он ушёл, обретя проблеск человечности.",
+    "SS2_NEMCOMMANDO_OUTRO_FAILURE": "..и он исчез, безвозвратно утратив человечность.",
+    "SS2_NEMCOMMANDO_LORE": "Он устраивается у костра, раскладывая оружие в пределах досягаемости. Осматривает пещеру — достаточно ли это укрытие? Кто-то сказал бы, что такая осторожность излишня. Он бы ответил: <link=\"textShaky\">они просто мало видели</link>.\n\nСлужебный пистолет, полученный при призыве на военную службу. Засаленный, изношенный, любимый. Не раз выручал в трудную минуту. Кто-то сказал бы, что только дурак доверяет оружию. Он бы ответил: <link=\"textShaky\">оружию можно доверять больше всего</link>.\n\nКлинок павшего собрата по оружию. Подобран среди обломков последних следов человечества. Кто-то сказал бы, что это объединяет их духи. Он бы ответил: <link=\"textShaky\">это отдаляет момент, когда их духи воссоединятся</link>.\n\nГрузы, приземлившиеся вместе с ним. Каждый предмет из ящиков так или иначе сохранял ему жизнь. Десятки посылок, предназначенных кому угодно, но не ему. Кто-то сказал бы, что это не его вещи. Он бы ответил: <link=\"textShaky\">если не он, то кто?</link>.\n\nФиолетовый свет из глубины пещеры. Успокаивающий, тёплый... манящий. Сулящий безопасность. Кто-то сказал бы, что слишком хорошо — не правда. Он бы ответил: <link=\"textWavy\">Фауст был мудрецом</link>.",
+
+    "SS2_NEMCOMMANDO_EMERGE": "Появление",
+
+    "SS2_KEYWORD_GOUGE": "<style=cKeywordName>Глубокая Рана</style><style=cSub>Наносит 100% урона со временем с шансом крита.",
+    "SS2_KEYWORD_GOUGE2": "<style=cKeywordName>Глубокая Рана</style><style=cSub>Наносит 200% урона со временем. Может критовать и активировать эффекты предметов.",
+
+    "SS2_NEMCOMMANDO_PRIMARY_BLADE_NAME": "Клинок Прекращения",
+    "SS2_NEMCOMMANDO_PRIMARY_BLADE_DESCRIPTION": "<style=cIsDamage>Глубокая Рана</style>. <style=cIsUtility>Проворство</style>. Рубите врагов перед собой, нанося <style=cIsDamage>160% урона</style>.",
+
+    "SS2_NEMCOMMANDO_SECONDARY_CONCUSSION_NAME": "Дальний Разрез (Контузия)",
+    "SS2_NEMCOMMANDO_SECONDARY_CONCUSSION_DESCRIPTION": "<style=cIsDamage>Глубокая Рана</style>. Выпускает <style=cIsDamage>пронзающий</style> клинковый луч на <style=cIsDamage>400% урона</style>.",
+
+    "SS2_NEMCOMMANDO_SECONDARY_BEAM_NAME": "Дальний Разрез",
+    "SS2_NEMCOMMANDO_SECONDARY_BEAM_DESCRIPTION": "<style=cIsDamage>Глубокая Рана</style>. Выпускает <style=cIsDamage>пронзающий</style> клинковый луч на <style=cIsDamage>400% урона</style>.",
+
+    "SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME": "Одиночный Выстрел",
+    "SS2_NEMCOMMANDO_SECONDARY_SHOOT_DESCRIPTION": "Стреляйте во врага, нанося <style=cIsDamage>150% урона</style>. Перезарядка <style=cIsUtility>полная</style>.",
+
+    "SS2_NEMCOMMANDO_UTILITY_DODGE_NAME": "Тактический Перекат",
+    "SS2_NEMCOMMANDO_UTILITY_DODGE_DESCRIPTION": "<style=cIsUtility>Перекатывайтесь</style> на короткое расстояние, временно получая <style=cIsUtility>200 брони</style>. Макс. зарядов: <style=cIsUtility>2</style>.",
+
+    "SS2_NEMCOMMANDO_UTILITY_BACKDASH_NAME": "",
+    "SS2_NEMCOMMANDO_UTILITY_BACKDASH_DESCRIPTION": "",
+
+    "SS2_NEMCOMMANDO_UTILITY_TAUNT_NAME": "Покажи мне хорошее время!",
+    "SS2_NEMCOMMANDO_UTILITY_TAUNT_DESCRIPTION": "<style=cIsHealth>Провокация</style> nearby enemies: снижает их <style=cIsDamage>броню</style>, но увеличивает <style=cIsDamage>урон</style>. Эффект стэкается до <style=cIsDamage>3</style> раз.",
+
+    "SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_NAME": "Подавление",
+    "SS2_NEMCOMMANDO_SPECIAL_SUBMISSION_DESCRIPTION": "<style=cIsDamage>Оглушение</style>. Серия из <style=cIsDamage>6 выстрелов по 80% урона</style>. Количество выстрелов растёт с скоростью атаки.",
+
+    "SS2_NEMCOMMANDO_SPECIAL_BOSS_NAME": "Решающий Удар",
+    "SS2_NEMCOMMANDO_SPECIAL_BOSS_DESCRIPTION": "<style=cIsDamage>Глубокая Рана</style>. <style=cIsDamage>Оглушение</style>. <style=cIsUtility>Зарядите</style> и <style=cIsUtility>рвинитесь вперёд</style> для серии до <style=cIsDamage>6</style> ударов по <style=cIsDamage>360% урона</style> каждый.",
+
+    "SS2_NEMCOMMANDO_SPECIAL_SCEPSUBMISSION_NAME": "Подчинение",
+    "SS2_NEMCOMMANDO_SPECIAL_SCEPSUBMISSION_DESCRIPTION": "<style=cIsUtility>Проворство.</style> <style=cDeath>Раздирание.</style> <style=cIsUtility>Зарядка</style> выпускает залп до <style=cIsDamage>6 импульсов по 4x70%</style>. <style=cIsUtility>Количество выстрелов зависит от скорости атаки</style>. \n<color=#d299ff>СКИПЕТР: Дополнительно выпускает до {0} лазеров по {2}% урона.</color>",
+
+    "SS2_NEMCOMMANDO_SPECIAL_SCEPBOSS_NAME": "Рассекающий Приговор",
+    "SS2_NEMCOMMANDO_SPECIAL_SCEPBOSS_DESCRIPTION": "<style=cIsDamage>Глубокая Рана.</style> <style=cIsUtility>Зарядите</style> и <style=cIsUtility>рвинитесь вперёд</style> для серии до <style=cIsDamage>{0} ударов</style> по <style=cIsDamage>{1}% урона</style>. <style=cIsUtility>Количество ударов зависит от скорости атаки</style>. \n<color=#d299ff>СКИПЕТР: На полном заряде исчезаете, затем наносите все удары одновременно.</color>",
+
+    "SS2_SKIN_NEMCOMMANDO_DEFAULT": "Стандартный",
+    "SS2_SKIN_NEMCOMMANDO_MASTERY": "Оса",
+    "SS2_SKIN_NEMCOMMANDO_GRANDMASTERY": "Минуано",
+    "SS2_SKIN_NEMCOMMANDO_COMMANDO": "Солдат",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NAME": "Одинокое Эхо",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_DESC": "Победите Тень Коммандо.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_NAME": "Враждебный Коммандо: Мастерство",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_MASTERY_DESC": "Пройдите игру или уничтожьтесь на уровне сложности Муссон и выше.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_NAME": "Враждебный Коммандо: Великое Мастерство",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRANDMASTERY_DESC": "Пройдите игру или уничтожьтесь на уровне сложности Тайфун.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NEMESIS_NAME": "Враждебный Коммандо: Загнанный Стрелок",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_NEMESIS_DESC": "Победите Тень Коммандо, играя за Враждебного Коммандо.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_NAME": "Враждебный Коммандо: Дзандацу",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_BOSSATTACK_DESC": "Наложите 8+ стаков Глубокой Раны на одну цель за раз.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRENADE_NAME": "Враждебный Коммандо: Полная Коррупция",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_GRENADE_DESC": "Дойдите до 8-го этапа с 20+ лунными предметами.",
+
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_NAME": "Враждебный Коммандо: Потрошитель",
+    "SS2_ACHIEVEMENT_NEMCOMMANDO_SWORDBEAM_DESC": "Достигните 100% шанса кровотечения."
+  }
+}
