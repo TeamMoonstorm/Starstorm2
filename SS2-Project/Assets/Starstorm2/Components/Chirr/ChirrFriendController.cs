@@ -334,7 +334,12 @@ namespace SS2.Components
 			AffixBeadBehavior component = body.GetComponent<AffixBeadBehavior>();
 			if(component && component.affixBeadWard)
             {
-				component.affixBeadWard.GetComponent<TeamFilter>().teamIndex = newTeam;
+				var filter = component.affixBeadWard.GetComponent<TeamFilter>();
+				SS2Log.Warning("filter : " + filter);
+                if (filter)
+				{
+					filter.teamIndex = newTeam;
+				}
             }
 		}
 

@@ -28,6 +28,7 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_RELICOFEXTINCTION_DESC", 1)]
         public static float orbMovementSpeed = .015f;
 
+        public static Vector3 teleporterPosition;
 
         //public static ItemAssetCollection AssetCollectionReference;
         public static GameObject extinctionReference;
@@ -35,6 +36,21 @@ namespace SS2.Items
         {
             //AssetCollectionReference = AssetCollection;
             extinctionReference = AssetCollection.FindAsset<GameObject>("ExtinctionOrb");
+            On.RoR2.SceneDirector.PlaceTeleporter += PlaceTeleporterExtinctionGrabPosition;
+
+        }
+
+        private void PlaceTeleporterExtinctionGrabPosition(On.RoR2.SceneDirector.orig_PlaceTeleporter orig, SceneDirector self)
+        {
+            orig(self);
+            if (self.teleporterSpawnCard)
+            {
+                teleporterPosition = self.teleporterInstance.transform.position;
+            }
+            else
+            {
+                teleporterPosition = Vector3.zero;
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -77,7 +93,7 @@ namespace SS2.Items
                     if (value)
                     {
                         //AssetCollection.FindAsset<Material>("matTrimSheetMetalBlue"); //LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/NearbyDamageBonusIndicator");
-                        extinctionObject = UnityEngine.Object.Instantiate<GameObject>(extinctionReference, Vector3.zero, Quaternion.identity);
+                        extinctionObject = UnityEngine.Object.Instantiate<GameObject>(extinctionReference, teleporterPosition, Quaternion.identity);
                         //extinctionObject.transform.localScale = extinctionObject.transform.localScale / 5f;
                         var eoh = extinctionObject.gameObject.AddComponent<ExtinctionOrbHandler>();
                         eoh.target = body;
@@ -135,11 +151,12 @@ namespace SS2.Items
                 //var currentPos = this.transform.position;
                 var magnitude = (transform.position - target.corePosition).magnitude;
                 var dir = transform.position - target.corePosition;
-                var velocity = dir.normalized * magnitude / 4;
-
+                //var velocity = dir.normalized * magnitude * -5;
+                var magnitudeAdjusted = Mathf.Max(magnitude, 75);
+                var velocity = dir.normalized * magnitudeAdjusted * -15;
                 if (rigid)
                 {
-                    rigid.velocity = velocity;
+                    rigid.velocity = velocity * Time.deltaTime;
                 }
                 else
                 {
@@ -156,6 +173,8 @@ namespace SS2.Items
                 if (timer > .1f)
                 {
                     timer = 0;
+
+                    SS2Log.Error("Position : " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z + " ||| " + velocity + " ||| " + magnitude + " : " + magnitudeAdjusted + " ||| " + target.corePosition.x + " | " + target.corePosition.y + " | " + target.corePosition.z);
 
                     new BlastAttack
                     {
