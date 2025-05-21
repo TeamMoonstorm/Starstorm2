@@ -8,6 +8,7 @@ using UnityEngine;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using UnityEngine.Networking;
 
 namespace SS2.Items
 {
@@ -35,14 +36,13 @@ namespace SS2.Items
         {
             //AssetCollectionReference = AssetCollection;
             extinctionReference = AssetCollection.FindAsset<GameObject>("ExtinctionOrb");
-            On.RoR2.SceneDirector.PlaceTeleporter += PlaceTeleporterExtinctionGrabPosition;
-
+            //On.RoR2.SceneDirector.PlaceTeleporter += PlaceTeleporterExtinctionGrabPosition;
+            SceneDirector.onPostPopulateSceneServer += PostPopulateSceneGrabExtinctionPosition;
         }
 
-        private void PlaceTeleporterExtinctionGrabPosition(On.RoR2.SceneDirector.orig_PlaceTeleporter orig, SceneDirector self)
+        private void PostPopulateSceneGrabExtinctionPosition(SceneDirector self)
         {
-            orig(self);
-            if (self.teleporterSpawnCard)
+            if (self.teleporterSpawnCard && self.teleporterInstance)
             {
                 teleporterPosition = self.teleporterInstance.transform.position;
             }
@@ -51,6 +51,19 @@ namespace SS2.Items
                 teleporterPosition = Vector3.zero;
             }
         }
+
+        //private void PlaceTeleporterExtinctionGrabPosition(On.RoR2.SceneDirector.orig_PlaceTeleporter orig, SceneDirector self)
+        //{
+        //    orig(self);
+        //    if (self.teleporterSpawnCard && self.teleporterInstance)
+        //    {
+        //        teleporterPosition = self.teleporterInstance.transform.position;
+        //    }
+        //    else
+        //    {
+        //        teleporterPosition = Vector3.zero;
+        //    }
+        //}
 
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -63,7 +76,7 @@ namespace SS2.Items
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RelicOfExtinction;
 
-            
+
             public GameObject extinctionObject;
 
             public void OnEnable()
@@ -75,6 +88,20 @@ namespace SS2.Items
             {
                 extinctionActive = false;
             }
+
+            public int RandomizeParity()
+            {
+                var val = Run.instance.spawnRng.RangeInt(0, 2);
+
+                if (val == 0)
+                {
+                    return -1;
+                }
+                return 1;
+
+
+            }
+
 
             private bool extinctionActive
             {
@@ -92,12 +119,19 @@ namespace SS2.Items
                     if (value)
                     {
                         //AssetCollection.FindAsset<Material>("matTrimSheetMetalBlue"); //LegacyResourcesAPI.Load<GameObject>("Prefabs/NetworkedObjects/NearbyDamageBonusIndicator");
+                        if (teleporterPosition == Vector3.zero)
+                        {
+                            teleporterPosition.x = body.corePosition.x + (75 * RandomizeParity());
+                            teleporterPosition.y = body.corePosition.y + (75 * RandomizeParity());
+                            teleporterPosition.z = body.corePosition.z + (75 * RandomizeParity());
+                        }
                         extinctionObject = UnityEngine.Object.Instantiate<GameObject>(extinctionReference, teleporterPosition, Quaternion.identity);
                         //extinctionObject.transform.localScale = extinctionObject.transform.localScale / 5f;
                         var eoh = extinctionObject.gameObject.AddComponent<ExtinctionOrbHandler>();
                         eoh.target = body;
                         eoh.SetStacks();
                         eoh.BeginScale(true);
+                        NetworkServer.Spawn(extinctionObject);
                         //extinctionObject.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(base.gameObject, null);
                         return;
                     }
@@ -112,7 +146,7 @@ namespace SS2.Items
                     {
                         extinctionObject = null;
                     }
-                    
+
                 }
             }
         }
@@ -130,6 +164,7 @@ namespace SS2.Items
         float scalar = .005f;
 
         int count = 1;
+        private bool alternate = false;
 
         public void Start()
         {
@@ -155,19 +190,19 @@ namespace SS2.Items
                     maxSpeed /= target.sprintingSpeedMultiplier;
                 }
 
-                maxSpeed += 10f; //it moving at exactly player speed is way too slow
+                //maxSpeed += 10f; //it moving at exactly player speed is way too slow
 
-                var magnitude = (target.corePosition - transform.position).magnitude;
+                var magnitude = (target.corePosition - transform.position).magnitude * maxSpeed / 16;
                 var dir = CalculatePullDirection();
-                var magnitudeAdjusted = Mathf.Max(Mathf.Min(magnitude, maxSpeed), 5);
+                var magnitudeAdjusted = Mathf.Max(Mathf.Min(magnitude, maxSpeed * 2), 5);
 
                 var idealVelocity = dir * magnitudeAdjusted;
 
                 if (rigid)
                 {
                     var inaccuracy = idealVelocity - rigid.velocity;
-                    rigid.velocity += inaccuracy/2 * Time.deltaTime;
-                    if(rigid.velocity.magnitude > maxSpeed)
+                    rigid.velocity += inaccuracy / 2 * Time.deltaTime;
+                    if (rigid.velocity.magnitude > maxSpeed * 2)
                     {
                         rigid.velocity = rigid.velocity.normalized * maxSpeed;
                     }
@@ -188,24 +223,32 @@ namespace SS2.Items
                 {
                     timer = 0;
 
-                    SS2Log.Error("Position : " + rigid.velocity.x + ", " + rigid.velocity.y + ", " + rigid.velocity.z + " ||| " + magnitudeAdjusted + " : " + maxSpeed);
+                    SS2Log.Error("Position : " + rigid.velocity.x + ", " + rigid.velocity.y + ", " + rigid.velocity.z + " ||| " + magnitudeAdjusted + " : " + maxSpeed * 2);
 
-                    new BlastAttack
+                    if (alternate)
                     {
-                        radius = (size * (10f / 12f)) * 2,
-                        baseDamage = 10,
-                        procCoefficient = 0,
-                        crit = false,
-                        damageColorIndex = DamageColorIndex.Item,
-                        attackerFiltering = AttackerFiltering.Default,
-                        falloffModel = BlastAttack.FalloffModel.None,
-                        attacker = target.gameObject,
-                        teamIndex = target.teamComponent.teamIndex,
-                        position = transform.position,
-                        //baseForce = 0,
-                        damageType = DamageType.AOE
+                        new BlastAttack
+                        {
+                            radius = (size * (10f / 12f)) * 2,
+                            baseDamage = 5,
+                            procCoefficient = 0,
+                            crit = false,
+                            damageColorIndex = DamageColorIndex.Item,
+                            attackerFiltering = AttackerFiltering.Default,
+                            falloffModel = BlastAttack.FalloffModel.None,
+                            attacker = target.gameObject,
+                            teamIndex = target.teamComponent.teamIndex,
+                            position = transform.position,
+                            //baseForce = 0,
+                            damageType = DamageType.AOE
 
-                    }.Fire();
+                        }.Fire();
+                        alternate = false;
+                    }
+                    else
+                    {
+                        alternate = true;
+                    }
 
                     new BlastAttack
                     {
