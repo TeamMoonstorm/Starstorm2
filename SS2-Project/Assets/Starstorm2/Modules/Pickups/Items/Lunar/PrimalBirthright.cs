@@ -328,7 +328,6 @@ namespace SS2.Items
 
     }
 
-
     public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
     {
         public override string GenerateString()
