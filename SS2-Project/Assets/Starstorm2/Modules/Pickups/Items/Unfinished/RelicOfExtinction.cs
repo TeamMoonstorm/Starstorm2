@@ -11,7 +11,6 @@ using MSU.Config;
 
 namespace SS2.Items
 {
-#if DEBUG
     public sealed class RelicOfExtinction : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfExtinction", SS2Bundle.Items);
@@ -149,14 +148,29 @@ namespace SS2.Items
             if (target)
             {
                 //var currentPos = this.transform.position;
-                var magnitude = (transform.position - target.corePosition).magnitude;
-                var dir = transform.position - target.corePosition;
-                //var velocity = dir.normalized * magnitude * -5;
-                var magnitudeAdjusted = Mathf.Max(magnitude, 75);
-                var velocity = dir.normalized * magnitudeAdjusted * -15;
+
+                var maxSpeed = target.moveSpeed;
+                if (target.isSprinting)
+                {
+                    maxSpeed /= target.sprintingSpeedMultiplier;
+                }
+
+                maxSpeed += 10f; //it moving at exactly player speed is way too slow
+
+                var magnitude = (target.corePosition - transform.position).magnitude;
+                var dir = CalculatePullDirection();
+                var magnitudeAdjusted = Mathf.Max(Mathf.Min(magnitude, maxSpeed), 5);
+
+                var idealVelocity = dir * magnitudeAdjusted;
+
                 if (rigid)
                 {
-                    rigid.velocity = velocity * Time.deltaTime;
+                    var inaccuracy = idealVelocity - rigid.velocity;
+                    rigid.velocity += inaccuracy/2 * Time.deltaTime;
+                    if(rigid.velocity.magnitude > maxSpeed)
+                    {
+                        rigid.velocity = rigid.velocity.normalized * maxSpeed;
+                    }
                 }
                 else
                 {
@@ -174,7 +188,24 @@ namespace SS2.Items
                 {
                     timer = 0;
 
-                    SS2Log.Error("Position : " + transform.position.x + ", " + transform.position.y + ", " + transform.position.z + " ||| " + velocity + " ||| " + magnitude + " : " + magnitudeAdjusted + " ||| " + target.corePosition.x + " | " + target.corePosition.y + " | " + target.corePosition.z);
+                    SS2Log.Error("Position : " + rigid.velocity.x + ", " + rigid.velocity.y + ", " + rigid.velocity.z + " ||| " + magnitudeAdjusted + " : " + maxSpeed);
+
+                    new BlastAttack
+                    {
+                        radius = (size * (10f / 12f)) * 2,
+                        baseDamage = 10,
+                        procCoefficient = 0,
+                        crit = false,
+                        damageColorIndex = DamageColorIndex.Item,
+                        attackerFiltering = AttackerFiltering.Default,
+                        falloffModel = BlastAttack.FalloffModel.None,
+                        attacker = target.gameObject,
+                        teamIndex = target.teamComponent.teamIndex,
+                        position = transform.position,
+                        //baseForce = 0,
+                        damageType = DamageType.AOE
+
+                    }.Fire();
 
                     new BlastAttack
                     {
@@ -220,6 +251,15 @@ namespace SS2.Items
                     }
                 }
             }
+        }
+
+        private Vector3 CalculatePullDirection()
+        {
+            if (target)
+            {
+                return (target.corePosition - transform.position).normalized;
+            }
+            return base.transform.forward;
         }
 
         public void BeginScale(bool increase)
@@ -272,8 +312,6 @@ namespace SS2.Items
             }
         }
     }
-
-#endif
 }
 
 
