@@ -91,7 +91,7 @@ namespace SS2.Items
 
             public int RandomizeParity()
             {
-                var val = Run.instance.spawnRng.RangeInt(0, 2);
+                var val = UnityEngine.Random.Range(0, 1);
 
                 if (val == 0)
                 {
@@ -217,7 +217,7 @@ namespace SS2.Items
                 //magnitude -= (sizeMax / 2f);
                 //transform.position = Vector3.MoveTowards(transform.position, target.corePosition, .01f * magnitude);
 
-                timer += Time.deltaTime;
+                timer += Time.fixedDeltaTime;
 
                 if (timer > .1f)
                 {
