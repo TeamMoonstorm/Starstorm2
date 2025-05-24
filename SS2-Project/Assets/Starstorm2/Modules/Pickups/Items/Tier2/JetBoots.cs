@@ -51,7 +51,7 @@ namespace SS2.Items
 
             // this will interfere with other bonus jump items but they can be unified in a similar way to this
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsHook; // recalculatestatsapi doesnt have maxjumpcount
-            IL.EntityStates.GenericCharacterMain.ProcessJump += ProcessJumpHook;
+            IL.EntityStates.GenericCharacterMain.ProcessJump_bool += ProcessJumpBoolHook;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -83,7 +83,7 @@ namespace SS2.Items
         }
 
 
-        private void ProcessJumpHook(ILContext il)
+        private void ProcessJumpBoolHook(ILContext il)
         {
             ILCursor c = new ILCursor(il);
             // if (base.characterMotor.jumpCount >= base.characterBody.baseJumpCount)

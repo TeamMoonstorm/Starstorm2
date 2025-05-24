@@ -20,8 +20,6 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPrimalBirthright", SS2Bundle.Items);
 
-        public PurchaseEvent OnPurchaseBirthrightChest { get; private set; }
-
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of legendary chests the first stack grants per stage.")]
         [FormatToken("SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC", 0)]
         public static float legendaryCountBase = 1f;
@@ -330,30 +328,11 @@ namespace SS2.Items
 
     }
 
-
     public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
     {
         public override string GenerateString()
         {
             return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count);
-        }
-
-        public override bool IsDirty()
-        {
-            return true;
-        }
-    }
-
-    public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
-    {
-        public override string GenerateString()
-        {
-            int count = 0;
-            foreach(var pair in PrimalBirthright.primalToken.purchaseInteractions)
-            {
-                if (pair.Item1.available) { ++count; }
-            }
-            return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), count);
         }
 
         public override bool IsDirty()

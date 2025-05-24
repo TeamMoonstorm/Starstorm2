@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: MimicMinigunState
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Mimic.Weapon.MimicMinigunState, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: muzzleNameLeft
+      fieldValue:
+        stringValue: MuzzleLeft
+        objectValue: {fileID: 0}
+    - fieldName: muzzleNameRight
+      fieldValue:
+        stringValue: MuzzleRight
+        objectValue: {fileID: 0}
+    - fieldName: fireRate
+      fieldValue:
+        stringValue: 5
+        objectValue: {fileID: 0}
+    - fieldName: recoil
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: range
+      fieldValue:
+        stringValue: 40
+        objectValue: {fileID: 0}
+    - fieldName: tracerEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 9014596825164709206, guid: b426f5c4c72a7b444ae1b3574ba0fbd8,
+          type: 3}
