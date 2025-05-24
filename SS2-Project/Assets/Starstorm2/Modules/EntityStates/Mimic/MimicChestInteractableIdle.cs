@@ -31,13 +31,6 @@ namespace EntityStates.Mimic
             duration = baseDuration / attackSpeedStat;
             var intermediate = GetComponent<ModelLocator>();
 
-            int rng = UnityEngine.Random.Range(0, 2);
-            SS2Log.Warning("HIIII " + rng + " | " + anim.GetBool("canTransition") + " | " + anim.GetBool("aimActive"));
-
-            anim = characterBody.modelLocator.modelTransform.GetComponent<Animator>();
-            anim.SetInteger("spawnIndex", rng);
-            anim.SetBool("canTransition", true);
-
             purchaseInter = intermediate.modelTransform.GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
@@ -68,6 +61,9 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            HandleSkill(base.skillLocator.special, ref base.inputBank.skill4);
+
             if (activated)
             {
                 timer += Time.fixedDeltaTime;
@@ -77,8 +73,13 @@ namespace EntityStates.Mimic
                 }
             }
         }
-
-
+        void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
+        {
+            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed) && skillSlot.ExecuteIfReady())
+            {
+                buttonState.hasPressBeenClaimed = true;
+            }
+        }
         public override void OnExit()
         {
             base.OnExit();

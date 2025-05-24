@@ -195,9 +195,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: spawnIndex
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: canTransition
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4255309951805962704}
   m_Solo: 0
@@ -817,7 +814,8 @@ AnimatorState:
   - {fileID: 7481296520042688859}
   - {fileID: -8170336312759280225}
   - {fileID: 310627659401920453}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: 5981758587939905154}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -970,12 +968,6 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: canTransition
-    m_Type: 4
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Body
@@ -1087,9 +1079,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: spawnIndex
     m_EventTreshold: 2
-  - m_ConditionMode: 1
-    m_ConditionEvent: canTransition
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6194272663066195206}
   m_Solo: 0
@@ -1457,16 +1446,16 @@ AnimatorStateMachine:
     m_Position: {x: 40, y: 420, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6194272663066195206}
-    m_Position: {x: -80, y: 130, z: 0}
+    m_Position: {x: -80, y: 140, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 2811129928517772821}
-    m_Position: {x: -80, y: 60, z: 0}
+    m_Position: {x: -80, y: 70, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4255309951805962704}
-    m_Position: {x: -80, y: -10, z: 0}
+    m_Position: {x: -80, y: 0, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -660475760388877504}
-    m_Position: {x: 180, y: 60, z: 0}
+    m_Position: {x: 180, y: 70, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -1607,6 +1596,21 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
+--- !u!114 &5981758587939905154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1124653335, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intParameterName: spawnIndex
+  rangeMin: 0
+  rangeMax: 2
 --- !u!1102 &6194272663066195206
 AnimatorState:
   serializedVersion: 6
@@ -1814,9 +1818,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: spawnIndex
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: canTransition
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2811129928517772821}
   m_Solo: 0

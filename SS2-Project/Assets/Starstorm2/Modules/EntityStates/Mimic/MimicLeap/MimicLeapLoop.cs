@@ -1,5 +1,6 @@
 using EntityStates;
 using RoR2;
+using SS2;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,7 @@ namespace EntityStates.Mimic
 				{
 					DoImpactAuthority();
 					endedSuccessfully = true;
+					SS2Log.Warning("FixedUpdate Fire");
 					outer.SetNextState(new MimicLeapExit());
 				}
 			}
@@ -117,6 +119,7 @@ namespace EntityStates.Mimic
 
 		protected void DoImpactAuthority()
 		{
+			SS2Log.Warning("DoImpactAuthority");
 			if (landingSound)
 			{
 				EffectManager.SimpleSoundEffect(landingSound.index, characterBody.footPosition, true);
@@ -126,13 +129,15 @@ namespace EntityStates.Mimic
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
-			Vector3 footPosition = characterBody.footPosition;
-			EffectManager.SpawnEffect(blastEffectPrefab, new EffectData
-			{
-				origin = footPosition,
-				scale = blastRadius
-			}, true);
-				
+			//Vector3 footPosition = characterBody.corePosition;
+			//EffectManager.SpawnEffect(blastEffectPrefab, new EffectData
+			//{
+			//	origin = footPosition,
+			//	scale = blastRadius
+			//}, true);
+			SS2Log.Warning("Detonate Authority");
+
+
 			return new BlastAttack
 			{
 				attacker = gameObject,
@@ -144,9 +149,9 @@ namespace EntityStates.Mimic
 				falloffModel = BlastAttack.FalloffModel.None,
 				procCoefficient = blastProcCoefficient,
 				radius = blastRadius,
-				position = footPosition,
+				position = characterBody.corePosition,
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
-				impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
+				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex
 			}.Fire();
 		}
