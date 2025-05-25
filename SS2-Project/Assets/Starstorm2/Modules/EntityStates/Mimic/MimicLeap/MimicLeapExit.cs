@@ -15,8 +15,8 @@ namespace EntityStates.Mimic
 		{
 			base.OnEnter();
 			duration = baseDuration / attackSpeedStat;
-
 			PlayCrossfade("FullBody, Override", "LeapExit", "Leap.playbackRate", duration, 0.05f);
+			//duration += .02f;
 		}
 
 		public override void FixedUpdate()
@@ -32,6 +32,7 @@ namespace EntityStates.Mimic
 		public override void OnExit()
 		{
 			base.OnExit();
+			PlayAnimation("FullBody, Override", "BufferEmpty");
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()

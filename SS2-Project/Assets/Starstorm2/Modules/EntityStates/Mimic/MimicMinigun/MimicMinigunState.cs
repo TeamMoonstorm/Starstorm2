@@ -19,6 +19,9 @@ namespace EntityStates.Mimic.Weapon
 		protected Transform muzzleTransformLeft;
 		protected Transform muzzleTransformRight;
 
+		public GameObject fireVFXInstanceLeft;
+		public GameObject fireVFXInstanceRight;
+
 		public override void OnEnter()
 		{
 			base.OnEnter();

@@ -34,8 +34,8 @@ namespace EntityStates.Mimic.Weapon
 			SS2Log.Warning("muzzleTransformLeft: " + muzzleTransformLeft);
 			if (muzzleTransformLeft && spinVFXPrefab)
 			{
-				spinInstanceLeft = UnityEngine.Object.Instantiate<GameObject>(spinVFXPrefab, muzzleTransformLeft.position, muzzleTransformLeft.rotation);
-				spinInstanceLeft.transform.parent = muzzleTransformLeft;
+				fireVFXInstanceLeft = UnityEngine.Object.Instantiate<GameObject>(spinVFXPrefab, muzzleTransformLeft.position, muzzleTransformLeft.rotation);
+				fireVFXInstanceLeft.transform.parent = muzzleTransformLeft;
 				//ScaleParticleSystemDuration component = this.chargeInstance.GetComponent<ScaleParticleSystemDuration>();
 				//if (component)
 				//{
@@ -45,8 +45,8 @@ namespace EntityStates.Mimic.Weapon
 
 			if (muzzleTransformLeft && spinVFXPrefab)
 			{
-				spinInstanceRight = UnityEngine.Object.Instantiate<GameObject>(spinVFXPrefab, muzzleTransformRight.position, muzzleTransformRight.rotation);
-				spinInstanceRight.transform.parent = muzzleTransformRight;
+				fireVFXInstanceRight = UnityEngine.Object.Instantiate<GameObject>(spinVFXPrefab, muzzleTransformRight.position, muzzleTransformRight.rotation);
+				fireVFXInstanceRight.transform.parent = muzzleTransformRight;
 				//ScaleParticleSystemDuration component = this.chargeInstance.GetComponent<ScaleParticleSystemDuration>();
 				//if (component)
 				//{
@@ -70,16 +70,6 @@ namespace EntityStates.Mimic.Weapon
 		public override void OnExit()
 		{
 			base.OnExit();
-			if (spinInstanceLeft)
-			{
-				EntityState.Destroy(spinInstanceLeft);
-			}
-
-			if (spinInstanceRight)
-			{
-				EntityState.Destroy(spinInstanceRight);
-			}
-
 			if (!endedSuccessfully)
 			{
 				PlayAnimation("Gesture, Override", "BufferEmpty");

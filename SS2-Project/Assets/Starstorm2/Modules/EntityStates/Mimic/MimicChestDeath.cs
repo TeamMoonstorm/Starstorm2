@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using SS2;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,15 +13,18 @@ namespace EntityStates.Mimic
         {
             base.OnEnter();
             itemInd = characterBody.inventory.itemAcquisitionOrder;
+            SS2Log.Warning("Death On Enter");
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            SS2Log.Warning("Death Fixed Update");
         }
 
         public override void OnExit()
         {
+            SS2Log.Warning("Death Exit");
             if (itemInd.Count > 0)
             {
                 var dir = characterDirection.forward;

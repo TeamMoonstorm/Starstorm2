@@ -1,16 +1,17 @@
-using EntityStates;
+using R2API;
 using RoR2;
 using SS2;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace EntityStates.Mimic
 {
-	public class MimicLeapLoop : BaseCharacterMain
+    public class MimicChestActivateLoop : BaseCharacterMain
 	{
+		public static float baseDuration;
+		private float duration;
 
 		public static float minimumDuration;
 		public static float blastRadius;
@@ -50,8 +51,9 @@ namespace EntityStates.Mimic
 
 		public override void OnEnter()
 		{
+			duration = baseDuration / attackSpeedStat;
 			base.OnEnter();
-			PlayCrossfade("FullBody, Override", "LeapLoop", 0.05f);
+			PlayCrossfade("FullBody, Override", "ActivateLoop", "Activate.playbackRate", duration, 0.05f);
 
 			previousAirControl = characterMotor.airControl;
 			characterMotor.airControl = airControl;
@@ -71,30 +73,19 @@ namespace EntityStates.Mimic
 			if (NetworkServer.active)
 			{
 				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
+				characterBody.AddTimedBuff(RoR2Content.Buffs.ArmorBoost, duration);
 			}
 			GetModelTransform().GetComponent<AimAnimator>().enabled = true;
 
 			Util.PlaySound(leapSoundString, gameObject);
 			characterDirection.moveVector = direction;
 
-			if (isAuthority)
-			{
-				characterMotor.onMovementHit += OnMovementHit;
-			}
+			//if (isAuthority)
+			//{
+			//	characterMotor.onMovementHit += OnMovementHit;
+			//}
 
 			Util.PlaySound(soundLoopStartEvent, gameObject);
-		}
-
-		private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
-		{
-			detonateNextFrame = true;
-		}
-
-		public override void UpdateAnimationParameters()
-		{
-			base.UpdateAnimationParameters();
-			float value = Mathf.Clamp01(Util.Remap(estimatedVelocity.y, minYVelocityForAnim, maxYVelocityForAnim, 0f, 1f)) * 0.97f;
-			//modelAnimator.SetFloat("LeapCycle", value, 0.1f, Time.deltaTime);
 		}
 
 		public override void FixedUpdate()
@@ -102,29 +93,18 @@ namespace EntityStates.Mimic
 			base.FixedUpdate();
 			if (isAuthority && characterMotor)
 			{
-				characterMotor.moveDirection = inputBank.moveVector;
-				if (fixedAge >= minimumDuration && (detonateNextFrame || (characterMotor.Motor.GroundingStatus.IsStableOnGround && !characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
+				if (fixedAge >= duration && isAuthority)
 				{
-					DoImpactAuthority();
+					//DetonateAuthority();
 					endedSuccessfully = true;
 					SS2Log.Warning("FixedUpdate Fire");
-					outer.SetNextState(new MimicLeapExit());
+					outer.SetNextState(new MimicChestActivateExit());
 				}
 			}
 			if (NetworkServer.active)
 			{
 				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
 			}
-		}
-
-		protected void DoImpactAuthority()
-		{
-			SS2Log.Warning("DoImpactAuthority");
-			if (landingSound)
-			{
-				EffectManager.SimpleSoundEffect(landingSound.index, characterBody.footPosition, true);
-			}
-			DetonateAuthority();
 		}
 
 		protected BlastAttack.Result DetonateAuthority()
@@ -138,7 +118,7 @@ namespace EntityStates.Mimic
 			SS2Log.Warning("Detonate Authority");
 			SS2Log.Warning("attacker : " + gameObject);
 			SS2Log.Warning("damageStat : " + damageStat);
-			SS2Log.Warning("damageCoeff : " + damageCoeff);
+			SS2Log.Warning("blastDamageCoefficient : " + damageCoeff);
 			SS2Log.Warning("blastForce : " + blastForce);
 			SS2Log.Warning("blastBonusForce : " + blastBonusForce);
 			SS2Log.Warning("isCritAuthority : " + isCritAuthority);
@@ -149,8 +129,7 @@ namespace EntityStates.Mimic
 			SS2Log.Warning("attacker : " + gameObject);
 
 
-
-			return new BlastAttack
+			var attack =  new BlastAttack
 			{
 				attacker = gameObject,
 				baseDamage = damageStat * damageCoeff,
@@ -165,16 +144,22 @@ namespace EntityStates.Mimic
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
 				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex
-			}.Fire();
+			};
+
+			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.Mimic.StealItemDamageType);
+
+			return attack.Fire(); 
 		}
 
 		public override void OnExit()
 		{
+
+			SS2Log.Info("MimicChestActivateLoop EXIT");
 			Util.PlaySound(soundLoopStopEvent, gameObject);
-			if (isAuthority)
-			{
-				characterMotor.onMovementHit -= OnMovementHit;
-			}
+			//if (isAuthority)
+			//{
+			//	characterMotor.onMovementHit -= OnMovementHit;
+			//}
 			characterMotor.airControl = previousAirControl;
 			base.OnExit();
 
@@ -182,12 +167,15 @@ namespace EntityStates.Mimic
 			{
 				PlayAnimation("FullBody, Override", "BufferEmpty");
 			}
+            else
+            {
+				DetonateAuthority();
+			}
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()
-		{
-			return InterruptPriority.PrioritySkill;
-		}
-		
-	}
+        {
+            return InterruptPriority.PrioritySkill;
+        }
+    }
 }

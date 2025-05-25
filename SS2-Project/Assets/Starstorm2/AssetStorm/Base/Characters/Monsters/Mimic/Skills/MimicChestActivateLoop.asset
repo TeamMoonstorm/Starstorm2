@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: MimicLeapLoop
+  m_Name: MimicChestActivateLoop
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Mimic.MimicLeapLoop, Starstorm2, Version=1.0.0.0,
-      Culture=neutral, PublicKeyToken=null
+    assemblyQualifiedName: EntityStates.Mimic.MimicChestActivateLoop, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
     - fieldName: biteEffect
       fieldValue:
         stringValue: 
@@ -55,11 +59,11 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: upwardVelocity
       fieldValue:
-        stringValue: 10
+        stringValue: 6
         objectValue: {fileID: 0}
     - fieldName: forwardVelocity
       fieldValue:
-        stringValue: 4
+        stringValue: 2
         objectValue: {fileID: 0}
     - fieldName: minimumY
       fieldValue:

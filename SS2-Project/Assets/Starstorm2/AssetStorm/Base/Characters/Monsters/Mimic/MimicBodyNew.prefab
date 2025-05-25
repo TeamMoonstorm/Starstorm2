@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
+  healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 0
   damageModifier: 0
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
+  healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 1
   damageModifier: 0
@@ -1093,7 +1093,7 @@ MonoBehaviour:
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
+  healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 0
   damageModifier: 0
@@ -1157,7 +1157,7 @@ MonoBehaviour:
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthComponent: {fileID: 0}
+  healthComponent: {fileID: 7538489209536380576}
   isBullseye: 1
   isSniperTarget: 0
   damageModifier: 0
@@ -1800,6 +1800,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90.36562
       objectReference: {fileID: 0}
+    - target: {fileID: -5162997288872949067, guid: b633ec2733078fd4eb312f2a257422cc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0910a420b8fe8244db7f8adb8e3c63de, type: 2}
+    - target: {fileID: -4888779860487815875, guid: b633ec2733078fd4eb312f2a257422cc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0910a420b8fe8244db7f8adb8e3c63de, type: 2}
     - target: {fileID: -4832303692880403382, guid: b633ec2733078fd4eb312f2a257422cc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -3210,6 +3220,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 109.81282
       objectReference: {fileID: 0}
+    - target: {fileID: 1432257401734733106, guid: b633ec2733078fd4eb312f2a257422cc,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0910a420b8fe8244db7f8adb8e3c63de, type: 2}
     - target: {fileID: 1959699109437184836, guid: b633ec2733078fd4eb312f2a257422cc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4874,7 +4889,7 @@ MonoBehaviour:
   m_Script: {fileID: -1161602148, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entity: {fileID: 0}
+  entity: {fileID: 6834269246480251630}
   entityZoneIndex: 0
 --- !u!114 &1473136892697998153
 MonoBehaviour:
@@ -5162,8 +5177,8 @@ MonoBehaviour:
   m_Script: {fileID: 1392865457, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputBank: {fileID: 0}
-  directionComponent: {fileID: 0}
+  inputBank: {fileID: 5256114729885995905}
+  directionComponent: {fileID: 6887562311180294278}
   pitchRangeMin: -60
   pitchRangeMax: 60
   yawRangeMin: -90
@@ -5212,12 +5227,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  mainHurtBox: {fileID: 0}
-  bullseyeCount: 0
+  - {fileID: 2634937646881772031}
+  - {fileID: 1716825977873983576}
+  - {fileID: 4979992371765693414}
+  - {fileID: 6742170549451550344}
+  mainHurtBox: {fileID: 2634937646881772031}
+  bullseyeCount: 1
 --- !u!114 &7263045207606268550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5247,6 +5262,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
+--- !u!114 &3365092041113736748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6834269246480251630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1271010, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InspectInfo: {fileID: 0}
+  inspectHintOverrideToken: 
 --- !u!137 &7656122838603369738 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -5162997288872949067, guid: b633ec2733078fd4eb312f2a257422cc,

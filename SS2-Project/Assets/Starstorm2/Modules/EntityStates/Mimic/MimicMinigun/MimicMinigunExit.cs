@@ -22,6 +22,16 @@ namespace EntityStates.Mimic.Weapon
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             PlayCrossfade("Gesture, Override", "MinigunExit", "MinigunFire.playbackRate", duration, 0.05f);
+
+            if (fireVFXInstanceLeft)
+            {
+                EntityState.Destroy(fireVFXInstanceLeft);
+            }
+
+            if (fireVFXInstanceRight)
+            {
+                EntityState.Destroy(fireVFXInstanceRight);
+            }
             //Util.PlayAttackSpeedSound(MinigunSpinDown.sound, base.gameObject, this.attackSpeedStat);
             //base.GetModelAnimator().SetBool(MinigunSpinDown.WeaponIsReadyParamHash, false);
         }

@@ -69,13 +69,13 @@ namespace EntityStates.Mimic
                 timer += Time.fixedDeltaTime;
                 if (timer >= duration && isAuthority)
                 {
-                    outer.SetNextState(new MimicChestOpen()); //leap
+                    outer.SetNextState(new MimicChestActivateEnter()); //leap
                 }
             }
         }
         void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
         {
-            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed) && skillSlot.ExecuteIfReady())
+            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed) && skillSlot.ExecuteIfReady() && (UnityEngine.Random.Range(0, 4) == 0 || characterBody.isPlayerControlled))
             {
                 buttonState.hasPressBeenClaimed = true;
             }
