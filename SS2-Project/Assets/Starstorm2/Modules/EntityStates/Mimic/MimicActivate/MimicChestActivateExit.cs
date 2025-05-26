@@ -28,7 +28,7 @@ namespace EntityStates.Mimic
         public override void OnExit()
         {
             base.OnExit();
-            PlayAnimation("FullBody, Override", "BufferEmpty");
+            
             SS2Log.Warning("MimicChestActivateExit Exit ");
         }
 

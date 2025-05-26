@@ -19,6 +19,9 @@ namespace EntityStates.Mimic
 
 			PlayCrossfade("FullBody, Override", "LeapEnter", "Leap.playbackRate", duration, 0.05f);
 
+			var animator = GetModelAnimator();
+			animator.SetBool("isGrounded", false);
+
 			characterMotor.walkSpeedPenaltyCoefficient += .6f;
 		}
 

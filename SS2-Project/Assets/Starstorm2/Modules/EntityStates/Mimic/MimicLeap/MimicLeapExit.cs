@@ -32,7 +32,7 @@ namespace EntityStates.Mimic
 		public override void OnExit()
 		{
 			base.OnExit();
-			PlayAnimation("FullBody, Override", "BufferEmpty");
+			//PlayAnimation("FullBody, Override", "BufferEmpty");
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()

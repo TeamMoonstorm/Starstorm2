@@ -12,12 +12,10 @@ namespace EntityStates.Mimic
 	{
 		public static float baseDuration;
 		private float duration;
-
-		public static float minimumDuration;
 		public static float blastRadius;
 
 		public static float blastProcCoefficient;
-		public float damageCoeff = 3; //this fucking value REFUSES to be set via an esc. im hardcoding it. 
+		public static float damageCoeff;
 
 		public float blastForce;
 		public Vector3 blastBonusForce;
@@ -48,6 +46,7 @@ namespace EntityStates.Mimic
 		private bool detonateNextFrame;
 
 		private bool endedSuccessfully = false;
+		private bool stopDoingThat = false;
 
 		public override void OnEnter()
 		{
@@ -109,12 +108,6 @@ namespace EntityStates.Mimic
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
-			//Vector3 footPosition = characterBody.corePosition;
-			//EffectManager.SpawnEffect(blastEffectPrefab, new EffectData
-			//{
-			//	origin = footPosition,
-			//	scale = blastRadius
-			//}, true);
 			SS2Log.Warning("Detonate Authority");
 			SS2Log.Warning("attacker : " + gameObject);
 			SS2Log.Warning("damageStat : " + damageStat);
@@ -143,7 +136,8 @@ namespace EntityStates.Mimic
 				position = characterBody.corePosition,
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
 				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
-				teamIndex = teamComponent.teamIndex
+				teamIndex = teamComponent.teamIndex,
+				
 			};
 
 			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.Mimic.StealItemDamageType);

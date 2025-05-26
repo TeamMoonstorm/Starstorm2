@@ -121,6 +121,15 @@ namespace EntityStates.Mimic.Weapon
 			if (!endedSuccessfully)
 			{
 				PlayAnimation("Gesture, Override", "BufferEmpty");
+				if (fireVFXInstanceLeft)
+				{
+					EntityState.Destroy(fireVFXInstanceLeft);
+				}
+
+				if (fireVFXInstanceRight)
+				{
+					EntityState.Destroy(fireVFXInstanceRight);
+				}
 			}
 		}
 

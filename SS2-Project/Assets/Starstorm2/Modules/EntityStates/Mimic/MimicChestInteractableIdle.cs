@@ -25,13 +25,14 @@ namespace EntityStates.Mimic
 
         private float timer = 0;
         private Animator anim;
+
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            var intermediate = GetComponent<ModelLocator>();
+            //var intermediate = GetComponent<ModelLocator>();
 
-            purchaseInter = intermediate.modelTransform.GetComponent<PurchaseInteraction>();
+            purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
@@ -45,6 +46,8 @@ namespace EntityStates.Mimic
             {
                 OnPurchaseMimic(interactor, purchaseInter);
             });
+
+            //modelLocator
 
             //characterBody.inventory.GiveItem()
 
@@ -75,9 +78,17 @@ namespace EntityStates.Mimic
         }
         void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
         {
-            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed) && skillSlot.ExecuteIfReady() && (UnityEngine.Random.Range(0, 4) == 0 || characterBody.isPlayerControlled))
+            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed))
             {
-                buttonState.hasPressBeenClaimed = true;
+                if (UnityEngine.Random.Range(0, 4) == 0)
+                {
+                    skillSlot.ExecuteIfReady();
+                    buttonState.hasPressBeenClaimed = true;
+                }
+                else
+                {
+                    skillSlot.RemoveAllStocks();
+                }
             }
         }
         public override void OnExit()

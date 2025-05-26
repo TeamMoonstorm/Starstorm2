@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Hologram;
 using SS2;
 using System;
 using UnityEngine;
@@ -29,7 +30,11 @@ namespace EntityStates.Mimic
             SS2Log.Warning("Mimic Chest Open On Enter HIIIII ");
             base.OnEnter();
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
+            PlayCrossfade("Body", "Idle", .05f);
             var intermediate = GetComponent<ModelLocator>();
+
+            var animator = GetModelAnimator();
+            animator.SetBool("isGrounded", false);
 
             purchaseInter = intermediate.modelTransform.GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
@@ -87,9 +92,10 @@ namespace EntityStates.Mimic
                 box.gameObject.SetActive(true);
             }
 
-            intermediate.modelTransform.GetComponent<GenericInspectInfoProvider>().enabled = false;
-            intermediate.modelTransform.GetComponent<GenericDisplayNameProvider>().enabled = false;
-            intermediate.modelTransform.GetComponent<PingInfoProvider>().enabled = false;
+            GetComponent<GenericInspectInfoProvider>().enabled = false;
+            GetComponent<GenericDisplayNameProvider>().enabled = false;
+            GetComponent<PingInfoProvider>().enabled = false;
+            GetComponent<HologramProjector>().enabled = false;
             intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(false);
 
             intermediate.modelTransform.GetComponent<BoxCollider>().enabled = false;

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedCardPairs:
   - stage:
-      Value: -1
+      Value: -2
     customStageNames: []
     interactableCategory: 2
     customCategoryWeight: 0
@@ -25,10 +25,10 @@ MonoBehaviour:
         _asset: {fileID: 11400000, guid: 4d35c2f91855c854abd3573322147753, type: 2}
         _address: 
         _useDirectReference: 1
-      selectionWeight: 30
+      selectionWeight: 60
       spawnDistance: 0
       preventOverhead: 0
-      minimumStageCompletions: 2
+      minimumStageCompletions: 0
       requiredUnlockableDef:
         _asset: {fileID: 0}
         _address: 

@@ -16,7 +16,7 @@ namespace EntityStates.Mimic
 		public static float blastRadius;
 
 		public static float blastProcCoefficient;
-		public float damageCoeff = 3; //this fucking value REFUSES to be set via an esc. im hardcoding it. 
+		public static float damageCoeff;
 
 		public float blastForce;
 		public Vector3 blastBonusForce;
@@ -182,6 +182,7 @@ namespace EntityStates.Mimic
 			{
 				PlayAnimation("FullBody, Override", "BufferEmpty");
 			}
+            
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()
