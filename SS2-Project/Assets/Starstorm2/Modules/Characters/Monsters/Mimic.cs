@@ -177,7 +177,7 @@ namespace SS2.Monsters
 
 		public override bool IsAvailable(ContentPack contentPack)
 		{
-			return true;
+			return false;
 		}
 
 	}
