@@ -21,7 +21,7 @@ namespace SS2.Monsters
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
-			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			//On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
 		}
 
