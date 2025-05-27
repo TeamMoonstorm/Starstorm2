@@ -46,7 +46,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false; //disabled for now
+            return true; //disabled for now
         }
 
         public override void Initialize()
@@ -172,8 +172,11 @@ namespace SS2.Items
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
+                //SS2Log.Warning("burger");
+
                 if (body.HasBuff(SS2Content.Buffs.BuffEchelon))
                 {
+                    //SS2Log.Error("nuggetsh true");
                     args.baseDamageAdd += (damageBonus * (stack - 1));
                     args.baseHealthAdd += (healthBonus * (stack - 1));
                 }

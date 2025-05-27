@@ -1,0 +1,61 @@
+{
+  "strings": {
+    "SS2_NEMCAPTAIN_NAME": "Враждебный Капитан",
+    "SS2_NEMCAPTAIN_SUBTITLE": "Погибший со своим кораблём",
+    "SS2_NEMCAPTAIN_DESCRIPTION": "Враждебный Капитан отдаёт приказы для контроля поля боя, сражаясь безопасно за спиной своих Адаптивных Микроботов.\n\n<color=#CCD3E0>< ! > Сохраняйте хладнокровие. Слишком частое использование Приказов увеличит Уровень Стресса, делая вас уязвимым.</color>",
+    "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "..и он удалился, закурив свежую сигару.",
+    "SS2_NEMCAPTAIN_OUTRO_FAILURE": "..и он исчез, наконец отправленный в отставку.",
+    "SS2_NEMCAPTAIN_LORE": "Эта планета отстой, чувак... *затягивается сигарой*",
+
+    "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "Механика Стресса",
+    "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "Получайте <style=cIsHealth>Стресс</style> в опасных ситуациях. При максимальном уровне Стресса временно становитесь <style=cIsHealth>Перегруженным</style>, теряя <style=cIsUtility>скорость передвижения</style>, <style=cIsUtility>броню</style> и <style=cIsDamage>урон</style>.",
+
+    "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Стресс</style><style=cSub>Увеличивается при окружении врагами, получении урона или использовании Приказов. Уменьшается при нанесении Критических Ударов, лечении, убийствах врагов, использовании определённых Приказов и вне боя.</style>",
+    "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS": "<style=cKeywordName>Перегрузка</style><style=cSub>Вы получаете эффекты максимального Стресса, а также -30% к скорости передвижения, -20 к броне и -50% к урону, пока уровень Стресса не снизится до 0.</style>",
+
+    "SS2_NEMCAPTAIN_PRIMARY_NAME": "Стандартный Боезапас",
+    "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Быстро стреляйте, нанося <style=cIsDamage>90% урона</style> за пулю. Вместимость магазина — 20 патронов.",
+
+    "SS2_NEMCAPTAIN_SECONDARY_NAME": "Личный Резерв",
+    "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Оглушение</style>. Прицельтесь из трости-ружья и выстрелите, нанося <style=cIsDamage>680% урона</style>.",
+
+    "SS2_NEMCAPTAIN_PUNCH_NAME": "Фудзин",
+    "SS2_NEMCAPTAIN_PUNCH_DESCRIPTION": "<style=cIsDamage>Оглушение</style>. Нанесите удар перед собой, нанося <style=cIsDamage>150% урона</style>.",
+
+    "SS2_NEMCAPTAIN_HAIDARA_NAME": "Райдзин",
+    "SS2_NEMCAPTAIN_HAIDARA_DESCRIPTION": "<style=cIsDamage>Шок</style>. Выпустите разряд молнии перед собой, нанося <style=cIsDamage>440% урона</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERS_NAME": "Адаптивные Микроботы",
+    "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Активируйте 1 из 4 <style=cIsUtility>Приказов Микроботам</style>. Использование Приказов увеличивает <style=cIsHealth>Стресс</style>. <style=cIsUtility>Удерживайте клавишу</style> Приказа, чтобы <style=cIsUtility>отменить</style> его.",
+
+    "SS2_NEMCAPTAIN_ORDERNULL_NAME": "Обновить Приказ",
+    "SS2_NEMCAPTAIN_ORDERNULL_DESCRIPTION": "Разработайте новый план атаки, слегка увеличив <style=cIsHealth>Стресс</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKE_NAME": "ПРИКАЗ: Удар",
+    "SS2_NEMCAPTAIN_ORDERSTRIKE_DESCRIPTION": "<style=cIsUtility>Оглушение</style>. Наведите Микробота и выпустите лазер, <style=cIsDamage>взрывающийся</style> с уроном <style=cIsDamage>1400%</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_NAME": "ПРИКАЗ: Тройной Удар",
+    "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_DESCRIPTION": "<style=cIsUtility>Оглушение</style>. Наведите Микробота и выпустите лазер, <style=cIsDamage>взрывающийся</style> с уроном <style=cIsDamage>600%</style>. <style=cIsUtility>Можно использовать 3 раза.</style>",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_NAME": "ПРИКАЗ: Удар PSI",
+    "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_DESCRIPTION": "<style=cIsUtility>Заморозка</style>. Наведите Микробота и выпустите лазер, <style=cIsDamage>взрывающийся</style> с уроном <style=cIsDamage>1100%</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_NAME": "ПРИКАЗ: Удар KOPPA",
+    "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_DESCRIPTION": "<style=cIsUtility>Шок</style>. Наведите Микробота и выпустите лазер, <style=cIsDamage>взрывающийся</style> с уроном <style=cIsDamage>900%</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERREGEN_NAME": "ПРИКАЗ: Релаксант",
+    "SS2_NEMCAPTAIN_ORDERREGEN_DESCRIPTION": "Временно увеличивает скорость снижения Стресса на <style=cIsUtility>15 секунд</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERREDUCE_NAME": "ПРИКАЗ: Стимулянт",
+    "SS2_NEMCAPTAIN_ORDERREDUCE_DESCRIPTION": "Временно уменьшает получаемый Стресс от всех источников на <style=cIsUtility>50%</style> в течение <style=cIsUtility>10 секунд</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERRECOVER_NAME": "ПРИКАЗ: Полный Сброс",
+    "SS2_NEMCAPTAIN_ORDERRECOVER_DESCRIPTION": "Значительно снижает текущий уровень Стресса и <style=cIsUtility>отменяет все другие Приказы</style>. Эффективность увеличивается за каждый отменённый Приказ.",
+
+    "SS2_NEMCAPTAIN_ORDERHEAL_NAME": "ПРИКАЗ: Поле Бодрости",
+    "SS2_NEMCAPTAIN_ORDERHEAL_DESCRIPTION": "<style=cIsHealing>Лечит</style> союзников на <style=cIsHealing>6%</style> от их <style=cIsHealth>максимального здоровья</style> каждую секунду, а также даёт <style=cIsUtility>50 брони</style> и <style=cIsDamage>+20% к скорости атаки</style> на <style=cIsUtility>12 секунд</style>.",
+
+    "SS2_NEMCAPTAIN_ORDERGRAVITY_NAME": "ПРИКАЗ: Гравитационный Колодец",
+    "SS2_NEMCAPTAIN_ORDERGRAVITY_DESCRIPTION": "<style=cIsUtility>Притягивает</style> врагов в течение <style=cIsUtility>8 секунд</style>."
+  }
+}
