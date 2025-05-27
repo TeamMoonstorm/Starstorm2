@@ -192,6 +192,8 @@ namespace SS2.Items
                 if (createUI)
                 {
                     ObjectivePanelController.collectObjectiveSources += OnCollectObjectiveSources;
+                } else {
+                    ObjectivePanelController.collectObjectiveSources -= OnCollectObjectiveSources;
                 }
             }
         }
