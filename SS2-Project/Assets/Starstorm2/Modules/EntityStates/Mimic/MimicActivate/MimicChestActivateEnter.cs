@@ -31,19 +31,19 @@ namespace EntityStates.Mimic
             base.OnEnter();
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
             PlayCrossfade("Body", "Idle", .05f);
-            var intermediate = GetComponent<ModelLocator>();
+            //var intermediate = GetComponent<ModelLocator>();
 
             var animator = GetModelAnimator();
             animator.SetBool("isGrounded", false);
 
-            purchaseInter = intermediate.modelTransform.GetComponent<PurchaseInteraction>();
+            purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
             }
             else
             {
-                SS2Log.Error("Fuck");
+                SS2Log.Error("Fuck (activate  enter)");
             }
 
             //var hbxg = intermediate.modelTransform.GetComponent<HurtBoxGroup>();
@@ -93,8 +93,8 @@ namespace EntityStates.Mimic
             }
 
             GetComponent<GenericInspectInfoProvider>().enabled = false;
-            GetComponent<GenericDisplayNameProvider>().enabled = false;
-            GetComponent<PingInfoProvider>().enabled = false;
+            //GetComponent<GenericDisplayNameProvider>().enabled = false;
+            //GetComponent<PingInfoProvider>().enabled = false;
             GetComponent<HologramProjector>().enabled = false;
             intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(false);
 
