@@ -2,7 +2,7 @@
 
 ### 0.6.20
 * General
-    * New RU translation thanks to 
+    * New RU translation thanks to DSOverlord
 * Survivors
     * Attempt has been made to fix Executioners secondary not working with backup mag
 * Items

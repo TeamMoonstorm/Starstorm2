@@ -30,19 +30,19 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* Buns, Nebby, orbeezeater22, swuff★, Zenithrium
+* Buns, Nebby, orbeezeater22, swuff★, Zenithrium, EarthZebra, JaceCascade
 
 With previous and one-off code contributions by...
-* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, JaceCascade, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, Starnoenas, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, Gemo, SkeletorChampion, SOM, Spenny, Starnoenas, Smxrez, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, YarrowQueen/Resident Providence, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
+* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
-* Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
+* Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
 ## Feedback, Bug Reporting & Known Issues
 
