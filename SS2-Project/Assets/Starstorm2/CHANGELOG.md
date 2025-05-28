@@ -1,5 +1,16 @@
   **Warning: content spoilers below!**
 
+### 0.6.20
+* General
+    * New RU translation thanks to 
+* Survivors
+    * Attempt has been made to fix Executioners secondary not working with backup mag
+* Items
+    * Fixed hook on Jet Boots
+    * Relic of Extinction has been added as a tierless item you can test with debug toolkit! 
+    * Items reimported to hopefully fix the logbook issues
+    * Primal Birthright networked objective fixes / fixed issues with clients not seeing the chets
+
 ### 0.6.19
 * Survivors
     * Executioner's fear execute is still broken for now. We are working on a more comphrensive fix alongside Jet Boots
