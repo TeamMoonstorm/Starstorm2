@@ -47,6 +47,8 @@ namespace EntityStates.Mimic
                 OnPurchaseMimic(interactor, purchaseInter);
             });
 
+
+
             //modelLocator
 
             //characterBody.inventory.GiveItem()

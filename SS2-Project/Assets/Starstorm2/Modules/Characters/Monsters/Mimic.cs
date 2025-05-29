@@ -6,8 +6,10 @@ using RoR2.UI;
 using SS2.Components;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
@@ -20,6 +22,10 @@ namespace SS2.Monsters
 		public static GameObject _masterPrefab;
 		public static ModdedDamageType StealItemDamageType { get; private set; }
 
+		public Xoroshiro128Plus mimicItemRng;
+		MimicDropTable mimicDT;
+		public GameObject itemOrb;
+
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
@@ -27,12 +33,20 @@ namespace SS2.Monsters
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			//On.RoR2.Interactor.FindBestInteractableObject += FindBest;
 			//On.RoR2.PingerController.AttemptPing += Why;
-			//On.RoR2.PingerController.GeneratePingInfo += GenPing;
+			On.RoR2.PingerController.GeneratePingInfo += GenPing;
 
 			On.RoR2.CharacterMaster.Start += StartMimic;
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
+
+			mimicDT = ScriptableObject.CreateInstance<MimicDropTable>();
+			//RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab 	
+			//RoR2/Base/Common/VFX/ItemTransferOrbEffect.prefab
+
+			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
+
 		}
 
         private void StartMimic(On.RoR2.CharacterMaster.orig_Start orig, CharacterMaster self)
@@ -40,6 +54,29 @@ namespace SS2.Monsters
 			SS2Log.Warning("self " + self + " | " + self.name + " | " + self.bodyInstanceObject);
 			orig(self);
 			SS2Log.Warning("AFTER " + self + " | " + self.name + " | " + self.bodyInstanceObject);
+			
+			if (self.name.Contains("Mimic"))
+            {
+				if (mimicItemRng == null)
+				{
+					mimicItemRng = new Xoroshiro128Plus(Run.instance.seed);
+					SS2Log.Warning("rng " + mimicItemRng);
+				}
+
+				var mim = self.GetBody().GetComponent<MimicInventoryManager>();
+				if (mim)
+				{
+					var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
+					var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+					SS2Log.Warning("item " + item + " | itemIndex " + itemIndex + " | ");
+					self.inventory.GiveItem(itemIndex);
+					SS2Log.Warning("adding " + item + " | mim " + mim + " | ");
+					mim.AddItem(itemIndex);
+				}
+			}
+			
+			
+			//self.inventory.GiveItem()
 		}
 
         private bool GenPing(On.RoR2.PingerController.orig_GeneratePingInfo orig, Ray aimRay, GameObject bodyObject, out PingerController.PingInfo result)
@@ -103,6 +140,7 @@ namespace SS2.Monsters
 			orig(self, aimRay, bodyObject);
         }
 
+		//i dont want to write IL
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
@@ -216,11 +254,39 @@ namespace SS2.Monsters
 			if (obj.victimBody && obj.victimBody.inventory && obj.attackerBody && obj.attackerBody.inventory && DamageAPI.HasModdedDamageType(obj.damageInfo, StealItemDamageType))
 			{
 				var itemList = obj.victimBody.inventory.itemAcquisitionOrder;
+				
 				if (itemList.Count > 0)
 				{
-					int item = UnityEngine.Random.Range(0, itemList.Count);
-					obj.attackerBody.inventory.GiveItem(itemList[item]);
-					obj.victimBody.inventory.RemoveItem(itemList[item]);
+					//int item = UnityEngine.Random.Range(0, itemList.Count);
+					//var ind = itemList[item];
+					//obj.attackerBody.inventory.GiveItem(ind);
+					//obj.victimBody.inventory.RemoveItem(ind);
+
+					var mim = obj.attackerBody.gameObject.GetComponent<MimicInventoryManager>();
+					if (mim)
+					{
+						Util.ShuffleList(itemList);
+						for(int i = 0; i < itemList.Count; ++i)
+                        {
+							var def = ItemCatalog.GetItemDef(itemList[i]);
+							
+							if(def.tier == ItemTier.NoTier) { continue; }
+							
+							obj.attackerBody.inventory.GiveItem(def);
+							obj.victimBody.inventory.RemoveItem(def);
+							mim.AddItem(def.itemIndex);
+
+							EffectData effectData = new EffectData
+							{
+								origin = obj.victimBody.corePosition,
+								genericFloat = 1.5f,
+								genericUInt = (uint)(def.itemIndex + 1)
+							};
+							effectData.SetNetworkedObjectReference(obj.attacker);
+							EffectManager.SpawnEffect(itemOrb, effectData, true);
+							break;
+						}
+					}
 				}
 			}
 		}
@@ -230,5 +296,88 @@ namespace SS2.Monsters
 			return true;
 		}
 
+	}
+	public class MimicTableDropTable : BasicPickupDropTable
+	{
+		private void AddNew(List<PickupIndex> sourceDropList, float listWeight)
+		{
+			if (listWeight <= 0f || sourceDropList.Count == 0)
+			{
+				return;
+			}
+			float weight = listWeight / (float)sourceDropList.Count;
+			foreach (PickupIndex value in sourceDropList)
+			{
+				selector.AddChoice(value, weight);
+			}
+		}
+
+		public PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng, int count)
+		{
+			selector.Clear();
+			AddNew(Run.instance.availableTier1DropList, tier1Weight);
+			AddNew(Run.instance.availableTier2DropList, tier2Weight * (float)count);
+			AddNew(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)count, 2f)); //this is basically the shipping request code but with a slightly lower red weight scaling
+
+			return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
+		}
+
+		public override int GetPickupCount()
+		{
+			return selector.Count;
+		}
+
+		public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
+		{
+			return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
+		}
+
+		new private float tier1Weight = .793f; //.316f;
+
+		new private float tier2Weight = .20f; //.08f;
+
+		new private float tier3Weight = .007f; //.004f;
+
+		new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
+	}
+
+	public class MimicDropTable : PickupDropTable
+	{
+		private void Add(List<PickupIndex> sourceDropList, float listWeight)
+		{
+			if (listWeight <= 0f || sourceDropList.Count == 0)
+			{
+				return;
+			}
+			float weight = listWeight / (float)sourceDropList.Count;
+			foreach (PickupIndex value in sourceDropList)
+			{
+				selector.AddChoice(value, weight);
+			}
+		}
+
+		public override PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng)
+		{
+			int num = 1;
+			selector.Clear();
+			Add(Run.instance.availableTier1DropList, tier1Weight);
+			Add(Run.instance.availableTier2DropList, tier2Weight * (float)num);
+			Add(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)num, 2f));
+			return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
+		}
+
+		public override int GetPickupCount()
+		{
+			return selector.Count;
+		}
+		public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
+		{
+			return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
+		}
+
+		private float tier1Weight = .70f;
+		private float tier2Weight = .25f;
+		private float tier3Weight = .05f;
+		private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>();
 	}
 }

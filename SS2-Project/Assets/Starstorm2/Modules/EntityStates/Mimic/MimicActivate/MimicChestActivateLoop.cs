@@ -138,13 +138,15 @@ namespace EntityStates.Mimic
 				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex,
 				
+				
 			};
 
 			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.Mimic.StealItemDamageType);
 
 			return attack.Fire(); 
-		}
 
+
+		}
 		public override void OnExit()
 		{
 

@@ -12,7 +12,7 @@ namespace SS2.Components
         private void Start()
         {
 			Vector3 vec = this.transform.position;
-			vec.y += 0.5f;
+			vec.y += 0.05f;
 			SS2Log.Warning(" im tired  : " + masterObject);
 			GameObject masterInstance = Object.Instantiate<GameObject>(masterObject, vec, Quaternion.identity);
 

@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using SS2;
+using SS2.Components;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,13 +8,28 @@ namespace EntityStates.Mimic
 {
     public class MimicChestDeath : GenericCharacterDeath
     {
-        private List<ItemIndex> itemInd;
-
         public override void OnEnter()
         {
             base.OnEnter();
-            itemInd = characterBody.inventory.itemAcquisitionOrder;
-            SS2Log.Warning("Death On Enter : " + itemInd.Count);
+            if (gameObject)
+            {
+                if (gameObject)
+                {
+                    var mim = gameObject.GetComponent<MimicInventoryManager>();
+                    SS2Log.Error("Death enter : " + mim + " | ");
+                    if (mim)
+                    {
+                        SS2Log.Error("calling : " + mim + " | ");
+                        mim.BeginCountdown();
+                    }
+                    //Util.PlaySound("Play_UI_chest_unlock", gameObject);
+                }
+                //Util.PlaySound("Play_UI_chest_unlock", gameObject);
+            }
+            //itemInd = characterBody.inventory.itemAcquisitionOrder;
+
+            //character
+            //SS2Log.Warning("Death On Enter : " + itemInd.Count);
         }
 
         public override void FixedUpdate()
@@ -22,24 +38,9 @@ namespace EntityStates.Mimic
         }
 
         public override void OnExit()
-        { 
-            var pivot = FindModelChild("PickupPivot");
-            SS2Log.Warning("Death Exit : " + pivot + " | " + itemInd.Count);
-            if (itemInd.Count > 0 && pivot)
-            {
-                var dir = characterDirection.forward;
-                var angle = 90 / itemInd.Count;
-    
-                Vector3 vec = Vector3.up * 5 + dir * 5;
-                Quaternion rot = Quaternion.AngleAxis(angle, Vector3.up);
-                
-                foreach (var ind in itemInd)
-                {
-                    var pind = RoR2.PickupCatalog.FindPickupIndex(ind);                    
-                    PickupDropletController.CreatePickupDroplet(pind, pivot.position, vec);
-                    vec = rot * vec;
-                }
-            }
+        {
+            SS2Log.Error("Death Exit : " + gameObject);
+
             base.OnExit();
         }
     }
