@@ -1,5 +1,11 @@
   **Warning: content spoilers below!**
 
+### 0.6.21
+* General
+    * Got rid of the Unlock All config
+* Items
+    * Disable item config now works again! Yay!
+
 ### 0.6.20
 * General
     * New RU translation thanks to DSOverlord
