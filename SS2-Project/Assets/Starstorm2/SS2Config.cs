@@ -76,7 +76,6 @@ namespace SS2
             
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
-            unlockAll.WithConfigFile(ConfigMain).DoConfigure();
 
             //RoR2Application.onLoad += CreateConfigs;
         }

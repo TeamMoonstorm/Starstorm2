@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using RiskOfOptions.OptionConfigs;
 
 namespace SS2
 {
@@ -25,9 +27,24 @@ namespace SS2
 
         public abstract SS2AssetRequest AssetRequest();
 
-
         public abstract void Initialize();
-        public abstract bool IsAvailable(ContentPack contentPack);
+
+        public static ConfiguredBool DisableItem = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.section = SS2Config.ID_ITEM;
+            b.key = "Disable item?";
+            b.description = "Set this to true if you want to disable this item from appearing in game.";
+            b.configFile = SS2Config.ConfigEvent;
+            b.checkBoxConfig = new CheckBoxConfig
+            {
+                restartRequired = true
+            };
+        }).DoConfigure();
+
+        public virtual bool IsAvailable(ContentPack contentPack)
+        {
+            return !DisableItem;
+        }
         public virtual IEnumerator LoadContentAsync()
         {
             SS2AssetRequest request = AssetRequest();

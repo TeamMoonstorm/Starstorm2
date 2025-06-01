@@ -30,11 +30,6 @@ namespace SS2.Items
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]

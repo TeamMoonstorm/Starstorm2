@@ -50,11 +50,6 @@ namespace SS2.Items
             if (skill4) GameObject.Instantiate(overlayPanel, skill4);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

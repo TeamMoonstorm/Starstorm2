@@ -41,7 +41,7 @@ namespace SS2
             };
         }).DoConfigure();
 
-        public bool IsAvailable(ContentPack contentPack) {
+        public virtual bool IsAvailable(ContentPack contentPack) {
             return !DisableItem;
         }
 

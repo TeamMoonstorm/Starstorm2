@@ -28,11 +28,6 @@ namespace SS2.Items
             IL.RoR2.HealthComponent.HandleDamageDealt += AddForkDamageNumber;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void ForkDamage(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             int stack = sender.inventory ? sender.inventory.GetItemCount(ItemDef) : 0;
