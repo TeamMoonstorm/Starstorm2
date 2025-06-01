@@ -36,14 +36,6 @@ namespace SS2
         //public static ConfigFile ConfigInteractable { get; private set; }
         public static ConfigFile ConfigMisc { get; private set; }
 
-        internal static ConfiguredBool unlockAll = new ConfiguredBool(false)
-        {
-            section = "General",
-            key = "Unlock All",
-            description = "Setting this to true unlocks all the content in Starstorm 2, excluding skin unlocks.",
-            modGUID = SS2Main.GUID,
-            modName = SS2Main.MODNAME,
-        };
         internal static ConfiguredBool EnableItems;
         public static ConfiguredBool EnableEquipments;
         public static ConfiguredBool EnableInteractables;
