@@ -149,7 +149,7 @@ namespace EntityStates.Executioner2
                     search.searchOrigin = ray.origin;
                     search.searchDirection = ray.direction;
                     search.RefreshCandidates();
-                    targets = search.GetResults().Where(new Func<HurtBox, bool>(Util.IsValid)).Distinct(default(HurtBox.EntityEqualityComparer)).ToList();
+                    targets = search.GetResults().ToList();
                     if (targets.Count > 0 && targets[0].healthComponent)
                     {
                         //idx = (idx + 1) % targets.Count;

@@ -27,7 +27,7 @@ namespace SS2.Survivors
         public static GameObject plumeEffectLarge;
         public static GameObject taserVFX;
         public static GameObject taserVFXFade;
-
+        public static GameObject fearEffectPrefab;
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
@@ -49,6 +49,7 @@ namespace SS2.Survivors
         {
             plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
             plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
+            fearEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerFearEffect");
 
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
@@ -69,6 +70,13 @@ namespace SS2.Survivors
             if(sender.HasBuff(SS2Content.Buffs.BuffFear))
             {
                 args.moveSpeedReductionMultAdd += 0.5f;
+            }
+
+            int consecrationStack = sender.GetBuffCount(SS2Content.Buffs.bdConsecration);
+            if(consecrationStack > 0)
+            {
+                args.attackSpeedMultAdd += 0.1f * consecrationStack;
+                args.moveSpeedMultAdd += 0.1f * consecrationStack;
             }
         }
 
@@ -226,6 +234,45 @@ namespace SS2.Survivors
                     return 3;
                 default:
                     return 1;
+            }
+        }
+        public sealed class FearBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFear;
+
+            private GameObject effectInstance;
+            private static string activationSoundString = "Play_voidman_R_pop";
+            private Collider bodyCollider;
+            private void OnEnable()
+            {
+                effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                Util.PlaySound(activationSoundString, gameObject);
+                if(!bodyCollider)
+                    bodyCollider = base.GetComponent<Collider>();
+            }
+            private void OnDisable()
+            {
+                Destroy(effectInstance);
+            }
+
+            private void FixedUpdate()
+            {
+                if (!base.characterBody.healthComponent.alive)
+                    Destroy(this.effectInstance);
+            }
+
+            private void Update()
+            {
+                if (effectInstance)
+                {
+                    Vector3 a = base.transform.position;
+                    if (this.bodyCollider)
+                    {
+                        a = this.bodyCollider.bounds.center + new Vector3(0f, this.bodyCollider.bounds.extents.y, 0f);
+                    }
+                    effectInstance.transform.position = a;
+                }
             }
         }
 

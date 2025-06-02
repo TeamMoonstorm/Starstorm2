@@ -13,10 +13,9 @@ namespace SS2.Orbs
 
         //private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
         private const float speed = 50f;
-        private string skinNameToken;
 
-        private static GameObject _orbEffect;
-        private static GameObject _masteryOrbEffect;
+        protected static GameObject _orbEffect;
+        protected static GameObject _masteryOrbEffect;
 
         [AsyncAssetLoad]
         private static IEnumerator LoadAssets()
@@ -52,10 +51,44 @@ namespace SS2.Orbs
             if (hurtBox)
             {
                 execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();
-                skinNameToken = hurtBox.gameObject.transform.root.GetComponentInChildren<ModelSkinController>().skins[hurtBox.healthComponent.body.skinIndex].nameToken;
+                if (execController && execController.inMasterySkin)
+                {
+                    EffectManager.SpawnEffect(_masteryOrbEffect, effectData, true);
+                }
+                else
+                {
+                    EffectManager.SpawnEffect(_orbEffect, effectData, true);
+                }
+            }
+        }
 
+        public override void OnArrival()
+        {
+            if (execController)
+            {
+                execController.RpcAddIonCharge();
+                //if (sound)
+                //    EffectManager.SimpleSoundEffect(sound.index, execController.transform.position, true);
+            }
+        }
+    }
 
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+    public class ExecutionerBloodOrb : ExecutionerIonOrb
+    {
+        public override void Begin()
+        {
+            EffectData effectData = new EffectData
+            {
+                origin = origin,
+                genericFloat = duration
+            };
+            effectData.SetHurtBoxReference(target);
+
+            HurtBox hurtBox = target.GetComponent<HurtBox>();
+            if (hurtBox)
+            {
+                execController = hurtBox.healthComponent.GetComponent<ExecutionerController>();
+                if (execController && execController.inMasterySkin)
                 {
                     EffectManager.SpawnEffect(_masteryOrbEffect, effectData, true);
                 }
