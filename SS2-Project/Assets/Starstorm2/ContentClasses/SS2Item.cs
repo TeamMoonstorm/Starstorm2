@@ -29,20 +29,21 @@ namespace SS2
 
         public abstract void Initialize();
 
-        public static ConfiguredBool DisableItem = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        public virtual bool IsAvailable(ContentPack conentPack)
         {
-            b.section = SS2Config.ID_ITEM;
-            b.key = "Disable item?";
-            b.description = "Set this to true if you want to disable this item from appearing in game.";
-            b.configFile = SS2Config.ConfigEvent;
-            b.checkBoxConfig = new CheckBoxConfig
+            ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
             {
-                restartRequired = true
-            };
-        }).DoConfigure();
+                b.section = "Item Disabling";
+                b.key = $"Disable Item: {MSUtil.NicifyString(GetType().Name)}";
+                b.description = "Set this to true if you want to disable this item from appearing in game.";
+                b.configFile = SS2Config.ConfigItem;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true
+                };
+            }).DoConfigure();
 
-        public virtual bool IsAvailable(ContentPack contentPack) {
-            return !DisableItem;
+            return !isDisabled;
         }
 
         public virtual IEnumerator LoadContentAsync()
