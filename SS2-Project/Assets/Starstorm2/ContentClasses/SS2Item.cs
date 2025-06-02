@@ -33,7 +33,7 @@ namespace SS2
         {
             ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
             {
-                b.section = "Item Disabling";
+                b.section = "00 - Item Disabling";
                 b.key = $"Disable Item: {MSUtil.NicifyString(GetType().Name)}";
                 b.description = "Set this to true if you want to disable this item from appearing in game.";
                 b.configFile = SS2Config.ConfigItem;

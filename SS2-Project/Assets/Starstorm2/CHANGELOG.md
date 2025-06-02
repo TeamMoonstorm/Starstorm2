@@ -2,7 +2,9 @@
 
 ### 0.6.21
 * General
-    * Got rid of the Unlock All config
+    * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
+* Survivors
+    * 
 * Items
     * Configs now work again! You can freely disable items and equipment once more
 * Drones
