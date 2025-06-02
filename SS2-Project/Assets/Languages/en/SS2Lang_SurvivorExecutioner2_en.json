@@ -21,7 +21,7 @@
     "SS2_EXECUTIONER_PISTOL_DESCRIPTION": "Fire your pistol for <style=cIsDamage>180% damage</style>.",
 
     "SS2_EXECUTIONER2_EXECUTION_NAME": "Execution",
-    "SS2_EXECUTIONER2_EXECUTION_DESC": "<style=cIsDamage>Executing</style>. Leap up, and <style=cIsDamage>slam</style> down with an ion axe for <style=cIsDamage>1450% damage</style>. <style=cIsUtility>Hold to aim.</style>",
+    "SS2_EXECUTIONER2_EXECUTION_DESC": "Leap up, and <style=cIsDamage>slam</style> down with an ion axe for <style=cIsDamage>1450% damage</style>. Hitting an isolated target deals <style=cIsDamage>double damage</style> and restores 3 <color=#29e5f2>Ion Charges</color>.",
 
     "SS2_EXECUTIONER2_FIRINGSQUAD_NAME": "Fusillade",
     "SS2_EXECUTIONER2_FIRINGSQUAD_DESC": "<style=cIsDamage>Shocking</style>. Summon a firing squad of ion guns, rapidly firing ion bullets for <style=cIsDamage>350% damage</style> per bullet but losing <style=cIsHealth>-60% movement speed</style>. <style=cIsUtility>Hold to extend duration. Cooldown scales with usage length.</style>",
@@ -30,10 +30,16 @@
     "SS2_EXECUTIONER2_IONBURST_DESC": "<style=cIsDamage>Shocking</style>. Rapidly discharge <style=cIsUtility>Ion Manipulator stocks</style> as ion bullets for <style=cIsDamage>350% damage</style> per bullet.",
 
     "SS2_EXECUTIONER2_IONCHARGE_NAME": "Ion Manipulators",
-    "SS2_EXECUTIONER2_IONCHARGE_DESC": "Hold to begin building up to <style=cIsUtility>5 stocks</style>, and replace your <style=cIsDamage>primary skill</style>. <style=cIsUtility>Killing enemies also adds stocks.</style>",
+    "SS2_EXECUTIONER2_IONCHARGE_DESC": "<style=cIsDamage>Shocking</style>. Rapidly discharge <color=#29e5f2>Ion Charges</color> as ion bullets for <style=cIsDamage>350% damage</style>. <color=#29e5f2>Ion Charges</color> are restored on kill.",
+	
+	"SS2_EXECUTIONER2_CONSECRATION_NAME": "Consecration",
+    "SS2_EXECUTIONER2_CONSECRATION_DESC": "Consume all <color=#29e5f2>Ion Charges</color> to <style=cIsHealing>heal</style>, gain <style=cIsUtility>movement speed</style>, and reduce your cooldowns by <style=cIsUtility>1 second</style> per charge.",
 
     "SS2_EXECUTIONER2_DASH_NAME": "Crowd Dispersion",
     "SS2_EXECUTIONER2_DASH_DESC": "<style=cIsUtility>Dash</style> forward and inspire <style=cIsUtility>fear</style> in nearby enemies.</style>",
+	
+	"SS2_EXECUTIONER2_BLOODLETTING_NAME": "Bloodletting",
+    "SS2_EXECUTIONER2_BLOODLETTING_DESC": "Consume <style=cIsHealth>25%</style> of your health to inspire <style=cIsUtility>fear</style> in nearby enemies and</style> gain 3 <color=#29e5f2>Ion Charges</color>.",
 
     "SS2_EXECUTIONER2_IONJUGGERNAUT_NAME": "Ion Overlord",
     "SS2_EXECUTIONER2_IONJUGGERNAUT_DESC": "Swing your ion axe for <style=cIsDamage>1700% damage</style> while held. Activating begins slowly consuming <style=cIsUtility>Ion Manipulator charges</style> to project ion armor.",

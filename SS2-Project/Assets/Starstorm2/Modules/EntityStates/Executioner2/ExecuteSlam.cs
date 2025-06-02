@@ -12,8 +12,8 @@ namespace EntityStates.Executioner2
         public static float procCoefficient;
         public static float recoil;
         private static float maxDuration = 10f;
-        private static float walkSpeedCoefficient = 1f;
-        private static float maxAngle = 30f;
+        private static float walkSpeedCoefficient = 1.5f;
+        private static float maxAngle = 37f;
         private static float verticlalSpeed = 100f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
@@ -211,7 +211,7 @@ namespace EntityStates.Executioner2
 
     public class ExecuteImpact : BaseSkillState
     {
-        public static int chargesToGrant = 3;
+        private static int chargesToGrant = 3;
         public bool giveCharges;
         public Vector3 targetPosition;
 

@@ -72,7 +72,8 @@ namespace EntityStates.Executioner2
         private static float orbDuration = 0.25f;
         private static float debuffDuration = 3f;
         private static float debuffRadius = 16f;
-        private static int chargesToGrant = 3;
+        private static float buffDuration = 8f;
+        private static int chargesToGrant = 0;
         private static string activationSoundString = "Play_voidman_R_pop";
         public static GameObject effectPrefab;
         private float duration;
@@ -88,7 +89,7 @@ namespace EntityStates.Executioner2
             if (NetworkServer.active)
             {
                 DamageInfo damageInfo = new DamageInfo();
-                damageInfo.damage = healthComponent.combinedHealth * healthFraction;
+                damageInfo.damage = healthComponent.fullHealth * healthFraction;
                 damageInfo.position = base.characterBody.corePosition;
                 damageInfo.force = Vector3.zero;
                 damageInfo.damageColorIndex = DamageColorIndex.Default;
@@ -100,7 +101,10 @@ namespace EntityStates.Executioner2
                 damageInfo.procChainMask = default(ProcChainMask);
                 healthComponent.TakeDamage(damageInfo);
 
-
+                for(int i = 0; i < buffDuration; i++)
+                {
+                    characterBody.AddTimedBuff(SS2Content.Buffs.bdConsecration, i + 1);
+                }
                 for (int i = 0; i < chargesToGrant; i++)
                 {
                     ExecutionerBloodOrb ionOrb = new ExecutionerBloodOrb();

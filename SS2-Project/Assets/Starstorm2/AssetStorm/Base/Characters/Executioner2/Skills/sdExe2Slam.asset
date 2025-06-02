@@ -15,15 +15,14 @@ MonoBehaviour:
   skillName: ExecutionerExecute
   skillNameToken: SS2_EXECUTIONER2_EXECUTION_NAME
   skillDescriptionToken: SS2_EXECUTIONER2_EXECUTION_DESC
-  keywordTokens:
-  - SS2_KEYWORD_EXECUTING2
+  keywordTokens: []
   icon: {fileID: 21300000, guid: 10825e9d7f2cb3c4abcfde5746b26c78, type: 3}
   activationStateMachineName: Body
   activationState:
     _typeName: EntityStates.Executioner2.ExecuteLeap, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 8
+  baseRechargeInterval: 9
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

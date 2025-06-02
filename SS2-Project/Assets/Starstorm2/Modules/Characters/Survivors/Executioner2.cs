@@ -69,14 +69,21 @@ namespace SS2.Survivors
             }
             if(sender.HasBuff(SS2Content.Buffs.BuffFear))
             {
-                args.moveSpeedReductionMultAdd += 0.5f;
+                args.moveSpeedReductionMultAdd += 0.33f;
             }
 
             int consecrationStack = sender.GetBuffCount(SS2Content.Buffs.bdConsecration);
             if(consecrationStack > 0)
             {
-                args.attackSpeedMultAdd += 0.1f * consecrationStack;
-                args.moveSpeedMultAdd += 0.1f * consecrationStack;
+                //args.attackSpeedMultAdd += 0.08f * consecrationStack;
+                args.moveSpeedMultAdd += 0.05f * consecrationStack;
+            }
+
+            int bloodRushStack = sender.GetBuffCount(SS2Content.Buffs.bdBloodRush);
+            if (bloodRushStack > 0)
+            {
+                args.attackSpeedMultAdd += 0.08f * bloodRushStack;
+                args.moveSpeedMultAdd += 0.08f * bloodRushStack;
             }
         }
 
@@ -215,11 +222,14 @@ namespace SS2.Survivors
         }
         internal static int GetIonCountFromBody(CharacterBody body)
         {
+            if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
+                return 100;
+
+            return 1; // :3
+
             if (body == null) return 1;
             if (body.bodyIndex == BodyIndex.None) return 1;
 
-            if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
-                return 100;
 
             if (body.isChampion)
                 return 5;
@@ -244,10 +254,11 @@ namespace SS2.Survivors
             private GameObject effectInstance;
             private static string activationSoundString = "Play_voidman_R_pop";
             private Collider bodyCollider;
+            private int previousBuffCount;
             private void OnEnable()
             {
-                effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
-                Util.PlaySound(activationSoundString, gameObject);
+                previousBuffCount = buffCount;
+                OnStackGained();
                 if(!bodyCollider)
                     bodyCollider = base.GetComponent<Collider>();
             }
@@ -258,8 +269,20 @@ namespace SS2.Survivors
 
             private void FixedUpdate()
             {
+                if(buffCount > previousBuffCount)
+                {
+                    OnStackGained();
+                }
                 if (!base.characterBody.healthComponent.alive)
                     Destroy(this.effectInstance);
+                previousBuffCount = buffCount;
+            }
+
+            private void OnStackGained()
+            {
+                if (effectInstance) Destroy(effectInstance);
+                effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                Util.PlaySound(activationSoundString, gameObject);
             }
 
             private void Update()

@@ -65,7 +65,7 @@ namespace EntityStates.Executioner2
     {
         private static float baseDuration = 0.25f;
         private static float healFraction = 0.05f;
-        private static float buffDuration = 8f;
+        private static float buffDuration = 6f;
         private static float cooldownDeduction = 1f;
         private static string activationSoundString = "Play_voidman_R_pop";
         public static GameObject effectPrefab;
@@ -100,7 +100,9 @@ namespace EntityStates.Executioner2
 
                 for(int i = 0; i < stock; i++)
                 {
-                    characterBody.AddTimedBuff(SS2Content.Buffs.bdConsecration, buffDuration);
+                    if(buffDuration > 0)
+                        characterBody.AddTimedBuff(SS2Content.Buffs.bdConsecration, buffDuration);
+
                     EffectData effectData = new EffectData
                     {
                         origin = characterBody.corePosition,

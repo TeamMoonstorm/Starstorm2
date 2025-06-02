@@ -13,7 +13,7 @@ namespace EntityStates.Executioner2
     {
         public static float baseDuration = 0.6f;
         public static float speedMultiplier = 3.0f;
-        public static float debuffRadius = 14f;
+        public static float debuffRadius = 12f;
         [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
         public static float debuffDuration = 4.0f;
         public static float debuffCheckInterval = 0.0333333f;

@@ -2434,26 +2434,31 @@ MonoBehaviour:
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 4829152103322887669}
     defaultMaterial: {fileID: 2100000, guid: 5579c4e358f1003429d7e2f7f0ce2649, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 7693044374646899355}
     defaultMaterial: {fileID: 2100000, guid: 94fdb687c87211346a8011447c9fe442, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 7583073213555001400}
     defaultMaterial: {fileID: 2100000, guid: dc9d29b7020c71f4097ea1ca6d121725, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 8966749530243362934}
     defaultMaterial: {fileID: 2100000, guid: 658cf25c021b2ba49ab2d49992cdbc9b, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 1
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   baseLightInfos: []
   corpseFade: 1
   CharacterOnScreen: 0
@@ -2541,6 +2546,7 @@ MonoBehaviour:
   baseFootstepString: Play_captain_step
   sprintFootstepOverrideString: Play_captain_step_sprint
   enableFootstepDust: 1
+  rotateToMoveDirection: 0
   footstepDustPrefab: {fileID: 1581438006475099, guid: e97bdc6bbe332ef4cb3c2bfa60097ea9,
     type: 3}
   footstepEffect: {fileID: 0}
@@ -13899,14 +13905,16 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
+  amputatedMaxHealth: 0
+  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
-  solitudeLevelCount: 0
+  boostAllStatsDisplay: {fileID: 0}
+  currentGrowthNectarBuffCount: 0
+  maxGrowthNectarBuffCount: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.3
   spreadBloomCurve:
@@ -13935,10 +13943,14 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
-  increasePrimaryDamageEffectUpdater: {fileID: 0}
-  protectFromOneShot: 0
-  hasTeleported: 0
+  canAddIncrasePrimaryDamage: 0
+  knockBackFinGroundedTimer: 0
+  runicLensPosition: {x: 0, y: 0, z: 0}
+  meteorVictimBody: {fileID: 0}
+  runicLensStartTime: 0
+  runicLensImpactTime: 0
   runicLensMeteorReady: 0
+  spawnedPickupCount: 0
   aimOriginTransform: {fileID: 6302135568559517438}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: a227cf48f5fc2f240a304138d0cb5ef9, type: 3}
@@ -13950,6 +13962,7 @@ MonoBehaviour:
   preferredInitialStateType:
     _typeName: EntityStates.Uninitialized, Assembly-CSharp
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &9011166777397608918
@@ -13980,9 +13993,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 9011166777397608919}
   forceCulled: 0
@@ -14135,7 +14150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: bfd01efb131fc86478652f9798b96f5a, type: 2}
   skillName: exeManipulators
-  hideInCharacterSelect: 0
+  hideInCharacterSelect: 1
   baseStock: 0
   baseRechargeStopwatch: 0
   hasExecutedSuccessfully: 0
@@ -14383,6 +14398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 9011166777397608906}
   muteWalkMotion: 0
   mass: 100
@@ -14394,6 +14410,7 @@ MonoBehaviour:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
+  useHangtimeGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &9011166777397608906
@@ -14492,8 +14509,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshExeAxe: {fileID: 0}
-  hasOOB: 0
-  isExec: 0
 --- !u!114 &6533427204412895867
 MonoBehaviour:
   m_ObjectHideFlags: 0

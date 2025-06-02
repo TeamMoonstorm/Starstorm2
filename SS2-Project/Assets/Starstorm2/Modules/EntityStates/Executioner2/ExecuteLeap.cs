@@ -9,10 +9,11 @@ namespace EntityStates.Executioner2
     {
         private Vector3 flyVector = Vector3.zero;
         private static float walkSpeedCoefficient = 2f;
-        private static float baseVerticalSpeed = 24f;
+        private static float baseVerticalSpeed = 32f;
         public static AnimationCurve speedCoefficientCurve;
         private static float baseDuration = 0.8f;
         private static float maxAttackSpeed = 1.6f;
+        private static float dumbFuckingSpeedScalingNumberCoefficientValue = 1.3f;
         public static float crosshairDur = 0.75f;
 
         private static float searchAngle = 30f;
@@ -58,7 +59,8 @@ namespace EntityStates.Executioner2
 
             float attackSpeed = Mathf.Min(attackSpeedStat, maxAttackSpeed);
             duration = baseDuration / attackSpeed;
-            verticalSpeed = baseVerticalSpeed * attackSpeed;
+            float dipshit = ((attackSpeed - 1) * dumbFuckingSpeedScalingNumberCoefficientValue) + 1;
+            verticalSpeed = baseVerticalSpeed * dipshit;
 
             characterBody.hideCrosshair = true;
             characterBody.SetAimTimer(duration);
