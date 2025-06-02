@@ -3,14 +3,14 @@
 ### 0.6.21
 * General
     * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
-* Survivors
-    * 
 * Items
     * Configs now work again! You can freely disable items and equipment once more
 * Drones
     * Lower the director credit cost of Shock and Dupe drones.
         * Shock is down 15 -> 12
         * Dupe is down 40 -> 32
+* Enemies
+    * A wide range of buffs to Wayfarer's health, damage, speed, and projectile attack
 
 ### 0.6.20
 * General
