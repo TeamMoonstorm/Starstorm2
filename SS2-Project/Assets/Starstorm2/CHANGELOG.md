@@ -4,7 +4,7 @@
 * General
     * Got rid of the Unlock All config
 * Items
-    * Disable item config now works again! Yay!
+    * Configs now work again! You can disable all the content you hate once more!
 
 ### 0.6.20
 * General
