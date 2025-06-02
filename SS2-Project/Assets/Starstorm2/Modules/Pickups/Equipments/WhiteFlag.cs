@@ -47,10 +47,6 @@ namespace SS2.Equipments
             BuffOverlays.AddBuffOverlay(buffSurrender, overlay);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
         public override void OnEquipmentLost(CharacterBody CharacterBody)
         {
         }

@@ -5,6 +5,10 @@
     * Got rid of the Unlock All config
 * Items
     * Configs now work again! You can disable all the content you hate once more!
+* Drones
+    * Lower the director credit cost of Shock and Dupe drones.
+        * Shock is down 15 -> 12
+        * Dupe is down 40 -> 32
 
 ### 0.6.20
 * General

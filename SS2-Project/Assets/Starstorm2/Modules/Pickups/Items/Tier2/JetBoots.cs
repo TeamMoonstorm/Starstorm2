@@ -54,11 +54,6 @@ namespace SS2.Items
             IL.EntityStates.GenericCharacterMain.ProcessJump_bool += ProcessJumpBoolHook;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         // ALL OF THIS IS TERRIBLE. BANDAIDS ON BANDAIDS. REWRITE FROM SCRATCH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
        // FUCKING CLINET SIDE BUFFS LOL SURELY NOTHING BREAKS
         private void RecalculateStatsHook(ILContext il)

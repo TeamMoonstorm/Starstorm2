@@ -29,12 +29,6 @@ namespace SS2.Items
             _monsterSoulPickup = AssetCollection.FindAsset<GameObject>("MonsterSoul");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]

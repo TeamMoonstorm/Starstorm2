@@ -43,11 +43,6 @@ namespace SS2.Items
             On.RoR2.EquipmentSlot.Update += EquipmentSlot_Update;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         #region Gameplay Mechanics
         private void ActivateAllEquipment(EquipmentSlot self, EquipmentIndex equipmentIndex)
         {
