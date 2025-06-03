@@ -26,6 +26,7 @@ namespace EntityStates.Mimic
         private float timer = 0;
         private Animator anim;
         private CharacterBody target;
+		
         public override void OnEnter()
         {
             base.OnEnter();
@@ -46,8 +47,6 @@ namespace EntityStates.Mimic
             {
                 OnPurchaseMimic(interactor, purchaseInter);
             });
-
-
 
             //modelLocator
 

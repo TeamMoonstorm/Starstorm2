@@ -66,7 +66,6 @@ namespace EntityStates.Mimic.Weapon
 
 			critEndTime = Run.FixedTimeStamp.negativeInfinity;
 			lastCritCheck = Run.FixedTimeStamp.negativeInfinity;
-			
 
 
 			PlayCrossfade("Gesture, Override", "MinigunLoop", 0.05f);

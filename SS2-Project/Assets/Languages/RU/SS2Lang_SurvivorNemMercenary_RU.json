@@ -1,0 +1,75 @@
+{
+  "strings": {
+    "SS2_NEMESIS_MERCENARY_NAME": "Враждебный наёмник",
+    "SS2_NEMESIS_MERCENARY_BODY_NAME": "Враждебный наёмник",
+    "SS2_NEMESIS_MERCENARY_SUBTITLE": "Мстительный Дезертир",
+    "SS2_NEMESIS_MERCENARY_DESCRIPTION": "Враждебный Наёмник — это быстрый боец ближнего боя, способный доминировать в любой схватке, независимо от обстоятельств.\n\n<color=#CCD3E0>< ! > «Шквал» наносит сокрушительный урон вблизи. Используйте другие навыки, чтобы сократить дистанцию.\n\n< ! > «Горлорез» прерывает атаки врагов и позволяет перенаправить рывок на других противников.\n\n< ! > «Переброска» — мощный инструмент мобильности в бою, не прерывающий перезарядку.\n\n< ! > К «Векторам Атаки» можно мгновенно перемещаться без отката. Это делает «Эксплойт» ключевым навыком в сложных ситуациях.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FLAVOR": "...и так он ушёл, с новым смыслом в каждом патроне.",
+    "SS2_NEMESIS_MERCENARY_OUTRO_FAILURE": "...и так он исчез, с пустыми боеприпасами и ещё более пустым сердцем.",
+    "SS2_NEMESIS_MERCENARY_LORE": "— Эй!\n\nФигура медленно вышла из марсианских дюн, настроившись на внешние коммуникации Форта Лоун. — Эй, впустите меня? Пыль тут просто убийственная.\n\nОдин из охранников у забора саркастично ответил из будки: — ...У вас есть документы, сэр?\n\n— Да ладно, неужели не узнаёте? Новый рекрут, да? — Фигура продолжала небрежно приближаться к забору, пока второй охранник не воскликнул: — Погодите. Это Вантре? Гость рассмеялся: — Виновен, как charged. Решил заглянуть, раз уж в этих краях. Проведать старых товарищей.\n\nОхранники замолчали, затем связались с командиром: — Командир Байрен, Вантре у внешнего забора. Выглядит безобидно, что само по себе тревожно. Каковы приказы?\n\nРаздражённый голос Байрена ответил по рации: — Чёрт возьми... Вызовите группу подавления. Убедитесь, что он ничего не замышляет. Задержите его, пока не подкрепление.\n\nНо когда охранники обернулись, Вантре уже исчез, оставив лишь искры в воздухе. Весь гарнизон форта потратил десять минут на поиски — и обнаружил своего командира мёртвым в кабинете, с развороченным затылком.",
+
+    "SS2_KEYWORD_STAGGER": "<style=cKeywordName>Оглушение</style><style=cSub>Прерывает атаки врагов.",
+    "SS2_KEYWORD_BLEEDING": "<style=cKeywordName>Кровотечение</style><style=cSub>Наносит <style=cIsDamage>240% базового урона</style> за 3 сек. <i>Может складываться.</i>",
+    "SS2_KEYWORD_ATTACKVECTOR": "<style=cKeywordName>Вектор Атаки</style><style=cSub>Прерывает врагов.",
+
+    "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_NAME": "Шквал",
+    "SS2_NEMESIS_MERCENARY_PRIMARY_SHOTGUN_DESCRIPTION": "<style=cIsUtility>Проворство</style>. Выстрелите из дробовика, нанося <style=cIsDamage>6×80% урона</style>, и ещё раз при отпускании. Макс. 2 патрона.",
+
+    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_NAME": "Горлорез",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_SLASH_DESCRIPTION": "<style=cIsDamage>Оглушает</style>. Рывок с рубящим ударом на <style=cIsDamage>2×300% урона</style>. <style=cIsUtility>Можно использовать во время рывка</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_NAME": "Перфоратор",
+    "SS2_NEMESIS_MERCENARY_SECONDARY_KNIFE_DESCRIPTION": "<style=cIsHealth>Кровотечение</style>. Бросьте нож, нанося <style=cIsDamage>100% урона</style>.\n<style=cIsDamage>Убийца</style>. Приблизьтесь, чтобы вырвать нож, нанося <style=cIsDamage>400% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_NAME": "Переброска",
+    "SS2_NEMESIS_MERCENARY_UTILITY_BLINK_DESCRIPTION": "<style=cIsUtility>Мгновенно переместитесь</style> за врага или к <style=cIsUtility>вектору атаки</style>.",
+
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_NAME": "Обессиливание",
+    "SS2_NEMESIS_MERCENARY_UTILITY_SLIDE_DESCRIPTION": "<style=cIsDamage>Оглушение</style>. Удерживайте для <style=cIsUtility>скольжения</style> с последующим рывком, наносящим <style=cIsDamage>600% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_NAME": "Эксплойт",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCAN_DESCRIPTION": "Обнаруживает <style=cIsUtility>векторы атаки</style> у до <style=cIsDamage>4</style> ближайших врагов. <style=cIsUtility>Займите позицию</style> для рывка вперёд, наносящего <style=cIsDamage>1200% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_NAME": "Пролиферация",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DESCRIPTION": "Создаёт <style=cIsUtility>клона</style> за целью, который <style=cIsDamage>копирует ваши способности</style>. Повторное использование — рывок к нему, наносящий <style=cIsDamage>800% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_NAME": "Финт",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_CLONE_DASH_DESCRIPTION": "Рывок к клону, наносящий <style=cIsDamage>800% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_NAME": "Искоренение",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_DESCRIPTION": "Обнаруживает <style=cIsUtility>векторы атаки</style> у до <style=cIsDamage>6</style> ближайших врагов. <style=cIsUtility>Займите позицию</style> для рывка, наносящего <style=cIsDamage>1500% урона</style>.",
+
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_NAME": "Тур-де-Форс",
+    "SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_DESCRIPTION": "Создаёт <style=cIsUtility>клона</style> за целью, который <style=cIsDamage>копирует ваши способности</style>. Повторное использование — рывок к нему, наносящий <style=cIsDamage>800% урона</style> (макс. <style=cIsUtility>2</style> раза).",
+
+    "SS2_ACHIEVEMENT_NEMMERC_NAME": "Мстительный Дезертир",
+    "SS2_ACHIEVEMENT_NEMMERC_DESC": "Победите Тень Наёмника.",
+
+    "SS2_SKIN_NEMESIS_MERCENARY_DEFAULT": "Стандартный",
+    "SS2_SKIN_NEMESIS_MERCENARY_MASTERY": "Изгой",
+    "SS2_SKIN_NEMESIS_MERCENARY_GRANDMASTERY": "[NYI] Корпоративный",
+    "SS2_SKIN_NEMESIS_MERCENARY_NEMESIS": "Благородный",
+    "SS2_SKIN_MERCENARY_NEMESIS": "Баллистический",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NAME": "Мстительный Дезертир",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_DESC": "Победите Тень Наёмника.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_MASTERY_NAME": "Враждебный Наёмник: Мастерство",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_MASTERY_DESC": "Завершите игру или самоуничтожьтесь на уровне сложности «Муссон» или выше.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_NAME": "Враждебный Наёмник: Великое Мастерство",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_GRANDMASTERY_DESC": "Завершите игру или самоуничтожьтесь на уровне сложности «Тайфун».",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_NAME": "Враждебный Наёмник: Наёмный Клинок",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_NEMESIS_DESC": "Победите Тень Наёмника, играя за Враждебного Наёмника.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_NAME": "Враждебный Наёмник: Обман",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_CLONE_DESC": "Купите Дрон-Дупликатор, играя за Враждебного Наёмника.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_NAME": "Враждебный Наёмник: Перебежчик",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_KNIFE_DESC": "Победите чужую Тень, играя за Враждебного Наёмника.",
+
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_NAME": "Враждебный Наёмник: На Земле",
+    "SS2_ACHIEVEMENT_NEMESIS_MERCENARY_SLIDE_DESC": "Пройдите уровень, не отрываясь от земли, играя за Враждебного Наёмника."
+  }
+}

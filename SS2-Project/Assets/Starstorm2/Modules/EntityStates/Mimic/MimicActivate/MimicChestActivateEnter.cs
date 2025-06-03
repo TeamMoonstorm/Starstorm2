@@ -34,7 +34,6 @@ namespace EntityStates.Mimic
             base.OnEnter();
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
             PlayCrossfade("Body", "Idle", .05f);
-            //var intermediate = GetComponent<ModelLocator>();
 
             var animator = GetModelAnimator();
             animator.SetBool("isGrounded", false);
@@ -78,7 +77,6 @@ namespace EntityStates.Mimic
                 SS2Log.Warning("rotating to " + target);
                 AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);
             }
-
         }
 
         public override void FixedUpdate()
@@ -117,6 +115,7 @@ namespace EntityStates.Mimic
             GetComponent<GenericInspectInfoProvider>().enabled = false;
             //GetComponent<GenericDisplayNameProvider>().enabled = false;
             //GetComponent<PingInfoProvider>().enabled = false;
+
             GetComponent<HologramProjector>().enabled = false;
             intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(false);
 
