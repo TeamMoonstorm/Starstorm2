@@ -11,6 +11,9 @@
         * Dupe is down 40 -> 32
 * Enemies
     * A wide range of buffs to Wayfarer's health, damage, speed, and projectile attack
+    * Improvements to Wayfarer AI to make them more lethal
+    * Followers will now miss the first shot if youre off screen like other flying enemies
+    * Increased Rushroom hurtbox and a tiny health buff with it to compensate
 
 ### 0.6.20
 * General
