@@ -99,11 +99,6 @@ namespace SS2.Items
             BuffOverlays.AddBuffOverlay(buffVfx, overlayMaterial);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void OverrideTerminalBossMarker(On.RoR2.TeamComponent.orig_SetupIndicator orig, TeamComponent self)
         {
             if (self.body)

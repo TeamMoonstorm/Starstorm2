@@ -21,11 +21,6 @@ namespace SS2.Items
         {
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         //I have a hunch this could be done without a body behaviour, cant bother with it rn tho. -N
         public sealed class Behavior : BaseItemMasterBehaviour
         {

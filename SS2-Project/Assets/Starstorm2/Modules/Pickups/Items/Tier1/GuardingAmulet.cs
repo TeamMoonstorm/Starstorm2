@@ -23,11 +23,6 @@ namespace SS2.Items
             _shieldEffect = AssetCollection.FindAsset<GameObject>("AmuletShieldEffect");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]

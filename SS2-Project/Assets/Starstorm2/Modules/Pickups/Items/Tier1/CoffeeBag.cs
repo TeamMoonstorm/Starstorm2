@@ -39,11 +39,6 @@ namespace SS2.Items
             RecalculateStatsAPI.GetStatCoefficients += CalculateStatsCoffeeBag;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void CalculateStatsCoffeeBag(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             int buffStack = sender.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag);

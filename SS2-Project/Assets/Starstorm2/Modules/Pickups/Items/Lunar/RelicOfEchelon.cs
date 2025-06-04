@@ -44,11 +44,6 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfEchelon", SS2Bundle.Items);
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true; //disabled for now
-        }
-
         public override void Initialize()
         {
             //_overlay = assetCollection.FindAsset<Material>("matCognation");

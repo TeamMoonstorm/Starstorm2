@@ -45,11 +45,6 @@ namespace SS2.Equipments
         {
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }

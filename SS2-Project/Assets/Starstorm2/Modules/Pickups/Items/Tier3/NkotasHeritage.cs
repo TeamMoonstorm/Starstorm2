@@ -33,11 +33,6 @@ namespace SS2.Items
             Stage.onStageStartGlobal += Stage_onServerStageBegin; //Cannot be onServerStageBegin because the players havent spawned by then!
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void Stage_onServerStageBegin(Stage obj)
         {
             if (!NetworkServer.active) return;
