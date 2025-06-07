@@ -3,6 +3,7 @@
 ### 0.6.21
 * General
     * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
+    * Recompiled the mod for Memop update
 * Items
     * Configs now work again! You can freely disable items and equipment once more
 * Drones
