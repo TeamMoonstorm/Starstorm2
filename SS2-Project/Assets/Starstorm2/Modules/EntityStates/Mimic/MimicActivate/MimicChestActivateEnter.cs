@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.CharacterAI;
 using RoR2.Hologram;
 using SS2;
 using System;
@@ -15,7 +16,9 @@ namespace EntityStates.Mimic
         protected PurchaseInteraction purchaseInter;
 
         private bool endedSuccessfully = false;
-
+        BaseAI ai;
+        private bool hasRotated = false;
+        public CharacterBody? target;
         protected virtual bool enableInteraction
         {
             get
@@ -31,19 +34,27 @@ namespace EntityStates.Mimic
             base.OnEnter();
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
             PlayCrossfade("Body", "Idle", .05f);
-            var intermediate = GetComponent<ModelLocator>();
 
             var animator = GetModelAnimator();
             animator.SetBool("isGrounded", false);
 
-            purchaseInter = intermediate.modelTransform.GetComponent<PurchaseInteraction>();
+            purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
+                
             }
             else
             {
-                SS2Log.Error("Fuck");
+                SS2Log.Error("Fuck (activate  enter)");
+            }
+
+            //var ai = base.GetComponent<BaseAI>();
+
+            var master = characterBody.master;
+            if (master)
+            {
+                ai = master.GetComponent<BaseAI>();
             }
 
             //var hbxg = intermediate.modelTransform.GetComponent<HurtBoxGroup>();
@@ -61,12 +72,21 @@ namespace EntityStates.Mimic
 
             GetComponent<CapsuleCollider>().enabled = true;
             SS2Log.Warning("Finished enter ");
-
+            if (target)
+            {
+                SS2Log.Warning("rotating to " + target);
+                AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (fixedAge >= duration/2 && isAuthority)
+            {
+                ai.UpdateBodyAim(Time.fixedDeltaTime);
+            }
+
             if (fixedAge >= duration && isAuthority)
             {
                 endedSuccessfully = true;
@@ -93,8 +113,9 @@ namespace EntityStates.Mimic
             }
 
             GetComponent<GenericInspectInfoProvider>().enabled = false;
-            GetComponent<GenericDisplayNameProvider>().enabled = false;
-            GetComponent<PingInfoProvider>().enabled = false;
+            //GetComponent<GenericDisplayNameProvider>().enabled = false;
+            //GetComponent<PingInfoProvider>().enabled = false;
+
             GetComponent<HologramProjector>().enabled = false;
             intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(false);
 
@@ -103,6 +124,31 @@ namespace EntityStates.Mimic
             characterBody.skillLocator.special.RemoveAllStocks();
 
         }
+
+        protected void AimAt(ref BaseAI.BodyInputs dest, BaseAI.Target aimTarget)
+        {
+            if (aimTarget == null)
+            {
+                return;
+            }
+            Vector3 a;
+            if (aimTarget.GetBullseyePosition(out a))
+            {
+                dest.desiredAimDirection = (a - inputBank.aimOrigin).normalized;
+                
+            }
+        }
+
+        // Token: 0x06001C93 RID: 7315 RVA: 0x00085C16 File Offset: 0x00083E16
+        protected void AimInDirection(ref BaseAI.BodyInputs dest, Vector3 aimDirection)
+        {
+            if (aimDirection != Vector3.zero)
+            {
+                dest.desiredAimDirection = aimDirection;
+            }
+          
+        }
+
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {

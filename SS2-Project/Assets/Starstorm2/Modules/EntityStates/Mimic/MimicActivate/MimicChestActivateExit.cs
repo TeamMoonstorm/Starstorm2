@@ -1,3 +1,4 @@
+using RoR2;
 using SS2;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace EntityStates.Mimic
             base.OnEnter();
             PlayCrossfade("FullBody, Override", "ActivateExit", "Activate.playbackRate", duration, 0.05f);
             //duration += .02f;
+            Util.PlaySound("Play_MULT_shift_hit", gameObject);
         }
 
         public override void FixedUpdate()

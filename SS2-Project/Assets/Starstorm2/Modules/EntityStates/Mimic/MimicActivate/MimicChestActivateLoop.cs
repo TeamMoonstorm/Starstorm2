@@ -144,7 +144,7 @@ namespace EntityStates.Mimic
 
 			return attack.Fire(); 
 		}
-
+		
 		public override void OnExit()
 		{
 

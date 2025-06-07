@@ -66,7 +66,6 @@ namespace EntityStates.Mimic.Weapon
 
 			critEndTime = Run.FixedTimeStamp.negativeInfinity;
 			lastCritCheck = Run.FixedTimeStamp.negativeInfinity;
-			//Util.PlaySound(MinigunFire.startSound, base.gameObject);
 
 
 			PlayCrossfade("Gesture, Override", "MinigunLoop", 0.05f);
@@ -93,6 +92,7 @@ namespace EntityStates.Mimic.Weapon
 		{
 			if (this.lastCritCheck.timeSince >= 1f)
 			{
+				Util.PlaySound("Play_commando_M1", gameObject);
 				this.lastCritCheck = Run.FixedTimeStamp.now;
 				if (base.RollCrit())
 				{
