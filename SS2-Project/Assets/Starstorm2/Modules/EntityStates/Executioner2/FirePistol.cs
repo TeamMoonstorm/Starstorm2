@@ -14,6 +14,7 @@ namespace EntityStates.Executioner
         public static float spreadBloom;
         public static float force;
 
+        private static float bulletRadius = .7f;
         [HideInInspector]
         private static GameObject muzzleEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
         [HideInInspector]
@@ -92,7 +93,7 @@ namespace EntityStates.Executioner
                         smartCollision = true,
                         procChainMask = default(ProcChainMask),
                         procCoefficient = procCoefficient,
-                        radius = 0.35f,
+                        radius = bulletRadius,
                         weapon = gameObject,
                         tracerEffectPrefab = tracerPrefab,
                         hitEffectPrefab = hitPrefab

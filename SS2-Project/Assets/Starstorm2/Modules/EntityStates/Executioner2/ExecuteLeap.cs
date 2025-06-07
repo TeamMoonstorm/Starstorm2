@@ -16,9 +16,9 @@ namespace EntityStates.Executioner2
         private static float dumbFuckingSpeedScalingNumberCoefficientValue = 1.3f;
         public static float crosshairDur = 0.75f;
 
-        private static float searchAngle = 30f;
-        private static float searchDistance;
+        private static float maxAngle = 42f;
 
+        public static GameObject indicatorPrefab;
         public static GameObject jumpEffect;
         public static GameObject jumpEffectMastery;
         public static Material jumpMaterialMastery;
@@ -29,7 +29,7 @@ namespace EntityStates.Executioner2
         private float duration;
         private float verticalSpeed;
         private ExecutionerController exeController;
-        private BullseyeSearch search;
+        private GameObject indicatorInstance;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
@@ -50,12 +50,6 @@ namespace EntityStates.Executioner2
             {
                 exeController.meshExeAxe.SetActive(true);
             }
-
-            search = new BullseyeSearch();
-            search.teamMaskFilter = TeamMask.GetEnemyTeams(teamComponent.teamIndex);
-            search.queryTriggerInteraction = QueryTriggerInteraction.Collide;
-            search.maxAngleFilter = searchAngle;
-            search.maxDistanceFilter = searchDistance;
 
             float attackSpeed = Mathf.Min(attackSpeedStat, maxAttackSpeed);
             duration = baseDuration / attackSpeed;
@@ -97,6 +91,14 @@ namespace EntityStates.Executioner2
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
             StartAimMode();
 
+            if (indicatorPrefab)
+            {
+                indicatorInstance = GameObject.Instantiate(indicatorPrefab);
+                indicatorInstance.transform.localScale = Vector3.one * ExecuteSlam.slamRadius;
+                indicatorInstance.GetComponent<TeamFilter>().teamIndex = teamComponent.teamIndex;
+                UpdateIndicator();
+            }
+
             if (isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
@@ -128,6 +130,27 @@ namespace EntityStates.Executioner2
             if (isAuthority)
             {
                 FixedUpdateAuthority();
+            }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            UpdateIndicator();
+        }
+        private void UpdateIndicator()
+        {
+            if (indicatorInstance)
+            {
+                Ray aimRay = base.GetAimRay();
+                Vector3 direction = Vector3.down;
+                direction = Vector3.RotateTowards(direction, aimRay.direction, maxAngle * Mathf.Deg2Rad, 0f);
+                aimRay.direction = direction;
+                if (Util.CharacterRaycast(gameObject, aimRay, out RaycastHit hit, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+                {
+                    indicatorInstance.transform.position = hit.point;
+                    indicatorInstance.transform.up = hit.normal;
+                }
             }
         }
 
@@ -164,6 +187,10 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            if(indicatorInstance)
+            {
+                Destroy(indicatorInstance);
+            }
             characterBody.hideCrosshair = false;
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
             if (exeController != null && controlledExit == false)

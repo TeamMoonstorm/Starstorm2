@@ -13,7 +13,7 @@ namespace EntityStates.Executioner2
         public static float recoil;
         private static float maxDuration = 10f;
         private static float walkSpeedCoefficient = 1.5f;
-        private static float maxAngle = 37f;
+        private static float maxAngle = 42f;
         private static float verticlalSpeed = 100f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
@@ -102,10 +102,11 @@ namespace EntityStates.Executioner2
             }
         }
 
+        private static bool FUCK = true;
         public void HandleMovement()
         {
             characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
-            characterMotor.moveDirection = inputBank.moveVector;
+            characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
         }
 
         private void DoImpactAuthority()
@@ -236,6 +237,7 @@ namespace EntityStates.Executioner2
                 for (int i = 0; i < chargesToGrant; i++)
                 {
                     SS2.Orbs.ExecutionerIonOrb ionOrb = new SS2.Orbs.ExecutionerIonOrb();
+                    ionOrb.speed = 25f;
                     ionOrb.origin = targetPosition;
                     ionOrb.target = characterBody.mainHurtBox;
                     RoR2.Orbs.OrbManager.instance.AddOrb(ionOrb);

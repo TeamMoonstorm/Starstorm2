@@ -12,7 +12,7 @@ namespace SS2.Orbs
         public ExecutionerController execController;
 
         //private NetworkSoundEventDef sound = SS2Assets.LoadAsset<NetworkSoundEventDef>("SoundEventExecutionerGainCharge", SS2Bundle.Executioner);
-        private const float speed = 50f;
+        public float speed = 50f;
 
         protected static GameObject _orbEffect;
         protected static GameObject _masteryOrbEffect;

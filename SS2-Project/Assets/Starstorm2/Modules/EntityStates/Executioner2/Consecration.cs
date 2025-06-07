@@ -9,7 +9,7 @@ namespace EntityStates.Executioner2
         private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
         private static string muzzle;
-        private static string chargeSoundString = "Play_voidman_R_activate";
+        private static string chargeSoundString = "Play_voidman_m2_chargeUp";
         private float duration;
         private uint soundID;
         private GameObject effectInstance;
@@ -67,7 +67,7 @@ namespace EntityStates.Executioner2
         private static float healFraction = 0.05f;
         private static float buffDuration = 6f;
         private static float cooldownDeduction = 1f;
-        private static string activationSoundString = "Play_voidman_R_pop";
+        private static string activationSoundString = "Play_voidman_m2_shoot_fullCharge";
         public static GameObject effectPrefab;
         public static GameObject orbEffectPrefab;
         private float duration;
@@ -106,7 +106,7 @@ namespace EntityStates.Executioner2
                     EffectData effectData = new EffectData
                     {
                         origin = characterBody.corePosition,
-                        genericFloat = 0.1f
+                        genericFloat = 0.4f
                     };
                     effectData.SetHurtBoxReference(characterBody.mainHurtBox);
                     EffectManager.SpawnEffect(orbEffectPrefab, effectData, true);

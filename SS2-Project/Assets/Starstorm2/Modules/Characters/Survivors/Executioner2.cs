@@ -225,26 +225,33 @@ namespace SS2.Survivors
             if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
                 return 100;
 
-            return 1; // :3
-
             if (body == null) return 1;
             if (body.bodyIndex == BodyIndex.None) return 1;
 
-
+            int value = 1;
             if (body.isChampion)
-                return 5;
+                value = 3;
 
             switch (body.hullClassification)
             {
                 case HullClassification.Human:
-                    return 1;
+                    value = 1;
+                    break;
                 case HullClassification.Golem:
-                    return 2;
+                    value = 2;
+                    break;
                 case HullClassification.BeetleQueen:
-                    return 3;
+                    value = 2;
+                    break;
                 default:
-                    return 1;
+                    value = 1;
+                    break;
             }
+            if(body.isElite)
+            {
+                value *= 2;
+            }
+            return value;
         }
         public sealed class FearBehavior : BaseBuffBehaviour
         {
