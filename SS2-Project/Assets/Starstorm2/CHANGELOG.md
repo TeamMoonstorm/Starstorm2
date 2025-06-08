@@ -4,6 +4,7 @@
 * General
     * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
     * Recompiled the mod for Memop update
+    * NOTE: Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update
 * Items
     * Configs now work again! You can freely disable items and equipment once more
 * Drones

@@ -52,4 +52,4 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Man o War causes NRE spam, we've made a temporary dependenncy on MiscFixes mod by score until we can resolve the issue ourselves. Thank you score for the fix!
     * Elite events are currently disabled.
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
-    * NOTE: Chirr players are advised to download [EnemyImportance](https://thunderstore.io/package/pseudopulse/EnemyImportance/) due to a known enemy sliding bug caused by how SOTS changes enemy collision and Chirr's grab. This mod also impacts performance so it isnt a requirement, but is recommended if you want the best Chirr experience
+    * Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update
