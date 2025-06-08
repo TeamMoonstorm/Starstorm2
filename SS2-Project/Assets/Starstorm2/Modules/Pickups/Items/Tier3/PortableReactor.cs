@@ -44,11 +44,6 @@ namespace SS2.Items
                 args.moveSpeedMultAdd += 1f;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void ImFuckingInvincible(CharacterBody obj)
         {
             if(obj.TryGetItemCount(SS2Content.Items.PortableReactor, out var count))

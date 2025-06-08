@@ -50,11 +50,6 @@ namespace SS2.Items
             GlobalEventManager.onCharacterDeathGlobal += ProcLightningOnKill;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void ProcLightningOnKill(DamageReport damageReport)
         {
             CharacterBody body = damageReport.attackerBody;

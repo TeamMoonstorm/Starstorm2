@@ -53,11 +53,6 @@ namespace SS2.Items
             ignoredProcs.AddProc(ProcType.Backstab);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
 

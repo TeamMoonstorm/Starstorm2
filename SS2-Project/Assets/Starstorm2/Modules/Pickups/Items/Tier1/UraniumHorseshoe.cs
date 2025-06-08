@@ -35,11 +35,6 @@ namespace SS2.Items
             args.jumpPowerMultAdd += jumpBoost * count;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

@@ -32,11 +32,6 @@ namespace SS2.Items
             _droidDroneMaster = AssetCollection.FindAsset<GameObject>("DroidDroneMaster");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
             [ItemDefAssociation]

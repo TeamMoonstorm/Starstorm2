@@ -36,11 +36,6 @@ namespace SS2.Items
             _critEffect = AssetCollection.FindAsset<GameObject>("NeedlesCritEffect");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         // should just be an ilhook but im lazy
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageOtherServerReciever
         {

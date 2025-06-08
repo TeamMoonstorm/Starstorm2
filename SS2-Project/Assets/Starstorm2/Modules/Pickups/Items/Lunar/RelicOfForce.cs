@@ -46,11 +46,6 @@ namespace SS2.Items
             relicForceDamageType = DamageAPI.ReserveDamageType();
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
 
         private float ForceSkillFinalRecharge(On.RoR2.GenericSkill.orig_CalculateFinalRechargeInterval orig, GenericSkill self)
         {

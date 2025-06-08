@@ -21,10 +21,11 @@ namespace SS2
 
         public virtual IEnumerator InitializeAsync()
         {
+            /*
             var coroutine = assetCollection.InitializeSkinDefs();
 
             while (!coroutine.IsDone())
-                yield return null;
+                yield return null;*/
 
             yield break;
         }

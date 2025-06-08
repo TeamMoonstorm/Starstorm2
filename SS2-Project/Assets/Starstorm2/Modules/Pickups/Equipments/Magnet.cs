@@ -41,11 +41,6 @@ namespace SS2.Equipments
             _magnetPrefab = AssetCollection.FindAsset<GameObject>("PickupMagnetController");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }

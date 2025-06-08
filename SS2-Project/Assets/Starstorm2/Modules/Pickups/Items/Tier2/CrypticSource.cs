@@ -37,10 +37,6 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Should Cryptic Source explode automatically after most dash skills.")]
         public static bool AutoBurst = true;
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
 
         public override void Initialize()
         {

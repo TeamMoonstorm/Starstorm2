@@ -1,5 +1,21 @@
   **Warning: content spoilers below!**
 
+### 0.6.21
+* General
+    * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
+    * Recompiled the mod for Memop update
+* Items
+    * Configs now work again! You can freely disable items and equipment once more
+* Drones
+    * Lower the director credit cost of Shock and Dupe drones.
+        * Shock is down 15 -> 12
+        * Dupe is down 40 -> 32
+* Enemies
+    * A wide range of buffs to Wayfarer's health, damage, speed, and projectile attack
+    * Improvements to Wayfarer AI to make them more lethal
+    * Followers will now miss the first shot if youre off screen like other flying enemies
+    * Increased Rushroom hurtbox and a tiny health buff with it to compensate
+
 ### 0.6.20
 * General
     * New RU translation thanks to DSOverlord

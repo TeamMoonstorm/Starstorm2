@@ -33,11 +33,6 @@ namespace SS2.Items
             _burstEffect = AssetCollection.FindAsset<GameObject>("SpeakerBurstEffect");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnIncomingDamageServerReceiver
         {
             [ItemDefAssociation]
