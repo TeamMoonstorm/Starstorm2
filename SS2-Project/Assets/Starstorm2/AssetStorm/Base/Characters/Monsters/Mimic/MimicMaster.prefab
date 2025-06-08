@@ -100,7 +100,7 @@ MonoBehaviour:
   trackedFreeUnlocks: 0
   trackedMissileCount: 0
   isBoss: 0
-  preventGameOver: 1
+  preventGameOver: 0
   _seekerRevivedOnce: 0
   _seekerRevitalize: 0
   seekerSelfRevive: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showDebugStateChanges: 0
-  fullVision: 0
+  fullVision: 1
   neverRetaliateFriendlies: 0
   enemyAttentionDuration: 5
   desiredSpawnNodeGraphType: 0
@@ -164,7 +164,7 @@ MonoBehaviour:
   enemyAttention: 0
   prioritizePlayers: 0
   aimVectorDampTime: 0.05
-  aimVectorMaxSpeed: 90
+  aimVectorMaxSpeed: 70
   selectedSkilldriverName: 
   shouldMissFirstOffScreenShot: 0
   forceUpdateEveryFrame: 0
@@ -228,7 +228,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: -1
+  driverUpdateTimerOverride: 1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
@@ -250,10 +250,10 @@ MonoBehaviour:
   requireSkillReady: 0
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
+  maxUserHealthFraction: 0.95
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 10
+  minDistance: 5
   maxDistance: 25
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -263,15 +263,15 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 3
+  movementType: 1
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 1
-  driverUpdateTimerOverride: -1
+  buttonPressType: 2
+  driverUpdateTimerOverride: 1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
@@ -297,7 +297,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 20
+  maxDistance: 40
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 1
+  movementType: 2
   moveInputScale: 0
   aimType: 1
   ignoreNodeGraph: 1
@@ -314,7 +314,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 1
+  driverUpdateTimerOverride: 4
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
@@ -339,7 +339,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 30
+  minDistance: 40
   maxDistance: 60
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -356,7 +356,7 @@ MonoBehaviour:
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 0
+  buttonPressType: 1
   driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
@@ -382,7 +382,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 0
+  minDistance: 10
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
@@ -399,7 +399,7 @@ MonoBehaviour:
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
-  buttonPressType: 0
+  buttonPressType: 1
   driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
