@@ -1,4 +1,15 @@
   **Warning: content spoilers below!**
+### 0.6.21
+* Executioner
+    * New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
+    * Ion Manipulators no longer gains ion charges over time.
+	* All enemies now restore one ion charge when killed, instead of gaining extra based on size and Elite type.
+    * Added new visual effect for feared enemies.
+	* Increased Crowd Dispersion cooldown (6 seconds -> 7 seconds).
+	* New visual effects for hitting a single target with Execution.
+	* Hitting a single target with Execution now restores 3 ion charges.
+	* Execution now extends the duration of Crowd Dispersion.
+	* Execution can no longer be held to aim.
 
 ### 0.6.21
 * General

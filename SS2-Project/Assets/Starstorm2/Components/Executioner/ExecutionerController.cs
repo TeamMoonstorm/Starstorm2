@@ -20,8 +20,7 @@ namespace SS2.Components
         public GameObject meshExeAxe;
         private bool axeVisible = false;
 
-        public bool hasOOB = false;
-        public bool isExec = false;
+        public bool inMasterySkin { get; private set; }
 
         private void Awake()
         {
@@ -35,6 +34,10 @@ namespace SS2.Components
 
             modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
+
+            string skinNameToken = modelLocator.modelTransform.GetComponent<ModelSkinController>().skins[GetComponent<CharacterBody>().skinIndex].nameToken;
+            inMasterySkin = skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY";
+
             if (childLocator)
                 transformExeAxe = childLocator.FindChild("AxeSpawn");
             if (transformExeAxe)
@@ -75,7 +78,7 @@ namespace SS2.Components
         public void OnDamageDealtServer(DamageReport report)
         {
             //This will break is anyone renames that skilldef's identifier
-            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && secondary.skillDef.skillName == "ExecutionerChargeIons")
+            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
             {
                 //Debug.Log("adding killcpt");
                 var killComponents = report.victimBody.GetComponents<ExecutionerKillComponent>();

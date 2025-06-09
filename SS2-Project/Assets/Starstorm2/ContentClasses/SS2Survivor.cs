@@ -27,6 +27,15 @@ namespace SS2
 
         public abstract SS2AssetRequest<SurvivorAssetCollection> AssetRequest { get; }
 
+        protected void SetupDefaultBody(GameObject prefab)
+        {
+            CharacterBody cb = prefab.GetComponent<CharacterBody>();
+            if(cb)
+            {
+                cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+                cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
+            }
+        }
         public virtual IEnumerator LoadContentAsync()
         {
             SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
