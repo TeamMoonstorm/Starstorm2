@@ -113,6 +113,7 @@ namespace EntityStates.Executioner2
             base.FixedUpdate();
 
             characterBody.isSprinting = false;
+            characterBody.aimTimer = 2f;
 
             if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
             {

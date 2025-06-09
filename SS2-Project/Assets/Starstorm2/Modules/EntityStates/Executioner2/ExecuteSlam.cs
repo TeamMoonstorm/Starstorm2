@@ -13,7 +13,6 @@ namespace EntityStates.Executioner2
         public static float recoil;
         private static float maxDuration = 10f;
         private static float walkSpeedCoefficient = 1.5f;
-        private static float maxAngle = 42f;
         private static float verticlalSpeed = 100f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
@@ -21,11 +20,12 @@ namespace EntityStates.Executioner2
         public static GameObject soloImpactEffectPrefab;
         public static GameObject cameraEffectPrefab;
         public static float duration = 1f;
-        private Vector3 dashVector = Vector3.zero;
+        public Vector3 dashVector = Vector3.zero;
         private bool hasImpacted;
         private ExecutionerController exeController;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private static float cameraLerpDuration = 0.3f;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
@@ -35,8 +35,8 @@ namespace EntityStates.Executioner2
             wallCushion = 0.1f,
         };
         private static Vector3 slamCameraPosition = new Vector3(0, 0, -9f);
-        
 
+        private int originalLayer;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -58,6 +58,9 @@ namespace EntityStates.Executioner2
 
             characterBody.SetAimTimer(duration);
 
+            originalLayer = gameObject.layer;
+            gameObject.layer = LayerIndex.projectile.intVal;
+            characterMotor.Motor.RebuildCollidableLayers();
 
             if (isAuthority)
             {
@@ -66,10 +69,7 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.1f);
-
-                dashVector = Vector3.down;
-                dashVector = Vector3.RotateTowards(dashVector, inputBank.aimDirection, maxAngle * Mathf.Deg2Rad, 0f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
             }
         }
 
@@ -107,6 +107,7 @@ namespace EntityStates.Executioner2
         {
             characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
             characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
+            characterMotor.velocity = Vector3.zero;
         }
 
         private void DoImpactAuthority()
@@ -191,6 +192,8 @@ namespace EntityStates.Executioner2
             base.OnExit();
             characterBody.hideCrosshair = false;
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
+            gameObject.layer = originalLayer;
+            characterMotor.Motor.RebuildCollidableLayers();
             PlayAnimation("FullBody, Override", "SpecialImpact");
             if (exeController != null)
             {

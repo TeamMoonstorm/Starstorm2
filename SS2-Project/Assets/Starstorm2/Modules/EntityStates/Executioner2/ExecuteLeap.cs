@@ -9,14 +9,16 @@ namespace EntityStates.Executioner2
     {
         private Vector3 flyVector = Vector3.zero;
         private static float walkSpeedCoefficient = 2f;
-        private static float baseVerticalSpeed = 32f;
+        private static float baseVerticalSpeed = 48f;
         public static AnimationCurve speedCoefficientCurve;
         private static float baseDuration = 0.8f;
-        private static float maxAttackSpeed = 1.6f;
+        private static float maxAttackSpeed = 1.4f;
         private static float dumbFuckingSpeedScalingNumberCoefficientValue = 1.3f;
         public static float crosshairDur = 0.75f;
 
         private static float maxAngle = 42f;
+        private static float maxAngleTuah = 66f;
+        private static float rayRadius = 1.5f;
 
         public static GameObject indicatorPrefab;
         public static GameObject jumpEffect;
@@ -32,6 +34,7 @@ namespace EntityStates.Executioner2
         private GameObject indicatorInstance;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private static float cameraLerpDuration = 0.5f;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
@@ -119,7 +122,7 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
             }    
         }
 
@@ -146,11 +149,22 @@ namespace EntityStates.Executioner2
                 Vector3 direction = Vector3.down;
                 direction = Vector3.RotateTowards(direction, aimRay.direction, maxAngle * Mathf.Deg2Rad, 0f);
                 aimRay.direction = direction;
-                if (Util.CharacterRaycast(gameObject, aimRay, out RaycastHit hit, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+                if (Util.CharacterSpherecast(gameObject, aimRay, rayRadius, out RaycastHit hit, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
                 {
                     indicatorInstance.transform.position = hit.point;
                     indicatorInstance.transform.up = hit.normal;
                 }
+
+                // prevent spherecast jank so we dont go up/sideways
+                Vector3 between = indicatorInstance.transform.position - aimRay.origin;
+                Vector3 directionTuah = Vector3.RotateTowards(Vector3.down, between.normalized, maxAngleTuah * Mathf.Deg2Rad, 0f);
+                aimRay.direction = directionTuah;
+                if(Util.CharacterRaycast(gameObject, aimRay, out RaycastHit hitTuah, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+                {
+                    indicatorInstance.transform.position = hitTuah.point;
+                    indicatorInstance.transform.up = hitTuah.normal;
+                }
+
             }
         }
 
@@ -160,6 +174,9 @@ namespace EntityStates.Executioner2
             {
                 controlledExit = true;
                 ExecuteSlam nextState = new ExecuteSlam();
+                Vector3 direction = (indicatorInstance.transform.position - characterBody.footPosition).normalized;
+                direction = Vector3.RotateTowards(Vector3.down, direction, maxAngleTuah * Mathf.Deg2Rad, 0f);
+                nextState.dashVector = direction.normalized;
                 outer.SetNextState(nextState);
             }
             else
