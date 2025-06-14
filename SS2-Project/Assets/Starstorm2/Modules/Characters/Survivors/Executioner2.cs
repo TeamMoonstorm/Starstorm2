@@ -184,7 +184,7 @@ namespace SS2.Survivors
                 bool error = true;
                 ILCursor c = new ILCursor(il);
 
-                if (c.TryGotoNext(x => x.MatchLdloc(73), x => x.MatchLdcR4(0)))
+                if (c.TryGotoNext(x => x.MatchLdloc(74), x => x.MatchLdcR4(0)))
                 {
                     c.Index++;
                     c.Emit(OpCodes.Ldarg_0);//self
@@ -198,7 +198,7 @@ namespace SS2.Survivors
                         return executeFraction;
                     });
 
-                    if (c.TryGotoNext(x => x.MatchLdloc(73)))
+                    if (c.TryGotoNext(x => x.MatchLdloc(74)))
                     {
                         c.Index++;
                         c.Emit(OpCodes.Ldarg_0);//self
