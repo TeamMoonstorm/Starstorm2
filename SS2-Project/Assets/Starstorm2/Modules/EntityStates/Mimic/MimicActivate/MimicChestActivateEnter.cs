@@ -82,7 +82,7 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration/2 && isAuthority)
+            if (fixedAge >= duration/2 && isAuthority && ai)
             {
                 ai.UpdateBodyAim(Time.fixedDeltaTime);
             }
