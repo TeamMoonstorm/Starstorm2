@@ -51,7 +51,7 @@ namespace SS2.Interactables
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         //private void SpawnShockCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
