@@ -19,6 +19,9 @@ namespace EntityStates.Mimic
         BaseAI ai;
         private bool hasRotated = false;
         public CharacterBody? target;
+
+        GameObject lVFX;
+        GameObject rVFX;
         protected virtual bool enableInteraction
         {
             get
@@ -26,7 +29,6 @@ namespace EntityStates.Mimic
                 return false;
             }
         }
-
         public override void OnEnter()
         {
             duration = baseDuration / attackSpeedStat;
@@ -70,6 +72,19 @@ namespace EntityStates.Mimic
             //
             //intermediate.modelTransform.GetComponent<BoxCollider>().enabled = false;
 
+            var zipL = FindModelChild("ZipperL");
+            if (zipL)
+            {
+                lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
+            }
+
+            var zipR = FindModelChild("ZipperR");
+            if (zipR)
+            {
+                rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
+            }
+
+
             GetComponent<CapsuleCollider>().enabled = true;
             SS2Log.Warning("Finished enter ");
             if (target)
@@ -99,6 +114,9 @@ namespace EntityStates.Mimic
         {
             base.OnExit();
             SS2Log.Warning("MimicChestActivateEnter EXIT ");
+
+            Destroy(lVFX);
+            Destroy(rVFX);
 
             if (!endedSuccessfully)
             {

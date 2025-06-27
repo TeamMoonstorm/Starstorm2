@@ -63,7 +63,10 @@ namespace EntityStates.Mimic.Weapon
 			if (fixedAge >= duration && isAuthority)
 			{
 				endedSuccessfully = true;
-				outer.SetNextState(new MimicMinigunLoop());
+				var loop = new MimicMinigunLoop();
+				loop.fireVFXInstanceLeft = fireVFXInstanceLeft;
+				loop.fireVFXInstanceRight = fireVFXInstanceRight;
+				outer.SetNextState(loop);
 			}
 		}
 

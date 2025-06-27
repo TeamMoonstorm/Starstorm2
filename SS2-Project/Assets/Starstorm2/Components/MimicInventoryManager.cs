@@ -2,6 +2,7 @@
 using RoR2;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.AddressableAssets;
 
 namespace SS2.Components
 {
@@ -52,8 +53,35 @@ namespace SS2.Components
             {
                 FindPivot();
             }
-            SS2Log.Warning("begin waity");
+            //SS2Log.Warning("begin waity");
+            //string effectName = "RoR2/Base/Chest1/ChestUnzip.prefab";
+            //var effect = Addressables.LoadAssetAsync<GameObject>(effectName).WaitForCompletion();
+            //UnityEngine.Object.Instantiate<GameObject>(effect, pivot);
+
             yield return new WaitForSeconds(1.5f);
+
+            //string effectName2 = "RoR2/Base/Chest1/Chest1Starburst.prefab";
+            //var effect2 = Addressables.LoadAssetAsync<GameObject>(effectName2).WaitForCompletion();
+
+            //EffectData effectData = new EffectData
+            //{
+            //    origin = this.transform.position
+            //};
+            //effectData.SetNetworkedObjectReference(this.gameObject);
+            //EffectManager.SimpleEffect(effect, this.transform.position, this.transform.rotation, true);
+            //SS2Log.Warning("Simple Effect Just Fired");
+            var temp = pivot.position;
+            temp.y += .1f;
+            EffectData effectData = new EffectData
+            {
+                origin = temp
+            };
+            effectData.SetNetworkedObjectReference(pivot.gameObject); //?
+            EffectManager.SpawnEffect(SS2.Monsters.Mimic.itemStarburst, effectData, true);
+            SS2Log.Warning("SimpleMuzzleFlash Fired");
+
+            //UnityEngine.Object.Instantiate<GameObject>(effect2, pivot);
+
             SS2Log.Warning("end wait");
             if (itemInd.Count > 0 && pivot && cdir)
             {

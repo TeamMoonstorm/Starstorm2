@@ -26,7 +26,7 @@ namespace EntityStates.Mimic
         private float timer = 0;
         private Animator anim;
         private CharacterBody target;
-		
+        public bool rechest = false;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -49,7 +49,11 @@ namespace EntityStates.Mimic
             });
 
             //modelLocator
-
+            if (!rechest)
+            {
+                int adjust = UnityEngine.Random.Range(0, 2) - 1;
+                purchaseInter.cost += adjust;
+            }
             //characterBody.inventory.GiveItem()
 
 
@@ -84,14 +88,25 @@ namespace EntityStates.Mimic
         {
             if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed))
             {
-                if (UnityEngine.Random.Range(0, 4) == 0)
+                if (rechest)
                 {
-                    skillSlot.ExecuteIfReady();
-                    buttonState.hasPressBeenClaimed = true;
+                    if (UnityEngine.Random.Range(0, 3) == 0)
+                    {
+                        skillSlot.ExecuteIfReady();
+                        buttonState.hasPressBeenClaimed = true;
+                    }
                 }
                 else
                 {
-                    skillSlot.RemoveAllStocks();
+                    if (UnityEngine.Random.Range(0, 4) == 0)
+                    {
+                        skillSlot.ExecuteIfReady();
+                        buttonState.hasPressBeenClaimed = true;
+                    }
+                    else
+                    {
+                        skillSlot.RemoveAllStocks();
+                    }
                 }
             }
         }

@@ -83,7 +83,10 @@ namespace EntityStates.Mimic.Weapon
 			}
 			if (base.isAuthority && !base.skillButtonState.down)
 			{
-				this.outer.SetNextState(new MimicMinigunExit());
+				var exit = new MimicMinigunExit();
+				exit.fireVFXInstanceLeft = fireVFXInstanceLeft;
+				exit.fireVFXInstanceRight = fireVFXInstanceRight;
+				this.outer.SetNextState(exit);
 				return;
 			}
 		}

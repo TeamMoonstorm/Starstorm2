@@ -4,6 +4,7 @@ using SS2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.Mimic
@@ -85,6 +86,23 @@ namespace EntityStates.Mimic
 			//}
 
 			Util.PlaySound(soundLoopStartEvent, gameObject);
+
+			var lThruster = FindModelChild("ThrusterL");
+			var rThruster = FindModelChild("ThrusterR");
+
+			string effectName = "RoR2/Base/Commando/CommandoDashJets.prefab";
+			var effect = Addressables.LoadAssetAsync<GameObject>(effectName).WaitForCompletion();
+
+			if (lThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(effect, lThruster);
+			}
+
+			if (rThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(effect, rThruster);
+			}
+
 		}
 
 		public override void FixedUpdate()
@@ -141,6 +159,15 @@ namespace EntityStates.Mimic
 			};
 
 			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.Mimic.StealItemDamageType);
+
+			var explosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
+			EffectData effectData = new EffectData
+			{
+				origin = characterBody.corePosition
+			};
+			effectData.SetNetworkedObjectReference(this.gameObject);
+			EffectManager.SpawnEffect(explosion, effectData, transmit: true);
+
 
 			return attack.Fire(); 
 		}

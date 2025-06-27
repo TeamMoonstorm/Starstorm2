@@ -25,7 +25,8 @@ namespace SS2.Monsters
 		public Xoroshiro128Plus mimicItemRng;
 		MimicDropTable mimicDT;
 		public GameObject itemOrb;
-
+		static public GameObject itemStarburst;
+		static public GameObject zipperVFX;
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
@@ -47,13 +48,103 @@ namespace SS2.Monsters
 
 			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
 
+			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
+			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
+
+			var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
+			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
+			pip.pingIconOverride = ping;
+
+			//On.RoR2.AnimationEvents.CreatePrefab += prefaber;
+			//On.RoR2.AnimationEvents.CreateEffect += efcetr;
+
+		}
+
+        private void efcetr(On.RoR2.AnimationEvents.orig_CreateEffect orig, AnimationEvents self, AnimationEvent animationEvent)
+        {
+			var tarnsform = self.transform;
+			Debug.Log("transform ;" + tarnsform + " | " + (GameObject)animationEvent.objectReferenceParameter);
+			orig(self, animationEvent);
+		}
+
+        private void prefaber(On.RoR2.AnimationEvents.orig_CreatePrefab orig, AnimationEvents self, AnimationEvent animationEvent)
+        {
+
+			//GameObject gameObject = (GameObject)animationEvent.objectReferenceParameter;
+			//bool flag = EffectManager.ShouldUsePooledEffect(gameObject);
+			//Debug.Log("Flag: " + flag + " | " + gameObject + " | " + gameObject.name);
+			//orig(self, animationEvent);
+
+
+			GameObject gameObject = (GameObject)animationEvent.objectReferenceParameter;
+			bool flag = EffectManager.ShouldUsePooledEffect(gameObject);
+			string stringParameter = animationEvent.stringParameter;
+			Transform transform = self.transform;
+			int intParameter = animationEvent.intParameter;
+			if (self.childLocator)
+			{
+				Transform transform2 = self.childLocator.FindChild(stringParameter);
+				if (transform2)
+				{
+					Debug.Log("transform2: " + transform2 + " | ");
+					if (intParameter == 0)
+					{
+						if (!flag)
+						{
+							UnityEngine.Object.Instantiate<GameObject>(gameObject, transform2.position, Quaternion.identity);
+							Debug.Log("The Spawner: " + transform2 + " | ");
+							return;
+						}
+						Debug.Log("The Pooler: " + transform2 + " | ");
+						EffectManager.GetAndActivatePooledEffect(gameObject, transform2.position, Quaternion.identity);
+						return;
+					}
+					else
+					{
+						if (!flag)
+						{
+							Debug.Log("The Spawner, Sequale: " + transform2 + " | ");
+							UnityEngine.Object.Instantiate<GameObject>(gameObject, transform2.position, transform2.rotation).transform.parent = transform2;
+							return;
+						}
+						Debug.Log("The Pooler, Sequalae: " + transform2 + " | ");
+						EffectManager.GetAndActivatePooledEffect(gameObject, transform2.position, transform2.rotation, transform2);
+						return;
+					}
+				}
+				else if (gameObject)
+				{
+					if (!flag)
+					{
+						Debug.Log("The Spawner, Thrice Called: " + transform2 + " | ");
+						UnityEngine.Object.Instantiate<GameObject>(gameObject, transform.position, transform.rotation);
+						return;
+					}
+					Debug.Log("The Pooler, Thrice Proclaimed: " + transform2 + " | ");
+					EffectManager.GetAndActivatePooledEffect(gameObject, transform.position, transform.rotation);
+					return;
+				}
+			}
+			else if (gameObject)
+			{
+				if (!flag)
+				{
+					Debug.Log("The Spawner, Quadruple Pogger: " + gameObject + " | ");
+					UnityEngine.Object.Instantiate<GameObject>(gameObject, transform.position, transform.rotation);
+					return;
+				}
+				Debug.Log("The Pooler, More than Thrice Riced: " + gameObject + " | ");
+				EffectManager.GetAndActivatePooledEffect(gameObject, transform.position, transform.rotation);
+			}
+
+
 		}
 
         private void StartMimic(On.RoR2.CharacterMaster.orig_Start orig, CharacterMaster self)
         {
-			SS2Log.Warning("self " + self + " | " + self.name + " | " + self.bodyInstanceObject);
+			//SS2Log.Warning("self " + self + " | " + self.name + " | " + self.bodyInstanceObject);
 			orig(self);
-			SS2Log.Warning("AFTER " + self + " | " + self.name + " | " + self.bodyInstanceObject);
+			//SS2Log.Warning("AFTER " + self + " | " + self.name + " | " + self.bodyInstanceObject);
 			
 			if (self.name.Contains("Mimic"))
             {

@@ -13,7 +13,7 @@ namespace SS2.Components
         {
 			Vector3 vec = this.transform.position;
 			vec.y += 0.05f;
-			SS2Log.Warning(" im tired  : " + masterObject);
+			SS2Log.Warning("!!!SPAWNING A MIMIC  : " + masterObject);
 			GameObject masterInstance = Object.Instantiate<GameObject>(masterObject, vec, Quaternion.identity);
 
 			CharacterMaster component = masterInstance.GetComponent<CharacterMaster>();

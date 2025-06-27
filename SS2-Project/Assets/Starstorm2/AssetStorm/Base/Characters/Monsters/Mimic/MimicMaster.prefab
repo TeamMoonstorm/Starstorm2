@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 6338205286472841710}
   - component: {fileID: 1636198127395624791}
   - component: {fileID: 5004364896986939778}
+  - component: {fileID: -8768141246394826976}
   - component: {fileID: -5751928995135875523}
   - component: {fileID: 8983767220195861630}
   m_Layer: 0
@@ -216,14 +217,14 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
-  maxTimesSelected: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 1
   moveInputScale: 1
-  aimType: 1
+  aimType: 2
   ignoreNodeGraph: 1
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -250,7 +251,7 @@ MonoBehaviour:
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
   requireEquipmentReady: 0
-  minUserHealthFraction: 0.05
+  minUserHealthFraction: 0.23
   maxUserHealthFraction: 0.95
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
@@ -266,7 +267,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 1
   moveInputScale: 0.25
-  aimType: 1
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -274,7 +275,7 @@ MonoBehaviour:
   buttonPressType: 2
   driverUpdateTimerOverride: 1.5
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
+  noRepeat: 1
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &1636198127395624791
 MonoBehaviour:
@@ -293,7 +294,7 @@ MonoBehaviour:
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
   requireEquipmentReady: 0
-  minUserHealthFraction: 0.05
+  minUserHealthFraction: 0.23
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
@@ -308,8 +309,8 @@ MonoBehaviour:
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
   movementType: 2
-  moveInputScale: 1
-  aimType: 1
+  moveInputScale: 0.5
+  aimType: 2
   ignoreNodeGraph: 1
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -336,7 +337,7 @@ MonoBehaviour:
   requiredSkill: {fileID: 0}
   requireSkillReady: 0
   requireEquipmentReady: 0
-  minUserHealthFraction: 0.05
+  minUserHealthFraction: 0.23
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
@@ -362,6 +363,49 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &-8768141246394826976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609412355061465226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Rechest
+  skillSlot: 2
+  requiredSkill: {fileID: 11400000, guid: 43cc86deb2e90e048a19f742300398ee, type: 2}
+  requireSkillReady: 0
+  requireEquipmentReady: 0
+  minUserHealthFraction: -Infinity
+  maxUserHealthFraction: 0.24
+  minTargetHealthFraction: -Infinity
+  maxTargetHealthFraction: Infinity
+  minDistance: 17.5
+  maxDistance: Infinity
+  selectionRequiresTargetLoS: 0
+  selectionRequiresOnGround: 0
+  selectionRequiresAimTarget: 0
+  maxTimesSelected: -1
+  moveTargetType: 0
+  activationRequiresTargetLoS: 0
+  activationRequiresAimTargetLoS: 0
+  activationRequiresAimConfirmation: 0
+  movementType: 0
+  moveInputScale: 0
+  aimType: 0
+  ignoreNodeGraph: 0
+  shouldSprint: 1
+  shouldFireEquipment: 0
+  shouldTapButton: 0
+  buttonPressType: 0
+  driverUpdateTimerOverride: 2
+  resetCurrentEnemyOnNextDriverSelection: 0
+  noRepeat: 0
+  nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &-5751928995135875523
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,11 +420,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Cower
   skillSlot: -1
-  requiredSkill: {fileID: 11400000, guid: ba636943d92ca8f4d818c76e9f9db3e2, type: 2}
+  requiredSkill: {fileID: 11400000, guid: 43cc86deb2e90e048a19f742300398ee, type: 2}
   requireSkillReady: 0
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: 0.075
+  maxUserHealthFraction: 0.24
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
@@ -388,7 +432,7 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
-  maxTimesSelected: 1
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
@@ -401,7 +445,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 1
+  driverUpdateTimerOverride: 2
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
@@ -426,7 +470,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 10
+  minDistance: 15
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
