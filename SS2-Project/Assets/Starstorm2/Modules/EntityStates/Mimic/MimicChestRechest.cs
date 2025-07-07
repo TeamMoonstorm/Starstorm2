@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Hologram;
 using SS2;
 using System;
 using UnityEngine;
@@ -66,8 +67,12 @@ namespace EntityStates.Mimic
 
             if (fixedAge >= duration && isAuthority)
             {
+                ProcChainMask mask = new ProcChainMask();
+                healthComponent.HealFraction(.5f, mask);
+
                 var next = new MimicChestInteractableIdle();
                 next.rechest = true;
+                next.health = healthComponent.health;
                 //next.target = target;
                 outer.SetNextState(next); //leap begin
                 SS2Log.Warning("Fixed Update End");
@@ -89,24 +94,27 @@ namespace EntityStates.Mimic
             body.GetComponent<BoxCollider>().enabled = true;
             body.GetComponent<CapsuleCollider>().enabled = false;
 
-            body.GetComponent<PingInfoProvider>().enabled = true;
-            body.GetComponent<GenericInspectInfoProvider>().enabled = true;
+            //body.GetComponent<PingInfoProvider>().enabled = true;
+            //body.GetComponent<GenericInspectInfoProvider>().enabled = true;
 
-            if(modelLocator && modelLocator.modelTransform)
+            body.GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_INTERACTABLE_NAME";
+
+            if (modelLocator && modelLocator.modelTransform)
             {
                 var mdl = modelLocator.modelTransform;
                 mdl.GetComponent<BoxCollider>().enabled = true;
 
                 mdl.Find("PickupPivot").gameObject.SetActive(false);
 
-                var hbg = mdl.GetComponent<HurtBoxGroup>();
-                if (hbg)
-                {
-                    foreach(var hb in hbg.hurtBoxes)
-                    {
-                        hb.gameObject.SetActive(true);
-                    }
-                }
+                //var hbg = mdl.GetComponent<HurtBoxGroup>();
+                //if (hbg)
+                //{
+                //    foreach(var hb in hbg.hurtBoxes)
+                //    {
+                //        Debug.Log("Disabling : ")
+                //        hb.gameObject.SetActive(true);
+                //    }
+                //}
             }
 
             purchaseInter.SetAvailable(true);
@@ -121,8 +129,8 @@ namespace EntityStates.Mimic
             PlayAnimation("Body", "IntermediateIdle");
 
             skillLocator.special.AddOneStock();
-            ProcChainMask mask = new ProcChainMask();
-            healthComponent.HealFraction(.5f, mask);
+
+            GetComponent<HologramProjector>().enabled = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

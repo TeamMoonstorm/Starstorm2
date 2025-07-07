@@ -35,8 +35,6 @@ namespace EntityStates.Mimic
 		public static float forwardVelocity;
 
 		public static float minimumY;
-		public static float minYVelocityForAnim;
-		public static float maxYVelocityForAnim;
 
 		public static string soundLoopStartEvent;
 		public static string soundLoopStopEvent;
@@ -62,7 +60,7 @@ namespace EntityStates.Mimic
 			{
 				characterBody.isSprinting = true;
 				direction.y = Mathf.Max(direction.y, minimumY);
-				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat/2;
 				Vector3 b = Vector3.up * upwardVelocity;
 				Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
 				characterMotor.Motor.ForceUnground(0.1f);
@@ -112,7 +110,6 @@ namespace EntityStates.Mimic
 		public override void UpdateAnimationParameters()
 		{
 			base.UpdateAnimationParameters();
-			float value = Mathf.Clamp01(Util.Remap(estimatedVelocity.y, minYVelocityForAnim, maxYVelocityForAnim, 0f, 1f)) * 0.97f;
 			//modelAnimator.SetFloat("LeapCycle", value, 0.1f, Time.deltaTime);
 		}
 

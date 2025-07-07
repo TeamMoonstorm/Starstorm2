@@ -27,6 +27,9 @@ namespace EntityStates.Mimic
         private Animator anim;
         private CharacterBody target;
         public bool rechest = false;
+        public float health;
+
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -37,6 +40,7 @@ namespace EntityStates.Mimic
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
+                //healthComponent.health
             }
             else
             {
@@ -83,6 +87,15 @@ namespace EntityStates.Mimic
                     outer.SetNextState(next); //leap begin
                 }
             }
+
+            if(health > healthComponent.health && isAuthority)
+            {
+                Debug.Log("waking up because of damage");
+                var next = new MimicChestActivateEnter();
+                next.target = target;
+                outer.SetNextState(next); //leap begin
+            }
+
         }
         void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
         {

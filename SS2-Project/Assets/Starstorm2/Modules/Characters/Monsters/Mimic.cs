@@ -37,6 +37,9 @@ namespace SS2.Monsters
 			//On.RoR2.Interactor.FindBestInteractableObject += FindBest;
 			//On.RoR2.PingerController.AttemptPing += Why;
 			On.RoR2.PingerController.GeneratePingInfo += GenPing;
+			On.RoR2.RandomizeSplatBias.Setup += SplatSetup;
+			//On.RoR2.RandomizeSplatBias.Setup += Hello;
+
 
 			On.RoR2.CharacterMaster.Start += StartMimic;
 
@@ -54,10 +57,45 @@ namespace SS2.Monsters
 			var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
 			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
 			pip.pingIconOverride = ping;
-
+			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
+			mid.Info.Visual = ping;
 			//On.RoR2.AnimationEvents.CreatePrefab += prefaber;
 			//On.RoR2.AnimationEvents.CreateEffect += efcetr;
 
+		}
+
+        private void SplatSetup(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
+        {
+
+			var mpc = self.GetComponent<MimicPingCorrecter>();
+            if (mpc)
+            {
+				var ml = self.GetComponent<ModelLocator>();
+                if (ml)
+                {
+					var transf = ml.modelTransform;
+					SS2Log.Warning("no");
+					var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
+					foreach(var comp in componentsInChildren)
+                    {
+						Material material2 = UnityEngine.Object.Instantiate<Material>(comp.material);
+						self.materialsList.Add(material2);
+						comp.material = material2;
+						self._propBlock = new MaterialPropertyBlock();
+						comp.GetPropertyBlock(self._propBlock);
+						self._propBlock.SetFloat("_RedChannelBias", UnityEngine.Random.Range(self.minRedBias, self.maxRedBias));
+						self._propBlock.SetFloat("_BlueChannelBias", UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias));
+						self._propBlock.SetFloat("_GreenChannelBias", UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias));
+						comp.SetPropertyBlock(self._propBlock);
+					}
+					SS2Log.Warning("byuebye!!!!");
+				}
+
+			}
+            else
+            {
+				orig(self);
+            }
 		}
 
         private void efcetr(On.RoR2.AnimationEvents.orig_CreateEffect orig, AnimationEvents self, AnimationEvent animationEvent)
@@ -159,6 +197,15 @@ namespace SS2.Monsters
 				{
 					var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
 					var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+					SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")));
+					SS2Log.Warning(PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")));
+					SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")).itemIndex == PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")).itemIndex);
+
+
+					if (itemIndex == ItemCatalog.FindItemIndex("Thorns"))
+                    {
+
+                    }
 					SS2Log.Warning("item " + item + " | itemIndex " + itemIndex + " | ");
 					self.inventory.GiveItem(itemIndex);
 					SS2Log.Warning("adding " + item + " | mim " + mim + " | ");
@@ -280,7 +327,18 @@ namespace SS2.Monsters
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
 						string ownerName = self.GetOwnerName();
-						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
+						
+						string text = "";
+						if (gdnp) 
+						{
+							text = Language.GetString(gdnp.displayToken);
+                        }
+						else
+						{
+							text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+						}
+
 						self.pingText.enabled = true;
 						self.pingText.text = ownerName;
 
@@ -451,6 +509,8 @@ namespace SS2.Monsters
 		{
 			int num = 1;
 			selector.Clear();
+			var list1 = Run.instance.availableTier1DropList;
+			//
 			Add(Run.instance.availableTier1DropList, tier1Weight);
 			Add(Run.instance.availableTier2DropList, tier2Weight * (float)num);
 			Add(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)num, 2f));

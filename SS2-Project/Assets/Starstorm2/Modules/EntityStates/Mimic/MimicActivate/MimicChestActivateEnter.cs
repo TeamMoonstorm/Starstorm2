@@ -3,6 +3,7 @@ using RoR2.CharacterAI;
 using RoR2.Hologram;
 using SS2;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -19,6 +20,8 @@ namespace EntityStates.Mimic
         BaseAI ai;
         private bool hasRotated = false;
         public CharacterBody? target;
+        public HurtBox? hurt;
+
 
         GameObject lVFX;
         GameObject rVFX;
@@ -92,13 +95,37 @@ namespace EntityStates.Mimic
                 SS2Log.Warning("rotating to " + target);
                 AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);
             }
+            else
+            {
+                SphereSearch sphere = new SphereSearch();
+                List<HurtBox> list = new List<HurtBox>();
+
+                sphere.origin = this.transform.position;
+                sphere.mask = LayerIndex.entityPrecise.mask;
+                sphere.radius = 10f;
+                sphere.RefreshCandidates();
+                sphere.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(characterBody.teamComponent.teamIndex));
+                sphere.FilterCandidatesByDistinctHurtBoxEntities();
+                sphere.OrderCandidatesByDistance();
+                sphere.GetHurtBoxes(list);
+                sphere.ClearCandidates();
+                if(list.Count > 0)
+                {
+                    hurt = list[0];
+                    AimInDirection(ref ai.bodyInputs, (hurt.transform.position - transform.position).normalized);
+                }
+            }
+
+
+
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration/2 && isAuthority && ai)
+            if (fixedAge >= duration/4 && isAuthority && ai)
             {
+                Debug.Log("Updating Aim");
                 ai.UpdateBodyAim(Time.fixedDeltaTime);
             }
 
@@ -130,7 +157,7 @@ namespace EntityStates.Mimic
                 box.gameObject.SetActive(true);
             }
 
-            GetComponent<GenericInspectInfoProvider>().enabled = false;
+            //GetComponent<GenericInspectInfoProvider>().enabled = false;
             //GetComponent<GenericDisplayNameProvider>().enabled = false;
             //GetComponent<PingInfoProvider>().enabled = false;
 
@@ -140,7 +167,32 @@ namespace EntityStates.Mimic
             intermediate.modelTransform.GetComponent<BoxCollider>().enabled = false;
 
             characterBody.skillLocator.special.RemoveAllStocks();
+            GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_BODY_NAME";
 
+            //SphereSearch sphere = new SphereSearch();
+            //List<HurtBox> list = new List<HurtBox>();
+            //
+            //sphere.origin = this.transform.position;
+            //sphere.mask = LayerIndex.entityPrecise.mask;
+            //sphere.radius = 10f;
+            //sphere.RefreshCandidates();
+            //sphere.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(characterBody.teamComponent.teamIndex));
+            //sphere.FilterCandidatesByDistinctHurtBoxEntities();
+            //sphere.OrderCandidatesByDistance();
+            //sphere.GetHurtBoxes(list);
+            //sphere.ClearCandidates();
+            //
+            //if (target)
+            //{
+            //    SS2Log.Warning("rotating to " + target);
+            //    AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);
+            //}
+            //
+            //if(list.Count > 0)
+            //{
+            //    SS2Log.Warning("rotating to target from SphereSearch: " + target);
+            //    AimInDirection(ref ai.bodyInputs, (list[0].transform.position - transform.position).normalized);
+            //}
         }
 
         protected void AimAt(ref BaseAI.BodyInputs dest, BaseAI.Target aimTarget)
