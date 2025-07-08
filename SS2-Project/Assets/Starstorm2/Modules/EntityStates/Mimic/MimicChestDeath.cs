@@ -12,6 +12,7 @@ namespace EntityStates.Mimic
 
         GameObject lVFX;
         GameObject rVFX;
+        new bool shouldAutoDestroy = false;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -37,6 +38,7 @@ namespace EntityStates.Mimic
             }
 
             rigidbody.velocity = Vector3.zero;
+            characterMotor.velocity = Vector3.zero;
 
             if (gameObject)
             {
@@ -64,7 +66,7 @@ namespace EntityStates.Mimic
 
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
+            //base.FixedUpdate();
         }
 
         public override void OnExit()
@@ -72,7 +74,7 @@ namespace EntityStates.Mimic
             SS2Log.Error("Death Exit : " + gameObject);
             Destroy(lVFX);
             Destroy(rVFX);
-            base.OnExit();
+            //base.OnExit();
         }
     }
 }

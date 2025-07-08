@@ -926,8 +926,8 @@ MonoBehaviour:
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
-  dontReleaseModelOnDeath: 0
-  preserveModel: 0
+  dontReleaseModelOnDeath: 1
+  preserveModel: 1
   forceCulled: 0
   normalizeToFloor: 1
   normalSmoothdampTime: 0.1
@@ -1341,7 +1341,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 7096113393629376220}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Height: 1.82
   m_Direction: 1

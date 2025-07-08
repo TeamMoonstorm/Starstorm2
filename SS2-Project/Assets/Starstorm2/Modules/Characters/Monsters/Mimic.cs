@@ -23,31 +23,18 @@ namespace SS2.Monsters
 		public static ModdedDamageType StealItemDamageType { get; private set; }
 
 		public Xoroshiro128Plus mimicItemRng;
-		MimicDropTable mimicDT;
 		public GameObject itemOrb;
 		static public GameObject itemStarburst;
 		static public GameObject zipperVFX;
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
-			MimicSpawner.masterObject = _masterPrefab;
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
-			//On.RoR2.Interactor.FindBestInteractableObject += FindBest;
-			//On.RoR2.PingerController.AttemptPing += Why;
-			On.RoR2.PingerController.GeneratePingInfo += GenPing;
 			On.RoR2.RandomizeSplatBias.Setup += SplatSetup;
-			//On.RoR2.RandomizeSplatBias.Setup += Hello;
-
-
-			On.RoR2.CharacterMaster.Start += StartMimic;
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
-
-			mimicDT = ScriptableObject.CreateInstance<MimicDropTable>();
-			//RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab 	
-			//RoR2/Base/Common/VFX/ItemTransferOrbEffect.prefab
 
 			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
 
@@ -59,14 +46,10 @@ namespace SS2.Monsters
 			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
 			mid.Info.Visual = ping;
-			//On.RoR2.AnimationEvents.CreatePrefab += prefaber;
-			//On.RoR2.AnimationEvents.CreateEffect += efcetr;
-
 		}
 
         private void SplatSetup(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
         {
-
 			var mpc = self.GetComponent<MimicPingCorrecter>();
             if (mpc)
             {
@@ -74,7 +57,6 @@ namespace SS2.Monsters
                 if (ml)
                 {
 					var transf = ml.modelTransform;
-					SS2Log.Warning("no");
 					var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
 					foreach(var comp in componentsInChildren)
                     {
@@ -88,201 +70,18 @@ namespace SS2.Monsters
 						self._propBlock.SetFloat("_GreenChannelBias", UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias));
 						comp.SetPropertyBlock(self._propBlock);
 					}
-					SS2Log.Warning("byuebye!!!!");
 				}
-
 			}
             else
             {
 				orig(self);
             }
 		}
-
-        private void efcetr(On.RoR2.AnimationEvents.orig_CreateEffect orig, AnimationEvents self, AnimationEvent animationEvent)
-        {
-			var tarnsform = self.transform;
-			Debug.Log("transform ;" + tarnsform + " | " + (GameObject)animationEvent.objectReferenceParameter);
-			orig(self, animationEvent);
-		}
-
-        private void prefaber(On.RoR2.AnimationEvents.orig_CreatePrefab orig, AnimationEvents self, AnimationEvent animationEvent)
-        {
-
-			//GameObject gameObject = (GameObject)animationEvent.objectReferenceParameter;
-			//bool flag = EffectManager.ShouldUsePooledEffect(gameObject);
-			//Debug.Log("Flag: " + flag + " | " + gameObject + " | " + gameObject.name);
-			//orig(self, animationEvent);
-
-
-			GameObject gameObject = (GameObject)animationEvent.objectReferenceParameter;
-			bool flag = EffectManager.ShouldUsePooledEffect(gameObject);
-			string stringParameter = animationEvent.stringParameter;
-			Transform transform = self.transform;
-			int intParameter = animationEvent.intParameter;
-			if (self.childLocator)
-			{
-				Transform transform2 = self.childLocator.FindChild(stringParameter);
-				if (transform2)
-				{
-					Debug.Log("transform2: " + transform2 + " | ");
-					if (intParameter == 0)
-					{
-						if (!flag)
-						{
-							UnityEngine.Object.Instantiate<GameObject>(gameObject, transform2.position, Quaternion.identity);
-							Debug.Log("The Spawner: " + transform2 + " | ");
-							return;
-						}
-						Debug.Log("The Pooler: " + transform2 + " | ");
-						EffectManager.GetAndActivatePooledEffect(gameObject, transform2.position, Quaternion.identity);
-						return;
-					}
-					else
-					{
-						if (!flag)
-						{
-							Debug.Log("The Spawner, Sequale: " + transform2 + " | ");
-							UnityEngine.Object.Instantiate<GameObject>(gameObject, transform2.position, transform2.rotation).transform.parent = transform2;
-							return;
-						}
-						Debug.Log("The Pooler, Sequalae: " + transform2 + " | ");
-						EffectManager.GetAndActivatePooledEffect(gameObject, transform2.position, transform2.rotation, transform2);
-						return;
-					}
-				}
-				else if (gameObject)
-				{
-					if (!flag)
-					{
-						Debug.Log("The Spawner, Thrice Called: " + transform2 + " | ");
-						UnityEngine.Object.Instantiate<GameObject>(gameObject, transform.position, transform.rotation);
-						return;
-					}
-					Debug.Log("The Pooler, Thrice Proclaimed: " + transform2 + " | ");
-					EffectManager.GetAndActivatePooledEffect(gameObject, transform.position, transform.rotation);
-					return;
-				}
-			}
-			else if (gameObject)
-			{
-				if (!flag)
-				{
-					Debug.Log("The Spawner, Quadruple Pogger: " + gameObject + " | ");
-					UnityEngine.Object.Instantiate<GameObject>(gameObject, transform.position, transform.rotation);
-					return;
-				}
-				Debug.Log("The Pooler, More than Thrice Riced: " + gameObject + " | ");
-				EffectManager.GetAndActivatePooledEffect(gameObject, transform.position, transform.rotation);
-			}
-
-
-		}
-
-        private void StartMimic(On.RoR2.CharacterMaster.orig_Start orig, CharacterMaster self)
-        {
-			//SS2Log.Warning("self " + self + " | " + self.name + " | " + self.bodyInstanceObject);
-			orig(self);
-			//SS2Log.Warning("AFTER " + self + " | " + self.name + " | " + self.bodyInstanceObject);
-			
-			if (self.name.Contains("Mimic"))
-            {
-				if (mimicItemRng == null)
-				{
-					mimicItemRng = new Xoroshiro128Plus(Run.instance.seed);
-					SS2Log.Warning("rng " + mimicItemRng);
-				}
-
-				var mim = self.GetBody().GetComponent<MimicInventoryManager>();
-				if (mim)
-				{
-					var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
-					var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
-					SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")));
-					SS2Log.Warning(PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")));
-					SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")).itemIndex == PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")).itemIndex);
-
-
-					if (itemIndex == ItemCatalog.FindItemIndex("Thorns"))
-                    {
-
-                    }
-					SS2Log.Warning("item " + item + " | itemIndex " + itemIndex + " | ");
-					self.inventory.GiveItem(itemIndex);
-					SS2Log.Warning("adding " + item + " | mim " + mim + " | ");
-					mim.AddItem(itemIndex);
-				}
-			}
-			
-			
-			//self.inventory.GiveItem()
-		}
-
-        private bool GenPing(On.RoR2.PingerController.orig_GeneratePingInfo orig, Ray aimRay, GameObject bodyObject, out PingerController.PingInfo result)
-        {
-			result = new PingerController.PingInfo
-			{
-				active = true,
-				origin = Vector3.zero,
-				normal = Vector3.zero,
-				targetNetworkIdentity = null
-			};
-			float num;
-			aimRay = CameraRigController.ModifyAimRayIfApplicable(aimRay, bodyObject, out num);
-			float maxDistance = 1000f + num;
-			RaycastHit raycastHit;
-			if (Util.CharacterRaycast(bodyObject, aimRay, out raycastHit, maxDistance, LayerIndex.entityPrecise.mask | LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal))
-			{
-				SS2Log.Warning("Enemy Character Ray Cast " + raycastHit);
-				HurtBox component = raycastHit.collider.GetComponent<HurtBox>();
-				if (component && component.healthComponent)
-				{
-					CharacterBody body = component.healthComponent.body;
-					result.origin = body.corePosition;
-					result.normal = Vector3.zero;
-					result.targetNetworkIdentity = body.networkIdentity;
-					SS2Log.Warning(" Determined Enemy : " + result + " | " + body + " | " + component);
-				}
-			}
-			if (Util.CharacterRaycast(bodyObject, aimRay, out raycastHit, maxDistance, LayerIndex.world.mask | LayerIndex.CommonMasks.characterBodiesOrDefault | LayerIndex.pickups.mask, QueryTriggerInteraction.Collide))
-			{
-				SS2Log.Warning("Other Character Ray Cast " + raycastHit);
-				GameObject gameObject = raycastHit.collider.gameObject;
-				NetworkIdentity networkIdentity = gameObject.GetComponentInParent<NetworkIdentity>();
-				ForcePingable component2 = gameObject.GetComponent<ForcePingable>();
-				SS2Log.Warning("GAme  " + gameObject + " | " + networkIdentity + " | " + component2);
-				if (!networkIdentity && (component2 == null || !component2.bypassEntityLocator))
-				{
-					Transform parent = gameObject.transform.parent;
-					EntityLocator entityLocator = parent ? parent.GetComponentInChildren<EntityLocator>() : gameObject.GetComponent<EntityLocator>();
-					SS2Log.Warning("bar enable  " + parent + " | " + entityLocator + " | ");
-					if (entityLocator)
-					{
-						gameObject = entityLocator.entity;
-						networkIdentity = gameObject.GetComponent<NetworkIdentity>();
-					}
-				}
-				result.origin = raycastHit.point;
-				result.normal = raycastHit.normal;
-				if (networkIdentity)
-				{
-					result.targetNetworkIdentity = networkIdentity;
-				}
-				
-			}
-
-			return orig(aimRay, bodyObject, out result);
-        }
-
-        private void Why(On.RoR2.PingerController.orig_AttemptPing orig, PingerController self, Ray aimRay, GameObject bodyObject)
-        {
-			orig(self, aimRay, bodyObject);
-        }
-
+        
 		//i dont want to write IL
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
-			SS2Log.Warning("Rebuild Ping Start : " + self.gameObject.name);
 			self.pingHighlight.enabled = false;
 			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
 			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
@@ -309,7 +108,6 @@ namespace SS2.Monsters
 			{
 				array[i].SetActive(false);
 			}
-			SS2Log.Warning("pingc : " + self.pingTarget + " | ");
 			if (self.pingTarget)
 			{
 				Debug.LogFormat("Ping target {0}", new object[]
@@ -317,12 +115,10 @@ namespace SS2.Monsters
 					self.pingTarget
 				});
 				modelLocator = self.pingTarget.GetComponent<ModelLocator>();
-				SS2Log.Warning("pingc : " + modelLocator + " | " + displayNameProvider);
 				if (displayNameProvider != null)
 				{
 					//CharacterBody component = self.pingTarget.GetComponent<CharacterBody>();
 					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
-					SS2Log.Warning("pingc : " + pingc + " | " + self.pingTarget);
 					if (pingc)
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
@@ -403,14 +199,8 @@ namespace SS2.Monsters
 			if (obj.victimBody && obj.victimBody.inventory && obj.attackerBody && obj.attackerBody.inventory && DamageAPI.HasModdedDamageType(obj.damageInfo, StealItemDamageType))
 			{
 				var itemList = obj.victimBody.inventory.itemAcquisitionOrder;
-				
 				if (itemList.Count > 0)
 				{
-					//int item = UnityEngine.Random.Range(0, itemList.Count);
-					//var ind = itemList[item];
-					//obj.attackerBody.inventory.GiveItem(ind);
-					//obj.victimBody.inventory.RemoveItem(ind);
-
 					var mim = obj.attackerBody.gameObject.GetComponent<MimicInventoryManager>();
 					if (mim)
 					{
@@ -445,90 +235,5 @@ namespace SS2.Monsters
 			return true;
 		}
 
-	}
-	public class MimicTableDropTable : BasicPickupDropTable
-	{
-		private void AddNew(List<PickupIndex> sourceDropList, float listWeight)
-		{
-			if (listWeight <= 0f || sourceDropList.Count == 0)
-			{
-				return;
-			}
-			float weight = listWeight / (float)sourceDropList.Count;
-			foreach (PickupIndex value in sourceDropList)
-			{
-				selector.AddChoice(value, weight);
-			}
-		}
-
-		public PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng, int count)
-		{
-			selector.Clear();
-			AddNew(Run.instance.availableTier1DropList, tier1Weight);
-			AddNew(Run.instance.availableTier2DropList, tier2Weight * (float)count);
-			AddNew(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)count, 2f)); //this is basically the shipping request code but with a slightly lower red weight scaling
-
-			return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
-		}
-
-		public override int GetPickupCount()
-		{
-			return selector.Count;
-		}
-
-		public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
-		{
-			return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
-		}
-
-		new private float tier1Weight = .793f; //.316f;
-
-		new private float tier2Weight = .20f; //.08f;
-
-		new private float tier3Weight = .007f; //.004f;
-
-		new private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>(8);
-	}
-
-	public class MimicDropTable : PickupDropTable
-	{
-		private void Add(List<PickupIndex> sourceDropList, float listWeight)
-		{
-			if (listWeight <= 0f || sourceDropList.Count == 0)
-			{
-				return;
-			}
-			float weight = listWeight / (float)sourceDropList.Count;
-			foreach (PickupIndex value in sourceDropList)
-			{
-				selector.AddChoice(value, weight);
-			}
-		}
-
-		public override PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng)
-		{
-			int num = 1;
-			selector.Clear();
-			var list1 = Run.instance.availableTier1DropList;
-			//
-			Add(Run.instance.availableTier1DropList, tier1Weight);
-			Add(Run.instance.availableTier2DropList, tier2Weight * (float)num);
-			Add(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)num, 2f));
-			return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
-		}
-
-		public override int GetPickupCount()
-		{
-			return selector.Count;
-		}
-		public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
-		{
-			return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
-		}
-
-		private float tier1Weight = .70f;
-		private float tier2Weight = .25f;
-		private float tier3Weight = .05f;
-		private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>();
 	}
 }

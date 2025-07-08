@@ -13,6 +13,8 @@ namespace SS2.Components
         private List<ItemIndex> itemInd = new List<ItemIndex>();
         public Transform pivot;
         public CharacterDirection cdir;
+        public Xoroshiro128Plus mimicItemRng;
+        MimicDropTable mimicDT;
 
         public void Start()
         {
@@ -20,6 +22,28 @@ namespace SS2.Components
             {
                 FindPivot();
             }
+
+            mimicDT = ScriptableObject.CreateInstance<MimicDropTable>();
+
+            if (mimicItemRng == null)
+            {
+                mimicItemRng = new Xoroshiro128Plus(Run.instance.seed);
+                SS2Log.Warning("rng " + mimicItemRng);
+            }
+
+             var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
+             var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+             //SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")));
+             //SS2Log.Warning(PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")));
+             //SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")).itemIndex == PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")).itemIndex);
+             //if (itemIndex == ItemCatalog.FindItemIndex("Thorns"))
+             //{
+             //
+             //}
+             SS2Log.Warning("item " + item + " | itemIndex " + itemIndex + " | ");
+             this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
+             SS2Log.Warning("adding " + item + " | mim ");
+             AddItem(itemIndex);
         }
 
         public void FindPivot()
@@ -101,5 +125,45 @@ namespace SS2.Components
                 }
             }
         }
+    }
+
+    public class MimicDropTable : PickupDropTable
+    {
+        private void Add(List<PickupIndex> sourceDropList, float listWeight)
+        {
+            if (listWeight <= 0f || sourceDropList.Count == 0)
+            {
+                return;
+            }
+            float weight = listWeight / (float)sourceDropList.Count;
+            foreach (PickupIndex value in sourceDropList)
+            {
+                selector.AddChoice(value, weight);
+            }
+        }
+
+        public override PickupIndex GenerateDropPreReplacement(Xoroshiro128Plus rng)
+        {
+            int num = 1;
+            selector.Clear();
+            Add(Run.instance.availableTier1DropList, tier1Weight);
+            Add(Run.instance.availableTier2DropList, tier2Weight * (float)num);
+            Add(Run.instance.availableTier3DropList, tier3Weight * Mathf.Pow((float)num, 2f));
+            return PickupDropTable.GenerateDropFromWeightedSelection(rng, selector);
+        }
+
+        public override int GetPickupCount()
+        {
+            return selector.Count;
+        }
+        public override PickupIndex[] GenerateUniqueDropsPreReplacement(int maxDrops, Xoroshiro128Plus rng)
+        {
+            return PickupDropTable.GenerateUniqueDropsFromWeightedSelection(maxDrops, rng, selector);
+        }
+
+        private float tier1Weight = .70f;
+        private float tier2Weight = .25f;
+        private float tier3Weight = .05f;
+        private readonly WeightedSelection<PickupIndex> selector = new WeightedSelection<PickupIndex>();
     }
 }

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: -8768141246394826976}
   - component: {fileID: -5751928995135875523}
   - component: {fileID: 8983767220195861630}
+  - component: {fileID: 3131444082547993955}
   m_Layer: 0
   m_Name: MimicMaster
   m_TagString: Untagged
@@ -92,12 +93,12 @@ MonoBehaviour:
   _masterIndex: 0
   bodyPrefab: {fileID: 7096113393629376220, guid: 1075a75301c54b84585e5a581eef4b0f,
     type: 3}
-  spawnOnStart: 0
+  spawnOnStart: 1
   _teamIndex: 2
   onBodyDeath:
     m_PersistentCalls:
       m_Calls: []
-  destroyOnBodyDeath: 1
+  destroyOnBodyDeath: 0
   ExtraBossMissileMoneyRemainder: 0
   trackedFreeUnlocks: 0
   trackedMissileCount: 0
@@ -492,3 +493,15 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 1
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
+--- !u!114 &3131444082547993955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609412355061465226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d2c12a2e98fa8b449d5c5d821e91efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
