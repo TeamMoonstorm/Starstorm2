@@ -1,11 +1,16 @@
-﻿using MSU;
+﻿﻿using MSU;
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.UI;
+using SS2.Components;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
 namespace SS2.Monsters
@@ -17,16 +22,66 @@ namespace SS2.Monsters
 		public static GameObject _masterPrefab;
 		public static ModdedDamageType StealItemDamageType { get; private set; }
 
+		public Xoroshiro128Plus mimicItemRng;
+		public GameObject itemOrb;
+		static public GameObject itemStarburst;
+		static public GameObject zipperVFX;
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
+
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
-			//On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.RandomizeSplatBias.Setup += SplatSetup;
+
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
+
+			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
+
+			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
+			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
+
+			var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
+			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
+			pip.pingIconOverride = ping;
+			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
+			mid.Info.Visual = ping;
 		}
 
-		private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
+        private void SplatSetup(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
+        {
+			var mpc = self.GetComponent<MimicPingCorrecter>();
+            if (mpc)
+            {
+				var ml = self.GetComponent<ModelLocator>();
+                if (ml)
+                {
+					var transf = ml.modelTransform;
+					var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
+					foreach(var comp in componentsInChildren)
+                    {
+						Material material2 = UnityEngine.Object.Instantiate<Material>(comp.material);
+						self.materialsList.Add(material2);
+						comp.material = material2;
+						self._propBlock = new MaterialPropertyBlock();
+						comp.GetPropertyBlock(self._propBlock);
+						self._propBlock.SetFloat("_RedChannelBias", UnityEngine.Random.Range(self.minRedBias, self.maxRedBias));
+						self._propBlock.SetFloat("_BlueChannelBias", UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias));
+						self._propBlock.SetFloat("_GreenChannelBias", UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias));
+						comp.SetPropertyBlock(self._propBlock);
+					}
+				}
+			}
+            else
+            {
+				orig(self);
+            }
+		}
+        
+		//i dont want to write IL
+        private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
+			bool printed = false;
 			self.pingHighlight.enabled = false;
 			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
 			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
@@ -62,103 +117,81 @@ namespace SS2.Monsters
 				modelLocator = self.pingTarget.GetComponent<ModelLocator>();
 				if (displayNameProvider != null)
 				{
-					CharacterBody component = self.pingTarget.GetComponent<CharacterBody>();
-					//MimicPingCorrecter pingc = self.pingTarget.GetComponent <>
-					if (component)
-					{
-						self.pingType = PingIndicator.PingType.Enemy;
-						self.targetTransformToFollow = component.coreTransform;
-					}
-					else
+					//CharacterBody component = self.pingTarget.GetComponent<CharacterBody>();
+					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
+					if (pingc)
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
+						string ownerName = self.GetOwnerName();
+						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
+						
+						string text = "";
+						if (gdnp) 
+						{
+							text = Language.GetString(gdnp.displayToken);
+                        }
+						else
+						{
+							text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+						}
+
+						self.pingText.enabled = true;
+						self.pingText.text = ownerName;
+
+						self.pingColor = self.interactablePingColor;
+						self.pingDuration = self.interactablePingDuration;
+						self.pingTargetPurchaseInteraction = self.pingTarget.GetComponent<PurchaseInteraction>();
+						Sprite interactableIcon = PingIndicator.GetInteractableIcon(self.pingTarget);
+						SpriteRenderer component3 = self.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
+						array = self.interactablePingGameObjects;
+						for (int i = 0; i < array.Length; i++)
+						{
+							array[i].SetActive(true);
+						}
+						Renderer componentInChildren;
+						if (modelLocator)
+						{
+							componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
+						}
+						else
+						{
+							componentInChildren = self.pingTarget.GetComponentInChildren<Renderer>();
+						}
+						if (componentInChildren)
+						{
+							self.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
+							self.pingHighlight.targetRenderer = componentInChildren;
+							self.pingHighlight.strength = 1f;
+							self.pingHighlight.isOn = true;
+							self.pingHighlight.enabled = true;
+						}
+						component3.sprite = interactableIcon;
+						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
+						{
+							PingIndicator.sharedStringBuilder.Clear();
+							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
+							int num = self.pingTargetPurchaseInteraction.cost;
+							if (self.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
+							{
+								num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
+							}
+							costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
+						}
+						else
+						{
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
+						}
+						self.pingText.color = self.textBaseColor * self.pingColor;
+						self.fixedTimer = self.pingDuration;
+						printed = true;
 					}
 				}
 			}
-			string ownerName = self.GetOwnerName();
-			string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
-
-			//self.pingText.enabled = true;
-			//self.pingText.text = ownerName;
-			//
-			//			this.pingColor = this.interactablePingColor;
-			//			this.pingDuration = this.interactablePingDuration;
-			//			this.pingTargetPurchaseInteraction = this.pingTarget.GetComponent<PurchaseInteraction>();
-			//			this.halcyonShrine = this.pingTarget.GetComponent<HalcyoniteShrineInteractable>();
-			//			Sprite interactableIcon = PingIndicator.GetInteractableIcon(this.pingTarget);
-			//			SpriteRenderer component3 = this.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
-			//			ShopTerminalBehavior component4 = this.pingTarget.GetComponent<ShopTerminalBehavior>();
-			//			TeleporterInteraction component5 = this.pingTarget.GetComponent<TeleporterInteraction>();
-			//			if (component4)
-			//			{
-			//				PickupIndex pickupIndex = component4.CurrentPickupIndex();
-			//				IFormatProvider invariantCulture = CultureInfo.InvariantCulture;
-			//				string format = "{0} ({1})";
-			//				object arg = text;
-			//				object arg2;
-			//				if (!component4.pickupIndexIsHidden && component4.pickupDisplay)
-			//				{
-			//					PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
-			//					arg2 = Language.GetString(((pickupDef != null) ? pickupDef.nameToken : null) ?? PickupCatalog.invalidPickupToken);
-			//				}
-			//				else
-			//				{
-			//					arg2 = "?";
-			//				}
-			//				text = string.Format(invariantCulture, format, arg, arg2);
-			//			}
-			//			else if (component5)
-			//			{
-			//				this.pingDuration = 30f;
-			//				this.pingText.enabled = false;
-			//				component5.PingTeleporter(ownerName, this);
-			//			}
-			//			else if (!this.pingTarget.gameObject.name.Contains("Shrine") && (this.pingTarget.GetComponent<GenericPickupController>() || this.pingTarget.GetComponent<PickupPickerController>()))
-			//			{
-			//				this.pingDuration = 60f;
-			//			}
-			//			array = this.interactablePingGameObjects;
-			//			for (int i = 0; i < array.Length; i++)
-			//			{
-			//				array[i].SetActive(true);
-			//			}
-			//			Renderer componentInChildren;
-			//			if (modelLocator)
-			//			{
-			//				componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
-			//			}
-			//			else
-			//			{
-			//				componentInChildren = this.pingTarget.GetComponentInChildren<Renderer>();
-			//			}
-			//			if (componentInChildren)
-			//			{
-			//				this.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
-			//				this.pingHighlight.targetRenderer = componentInChildren;
-			//				this.pingHighlight.strength = 1f;
-			//				this.pingHighlight.isOn = true;
-			//				this.pingHighlight.enabled = true;
-			//			}
-			//			component3.sprite = interactableIcon;
-			//			component3.enabled = !component5;
-			//			if (this.pingTargetPurchaseInteraction && this.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
-			//			{
-			//				PingIndicator.sharedStringBuilder.Clear();
-			//				CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(this.pingTargetPurchaseInteraction.costType);
-			//				int num = this.pingTargetPurchaseInteraction.cost;
-			//				if (this.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
-			//				{
-			//					num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
-			//				}
-			//				costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
-			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
-			//			}
-			//			else
-			//			{
-			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
-			//			}
-			//this.pingText.color = this.textBaseColor * this.pingColor;
-			//this.fixedTimer = this.pingDuration;
+            if (!printed)
+            {
+				orig(self);
+			}
 		}
 
 		private void ServerDamageStealItem(DamageReport obj)
@@ -168,16 +201,38 @@ namespace SS2.Monsters
 				var itemList = obj.victimBody.inventory.itemAcquisitionOrder;
 				if (itemList.Count > 0)
 				{
-					int item = UnityEngine.Random.Range(0, itemList.Count);
-					obj.attackerBody.inventory.GiveItem(itemList[item]);
-					obj.victimBody.inventory.RemoveItem(itemList[item]);
+					var mim = obj.attackerBody.gameObject.GetComponent<MimicInventoryManager>();
+					if (mim)
+					{
+						Util.ShuffleList(itemList);
+						for(int i = 0; i < itemList.Count; ++i)
+                        {
+							var def = ItemCatalog.GetItemDef(itemList[i]);
+							
+							if(def.tier == ItemTier.NoTier) { continue; }
+							
+							obj.attackerBody.inventory.GiveItem(def);
+							obj.victimBody.inventory.RemoveItem(def);
+							mim.AddItem(def.itemIndex);
+
+							EffectData effectData = new EffectData
+							{
+								origin = obj.victimBody.corePosition,
+								genericFloat = 1.5f,
+								genericUInt = (uint)(def.itemIndex + 1)
+							};
+							effectData.SetNetworkedObjectReference(obj.attacker);
+							EffectManager.SpawnEffect(itemOrb, effectData, true);
+							break;
+						}
+					}
 				}
 			}
 		}
 
 		public override bool IsAvailable(ContentPack contentPack)
 		{
-			return false;
+			return true;
 		}
 
 	}
