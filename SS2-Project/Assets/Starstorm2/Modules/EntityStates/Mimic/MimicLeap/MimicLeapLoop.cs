@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.Mimic
@@ -34,8 +35,6 @@ namespace EntityStates.Mimic
 		public static float forwardVelocity;
 
 		public static float minimumY;
-		public static float minYVelocityForAnim;
-		public static float maxYVelocityForAnim;
 
 		public static string soundLoopStartEvent;
 		public static string soundLoopStopEvent;
@@ -61,7 +60,7 @@ namespace EntityStates.Mimic
 			{
 				characterBody.isSprinting = true;
 				direction.y = Mathf.Max(direction.y, minimumY);
-				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat/2;
 				Vector3 b = Vector3.up * upwardVelocity;
 				Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
 				characterMotor.Motor.ForceUnground(0.1f);
@@ -83,6 +82,24 @@ namespace EntityStates.Mimic
 			}
 
 			Util.PlaySound(soundLoopStartEvent, gameObject);
+
+			var lThruster = FindModelChild("ThrusterL");
+			var rThruster = FindModelChild("ThrusterR");
+
+			string effectName = "RoR2/Base/Commando/CommandoDashJets.prefab";
+			var effect = Addressables.LoadAssetAsync<GameObject>(effectName).WaitForCompletion();
+
+			if (lThruster)
+            {
+				UnityEngine.Object.Instantiate<GameObject>(effect, lThruster);
+			}
+
+            if (rThruster)
+            {
+				UnityEngine.Object.Instantiate<GameObject>(effect, rThruster);
+			}
+
+
 		}
 
 		private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
@@ -93,7 +110,6 @@ namespace EntityStates.Mimic
 		public override void UpdateAnimationParameters()
 		{
 			base.UpdateAnimationParameters();
-			float value = Mathf.Clamp01(Util.Remap(estimatedVelocity.y, minYVelocityForAnim, maxYVelocityForAnim, 0f, 1f)) * 0.97f;
 			//modelAnimator.SetFloat("LeapCycle", value, 0.1f, Time.deltaTime);
 		}
 
@@ -148,7 +164,13 @@ namespace EntityStates.Mimic
 			SS2Log.Warning("teamComponent.teamIndex : " + teamComponent.teamIndex);
 			SS2Log.Warning("attacker : " + gameObject);
 
-
+			var explosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
+			EffectData effectData = new EffectData
+			{
+				origin = characterBody.corePosition
+			};
+			effectData.SetNetworkedObjectReference(this.gameObject);
+			EffectManager.SpawnEffect(explosion, effectData, transmit: true);
 
 			return new BlastAttack
 			{
@@ -166,6 +188,7 @@ namespace EntityStates.Mimic
 				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex
 			}.Fire();
+
 		}
 
 		public override void OnExit()
