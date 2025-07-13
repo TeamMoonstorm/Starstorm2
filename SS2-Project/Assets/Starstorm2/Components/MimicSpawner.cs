@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using RoR2;
 using UnityEngine.Networking;
+using MSU.Config;
+using MSU;
 
 namespace SS2.Components
 {
@@ -9,7 +11,7 @@ namespace SS2.Components
     {
 		public static GameObject masterObject;
 
-        private void Start()
+		private void Start()
         {
 			Vector3 vec = this.transform.position;
 			vec.y += 0.05f;

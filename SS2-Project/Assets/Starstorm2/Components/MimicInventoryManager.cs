@@ -31,17 +31,20 @@ namespace SS2.Components
                 SS2Log.Warning("rng " + mimicItemRng);
             }
 
-             var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
-             var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
-             //SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")));
-             //SS2Log.Warning(PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")));
-             //SS2Log.Warning(ItemCatalog.GetItemDef(ItemCatalog.FindItemIndex("Thorns")).itemIndex == PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex("Thorns")).itemIndex);
-             //if (itemIndex == ItemCatalog.FindItemIndex("Thorns"))
-             //{
-             //
-             //}
-             SS2Log.Warning("item " + item + " | itemIndex " + itemIndex + " | ");
-             this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
+            var item = mimicDT.GenerateDropPreReplacement(mimicItemRng);
+            var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+            var def = ItemCatalog.GetItemDef(itemIndex);
+
+            if(def.DoesNotContainTag(ItemTag.AIBlacklist))
+            {
+                SS2Log.Warning("item " + item + " | itemIndex " + def + " | ");
+                this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
+            }
+            else
+            {
+                SS2Log.Warning("Did Not Add " + def);
+            }
+
              SS2Log.Warning("adding " + item + " | mim ");
              AddItem(itemIndex);
         }

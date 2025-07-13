@@ -1,4 +1,5 @@
 ﻿﻿using MSU;
+using MSU.Config;
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
@@ -26,6 +27,16 @@ namespace SS2.Monsters
 		public GameObject itemOrb;
 		static public GameObject itemStarburst;
 		static public GameObject zipperVFX;
+
+		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of all items present in the previous launch of the game.")]
+		//public string printItemList = "";
+		//
+		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of all AI Blacklisted items. Items that either don't help the mimic, or are likely to be outright unfair.")]
+		//public string printItemListAIBan = "";
+		//
+		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of items the mimic cannot use. ")]
+		//public string mimicBannedItems = ""
+
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
