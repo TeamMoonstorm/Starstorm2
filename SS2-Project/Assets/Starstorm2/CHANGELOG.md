@@ -1,5 +1,11 @@
   **Warning: content spoilers below!**
 
+### 0.6.22
+* Survivors
+    * Fear fix provided by Moffein, thanks Moffein!
+* Items
+    * Some items were missing disable configs, added them in. Might have missed some still. Please report!
+
 ### 0.6.21
 * General
     * Got rid of the Unlock All config, just use RealerCheatUnlocks or any force unlock mod
