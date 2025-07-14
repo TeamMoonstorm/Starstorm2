@@ -2,6 +2,10 @@
 using RoR2;
 using JetBrains.Annotations;
 
+
+/// <summary>
+/// Exists to make MSU happy when it expects an interactable to contain an IInteractable - this goes on the Master, which otherwise would lack it
+/// </summary>
 namespace SS2.Components
 {
     public class MimicMSUDelighter : MonoBehaviour, IInteractable

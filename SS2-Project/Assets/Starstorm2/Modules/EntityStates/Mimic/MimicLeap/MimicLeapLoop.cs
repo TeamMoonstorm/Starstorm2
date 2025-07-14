@@ -86,31 +86,20 @@ namespace EntityStates.Mimic
 			var lThruster = FindModelChild("ThrusterL");
 			var rThruster = FindModelChild("ThrusterR");
 
-			string effectName = "RoR2/Base/Commando/CommandoDashJets.prefab";
-			var effect = Addressables.LoadAssetAsync<GameObject>(effectName).WaitForCompletion();
-
 			if (lThruster)
             {
-				UnityEngine.Object.Instantiate<GameObject>(effect, lThruster);
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, lThruster);
 			}
 
             if (rThruster)
             {
-				UnityEngine.Object.Instantiate<GameObject>(effect, rThruster);
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
 			}
-
-
 		}
 
 		private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
 		{
 			detonateNextFrame = true;
-		}
-
-		public override void UpdateAnimationParameters()
-		{
-			base.UpdateAnimationParameters();
-			//modelAnimator.SetFloat("LeapCycle", value, 0.1f, Time.deltaTime);
 		}
 
 		public override void FixedUpdate()
@@ -123,7 +112,6 @@ namespace EntityStates.Mimic
 				{
 					DoImpactAuthority();
 					endedSuccessfully = true;
-					SS2Log.Warning("FixedUpdate Fire");
 					outer.SetNextState(new MimicLeapExit());
 				}
 			}
@@ -135,7 +123,6 @@ namespace EntityStates.Mimic
 
 		protected void DoImpactAuthority()
 		{
-			SS2Log.Warning("DoImpactAuthority");
 			if (landingSound)
 			{
 				EffectManager.SimpleSoundEffect(landingSound.index, characterBody.footPosition, true);
@@ -145,32 +132,12 @@ namespace EntityStates.Mimic
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
-			//Vector3 footPosition = characterBody.corePosition;
-			//EffectManager.SpawnEffect(blastEffectPrefab, new EffectData
-			//{
-			//	origin = footPosition,
-			//	scale = blastRadius
-			//}, true);
-			SS2Log.Warning("Detonate Authority");
-			SS2Log.Warning("attacker : " + gameObject);
-			SS2Log.Warning("damageStat : " + damageStat);
-			SS2Log.Warning("damageCoeff : " + damageCoeff);
-			SS2Log.Warning("blastForce : " + blastForce);
-			SS2Log.Warning("blastBonusForce : " + blastBonusForce);
-			SS2Log.Warning("isCritAuthority : " + isCritAuthority);
-			SS2Log.Warning("blastProcCoefficient : " + blastProcCoefficient);
-			SS2Log.Warning("blastRadius : " + blastRadius);
-			SS2Log.Warning("characterBody.corePosition : " + characterBody.corePosition + " |" + transform.position);
-			SS2Log.Warning("teamComponent.teamIndex : " + teamComponent.teamIndex);
-			SS2Log.Warning("attacker : " + gameObject);
-
-			var explosion = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
 			EffectData effectData = new EffectData
 			{
 				origin = characterBody.corePosition
 			};
 			effectData.SetNetworkedObjectReference(this.gameObject);
-			EffectManager.SpawnEffect(explosion, effectData, transmit: true);
+			EffectManager.SpawnEffect(SS2.Monsters.Mimic.leapLandVFX, effectData, transmit: true);
 
 			return new BlastAttack
 			{
@@ -185,7 +152,6 @@ namespace EntityStates.Mimic
 				radius = blastRadius,
 				position = characterBody.corePosition,
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
-				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex
 			}.Fire();
 

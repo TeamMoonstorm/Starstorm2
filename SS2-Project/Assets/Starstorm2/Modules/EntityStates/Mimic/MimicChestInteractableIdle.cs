@@ -24,27 +24,20 @@ namespace EntityStates.Mimic
         private float duration;
 
         private float timer = 0;
-        private Animator anim;
         private CharacterBody target;
         public bool rechest = false;
-        public float health;
+        public float healthPrevious;
 
 
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            //var intermediate = GetComponent<ModelLocator>();
 
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
-                //healthComponent.health
-            }
-            else
-            {
-                SS2Log.Error("Fuck");
             }
 
             purchaseInter.onPurchase.AddListener(delegate (Interactor interactor)
@@ -52,15 +45,16 @@ namespace EntityStates.Mimic
                 OnPurchaseMimic(interactor, purchaseInter);
             });
 
-            //modelLocator
             if (!rechest)
             {
                 int adjust = UnityEngine.Random.Range(0, 2) - 1;
                 purchaseInter.cost += adjust;
             }
-            //characterBody.inventory.GiveItem()
-
-
+            else if (NetworkServer.active)
+            {
+                ProcChainMask mask = new ProcChainMask();
+                healthComponent.HealFraction(.5f, mask);
+            }
         }
 
         private void OnPurchaseMimic(Interactor interactor, PurchaseInteraction purchaseInter)
@@ -82,24 +76,27 @@ namespace EntityStates.Mimic
                 timer += Time.fixedDeltaTime;
                 if (timer >= duration && isAuthority)
                 {
-                    var next = new MimicChestActivateEnter();
-                    next.target = target;
+                    var next = new MimicChestActivateEnter { target = this.target };
                     outer.SetNextState(next); //leap begin
                 }
             }
-
-            if(health > healthComponent.health && isAuthority)
+            
+            if (healthPrevious > healthComponent.health && isAuthority)
             {
-                Debug.Log("waking up because of damage");
-                var next = new MimicChestActivateEnter();
-                next.target = target;
+                var next = new MimicChestActivateEnter { target = this.target };
                 outer.SetNextState(next); //leap begin
+            }
+            else
+            {
+                healthPrevious = healthComponent.health;
             }
 
         }
+
+        //Allows mimic to cast Jumpscare while in chest mode
         void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
         {
-            if ((bool)skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed))
+            if (skillSlot && !(skillSlot.skillDef == null) && (buttonState.down || !skillSlot.skillDef) && (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed))
             {
                 if (rechest)
                 {
@@ -107,6 +104,10 @@ namespace EntityStates.Mimic
                     {
                         skillSlot.ExecuteIfReady();
                         buttonState.hasPressBeenClaimed = true;
+                    }
+                    else
+                    {
+                        skillSlot.RemoveAllStocks();
                     }
                 }
                 else
@@ -123,13 +124,13 @@ namespace EntityStates.Mimic
                 }
             }
         }
+
         public override void OnExit()
         {
             base.OnExit();
             var anim = characterBody.modelLocator.modelTransform.GetComponent<Animator>();
             if (anim)
             {
-                SS2Log.Warning("exiting InteractableIdle");
                 anim.SetBool("aimActive", true);
             }
         }
@@ -138,6 +139,5 @@ namespace EntityStates.Mimic
         {
             return InterruptPriority.PrioritySkill;
         }
-
     }
 }

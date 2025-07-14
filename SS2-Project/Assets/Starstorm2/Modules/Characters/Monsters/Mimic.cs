@@ -25,17 +25,10 @@ namespace SS2.Monsters
 
 		public Xoroshiro128Plus mimicItemRng;
 		public GameObject itemOrb;
-		static public GameObject itemStarburst;
-		static public GameObject zipperVFX;
-
-		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of all items present in the previous launch of the game.")]
-		//public string printItemList = "";
-		//
-		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of all AI Blacklisted items. Items that either don't help the mimic, or are likely to be outright unfair.")]
-		//public string printItemListAIBan = "";
-		//
-		//[RiskOfOptionsConfigureField(SS2Config.ID_MONSTER, configDescOverride = "List of items the mimic cannot use. ")]
-		//public string mimicBannedItems = ""
+		public static GameObject itemStarburst;
+	    public static GameObject zipperVFX;
+		public static GameObject jetVFX;
+		public static GameObject leapLandVFX;
 
 		public override void Initialize()
 		{
@@ -48,6 +41,8 @@ namespace SS2.Monsters
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
 
 			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
+			jetVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion();
+			leapLandVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
 
 			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
 			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
@@ -57,8 +52,11 @@ namespace SS2.Monsters
 			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
 			mid.Info.Visual = ping;
+
+			
 		}
 
+		//Modifies the RandomizeSplatBias to work on Mimic's mess of a CharacterBody
         private void SplatSetup(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
         {
 			var mpc = self.GetComponent<MimicPingCorrecter>();
@@ -89,7 +87,7 @@ namespace SS2.Monsters
             }
 		}
         
-		//i dont want to write IL
+		//Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
@@ -100,7 +98,6 @@ namespace SS2.Monsters
 			self.positionIndicator.targetTransform = (self.pingTarget ? self.pingTarget.transform : null);
 			self.positionIndicator.defaultPosition = self.transform.position;
 			IDisplayNameProvider displayNameProvider = self.pingTarget ? self.pingTarget.GetComponentInParent<IDisplayNameProvider>() : null;
-			ModelLocator modelLocator = null;
 			self.pingType = PingIndicator.PingType.Default;
 			self.pingObjectScaleCurve.enabled = false;
 			self.pingObjectScaleCurve.enabled = true;
@@ -121,14 +118,9 @@ namespace SS2.Monsters
 			}
 			if (self.pingTarget)
 			{
-				Debug.LogFormat("Ping target {0}", new object[]
-				{
-					self.pingTarget
-				});
-				modelLocator = self.pingTarget.GetComponent<ModelLocator>();
+				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
 				if (displayNameProvider != null)
 				{
-					//CharacterBody component = self.pingTarget.GetComponent<CharacterBody>();
 					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
 					if (pingc)
 					{
@@ -136,7 +128,7 @@ namespace SS2.Monsters
 						string ownerName = self.GetOwnerName();
 						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
 						
-						string text = "";
+						string text;
 						if (gdnp) 
 						{
 							text = Language.GetString(gdnp.displayToken);
@@ -205,6 +197,7 @@ namespace SS2.Monsters
 			}
 		}
 
+		//How the mimic steals items, using a custom damage type
 		private void ServerDamageStealItem(DamageReport obj)
 		{
 			if (obj.victimBody && obj.victimBody.inventory && obj.attackerBody && obj.attackerBody.inventory && DamageAPI.HasModdedDamageType(obj.damageInfo, StealItemDamageType))

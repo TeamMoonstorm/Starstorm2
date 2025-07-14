@@ -14,8 +14,8 @@ namespace EntityStates.Mimic
         {
             duration = baseDuration / attackSpeedStat;
             base.OnEnter();
+
             PlayCrossfade("FullBody, Override", "ActivateExit", "Activate.playbackRate", duration, 0.05f);
-            //duration += .02f;
             Util.PlaySound("Play_MULT_shift_hit", gameObject);
         }
 
@@ -30,8 +30,6 @@ namespace EntityStates.Mimic
         public override void OnExit()
         {
             base.OnExit();
-            
-            SS2Log.Warning("MimicChestActivateExit Exit ");
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

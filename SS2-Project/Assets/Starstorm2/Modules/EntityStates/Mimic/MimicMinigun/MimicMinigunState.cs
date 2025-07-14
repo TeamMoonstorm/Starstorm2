@@ -7,10 +7,8 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Mimic.Weapon
 {
-
 	public class MimicMinigunState : BaseState
 	{
-
 		public static string muzzleNameLeft;
 		public static string muzzleNameRight;
 
@@ -27,13 +25,6 @@ namespace EntityStates.Mimic.Weapon
 			base.OnEnter();
 			muzzleTransformLeft = FindModelChild(muzzleNameLeft);
 			muzzleTransformRight = FindModelChild(muzzleNameRight);
-			SS2Log.Warning("muzzleTransformLeft : " + muzzleTransformLeft + " | " + muzzleNameLeft);
-			SS2Log.Warning("muzzleTransformRight : " + muzzleTransformRight + " | " + muzzleNameRight);
-
-			//if (NetworkServer.active && base.characterBody)
-			//{
-			//	characterBody.AddBuff(slowBuff);
-			//}
 		}
 
 		public override void FixedUpdate()
@@ -44,10 +35,6 @@ namespace EntityStates.Mimic.Weapon
 
 		public override void OnExit()
 		{
-			//if (NetworkServer.active && base.characterBody)
-			//{
-			//	//characterBody.RemoveBuff(slowBuff);
-			//}
 			base.OnExit();
 		}
 

@@ -7,12 +7,6 @@ namespace EntityStates.Mimic.Weapon
 {
     public class MimicMinigunLoop : MimicMinigunState
     {
-        //public static float damageCoefficient;
-        //public static float fireRate;
-        //public static float recoil;
-        //public static float range;
-        //public static GameObject tracerEffectPrefab;
-
 		public static float baseFireInterval;
 		public static int baseBulletCount;
 
@@ -42,24 +36,11 @@ namespace EntityStates.Mimic.Weapon
 
 		public static string mecanimPeramater;
 
-        private float duration;
-        private bool hasFired;
-		//private Transform muzzle;
-		private Animator animator;
-
 		private bool endedSuccessfully = false;
 
 		public override void OnEnter()
 		{
 			base.OnEnter();
-			//if (this.muzzleTransform && MinigunFire.muzzleVfxPrefab)
-			//{
-			//	this.muzzleVfxTransform = UnityEngine.Object.Instantiate<GameObject>(MinigunFire.muzzleVfxPrefab, this.muzzleTransform).transform;
-			//}
-			//if (NetworkServer.active && base.characterBody)
-			//{
-				//characterBody.AddBuff(slowBuff);
-			//}
 
 			baseFireRate = 1f / baseFireInterval;
 			baseBulletsPerSecond = (float)baseBulletCount * this.baseFireRate;
@@ -67,13 +48,13 @@ namespace EntityStates.Mimic.Weapon
 			critEndTime = Run.FixedTimeStamp.negativeInfinity;
 			lastCritCheck = Run.FixedTimeStamp.negativeInfinity;
 
-
 			PlayCrossfade("Gesture, Override", "MinigunLoop", 0.05f);
 		}
 
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+
 			this.fireTimer -= base.GetDeltaTime();
 			if (this.fireTimer <= 0f)
 			{
@@ -83,9 +64,7 @@ namespace EntityStates.Mimic.Weapon
 			}
 			if (base.isAuthority && !base.skillButtonState.down)
 			{
-				var exit = new MimicMinigunExit();
-				exit.fireVFXInstanceLeft = fireVFXInstanceLeft;
-				exit.fireVFXInstanceRight = fireVFXInstanceRight;
+				var exit = new MimicMinigunExit { fireVFXInstanceLeft = this.fireVFXInstanceLeft, fireVFXInstanceRight = this.fireVFXInstanceRight };
 				this.outer.SetNextState(exit);
 				return;
 			}
@@ -95,7 +74,6 @@ namespace EntityStates.Mimic.Weapon
 		{
 			if (this.lastCritCheck.timeSince >= 1f)
 			{
-				Util.PlaySound("Play_commando_M1", gameObject);
 				this.lastCritCheck = Run.FixedTimeStamp.now;
 				if (base.RollCrit())
 				{
@@ -107,19 +85,8 @@ namespace EntityStates.Mimic.Weapon
 
 		public override void OnExit()
 		{
-			Util.PlaySound(endSound, base.gameObject);
-			//if (this.muzzleVfxTransform)
-			//{
-			//	EntityState.Destroy(this.muzzleVfxTransform.gameObject);
-			//	this.muzzleVfxTransform = null;
-			//}
-			//base.PlayCrossfade("Gesture, Additive", "BufferEmpty", 0.2f);
-			//if (NetworkServer.active && base.characterBody)
-			//{
-			//	characterBody.RemoveBuff(slowBuff);
-			//}
-
 			base.OnExit();
+			Util.PlaySound(endSound, base.gameObject);
 
 			if (!endedSuccessfully)
 			{
@@ -139,7 +106,7 @@ namespace EntityStates.Mimic.Weapon
 
 		private void OnFireShared()
 		{
-			//Util.PlaySound(fireSound, base.gameObject);
+			Util.PlaySound("Play_commando_M1", gameObject);
 			if (base.isAuthority)
 			{
 				this.OnFireAuthority();
@@ -152,7 +119,6 @@ namespace EntityStates.Mimic.Weapon
 			this.UpdateCrits();
 			bool isCrit = !critEndTime.hasPassed;
 			float damage = baseDamagePerSecondCoefficient / baseBulletsPerSecond * damageStat;
-			//float force = baseForcePerSecond / baseBulletsPerSecond;
 			float procCoefficient = baseProcCoefficientPerSecond / baseBulletsPerSecond;
 			Ray aimRay = base.GetAimRay();
 			
