@@ -219,6 +219,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3970051610462512208}
   - component: {fileID: 7656122838603369738}
+  - component: {fileID: 2496576883776024982}
   m_Layer: 0
   m_Name: CrabChestLid
   m_TagString: Untagged
@@ -375,6 +376,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0, y: 3.7384338, z: -62}
     m_Extent: {x: 125, y: 68.692154, z: 80}
   m_DirtyAABB: 0
+--- !u!114 &2496576883776024982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 263875514853734037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -251527598, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRedBias: 0
+  maxRedBias: 0
+  minGreenBias: -0.18
+  maxGreenBias: 0.125
+  minBlueBias: -2
+  maxBlueBias: -2
 --- !u!1 &432756834624341572
 GameObject:
   m_ObjectHideFlags: 0
@@ -659,7 +678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1112878363500015931}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1943,6 +1962,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8587798272451852950}
   - component: {fileID: 7944009873553095298}
+  - component: {fileID: 8735624458578661965}
   m_Layer: 0
   m_Name: CrabChestLegs
   m_TagString: Untagged
@@ -2098,6 +2118,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 3.9083557, y: 17.189804, z: 11.828461}
     m_Extent: {x: 182.10052, y: 92.2762, z: 85.23752}
   m_DirtyAABB: 0
+--- !u!114 &8735624458578661965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4766435530325563171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -251527598, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRedBias: 0
+  maxRedBias: 0
+  minGreenBias: -0.18
+  maxGreenBias: 0.125
+  minBlueBias: -2
+  maxBlueBias: -2
 --- !u!1 &4811402930701113981
 GameObject:
   m_ObjectHideFlags: 0
@@ -3549,7 +3587,6 @@ GameObject:
   - component: {fileID: 92759885951771341}
   - component: {fileID: 6449461314649773876}
   - component: {fileID: 8119593420475265400}
-  - component: {fileID: 2866754830441582408}
   m_Layer: 0
   m_Name: MimicBodyNew
   m_TagString: Untagged
@@ -4511,26 +4548,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8265ae7ef8b19a34ea2df87a09f1dbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pickupPivot: {fileID: 0}
   cdir: {fileID: 6887562311180294278}
   dropTable: {fileID: 11400000, guid: 36eab256ec979cc4e8a2c170b3f6808c, type: 2}
---- !u!114 &2866754830441582408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7096113393629376220}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -251527598, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  minRedBias: 0
-  maxRedBias: 0
-  minGreenBias: -0.18
-  maxGreenBias: 0.125
-  minBlueBias: -2
-  maxBlueBias: -2
 --- !u!1 &7175305916529430826
 GameObject:
   m_ObjectHideFlags: 0
@@ -5373,6 +5393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2957898185778204187}
   - component: {fileID: 4753897946817976973}
+  - component: {fileID: 7300252444956159322}
   m_Layer: 0
   m_Name: CrabChestInside
   m_TagString: Untagged
@@ -5529,6 +5550,24 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.0009003, y: 4.050701, z: -104.85537}
     m_Extent: {x: 100.2028, y: 53.363422, z: 109.23676}
   m_DirtyAABB: 0
+--- !u!114 &7300252444956159322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9108844092028113165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -251527598, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minRedBias: 0
+  maxRedBias: 0
+  minGreenBias: -0.18
+  maxGreenBias: 0.125
+  minBlueBias: -2
+  maxBlueBias: -2
 --- !u!1 &9170129228270793119
 GameObject:
   m_ObjectHideFlags: 0

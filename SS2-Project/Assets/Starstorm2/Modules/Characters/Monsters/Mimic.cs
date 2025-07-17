@@ -36,7 +36,6 @@ namespace SS2.Monsters
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
-			On.RoR2.RandomizeSplatBias.Setup += SplatSetup;
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
 
@@ -51,40 +50,7 @@ namespace SS2.Monsters
 			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
 			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
-			mid.Info.Visual = ping;
-
-			
-		}
-
-		//Modifies the RandomizeSplatBias to work on Mimic's mess of a CharacterBody
-        private void SplatSetup(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
-        {
-			var mpc = self.GetComponent<MimicPingCorrecter>();
-            if (mpc)
-            {
-				var ml = self.GetComponent<ModelLocator>();
-                if (ml)
-                {
-					var transf = ml.modelTransform;
-					var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
-					foreach(var comp in componentsInChildren)
-                    {
-						Material material2 = UnityEngine.Object.Instantiate<Material>(comp.material);
-						self.materialsList.Add(material2);
-						comp.material = material2;
-						self._propBlock = new MaterialPropertyBlock();
-						comp.GetPropertyBlock(self._propBlock);
-						self._propBlock.SetFloat("_RedChannelBias", UnityEngine.Random.Range(self.minRedBias, self.maxRedBias));
-						self._propBlock.SetFloat("_BlueChannelBias", UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias));
-						self._propBlock.SetFloat("_GreenChannelBias", UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias));
-						comp.SetPropertyBlock(self._propBlock);
-					}
-				}
-			}
-            else
-            {
-				orig(self);
-            }
+			mid.Info.Visual = ping;	
 		}
         
 		//Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping
