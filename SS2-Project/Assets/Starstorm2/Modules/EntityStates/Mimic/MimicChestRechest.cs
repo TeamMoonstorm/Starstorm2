@@ -48,17 +48,43 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration && isAuthority && mim && (mim.rechestPreventionTime <= 0 || taunting))
+            if(mim && mim.rechestPreventionTime > 0 && !taunting && isAuthority){
+                skillLocator.special.RemoveAllStocks();
+                skillLocator.special.cooldownOverride = mim.rechestPreventionTime;
+                outer.SetNextStateToMain();
+            }
+            
+            if (fixedAge >= duration && isAuthority)
             {
-                if(mim.rechestPreventionTime <= 0 || taunting){
-                    skillLocator.special.DeductStock(1);
-                    var next = new MimicChestInteractableIdle { rechest = true };
-                    outer.SetNextState(next);
-                }
-                else
+                skillLocator.special.cooldownOverride = 0;
+                var body = purchaseInter.gameObject;
+                body.GetComponent<BoxCollider>().enabled = true;
+                body.GetComponent<CapsuleCollider>().enabled = false;
+
+                body.GetComponent<GenericDisplayNameProvider>().displayToken = "CHEST1_NAME";
+
+                var intermediate = GetComponent<ModelLocator>();
+                intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(true);
+
+                if (modelLocator && modelLocator.modelTransform)
                 {
-                    outer.SetNextStateToMain();
+                    var mdl = modelLocator.modelTransform;
+                    mdl.GetComponent<BoxCollider>().enabled = true;
                 }
+
+                purchaseInter.SetAvailable(true);
+
+                var impact = SS2.Monsters.Mimic.rechestVFX;
+                EffectData effectData = new EffectData { origin = characterBody.corePosition };
+                effectData.SetNetworkedObjectReference(impact);
+                EffectManager.SpawnEffect(impact, effectData, transmit: true);
+
+                PlayAnimation("Body", "IntermediateIdle");
+
+                GetComponent<HologramProjector>().enabled = true;
+
+                var next = new MimicChestInteractableIdle { rechest = true };
+                outer.SetNextState(next);
             }
 
         }
@@ -66,33 +92,6 @@ namespace EntityStates.Mimic
         public override void OnExit()
         {
             base.OnExit();
-            var body = purchaseInter.gameObject;
-            body.GetComponent<BoxCollider>().enabled = true;
-            body.GetComponent<CapsuleCollider>().enabled = false;
-
-            body.GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_INTERACTABLE_NAME";
-
-            var intermediate = GetComponent<ModelLocator>();
-            intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(true);
-
-            if (modelLocator && modelLocator.modelTransform)
-            {
-                var mdl = modelLocator.modelTransform;
-                mdl.GetComponent<BoxCollider>().enabled = true;
-            }
-
-            purchaseInter.SetAvailable(true);
-
-            var impact = SS2.Monsters.Mimic.rechestVFX;
-            EffectData effectData = new EffectData { origin = characterBody.corePosition };
-            effectData.SetNetworkedObjectReference(impact);
-            EffectManager.SpawnEffect(impact, effectData, transmit: true);
-
-            PlayAnimation("Body", "IntermediateIdle");
-
-            skillLocator.special.AddOneStock();
-
-            GetComponent<HologramProjector>().enabled = true;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

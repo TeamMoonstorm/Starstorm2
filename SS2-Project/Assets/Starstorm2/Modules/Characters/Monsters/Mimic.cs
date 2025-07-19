@@ -215,7 +215,7 @@ namespace SS2.Monsters
 						self.fixedTimer = self.pingDuration;
 						printed = true;
                     }
-                    else if(!pingc.isInteractable)
+                    else if(pingc && !pingc.isInteractable)
                     {
 						string ownerName = self.GetOwnerName();
 						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
@@ -254,6 +254,7 @@ namespace SS2.Monsters
 								}
 							}
 							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
+							printed = true;
 						}
 					}
 				}

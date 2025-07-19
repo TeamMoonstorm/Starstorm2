@@ -4084,8 +4084,8 @@ MonoBehaviour:
   m_Script: {fileID: 370243918, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayNameToken: SS2_INTERACTABLE_MIMIC_NAME
-  contextToken: SS2_INTERACTABLE_MIMIC_CONTEXT
+  displayNameToken: CHEST1_NAME
+  contextToken: CHEST1_CONTEXT
   costType: 1
   available: 1
   cost: 25
@@ -4278,7 +4278,7 @@ MonoBehaviour:
   m_Script: {fileID: -1620867292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayToken: SS2_MIMIC_INTERACTABLE_NAME
+  displayToken: CHEST1_NAME
 --- !u!114 &4375175657796813748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4348,6 +4348,7 @@ MonoBehaviour:
   pickupPivot: {fileID: 0}
   cdir: {fileID: 6887562311180294278}
   dropTable: {fileID: 11400000, guid: 36eab256ec979cc4e8a2c170b3f6808c, type: 2}
+  rechestPreventionTime: 2.5
 --- !u!1 &7175305916529430826
 GameObject:
   m_ObjectHideFlags: 0
