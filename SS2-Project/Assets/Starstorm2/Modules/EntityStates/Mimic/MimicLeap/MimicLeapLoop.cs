@@ -154,7 +154,6 @@ namespace EntityStates.Mimic
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
 				teamIndex = teamComponent.teamIndex
 			}.Fire();
-
 		}
 
 		public override void OnExit()

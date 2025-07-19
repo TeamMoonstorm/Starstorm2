@@ -12,6 +12,7 @@ namespace EntityStates.Mimic
 		public static float baseDuration;
 		private float duration;
 		private bool endedSuccessfully = false;
+
 		public override void OnEnter()
 		{
 			base.OnEnter();

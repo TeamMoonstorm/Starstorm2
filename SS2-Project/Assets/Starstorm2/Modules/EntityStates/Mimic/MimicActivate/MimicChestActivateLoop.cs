@@ -77,7 +77,6 @@ namespace EntityStates.Mimic
 
 			Util.PlaySound(leapSoundString, gameObject);
 			characterDirection.moveVector = direction;
-
 			Util.PlaySound(soundLoopStartEvent, gameObject);
 
 
@@ -93,7 +92,6 @@ namespace EntityStates.Mimic
 			{
 				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
 			}
-
 		}
 
 		public override void FixedUpdate()

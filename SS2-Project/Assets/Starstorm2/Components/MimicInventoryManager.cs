@@ -71,7 +71,7 @@ namespace SS2.Components
             {
                 origin = temp
             };
-            //effectData.SetNetworkedObjectReference(pickupPivot.gameObject);
+
             EffectManager.SpawnEffect(SS2.Monsters.Mimic.itemStarburst, effectData, true);
 
             if (itemInd.Count > 0 && pickupPivot && cdir)

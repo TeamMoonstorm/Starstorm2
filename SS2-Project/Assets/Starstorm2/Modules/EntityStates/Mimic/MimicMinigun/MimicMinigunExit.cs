@@ -12,7 +12,6 @@ namespace EntityStates.Mimic.Weapon
 
         private float duration;
         private bool hasFired;
-        //private Transform muzzle;
         private Animator animator;
 
         private float originalMoveSpeed;

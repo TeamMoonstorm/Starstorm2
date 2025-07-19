@@ -27,6 +27,7 @@ namespace EntityStates.Mimic
                 outer.SetNextStateToMain();
             }
         }
+
         public override void OnExit()
         {
             base.OnExit();
