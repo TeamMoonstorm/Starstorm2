@@ -48,13 +48,16 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if(mim && mim.rechestPreventionTime > 0 && !taunting && isAuthority){
+            if(mim && mim.rechestPreventionTime > 0 && !taunting){
                 skillLocator.special.RemoveAllStocks();
                 skillLocator.special.cooldownOverride = mim.rechestPreventionTime;
-                outer.SetNextStateToMain();
+                if (isAuthority)
+                {
+                    outer.SetNextStateToMain();
+                }
             }
             
-            if (fixedAge >= duration && isAuthority)
+            if (fixedAge >= duration)
             {
                 skillLocator.special.cooldownOverride = 0;
                 var body = purchaseInter.gameObject;
@@ -82,9 +85,11 @@ namespace EntityStates.Mimic
                 PlayAnimation("Body", "IntermediateIdle");
 
                 GetComponent<HologramProjector>().enabled = true;
-
-                var next = new MimicChestInteractableIdle { rechest = true };
-                outer.SetNextState(next);
+                if (isAuthority)
+                {
+                    var next = new MimicChestInteractableIdle { rechest = true };
+                    outer.SetNextState(next);
+                }
             }
 
         }
