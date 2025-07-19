@@ -36,6 +36,7 @@ namespace SS2.Monsters
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
 			On.RoR2.CharacterMaster.Respawn += RespawnMimicFixHitboxes;
 			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
+			On.RoR2.HealthComponent.TakeDamageProcess += TakeDamagePreventAnnoyingRechest;
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
 
@@ -68,79 +69,27 @@ namespace SS2.Monsters
 			var commandoBank = commando.GetComponent<AkBank>();
 			var mimicBank = AssetCollection.bodyPrefab.AddComponent<AkBank>();
 			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
-
-
-
-			On.RoR2.RandomizeSplatBias.Setup += Replicate;
-
 		}
 
-        private void Replicate(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
+        private void TakeDamagePreventAnnoyingRechest(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
-			self.characterModel = self.GetComponent<CharacterModel>();
-			if (self.characterModel)
-			{
-				for (int i = 0; i < self.characterModel.baseRendererInfos.Length; i++)
-				{
-					CharacterModel.RendererInfo rendererInfo = self.characterModel.baseRendererInfos[i];
-					Material material = UnityEngine.Object.Instantiate<Material>(rendererInfo.defaultMaterial);
-					if (material.shader == RandomizeSplatBias.printShader)
-					{
-						self.materialsList.Add(material);
-						self.rendererList.Add(rendererInfo.renderer);
-						rendererInfo.defaultMaterial = material;
-						self.characterModel.baseRendererInfos[i] = rendererInfo;
-					}
-					Renderer renderer = self.rendererList[i];
-					self._propBlock = new MaterialPropertyBlock();
-					renderer.GetPropertyBlock(self._propBlock);
+			orig(self, damageInfo);
+			var mim = self.GetComponent<MimicInventoryManager>();
 
-					var red1 = UnityEngine.Random.Range(self.minRedBias, self.maxRedBias);
-					SS2Log.Warning("red ; " + red1);
-
-					var blue1 = UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias);
-					SS2Log.Warning("blue ; " + blue1);
-
-					var gren1 = UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias);
-					SS2Log.Warning("gren ; " + gren1);
-
-					self._propBlock.SetFloat("_RedChannelBias", red1);
-					self._propBlock.SetFloat("_BlueChannelBias", blue1);
-					self._propBlock.SetFloat("_GreenChannelBias", gren1);
-					renderer.SetPropertyBlock(self._propBlock);
-				}
-				return;
-			}
-			Renderer componentInChildren = self.GetComponentInChildren<Renderer>();
-			Material material2 = UnityEngine.Object.Instantiate<Material>(componentInChildren.material);
-			self.materialsList.Add(material2);
-			componentInChildren.material = material2;
-			self._propBlock = new MaterialPropertyBlock();
-			componentInChildren.GetPropertyBlock(self._propBlock);
-
-			var red = UnityEngine.Random.Range(self.minRedBias, self.maxRedBias);
-			SS2Log.Warning("red ; " + red);
-
-			var blue = UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias);
-			SS2Log.Warning("blue ; " + blue);
-
-			var gren = UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias);
-			SS2Log.Warning("gren ; " + gren);
-
-			self._propBlock.SetFloat("_RedChannelBias", red);
-			self._propBlock.SetFloat("_BlueChannelBias", blue);
-			self._propBlock.SetFloat("_GreenChannelBias", gren);
-
-			componentInChildren.SetPropertyBlock(self._propBlock);
-		}
+			if (mim)
+            {
+				mim.rechestPreventionTime = 2.5f;
+            }
+        }
 
         //Puts the mimic back into chest mode after it kills someone.
         private void CharacterDeathGlobalMimicTaunt(DamageReport obj)
         {
-			if (obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
+			if (obj.victimBody && obj.victimBody.isPlayerControlled && obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
 			{
 				var bodyESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Body");
-				bodyESM.SetNextState(new MimicChestRechest());
+				var rechest = new MimicChestRechest { taunting = true };
+				bodyESM.SetNextState(rechest);
 
 				var weaponESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Weapon");
 				weaponESM.SetNextStateToMain();

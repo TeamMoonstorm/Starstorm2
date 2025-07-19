@@ -14,6 +14,7 @@ namespace SS2.Components
         public Transform pickupPivot;
         public CharacterDirection cdir;
         public BasicPickupDropTable dropTable;
+        public float rechestPreventionTime = 2.5f;
 
         public void Start()
         {
@@ -47,6 +48,14 @@ namespace SS2.Components
                 {
                     pickupPivot = cloc.FindChild("PickupPivot");
                 }
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if(rechestPreventionTime > 0)
+            {
+                rechestPreventionTime -= Time.fixedDeltaTime;
             }
         }
 

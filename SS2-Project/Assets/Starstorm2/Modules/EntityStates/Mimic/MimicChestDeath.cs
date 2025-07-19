@@ -1,4 +1,5 @@
-﻿using RoR2;
+﻿using KinematicCharacterController;
+using RoR2;
 using RoR2.Hologram;
 using SS2;
 using SS2.Components;
@@ -46,6 +47,10 @@ namespace EntityStates.Mimic
             {
                 holo.enabled = false;
             }
+
+            //Let them smush into the ground more
+            var kinematic = GetComponent<KinematicCharacterMotor>();
+            kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
 
         }
 

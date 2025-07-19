@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using RoR2.Hologram;
 using SS2;
+using SS2.Components;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -22,6 +23,10 @@ namespace EntityStates.Mimic
 
         public static float baseDuration;
         private float duration;
+
+        public bool taunting = false;
+
+        private MimicInventoryManager mim;
 		
         public override void OnEnter()
         {
@@ -36,16 +41,26 @@ namespace EntityStates.Mimic
 
             PlayAnimation("Gesture, Override", "BufferEmpty");
             PlayAnimation("FullBody, Override", "BufferEmpty");
+
+            mim = GetComponent<MimicInventoryManager>();
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration && isAuthority)
+            if (fixedAge >= duration && isAuthority && mim && (mim.rechestPreventionTime <= 0 || taunting))
             {
-                var next = new MimicChestInteractableIdle { rechest = true };
-                outer.SetNextState(next); 
+                if(mim.rechestPreventionTime <= 0 || taunting){
+                    skillLocator.special.DeductStock(1);
+                    var next = new MimicChestInteractableIdle { rechest = true };
+                    outer.SetNextState(next);
+                }
+                else
+                {
+                    outer.SetNextStateToMain();
+                }
             }
+
         }
 
         public override void OnExit()

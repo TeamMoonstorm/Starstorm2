@@ -162,6 +162,8 @@ namespace EntityStates.Mimic
 
             var pingc = GetComponent<MimicPingCorrecter>();
             pingc.isInteractable = false;
+
+            //Set their height to a value more appropriate for moving nicely visually
             var kinematic = GetComponent<KinematicCharacterMotor>();
             kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
         }
