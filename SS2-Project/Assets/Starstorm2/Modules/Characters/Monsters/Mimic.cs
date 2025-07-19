@@ -71,6 +71,7 @@ namespace SS2.Monsters
 			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
 		}
 
+		//Along with code in Rechest, prevents mimic from annoyingly rechesting at range when damaged recently.
         private void TakeDamagePreventAnnoyingRechest(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
 			orig(self, damageInfo);
