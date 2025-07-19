@@ -8,5 +8,7 @@ namespace SS2.Components
 {
     [RequireComponent(typeof(CharacterBody))]
     [RequireComponent(typeof(PurchaseInteraction))]
-    public class MimicPingCorrecter : MonoBehaviour { }
+    public class MimicPingCorrecter : MonoBehaviour {
+        public bool isInteractable = true;    
+    }
 }

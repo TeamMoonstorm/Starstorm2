@@ -55,17 +55,17 @@ namespace EntityStates.Mimic.Weapon
 		{
 			base.FixedUpdate();
 
-			this.fireTimer -= base.GetDeltaTime();
-			if (this.fireTimer <= 0f)
+			fireTimer -= GetDeltaTime();
+			if (fireTimer <= 0f)
 			{
-				float num = baseFireInterval / this.attackSpeedStat;
-				this.fireTimer += num;
-				this.OnFireShared();
+				float num = baseFireInterval / attackSpeedStat;
+				fireTimer += num;
+				OnFireShared();
 			}
-			if (base.isAuthority && !base.skillButtonState.down)
+			if (isAuthority && !skillButtonState.down)
 			{
 				var exit = new MimicMinigunExit { fireVFXInstanceLeft = this.fireVFXInstanceLeft, fireVFXInstanceRight = this.fireVFXInstanceRight };
-				this.outer.SetNextState(exit);
+				outer.SetNextState(exit);
 				return;
 			}
 		}
@@ -107,20 +107,20 @@ namespace EntityStates.Mimic.Weapon
 		private void OnFireShared()
 		{
 			Util.PlaySound("Play_commando_M1", gameObject);
-			if (base.isAuthority)
+			if (isAuthority)
 			{
-				this.OnFireAuthority();
+				OnFireAuthority();
 			}
 		}
 
 
 		private void OnFireAuthority()
 		{
-			this.UpdateCrits();
+			UpdateCrits();
 			bool isCrit = !critEndTime.hasPassed;
 			float damage = baseDamagePerSecondCoefficient / baseBulletsPerSecond * damageStat;
 			float procCoefficient = baseProcCoefficientPerSecond / baseBulletsPerSecond;
-			Ray aimRay = base.GetAimRay();
+			Ray aimRay = GetAimRay();
 			
 			new BulletAttack
 			{
@@ -137,7 +137,7 @@ namespace EntityStates.Mimic.Weapon
 				minSpread = bulletMinSpread,
 				maxSpread = bulletMaxSpread,
 				isCrit = isCrit,
-				owner = base.gameObject,
+				owner = gameObject,
 				muzzleName = muzzleNameLeft,
 				smartCollision = false,
 				procChainMask = default(ProcChainMask),
@@ -169,7 +169,7 @@ namespace EntityStates.Mimic.Weapon
 				minSpread = bulletMinSpread,
 				maxSpread = bulletMaxSpread,
 				isCrit = isCrit,
-				owner = base.gameObject,
+				owner = gameObject,
 				muzzleName = muzzleNameRight,
 				smartCollision = false,
 				procChainMask = default(ProcChainMask),

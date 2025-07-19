@@ -2,6 +2,7 @@
 using RoR2;
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.Networking;
 
 namespace SS2.Components
 {
@@ -20,17 +21,19 @@ namespace SS2.Components
             {
                 FindPivot();
             }
-
-            var item = dropTable.GenerateDropPreReplacement(Run.instance.treasureRng);
-            var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
-            var def = ItemCatalog.GetItemDef(itemIndex);
-
-            if(def.DoesNotContainTag(ItemTag.AIBlacklist))
+            if (NetworkServer.active)
             {
-                this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
-            }
+                var item = dropTable.GenerateDropPreReplacement(Run.instance.treasureRng);
+                var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+                var def = ItemCatalog.GetItemDef(itemIndex);
 
-             AddItem(itemIndex);
+                if (def.DoesNotContainTag(ItemTag.AIBlacklist))
+                {
+                    this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
+                }
+
+                AddItem(itemIndex);
+            }
         }
 
         public void FindPivot()
@@ -52,20 +55,8 @@ namespace SS2.Components
             itemInd.Add(ind);
         }
 
-        public void BeginDropCountdown()
+        public void DropItems()
         {
-            StartCoroutine(DropItems());
-        }
-
-        IEnumerator DropItems()
-        {
-            if (!pickupPivot || !cdir)
-            {
-                FindPivot();
-            }
-
-            yield return new WaitForSeconds(1.5f);
-
             var temp = pickupPivot.position;
             EffectData effectData = new EffectData
             {
@@ -88,6 +79,12 @@ namespace SS2.Components
                     PickupDropletController.CreatePickupDroplet(pind, pickupPivot.position, vec);
                     vec = rot * vec;
                 }
+            }
+
+            var cb = GetComponent<CharacterBody>();
+            if(cb && cb.inventory)
+            {
+                cb.inventory.CleanInventory();
             }
         }
     }

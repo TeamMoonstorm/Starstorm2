@@ -1,14 +1,11 @@
-﻿﻿using MSU;
-using MSU.Config;
+﻿using EntityStates.Mimic;
+using MSU;
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.UI;
 using SS2.Components;
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
@@ -23,12 +20,13 @@ namespace SS2.Monsters
 		public static GameObject _masterPrefab;
 		public static ModdedDamageType StealItemDamageType { get; private set; }
 
-		public Xoroshiro128Plus mimicItemRng;
 		public GameObject itemOrb;
+
 		public static GameObject itemStarburst;
 	    public static GameObject zipperVFX;
 		public static GameObject jetVFX;
 		public static GameObject leapLandVFX;
+		public static GameObject rechestVFX;
 
 		public override void Initialize()
 		{
@@ -36,24 +34,137 @@ namespace SS2.Monsters
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.CharacterMaster.Respawn += RespawnMimicFixHitboxes;
+			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
+
+			var ml = AssetCollection.bodyPrefab.GetComponent<ModelLocator>();
+			if (ml)
+			{
+				var transf = ml.modelTransform;
+				var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
+				foreach (var comp in componentsInChildren)
+				{
+					comp.material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Chest1/matChest1.mat").WaitForCompletion();
+				}
+			}
 
 			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
 			jetVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion();
 			leapLandVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
+			rechestVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/RoboCratePodGroundImpact.prefab").WaitForCompletion();
 
 			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
 			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
 
-			var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
+		    var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
 			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
 			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
-			mid.Info.Visual = ping;	
+			mid.Info.Visual = ping;
+
+			var commando = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoBody.prefab").WaitForCompletion();
+			var commandoBank = commando.GetComponent<AkBank>();
+			var mimicBank = AssetCollection.bodyPrefab.AddComponent<AkBank>();
+			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
+
+
+
+			On.RoR2.RandomizeSplatBias.Setup += Replicate;
+
 		}
-        
-		//Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping
+
+        private void Replicate(On.RoR2.RandomizeSplatBias.orig_Setup orig, RandomizeSplatBias self)
+        {
+			self.characterModel = self.GetComponent<CharacterModel>();
+			if (self.characterModel)
+			{
+				for (int i = 0; i < self.characterModel.baseRendererInfos.Length; i++)
+				{
+					CharacterModel.RendererInfo rendererInfo = self.characterModel.baseRendererInfos[i];
+					Material material = UnityEngine.Object.Instantiate<Material>(rendererInfo.defaultMaterial);
+					if (material.shader == RandomizeSplatBias.printShader)
+					{
+						self.materialsList.Add(material);
+						self.rendererList.Add(rendererInfo.renderer);
+						rendererInfo.defaultMaterial = material;
+						self.characterModel.baseRendererInfos[i] = rendererInfo;
+					}
+					Renderer renderer = self.rendererList[i];
+					self._propBlock = new MaterialPropertyBlock();
+					renderer.GetPropertyBlock(self._propBlock);
+
+					var red1 = UnityEngine.Random.Range(self.minRedBias, self.maxRedBias);
+					SS2Log.Warning("red ; " + red1);
+
+					var blue1 = UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias);
+					SS2Log.Warning("blue ; " + blue1);
+
+					var gren1 = UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias);
+					SS2Log.Warning("gren ; " + gren1);
+
+					self._propBlock.SetFloat("_RedChannelBias", red1);
+					self._propBlock.SetFloat("_BlueChannelBias", blue1);
+					self._propBlock.SetFloat("_GreenChannelBias", gren1);
+					renderer.SetPropertyBlock(self._propBlock);
+				}
+				return;
+			}
+			Renderer componentInChildren = self.GetComponentInChildren<Renderer>();
+			Material material2 = UnityEngine.Object.Instantiate<Material>(componentInChildren.material);
+			self.materialsList.Add(material2);
+			componentInChildren.material = material2;
+			self._propBlock = new MaterialPropertyBlock();
+			componentInChildren.GetPropertyBlock(self._propBlock);
+
+			var red = UnityEngine.Random.Range(self.minRedBias, self.maxRedBias);
+			SS2Log.Warning("red ; " + red);
+
+			var blue = UnityEngine.Random.Range(self.minBlueBias, self.maxBlueBias);
+			SS2Log.Warning("blue ; " + blue);
+
+			var gren = UnityEngine.Random.Range(self.minGreenBias, self.maxGreenBias);
+			SS2Log.Warning("gren ; " + gren);
+
+			self._propBlock.SetFloat("_RedChannelBias", red);
+			self._propBlock.SetFloat("_BlueChannelBias", blue);
+			self._propBlock.SetFloat("_GreenChannelBias", gren);
+
+			componentInChildren.SetPropertyBlock(self._propBlock);
+		}
+
+        //Puts the mimic back into chest mode after it kills someone.
+        private void CharacterDeathGlobalMimicTaunt(DamageReport obj)
+        {
+			if (obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
+			{
+				var bodyESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Body");
+				bodyESM.SetNextState(new MimicChestRechest());
+
+				var weaponESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Weapon");
+				weaponESM.SetNextStateToMain();
+			}
+		}
+
+		//Makes it so Respawned mimics via Dios and Void Dios are not invulnerable until purchased.
+        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
+        {
+			var output = orig(self, footPosition, rotation, wasRevivedMidStage);
+
+			if(self.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
+            {
+				if(self.inventory.GetItemCount(RoR2Content.Items.ExtraLifeConsumed) > 0 || self.inventory.GetItemCount(DLC1Content.Items.ExtraLifeVoidConsumed) > 0)
+                {
+					var esm = EntityStateMachine.FindByCustomName(self.bodyInstanceObject, "Body");
+					esm.SetNextState(new MimicChestActivateEnter());
+				}
+            }
+
+			return output;
+        }
+
+        //Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping.
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
@@ -88,7 +199,7 @@ namespace SS2.Monsters
 				if (displayNameProvider != null)
 				{
 					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
-					if (pingc)
+					if (pingc && pingc.isInteractable)
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
 						string ownerName = self.GetOwnerName();
@@ -154,6 +265,47 @@ namespace SS2.Monsters
 						self.pingText.color = self.textBaseColor * self.pingColor;
 						self.fixedTimer = self.pingDuration;
 						printed = true;
+                    }
+                    else if(!pingc.isInteractable)
+                    {
+						string ownerName = self.GetOwnerName();
+						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+
+						self.pingText.enabled = true;
+						self.pingText.text = ownerName;
+
+						self.pingColor = self.enemyPingColor;
+						self.pingDuration = self.enemyPingDuration;
+						array = self.enemyPingGameObjects;
+						for (int i = 0; i < array.Length; i++)
+						{
+							array[i].SetActive(true);
+						}
+						if (modelLocator)
+						{
+							Transform modelTransform = modelLocator.modelTransform;
+							if (modelTransform)
+							{
+								CharacterModel component2 = modelTransform.GetComponent<CharacterModel>();
+								if (component2)
+								{
+									bool flag = false;
+									foreach (CharacterModel.RendererInfo rendererInfo in component2.baseRendererInfos)
+									{
+										if (!rendererInfo.ignoreOverlays && !flag)
+										{
+											self.pingHighlight.highlightColor = Highlight.HighlightColor.teleporter;
+											self.pingHighlight.targetRenderer = rendererInfo.renderer;
+											self.pingHighlight.strength = 1f;
+											self.pingHighlight.isOn = true;
+											self.pingHighlight.enabled = true;
+											break;
+										}
+									}
+								}
+							}
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
+						}
 					}
 				}
 			}

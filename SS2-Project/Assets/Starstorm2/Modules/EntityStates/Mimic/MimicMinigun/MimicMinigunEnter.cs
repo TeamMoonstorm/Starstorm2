@@ -2,6 +2,7 @@
 using RoR2.Projectile;
 using SS2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.Mimic.Weapon
 {

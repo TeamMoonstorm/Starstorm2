@@ -13,7 +13,8 @@ namespace EntityStates.Mimic
     {
         GameObject lVFX;
         GameObject rVFX;
-
+        bool hasDropped = false;
+        
         public override bool shouldAutoDestroy => false;
 
         public override void OnEnter()
@@ -23,32 +24,16 @@ namespace EntityStates.Mimic
             PlayAnimation("Gesture, Override", "BufferEmpty");
 
             //Replicating the chest opening VFX
-            if (NetworkServer.active)
+            var zipL = FindModelChild("ZipperL");
+            if (zipL)
             {
-                var zipL = FindModelChild("ZipperL");
-                if (zipL)
-                {
-                    lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
-                }
-
-                var zipR = FindModelChild("ZipperR");
-                if (zipR)
-                {
-                    rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
-                }
+                lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
             }
 
-            //Attempting to lock mimic in place when it dies
-            rigidbody.velocity = Vector3.zero;
-            characterMotor.velocity = Vector3.zero;
-
-            if (gameObject)
+            var zipR = FindModelChild("ZipperR");
+            if (zipR)
             {
-               var mim = gameObject.GetComponent<MimicInventoryManager>();
-               if (mim)
-               {
-                   mim.BeginDropCountdown();
-               }
+                rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
             }
 
             var purchaseInter = GetComponent<PurchaseInteraction>();
@@ -67,14 +52,32 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            //Attempting to lock mimic in place when it dies
+            characterMotor.velocity = Vector3.zero;
+
+            var mim = gameObject.GetComponent<MimicInventoryManager>();
+
+            if (fixedAge > 1.5f && !hasDropped && mim)
+            {
+                hasDropped = true;
+                mim.DropItems();
+            }
         }
 
         public override void OnExit()
         {
             base.OnExit();
 
-            Destroy(lVFX);
-            Destroy(rVFX);
+            if (lVFX)
+            {
+                GameObject.Destroy(lVFX);
+            }
+            
+            if (rVFX)
+            {
+                GameObject.Destroy(rVFX);
+            }
+ 
         }
     }
 }

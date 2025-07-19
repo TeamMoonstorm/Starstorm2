@@ -57,6 +57,9 @@ namespace EntityStates.Mimic
 
             body.GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_INTERACTABLE_NAME";
 
+            var intermediate = GetComponent<ModelLocator>();
+            intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(true);
+
             if (modelLocator && modelLocator.modelTransform)
             {
                 var mdl = modelLocator.modelTransform;
@@ -65,7 +68,7 @@ namespace EntityStates.Mimic
 
             purchaseInter.SetAvailable(true);
 
-            var impact = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/RoboCratePodGroundImpact.prefab").WaitForCompletion();
+            var impact = SS2.Monsters.Mimic.rechestVFX;
             EffectData effectData = new EffectData { origin = characterBody.corePosition };
             effectData.SetNetworkedObjectReference(impact);
             EffectManager.SpawnEffect(impact, effectData, transmit: true);

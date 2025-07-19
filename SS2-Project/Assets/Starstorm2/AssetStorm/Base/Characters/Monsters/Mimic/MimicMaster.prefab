@@ -207,7 +207,7 @@ MonoBehaviour:
   customName: Jumpscare
   skillSlot: 3
   requiredSkill: {fileID: 11400000, guid: ba636943d92ca8f4d818c76e9f9db3e2, type: 2}
-  requireSkillReady: 0
+  requireSkillReady: 1
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: Infinity
@@ -222,7 +222,7 @@ MonoBehaviour:
   moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
+  activationRequiresAimConfirmation: 1
   movementType: 1
   moveInputScale: 1
   aimType: 2
@@ -356,7 +356,7 @@ MonoBehaviour:
   moveInputScale: 0.75
   aimType: 4
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 1
@@ -397,7 +397,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 0
   moveInputScale: 0
-  aimType: 0
+  aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 1
   shouldFireEquipment: 0
@@ -430,7 +430,7 @@ MonoBehaviour:
   maxTargetHealthFraction: Infinity
   minDistance: 0
   maxDistance: Infinity
-  selectionRequiresTargetLoS: 1
+  selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
@@ -440,7 +440,7 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 3
   moveInputScale: 1
-  aimType: 1
+  aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 1
   shouldFireEquipment: 0
@@ -485,7 +485,7 @@ MonoBehaviour:
   moveInputScale: 1
   aimType: 1
   ignoreNodeGraph: 0
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 1

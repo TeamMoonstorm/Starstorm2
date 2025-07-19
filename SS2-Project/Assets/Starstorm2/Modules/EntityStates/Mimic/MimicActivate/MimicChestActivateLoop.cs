@@ -80,21 +80,20 @@ namespace EntityStates.Mimic
 
 			Util.PlaySound(soundLoopStartEvent, gameObject);
 
-            if (NetworkServer.active)
-            {
-				var lThruster = FindModelChild("ThrusterL");
-				var rThruster = FindModelChild("ThrusterR");
 
-				if (lThruster)
-				{
-					UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, lThruster);
-				}
+			var lThruster = FindModelChild("ThrusterL");
+			var rThruster = FindModelChild("ThrusterR");
 
-				if (rThruster)
-				{
-					UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
-				}
+			if (lThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, lThruster);
 			}
+
+			if (rThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
+			}
+
 		}
 
 		public override void FixedUpdate()

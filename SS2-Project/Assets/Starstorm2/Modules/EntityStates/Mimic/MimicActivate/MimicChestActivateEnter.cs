@@ -51,31 +51,29 @@ namespace EntityStates.Mimic
             }
 
             //Replicating the chest opening zipper
-            if (NetworkServer.active)
+            var master = characterBody.master;
+            if (master)
             {
-                var master = characterBody.master;
-                if (master)
-                {
-                    ai = master.GetComponent<BaseAI>();
-                }
-
-
-                var zipL = FindModelChild("ZipperL");
-                if (zipL)
-                {
-                    lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
-                }
-
-                var zipR = FindModelChild("ZipperR");
-                if (zipR)
-                {
-                    rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
-                }
+                ai = master.GetComponent<BaseAI>();
             }
-            
+
+
+            var zipL = FindModelChild("ZipperL");
+            if (zipL)
+            {
+                lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
+            }
+
+            var zipR = FindModelChild("ZipperR");
+            if (zipR)
+            {
+                rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
+            }
 
             //Trying to aim at the interactor if it was purchased, or just at the nearest player
             GetComponent<CapsuleCollider>().enabled = true;
+
+
             if (target)
             {
                 AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);

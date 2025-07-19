@@ -1,5 +1,7 @@
-﻿using RoR2;
+﻿using KinematicCharacterController;
+using RoR2;
 using SS2;
+using SS2.Components;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -34,6 +36,16 @@ namespace EntityStates.Mimic
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
+            //Turn off gravity, so they don't fall through the ground on some uneven surfaces
+            characterMotor.velocity = Vector3.zero;
+            var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
+            if (characterGravityParameterProvider != null)
+            {
+                CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
+                ++gravityParameters.channeledAntiGravityGranterCount;
+                characterGravityParameterProvider.gravityParameters = gravityParameters;
+            } //Maybe turn this off for Rechest so they don't float in the air 
+
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
@@ -55,6 +67,9 @@ namespace EntityStates.Mimic
                 ProcChainMask mask = new ProcChainMask();
                 healthComponent.HealFraction(.5f, mask);
             }
+
+            var pingc = GetComponent<MimicPingCorrecter>();
+            pingc.isInteractable = true;
         }
 
         private void OnPurchaseMimic(Interactor interactor, PurchaseInteraction purchaseInter)
@@ -90,6 +105,9 @@ namespace EntityStates.Mimic
             {
                 healthPrevious = healthComponent.health;
             }
+
+            //Lock then in place so they don't fall through the map on uneven ground
+            characterMotor.velocity = Vector3.zero;
 
         }
 
@@ -133,6 +151,19 @@ namespace EntityStates.Mimic
             {
                 anim.SetBool("aimActive", true);
             }
+
+            var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
+            if (characterGravityParameterProvider != null)
+            {
+                CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
+                --gravityParameters.channeledAntiGravityGranterCount;
+                characterGravityParameterProvider.gravityParameters = gravityParameters;
+            }
+
+            var pingc = GetComponent<MimicPingCorrecter>();
+            pingc.isInteractable = false;
+            var kinematic = GetComponent<KinematicCharacterMotor>();
+            kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
