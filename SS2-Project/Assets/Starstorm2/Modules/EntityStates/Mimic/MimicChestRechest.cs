@@ -48,16 +48,18 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            bool tryRechest = true; //Probably not needed, but nice to have
             if(mim && mim.rechestPreventionTime > 0 && !taunting){
                 skillLocator.special.RemoveAllStocks();
                 skillLocator.special.cooldownOverride = mim.rechestPreventionTime;
                 if (isAuthority)
                 {
+                    tryRechest = false;
                     outer.SetNextStateToMain();
                 }
             }
             
-            if (fixedAge >= duration)
+            if (fixedAge >= duration && tryRechest)
             {
                 skillLocator.special.cooldownOverride = 0;
                 var body = purchaseInter.gameObject;

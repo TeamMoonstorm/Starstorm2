@@ -82,7 +82,6 @@ namespace EntityStates.Mimic.Weapon
 			}
 		}
 
-
 		public override void OnExit()
 		{
 			base.OnExit();

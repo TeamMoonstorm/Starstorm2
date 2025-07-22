@@ -69,6 +69,10 @@ namespace SS2.Monsters
 			var commandoBank = commando.GetComponent<AkBank>();
 			var mimicBank = AssetCollection.bodyPrefab.AddComponent<AkBank>();
 			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
+
+			ChatMessageBase.chatMessageTypeToIndex.Add(typeof(MimicTheftMessage), (byte)ChatMessageBase.chatMessageIndexToType.Count);
+			ChatMessageBase.chatMessageIndexToType.Add(typeof(MimicTheftMessage));
+
 		}
 
 		//Along with code in Rechest, prevents mimic from annoyingly rechesting at range when damaged recently.
@@ -86,8 +90,10 @@ namespace SS2.Monsters
         //Puts the mimic back into chest mode after it kills someone.
         private void CharacterDeathGlobalMimicTaunt(DamageReport obj)
         {
+			SS2Log.Warning("global death taunt");
 			if (obj.victimBody && obj.victimBody.isPlayerControlled && obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
 			{
+				SS2Log.Warning("condition met");
 				var bodyESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Body");
 				var rechest = new MimicChestRechest { taunting = true };
 				bodyESM.SetNextState(rechest);
@@ -118,6 +124,7 @@ namespace SS2.Monsters
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
+			SS2Log.Warning("Awawa");
 			self.pingHighlight.enabled = false;
 			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
 			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
@@ -145,12 +152,15 @@ namespace SS2.Monsters
 			}
 			if (self.pingTarget)
 			{
+				SS2Log.Warning("Fou7nd potential Target");
 				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
 				if (displayNameProvider != null)
 				{
+					SS2Log.Warning("displayNameProvider not null");
 					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
 					if (pingc && pingc.isInteractable)
 					{
+						SS2Log.Warning("found pingc! isInteractable");
 						self.pingType = PingIndicator.PingType.Interactable;
 						string ownerName = self.GetOwnerName();
 						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
@@ -198,6 +208,7 @@ namespace SS2.Monsters
 						component3.sprite = interactableIcon;
 						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
 						{
+							SS2Log.Warning("found pingc! noT CostTypeIndex.None");
 							PingIndicator.sharedStringBuilder.Clear();
 							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
 							int num = self.pingTargetPurchaseInteraction.cost;
@@ -210,6 +221,7 @@ namespace SS2.Monsters
 						}
 						else
 						{
+							SS2Log.Warning("other");
 							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
 						}
 						self.pingText.color = self.textBaseColor * self.pingColor;
@@ -218,6 +230,7 @@ namespace SS2.Monsters
                     }
                     else if(pingc && !pingc.isInteractable)
                     {
+						SS2Log.Warning("found pingc! noT isInteractable");
 						string ownerName = self.GetOwnerName();
 						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
 
@@ -233,6 +246,7 @@ namespace SS2.Monsters
 						}
 						if (modelLocator)
 						{
+							SS2Log.Warning("modelLocator");
 							Transform modelTransform = modelLocator.modelTransform;
 							if (modelTransform)
 							{
@@ -283,7 +297,9 @@ namespace SS2.Monsters
 							var def = ItemCatalog.GetItemDef(itemList[i]);
 							
 							if(def.tier == ItemTier.NoTier) { continue; }
-							
+
+							var pdef = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(itemList[i]));
+
 							obj.attackerBody.inventory.GiveItem(def);
 							obj.victimBody.inventory.RemoveItem(def);
 							mim.AddItem(def.itemIndex);
@@ -296,6 +312,16 @@ namespace SS2.Monsters
 							};
 							effectData.SetNetworkedObjectReference(obj.attacker);
 							EffectManager.SpawnEffect(itemOrb, effectData, true);
+
+							//"MONSTER_PICKUP": "<style=cWorldEvent>{0} picked up {1}{2}</color>",
+							Chat.SendBroadcastChat(new MimicTheftMessage
+							{
+								subjectAsCharacterBody = obj.attackerBody,
+								baseToken = "SS2_MIMIC_THEFT",
+								pickupToken = pdef.nameToken,
+								pickupColor = pdef.baseColor,
+								victimName = obj.victimBody.GetDisplayName()
+							});
 							break;
 						}
 					}
@@ -308,5 +334,48 @@ namespace SS2.Monsters
 			return true;
 		}
 
+	}
+
+	public class MimicTheftMessage : SubjectChatMessage
+	{
+		public override string ConstructChatString()
+		{
+			string subjectName = base.GetSubjectName();
+			string @string = Language.GetString(base.GetResolvedToken());
+
+			string text = Language.GetString(this.pickupToken) ?? "???";
+			text = Util.GenerateColoredString(text, this.pickupColor);
+			try
+			{
+				return string.Format(@string, subjectName, text, victimName);
+			}
+			catch (Exception message)
+			{
+				Debug.LogError(message);
+			}
+			return "";
+		}
+
+		public override void Serialize(NetworkWriter writer)
+		{
+			base.Serialize(writer);
+			writer.Write(this.pickupToken);
+			writer.Write(this.pickupColor);
+			writer.Write(this.victimName);
+		}
+
+		public override void Deserialize(NetworkReader reader)
+		{
+			base.Deserialize(reader);
+			this.pickupToken = reader.ReadString();
+			this.pickupColor = reader.ReadColor32();
+			this.victimName = reader.ReadString();
+		}
+
+		public string pickupToken;
+
+		public Color32 pickupColor;
+
+		public string victimName;
 	}
 }
