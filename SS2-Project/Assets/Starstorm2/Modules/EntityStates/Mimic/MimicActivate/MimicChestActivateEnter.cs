@@ -108,10 +108,13 @@ namespace EntityStates.Mimic
                 ai.UpdateBodyAim(Time.fixedDeltaTime);
             }
 
-            if (fixedAge >= duration && isAuthority)
+            if (fixedAge >= duration)
             {
                 endedSuccessfully = true;
-                outer.SetNextState(new MimicChestActivateLoop());
+                if (isAuthority)
+                {
+                    outer.SetNextState(new MimicChestActivateLoop());
+                }
             }
         }
 

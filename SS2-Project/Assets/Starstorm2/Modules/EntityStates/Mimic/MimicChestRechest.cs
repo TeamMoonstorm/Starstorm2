@@ -38,6 +38,7 @@ namespace EntityStates.Mimic
             {
                 purchaseInter.SetAvailable(enableInteraction);
             }
+            SS2Log.Warning(" AAAAAAAAAAAAAAAA " + taunting + " | " + isAuthority + " | " + NetworkServer.active); 
 
             PlayAnimation("Gesture, Override", "BufferEmpty");
             PlayAnimation("FullBody, Override", "BufferEmpty");
@@ -50,6 +51,8 @@ namespace EntityStates.Mimic
             base.FixedUpdate();
             bool tryRechest = true; //Probably not needed, but nice to have
             if(mim && mim.rechestPreventionTime > 0 && !taunting){
+                SS2Log.Warning(" Gave Up " + taunting + " | " + isAuthority + " | " + NetworkServer.active + " ? " + mim.rechestPreventionTime);
+
                 skillLocator.special.RemoveAllStocks();
                 skillLocator.special.cooldownOverride = mim.rechestPreventionTime;
                 if (isAuthority)
@@ -61,7 +64,9 @@ namespace EntityStates.Mimic
             
             if (fixedAge >= duration && tryRechest)
             {
-                skillLocator.special.cooldownOverride = 0;
+                SS2Log.Warning(" Turning back int chest " + taunting + " | " + isAuthority + " | " + NetworkServer.active + " ? " + mim.rechestPreventionTime);
+                skillLocator.special.cooldownOverride = 1;
+                skillLocator.special.AddOneStock();
                 var body = purchaseInter.gameObject;
                 body.GetComponent<BoxCollider>().enabled = true;
                 body.GetComponent<CapsuleCollider>().enabled = false;
@@ -77,7 +82,10 @@ namespace EntityStates.Mimic
                     mdl.GetComponent<BoxCollider>().enabled = true;
                 }
 
-                purchaseInter.SetAvailable(true);
+                if (NetworkServer.active)
+                {
+                    purchaseInter.SetAvailable(true);
+                }
 
                 var impact = SS2.Monsters.Mimic.rechestVFX;
                 EffectData effectData = new EffectData { origin = characterBody.corePosition };
@@ -93,7 +101,6 @@ namespace EntityStates.Mimic
                     outer.SetNextState(next);
                 }
             }
-
         }
 
         public override void OnExit()
@@ -106,5 +113,27 @@ namespace EntityStates.Mimic
             return InterruptPriority.PrioritySkill;
         }
 
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            base.OnSerialize(writer);
+            SS2Log.Warning("on serialize");
+            writer.Write(taunting);
+        }
+            
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            base.OnDeserialize(reader);
+            SS2Log.Warning("OnDeserialize");
+            taunting = reader.ReadBoolean();
+        }
+
+        public override void ModifyNextState(EntityState nextState)
+        {
+            SS2Log.Warning("ModifyNextState");
+            if (nextState is MimicChestInteractableIdle idle)
+            {
+                idle.rechest = true;
+            }
+        }
     }
 }

@@ -34,8 +34,6 @@ namespace EntityStates.Mimic.Weapon
 		private Run.FixedTimeStamp critEndTime;
 		private Run.FixedTimeStamp lastCritCheck;
 
-		public static string mecanimPeramater;
-
 		private bool endedSuccessfully = false;
 
 		public override void OnEnter()
@@ -62,11 +60,15 @@ namespace EntityStates.Mimic.Weapon
 				fireTimer += num;
 				OnFireShared();
 			}
-			if (isAuthority && !skillButtonState.down)
-			{
-				var exit = new MimicMinigunExit { fireVFXInstanceLeft = this.fireVFXInstanceLeft, fireVFXInstanceRight = this.fireVFXInstanceRight };
-				outer.SetNextState(exit);
-				return;
+
+            if (!skillButtonState.down)
+            {
+				endedSuccessfully = true;
+                if (isAuthority)
+                {
+					outer.SetNextState(new MimicMinigunExit());
+					return;
+				}
 			}
 		}
 
@@ -90,6 +92,7 @@ namespace EntityStates.Mimic.Weapon
 			if (!endedSuccessfully)
 			{
 				PlayAnimation("Gesture, Override", "BufferEmpty");
+
 				if (fireVFXInstanceLeft)
 				{
 					EntityState.Destroy(fireVFXInstanceLeft);
@@ -111,7 +114,6 @@ namespace EntityStates.Mimic.Weapon
 				OnFireAuthority();
 			}
 		}
-
 
 		private void OnFireAuthority()
 		{

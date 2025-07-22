@@ -24,6 +24,7 @@ namespace EntityStates.Mimic.Weapon
 			{
 				fireVFXInstanceLeft = UnityEngine.Object.Instantiate<GameObject>(spinVFXPrefab, muzzleTransformLeft.position, muzzleTransformLeft.rotation);
 				fireVFXInstanceLeft.transform.parent = muzzleTransformLeft;
+				
 			}
 
 			if (muzzleTransformLeft && spinVFXPrefab)
@@ -38,20 +39,24 @@ namespace EntityStates.Mimic.Weapon
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (fixedAge >= duration && isAuthority)
+			if (fixedAge >= duration)
 			{
 				endedSuccessfully = true;
-				var loop = new MimicMinigunLoop { fireVFXInstanceLeft = this.fireVFXInstanceLeft, fireVFXInstanceRight = this.fireVFXInstanceRight };
-				outer.SetNextState(loop);
+                if (isAuthority)
+                {
+					outer.SetNextState(new MimicMinigunLoop());
+				}
 			}
 		}
 
 		public override void OnExit()
 		{
 			base.OnExit();
+
 			if (!endedSuccessfully)
 			{
 				PlayAnimation("Gesture, Override", "BufferEmpty");
+
 				if (fireVFXInstanceLeft)
 				{
 					EntityState.Destroy(fireVFXInstanceLeft);
@@ -62,7 +67,6 @@ namespace EntityStates.Mimic.Weapon
 					EntityState.Destroy(fireVFXInstanceRight);
 				}
 			}
-
 		}
     }
 }

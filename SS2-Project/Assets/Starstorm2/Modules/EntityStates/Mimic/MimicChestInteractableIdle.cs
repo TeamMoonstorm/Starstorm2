@@ -36,16 +36,6 @@ namespace EntityStates.Mimic
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
-            //Turn off gravity, so they don't fall through the ground on some uneven surfaces
-            characterMotor.velocity = Vector3.zero;
-            var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
-            if (characterGravityParameterProvider != null)
-            {
-                CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
-                ++gravityParameters.channeledAntiGravityGranterCount;
-                characterGravityParameterProvider.gravityParameters = gravityParameters;
-            } //Maybe turn this off for Rechest so they don't float in the air 
-
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
@@ -61,6 +51,16 @@ namespace EntityStates.Mimic
             {
                 int adjust = UnityEngine.Random.Range(0, 2) - 1;
                 purchaseInter.cost += adjust;
+
+                //Turn off gravity, so they don't fall through the ground on some uneven surfaces
+                characterMotor.velocity = Vector3.zero;
+                var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
+                if (characterGravityParameterProvider != null)
+                {
+                    CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
+                    ++gravityParameters.channeledAntiGravityGranterCount;
+                    characterGravityParameterProvider.gravityParameters = gravityParameters;
+                }
             }
             else if (NetworkServer.active)
             {
@@ -152,12 +152,15 @@ namespace EntityStates.Mimic
                 anim.SetBool("aimActive", true);
             }
 
-            var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
-            if (characterGravityParameterProvider != null)
+            if (!rechest) 
             {
-                CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
-                --gravityParameters.channeledAntiGravityGranterCount;
-                characterGravityParameterProvider.gravityParameters = gravityParameters;
+                var characterGravityParameterProvider = gameObject.GetComponent<ICharacterGravityParameterProvider>();
+                if (characterGravityParameterProvider != null)
+                {
+                    CharacterGravityParameters gravityParameters = characterGravityParameterProvider.gravityParameters;
+                    --gravityParameters.channeledAntiGravityGranterCount;
+                    characterGravityParameterProvider.gravityParameters = gravityParameters;
+                }
             }
 
             var pingc = GetComponent<MimicPingCorrecter>();

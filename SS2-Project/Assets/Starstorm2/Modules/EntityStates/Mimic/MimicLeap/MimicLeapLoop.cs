@@ -105,19 +105,18 @@ namespace EntityStates.Mimic
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (isAuthority && characterMotor)
+			if (characterMotor)
 			{
-				characterMotor.moveDirection = inputBank.moveVector;
 				if (fixedAge >= minimumDuration && (detonateNextFrame || (characterMotor.Motor.GroundingStatus.IsStableOnGround && !characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
 				{
-					DoImpactAuthority();
 					endedSuccessfully = true;
-					outer.SetNextState(new MimicLeapExit());
+                    if (isAuthority)
+                    {
+						characterMotor.moveDirection = inputBank.moveVector;
+						DoImpactAuthority();
+						outer.SetNextState(new MimicLeapExit());
+					}
 				}
-			}
-			if (NetworkServer.active)
-			{
-				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
 			}
 		}
 

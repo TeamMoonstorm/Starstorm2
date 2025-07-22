@@ -90,10 +90,8 @@ namespace SS2.Monsters
         //Puts the mimic back into chest mode after it kills someone.
         private void CharacterDeathGlobalMimicTaunt(DamageReport obj)
         {
-			SS2Log.Warning("global death taunt");
 			if (obj.victimBody && obj.victimBody.isPlayerControlled && obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
 			{
-				SS2Log.Warning("condition met");
 				var bodyESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Body");
 				var rechest = new MimicChestRechest { taunting = true };
 				bodyESM.SetNextState(rechest);
@@ -124,7 +122,6 @@ namespace SS2.Monsters
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
 			bool printed = false;
-			SS2Log.Warning("Awawa");
 			self.pingHighlight.enabled = false;
 			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
 			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
@@ -152,15 +149,12 @@ namespace SS2.Monsters
 			}
 			if (self.pingTarget)
 			{
-				SS2Log.Warning("Fou7nd potential Target");
 				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
 				if (displayNameProvider != null)
 				{
-					SS2Log.Warning("displayNameProvider not null");
 					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
 					if (pingc && pingc.isInteractable)
 					{
-						SS2Log.Warning("found pingc! isInteractable");
 						self.pingType = PingIndicator.PingType.Interactable;
 						string ownerName = self.GetOwnerName();
 						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
@@ -208,7 +202,6 @@ namespace SS2.Monsters
 						component3.sprite = interactableIcon;
 						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
 						{
-							SS2Log.Warning("found pingc! noT CostTypeIndex.None");
 							PingIndicator.sharedStringBuilder.Clear();
 							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
 							int num = self.pingTargetPurchaseInteraction.cost;
@@ -221,7 +214,6 @@ namespace SS2.Monsters
 						}
 						else
 						{
-							SS2Log.Warning("other");
 							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
 						}
 						self.pingText.color = self.textBaseColor * self.pingColor;
@@ -230,7 +222,6 @@ namespace SS2.Monsters
                     }
                     else if(pingc && !pingc.isInteractable)
                     {
-						SS2Log.Warning("found pingc! noT isInteractable");
 						string ownerName = self.GetOwnerName();
 						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
 
@@ -246,7 +237,6 @@ namespace SS2.Monsters
 						}
 						if (modelLocator)
 						{
-							SS2Log.Warning("modelLocator");
 							Transform modelTransform = modelLocator.modelTransform;
 							if (modelTransform)
 							{

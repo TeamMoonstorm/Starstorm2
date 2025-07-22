@@ -97,17 +97,16 @@ namespace EntityStates.Mimic
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (isAuthority && characterMotor)
+			if (characterMotor)
 			{
-				if (fixedAge >= duration && isAuthority)
+				if (fixedAge >= duration)
 				{
 					endedSuccessfully = true;
-					outer.SetNextState(new MimicChestActivateExit());
+                    if (isAuthority)
+                    {
+						outer.SetNextState(new MimicChestActivateExit());
+					}
 				}
-			}
-			if (NetworkServer.active)
-			{
-				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
 			}
 		}
 

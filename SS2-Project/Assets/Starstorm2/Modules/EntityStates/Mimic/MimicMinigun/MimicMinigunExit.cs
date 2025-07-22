@@ -8,13 +8,7 @@ namespace EntityStates.Mimic.Weapon
     {
         public static float baseDuration;
 
-        public static string mecanimPeramater;
-
         private float duration;
-        private bool hasFired;
-        private Animator animator;
-
-        private float originalMoveSpeed;
 
         public override void OnEnter()
         {

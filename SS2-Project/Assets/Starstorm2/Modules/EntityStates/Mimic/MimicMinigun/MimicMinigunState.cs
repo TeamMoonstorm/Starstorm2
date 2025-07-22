@@ -50,5 +50,24 @@ namespace EntityStates.Mimic.Weapon
 		{
 			return InterruptPriority.Skill;
 		}
+
+		public override void ModifyNextState(EntityState nextState)
+		{
+			base.ModifyNextState(nextState);
+			if(nextState is MimicMinigunState minigunState)
+            {
+                if (this.fireVFXInstanceLeft)
+                {
+					minigunState.fireVFXInstanceLeft = this.fireVFXInstanceLeft;
+				}
+
+				if (this.fireVFXInstanceRight)
+				{
+					minigunState.fireVFXInstanceRight = this.fireVFXInstanceRight;
+				}
+
+			}
+
+		}
 	}
 }
