@@ -58,8 +58,8 @@ namespace EntityStates.Mimic
         {
             base.FixedUpdate();
             //Attempting to lock mimic in place when it dies
-            characterMotor.velocity = Vector3.zero;
-
+            characterMotor.velocity.x = 0;
+            characterMotor.velocity.z = 0;
             var mim = gameObject.GetComponent<MimicInventoryManager>();
 
             if (fixedAge > 1.5f && !hasDropped && mim)

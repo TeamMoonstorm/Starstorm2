@@ -25,9 +25,9 @@ namespace EntityStates.Mimic
         private float duration;
 
         public bool taunting = false;
-
+        public bool tryRechest = true;
         private MimicInventoryManager mim;
-		
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -38,7 +38,6 @@ namespace EntityStates.Mimic
             {
                 purchaseInter.SetAvailable(enableInteraction);
             }
-            SS2Log.Warning(" AAAAAAAAAAAAAAAA " + taunting + " | " + isAuthority + " | " + NetworkServer.active); 
 
             PlayAnimation("Gesture, Override", "BufferEmpty");
             PlayAnimation("FullBody, Override", "BufferEmpty");
@@ -49,24 +48,36 @@ namespace EntityStates.Mimic
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            bool tryRechest = true; //Probably not needed, but nice to have
-            if(mim && mim.rechestPreventionTime > 0 && !taunting){
-                SS2Log.Warning(" Gave Up " + taunting + " | " + isAuthority + " | " + NetworkServer.active + " ? " + mim.rechestPreventionTime);
 
-                skillLocator.special.RemoveAllStocks();
-                skillLocator.special.cooldownOverride = mim.rechestPreventionTime;
+            if (mim && mim.rechestPreventionTime > 0 && !taunting){
+                tryRechest = false;
                 if (isAuthority)
                 {
-                    tryRechest = false;
                     outer.SetNextStateToMain();
                 }
             }
             
             if (fixedAge >= duration && tryRechest)
             {
-                SS2Log.Warning(" Turning back int chest " + taunting + " | " + isAuthority + " | " + NetworkServer.active + " ? " + mim.rechestPreventionTime);
-                skillLocator.special.cooldownOverride = 1;
-                skillLocator.special.AddOneStock();
+                if (isAuthority)
+                {
+                    var next = new MimicChestInteractableIdle { rechest = true };
+                    outer.SetNextState(next);
+                }
+            }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            if (mim && (mim.rechestPreventionTime <= 0 || taunting) && tryRechest)
+            {
+                if (isAuthority)
+                {
+                    skillLocator.special.cooldownOverride = 1;
+                    skillLocator.special.AddOneStock();
+                }
                 var body = purchaseInter.gameObject;
                 body.GetComponent<BoxCollider>().enabled = true;
                 body.GetComponent<CapsuleCollider>().enabled = false;
@@ -95,17 +106,14 @@ namespace EntityStates.Mimic
                 PlayAnimation("Body", "IntermediateIdle");
 
                 GetComponent<HologramProjector>().enabled = true;
-                if (isAuthority)
-                {
-                    var next = new MimicChestInteractableIdle { rechest = true };
-                    outer.SetNextState(next);
-                }
             }
-        }
+            else if(isAuthority)
+            {
+                skillLocator.special.RemoveAllStocks();
+                skillLocator.special.RunRecharge(Mathf.Max(0, skillLocator.special.cooldownRemaining - 3));
+            }
 
-        public override void OnExit()
-        {
-            base.OnExit();
+
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

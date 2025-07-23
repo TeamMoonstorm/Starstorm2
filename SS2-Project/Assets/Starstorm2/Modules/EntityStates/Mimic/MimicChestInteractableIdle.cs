@@ -68,6 +68,13 @@ namespace EntityStates.Mimic
                 healthComponent.HealFraction(.5f, mask);
             }
 
+            var setstate = GetComponent<SetStateOnHurt>();
+            if (setstate)
+            {
+                setstate.canBeFrozen = false;
+                setstate.canBeStunned = false;
+            }
+
             var pingc = GetComponent<MimicPingCorrecter>();
             pingc.isInteractable = true;
         }
@@ -106,8 +113,18 @@ namespace EntityStates.Mimic
                 healthPrevious = healthComponent.health;
             }
 
-            //Lock then in place so they don't fall through the map on uneven ground
-            characterMotor.velocity = Vector3.zero;
+            
+            if (rechest)
+            {
+                //After rechesting, they'll be fine - just make it so they can't move, but do fall correctly
+                characterMotor.velocity.x = 0;
+                characterMotor.velocity.z = 0;
+            }
+            else
+            {
+                //Lock then in place so they don't fall through the map on uneven ground
+                characterMotor.velocity = Vector3.zero;
+            }
 
         }
 
@@ -169,6 +186,19 @@ namespace EntityStates.Mimic
             //Set their height to a value more appropriate for moving nicely visually
             var kinematic = GetComponent<KinematicCharacterMotor>();
             kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
+
+            var setstate = GetComponent<SetStateOnHurt>();
+            if (setstate)
+            {
+                setstate.canBeFrozen = true;
+                setstate.canBeStunned = true;
+            }
+
+
+            if (NetworkServer.active && purchaseInter)
+            {
+                purchaseInter.SetAvailable(false);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -40,6 +40,7 @@ namespace SS2.Monsters
 
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
 
+			var material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Chest1/matChest1.mat").WaitForCompletion();
 			var ml = AssetCollection.bodyPrefab.GetComponent<ModelLocator>();
 			if (ml)
 			{
@@ -47,9 +48,18 @@ namespace SS2.Monsters
 				var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
 				foreach (var comp in componentsInChildren)
 				{
-					comp.material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Chest1/matChest1.mat").WaitForCompletion();
+					comp.material = material;
 				}
 			}
+
+			var skd = AssetCollection.FindAsset<SkinDef>("sdMimic");
+            if (skd)
+            {
+				for(int i = 0; i < skd.skinDefParams.rendererInfos.Length; ++i)
+                {
+					skd.skinDefParams.rendererInfos[i].defaultMaterial = material;
+				}
+            }
 
 			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
 			jetVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion();
