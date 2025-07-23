@@ -37,6 +37,8 @@ namespace EntityStates.Mimic
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
+            SS2Log.Warning("Mimic Spawned / Rechested");
+
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
