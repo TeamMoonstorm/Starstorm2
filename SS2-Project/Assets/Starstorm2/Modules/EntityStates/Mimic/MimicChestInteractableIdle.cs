@@ -1,5 +1,6 @@
 ﻿using KinematicCharacterController;
 using RoR2;
+using RoR2.Hologram;
 using SS2;
 using SS2.Components;
 using System;
@@ -62,10 +63,38 @@ namespace EntityStates.Mimic
                     characterGravityParameterProvider.gravityParameters = gravityParameters;
                 }
             }
-            else if (NetworkServer.active)
+            else
             {
-                ProcChainMask mask = new ProcChainMask();
-                healthComponent.HealFraction(.5f, mask);
+                characterBody.GetComponent<BoxCollider>().enabled = true;
+                characterBody.GetComponent<CapsuleCollider>().enabled = false;
+
+                characterBody.GetComponent<GenericDisplayNameProvider>().displayToken = "CHEST1_NAME";
+
+                var intermediate = GetComponent<ModelLocator>();
+                intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(true);
+
+                if (modelLocator && modelLocator.modelTransform)
+                {
+                    var mdl = modelLocator.modelTransform;
+                    mdl.GetComponent<BoxCollider>().enabled = true;
+                }
+
+                var impact = SS2.Monsters.Mimic.rechestVFX;
+                EffectData effectData = new EffectData { origin = characterBody.corePosition };
+                effectData.SetNetworkedObjectReference(impact);
+                EffectManager.SpawnEffect(impact, effectData, transmit: true);
+
+                PlayAnimation("Body", "IntermediateIdle");
+
+                GetComponent<HologramProjector>().enabled = true;
+
+                if (NetworkServer.active)
+                {
+                    ProcChainMask mask = new ProcChainMask();
+                    healthComponent.HealFraction(.5f, mask);
+                    Util.CleanseBody(characterBody, true, true, true, true, true, false);
+                    
+                }
             }
 
             var setstate = GetComponent<SetStateOnHurt>();
