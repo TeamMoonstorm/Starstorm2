@@ -22,15 +22,25 @@ namespace SS2.Components
             {
                 FindPivot();
             }
+
             if (NetworkServer.active)
             {
                 var item = dropTable.GenerateDropPreReplacement(Run.instance.treasureRng);
                 var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
                 var def = ItemCatalog.GetItemDef(itemIndex);
+                var cb = GetComponent<CharacterBody>();
 
-                if (def.DoesNotContainTag(ItemTag.AIBlacklist))
+                if (cb && cb.inventory)
                 {
-                    this.GetComponent<CharacterBody>().inventory.GiveItem(itemIndex);
+                    if(cb.inventory.GetItemCount(RoR2Content.Items.UseAmbientLevel) <= 0)
+                    {
+                        cb.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+                    }
+
+                    if (def.DoesNotContainTag(ItemTag.AIBlacklist))
+                    {
+                        cb.inventory.GiveItem(itemIndex);
+                    }
                 }
 
                 AddItem(itemIndex);

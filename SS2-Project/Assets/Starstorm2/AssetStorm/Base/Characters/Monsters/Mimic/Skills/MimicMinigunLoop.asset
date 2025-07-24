@@ -29,7 +29,7 @@ MonoBehaviour:
           type: 3}
     - fieldName: baseFireInterval
       fieldValue:
-        stringValue: .075
+        stringValue: 0.125
         objectValue: {fileID: 0}
     - fieldName: baseBulletCount
       fieldValue:
@@ -37,7 +37,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseDamagePerSecondCoefficient
       fieldValue:
-        stringValue: 0.65
+        stringValue: 2.75
         objectValue: {fileID: 0}
     - fieldName: baseProcCoefficientPerSecond
       fieldValue:
@@ -45,11 +45,11 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: bulletMinSpread
       fieldValue:
-        stringValue: 0
+        stringValue: 0.25
         objectValue: {fileID: 0}
     - fieldName: bulletMaxSpread
       fieldValue:
-        stringValue: 4
+        stringValue: 4.25
         objectValue: {fileID: 0}
     - fieldName: bulletMaxDistance
       fieldValue:
@@ -63,19 +63,7 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: fireSound
+    - fieldName: baseForcePerSecond
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: startSound
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: endSound
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: mecanimPeramater
-      fieldValue:
-        stringValue: 
+        stringValue: 1
         objectValue: {fileID: 0}

@@ -23,10 +23,6 @@ namespace EntityStates.Mimic.Weapon
 		public static bool bulletHitEffectNormal;
 		public static float bulletMaxDistance;
 
-		public static string fireSound;
-		public static string startSound;
-		public static string endSound;
-
 		private float fireTimer;
 		private float baseFireRate;
 		private float baseBulletsPerSecond;
@@ -36,17 +32,25 @@ namespace EntityStates.Mimic.Weapon
 
 		private bool endedSuccessfully = false;
 
+		private float bulletDamage;
+		private float procCoeff;
+		private float fireInterval;
+
 		public override void OnEnter()
 		{
 			base.OnEnter();
 
 			baseFireRate = 1f / baseFireInterval;
+			fireInterval = baseFireInterval / attackSpeedStat;
 			baseBulletsPerSecond = (float)baseBulletCount * this.baseFireRate;
 
 			critEndTime = Run.FixedTimeStamp.negativeInfinity;
 			lastCritCheck = Run.FixedTimeStamp.negativeInfinity;
 
 			PlayCrossfade("Gesture, Override", "MinigunLoop", 0.05f);
+
+			bulletDamage = baseDamagePerSecondCoefficient / baseBulletsPerSecond;
+			procCoeff = baseProcCoefficientPerSecond / baseBulletsPerSecond;
 		}
 
 		public override void FixedUpdate()
@@ -56,8 +60,7 @@ namespace EntityStates.Mimic.Weapon
 			fireTimer -= GetDeltaTime();
 			if (fireTimer <= 0f)
 			{
-				float num = baseFireInterval / attackSpeedStat;
-				fireTimer += num;
+				fireTimer += fireInterval;
 				OnFireShared();
 			}
 
@@ -87,7 +90,6 @@ namespace EntityStates.Mimic.Weapon
 		public override void OnExit()
 		{
 			base.OnExit();
-			Util.PlaySound(endSound, base.gameObject);
 
 			if (!endedSuccessfully)
 			{
@@ -119,8 +121,7 @@ namespace EntityStates.Mimic.Weapon
 		{
 			UpdateCrits();
 			bool isCrit = !critEndTime.hasPassed;
-			float damage = baseDamagePerSecondCoefficient / baseBulletsPerSecond * damageStat;
-			float procCoefficient = baseProcCoefficientPerSecond / baseBulletsPerSecond;
+			float damage = bulletDamage * damageStat;
 			Ray aimRay = GetAimRay();
 			
 			new BulletAttack
@@ -142,7 +143,7 @@ namespace EntityStates.Mimic.Weapon
 				muzzleName = muzzleNameLeft,
 				smartCollision = false,
 				procChainMask = default(ProcChainMask),
-				procCoefficient = procCoefficient,
+				procCoefficient = procCoeff,
 				radius = 0f,
 				sniper = false,
 				stopperMask = LayerIndex.CommonMasks.bullet,
@@ -174,7 +175,7 @@ namespace EntityStates.Mimic.Weapon
 				muzzleName = muzzleNameRight,
 				smartCollision = false,
 				procChainMask = default(ProcChainMask),
-				procCoefficient = procCoefficient,
+				procCoefficient = procCoeff,
 				radius = 0f,
 				sniper = false,
 				stopperMask = LayerIndex.CommonMasks.bullet,

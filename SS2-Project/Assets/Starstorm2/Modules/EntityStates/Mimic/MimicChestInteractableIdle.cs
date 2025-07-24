@@ -37,8 +37,6 @@ namespace EntityStates.Mimic
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
-            SS2Log.Warning("Mimic Spawned / Rechested");
-
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
@@ -108,6 +106,21 @@ namespace EntityStates.Mimic
 
             var pingc = GetComponent<MimicPingCorrecter>();
             pingc.isInteractable = true;
+
+            if (characterBody)
+            {
+                if (characterBody.modelLocator)
+                {
+                    if (characterBody.modelLocator.modelTransform)
+                    {
+                        var anim = characterBody.modelLocator.modelTransform.GetComponent<Animator>();
+                        if (anim)
+                        {
+                            anim.SetBool("aimActive", false);
+                        }
+                    }
+                }
+            }
         }
 
         private void OnPurchaseMimic(Interactor interactor, PurchaseInteraction purchaseInter)
@@ -194,10 +207,19 @@ namespace EntityStates.Mimic
         public override void OnExit()
         {
             base.OnExit();
-            var anim = characterBody.modelLocator.modelTransform.GetComponent<Animator>();
-            if (anim)
+            if (characterBody)
             {
-                anim.SetBool("aimActive", true);
+                if (characterBody.modelLocator)
+                {
+                    if (characterBody.modelLocator.modelTransform)
+                    {
+                        var anim = characterBody.modelLocator.modelTransform.GetComponent<Animator>();
+                        if (anim)
+                        {
+                            anim.SetBool("aimActive", true);
+                        }
+                    }
+                }
             }
 
             if (!rechest) 
