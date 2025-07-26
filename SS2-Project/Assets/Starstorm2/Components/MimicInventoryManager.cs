@@ -32,18 +32,23 @@ namespace SS2.Components
 
                 if (cb && cb.inventory)
                 {
-                    if(cb.inventory.GetItemCount(RoR2Content.Items.UseAmbientLevel) <= 0)
+                    if (cb.inventory.GetItemCount(RoR2Content.Items.UseAmbientLevel) <= 0)
                     {
                         cb.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
                     }
-
-                    if (def.DoesNotContainTag(ItemTag.AIBlacklist))
+#if DEBUG
+                    SS2Log.Warning("giving items ");
+#endif
+                    if (cb.inventory.GetItemCount(RoR2Content.Items.ExtraLifeConsumed) <= 0 && cb.inventory.GetItemCount(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
                     {
-                        cb.inventory.GiveItem(itemIndex);
+                        if (def.DoesNotContainTag(ItemTag.AIBlacklist))
+                        {
+                            cb.inventory.GiveItem(itemIndex);
+                        }
+                        AddItem(itemIndex);
                     }
                 }
 
-                AddItem(itemIndex);
             }
         }
 
