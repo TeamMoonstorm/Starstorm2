@@ -12,6 +12,10 @@ namespace EntityStates.Executioner2
 
         private static float camEntryDuration = 0.2f;
         private static float camExitDuration = 0.4f;
+
+        private static string enterSoundString = "ExecutionerAimSecondary";
+        private static string exitSoundString = "ExecutionerExitSecondary";
+
         [SerializeField]
         public SkillDef primaryOverride;
 
@@ -52,6 +56,7 @@ namespace EntityStates.Executioner2
 
             duration = (baseDuration * skillLocator.secondary.cooldownScale);
 
+            Util.PlaySound(enterSoundString, gameObject);
             PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
 
             characterBody.SetAimTimer(2f);
@@ -145,6 +150,7 @@ namespace EntityStates.Executioner2
         {
             base.OnExit();
             PlayCrossfade("Gesture, Override", "BufferEmpty", "Secondary.playbackRate", duration, 0.3f);
+            Util.PlaySound(exitSoundString, gameObject);
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);

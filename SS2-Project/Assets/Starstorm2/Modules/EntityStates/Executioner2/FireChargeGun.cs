@@ -18,7 +18,7 @@ namespace EntityStates.Executioner2
         public static float recoil = 0.6f;
         private static bool useAimAssist = true;
         private static float aimSnapAngle = 15f;
-        private static float aimSnapAnglePerShot = 10f;
+        private static float aimSnapAnglePerShot = 1f;
         private static float aimSnapRange = 50f;
         public static float range = 200f;
         public static float force = 200f;
@@ -33,11 +33,9 @@ namespace EntityStates.Executioner2
         public bool fullBurst = false;
         public bool firstShot = true;
 
-        [HideInInspector]
         public static GameObject muzzlePrefab;
         public static GameObject tracerPrefab;
-        [HideInInspector]
-        public static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion();
+        public static GameObject hitPrefab;
 
         public int shotsToFire;
         public int shotsFired = 0;
@@ -70,7 +68,7 @@ namespace EntityStates.Executioner2
 
             lamp = GetComponent<LampBehavior>();
 
-            PlayAnimation("Gesture, Override", "FireIonGun", "Secondary.playbackRate", duration);
+            PlayAnimation("Gesture, Override", "FireIonGun");
 
             if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
             {
@@ -132,28 +130,52 @@ namespace EntityStates.Executioner2
                     //SS2Log.Info("special lamp incrementing fire");
                 }
 
+
                 if (useAimAssist)
                 {
-                    float angle = aimSnapAngle + aimSnapAnglePerShot * shotsFired;
-                    BullseyeSearch search = new BullseyeSearch();
-                    search.teamMaskFilter = TeamMask.GetEnemyTeams(GetTeam());
-                    search.filterByLoS = true;
-                    search.maxDistanceFilter = aimSnapRange;
-                    search.minAngleFilter = 0;
-                    search.maxAngleFilter = angle;
-                    search.sortMode = BullseyeSearch.SortMode.Angle;
-                    search.filterByDistinctEntity = true;
-                    search.searchOrigin = ray.origin;
-                    search.searchDirection = ray.direction;
-                    search.RefreshCandidates();
-                    foreach(HurtBox target in search.GetResults())
+
+
+
+
+
+
+                    /// TODO: BULLETATTACK PRECOLLECTED RAYCASTS!!!!!!!!!
+                    /// 
+
+
+
+
+
+                    // only aim assist if we hit nothing
+                    bool shouldAimAssist = true;
+                    if (Util.CharacterSpherecast(gameObject, ray, 1f, out RaycastHit hit, range, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Ignore))
                     {
-                        if(target && target.healthComponent && target.healthComponent.alive)
+                        shouldAimAssist = false;
+                    }
+                    if(shouldAimAssist)
+                    {
+                        float angle = aimSnapAngle + aimSnapAnglePerShot * shotsFired;
+                        BullseyeSearch search = new BullseyeSearch();
+                        search.teamMaskFilter = TeamMask.GetEnemyTeams(GetTeam());
+                        search.filterByLoS = true;
+                        search.maxDistanceFilter = aimSnapRange;
+                        search.minAngleFilter = 0;
+                        search.maxAngleFilter = angle;
+                        search.sortMode = BullseyeSearch.SortMode.Angle;
+                        search.filterByDistinctEntity = true;
+                        search.searchOrigin = ray.origin;
+                        search.searchDirection = ray.direction;
+                        search.RefreshCandidates();
+                        foreach (HurtBox target in search.GetResults())
                         {
-                            vec = target.transform.position - ray.origin;
-                            break;
+                            if (target && target.healthComponent && target.healthComponent.alive)
+                            {
+                                vec = target.transform.position - ray.origin;
+                                break;
+                            }
                         }
                     }
+                    
                 }
 
                 DamageTypeCombo damageType = DamageType.Shock5s;
@@ -180,7 +202,6 @@ namespace EntityStates.Executioner2
                     weapon = gameObject,
                     tracerEffectPrefab = inMasterySkin ? tracerPrefabMastery : tracerPrefab,
                     hitEffectPrefab = inMasterySkin ? hitPrefabMastery : hitPrefab,
-                    stopperMask = LayerIndex.world.mask,
                     spreadPitchScale = 0.2f,
                     spreadYawScale = 0.2f
                 };

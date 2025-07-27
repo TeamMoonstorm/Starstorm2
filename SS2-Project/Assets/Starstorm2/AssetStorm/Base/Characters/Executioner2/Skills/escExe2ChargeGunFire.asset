@@ -19,7 +19,7 @@ MonoBehaviour:
     serializedFields:
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 3.5
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
@@ -33,10 +33,6 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0.6
         objectValue: {fileID: 0}
-    - fieldName: aimSnapAngle
-      fieldValue:
-        stringValue: 7.5
-        objectValue: {fileID: 0}
     - fieldName: range
       fieldValue:
         stringValue: 200
@@ -49,10 +45,6 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0.4
         objectValue: {fileID: 0}
-    - fieldName: minimumShotBurst
-      fieldValue:
-        stringValue: 5
-        objectValue: {fileID: 0}
     - fieldName: muzzleString
       fieldValue:
         stringValue: Muzzle
@@ -62,10 +54,6 @@ MonoBehaviour:
         stringValue: 
         objectValue: {fileID: 5278828488813142746, guid: 9100bf74e3d11dd469b62f2ad760d8bd,
           type: 3}
-    - fieldName: useAimAssist
-      fieldValue:
-        stringValue: 0
-        objectValue: {fileID: 0}
     - fieldName: damageBurstCoefficient
       fieldValue:
         stringValue: 0.5
@@ -93,12 +81,10 @@ MonoBehaviour:
     - fieldName: muzzlePrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
-    - fieldName: tracerExtraPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 8168989150541067646, guid: c99a5165e6f15c14bad3cdc1cf05bcb1,
+          type: 3}
     - fieldName: hitPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 0}
+        objectValue: {fileID: 115301351690060409, guid: 8fc7153611d05774691024f6488637de,
+          type: 3}

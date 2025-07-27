@@ -154,7 +154,7 @@ ModelImporter:
       takeName: Armature.001|AimPitch
       internalID: 1732258533691021850
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -177,20 +177,20 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 50
+      additiveReferencePoseFrame: 10
     - serializedVersion: 16
       name: Armature.001|AimYaw
       takeName: Armature.001|AimYaw
       internalID: -8204549660136674306
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 20
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 1
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -206,7 +206,7 @@ ModelImporter:
       transformMask: []
       maskType: 3
       maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 50
+      additiveReferencePoseFrame: 10
     - serializedVersion: 16
       name: Armature.001|CSS
       takeName: Armature.001|CSS
@@ -242,35 +242,6 @@ ModelImporter:
       internalID: 8511244861995967692
       firstFrame: 0
       lastFrame: 125
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 50
-    - serializedVersion: 16
-      name: Armature.001|Default
-      takeName: Armature.001|Default
-      internalID: -5431909635643196441
-      firstFrame: 0
-      lastFrame: 0
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -514,7 +485,7 @@ ModelImporter:
       takeName: Armature.001|SpecialDescent
       internalID: 5014114635977350018
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 60
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -571,8 +542,8 @@ ModelImporter:
       name: Armature.001|SpecialSlam
       takeName: Armature.001|SpecialSlam
       internalID: 5954313834728560073
-      firstFrame: 5
-      lastFrame: 101
+      firstFrame: 0
+      lastFrame: 34
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -630,7 +601,7 @@ ModelImporter:
       takeName: Armature.001|Utility
       internalID: 63977755321445370
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 64
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -659,7 +630,7 @@ ModelImporter:
       takeName: Armature.001|DescentLoop
       internalID: 5703973794488295526
       firstFrame: 0
-      lastFrame: 99
+      lastFrame: 55
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -688,7 +659,7 @@ ModelImporter:
       takeName: Armature.001|Flinch1
       internalID: 8398792591329341169
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 4
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -717,7 +688,7 @@ ModelImporter:
       takeName: Armature.001|Flinch2
       internalID: 4778799825906639502
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 4
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -746,7 +717,7 @@ ModelImporter:
       takeName: Armature.001|Flinch3
       internalID: 2584508301840368675
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 4
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -978,7 +949,7 @@ ModelImporter:
       takeName: Armature.001|AxeThrow
       internalID: 3175425505579466803
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 49
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -1007,7 +978,36 @@ ModelImporter:
       takeName: Armature.001|PrimaryFire
       internalID: -6651538904646312071
       firstFrame: 0
-      lastFrame: 101
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 29
+    - serializedVersion: 16
+      name: Armature.001|ButtPackCharge
+      takeName: Armature.001|ButtPackCharge
+      internalID: 4387602846248258078
+      firstFrame: 0
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

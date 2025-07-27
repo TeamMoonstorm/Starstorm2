@@ -208,6 +208,10 @@ namespace EntityStates.Executioner2
             {
                 Destroy(indicatorInstance);
             }
+            if (outer.nextState is not ExecuteSlam)
+            {
+                PlayAnimation("FullBody, Override", "BufferEmpty");
+            }
             characterBody.hideCrosshair = false;
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
             if (exeController != null && controlledExit == false)

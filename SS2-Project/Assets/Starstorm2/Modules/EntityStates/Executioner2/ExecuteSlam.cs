@@ -134,6 +134,7 @@ namespace EntityStates.Executioner2
             search.FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(teamComponent.teamIndex));
             search.GetHurtBoxes(hits);
             hitTargets.Clear();
+            
             foreach (HurtBox h in hits)
             {
                 HealthComponent hp = h.healthComponent;
@@ -183,7 +184,7 @@ namespace EntityStates.Executioner2
                     EffectManager.SimpleEffect(slamEffect, position, Quaternion.identity, true);
                 }
             }
-            outer.SetNextState(new ExecuteImpact { giveCharges = soloTarget, targetPosition = hitPosition });
+            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition });
         }
         
 
@@ -194,13 +195,14 @@ namespace EntityStates.Executioner2
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
             gameObject.layer = originalLayer;
             characterMotor.Motor.RebuildCollidableLayers();
-            PlayAnimation("FullBody, Override", "SpecialImpact");
-            if (exeController != null)
-            {
-                exeController.meshExeAxe.SetActive(false);
-            }
             characterMotor.onHitGroundAuthority -= OnGroundHit;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
+
+            if(outer.nextState is not ExecuteImpact)
+            {
+                PlayAnimation("FullBody, Override", "BufferEmpty");
+            }
+
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
@@ -213,20 +215,25 @@ namespace EntityStates.Executioner2
         }
     }
 
-    public class ExecuteImpact : BaseSkillState
+    public class ExecuteImpact : BaseCharacterMain
     {
         private static int chargesToGrant = 3;
-        public bool giveCharges;
+        public bool soloTarget;
         public Vector3 targetPosition;
+        private static float baseHitPauseDuration = 2f;
+        private static float hitPauseDurationSolo = .45f;
+        private static float duration = 0.5f;
+        private static float ionOrbSpeed = 25f;
 
+        private float hitPauseDuration;
         public override void OnSerialize(NetworkWriter writer)
         {
-            writer.Write(giveCharges);
+            writer.Write(soloTarget);
             writer.Write(targetPosition);
         }
         public override void OnDeserialize(NetworkReader reader)
         {
-            giveCharges = reader.ReadBoolean();
+            soloTarget = reader.ReadBoolean();
             targetPosition = reader.ReadVector3();
         }
         public override void OnEnter()
@@ -234,19 +241,49 @@ namespace EntityStates.Executioner2
             base.OnEnter();
 
             characterBody.SetAimTimer(1f);
+            PlayAnimation("FullBody, Override", "SpecialImpact");
+            hitPauseDuration = soloTarget ? hitPauseDurationSolo : baseHitPauseDuration;
 
-            if(NetworkServer.active && giveCharges)
+            if (NetworkServer.active && soloTarget)
             {
                 for (int i = 0; i < chargesToGrant; i++)
                 {
                     SS2.Orbs.ExecutionerIonOrb ionOrb = new SS2.Orbs.ExecutionerIonOrb();
-                    ionOrb.speed = 25f;
+                    ionOrb.speed = ionOrbSpeed;
                     ionOrb.origin = targetPosition;
                     ionOrb.target = characterBody.mainHurtBox;
                     RoR2.Orbs.OrbManager.instance.AddOrb(ionOrb);
                 }
             }
-            outer.SetNextStateToMain();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+            if(fixedAge >= hitPauseDuration)
+            {
+                if(characterMotor)
+                    characterMotor.moveDirection = inputBank.moveVector;
+            }
+            else if (soloTarget)
+            {
+                if (characterDirection)
+                    characterDirection.forward = targetPosition - transform.position;
+            }
+
+            if(isAuthority && fixedAge >= duration)
+            {
+                outer.SetNextStateToMain();
+            }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            if (gameObject.TryGetComponent(out ExecutionerController exeController))
+            {
+                exeController.meshExeAxe.SetActive(false);
+            }
         }
     }
 }
