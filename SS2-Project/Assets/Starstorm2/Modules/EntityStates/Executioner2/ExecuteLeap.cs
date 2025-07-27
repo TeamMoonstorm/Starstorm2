@@ -19,6 +19,7 @@ namespace EntityStates.Executioner2
         private static float maxAngle = 42f;
         private static float maxAngleTuah = 66f;
         private static float rayRadius = 1.5f;
+        private static float axeFadeInDuration = .8f;
 
         public static GameObject indicatorPrefab;
         public static GameObject jumpEffect;
@@ -52,6 +53,7 @@ namespace EntityStates.Executioner2
             if (exeController != null)
             {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.AxeFadeIn(axeFadeInDuration);
             }
 
             float attackSpeed = Mathf.Min(attackSpeedStat, maxAttackSpeed);

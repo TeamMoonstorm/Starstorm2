@@ -19,7 +19,7 @@ namespace EntityStates.Executioner2
         private static bool useAimAssist = true;
         private static float aimSnapAngle = 15f;
         private static float aimSnapAnglePerShot = 1f;
-        private static float aimSnapRange = 50f;
+        private static float aimSnapRange = 70f;
         public static float range = 200f;
         public static float force = 200f;
         public static float spreadBloomValue = 0.8f;
@@ -178,7 +178,7 @@ namespace EntityStates.Executioner2
                     
                 }
 
-                DamageTypeCombo damageType = DamageType.Shock5s;
+                DamageTypeCombo damageType = DamageType.Generic;
                 damageType.damageSource = DamageSource.Secondary;
                 bool inMasterySkin = skinNameToken.Equals("SS2_SKIN_EXECUTIONER2_MASTERY");
                 var bulletAttack = new BulletAttack

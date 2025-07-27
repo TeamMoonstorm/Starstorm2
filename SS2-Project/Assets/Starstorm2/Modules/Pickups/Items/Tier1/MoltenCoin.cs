@@ -19,7 +19,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float damageCoeff = 1f;
+        public static float damageCoeff = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
@@ -51,12 +51,9 @@ namespace SS2.Items
                         duration = report.damageInfo.procCoefficient * 4f,
                         damageMultiplier = stack * damageCoeff
                     };
-                    SS2Log.Info("Before Burn");
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
-                    SS2Log.Info("After Burn");
                     DotController.InflictDot(ref dotInfo);
-                    SS2Log.Info("After Inflict");
-                    body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
+                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
                     EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);

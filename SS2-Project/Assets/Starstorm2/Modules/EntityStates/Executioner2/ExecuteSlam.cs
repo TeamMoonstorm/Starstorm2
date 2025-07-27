@@ -175,6 +175,11 @@ namespace EntityStates.Executioner2
 
             if (slamEffect)
             {
+                Transform muzzle = FindModelChild("AxeSlam");
+                if (muzzle)
+                {
+                    position = muzzle.position;
+                }
                 if (exeController.inMasterySkin)
                 {
                     EffectManager.SimpleEffect(slamEffectMastery, position, Quaternion.identity, true);
@@ -184,7 +189,11 @@ namespace EntityStates.Executioner2
                     EffectManager.SimpleEffect(slamEffect, position, Quaternion.identity, true);
                 }
             }
-            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition });
+            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition, dashVector = dashVector });
+            if (characterMotor)
+            {
+                characterMotor.velocity = Vector3.zero;
+            }
         }
         
 
@@ -220,12 +229,16 @@ namespace EntityStates.Executioner2
         private static int chargesToGrant = 3;
         public bool soloTarget;
         public Vector3 targetPosition;
+        public Vector3 dashVector;
         private static float baseHitPauseDuration = 2f;
         private static float hitPauseDurationSolo = .45f;
         private static float duration = 0.5f;
-        private static float ionOrbSpeed = 25f;
+        private static float axeFadeOutDuratoin = .9f;
+        private static float ionOrbSpeed = 8f;
 
         private float hitPauseDuration;
+        private ExecutionerController exeController;
+        private Vector3 direction;
         public override void OnSerialize(NetworkWriter writer)
         {
             writer.Write(soloTarget);
@@ -244,6 +257,9 @@ namespace EntityStates.Executioner2
             PlayAnimation("FullBody, Override", "SpecialImpact");
             hitPauseDuration = soloTarget ? hitPauseDurationSolo : baseHitPauseDuration;
 
+            exeController = GetComponent<ExecutionerController>();
+            exeController.AxeFadeOut(axeFadeOutDuratoin);
+
             if (NetworkServer.active && soloTarget)
             {
                 for (int i = 0; i < chargesToGrant; i++)
@@ -255,6 +271,15 @@ namespace EntityStates.Executioner2
                     RoR2.Orbs.OrbManager.instance.AddOrb(ionOrb);
                 }
             }
+            if(soloTarget)
+            {
+                direction = targetPosition - transform.position;
+            }
+            else
+            {
+                direction = dashVector;
+            }
+            
         }
 
         public override void FixedUpdate()
@@ -265,13 +290,17 @@ namespace EntityStates.Executioner2
                 if(characterMotor)
                     characterMotor.moveDirection = inputBank.moveVector;
             }
-            else if (soloTarget)
+            else
             {
-                if (characterDirection)
-                    characterDirection.forward = targetPosition - transform.position;
+                if(characterMotor)
+                {
+                    characterMotor.velocity = Vector3.zero;
+                }
             }
+            if (characterDirection)
+                characterDirection.forward = direction;
 
-            if(isAuthority && fixedAge >= duration)
+            if (isAuthority && fixedAge >= duration)
             {
                 outer.SetNextStateToMain();
             }

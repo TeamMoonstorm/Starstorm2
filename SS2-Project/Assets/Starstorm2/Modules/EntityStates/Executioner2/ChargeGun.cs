@@ -8,7 +8,7 @@ namespace EntityStates.Executioner2
 {
     public class ChargeGun : BaseSkillState
     {
-        public static float baseDuration = 1.2f;
+        public static float baseDuration = .3f;
 
         private static float camEntryDuration = 0.2f;
         private static float camExitDuration = 0.4f;
@@ -18,8 +18,6 @@ namespace EntityStates.Executioner2
 
         [SerializeField]
         public SkillDef primaryOverride;
-
-        private GenericSkill overriddenSkill;
 
         private bool thisFuckingSucks;
 
@@ -63,15 +61,9 @@ namespace EntityStates.Executioner2
 
             CameraSwap();
 
-            GenericSkill primarySkill = skillLocator.primary;
-            if (primarySkill)
-            {
-                if (!overriddenSkill)
-                {
-                    overriddenSkill = primarySkill;
-                    overriddenSkill.SetSkillOverride(primarySkill, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
-                }
-            }
+
+            skillLocator.primary.SetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+
         }
 
         private void CameraSwap()
@@ -120,6 +112,15 @@ namespace EntityStates.Executioner2
             characterBody.isSprinting = false;
             characterBody.aimTimer = 2f;
 
+            if (skillLocator.secondary.stock > 0)
+            {
+                skillLocator.primaryBonusStockSkill.stock = 1;
+            }
+            else
+            {
+                skillLocator.primary.stock = 0; // override skill has requiredStock 1
+            }
+
             if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
             {
                 thisFuckingSucks = true;
@@ -155,11 +156,13 @@ namespace EntityStates.Executioner2
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
             }
-            if (overriddenSkill)
-            {
-                overriddenSkill.UnsetSkillOverride(skillLocator.primary, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
-            }
+
+            skillLocator.primary.UnsetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            
             skillLocator.primary.RemoveAllStocks();
+            float rechargeInterval = skillLocator.primary.baseRechargeInterval;
+            float cooldownRestore = rechargeInterval * (1 - (1 / attackSpeedStat));
+            skillLocator.primary.RunRecharge(cooldownRestore);
         }
     }
 }

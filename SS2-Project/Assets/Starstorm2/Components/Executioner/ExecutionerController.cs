@@ -18,6 +18,9 @@ namespace SS2.Components
 
         private Transform transformExeAxe;
         public GameObject meshExeAxe;
+        public AnimateShaderAlpha axeIn;
+        public AnimateShaderAlpha axeOut;
+
         private bool axeVisible = false;
 
         public bool inMasterySkin { get; private set; }
@@ -95,6 +98,26 @@ namespace SS2.Components
                 var killComponent = report.victim.gameObject.AddComponent<ExecutionerKillComponent>();
                 killComponent.attacker = gameObject;
             }
+        }
+
+        public void AxeFadeIn(float duration)
+        {
+            axeIn.time = 0;
+            axeIn.timeMax = duration;
+            axeIn.enabled = true;
+
+            axeOut.time = 0;
+            axeOut.enabled = false;
+        }
+
+        public void AxeFadeOut(float duration)
+        {
+            axeIn.time = 0;
+            axeIn.enabled = false;
+
+            axeOut.time = 0;
+            axeOut.timeMax = duration;
+            axeOut.enabled = true;
         }
 
         [ClientRpc]
