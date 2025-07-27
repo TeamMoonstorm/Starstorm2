@@ -5120,7 +5120,6 @@ Transform:
   - {fileID: 4343709629979700428}
   - {fileID: 3470474737308346880}
   - {fileID: 7412992575627874924}
-  - {fileID: 7318362078684557785}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
@@ -5199,101 +5198,6 @@ MonoBehaviour:
   radius: 60
   scaleShakeRadiusWithLocalScale: 1
   amplitudeTimeDecay: 1
---- !u!1 &6392080417245960442
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7318362078684557785}
-  - component: {fileID: 2362548898783338084}
-  - component: {fileID: 1771208066256564944}
-  m_Layer: 9
-  m_Name: RuntimeDecal
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7318362078684557785
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6392080417245960442}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 15}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4343631074913908353}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2362548898783338084
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6392080417245960442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f6faeb9095674847875032215d704ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  material: {fileID: 2100000, guid: 04d270234eec32d4cb1c86e4c59402d8, type: 2}
-  limitTo: {fileID: 0}
-  animateShaderAlpha: {fileID: 1771208066256564944}
---- !u!114 &1771208066256564944
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6392080417245960442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -2051541306, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alphaCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: -2
-      outSlope: -2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -0
-      outSlope: -0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  timeMax: 1
-  decal: {fileID: 0}
-  pauseTime: 0
-  destroyOnEnd: 0
-  disableOnEnd: 1
-  time: 0
-  initialyEnabled: 0
-  OnFinished:
-    m_PersistentCalls:
-      m_Calls: []
-  continueExistingAfterTimeMaxIsReached: 0
 --- !u!1 &7418788557286816116
 GameObject:
   m_ObjectHideFlags: 0
@@ -5321,7 +5225,7 @@ Transform:
   m_GameObject: {fileID: 7418788557286816116}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4343631074913908353}
@@ -5488,8 +5392,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 2
-      minScalar: 2.6
+      scalar: 1.3
+      minScalar: 2
       maxCurve:
         serializedVersion: 2
         m_Curve: []
