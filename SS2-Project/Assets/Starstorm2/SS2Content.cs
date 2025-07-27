@@ -384,6 +384,8 @@ namespace SS2
 
             public static ItemDef PrimalBirthright;
 
+            public static ItemDef GalvanicCore;
+
         }
 
         public static class Equipments
@@ -624,6 +626,9 @@ namespace SS2
             public static BuffDef bdPyroJet;
 
             public static BuffDef bdOil;
+
+            public static BuffDef bdGalvanized;
+
         }
 
         public static class Elites
