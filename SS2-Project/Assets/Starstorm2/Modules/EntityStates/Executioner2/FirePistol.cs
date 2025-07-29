@@ -14,13 +14,12 @@ namespace EntityStates.Executioner
         public static float spreadBloom;
         public static float force;
 
-        private static float bulletRadius = .7f;
         [HideInInspector]
-        private static GameObject muzzleEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
+        public static GameObject muzzleEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
         [HideInInspector]
-        private static GameObject tracerPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/tracercommandodefault");
+        public static GameObject tracerPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/tracers/tracercommandodefault");
         [HideInInspector]
-        private static GameObject hitPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/HitsparkCommando");
+        public static GameObject hitPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/HitsparkCommando");
 
         private float duration;
         private float fireDuration;
@@ -93,7 +92,7 @@ namespace EntityStates.Executioner
                         smartCollision = true,
                         procChainMask = default(ProcChainMask),
                         procCoefficient = procCoefficient,
-                        radius = bulletRadius,
+                        radius = 0.35f,
                         weapon = gameObject,
                         tracerEffectPrefab = tracerPrefab,
                         hitEffectPrefab = hitPrefab

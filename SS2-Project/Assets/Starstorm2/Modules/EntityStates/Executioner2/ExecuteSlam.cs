@@ -2,7 +2,7 @@
 using UnityEngine;
 using RoR2;
 using SS2.Components;
-using UnityEngine.Networking;
+
 namespace EntityStates.Executioner2
 {
     public class ExecuteSlam : BaseSkillState
@@ -11,56 +11,53 @@ namespace EntityStates.Executioner2
         public static float slamRadius;
         public static float procCoefficient;
         public static float recoil;
-        private static float maxDuration = 10f;
-        private static float walkSpeedCoefficient = 1.5f;
-        private static float verticlalSpeed = 100f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
-        public static GameObject impactEffectPrefab;
-        public static GameObject soloImpactEffectPrefab;
-        public static GameObject cameraEffectPrefab;
+        private string skinNameToken;
+
         public static float duration = 1f;
-        public Vector3 dashVector = Vector3.zero;
-        private bool hasImpacted;
+        private bool hasSlammed = false;
+        private Vector3 dashVector = Vector3.zero;
+
         private ExecutionerController exeController;
 
+        public bool wasLiedTo = false;
+
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
-        private static float cameraLerpDuration = 0.3f;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
-            minPitch = -88f,
-            pivotVerticalOffset = 1.37f,
+            minPitch = -70f,
+            pivotVerticalOffset = 1f,
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        private static Vector3 slamCameraPosition = new Vector3(0, 0, -9f);
+        public static Vector3 slamCameraPosition = new Vector3(0f, 0.0f, -32.5f);
 
-        private int originalLayer;
         public override void OnEnter()
         {
             base.OnEnter();
+
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
             {
                 exeController.meshExeAxe.SetActive(true);
+                exeController.isExec = true;
             }
+                
 
-            characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
             characterBody.hideCrosshair = true;
             PlayAnimation("FullBody, Override", "SpecialSwing", "Special.playbackRate", duration * 0.8f);
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-            characterMotor.onHitGroundAuthority += OnGroundHit;
-            characterMotor.onMovementHit += OnMovementHit;
+            characterMotor.onHitGroundAuthority += GroundSlam;
+
             characterBody.isSprinting = true;
 
             characterBody.SetAimTimer(duration);
 
-            originalLayer = gameObject.layer;
-            gameObject.layer = LayerIndex.projectile.intVal;
-            characterMotor.Motor.RebuildCollidableLayers();
 
             if (isAuthority)
             {
@@ -69,19 +66,8 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.1f);
             }
-        }
-
-        private void OnGroundHit(ref CharacterMotor.HitGroundInfo hitGroundInfo)
-        {
-            DoImpactAuthority();
-        }
-
-        private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
-        {
-            if(isAuthority)
-                DoImpactAuthority();
         }
 
         public override void FixedUpdate()
@@ -93,61 +79,82 @@ namespace EntityStates.Executioner2
 
         private void FixedUpdateAuthority()
         {
-            characterDirection.forward = dashVector;
-            HandleMovement();
+            //if (exeController)
+            //{
+            //    if (exeController.hasOOB)
+            //    {
+            //        SS2Log.Info("Has OOBed");
+            //    }
+            //}
 
-            if (fixedAge > maxDuration || characterMotor.Motor.GroundingStatus.IsStableOnGround)
+            characterDirection.forward = dashVector;
+            if (!hasSlammed)
             {
-                DoImpactAuthority();
+                hasSlammed = true;
+                dashVector = inputBank.aimDirection;
+                //SS2Log.Info("Haven't started");
+                
             }
+            /*if (fixedAge >= duration)
+            {
+                //if (wasLiedTo)
+                //by request of ts <3
+                GroundSlamPos(characterBody.footPosition);
+                outer.SetNextStateToMain();
+            }*/
+            else
+            {
+                if (exeController)
+                {
+                    if (!exeController.hasOOB)
+                    {
+                        HandleMovement();
+                    }
+                    else
+                    {
+                        outer.SetNextStateToMain(); //emergency "everything has failed" stop slamming
+                    }
+                }
+                // HandleMovement();
+            }
+  
         }
 
-        private static bool FUCK = true;
         public void HandleMovement()
         {
-            characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
-            characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
-            characterMotor.velocity = Vector3.zero;
+            characterMotor.rootMotion += dashVector * moveSpeedStat * 18.5f * Time.fixedDeltaTime;
         }
 
-        private void DoImpactAuthority()
+        private void GroundSlam(ref CharacterMotor.HitGroundInfo hitGroundInfo)
         {
-            if (hasImpacted) return;
-            hasImpacted = true;
-            // should REALLY just do TakeDamage on everything the spheresearch hits
+            //get number of enemies hit to divide damage
+            //LogCore.LogI($"Velocity {hitGroundInfo.velocity}");
 
             SphereSearch search = new SphereSearch();
             List<HurtBox> hits = new List<HurtBox>();
             List<HealthComponent> hitTargets = new List<HealthComponent>();
-            Vector3 position = characterBody.footPosition;
 
             float damage = baseDamageCoefficient;
             float procMultiplier = 1;
-            bool soloTarget = false;
 
             search.ClearCandidates();
-            search.mask = LayerIndex.entityPrecise.mask;
-            search.origin = position;
+            search.origin = hitGroundInfo.position;
             search.radius = slamRadius;
             search.RefreshCandidates();
             search.FilterCandidatesByDistinctHurtBoxEntities();
             search.FilterCandidatesByHurtBoxTeam(TeamMask.GetEnemyTeams(teamComponent.teamIndex));
             search.GetHurtBoxes(hits);
             hitTargets.Clear();
-            
             foreach (HurtBox h in hits)
             {
                 HealthComponent hp = h.healthComponent;
                 if (hp && !hitTargets.Contains(hp))
                     hitTargets.Add(hp);
             }
-            if (hitTargets.Count == 1)
+            if (hitTargets.Count <= 1)
             {
                 damage *= 2f;
-                procMultiplier = 2;
-                soloTarget = true;
-                GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
-                cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+                procMultiplier++;
             }
 
             bool crit = RollCrit();
@@ -157,7 +164,7 @@ namespace EntityStates.Executioner2
             {
                 radius = slamRadius,
                 procCoefficient = procCoefficient * procMultiplier,
-                position = position,
+                position = hitGroundInfo.position,
                 attacker = gameObject,
                 teamIndex = teamComponent.teamIndex,
                 crit = crit,
@@ -165,53 +172,39 @@ namespace EntityStates.Executioner2
                 damageColorIndex = DamageColorIndex.Default,
                 falloffModel = BlastAttack.FalloffModel.None,
                 attackerFiltering = AttackerFiltering.NeverHitSelf,
-                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(soloTarget ? soloImpactEffectPrefab : impactEffectPrefab),
                 damageType = damageType,
             };
-            var result = blast.Fire();
-            Vector3 hitPosition = result.hitCount > 0 ? result.hitPoints[0].hitPosition : position; // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+            blast.Fire();
 
             AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
 
             if (slamEffect)
             {
-                Transform muzzle = FindModelChild("AxeSlam");
-                if (muzzle)
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
-                    position = muzzle.position;
-                }
-                if (exeController.inMasterySkin)
-                {
-                    EffectManager.SimpleEffect(slamEffectMastery, position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(slamEffectMastery, hitGroundInfo.position, Quaternion.identity, true);
                 }
                 else
                 {
-                    EffectManager.SimpleEffect(slamEffect, position, Quaternion.identity, true);
+                    EffectManager.SimpleEffect(slamEffect, hitGroundInfo.position, Quaternion.identity, true);
                 }
             }
-            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition, dashVector = dashVector });
-            if (characterMotor)
-            {
-                characterMotor.velocity = Vector3.zero;
-            }
+            outer.SetNextStateToMain();
         }
-        
 
         public override void OnExit()
         {
             base.OnExit();
             characterBody.hideCrosshair = false;
-            characterMotor.walkSpeedPenaltyCoefficient = 1f;
-            gameObject.layer = originalLayer;
-            characterMotor.Motor.RebuildCollidableLayers();
-            characterMotor.onHitGroundAuthority -= OnGroundHit;
-            characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
-
-            if(outer.nextState is not ExecuteImpact)
+            if (exeController != null)
             {
-                PlayAnimation("FullBody, Override", "BufferEmpty");
+                exeController.meshExeAxe.SetActive(false);
+                exeController.isExec = false;
+                exeController.hasOOB = false;
             }
-
+            PlayAnimation("FullBody, Override", "SpecialImpact", "Special.playbackRate", duration);
+            characterMotor.onHitGroundAuthority -= GroundSlam;
+            characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
@@ -221,98 +214,6 @@ namespace EntityStates.Executioner2
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Frozen;
-        }
-    }
-
-    public class ExecuteImpact : BaseCharacterMain
-    {
-        private static int chargesToGrant = 3;
-        public bool soloTarget;
-        public Vector3 targetPosition;
-        public Vector3 dashVector;
-        private static float baseHitPauseDuration = 2f;
-        private static float hitPauseDurationSolo = .45f;
-        private static float duration = 0.5f;
-        private static float axeFadeOutDuratoin = .9f;
-        private static float ionOrbSpeed = 8f;
-
-        private float hitPauseDuration;
-        private ExecutionerController exeController;
-        private Vector3 direction;
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            writer.Write(soloTarget);
-            writer.Write(targetPosition);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            soloTarget = reader.ReadBoolean();
-            targetPosition = reader.ReadVector3();
-        }
-        public override void OnEnter()
-        {
-            base.OnEnter();
-
-            characterBody.SetAimTimer(1f);
-            PlayAnimation("FullBody, Override", "SpecialImpact");
-            hitPauseDuration = soloTarget ? hitPauseDurationSolo : baseHitPauseDuration;
-
-            exeController = GetComponent<ExecutionerController>();
-            exeController.AxeFadeOut(axeFadeOutDuratoin);
-
-            if (NetworkServer.active && soloTarget)
-            {
-                for (int i = 0; i < chargesToGrant; i++)
-                {
-                    SS2.Orbs.ExecutionerIonOrb ionOrb = new SS2.Orbs.ExecutionerIonOrb();
-                    ionOrb.speed = ionOrbSpeed;
-                    ionOrb.origin = targetPosition;
-                    ionOrb.target = characterBody.mainHurtBox;
-                    RoR2.Orbs.OrbManager.instance.AddOrb(ionOrb);
-                }
-            }
-            if(soloTarget)
-            {
-                direction = targetPosition - transform.position;
-            }
-            else
-            {
-                direction = dashVector;
-            }
-            
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if(fixedAge >= hitPauseDuration)
-            {
-                if(characterMotor)
-                    characterMotor.moveDirection = inputBank.moveVector;
-            }
-            else
-            {
-                if(characterMotor)
-                {
-                    characterMotor.velocity = Vector3.zero;
-                }
-            }
-            if (characterDirection)
-                characterDirection.forward = direction;
-
-            if (isAuthority && fixedAge >= duration)
-            {
-                outer.SetNextStateToMain();
-            }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-            if (gameObject.TryGetComponent(out ExecutionerController exeController))
-            {
-                exeController.meshExeAxe.SetActive(false);
-            }
         }
     }
 }

@@ -624,10 +624,6 @@ namespace SS2
             public static BuffDef bdPyroJet;
 
             public static BuffDef bdOil;
-
-            public static BuffDef bdConsecration;
-
-            public static BuffDef bdBloodRush;
         }
 
         public static class Elites

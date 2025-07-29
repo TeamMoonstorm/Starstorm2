@@ -18,12 +18,10 @@ namespace SS2.Components
 
         private Transform transformExeAxe;
         public GameObject meshExeAxe;
-        public AnimateShaderAlpha axeIn;
-        public AnimateShaderAlpha axeOut;
-
         private bool axeVisible = false;
 
-        public bool inMasterySkin { get; private set; }
+        public bool hasOOB = false;
+        public bool isExec = false;
 
         private void Awake()
         {
@@ -37,10 +35,6 @@ namespace SS2.Components
 
             modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
             childLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
-
-            string skinNameToken = modelLocator.modelTransform.GetComponent<ModelSkinController>().skins[GetComponent<CharacterBody>().skinIndex].nameToken;
-            inMasterySkin = skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY";
-
             if (childLocator)
                 transformExeAxe = childLocator.FindChild("AxeSpawn");
             if (transformExeAxe)
@@ -81,7 +75,7 @@ namespace SS2.Components
         public void OnDamageDealtServer(DamageReport report)
         {
             //This will break is anyone renames that skilldef's identifier
-            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
+            if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless) && secondary.skillDef.skillName == "ExecutionerChargeIons")
             {
                 //Debug.Log("adding killcpt");
                 var killComponents = report.victimBody.GetComponents<ExecutionerKillComponent>();
@@ -98,26 +92,6 @@ namespace SS2.Components
                 var killComponent = report.victim.gameObject.AddComponent<ExecutionerKillComponent>();
                 killComponent.attacker = gameObject;
             }
-        }
-
-        public void AxeFadeIn(float duration)
-        {
-            axeIn.time = 0;
-            axeIn.timeMax = duration;
-            axeIn.enabled = true;
-
-            axeOut.time = 0;
-            axeOut.enabled = false;
-        }
-
-        public void AxeFadeOut(float duration)
-        {
-            axeIn.time = 0;
-            axeIn.enabled = false;
-
-            axeOut.time = 0;
-            axeOut.timeMax = duration;
-            axeOut.enabled = true;
         }
 
         [ClientRpc]
