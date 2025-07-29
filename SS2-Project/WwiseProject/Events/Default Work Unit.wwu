@@ -177,6 +177,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ExecutionerAimSecondary" ID="{0A97F81F-B716-409E-BDA7-4BA01726FB79}">
+							<ChildrenList>
+								<Action Name="" ID="{E83270C7-2F57-4D2E-9889-42BAD63DA541}" ShortID="382277158">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ExecutionerAimSecondary" ID="{D489C43A-15B2-46F3-9709-AAE55B259E1F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="ExecutionerExitSecondary" ID="{7DA669F7-78EC-4C18-88F2-05D853E18D0D}">
+							<ChildrenList>
+								<Action Name="" ID="{B1D73CCF-4D9F-4C0E-A0B1-93AA98E902E5}" ShortID="592917013">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="ExecutionerExitSecondary" ID="{9355B9B6-6FB6-4C19-84B5-A3228A40ECE4}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Events" ID="{A474E84B-734A-4D97-946C-9B5E3E5C502A}" ShortID="514409171"/>
