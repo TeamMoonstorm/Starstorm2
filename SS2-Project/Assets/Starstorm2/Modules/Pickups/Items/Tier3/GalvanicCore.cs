@@ -38,6 +38,8 @@ namespace SS2.Items
         public static GameObject stunVFX;
         public static GameObject galvanicAura;
 
+        private static GameObject gwbVFX;
+
         public override void Initialize()
         {
             On.RoR2.SetStateOnHurt.OnTakeDamageServer += SetStateDamageGalvanic;
@@ -48,6 +50,11 @@ namespace SS2.Items
 
             stunVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/StunChanceOnHit/ImpactStunGrenade.prefab").WaitForCompletion(); //LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/ImpactStunGrenade")
             galvanicAura = AssetCollection.FindAsset<GameObject>("GalvanicAura");
+            
+            gwbVFX = AssetCollection.FindAsset<GameObject>("GreaterBannerBuffEffectTEMP");
+
+            TempVisualEffectAPI.AddTemporaryVisualEffect(gwbVFX.InstantiateClone("GreaterBannerBuffEffectTWOTEMP", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.bdGalvanized); }, true, "MainHurtbox");
+
         }
 
         private void FinalBuffStackGainedUpdateStats(On.RoR2.CharacterBody.orig_OnBuffFirstStackGained orig, CharacterBody self, BuffDef buffDef)
@@ -57,23 +64,28 @@ namespace SS2.Items
                 SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
             }
             orig(self, buffDef);
-            self.RecalculateStats();
             if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
+                self.RecalculateStats();
                 SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
             }
         }
 
         private void FinalBuffStackLostPreventHealing(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
         {
+            float? health = null;
+
             if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
+                health = self.healthComponent.health;
                 SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
+
             }
             orig(self, buffDef);
-            self.RecalculateStats();
-            if (buffDef == SS2Content.Buffs.bdGalvanized)
+            if (buffDef == SS2Content.Buffs.bdGalvanized && health != null)
             {
+                self.RecalculateStats();
+                self.healthComponent.health = health.Value;
                 SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
             }
 
