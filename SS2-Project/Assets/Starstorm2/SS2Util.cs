@@ -229,6 +229,7 @@ namespace SS2
             {
                 if(current.buffIndex == buff.buffIndex)
                 {
+                    Debug.Log("current bufdf " + current.buffIndex + " | " + current.timer);
                     current.timer = duration;
                 }
             }
