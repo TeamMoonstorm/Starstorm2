@@ -43,43 +43,38 @@ namespace SS2.Items
             On.RoR2.SetStateOnHurt.OnTakeDamageServer += SetStateDamageGalvanic;
             On.RoR2.SetStateOnHurt.SetStun += SetStunAddGalvanicAura;
 
-            On.RoR2.BuffWard.BuffTeam += Behave;
+            On.RoR2.CharacterBody.OnBuffFirstStackGained += FinalBuffStackGainedUpdateStats;
+            On.RoR2.CharacterBody.OnBuffFinalStackLost += FinalBuffStackLostPreventHealing;
 
             stunVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/StunChanceOnHit/ImpactStunGrenade.prefab").WaitForCompletion(); //LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/ImpactStunGrenade")
             galvanicAura = AssetCollection.FindAsset<GameObject>("GalvanicAura");
         }
 
-        private void Behave(On.RoR2.BuffWard.orig_BuffTeam orig, BuffWard self, IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
+        private void FinalBuffStackGainedUpdateStats(On.RoR2.CharacterBody.orig_OnBuffFirstStackGained orig, CharacterBody self, BuffDef buffDef)
         {
-            //orig(self, recipients, radiusSqr, currentPosition);
-            SS2Log.Warning("self " + self.buffDef + " | ");
-            foreach(var target in recipients)
+            if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
-                SS2Log.Warning("target: " + target);
+                SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
             }
-
-            foreach (TeamComponent teamComponent in recipients)
+            orig(self, buffDef);
+            self.RecalculateStats();
+            if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
-                Vector3 vector = teamComponent.transform.position - currentPosition;
-                if (self.shape == BuffWard.BuffWardShape.VerticalTube)
-                {
-                    vector.y = 0f;
-                }
-                SS2Log.Warning("health component: " + teamComponent + " | " + vector.sqrMagnitude + " | " + radiusSqr);
-                if (vector.sqrMagnitude <= radiusSqr)
-                {
-                    CharacterBody component = teamComponent.GetComponent<CharacterBody>();
-                    SS2Log.Warning("cb: " + component + " | rq grounded: " + !self.requireGrounded + " | nomotor: " + !component.characterMotor);
-                    if (!component.characterMotor)
-                    {
-                        SS2Log.Warning("grounded: " + component.characterMotor.isGrounded);
-                    }
-                    if (component && (!self.requireGrounded || !component.characterMotor || component.characterMotor.isGrounded))
-                    {
-                        SS2Log.Warning("winning : " + self.buffDuration);
-                        component.AddTimedBuff(self.buffDef.buffIndex, self.buffDuration);
-                    }
-                }
+                SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
+            }
+        }
+
+        private void FinalBuffStackLostPreventHealing(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
+        {
+            if (buffDef == SS2Content.Buffs.bdGalvanized)
+            {
+                SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
+            }
+            orig(self, buffDef);
+            self.RecalculateStats();
+            if (buffDef == SS2Content.Buffs.bdGalvanized)
+            {
+                SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
             }
 
         }
@@ -104,11 +99,11 @@ namespace SS2.Items
                         token.aura = UnityEngine.Object.Instantiate(galvanicAura, cb.corePosition, Quaternion.identity);
                         token.aura.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(cb.gameObject, null);
                         SS2Log.Warning("token.aura : " + token.aura + " | " + token.timer);
-                        token.timer = duration * 999;
+                        token.timer = duration;
                     }
                     else
                     {
-                        token.timer = duration * 999;
+                        token.timer = duration;
                     }
                 }
             }

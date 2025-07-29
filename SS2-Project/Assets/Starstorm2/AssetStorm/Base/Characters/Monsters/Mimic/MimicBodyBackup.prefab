@@ -894,7 +894,7 @@ MonoBehaviour:
   spawnedPickupCount: 0
   aimOriginTransform: {fileID: 598047175825370784}
   hullClassification: 0
-  portraitIcon: {fileID: 2800000, guid: 7d90bd0331ab07e45b04215c5f0c9308, type: 3}
+  portraitIcon: {fileID: 2800000, guid: f212889ee8ae7ed4b8258c0a6a642b32, type: 3}
   bodyColor: {r: 1, g: 1, b: 1, a: 0}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
@@ -1688,6 +1688,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 138ae2756bb43c744aeaef490856795f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isInteractable: 1
 --- !u!114 &8119593420475265400
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1700,8 +1701,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8265ae7ef8b19a34ea2df87a09f1dbfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pivot: {fileID: 6737193236768347196}
+  pickupPivot: {fileID: 0}
   cdir: {fileID: 6887562311180294278}
+  dropTable: {fileID: 0}
+  rechestPreventionTime: 3
 --- !u!114 &2866754830441582408
 MonoBehaviour:
   m_ObjectHideFlags: 0
