@@ -50,8 +50,6 @@ namespace AK
         static const AkUniqueID ETHEREALPILLARSPAWN = 2943830540U;
         static const AkUniqueID ETHEREALPILLARSPAWN2 = 1154060502U;
         static const AkUniqueID ETHEREALSPAWN = 4032524928U;
-        static const AkUniqueID EXECUTIONERAIMSECONDARY = 2441657915U;
-        static const AkUniqueID EXECUTIONEREXITSECONDARY = 1442912802U;
         static const AkUniqueID EXECUTIONERGAINCHARGE = 566193013U;
         static const AkUniqueID EXECUTIONERMAXCHARGE = 1925425774U;
         static const AkUniqueID EXECUTIONERPRIMARY = 953642894U;

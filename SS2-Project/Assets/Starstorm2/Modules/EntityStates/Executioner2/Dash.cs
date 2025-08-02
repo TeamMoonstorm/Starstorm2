@@ -13,18 +13,16 @@ namespace EntityStates.Executioner2
     {
         public static float baseDuration = 0.6f;
         public static float speedMultiplier = 3.0f;
-        public static float debuffRadius = 12f;
+        public static float debuffRadius = 14f;
         [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
         public static float debuffDuration = 4.0f;
         public static float debuffCheckInterval = 0.0333333f;
         public static float hopVelocity; // = 17f;
-        private static float turnSpeed = 360f; // = 17f;
 
         private float debuffCheckStopwatch;
         private float duration;
         private SphereSearch fearSearch;
         private List<HurtBox> hits;
-        private List<HealthComponent> fearedTargets = new List<HealthComponent>();
         private Animator animator;
 
         public static GameObject dashEffect;
@@ -33,15 +31,13 @@ namespace EntityStates.Executioner2
         public static string ExhaustL;
         public static string ExhaustR;
 
-        private EntityStateMachine bodyStateMachine;
-        private Vector3 currentDirection;
-        private Vector3 directionVelocity;
+        private string skinNameToken;
 
         public override void OnEnter()
         {
             base.OnEnter();
             animator = GetModelAnimator();
-            bodyStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
+
             debuffCheckStopwatch = 0f;
             duration = baseDuration;
             Util.PlayAttackSpeedSound("ExecutionerUtility", gameObject, 1.0f);
@@ -49,22 +45,20 @@ namespace EntityStates.Executioner2
 
             HopIfAirborne();
 
-            characterDirection.turnSpeed = turnSpeed;
-            currentDirection = characterDirection.forward;
+            characterDirection.turnSpeed = 360f;
 
             hits = new List<HurtBox>();
             fearSearch = new SphereSearch();
             fearSearch.mask = LayerIndex.entityPrecise.mask;
             fearSearch.radius = debuffRadius;
 
-            string skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
-            bool inMasterySkin = skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY";
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
             //create dash aoe
             if (NetworkServer.active)
             {
                 CreateFearAoe();
                 
-                if (inMasterySkin)
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
                     EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustL, true);
                     EffectManager.SimpleMuzzleFlash(dashEffectMastery, gameObject, ExhaustR, true);
@@ -83,7 +77,7 @@ namespace EntityStates.Executioner2
             {
                 TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
-                if (inMasterySkin)
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
                     temporaryOverlay.duration = 1.3f * baseDuration; // doing this because otherwise it just makes him flash white ??? i still have no idea why this doesnt happen with the huntress one bc the settings are the same :((( -b
                 }
@@ -97,7 +91,7 @@ namespace EntityStates.Executioner2
                 temporaryOverlay.destroyComponentOnEnd = true;
 
 
-                if (inMasterySkin)
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
                 {
                     temporaryOverlay.originalMaterial = dashMasteryMaterial;
                 }
@@ -123,13 +117,16 @@ namespace EntityStates.Executioner2
             foreach (HurtBox h in hits)
             {
                 HealthComponent hp = h.healthComponent;
-                if (hp && !fearedTargets.Contains(hp))
+                if (hp)
                 {
-                    fearedTargets.Add(hp);
                     SetStateOnHurt ssoh = hp.GetComponent<SetStateOnHurt>();
                     if (ssoh)
                     {
-                        ssoh.SetStun(-1f);
+                        Type state = ssoh.targetStateMachine.state.GetType();
+                        if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
+                        {
+                            ssoh.SetStun(-1f);
+                        }
                     }
 
                     CharacterBody body = hp.body;
@@ -158,20 +155,8 @@ namespace EntityStates.Executioner2
 
             characterBody.isSprinting = true;
 
-            bool inExecuteLeap = bodyStateMachine && bodyStateMachine.state is ExecuteLeap;
-            Vector3 direction = inExecuteLeap ? inputBank.moveVector : characterDirection.forward;
-            if(inExecuteLeap)
-            {
-                direction = Vector3.SmoothDamp(currentDirection, direction, ref directionVelocity, 360f / turnSpeed * 0.25f);
-                currentDirection = direction;
-            }
-            else
-            {
-                currentDirection = characterDirection.forward;
-            }
-
             if (characterDirection && characterMotor)
-                characterMotor.rootMotion += direction * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
+                characterMotor.rootMotion += characterDirection.forward * characterBody.moveSpeed * speedMultiplier * Time.fixedDeltaTime;
 
             if (NetworkServer.active)
             {
@@ -184,11 +169,7 @@ namespace EntityStates.Executioner2
             }
 
             if (fixedAge >= duration)
-            {
-                if(!inExecuteLeap)
-                    outer.SetNextStateToMain();
-            }
-                
+                outer.SetNextStateToMain();
         }
         private void HopIfAirborne()
         {

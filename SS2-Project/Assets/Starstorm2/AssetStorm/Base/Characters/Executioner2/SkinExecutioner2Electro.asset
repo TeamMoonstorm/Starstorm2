@@ -18,36 +18,45 @@ MonoBehaviour:
   nameToken: SS2_SKIN_EXECUTIONER2_ELECTRO
   unlockableName: texExecutionerSkin
   unlockableDef: {fileID: 11400000, guid: 5abb68be5a38c9f4f913184826968650, type: 2}
-  rootObject: {fileID: 5784458865773462675, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  rootObject: {fileID: 3077815623334618848, guid: 18c30c6bbe052f04eb5058bbd75ba580,
     type: 3}
   rendererInfos:
-  - renderer: {fileID: 237583115033736604, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  - renderer: {fileID: 7890932552577666186, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 6951e41e585b72d40a7a7573e5f4d7b3, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-    ignoresMaterialOverrides: 0
-  - renderer: {fileID: 4690740898355004422, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  - renderer: {fileID: 4829152103322887669, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 3abd1e30b714325409406ff03dca79ce, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
-    ignoresMaterialOverrides: 0
-  - renderer: {fileID: 5833890857666900794, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  - renderer: {fileID: 8966749530243362934, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
     defaultMaterial: {fileID: 2100000, guid: 1a68683dc84008749804ed43aaa6bc54, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
+    defaultShadowCastingMode: 0
+    ignoreOverlays: 1
     hideOnDeath: 1
-    ignoresMaterialOverrides: 0
-  gameObjectActivations: []
+  gameObjectActivations:
+  - gameObject: {fileID: 7981336349453850921, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+      type: 3}
+    shouldActivate: 1
+  - gameObject: {fileID: 194872744712066964, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+      type: 3}
+    shouldActivate: 1
+  - gameObject: {fileID: 5459823789243991017, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+      type: 3}
+    shouldActivate: 1
   meshReplacements:
-  - renderer: {fileID: 237583115033736604, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  - renderer: {fileID: 7890932552577666186, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
     mesh: {fileID: 4300000, guid: 9733b61767de72d47b1da0e1fd4b7f71, type: 2}
-  - renderer: {fileID: 4690740898355004422, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+  - renderer: {fileID: 4829152103322887669, guid: 18c30c6bbe052f04eb5058bbd75ba580,
+      type: 3}
+    mesh: {fileID: 4300000, guid: 665e8f69ff4916b45a78159c321cb0e2, type: 2}
+  - renderer: {fileID: 4829152103322887669, guid: 18c30c6bbe052f04eb5058bbd75ba580,
       type: 3}
     mesh: {fileID: 4300000, guid: 665e8f69ff4916b45a78159c321cb0e2, type: 2}
   projectileGhostReplacements: []

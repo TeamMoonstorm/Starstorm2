@@ -19,7 +19,15 @@ MonoBehaviour:
     serializedFields:
     - fieldName: speedCoefficientCurve
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.4032520055770874,"weightedMode":0,"tangentMode":0},{"time":0.375,"value":1.0,"inTangent":6.349029064178467,"outTangent":-3.4371490478515627,"inWeight":0.037398338317871097,"outWeight":0.029268283396959306,"weightedMode":0,"tangentMode":1},{"time":1.0,"value":0.0,"inTangent":0.039003025740385059,"outTangent":0.039003025740385059,"inWeight":0.05487807095050812,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.9993438720703125,"inTangent":3.3348875045776369,"outTangent":3.3348875045776369,"inWeight":0.3333333432674408,"outWeight":0.78904128074646,"weightedMode":0,"tangentMode":0},{"time":0.20875287055969239,"value":1.6525185108184815,"inTangent":0.1316169947385788,"outTangent":0.1316169947385788,"inWeight":0.3333333432674408,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.8110316395759583,"value":-0.23911529779434205,"inTangent":-3.4437503814697267,"outTangent":-3.4437503814697267,"inWeight":0.04970580339431763,"outWeight":0.5419996380805969,"weightedMode":0,"tangentMode":0},{"time":0.9980080127716065,"value":-0.23182573914527894,"inTangent":-4.114472389221191,"outTangent":-4.114472389221191,"inWeight":0.5135156512260437,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        objectValue: {fileID: 0}
+    - fieldName: duration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: slamCameraPosition
+      fieldValue:
+        stringValue: 2.6 -2 -8
         objectValue: {fileID: 0}
     - fieldName: jumpEffect
       fieldValue:
@@ -43,12 +51,17 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 2100000, guid: f15f7e5112095574dbe162a9a7423b2d, type: 2}
+    - fieldName: areaIndicator
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1945392782114934, guid: dd7ec88c529afae44a6574a2b6787956,
+          type: 3}
+    - fieldName: areaIndicatorOOB
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6905233838290879817, guid: 59b1a6ffc98b4e94182a02eb663a106d,
+          type: 3}
     - fieldName: crosshairDur
       fieldValue:
         stringValue: 0.75
         objectValue: {fileID: 0}
-    - fieldName: indicatorPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 2771727519839935064, guid: 9c7c8aac210e0694aa9d15802d46cd24,
-          type: 3}

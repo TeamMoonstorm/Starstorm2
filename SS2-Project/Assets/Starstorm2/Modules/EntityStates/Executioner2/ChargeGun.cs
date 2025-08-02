@@ -8,29 +8,50 @@ namespace EntityStates.Executioner2
 {
     public class ChargeGun : BaseSkillState
     {
-        public static float baseDuration = .3f;
+        public static float baseDuration = 1.2f;
+        [HideInInspector]
+        public static GameObject chargeEffectPrefab = null;
+        public static GameObject defaultChargeEffectPrefab;
+        public static GameObject masteryChargeEffectPrefab;
+        private GameObject chargeEffectInstance;
 
-        private static float camEntryDuration = 0.2f;
-        private static float camExitDuration = 0.4f;
+        public static float timeBetweenStocks = 1.2f;
 
-        private static string enterSoundString = "ExecutionerAimSecondary";
-        private static string exitSoundString = "ExecutionerExitSecondary";
+        [HideInInspector]
+        public static GameObject plumeEffect = SS2Assets.LoadAsset<GameObject>("exePlume", SS2Bundle.Executioner2);
+        [HideInInspector]
+        public static GameObject plumeEffectLarge = SS2Assets.LoadAsset<GameObject>("exePlumeBig", SS2Bundle.Executioner2);
+        public static GameObject defaultPlume;
+        public static GameObject defaultPlumeLarge;
+        public static GameObject masteryPlume;
+        public static GameObject masteryPlumeLarge;
 
         [SerializeField]
         public SkillDef primaryOverride;
+        private SkillDef overrideDef;
+
+        private GenericSkill overriddenSkill;
 
         private bool thisFuckingSucks;
 
+        private float chargeTimer = 0f;
         private float duration;
 
+        private bool isPressingCameraSwap;
         private bool useAltCamera = false;
 
+        private NetworkStateMachine nsm;
+        private EntityStateMachine weaponEsm;
+
+        private string skinNameToken;
+
+        private float timer;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 70f,
-            minPitch = -70f,
+            maxPitch = 85f,
+            minPitch = -85f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = chargeCameraPos,
             wallCushion = 0.1f,
@@ -38,39 +59,71 @@ namespace EntityStates.Executioner2
 
         private CharacterCameraParamsData altCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 70f,
-            minPitch = -70f,
+            maxPitch = 85f,
+            minPitch = -85f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = altCameraPos,
             wallCushion = 0.1f,
         };
 
-        private static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
+        [HideInInspector]
+        public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
 
-        private static Vector3 altCameraPos = new Vector3(-1.2f, -0.65f, -6.1f);
+        [HideInInspector]
+        public static Vector3 altCameraPos = new Vector3(-1.2f, -0.65f, -6.1f);
         public override void OnEnter()
         {
             base.OnEnter();
 
+            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+
+            if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+            {
+                chargeEffectPrefab = masteryChargeEffectPrefab;
+                plumeEffect = masteryPlume;
+                plumeEffectLarge = masteryPlumeLarge;
+            }
+            else
+            {
+                plumeEffect = defaultPlume;
+                plumeEffectLarge = defaultPlumeLarge;
+                chargeEffectPrefab = defaultChargeEffectPrefab;
+            }
+
+            nsm = GetComponent<NetworkStateMachine>();
+            if (nsm != null)
+                weaponEsm = nsm.stateMachines[1];
+
+            if (inputBank.skill4.down)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
             duration = (baseDuration * skillLocator.secondary.cooldownScale);
 
-            Util.PlaySound(enterSoundString, gameObject);
             PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
 
             characterBody.SetAimTimer(2f);
 
             CameraSwap();
 
-
-            skillLocator.primary.SetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
-
+            GenericSkill primarySkill = skillLocator.primary;
+            if (primarySkill)
+            {
+                if (!overriddenSkill)
+                {
+                    overriddenSkill = primarySkill;
+                    overriddenSkill.SetSkillOverride(primarySkill, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+                }
+            }
         }
 
         private void CameraSwap()
         {
             if (useAltCamera)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -78,11 +131,11 @@ namespace EntityStates.Executioner2
                     priority = 0f
                 };
 
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, camEntryDuration);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
             }
             else
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -90,7 +143,7 @@ namespace EntityStates.Executioner2
                     priority = 0f
                 };
 
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, camEntryDuration);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
             }
         }
 
@@ -110,16 +163,6 @@ namespace EntityStates.Executioner2
             base.FixedUpdate();
 
             characterBody.isSprinting = false;
-            characterBody.aimTimer = 2f;
-
-            if (skillLocator.secondary.stock > 0)
-            {
-                skillLocator.primaryBonusStockSkill.stock = 1;
-            }
-            else
-            {
-                skillLocator.primary.stock = 0; // override skill has requiredStock 1
-            }
 
             if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
             {
@@ -132,6 +175,14 @@ namespace EntityStates.Executioner2
                 thisFuckingSucks = false;
             }
 
+            /*if (fixedAge >= duration && inputBank.skill2.down)
+            {
+                ChargeGun nextState = new ChargeGun();
+                nextState.useAltCamera = useAltCamera;
+                outer.SetNextState(nextState);
+                return;
+            }*/
+
             if (isAuthority)
             {
                 if (!inputBank.skill2.down || inputBank.skill3.down || inputBank.skill4.down)
@@ -139,6 +190,62 @@ namespace EntityStates.Executioner2
                     outer.SetNextStateToMain();
                     return;
                 }
+            }
+
+            if (weaponEsm.IsInMainState())
+                timer += Time.fixedDeltaTime;
+            else
+                timer = 0f;
+
+            if (timer >= (timeBetweenStocks * skillLocator.secondary.cooldownScale) / attackSpeedStat && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+            {
+                timer = 0f;
+
+                skillLocator.secondary.AddOneStock();
+
+                /*ExecutionerIonOrb ionOrb = new ExecutionerIonOrb();
+                ionOrb.origin = transform.position;
+                ionOrb.target = Util.FindBodyMainHurtBox(characterBody);
+                OrbManager.instance.AddOrb(ionOrb);*/
+                //Debug.Log("adding stock");
+
+                if (characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
+                {
+                    Util.PlaySound("ExecutionerGainCharge", gameObject);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustL", true);
+                    EffectManager.SimpleMuzzleFlash(plumeEffect, gameObject, "ExhaustR", true);
+                }
+                if (characterBody.skillLocator.secondary.stock >= characterBody.skillLocator.secondary.maxStock)
+                {
+                    Util.PlaySound("ExecutionerMaxCharge", gameObject);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustL", true);
+                    EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
+                    EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
+                }
+
+                characterBody.SetAimTimer(timeBetweenStocks);
+            }
+
+            /*if (inputBank.skill1.down && skillLocator.secondary.stock >= 1)
+            {
+                characterBody.SetBuffCount(SS2.SS2Content.Buffs.bdExeCharge.buffIndex, 0);
+                PlayAnimation("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration);
+                FireChargeGun nextState = new FireChargeGun();
+                nextState.activatorSkillSlot = activatorSkillSlot;
+                if (skillLocator.secondary.stock >= skillLocator.secondary.maxStock)
+                    nextState.fullBurst = true;
+                outer.SetNextState(nextState);
+            }*/
+
+            if (chargeEffectPrefab && !chargeEffectInstance && fixedAge >= 0.3f)
+            {
+                ChildLocator cl = modelLocator.modelTransform.GetComponent<ChildLocator>();
+                Transform muzzle = cl.FindChild("ExhaustGun");
+                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                    chargeEffectInstance = UnityEngine.Object.Instantiate(masteryChargeEffectPrefab, muzzle.position, muzzle.rotation);
+                else
+                    chargeEffectInstance = UnityEngine.Object.Instantiate(defaultChargeEffectPrefab, muzzle.position, muzzle.rotation);
+                chargeEffectInstance.transform.parent = muzzle.transform;
             }
         }
 
@@ -151,18 +258,17 @@ namespace EntityStates.Executioner2
         {
             base.OnExit();
             PlayCrossfade("Gesture, Override", "BufferEmpty", "Secondary.playbackRate", duration, 0.3f);
-            Util.PlaySound(exitSoundString, gameObject);
             if (cameraTargetParams)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
             }
-
-            skillLocator.primary.UnsetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
-            
+            if (overriddenSkill)
+            {
+                overriddenSkill.UnsetSkillOverride(skillLocator.primary, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            }
+            if (chargeEffectInstance)
+                Destroy(chargeEffectInstance);
             skillLocator.primary.RemoveAllStocks();
-            float rechargeInterval = skillLocator.primary.baseRechargeInterval;
-            float cooldownRestore = rechargeInterval * (1 - (1 / attackSpeedStat));
-            skillLocator.primary.RunRecharge(cooldownRestore);
         }
     }
 }
