@@ -27,12 +27,7 @@ namespace SS2.Survivors
         public static GameObject plumeEffectLarge;
         public static GameObject taserVFX;
         public static GameObject taserVFXFade;
-
-        public static BuffDef _buffDefFear;
-        public static BuffDef _buffExeMuteCharge;
-        public static BuffDef _buffExeSuperCharged;
-
-
+        public static GameObject fearEffectPrefab;
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
@@ -54,25 +49,42 @@ namespace SS2.Survivors
         {
             plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
             plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
-            _buffDefFear = AssetCollection.FindAsset<BuffDef>("BuffFear");
-            _buffExeMuteCharge = AssetCollection.FindAsset<BuffDef>("bdExeMuteCharge");
-            _buffExeSuperCharged = AssetCollection.FindAsset<BuffDef>("BuffExecutionerSuperCharged");
+            fearEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerFearEffect");
 
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
-            Hook();
+            R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+            SetupFearExecute();
             ModifyPrefab();
 
             taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
 
-            //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // i dont know what this is but its failing
-
-            //On.RoR2.UI.CharacterSelectController.RebuildStrip += CheckForSwitches;
-            //On.RoR2.UI.CharacterSelectController.BuildSkillStripDisplayData += CheckForDisplaySwitch;
+            //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // :3
         }
 
-        private void CheckForDisplaySwitch(On.RoR2.UI.CharacterSelectController.orig_BuildSkillStripDisplayData orig, RoR2.UI.CharacterSelectController self, Loadout loadout, ValueType bodyInfo, object dest)
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
-            orig(self, loadout, bodyInfo, dest);
+            if(sender.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
+            {
+                args.armorAdd += 60f;
+            }
+            if(sender.HasBuff(SS2Content.Buffs.BuffFear))
+            {
+                args.moveSpeedReductionMultAdd += 0.33f;
+            }
+
+            int consecrationStack = sender.GetBuffCount(SS2Content.Buffs.bdConsecration);
+            if(consecrationStack > 0)
+            {
+                //args.attackSpeedMultAdd += 0.08f * consecrationStack;
+                args.moveSpeedMultAdd += 0.05f * consecrationStack;
+            }
+
+            int bloodRushStack = sender.GetBuffCount(SS2Content.Buffs.bdBloodRush);
+            if (bloodRushStack > 0)
+            {
+                args.attackSpeedMultAdd += 0.08f * bloodRushStack;
+                args.moveSpeedMultAdd += 0.08f * bloodRushStack;
+            }
         }
 
         private void OrbEffect_Start(ILContext il)
@@ -126,43 +138,9 @@ namespace SS2.Survivors
             return true;
         }
 
-
         public void ModifyPrefab()
         {
-            var cb = CharacterPrefab.GetComponent<CharacterBody>();
-            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
-        }
-
-        public void Hook()
-        {
-            SetupFearExecute();
-            On.RoR2.MapZone.TeleportBody += MarkOOB;
-            On.RoR2.TeleportHelper.TeleportBody_CharacterBody_Vector3 += HelpOOB;
-        }
-
-        private void MarkOOB(On.RoR2.MapZone.orig_TeleportBody orig, MapZone self, CharacterBody characterBody)
-        {
-            var exc = characterBody.gameObject.GetComponent<ExecutionerController>();
-            if (exc)
-            {
-                exc.hasOOB = true;
-            }
-            orig(self, characterBody);
-        }
-
-        private void HelpOOB(On.RoR2.TeleportHelper.orig_TeleportBody_CharacterBody_Vector3 orig, CharacterBody body, Vector3 targetFootPosition)
-        {
-            var exc = body.gameObject.GetComponent<ExecutionerController>();
-            if (exc)
-            {
-                if (exc.isExec)
-                {
-                    exc.hasOOB = true;
-                    targetFootPosition += new Vector3(0, 1, 0);
-                }
-            }
-            orig(body, targetFootPosition);
+            SetupDefaultBody(CharacterPrefab);
         }
 
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
@@ -244,67 +222,105 @@ namespace SS2.Survivors
         }
         internal static int GetIonCountFromBody(CharacterBody body)
         {
-            if (body == null) return 1;
-            if (body.bodyIndex == BodyIndex.None) return 1;
-
             if (BodiesThatGiveSuperCharge.Contains(body.bodyIndex))
                 return 100;
 
+            if (body == null) return 1;
+            if (body.bodyIndex == BodyIndex.None) return 1;
+
+            int value = 1;
             if (body.isChampion)
-                return 5;
+                value = 3;
 
             switch (body.hullClassification)
             {
                 case HullClassification.Human:
-                    return 1;
+                    value = 1;
+                    break;
                 case HullClassification.Golem:
-                    return 2;
+                    value = 2;
+                    break;
                 case HullClassification.BeetleQueen:
-                    return 3;
+                    value = 2;
+                    break;
                 default:
-                    return 1;
+                    value = 1;
+                    break;
             }
+            if(body.isElite)
+            {
+                value *= 2;
+            }
+            return value;
         }
-        public sealed class ExeArmorBehavior : BaseBuffBehaviour, IBodyStatArgModifier
+        public sealed class FearBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerArmor;
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFear;
+
+            private GameObject effectInstance;
+            private static string activationSoundString = "Play_voidman_R_pop";
+            private Collider bodyCollider;
+            private int previousBuffCount;
+            private void OnEnable()
             {
-                //the stacking amounts are added by the item - these base values are here in case the buff is granted by something other than sigil
-                args.armorAdd += 60;
+                previousBuffCount = buffCount;
+                OnStackGained();
+                if(!bodyCollider)
+                    bodyCollider = base.GetComponent<Collider>();
             }
-        }
-
-        public sealed class FearDebuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
-        {
-            [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => _buffDefFear;
-
-            public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
+            private void OnDisable()
             {
-                args.moveSpeedReductionMultAdd += 0.5f;
+                Destroy(effectInstance);
+            }
+
+            private void FixedUpdate()
+            {
+                if(buffCount > previousBuffCount)
+                {
+                    OnStackGained();
+                }
+                if (!base.characterBody.healthComponent.alive)
+                    Destroy(this.effectInstance);
+                previousBuffCount = buffCount;
+            }
+
+            private void OnStackGained()
+            {
+                if (effectInstance) Destroy(effectInstance);
+                effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                Util.PlaySound(activationSoundString, gameObject);
+            }
+
+            private void Update()
+            {
+                if (effectInstance)
+                {
+                    Vector3 a = base.transform.position;
+                    if (this.bodyCollider)
+                    {
+                        a = this.bodyCollider.bounds.center + new Vector3(0f, this.bodyCollider.bounds.extents.y, 0f);
+                    }
+                    effectInstance.transform.position = a;
+                }
             }
         }
 
         public sealed class ExeSuperChargeBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => _buffExeSuperCharged;
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffExecutionerSuperCharged;
             private float timer;
 
             public void FixedUpdate()
             {
                 if (NetworkServer.active && hasAnyStacks)
                 {
-                    if (characterBody.baseNameToken != "SS2_EXECUTIONER2_NAME" || characterBody.HasBuff(_buffExeMuteCharge))
-                        return;
-                    else
-                        timer += Time.fixedDeltaTime;
+                    timer += Time.fixedDeltaTime;
 
                     if (timer >= 0.2f && characterBody.skillLocator.secondary.stock < characterBody.skillLocator.secondary.maxStock)
                     {
-                        timer = 0f;
+                        timer -= 0.2f;
 
                         characterBody.skillLocator.secondary.AddOneStock();
 
@@ -321,8 +337,6 @@ namespace SS2.Survivors
                             EffectManager.SimpleMuzzleFlash(plumeEffectLarge, gameObject, "ExhaustR", true);
                             EffectManager.SimpleEffect(Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/LightningFlash.prefab").WaitForCompletion(), characterBody.corePosition, Quaternion.identity, false);
                         }
-
-                        characterBody.SetAimTimer(1.6f);
                     }
                 }
             }
