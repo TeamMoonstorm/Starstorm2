@@ -130,6 +130,7 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration || !inputBank.skill4.down || inputBank.skill1.down)
             {
                 ExecuteSlam nextState = new ExecuteSlam();
+                nextState.wasLiedTo = imAFilthyFuckingLiar; //probably every time LOL 
                 outer.SetNextState(nextState);
             }
             else
