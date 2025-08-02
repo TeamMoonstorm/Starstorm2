@@ -22,17 +22,23 @@ MonoBehaviour:
     _typeName: EntityStates.Executioner2.FireTaser, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 0
-  baseRechargeInterval: 0
+  baseRechargeInterval: 0.5
   baseMaxStock: 1
-  rechargeStock: 0
-  requiredStock: 0
+  rechargeStock: 1
+  requiredStock: 1
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 1
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
