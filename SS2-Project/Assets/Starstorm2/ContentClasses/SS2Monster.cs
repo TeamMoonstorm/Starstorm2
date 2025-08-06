@@ -37,7 +37,7 @@ namespace SS2
             {
                 b.section = "00 - Enemy Disabling";
                 b.key = $"Disable Enemy: {MSUtil.NicifyString(GetType().Name)}";
-                b.description = "Set this to true if you want to disable this enemy from appearing in game.";
+                b.description = "Set this to true if you want to disable this enemy from appearing in game. Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur.";
                 b.configFile = SS2Config.ConfigMonster;
                 b.checkBoxConfig = new CheckBoxConfig
                 {
