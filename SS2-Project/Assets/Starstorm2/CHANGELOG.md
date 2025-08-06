@@ -5,6 +5,7 @@
     * Moved some of the debug only logs to production builds so your bug report logs contain more useful errors for us when debugging!
     * Added config options for disabling enemies and survivors (why would you do that).
     * New PT-BR translation for items thanks to Balorfist
+    * Updated Chinese translation thanks to EternitySwarmCrowm
 * Executioner
     * New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
     * Ion Manipulators no longer gains ion charges over time.
