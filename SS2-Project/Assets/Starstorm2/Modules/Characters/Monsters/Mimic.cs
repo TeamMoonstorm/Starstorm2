@@ -15,7 +15,7 @@ namespace SS2.Monsters
 {
 	public sealed class Mimic : SS2Monster
 	{
-		public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acMimic", SS2Bundle.Indev);
+		public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acMimic", SS2Bundle.Monsters);
 
 		public static GameObject _masterPrefab;
 		public static ModdedDamageType StealItemDamageType { get; private set; }
