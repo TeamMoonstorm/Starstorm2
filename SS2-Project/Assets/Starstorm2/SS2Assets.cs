@@ -85,15 +85,16 @@ namespace SS2
 
             asset = _assetBundles[bundle].LoadAsset<TAsset>(name);
 
-#if DEBUG
             if (!asset)
             {
                 SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling \"LoadAsset<TAsset>(string, CommissionBundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
-                    $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
-
+                    $"Make sure the asset was included in the production bundles if this is a production release.");
+#if DEBUG
+                SS2Log.Debug($"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
                 return LoadAsset<TAsset>(name, SS2Bundle.All);
-            }
 #endif
+            }
+
             return asset;
         }
 
@@ -111,12 +112,11 @@ namespace SS2
             }
             loadedAssets = _assetBundles[bundle].LoadAllAssets<TAsset>();
 
-#if DEBUG
             if (loadedAssets.Length == 0)
             {
                 SS2Log.Warning($"Could not find any asset of type {typeof(TAsset).Name} inside the bundle {bundle}");
             }
-#endif
+
             return loadedAssets;
         }
 
@@ -283,10 +283,8 @@ namespace SS2
                 assets.AddRange(bundles.LoadAllAssets<TAsset>());
             }
 
-#if DEBUG
             if (assets.Count == 0)
                 SS2Log.Warning($"Could not find any asset of type {typeof(TAsset).Name} in any of the bundles");
-#endif
 
             return assets.ToArray();
         }
