@@ -629,6 +629,7 @@ namespace SS2
 
             public static BuffDef bdGalvanized;
 
+            public static BuffDef bdGalvanizedSource;
         }
 
         public static class Elites

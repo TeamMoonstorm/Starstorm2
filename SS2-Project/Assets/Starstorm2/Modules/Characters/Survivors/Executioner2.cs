@@ -64,7 +64,7 @@ namespace SS2.Survivors
 
             taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
 
-            //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // i dont know what this is but its failing
+            IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // i dont know what this is but its failing
 
             //On.RoR2.UI.CharacterSelectController.RebuildStrip += CheckForSwitches;
             //On.RoR2.UI.CharacterSelectController.BuildSkillStripDisplayData += CheckForDisplaySwitch;
