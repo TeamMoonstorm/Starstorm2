@@ -1,5 +1,5 @@
   **Warning: content spoilers below!**
-### 0.6.21
+### 0.6.23
 * Executioner
     * New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
     * Ion Manipulators no longer gains ion charges over time.
