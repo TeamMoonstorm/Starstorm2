@@ -41,7 +41,7 @@ namespace SS2
 
             if (request == null)
             {
-                Debug.LogError($"AssetRequest is null for {GetType().Name}");
+                SS2Log.Warning($"AssetRequest is null for {GetType().Name}");
                 yield break;
             }
 
@@ -53,7 +53,7 @@ namespace SS2
 
             if (AssetCollection == null)
             {
-                Debug.LogError($"AssetCollection is null for {GetType().Name}");
+                SS2Log.Warning($"AssetCollection is null for {GetType().Name}");
                 yield break;
             }
 
@@ -63,7 +63,7 @@ namespace SS2
             }
             else
             {
-                Debug.LogError($"bodyPrefab is null in AssetCollection for {GetType().Name}");
+                SS2Log.Warning($"bodyPrefab is null in AssetCollection for {GetType().Name}");
             }
 
             if (AssetCollection.masterPrefab != null)
@@ -72,7 +72,7 @@ namespace SS2
             }
             else
             {
-                Debug.LogError($"masterPrefab is null in AssetCollection for {GetType().Name}");
+                SS2Log.Warning($"masterPrefab is null in AssetCollection for {GetType().Name}");
             }
 
             if (AssetCollection.monsterCardProvider != null)
@@ -81,7 +81,7 @@ namespace SS2
             }
             else
             {
-                Debug.LogError($"monsterCardProvider is null in AssetCollection for {GetType().Name}");
+                SS2Log.Warning($"monsterCardProvider is null in AssetCollection for {GetType().Name}");
             }
         }
 
