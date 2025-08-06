@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using RiskOfOptions.OptionConfigs;
 
 namespace SS2
 {
@@ -29,7 +31,22 @@ namespace SS2
         public GameObject CharacterPrefab { get; private set; }
 
         public abstract void Initialize();
-        public abstract bool IsAvailable(ContentPack contentPack);
+        public virtual bool IsAvailable(ContentPack conentPack)
+        {
+            ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "00 - Enemy Disabling";
+                b.key = $"Disable Enemy: {MSUtil.NicifyString(GetType().Name)}";
+                b.description = "Set this to true if you want to disable this enemy from appearing in game.";
+                b.configFile = SS2Config.ConfigMonster;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true
+                };
+            }).DoConfigure();
+
+            return !isDisabled;
+        }
 
         public abstract SS2AssetRequest<MonsterAssetCollection> AssetRequest { get; }
 
