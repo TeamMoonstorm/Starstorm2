@@ -32,7 +32,7 @@ namespace SS2
             {
                 b.section = "00 - Survivor Disabling";
                 b.key = $"Disable Survivor: {MSUtil.NicifyString(GetType().Name)}";
-                b.description = "Set this to true if you want to disable this survivor from appearing in game. Why....?";
+                b.description = "Set this to true if you want to disable this survivor from appearing in game. Why....? Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur.";
                 b.configFile = SS2Config.ConfigSurvivor;
                 b.checkBoxConfig = new CheckBoxConfig
                 {
