@@ -12,6 +12,7 @@ namespace EntityStates.Mimic
 		public static float baseDuration;
 		private float duration;
 		private bool endedSuccessfully = false;
+
 		public override void OnEnter()
 		{
 			base.OnEnter();
@@ -28,11 +29,14 @@ namespace EntityStates.Mimic
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (fixedAge >= duration && isAuthority)
+			if (fixedAge >= duration)
 			{
 				characterMotor.walkSpeedPenaltyCoefficient -= .6f;
 				endedSuccessfully = true;
-				outer.SetNextState(new MimicLeapLoop());
+				if (isAuthority)
+                {
+					outer.SetNextState(new MimicLeapLoop());
+				}
 			}
 		}
 

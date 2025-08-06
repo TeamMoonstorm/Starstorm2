@@ -4,6 +4,7 @@ using SS2;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.Mimic
@@ -43,10 +44,8 @@ namespace EntityStates.Mimic
 
 		private float previousAirControl;
 		protected bool isCritAuthority;
-		private bool detonateNextFrame;
 
 		private bool endedSuccessfully = false;
-		private bool stopDoingThat = false;
 
 		public override void OnEnter()
 		{
@@ -78,50 +77,41 @@ namespace EntityStates.Mimic
 
 			Util.PlaySound(leapSoundString, gameObject);
 			characterDirection.moveVector = direction;
-
-			//if (isAuthority)
-			//{
-			//	characterMotor.onMovementHit += OnMovementHit;
-			//}
-
 			Util.PlaySound(soundLoopStartEvent, gameObject);
+
+
+			var lThruster = FindModelChild("ThrusterL");
+			var rThruster = FindModelChild("ThrusterR");
+
+			if (lThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, lThruster);
+			}
+
+			if (rThruster)
+			{
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
+			}
 		}
 
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (isAuthority && characterMotor)
+			if (characterMotor)
 			{
-				if (fixedAge >= duration && isAuthority)
+				if (fixedAge >= duration)
 				{
-					//DetonateAuthority();
 					endedSuccessfully = true;
-					SS2Log.Warning("FixedUpdate Fire");
-					outer.SetNextState(new MimicChestActivateExit());
+                    if (isAuthority)
+                    {
+						outer.SetNextState(new MimicChestActivateExit());
+					}
 				}
-			}
-			if (NetworkServer.active)
-			{
-				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
 			}
 		}
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
-			SS2Log.Warning("Detonate Authority");
-			SS2Log.Warning("attacker : " + gameObject);
-			SS2Log.Warning("damageStat : " + damageStat);
-			SS2Log.Warning("blastDamageCoefficient : " + damageCoeff);
-			SS2Log.Warning("blastForce : " + blastForce);
-			SS2Log.Warning("blastBonusForce : " + blastBonusForce);
-			SS2Log.Warning("isCritAuthority : " + isCritAuthority);
-			SS2Log.Warning("blastProcCoefficient : " + blastProcCoefficient);
-			SS2Log.Warning("blastRadius : " + blastRadius);
-			SS2Log.Warning("characterBody.corePosition : " + characterBody.corePosition + " |" + transform.position);
-			SS2Log.Warning("teamComponent.teamIndex : " + teamComponent.teamIndex);
-			SS2Log.Warning("attacker : " + gameObject);
-
-
 			var attack =  new BlastAttack
 			{
 				attacker = gameObject,
@@ -135,33 +125,33 @@ namespace EntityStates.Mimic
 				radius = blastRadius,
 				position = characterBody.corePosition,
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
-				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex,
-				
 			};
 
 			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.Mimic.StealItemDamageType);
 
+			EffectData effectData = new EffectData
+			{
+				origin = characterBody.corePosition
+			};
+			effectData.SetNetworkedObjectReference(this.gameObject);
+			EffectManager.SpawnEffect(SS2.Monsters.Mimic.leapLandVFX, effectData, transmit: true);
+
 			return attack.Fire(); 
 		}
-
+		
 		public override void OnExit()
 		{
-
-			SS2Log.Info("MimicChestActivateLoop EXIT");
-			Util.PlaySound(soundLoopStopEvent, gameObject);
-			//if (isAuthority)
-			//{
-			//	characterMotor.onMovementHit -= OnMovementHit;
-			//}
-			characterMotor.airControl = previousAirControl;
 			base.OnExit();
+
+			Util.PlaySound(soundLoopStopEvent, gameObject);
+			characterMotor.airControl = previousAirControl;
 
 			if (!endedSuccessfully)
 			{
 				PlayAnimation("FullBody, Override", "BufferEmpty");
 			}
-            else
+            else if(NetworkServer.active && isAuthority)
             {
 				DetonateAuthority();
 			}

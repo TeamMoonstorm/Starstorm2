@@ -1,11 +1,14 @@
-﻿using MSU;
+﻿using EntityStates.Mimic;
+using MSU;
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.UI;
+using SS2.Components;
 using System;
-using System.Collections;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 using static R2API.DamageAPI;
 
 namespace SS2.Monsters
@@ -17,16 +20,118 @@ namespace SS2.Monsters
 		public static GameObject _masterPrefab;
 		public static ModdedDamageType StealItemDamageType { get; private set; }
 
+		public GameObject itemOrb;
+
+		public static GameObject itemStarburst;
+	    public static GameObject zipperVFX;
+		public static GameObject jetVFX;
+		public static GameObject leapLandVFX;
+		public static GameObject rechestVFX;
+
 		public override void Initialize()
 		{
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
+
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
-			//On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.CharacterMaster.Respawn += RespawnMimicFixHitboxes;
+			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
+			On.RoR2.HealthComponent.TakeDamageProcess += TakeDamagePreventAnnoyingRechest;
+
 			StealItemDamageType = R2API.DamageAPI.ReserveDamageType();
+
+			var material = Addressables.LoadAssetAsync<Material>("RoR2/Base/Chest1/matChest1.mat").WaitForCompletion();
+			var ml = AssetCollection.bodyPrefab.GetComponent<ModelLocator>();
+			if (ml)
+			{
+				var transf = ml.modelTransform;
+				var componentsInChildren = transf.GetComponentsInChildren<Renderer>();
+				foreach (var comp in componentsInChildren)
+				{
+					comp.material = material;
+				}
+			}
+
+			var skd = AssetCollection.FindAsset<SkinDef>("sdMimic");
+            if (skd)
+            {
+				for(int i = 0; i < skd.skinDefParams.rendererInfos.Length; ++i)
+                {
+					skd.skinDefParams.rendererInfos[i].defaultMaterial = material;
+				}
+            }
+
+			itemOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab").WaitForCompletion();
+			jetVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion();
+			leapLandVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
+			rechestVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/RoboCratePodGroundImpact.prefab").WaitForCompletion();
+
+			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
+			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
+
+		    var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
+			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
+			pip.pingIconOverride = ping;
+			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
+			mid.Info.Visual = ping;
+
+			var commando = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoBody.prefab").WaitForCompletion();
+			var commandoBank = commando.GetComponent<AkBank>();
+			var mimicBank = AssetCollection.bodyPrefab.AddComponent<AkBank>();
+			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
+
+			ChatMessageBase.chatMessageTypeToIndex.Add(typeof(MimicTheftMessage), (byte)ChatMessageBase.chatMessageIndexToType.Count);
+			ChatMessageBase.chatMessageIndexToType.Add(typeof(MimicTheftMessage));
+
 		}
 
-		private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
+		//Along with code in Rechest, prevents mimic from annoyingly rechesting at range when damaged recently.
+        private void TakeDamagePreventAnnoyingRechest(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
+        {
+			orig(self, damageInfo);
+			var mim = self.GetComponent<MimicInventoryManager>();
+
+			if (mim)
+            {
+				mim.rechestPreventionTime = 2.5f;
+            }
+        }
+
+        //Puts the mimic back into chest mode after it kills someone.
+        private void CharacterDeathGlobalMimicTaunt(DamageReport obj)
+        {
+			if (obj.victimBody && obj.victimBody.isPlayerControlled && obj.attacker && obj.attackerMaster && obj.attackerMaster.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
+			{
+				var bodyESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Body");
+				var rechest = new MimicChestRechest { taunting = true };
+				bodyESM.SetNextState(rechest);
+
+				var weaponESM = EntityStateMachine.FindByCustomName(obj.attackerMaster.bodyInstanceObject, "Weapon");
+				weaponESM.SetNextStateToMain();
+			}
+		}
+
+		//Makes it so Respawned mimics via Dios and Void Dios are not invulnerable until purchased.
+        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
+        {
+			var output = orig(self, footPosition, rotation, wasRevivedMidStage);
+
+			if(self.masterIndex == MasterCatalog.FindMasterIndex(_masterPrefab))
+            {
+				if(self.inventory.GetItemCount(RoR2Content.Items.ExtraLifeConsumed) > 0 || self.inventory.GetItemCount(DLC1Content.Items.ExtraLifeVoidConsumed) > 0)
+                {
+					var esm = EntityStateMachine.FindByCustomName(self.bodyInstanceObject, "Body");
+					esm.SetNextState(new MimicChestActivateEnter());
+				}
+            }
+
+			return output;
+        }
+
+        //Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping.
+        private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
+			bool printed = false;
 			self.pingHighlight.enabled = false;
 			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
 			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
@@ -34,7 +139,6 @@ namespace SS2.Monsters
 			self.positionIndicator.targetTransform = (self.pingTarget ? self.pingTarget.transform : null);
 			self.positionIndicator.defaultPosition = self.transform.position;
 			IDisplayNameProvider displayNameProvider = self.pingTarget ? self.pingTarget.GetComponentInParent<IDisplayNameProvider>() : null;
-			ModelLocator modelLocator = null;
 			self.pingType = PingIndicator.PingType.Default;
 			self.pingObjectScaleCurve.enabled = false;
 			self.pingObjectScaleCurve.enabled = true;
@@ -55,112 +159,128 @@ namespace SS2.Monsters
 			}
 			if (self.pingTarget)
 			{
-				Debug.LogFormat("Ping target {0}", new object[]
-				{
-					self.pingTarget
-				});
-				modelLocator = self.pingTarget.GetComponent<ModelLocator>();
+				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
 				if (displayNameProvider != null)
 				{
-					CharacterBody component = self.pingTarget.GetComponent<CharacterBody>();
-					//MimicPingCorrecter pingc = self.pingTarget.GetComponent <>
-					if (component)
-					{
-						self.pingType = PingIndicator.PingType.Enemy;
-						self.targetTransformToFollow = component.coreTransform;
-					}
-					else
+					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
+					if (pingc && pingc.isInteractable)
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
+						string ownerName = self.GetOwnerName();
+						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
+						
+						string text;
+						if (gdnp) 
+						{
+							text = Language.GetString(gdnp.displayToken);
+                        }
+						else
+						{
+							text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+						}
+
+						self.pingText.enabled = true;
+						self.pingText.text = ownerName;
+
+						self.pingColor = self.interactablePingColor;
+						self.pingDuration = self.interactablePingDuration;
+						self.pingTargetPurchaseInteraction = self.pingTarget.GetComponent<PurchaseInteraction>();
+						Sprite interactableIcon = PingIndicator.GetInteractableIcon(self.pingTarget);
+						SpriteRenderer component3 = self.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
+						array = self.interactablePingGameObjects;
+						for (int i = 0; i < array.Length; i++)
+						{
+							array[i].SetActive(true);
+						}
+						Renderer componentInChildren;
+						if (modelLocator)
+						{
+							componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
+						}
+						else
+						{
+							componentInChildren = self.pingTarget.GetComponentInChildren<Renderer>();
+						}
+						if (componentInChildren)
+						{
+							self.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
+							self.pingHighlight.targetRenderer = componentInChildren;
+							self.pingHighlight.strength = 1f;
+							self.pingHighlight.isOn = true;
+							self.pingHighlight.enabled = true;
+						}
+						component3.sprite = interactableIcon;
+						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
+						{
+							PingIndicator.sharedStringBuilder.Clear();
+							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
+							int num = self.pingTargetPurchaseInteraction.cost;
+							if (self.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
+							{
+								num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
+							}
+							costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
+						}
+						else
+						{
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
+						}
+						self.pingText.color = self.textBaseColor * self.pingColor;
+						self.fixedTimer = self.pingDuration;
+						printed = true;
+                    }
+                    else if(pingc && !pingc.isInteractable)
+                    {
+						string ownerName = self.GetOwnerName();
+						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+
+						self.pingText.enabled = true;
+						self.pingText.text = ownerName;
+
+						self.pingColor = self.enemyPingColor;
+						self.pingDuration = self.enemyPingDuration;
+						array = self.enemyPingGameObjects;
+						for (int i = 0; i < array.Length; i++)
+						{
+							array[i].SetActive(true);
+						}
+						if (modelLocator)
+						{
+							Transform modelTransform = modelLocator.modelTransform;
+							if (modelTransform)
+							{
+								CharacterModel component2 = modelTransform.GetComponent<CharacterModel>();
+								if (component2)
+								{
+									bool flag = false;
+									foreach (CharacterModel.RendererInfo rendererInfo in component2.baseRendererInfos)
+									{
+										if (!rendererInfo.ignoreOverlays && !flag)
+										{
+											self.pingHighlight.highlightColor = Highlight.HighlightColor.teleporter;
+											self.pingHighlight.targetRenderer = rendererInfo.renderer;
+											self.pingHighlight.strength = 1f;
+											self.pingHighlight.isOn = true;
+											self.pingHighlight.enabled = true;
+											break;
+										}
+									}
+								}
+							}
+							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
+							printed = true;
+						}
 					}
 				}
 			}
-			string ownerName = self.GetOwnerName();
-			string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
-
-			//self.pingText.enabled = true;
-			//self.pingText.text = ownerName;
-			//
-			//			this.pingColor = this.interactablePingColor;
-			//			this.pingDuration = this.interactablePingDuration;
-			//			this.pingTargetPurchaseInteraction = this.pingTarget.GetComponent<PurchaseInteraction>();
-			//			this.halcyonShrine = this.pingTarget.GetComponent<HalcyoniteShrineInteractable>();
-			//			Sprite interactableIcon = PingIndicator.GetInteractableIcon(this.pingTarget);
-			//			SpriteRenderer component3 = this.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
-			//			ShopTerminalBehavior component4 = this.pingTarget.GetComponent<ShopTerminalBehavior>();
-			//			TeleporterInteraction component5 = this.pingTarget.GetComponent<TeleporterInteraction>();
-			//			if (component4)
-			//			{
-			//				PickupIndex pickupIndex = component4.CurrentPickupIndex();
-			//				IFormatProvider invariantCulture = CultureInfo.InvariantCulture;
-			//				string format = "{0} ({1})";
-			//				object arg = text;
-			//				object arg2;
-			//				if (!component4.pickupIndexIsHidden && component4.pickupDisplay)
-			//				{
-			//					PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupIndex);
-			//					arg2 = Language.GetString(((pickupDef != null) ? pickupDef.nameToken : null) ?? PickupCatalog.invalidPickupToken);
-			//				}
-			//				else
-			//				{
-			//					arg2 = "?";
-			//				}
-			//				text = string.Format(invariantCulture, format, arg, arg2);
-			//			}
-			//			else if (component5)
-			//			{
-			//				this.pingDuration = 30f;
-			//				this.pingText.enabled = false;
-			//				component5.PingTeleporter(ownerName, this);
-			//			}
-			//			else if (!this.pingTarget.gameObject.name.Contains("Shrine") && (this.pingTarget.GetComponent<GenericPickupController>() || this.pingTarget.GetComponent<PickupPickerController>()))
-			//			{
-			//				this.pingDuration = 60f;
-			//			}
-			//			array = this.interactablePingGameObjects;
-			//			for (int i = 0; i < array.Length; i++)
-			//			{
-			//				array[i].SetActive(true);
-			//			}
-			//			Renderer componentInChildren;
-			//			if (modelLocator)
-			//			{
-			//				componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
-			//			}
-			//			else
-			//			{
-			//				componentInChildren = this.pingTarget.GetComponentInChildren<Renderer>();
-			//			}
-			//			if (componentInChildren)
-			//			{
-			//				this.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
-			//				this.pingHighlight.targetRenderer = componentInChildren;
-			//				this.pingHighlight.strength = 1f;
-			//				this.pingHighlight.isOn = true;
-			//				this.pingHighlight.enabled = true;
-			//			}
-			//			component3.sprite = interactableIcon;
-			//			component3.enabled = !component5;
-			//			if (this.pingTargetPurchaseInteraction && this.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
-			//			{
-			//				PingIndicator.sharedStringBuilder.Clear();
-			//				CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(this.pingTargetPurchaseInteraction.costType);
-			//				int num = this.pingTargetPurchaseInteraction.cost;
-			//				if (this.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
-			//				{
-			//					num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
-			//				}
-			//				costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
-			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
-			//			}
-			//			else
-			//			{
-			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
-			//			}
-			//this.pingText.color = this.textBaseColor * this.pingColor;
-			//this.fixedTimer = this.pingDuration;
+            if (!printed)
+            {
+				orig(self);
+			}
 		}
 
+		//How the mimic steals items, using a custom damage type
 		private void ServerDamageStealItem(DamageReport obj)
 		{
 			if (obj.victimBody && obj.victimBody.inventory && obj.attackerBody && obj.attackerBody.inventory && DamageAPI.HasModdedDamageType(obj.damageInfo, StealItemDamageType))
@@ -168,17 +288,94 @@ namespace SS2.Monsters
 				var itemList = obj.victimBody.inventory.itemAcquisitionOrder;
 				if (itemList.Count > 0)
 				{
-					int item = UnityEngine.Random.Range(0, itemList.Count);
-					obj.attackerBody.inventory.GiveItem(itemList[item]);
-					obj.victimBody.inventory.RemoveItem(itemList[item]);
+					var mim = obj.attackerBody.gameObject.GetComponent<MimicInventoryManager>();
+					if (mim)
+					{
+						Util.ShuffleList(itemList);
+						for(int i = 0; i < itemList.Count; ++i)
+                        {
+							var def = ItemCatalog.GetItemDef(itemList[i]);
+							
+							if(def.tier == ItemTier.NoTier) { continue; }
+
+							var pdef = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(itemList[i]));
+
+							obj.attackerBody.inventory.GiveItem(def);
+							obj.victimBody.inventory.RemoveItem(def);
+							mim.AddItem(def.itemIndex);
+
+							EffectData effectData = new EffectData
+							{
+								origin = obj.victimBody.corePosition,
+								genericFloat = 1.5f,
+								genericUInt = (uint)(def.itemIndex + 1)
+							};
+							effectData.SetNetworkedObjectReference(obj.attacker);
+							EffectManager.SpawnEffect(itemOrb, effectData, true);
+
+							//"MONSTER_PICKUP": "<style=cWorldEvent>{0} picked up {1}{2}</color>",
+							Chat.SendBroadcastChat(new MimicTheftMessage
+							{
+								subjectAsCharacterBody = obj.attackerBody,
+								baseToken = "SS2_MIMIC_THEFT",
+								pickupToken = pdef.nameToken,
+								pickupColor = pdef.baseColor,
+								victimName = obj.victimBody.GetDisplayName()
+							});
+							break;
+						}
+					}
 				}
 			}
 		}
 
 		public override bool IsAvailable(ContentPack contentPack)
 		{
-			return false;
+			return true;
 		}
 
+	}
+
+	public class MimicTheftMessage : SubjectChatMessage
+	{
+		public override string ConstructChatString()
+		{
+			string subjectName = base.GetSubjectName();
+			string @string = Language.GetString(base.GetResolvedToken());
+
+			string text = Language.GetString(this.pickupToken) ?? "???";
+			text = Util.GenerateColoredString(text, this.pickupColor);
+			try
+			{
+				return string.Format(@string, subjectName, text, victimName);
+			}
+			catch (Exception message)
+			{
+				Debug.LogError(message);
+			}
+			return "";
+		}
+
+		public override void Serialize(NetworkWriter writer)
+		{
+			base.Serialize(writer);
+			writer.Write(this.pickupToken);
+			writer.Write(this.pickupColor);
+			writer.Write(this.victimName);
+		}
+
+		public override void Deserialize(NetworkReader reader)
+		{
+			base.Deserialize(reader);
+			this.pickupToken = reader.ReadString();
+			this.pickupColor = reader.ReadColor32();
+			this.victimName = reader.ReadString();
+		}
+
+		public string pickupToken;
+
+		public Color32 pickupColor;
+
+		public string victimName;
 	}
 }

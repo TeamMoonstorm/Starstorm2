@@ -12,4 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68b43d1b0b7e3074e9c105a44212585b, type: 3}
   m_Name: msmdcMimic
   m_EditorClassIdentifier: 
-  serializedCardPairs: []
+  serializedCardPairs:
+  - stage:
+      Value: 0
+    customStageNames: []
+    monsterCategory: 2
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions: []
+    card:
+      spawnCard:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      selectionWeight: 0
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0

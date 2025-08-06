@@ -8,14 +8,7 @@ namespace EntityStates.Mimic.Weapon
     {
         public static float baseDuration;
 
-        public static string mecanimPeramater;
-
         private float duration;
-        private bool hasFired;
-        //private Transform muzzle;
-        private Animator animator;
-
-        private float originalMoveSpeed;
 
         public override void OnEnter()
         {
@@ -32,11 +25,8 @@ namespace EntityStates.Mimic.Weapon
             {
                 EntityState.Destroy(fireVFXInstanceRight);
             }
-            //Util.PlayAttackSpeedSound(MinigunSpinDown.sound, base.gameObject, this.attackSpeedStat);
-            //base.GetModelAnimator().SetBool(MinigunSpinDown.WeaponIsReadyParamHash, false);
         }
 
-        // Token: 0x060018B0 RID: 6320 RVA: 0x00072D81 File Offset: 0x00070F81
         public override void FixedUpdate()
         {
             base.FixedUpdate();

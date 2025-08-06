@@ -17,21 +17,9 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: biteEffect
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 0}
     - fieldName: damageCoeff
       fieldValue:
-        stringValue: 3
-        objectValue: {fileID: 0}
-    - fieldName: blastForce
-      fieldValue:
-        stringValue: 800
-        objectValue: {fileID: 0}
-    - fieldName: blastBonusForce
-      fieldValue:
-        stringValue: 0 800 0
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: minimumDuration
       fieldValue:
@@ -39,7 +27,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: blastRadius
       fieldValue:
-        stringValue: 3
+        stringValue: 3.75
         objectValue: {fileID: 0}
     - fieldName: blastProcCoefficient
       fieldValue:
@@ -55,23 +43,15 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: upwardVelocity
       fieldValue:
-        stringValue: 10
+        stringValue: 5
         objectValue: {fileID: 0}
     - fieldName: forwardVelocity
       fieldValue:
-        stringValue: 4
+        stringValue: 10
         objectValue: {fileID: 0}
     - fieldName: minimumY
       fieldValue:
         stringValue: .05
-        objectValue: {fileID: 0}
-    - fieldName: minYVelocityForAnim
-      fieldValue:
-        stringValue: 30
-        objectValue: {fileID: 0}
-    - fieldName: maxYVelocityForAnim
-      fieldValue:
-        stringValue: -30
         objectValue: {fileID: 0}
     - fieldName: knockbackForce
       fieldValue:

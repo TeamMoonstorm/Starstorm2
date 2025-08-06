@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.Mimic
@@ -34,8 +35,6 @@ namespace EntityStates.Mimic
 		public static float forwardVelocity;
 
 		public static float minimumY;
-		public static float minYVelocityForAnim;
-		public static float maxYVelocityForAnim;
 
 		public static string soundLoopStartEvent;
 		public static string soundLoopStopEvent;
@@ -61,7 +60,7 @@ namespace EntityStates.Mimic
 			{
 				characterBody.isSprinting = true;
 				direction.y = Mathf.Max(direction.y, minimumY);
-				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat;
+				Vector3 a = direction.normalized * aimVelocity * moveSpeedStat/2;
 				Vector3 b = Vector3.up * upwardVelocity;
 				Vector3 b2 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
 				characterMotor.Motor.ForceUnground(0.1f);
@@ -83,6 +82,19 @@ namespace EntityStates.Mimic
 			}
 
 			Util.PlaySound(soundLoopStartEvent, gameObject);
+
+			var lThruster = FindModelChild("ThrusterL");
+			var rThruster = FindModelChild("ThrusterR");
+
+			if (lThruster)
+            {
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, lThruster);
+			}
+
+            if (rThruster)
+            {
+				UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.jetVFX, rThruster);
+			}
 		}
 
 		private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
@@ -90,36 +102,26 @@ namespace EntityStates.Mimic
 			detonateNextFrame = true;
 		}
 
-		public override void UpdateAnimationParameters()
-		{
-			base.UpdateAnimationParameters();
-			float value = Mathf.Clamp01(Util.Remap(estimatedVelocity.y, minYVelocityForAnim, maxYVelocityForAnim, 0f, 1f)) * 0.97f;
-			//modelAnimator.SetFloat("LeapCycle", value, 0.1f, Time.deltaTime);
-		}
-
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (isAuthority && characterMotor)
+			if (characterMotor)
 			{
-				characterMotor.moveDirection = inputBank.moveVector;
 				if (fixedAge >= minimumDuration && (detonateNextFrame || (characterMotor.Motor.GroundingStatus.IsStableOnGround && !characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
 				{
-					DoImpactAuthority();
 					endedSuccessfully = true;
-					SS2Log.Warning("FixedUpdate Fire");
-					outer.SetNextState(new MimicLeapExit());
+                    if (isAuthority)
+                    {
+						characterMotor.moveDirection = inputBank.moveVector;
+						DoImpactAuthority();
+						outer.SetNextState(new MimicLeapExit());
+					}
 				}
-			}
-			if (NetworkServer.active)
-			{
-				characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
 			}
 		}
 
 		protected void DoImpactAuthority()
 		{
-			SS2Log.Warning("DoImpactAuthority");
 			if (landingSound)
 			{
 				EffectManager.SimpleSoundEffect(landingSound.index, characterBody.footPosition, true);
@@ -129,26 +131,12 @@ namespace EntityStates.Mimic
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
-			//Vector3 footPosition = characterBody.corePosition;
-			//EffectManager.SpawnEffect(blastEffectPrefab, new EffectData
-			//{
-			//	origin = footPosition,
-			//	scale = blastRadius
-			//}, true);
-			SS2Log.Warning("Detonate Authority");
-			SS2Log.Warning("attacker : " + gameObject);
-			SS2Log.Warning("damageStat : " + damageStat);
-			SS2Log.Warning("damageCoeff : " + damageCoeff);
-			SS2Log.Warning("blastForce : " + blastForce);
-			SS2Log.Warning("blastBonusForce : " + blastBonusForce);
-			SS2Log.Warning("isCritAuthority : " + isCritAuthority);
-			SS2Log.Warning("blastProcCoefficient : " + blastProcCoefficient);
-			SS2Log.Warning("blastRadius : " + blastRadius);
-			SS2Log.Warning("characterBody.corePosition : " + characterBody.corePosition + " |" + transform.position);
-			SS2Log.Warning("teamComponent.teamIndex : " + teamComponent.teamIndex);
-			SS2Log.Warning("attacker : " + gameObject);
-
-
+			EffectData effectData = new EffectData
+			{
+				origin = characterBody.corePosition
+			};
+			effectData.SetNetworkedObjectReference(this.gameObject);
+			EffectManager.SpawnEffect(SS2.Monsters.Mimic.leapLandVFX, effectData, transmit: true);
 
 			return new BlastAttack
 			{
@@ -163,7 +151,6 @@ namespace EntityStates.Mimic
 				radius = blastRadius,
 				position = characterBody.corePosition,
 				attackerFiltering = AttackerFiltering.NeverHitSelf,
-				//impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab),
 				teamIndex = teamComponent.teamIndex
 			}.Fire();
 		}
