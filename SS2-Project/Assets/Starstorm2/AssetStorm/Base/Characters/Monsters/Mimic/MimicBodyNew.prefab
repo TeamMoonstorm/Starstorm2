@@ -3384,6 +3384,7 @@ GameObject:
   - component: {fileID: 92759885951771341}
   - component: {fileID: 6449461314649773876}
   - component: {fileID: 8119593420475265400}
+  - component: {fileID: -8898214638666698048}
   m_Layer: 0
   m_Name: MimicBodyNew
   m_TagString: Untagged
@@ -4349,6 +4350,23 @@ MonoBehaviour:
   cdir: {fileID: 6887562311180294278}
   dropTable: {fileID: 11400000, guid: 36eab256ec979cc4e8a2c170b3f6808c, type: 2}
   rechestPreventionTime: 2.5
+--- !u!114 &-8898214638666698048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096113393629376220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -578974823, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logUnlockableName: 
+  logUnlockableDef: {fileID: 11400000, guid: f288acf60e7e8cd4f86f6b53fa75ec02, type: 2}
+  bossDropTable: {fileID: 0}
+  bossPickup:
+    pickupName: 
 --- !u!1 &7175305916529430826
 GameObject:
   m_ObjectHideFlags: 0
