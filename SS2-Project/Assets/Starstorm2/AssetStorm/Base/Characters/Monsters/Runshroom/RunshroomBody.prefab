@@ -1243,8 +1243,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5780451122550280789}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.000000001397, y: -0.03089, z: -0.000000004482}
+  m_LocalScale: {x: 1, y: 1.1594, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5060434209380387472}
@@ -1732,6 +1732,7 @@ MonoBehaviour:
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   baseLightInfos: []
   corpseFade: 1
   CharacterOnScreen: 0
@@ -6959,7 +6960,7 @@ MonoBehaviour:
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 200
+  baseMaxHealth: 225
   baseRegen: 0
   baseMaxShield: 0
   baseMoveSpeed: 25
@@ -6973,7 +6974,7 @@ MonoBehaviour:
   baseJumpCount: 0
   sprintingSpeedMultiplier: 1
   autoCalculateLevelStats: 1
-  levelMaxHealth: 60
+  levelMaxHealth: 68
   levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -7039,6 +7040,7 @@ MonoBehaviour:
   preferredInitialStateType:
     _typeName: 
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &9055669533049590444
@@ -7212,6 +7214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 0}
   muteWalkMotion: 0
   mass: 100
@@ -7295,6 +7298,7 @@ MonoBehaviour:
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 482690124488659400}
   forceCulled: 0
@@ -7593,8 +7597,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8474760254300593048}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -4.3e-14, y: -0.7648, z: -0.000000059605}
+  m_LocalScale: {x: 1, y: 2.0197, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7916818349661007983}

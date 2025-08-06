@@ -8,60 +8,62 @@ namespace EntityStates.Executioner2
     public class ExecuteLeap : BaseSkillState
     {
         private Vector3 flyVector = Vector3.zero;
+        private static float walkSpeedCoefficient = 2f;
+        private static float baseVerticalSpeed = 48f;
         public static AnimationCurve speedCoefficientCurve;
-        public static float duration = 0.8f;
+        private static float baseDuration = 0.8f;
+        private static float maxAttackSpeed = 1.4f;
+        private static float dumbFuckingSpeedScalingNumberCoefficientValue = 1.3f;
         public static float crosshairDur = 0.75f;
 
+        private static float maxAngle = 42f;
+        private static float maxAngleTuah = 66f;
+        private static float rayRadius = 1.5f;
+        private static float axeFadeInDuration = .8f;
+
+        public static GameObject indicatorPrefab;
         public static GameObject jumpEffect;
         public static GameObject jumpEffectMastery;
         public static Material jumpMaterialMastery;
         public static string ExhaustL;
         public static string ExhaustR;
-
-        private string skinNameToken;
-        private bool hasPlacedCrosshair = false;
         private bool controlledExit = false;
 
-        public static GameObject areaIndicator;
-        public static GameObject areaIndicatorOOB;
-
-        [HideInInspector]
-        public GameObject areaIndicatorInstance;
-
-        [HideInInspector]
-        public GameObject areaIndicatorInstanceOOB;
-
+        private float duration;
+        private float verticalSpeed;
         private ExecutionerController exeController;
+        private GameObject indicatorInstance;
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private static float cameraLerpDuration = 0.5f;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 88f,
-            minPitch = 25f,
-            pivotVerticalOffset = 1f,
+            minPitch = -88f,
+            pivotVerticalOffset = 1.37f,
             idealLocalCameraPos = slamCameraPosition,
             wallCushion = 0.1f,
         };
-        public static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -8f);
+        private static Vector3 slamCameraPosition = new Vector3(2.6f, -2.0f, -12f);
         public override void OnEnter()
         {
             base.OnEnter();
-
-            skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
 
             exeController = GetComponent<ExecutionerController>();
             if (exeController != null)
             {
                 exeController.meshExeAxe.SetActive(true);
-                exeController.hasOOB = false;
+                exeController.AxeFadeIn(axeFadeInDuration);
             }
 
-
-            //skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
+            float attackSpeed = Mathf.Min(attackSpeedStat, maxAttackSpeed);
+            duration = baseDuration / attackSpeed;
+            float dipshit = ((attackSpeed - 1) * dumbFuckingSpeedScalingNumberCoefficientValue) + 1;
+            verticalSpeed = baseVerticalSpeed * dipshit;
 
             characterBody.hideCrosshair = true;
             characterBody.SetAimTimer(duration);
-
+            characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
             flyVector = Vector3.up;
 
             Transform modelTransform = GetModelTransform();
@@ -73,7 +75,7 @@ namespace EntityStates.Executioner2
 
                 temporaryOverlay.destroyComponentOnEnd = true;
 
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                if (exeController.inMasterySkin)
                 {
                     temporaryOverlay.duration = .3f * duration;
                     temporaryOverlay.originalMaterial = jumpMaterialMastery;
@@ -92,12 +94,21 @@ namespace EntityStates.Executioner2
 
             Util.PlaySound("ExecutionerSpecialCast", gameObject);
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
+            StartAimMode();
+
+            if (indicatorPrefab)
+            {
+                indicatorInstance = GameObject.Instantiate(indicatorPrefab);
+                indicatorInstance.transform.localScale = Vector3.one * ExecuteSlam.slamRadius;
+                indicatorInstance.GetComponent<TeamFilter>().teamIndex = teamComponent.teamIndex;
+                UpdateIndicator();
+            }
 
             if (isAuthority)
             {
                 characterMotor.Motor.ForceUnground();
 
-                if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY")
+                if (exeController.inMasterySkin)
                 {
                     EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustL, true);
                     EffectManager.SimpleMuzzleFlash(jumpEffectMastery, gameObject, ExhaustR, true);
@@ -113,57 +124,49 @@ namespace EntityStates.Executioner2
                     cameraParamsData = slamCameraParams,
                     priority = 1f
                 };
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.5f);
-
-                
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
             }    
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (fixedAge >= duration * crosshairDur && !hasPlacedCrosshair)
-            {
-                hasPlacedCrosshair = true;
-                areaIndicatorInstance = UnityEngine.Object.Instantiate(areaIndicator);
-                //areaIndicatorInstanceOOB = UnityEngine.Object.Instantiate(areaIndicatorOOB);
-                areaIndicatorInstance.SetActive(true);
-            }
 
             if (isAuthority)
+            {
                 FixedUpdateAuthority();
+            }
         }
 
         public override void Update()
         {
             base.Update();
-            UpdateAreaIndicator();
+            UpdateIndicator();
         }
-
-        private void UpdateAreaIndicator()
+        private void UpdateIndicator()
         {
-            if (areaIndicatorInstance)
+            if (indicatorInstance)
             {
-                float maxDistance = 256f;
+                Ray aimRay = base.GetAimRay();
+                Vector3 direction = Vector3.down;
+                direction = Vector3.RotateTowards(direction, aimRay.direction, maxAngle * Mathf.Deg2Rad, 0f);
+                aimRay.direction = direction;
+                if (Util.CharacterSpherecast(gameObject, aimRay, rayRadius, out RaycastHit hit, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+                {
+                    indicatorInstance.transform.position = hit.point;
+                    indicatorInstance.transform.up = hit.normal;
+                }
 
-                Ray aimRay = GetAimRay();
-                RaycastHit raycastHit;
-                if (Physics.Raycast(aimRay, out raycastHit, maxDistance, LayerIndex.CommonMasks.bullet))
+                // prevent spherecast jank so we dont go up/sideways
+                Vector3 between = indicatorInstance.transform.position - aimRay.origin;
+                Vector3 directionTuah = Vector3.RotateTowards(Vector3.down, between.normalized, maxAngleTuah * Mathf.Deg2Rad, 0f);
+                aimRay.direction = directionTuah;
+                if(Util.CharacterRaycast(gameObject, aimRay, out RaycastHit hitTuah, 1000f, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
                 {
-                    //imAFilthyFuckingLiar = true;
-                    //areaIndicatorInstance.SetActive(true);
-                    //areaIndicatorInstanceOOB.SetActive(false);
-                    areaIndicatorInstance.transform.position = raycastHit.point;
-                    areaIndicatorInstance.transform.up = raycastHit.normal;
+                    indicatorInstance.transform.position = hitTuah.point;
+                    indicatorInstance.transform.up = hitTuah.normal;
                 }
-                else
-                {
-                    //imAFilthyFuckingLiar = false;
-                    //areaIndicatorInstance.SetActive(false);
-                    //areaIndicatorInstanceOOB.SetActive(true);
-                    areaIndicatorInstance.transform.position = aimRay.GetPoint(maxDistance);
-                    areaIndicatorInstance.transform.up = -aimRay.direction;
-                }
+
             }
         }
 
@@ -172,46 +175,52 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration)
             {
                 controlledExit = true;
-                if (inputBank.skill4.down)
-                {
-                    ExecuteHold nextState = new ExecuteHold();
-                    outer.SetNextState(nextState);
-                }
-                else
-                {
-                    ExecuteSlam nextState = new ExecuteSlam();
-                    outer.SetNextState(nextState);
-                }
+                ExecuteSlam nextState = new ExecuteSlam();
+                Vector3 direction = (indicatorInstance.transform.position - characterBody.footPosition).normalized;
+                direction = Vector3.RotateTowards(Vector3.down, direction, maxAngleTuah * Mathf.Deg2Rad, 0f);
+                nextState.dashVector = direction.normalized;
+                outer.SetNextState(nextState);
             }
             else
+            {
                 HandleMovement();
+            }
+               
         }
 
         public void HandleMovement()
         {
-            characterMotor.rootMotion += flyVector * (moveSpeedStat * speedCoefficientCurve.Evaluate(fixedAge / duration) * Time.fixedDeltaTime * 2f);
+            if(characterMotor.isGrounded)
+            {
+                characterMotor.Motor.ForceUnground();
+            }
+
+            float speed =  verticalSpeed * speedCoefficientCurve.Evaluate(fixedAge / duration);
+            characterMotor.rootMotion += flyVector * speed  * Time.fixedDeltaTime;
             characterMotor.velocity.y = 0f;
+
+            characterMotor.moveDirection = inputBank.moveVector;
+            characterDirection.forward = inputBank.aimDirection;
         }
 
         public override void OnExit()
         {
             base.OnExit();
+            if(indicatorInstance)
+            {
+                Destroy(indicatorInstance);
+            }
+            if (outer.nextState is not ExecuteSlam)
+            {
+                PlayAnimation("FullBody, Override", "BufferEmpty");
+            }
             characterBody.hideCrosshair = false;
+            characterMotor.walkSpeedPenaltyCoefficient = 1f;
             if (exeController != null && controlledExit == false)
                 exeController.meshExeAxe.SetActive(false);
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
-            }
-
-            if (areaIndicatorInstance)
-            {
-                Destroy(areaIndicatorInstance.gameObject);
-            }
-
-            if (areaIndicatorInstanceOOB)
-            {
-                Destroy(areaIndicatorInstanceOOB.gameObject);
             }
         }
 

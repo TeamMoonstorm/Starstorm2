@@ -234,14 +234,23 @@ namespace SS2
 
         public void AddPickups(ItemDef def, int count)
         {
+            if (def == null)
+                return;
+
             AddPickups(PickupCatalog.FindPickupIndex(def.itemIndex), count);
         }
         public void AddPickups(EquipmentDef def, int count)
         {
+            if (def == null)
+                return;
+
             AddPickups(PickupCatalog.FindPickupIndex(def.equipmentIndex), count);
         }
         public void AddPickups(MiscPickupDef def, int count)
         {
+            if (def == null)
+                return;
+
             AddPickups(PickupCatalog.FindPickupIndex(def.miscPickupIndex), count);
         }
         public void AddPickups(PickupIndex pickupIndex, int count)
@@ -267,14 +276,23 @@ namespace SS2
 
         public void Add(RewardDef rewardDef)
         {
+            if (rewardDef == null) 
+                return;
+
             Add(rewardDef, 1);
         }
         public void Add(RewardDef rewardDef, float weight)
         {
+            if (rewardDef == null)
+                return;
+
             rewardDefs.Add(new WeightedRewardDef { rewardDef = rewardDef, weight = weight });
         }
         public void Regenerate(Run run)
         {
+            if (run == null) 
+                return;
+
             selection.Clear();
             for (int i = 0; i < rewardDefs.Count; i++)
             {

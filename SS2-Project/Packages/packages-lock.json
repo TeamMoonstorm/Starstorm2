@@ -13,13 +13,20 @@
       "dependencies": {}
     },
     "com.passivepicasso.thunderkit": {
-      "version": "https://github.com/PassivePicasso/ThunderKit.git#9.0.1",
+      "version": "https://github.com/PassivePicasso/ThunderKit.git#9.1.1",
       "depth": 0,
       "source": "git",
       "dependencies": {
         "com.unity.scriptablebuildpipeline": "1.16.1"
       },
-      "hash": "9501deb9cb6b62d45cfa56f0c5629e3c8366d1f7"
+      "hash": "574342edeb55250cda0c75789f6969c8b748f4cd"
+    },
+    "com.thetimesweeper.henryeditortools": {
+      "version": "https://github.com/TheTimeSweeper/HenryEditorTools.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "de4cf6a8a31364a1e9f900b357a1ee8cb7692ec8"
     },
     "com.thetimesweeper.henryeditortools": {
       "version": "https://github.com/TheTimeSweeper/HenryEditorTools.git",
@@ -162,6 +169,12 @@
     },
     "nebby-loadingscreenspritefix": {
       "version": "file:LoadingScreenSpriteFix",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "pseudopulse-seekerspatcher": {
+      "version": "file:SeekersPatcher",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -340,6 +353,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-r2api_skills": {
+      "version": "file:R2API_Skills",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-r2api_skins": {
       "version": "file:R2API_Skins",
       "depth": 0,
@@ -396,7 +415,7 @@
       "dependencies": {
         "com.unity.editorcoroutines": "1.0.0"
       },
-      "hash": "3373df696da00fa01a2768907554c5752a1141a9"
+      "hash": "83a8727f8f657edcf0e9f0745ac6ac8b6df627be"
     },
     "riskofthunder-ror2importextensions": {
       "version": "https://github.com/risk-of-thunder/RoR2ImportExtensions.git#1.7.1",
@@ -411,6 +430,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "score-miscfixes": {
+      "version": "file:MiscFixes",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "smooth_salad-shaderswapper": {
       "version": "file:ShaderSwapper",
       "depth": 0,
@@ -418,11 +443,11 @@
       "dependencies": {}
     },
     "teammoonstorm-moonstormsharedutils": {
-      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git#2.2.0",
+      "version": "https://github.com/TeamMoonstorm/MoonstormSharedUtils.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "eec5a07ccc64a6a05c5c473224329ace8beb701e"
+      "hash": "69844dd8ab9af39c2c5d1c4646004fc4bba052ba"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",

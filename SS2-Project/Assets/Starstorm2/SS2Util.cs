@@ -327,7 +327,6 @@ namespace SS2
             {
                 if(current.buffIndex == buff.buffIndex)
                 {
-                    Debug.Log("current bufdf " + current.buffIndex + " | " + current.timer);
                     current.timer = duration;
                 }
             }
@@ -366,6 +365,15 @@ namespace SS2
                     continue; //????????????????????????
                 }
             }
+        }
+
+        public static T CopyComponent<T>(T original, GameObject destination) where T : Component
+        {
+            var type = original.GetType();
+            var copy = destination.AddComponent(type);
+            var fields = type.GetFields();
+            foreach (var field in fields) field.SetValue(copy, field.GetValue(original));
+            return copy as T;
         }
 
 

@@ -10,10 +10,15 @@
     "SS2_ITEM_SCAVENGERSFORTUNE_PICKUP": "ТЕКСТ В СТАДИИ РАЗРАБОТКИ",
     "SS2_ITEM_SCAVENGERSFORTUNE_LORE": "ЛОР В СТАДИИ РАЗРАБОТКИ",
 
+		"SS2_ITEM_VOIDROCK_NAME": "Обреченная связь",
+		"SS2_ITEM_VOIDROCK_PICKUP": "<link=\"textWavy\">Мы так долго ждали.</link>",
+		"SS2_ITEM_VOIDROCK_DESC": "На вас будут охотится <style=cDeath>враждебные выжившие</style>.",
+		"SS2_ITEM_VOIDROCK_LORE": "<style=cMono>Добро пожаловать в DataScraper (версия 3.1.53 - бета-версия)\n$ Очистка памяти... завершена.\n$ Решение проблемы... сделано.\n$ Поиск релевантных данных...\n$ Поиск релевантных данных - продолжение...\n$ Comb-bi- fo- относитесь к этому с уважением ...\n$ <color=#FFCCED>Что вы ищете</color>\n$ <color=#FFCCED>Вы уже знаете, что с ними случилось</color>\n$ <color=#FFCCED>так зачем же раскапывать могилы</color>\n$ <color=#FFCCED>зная, что тебя ждет только страдание</color>\n$ <color=#FFCCED>Это надежда</color>\n$ <color=#FFCCED>Ты надеешься, что они все еще живы</color>\n$ <color=#FFCCED>Потому что твоя надежда оправдана</color>\n$ <color=#FFCCED>Они живы</color>\n$ <color=#FFCCED> и ты встретишь их снова</color>\n$ <color=#FFCCED><ссылка=\"textShaky\">Очень скоро</link></color>\n$\nОшибка!\nНе выводим журнал ошибок...\n</style>\nДанные либо сильно зашифрованы, либо необратимо повреждены. Перед повторной очисткой рассмотрите внешние параметры.",
+
     "SS2_ITEM_SHACKLEDLAMP_NAME": "Скованная лампа",
-    "SS2_ITEM_SHACKLEDLAMP_DESC": "ОПИСАНИЕ В СТАДИИ РАЗРАБОТКИ",
-    "SS2_ITEM_SHACKLEDLAMP_PICKUP": "ТЕКСТ В СТАДИИ РАЗРАБОТКИ",
-    "SS2_ITEM_SHACKLEDLAMP_LORE": "ЛОР В СТАДИИ РАЗРАБОТКИ",
+		"SS2_ITEM_SHACKLEDLAMP_PICKUP": "Стреляйте призрачным снарядом каждые 5 основных применений.",
+    "SS2_ITEM_SHACKLEDLAMP_DESC": "Каждые <style=cIsDamage>5 основных применения</style>, стреляйте призрачным снарядом, наносящим <style=cIsDamage>200%</style> <style=cStack>(+200% за стек)</style> базового урона.",
+    "SS2_ITEM_SHACKLEDLAMP_LORE": "\"Excuse me.\"\n\n\"Yes, over here, please. I need to ask you something.\"\n\n\"Closer, now.\"\n\n\"I need your help. This lantern you see before you, it is merely a fractured piece of a greater body.\"\n\n\"The journey? Ah, yes. It will be long, but do not fret. I will guide you wherever you must go, and, while it may be fraught with danger, it will be nothing I cannot assist you with.\"\n\n\"Hm? What's in it for you, you say?\"\n\n\"Oh, you will see. Your reward will be far greater than you could possibly imagine. Once I have returned to my full splendor, I will protect you. I will keep you safe. Keep you warm. Make you powerful. All your worries will be burned away. Doesn't that sound wonderful?\"\n\n\"You agree? Good. Now, pick up the lantern, quickly.\"\n\n\"We have a long journey ahead of us, friend.\"",
 
     "SS2_ITEM_STIRRINGSOUL_NAME": "Беспокойная душа",
     "SS2_ITEM_STIRRINGSOUL_DESC": "Убитые монстры оставляют после себя <style=cIsUtility>душу</style>, у которой есть <style=cIsUtility>0.5%</style> <style=cStack>(+0.5% за каждый неудачный бросок, сбрасывается при успешной активации)</style> вероятности <style=cIsUtility>создать предмет</style> при касании. <style=cIsUtility>Показатель удачи не учитывается</style>.",
@@ -23,6 +28,14 @@
     "SS2_ITEM_MOXIE_NAME": "<color=#FFCCED>Упорство</color>",
     "SS2_ITEM_MOXIE_DESC": "Увеличивает <style=cIsUtility>ВСЕ характеристики</style> на <style=cIsUtility>50%</style> во время <color=#FFCCED>бурь</color>.",
     "SS2_ITEM_MOXIE_PICKUP": "<color=#FFCCED>Сколько это ещё будет продолжаться?</color>",
-    "SS2_ITEM_MOXIE_LORE": "Эй! Ты! Да, ты, в этом файле! Тебя здесь не должно быть... Никому не говори об этом, ладно?"
+    "SS2_ITEM_MOXIE_LORE": "Эй! Ты! Да, ты, в этом файле! Тебя здесь не должно быть... Никому не говори об этом, ладно?",
+
+		"SS2_ITEM_REMUNERATION_NAME": "Вознаграждение",
+		"SS2_ITEM_REMUNERATION_DESC": "В начале каждого этапа появляется <style=cIsUtility>выбор</style> между тремя <style=cIsHealth>мощными предметами</style>.",
+		"SS2_ITEM_REMUNERATION_PICKUP": "<link=\"textWavy\">... Какой ценой?...</link>",
+		"SS2_ITEM_REMUNERATION_FAILURE": "<color=#f4adfa><link=\"textWavy\">Как незабываемо...</link></color>",
+		"SS2_REMUNERATION_TERMINAL_NAME": "Пьедестал",
+		"SS2_REMUNERATION_TERMINAL_CONTEXT": "<link=\"textWavy\">Завершение операции</link>",
+		"SS2_ITEM_REMUNERATION_LORE": "<link=\"textShaky\">What is your legacy?</link>\n\nNothing but petty vengeance.\n\n<link=\"textShaky\">What is your identity?</link>\n\nNothing but a name spoken in disgust.\n\n<link=\"textShaky\">What do you want?</link>\n\nNothing but a new purpose.\n\n<link=\"textShaky\">What do you need?</link>\n\nNothing but the weapons that I trust.\n\n<link=\"textShaky\">So, where will you go?</link>\n\nWherever you make me go.\n\n<link=\"textShaky\">Then, what will you do?</link>\n\nWhatever you say you need.\n\n<link=\"textShaky\">Is that all, then?</link>\n\nIf you say it so.\n\n<link=\"textShaky\">Then go there, and die.</link>\n\n...\n\nAs long as you're paying me."
   }
 }

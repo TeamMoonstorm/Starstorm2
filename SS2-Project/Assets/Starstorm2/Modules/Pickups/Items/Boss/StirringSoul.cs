@@ -41,9 +41,37 @@ namespace SS2.Items
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
+        public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
         {
-            return true;
+            [ItemDefAssociation]
+            private static ItemDef GetItemDef() => SS2Content.Items.StirringSoul;
+            public float currentChance;
+
+            public void OnKilledOtherServer(DamageReport report)
+            {
+                if (NetworkServer.active && !Run.instance.isRunStopwatchPaused && report.victimMaster)
+                {
+                    GameObject soul = Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
+                    soul.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
+                    SoulPickup pickup = soul.GetComponentInChildren<SoulPickup>();
+                    pickup.team = soul.GetComponent<TeamFilter>();
+                    pickup.chance = currentChance;
+                    pickup.Behavior = this;
+                    NetworkServer.Spawn(soul);
+                }
+
+            }
+            public void ChangeChance(bool reset)
+            {
+                if (reset)
+                {
+                    currentChance = initChance * 200;
+                }
+                else if (currentChance < (maxChance * 200))
+                {
+                    currentChance += initChance * 200;
+                }
+            }
         }
     }
 }

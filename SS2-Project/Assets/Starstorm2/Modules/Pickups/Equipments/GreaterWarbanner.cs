@@ -83,11 +83,6 @@ namespace SS2.Equipments
             On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public override void OnEquipmentLost(CharacterBody body)
         {
         }

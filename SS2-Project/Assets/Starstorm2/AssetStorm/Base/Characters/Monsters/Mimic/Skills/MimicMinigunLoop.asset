@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: MimicMinigunLoop
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Mimic.Weapon.MimicMinigunLoop, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: bulletTracerEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 9014596825164709206, guid: b426f5c4c72a7b444ae1b3574ba0fbd8,
+          type: 3}
+    - fieldName: bulletHitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1310465176928669, guid: 445a37e31ea5f38498e970dd39c135d2,
+          type: 3}
+    - fieldName: baseFireInterval
+      fieldValue:
+        stringValue: 0.125
+        objectValue: {fileID: 0}
+    - fieldName: baseBulletCount
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: baseDamagePerSecondCoefficient
+      fieldValue:
+        stringValue: 2.75
+        objectValue: {fileID: 0}
+    - fieldName: baseProcCoefficientPerSecond
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: bulletMinSpread
+      fieldValue:
+        stringValue: 0.25
+        objectValue: {fileID: 0}
+    - fieldName: bulletMaxSpread
+      fieldValue:
+        stringValue: 4.25
+        objectValue: {fileID: 0}
+    - fieldName: bulletMaxDistance
+      fieldValue:
+        stringValue: 200
+        objectValue: {fileID: 0}
+    - fieldName: muzzleVfxPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: bulletHitEffectNormal
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}

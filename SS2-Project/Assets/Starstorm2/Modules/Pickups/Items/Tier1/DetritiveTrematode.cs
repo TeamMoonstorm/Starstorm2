@@ -39,11 +39,6 @@ namespace SS2.Items
             BuffOverlays.AddBuffOverlay(buffTrematodes, AssetCollection.FindAsset<Material>("matBloodOverlay"));
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
             [ItemDefAssociation]

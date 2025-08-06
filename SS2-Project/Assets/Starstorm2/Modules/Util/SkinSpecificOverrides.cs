@@ -17,21 +17,22 @@ namespace SS2.Modules
         [SystemInitializer]
         public static void Initialize()
         {
+            // TODO: Commenting this out for the memop skin bug
             //Generic Hooks (Currently all Commando - subject to change)
-            On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
-            On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
-            CharacterBody.onBodyStartGlobal += BodyStartGlobal;
+            //On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
+            //On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
+            //CharacterBody.onBodyStartGlobal += BodyStartGlobal;
 
             //MUL-T specific
-            matLunarGolem = Object.Instantiate(Resources.Load<GameObject>("Prefabs/CharacterBodies/LunarGolemBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial); // to-do: update this into an addressable
-            On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
-            On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
-            On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
+            //matLunarGolem = Object.Instantiate(Resources.Load<GameObject>("Prefabs/CharacterBodies/LunarGolemBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial); // to-do: update this into an addressable
+            //On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
+            //On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
+            //On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
 
             //merc specific
-            On.RoR2.SkinDef.Apply += ModifiyLighting;
+            //On.RoR2.SkinDef.Apply += ModifiyLighting;
         }
 
         public static void GPBS_FireProjectile(On.EntityStates.GenericProjectileBaseState.orig_FireProjectile orig, EntityStates.GenericProjectileBaseState self)

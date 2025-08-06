@@ -65,7 +65,9 @@ namespace SS2
             // "Terminal"
             if (characterBody.inventory && characterBody.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
             {
+                SS2Log.Warning("Termination Result before : " + result);
                 result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result); // relicopter
+                SS2Log.Warning("Termination Result after : " + result);
             }
             return result;
         }

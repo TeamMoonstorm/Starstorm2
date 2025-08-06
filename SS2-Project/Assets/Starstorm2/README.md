@@ -30,19 +30,19 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* Buns, Nebby, orbeezeater22, swuff★, Zenithrium
+* Buns, Nebby, orbeezeater22, swuff★, Zenithrium, EarthZebra, JaceCascade
 
 With previous and one-off code contributions by...
-* Anreol, bread, Flan, Gaforb, GrooveSalad, HIFU, JaceCascade, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, TheTimesweeper, Vale-X, xpcybic, Xubas
+* Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation contributions by...
-* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, SkeletorChampion, SOM, Spenny, Starnoenas, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, Zenithrium
+* Alexstarwras, Anreol, Bolty, bread, bruh, Cexeub, dotflare, Draymarc, Domi, JestAnotherAnimator, Gem, goodguy, GrooveSalad, JaceDaDorito, LucidInceptor, Neik, KevinFromHPCustomerService, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, rekkadraws, redacted, rob, Gemo, SkeletorChampion, SOM, Spenny, Starnoenas, Smxrez, swuff★, Slipskip, xpcybic, Reithierion, UnknownGlaze, YarrowQueen/Resident Providence, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
+* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight (Chinese), Kauzok (Portuguese), StyleMyk (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol
-* Special thanks - Altzeus, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
+* Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
 ## Feedback, Bug Reporting & Known Issues
 
@@ -52,4 +52,4 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
     * Man o War causes NRE spam, we've made a temporary dependenncy on MiscFixes mod by score until we can resolve the issue ourselves. Thank you score for the fix!
     * Elite events are currently disabled.
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
-    * NOTE: Chirr players are advised to download [EnemyImportance](https://thunderstore.io/package/pseudopulse/EnemyImportance/) due to a known enemy sliding bug caused by how SOTS changes enemy collision and Chirr's grab. This mod also impacts performance so it isnt a requirement, but is recommended if you want the best Chirr experience
+    * Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update

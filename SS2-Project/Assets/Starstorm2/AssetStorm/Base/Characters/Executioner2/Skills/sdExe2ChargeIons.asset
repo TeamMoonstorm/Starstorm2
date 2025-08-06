@@ -23,16 +23,22 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 0
-  baseMaxStock: 5
+  baseMaxStock: 10
   rechargeStock: 0
   requiredStock: 0
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 1
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
-  canceledFromSprinting: 0
+  canceledFromSprinting: 1
   isCombatSkill: 0
   mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

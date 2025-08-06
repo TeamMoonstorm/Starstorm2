@@ -27,11 +27,6 @@ namespace SS2.Items
         {
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         //N: Maybe this can be reduced to just a RecalcStatsAPI call? that'd be ideal.
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier, IStatItemBehavior
         {

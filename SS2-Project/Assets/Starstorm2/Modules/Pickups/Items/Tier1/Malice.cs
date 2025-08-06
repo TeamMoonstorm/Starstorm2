@@ -49,11 +49,6 @@ namespace SS2.Items
             malice = ProcTypeAPI.ReserveProcType();
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
         {
 

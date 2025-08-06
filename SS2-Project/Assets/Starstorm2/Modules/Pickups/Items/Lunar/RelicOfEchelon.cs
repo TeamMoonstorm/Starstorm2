@@ -44,11 +44,6 @@ namespace SS2.Items
 
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRelicOfEchelon", SS2Bundle.Items);
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return false; //disabled for now
-        }
-
         public override void Initialize()
         {
             //_overlay = assetCollection.FindAsset<Material>("matCognation");
@@ -172,8 +167,11 @@ namespace SS2.Items
 
             public void ModifyStatArguments(RecalculateStatsAPI.StatHookEventArgs args)
             {
+                //SS2Log.Warning("burger");
+
                 if (body.HasBuff(SS2Content.Buffs.BuffEchelon))
                 {
+                    //SS2Log.Error("nuggetsh true");
                     args.baseDamageAdd += (damageBonus * (stack - 1));
                     args.baseHealthAdd += (healthBonus * (stack - 1));
                 }

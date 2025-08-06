@@ -39,15 +39,50 @@ namespace SS2
         {
             SS2AssetRequest<MonsterAssetCollection> request = AssetRequest;
 
+            if (request == null)
+            {
+                SS2Log.Warning($"AssetRequest is null for {GetType().Name}");
+                yield break;
+            }
+
             request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
             AssetCollection = request.Asset;
 
-            CharacterPrefab = AssetCollection.bodyPrefab;
-            masterPrefab = AssetCollection.masterPrefab;
-            CardProvider = AssetCollection.monsterCardProvider;
+            if (AssetCollection == null)
+            {
+                SS2Log.Warning($"AssetCollection is null for {GetType().Name}");
+                yield break;
+            }
+
+            if (AssetCollection.bodyPrefab != null)
+            {
+                CharacterPrefab = AssetCollection.bodyPrefab;
+            }
+            else
+            {
+                SS2Log.Warning($"bodyPrefab is null in AssetCollection for {GetType().Name}");
+            }
+
+            if (AssetCollection.masterPrefab != null)
+            {
+                masterPrefab = AssetCollection.masterPrefab;
+            }
+            else
+            {
+                SS2Log.Warning($"masterPrefab is null in AssetCollection for {GetType().Name}");
+            }
+
+            if (AssetCollection.monsterCardProvider != null)
+            {
+                CardProvider = AssetCollection.monsterCardProvider;
+            }
+            else
+            {
+                SS2Log.Warning($"monsterCardProvider is null in AssetCollection for {GetType().Name}");
+            }
         }
 
 

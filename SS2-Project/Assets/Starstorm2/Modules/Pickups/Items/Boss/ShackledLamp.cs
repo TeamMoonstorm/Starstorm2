@@ -22,11 +22,6 @@ namespace SS2.Items
             projectilePrefab = AssetCollection.FindAsset<GameObject>("LampBulletPlayer");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class LampBehavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]

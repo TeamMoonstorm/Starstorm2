@@ -445,6 +445,9 @@ namespace SS2
             public static ItemDef StackMaxHpOnKill;
             public static ItemDef StackShieldGate;
             public static ItemDef StackHitList;
+            public static ItemDef PrimalBirthright;
+
+
         }
 
         public static class Equipments
@@ -705,6 +708,11 @@ namespace SS2
             public static BuffDef bdMongerSlippery;
 
             public static BuffDef bdWardenSurgeBuff;
+
+            public static BuffDef bdConsecration;
+
+            public static BuffDef bdBloodRush;
+
         }
 
         public static class Elites

@@ -37,6 +37,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -95,8 +96,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   destroyOnBodyDeath: 1
+  ExtraBossMissileMoneyRemainder: 0
+  trackedFreeUnlocks: 0
+  trackedMissileCount: 0
   isBoss: 0
   preventGameOver: 1
+  _seekerRevivedOnce: 0
+  _seekerRevitalize: 0
+  seekerSelfRevive: 0
+  devotionInventoryPrefab: {fileID: 0}
+  devotionInventoryUpdaterRef: {fileID: 0}
+  devotionItem: 0
+  devotedEvolutionTracker: 0
+  isDevotedMinion: 0
+  summonerRef: {fileID: 0}
 --- !u!114 &438206915632956328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemAcquisitionOrder: 
+  beadAppliedHealth: 0
+  beadAppliedShield: 0
+  beadAppliedRegen: 0
+  beadAppliedDamage: 0
 --- !u!114 &847967994302934447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 1357070253, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebugStateChanges: 0
   fullVision: 1
   neverRetaliateFriendlies: 1
   enemyAttentionDuration: 5
@@ -132,9 +150,12 @@ MonoBehaviour:
       PublicKeyToken=null
   isHealer: 1
   enemyAttention: 0
+  prioritizePlayers: 0
   aimVectorDampTime: 0.03
   aimVectorMaxSpeed: 180
   selectedSkilldriverName: 
+  shouldMissFirstOffScreenShot: 1
+  forceUpdateEveryFrame: 0
   debugEnemyHurtBox: {fileID: 0}
 --- !u!114 &5292029149305121724
 MonoBehaviour:
@@ -155,6 +176,7 @@ MonoBehaviour:
   mainStateType:
     _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  debug: 0
 --- !u!114 &862772613190836246
 MonoBehaviour:
   m_ObjectHideFlags: 0

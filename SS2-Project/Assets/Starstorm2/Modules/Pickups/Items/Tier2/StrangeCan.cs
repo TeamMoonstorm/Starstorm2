@@ -57,12 +57,6 @@ namespace SS2.Items
             DotIndex = DotAPI.RegisterDotDef(1 / 3f, 1 / 3f, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("BuffIntoxicated"));
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
-
         //theres no way this is correct
         //N: Yeah, cuz it aint no behaviour! >:C
         private void OnCharacterDeathGlobal(DamageReport report)

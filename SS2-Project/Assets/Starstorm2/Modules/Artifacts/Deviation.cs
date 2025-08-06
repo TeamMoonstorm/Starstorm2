@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UObject = UnityEngine.Object;
 using RoR2.ContentManagement;
+
 #if DEBUG
 namespace SS2.Artifacts
 {

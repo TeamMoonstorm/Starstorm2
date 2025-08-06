@@ -19,7 +19,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float damageCoeff = 1f;
+        public static float damageCoeff = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
@@ -28,11 +28,6 @@ namespace SS2.Items
         public override void Initialize()
         {
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
-        }
-
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnDamageDealtServerReceiver
@@ -53,8 +48,7 @@ namespace SS2.Items
                     };
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                     DotController.InflictDot(ref dotInfo);
-
-                    body.master.GiveMoney((uint)(stack * (Run.instance.stageClearCount + (coinGain * 1f))));
+                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
                     EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);

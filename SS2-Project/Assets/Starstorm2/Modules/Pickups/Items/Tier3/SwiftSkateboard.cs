@@ -48,11 +48,6 @@ namespace SS2.Items
             _effectPrefab = AssetCollection.FindAsset<GameObject>("SkateboardActivate");
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public sealed class Behavior : BaseItemBodyBehavior, IBodyStatArgModifier
         {
             [ItemDefAssociation]

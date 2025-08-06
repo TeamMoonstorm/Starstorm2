@@ -15,20 +15,6 @@ namespace SS2.Monsters
         private static BodyIndex BodyIndex;
         public override void Initialize()
         {
-            //N: i hate that people want to disable the boss's item but keep the boss, it doesnt make any fucking sense imo. Either that or i'm just schizo. Either way item disabling the way prod did it is not really feasable i think rn so i'll just comment this out
-            
-            /*var lampItem = SS2Assets.LoadAsset<ItemDef>("ShackledLamp", SS2Bundle.Items);
-            if (lampItem.tier != ItemTier.Boss) // item is disabled
-            {
-                DeathRewards deathRewards = CharacterPrefab.GetComponent<DeathRewards>();
-                ExplicitPickupDropTable dt = ScriptableObject.CreateInstance<ExplicitPickupDropTable>();
-                dt.pickupEntries = new ExplicitPickupDropTable.PickupDefEntry[]
-                {
-                    new ExplicitPickupDropTable.PickupDefEntry {pickupDef = RoR2Content.Items.Pearl, pickupWeight = 1f},
-                };
-                deathRewards.bossDropTable = dt;
-            }*/
-
             //N: IDK how you'd do this with the monster card providers, but i aint bothering.
             /*DateTime currentDate = DateTime.Now;
 

@@ -56,11 +56,6 @@ namespace SS2.Items
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         //Remove this as DotAPI can handle refreshment.
         private void RefreshInsects(DotController dotController, ref InflictDotInfo inflictDotInfo)
         {
