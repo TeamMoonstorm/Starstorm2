@@ -1,0 +1,61 @@
+{
+  "strings": {
+    "SS2_NEMCAPTAIN_NAME": "涅墨西斯船长",
+    "SS2_NEMCAPTAIN_SUBTITLE": "与船同归",
+    "SS2_NEMCAPTAIN_DESCRIPTION": "涅墨西斯船长下达指令控制战场，并通过适应性微型机器人在后方安全作战。\n\n<color=#CCD3E0>< ! > 保持冷静。过快使用指令会积累压力，导致脆弱。",
+    "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "……于是他离开了，点燃了一根新的雪茄。",
+    "SS2_NEMCAPTAIN_OUTRO_FAILURE": "……于是他消失了，终于退休了。",
+    "SS2_NEMCAPTAIN_LORE": "This planet sucks man.. *takes hit from cigar*",
+
+    "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "idk what to call half of this stuff or how to present it to the player",
+    "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "在危险中积累<style=cIsHealth>压力</style>。当压力达到最大时，暂时进入<style=cIsHealth>“过度紧张”</style>状态，减少<style=cIsUtility>移动速度</style>，<style=cIsUtility>护甲</style>和<style=cIsDamage>伤害</style>。",
+
+    "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>压力</style><style=cSub>被敌人包围、受到伤害或使用指令时积累压力。通过暴击、治疗、击杀敌人、使用某些指令或脱离战斗来减少压力。",
+    "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS": "<style=cKeywordName>过度紧张</style><style=cSub>当压力达到最大时，你会承受最大压力的负面效果，同时减少30%的移动速度、20%的护甲和50%的伤害，直到压力条减至0。",
+
+    "SS2_NEMCAPTAIN_PRIMARY_NAME": "标准武器",
+    "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "快速射击，每颗子弹造成<style=cIsDamage>90%伤害</style>。最多可容纳20颗子弹。",
+
+    "SS2_NEMCAPTAIN_SECONDARY_NAME": "备用武器",
+    "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>眩晕</style>。使用手杖步枪射击，造成<style=cIsDamage>680%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_PUNCH_NAME": "风神",
+    "SS2_NEMCAPTAIN_PUNCH_DESCRIPTION": "<style=cIsDamage>眩晕</style>。向前挥拳，造成<style=cIsDamage>150%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_HAIDARA_NAME": "雷神",
+    "SS2_NEMCAPTAIN_HAIDARA_DESCRIPTION": "<style=cIsDamage>震荡</style>。发射雷电，<style=cIsDamage>440%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERS_NAME": "适应性微型机器人",
+    "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "部署4种<style=cIsUtility>微型机器人</style>指令之一，使用指令会增加<style=cIsHealth>压力</style>。<style=cIsUtility>按住指令键</style>可<style=cIsUtility>丢弃</style>该指令。",
+
+    "SS2_NEMCAPTAIN_ORDERNULL_NAME": "指令刷新",
+    "SS2_NEMCAPTAIN_ORDERNULL_DESCRIPTION": "重新制定进攻计划，略微增加<style=cIsHealth>压力</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKE_NAME": "指令：打击",
+    "SS2_NEMCAPTAIN_ORDERSTRIKE_DESCRIPTION": "<style=cIsUtility>眩晕</style>。瞄准微型机器人并发射激光，<style=cIsDamage>爆炸</style>造成<style=cIsDamage>1400%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_NAME": "指令：三重打击",
+    "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_DESCRIPTION": "<style=cIsUtility>眩晕</style>。瞄准微型机器人并发射激光，<style=cIsDamage>爆炸</style>造成<style=cIsDamage>600%伤害</style>。<style=cIsUtility>可以发射3次。</style>",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_NAME": "指令：普西打击",
+    "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_DESCRIPTION": "<style=cIsUtility>冻结</style>。瞄准微型机器人并发射激光，<style=cIsDamage>爆炸</style>造成<style=cIsDamage>1100%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_NAME": "指令：卡帕打击",
+    "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_DESCRIPTION": "<style=cIsUtility>震荡</style>。瞄准微型机器人并发射激光，<style=cIsDamage>爆炸</style>造成<style=cIsDamage>900%伤害</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERREGEN_NAME": "指令：服用弛缓药",
+    "SS2_NEMCAPTAIN_ORDERREGEN_DESCRIPTION": "暂时提高压力减少的速度，持续<style=cIsUtility>15秒</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERREDUCE_NAME": "指令：注射兴奋剂",
+    "SS2_NEMCAPTAIN_ORDERREDUCE_DESCRIPTION": "暂时减少<style=cIsUtility>50%</style>的所有来源的压力增加量，持续<style=cIsUtility>10秒。</style>",
+
+    "SS2_NEMCAPTAIN_ORDERRECOVER_NAME": "指令：重置",
+    "SS2_NEMCAPTAIN_ORDERRECOVER_DESCRIPTION": "大幅度减少当前压力，并<style=cIsUtility>丢弃所有其他指令</style>。丢失的指令越多，减少的压力越多。",
+
+    "SS2_NEMCAPTAIN_ORDERHEAL_NAME": "指令：激励场",
+    "SS2_NEMCAPTAIN_ORDERHEAL_DESCRIPTION": "每秒<style=cIsHealing>治疗</style>附近友方单位</style>6%</style>的<style=cIsHealth>最大生命值</style>，同时为他们提供<style=cIsUtility>50点护甲</style>和<style=cIsDamage>20%攻击速度提升</style>持续<style=cIsUtility>12秒</style>。",
+
+    "SS2_NEMCAPTAIN_ORDERGRAVITY_NAME": "指令：引力井",
+    "SS2_NEMCAPTAIN_ORDERGRAVITY_DESCRIPTION": "<style=cIsUtility>吸引</syle>附近的敌人，持续<style=cIsUtility>8秒</style>。"
+  }
+}

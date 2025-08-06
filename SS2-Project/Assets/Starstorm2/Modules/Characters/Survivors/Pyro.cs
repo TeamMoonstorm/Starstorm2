@@ -1,15 +1,8 @@
-﻿using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using SS2.Components;
+﻿using SS2.Components;
 using RoR2;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using UnityEngine;
 using MSU;
-using System.Collections;
-using UnityEngine.Networking;
-using UnityEngine.AddressableAssets;
 using R2API;
 using RoR2.ContentManagement;
 using static R2API.DamageAPI;

@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 19.14, z: 0}
   m_LocalScale: {x: 1, y: 40, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2943055042911374253}
   m_RootOrder: 0
@@ -76,6 +77,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 1, z: 6}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1942350113587360934}
   - {fileID: 6203525335885568554}
@@ -133,11 +135,14 @@ MonoBehaviour:
   ghostTransformAnchor: {fileID: 0}
   startSound: EtherealPillarImpact
   cannotBeDeleted: 1
+  authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: a0361ae487a83024daab796f63d3f55e, type: 2}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
+  localCollisionHappened: 0
   procCoefficient: 1
+  CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!114 &2121329208279106582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +159,10 @@ MonoBehaviour:
   crit: 0
   force: 0
   damageColorIndex: 0
-  damageType: 0
+  damageType:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &4297714973760147785
@@ -198,7 +206,7 @@ MonoBehaviour:
   m_Script: {fileID: -848926067, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCoefficient: 20
+  damageCoefficient: 1
   attackerFiltering: 0
   impactEffect: {fileID: 0}
   forceVector: {x: 0, y: -5000, z: 0}
@@ -256,6 +264,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: 0, y: 19.14, z: 0}
   m_LocalScale: {x: 1, y: 40, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2943055042911374253}
   m_RootOrder: 1

@@ -12,7 +12,7 @@
 
     "SS2_ITEM_RELICOFFORCE_NAME": "力量遗物",
     "SS2_ITEM_RELICOFFORCE_PICKUP": "你所有的攻击额外造成一次伤害。<style=cDeath>降低攻击速度，延长冷却时间</style>。",
-    "SS2_ITEM_RELICOFFORCE_DESC": "所有攻击造成额外<style=cIsDamage>1</style> <style=cStack>(每层+1)</style>次伤害，造成原本伤害的<style=cIsDamage>5%</style>。<style=cIsUtility>连续攻击</style>同一个敌人会提高<style=cIsDamage>5%</style>伤害，最高至原本伤害的<style=cIsDamage>{0}%</style>。<style=cDeath>减少攻击速度并延长技能冷却时间的{1}%</style> <style=cStack>(每层-{1}%)</style>。",
+    "SS2_ITEM_RELICOFFORCE_DESC": "所有攻击造成额外<style=cIsDamage>1</style> <style=cStack>(每层+1)</style>次伤害，造成原本伤害的<style=cIsDamage>{1}%</style>。<style=cIsUtility>连续攻击</style>同一个敌人会提高<style=cIsDamage>{1}%</style>伤害，最高至原本伤害的<style=cIsDamage>{2}%</style>。<style=cDeath>减少攻击速度并延长技能冷却时间的{0}%</style> <style=cStack>(每层-{0}%)</style>。",
     "SS2_ITEM_RELICOFFORCE_LORE": "啊，年轻人，你回来了！还背了这么大的一个包！全是刚捡到的，对吧？\n\n嗯……包很沉但是不怎么满。你……你是偷偷藏了什么东西吗，年轻人？\n\n……你找到了什么很沉的东西…，我懂了。抱歉，我不该怀疑你的。让我看看你找到的东西吧。\n\n啊！年轻人，你确实没有骗我。这个东西，很小，但是很难举起来……它分出来的这几块，每块都和整体一样重？这，这太神奇了！\n\n我会把它和你找到的其他神奇小玩意儿放在一起。这样的东西要是落到坏人的手里就糟了。至于你，年轻人……我看你的包要修一修了吧，跟我来。",
 
     "SS2_ITEM_RELICOFMASS_NAME": "质量遗物",
@@ -21,12 +21,12 @@
     "SS2_ITEM_RELICOFMASS_LORE": "啊，欢迎回来，年轻人!你找到什么了？\n\n呃……从那个荒原上捡到的垃圾吗？嗯，你愿意的话就自己留着吧……还有其他的吗？\n\n啊，这是？给我看看，年轻人。\n\n啊，你找到的，这个，这个形状？坚定……但不忠诚，强大的同时也很脆弱。至少可以说……奇特。你在哪捡来的，年轻人？\n\n在那颗星球上捡来的？啊，不能算个好消息。这觉得不是那些沙丘人造的。太复杂了，太强大了。也不是利莫里亚造的。年轻人，这不是你偷来的吧？\n\n你没偷？好吧，我要留下这个“形状”，对于不理解的你来说它太危险了。\n\n哦，年轻人，别这样。你干了件很了不起的事情，我只是想保证它被妥善保管。跟我来，我们拿你的奖励。",
 
     "SS2_ITEM_RELICOFTERMINATION_NAME": "终止遗物",
-    "SS2_ITEM_RELICOFTERMINATION_PICKUP": "每{0}秒标记一名敌人。如果及时击败被标记的敌人会掉落一件物品；否则，被标记敌人的<style=cDeath>生命，伤害，速度，攻击均会大幅提升。</style>",
-    "SS2_ITEM_RELICOFTERMINATION_DESC": "每<style=cIsUtility>{0}</style> <style=cStack>(每层-{1}%)</style> <style=cIsUtility>秒</style><style=cIsDamage>标记</style>一名敌人。如果及时将其击败则<style=cIsDamage>掉落一件物品。</style>否则其<style=cDeath>生命值增加{3}%</style>、<style=cDeath>造成的伤害提高{2}%</style>、<style=cDeath>移动速度增加{4}%</style>、<style=cDeath>攻击速度增加{5}%</style>。<style=cStack>（掉落物的品质随物品堆叠层数增多而增高）。</style>",
+    "SS2_ITEM_RELICOFTERMINATION_PICKUP": "每{0}秒标记一名敌人。如果及时击败被标记的敌人会掉落一件物品；如果未能及时击败，则不掉落任何物品。被标记敌人的<style=cDeath>生命，伤害，速度，攻击均会大幅提升。</style>",
+    "SS2_ITEM_RELICOFTERMINATION_DESC": "每<style=cIsUtility>{0}</style> <style=cStack>(每层-{1}%)</style> <style=cIsUtility>秒</style><style=cIsDamage>标记</style>一名新生成的敌人。其<style=cDeath>生命值增加{3}%</style>、<style=cDeath>造成的伤害提高{2}%</style>、<style=cDeath>移动速度增加{4}%</style>、<style=cDeath>攻击速度增加{5}%</style>。如果及时将其击败则<style=cIsDamage>掉落一件物品。</style><style=cStack>（掉落物的品质随物品堆叠层数增多而增高）</style>；如果未能及时将其击败则<style=cIsDamage>不会掉落任何物品</style>，并延缓下一次标记。",
     "SS2_ITEM_RELICOFTERMINATION_LORE": "年轻人，看到你回来我太高兴了！你又找到什么了？\n\n你找到有意思的东西了？快给我看看！没什么好藏着掖着的，年轻人。\n\n这次这是?哦，它是空心的，很坚固。晃起来有响声，就像腰苹果一样。真是个奇怪的东西。\n\n哦？什么，有怪物在追你？天哪……没跟你到这儿来，对吧？\n\n……外面没人……当然，当然。这很隐蔽很安全，对吧年轻人？\n\n对，我要把这个东西拿走，放在不会招引怪物的地方……\n\n我懂我懂，害怕是很正常的……但是如果被某个倒霉的人捡到的话，也许就会发生惨剧了……你也不忍心这种事情发生吧？\n\n我们在这里很安全……年轻人，出去这么久你一定很饿了，跟我来。",
     "SS2_ITEM_RELICOFTERMINATION_PREFIX": "终端 {0}",
 
-    "SS2_ITEM_RELICOFECHELON_NAME": "梯队遗物",
+    "SS2_ITEM_RELICOFECHELON_NAME": "阶梯遗物",
     "SS2_ITEM_RELICOFECHELON_DESC": "使用时获得{1}(+{1}每层)基础伤害，{2}(每层+{2})基础生命值，持续{3}秒。使用装备会永久增加{0}%冷却时间",
     "SS2_ITEM_RELICOFECHELON_PICKUP": "在使用装备时获得强大的增益。 <style=cDeath>但会永久增加其冷却时间。</style>",
     "SS2_ITEM_RELICOFECHELON_LORE": "不不不，年轻人，你来得太早了！我还没来得及准备。请…稍后再回来。"

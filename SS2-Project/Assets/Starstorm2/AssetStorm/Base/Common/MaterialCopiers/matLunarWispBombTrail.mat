@@ -2,14 +2,17 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matLunarWispBombTrail
   m_Shader: {fileID: 4800000, guid: 55cc3b3fe693a4643b1d006f3e181259, type: 3}
-  m_ShaderKeywords: RoR2/Base/LunarWisp/matLunarWispBombTrail.mat
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - RoR2/Base/LunarWisp/matLunarWispBombTrail.mat
+  - StubbedRoR2/Base/Shaders/HGCloudRemap
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -35,6 +38,7 @@ Material:
         m_Texture: {fileID: 2800000, guid: 1d10b504347a49328bc53a73bedc9dcf, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AlphaBias: 0
     - _AlphaBoost: 5.01
@@ -83,3 +87,4 @@ Material:
     - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []

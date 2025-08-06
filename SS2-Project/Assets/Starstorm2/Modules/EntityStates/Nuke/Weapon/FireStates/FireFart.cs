@@ -13,6 +13,11 @@ using R2API;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Possible fire state of nucleator's default secondary, if he's grounded, or he's opn air and looking up, he'll transition to this state.
+    /// <br></br>
+    /// See <see cref="ChargeFart"/>
+    /// </summary>
     public class FireFart : BaseNukeFireState
     {
         public static SerializableDamageColor damageColor;
@@ -54,6 +59,7 @@ namespace EntityStates.Nuke.Weapon
                 _blastAttack.AddModdedDamageType(SS2.Survivors.Nuke.NuclearDamageType);
                 _blastAttack.Fire();
 
+                //Fire a projectile that spawns a pool of ooze downwards, increment upward velocity
                 if (!isGrounded)
                 {
                     Vector3 velocity = characterMotor.velocity;
@@ -72,7 +78,7 @@ namespace EntityStates.Nuke.Weapon
                     };
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
                 }
-                else
+                else //Spawn the pool of ooze.
                 {
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {

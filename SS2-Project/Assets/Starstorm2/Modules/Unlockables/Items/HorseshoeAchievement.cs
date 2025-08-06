@@ -4,16 +4,21 @@ namespace SS2.Unlocks.Pickups
 {
     public sealed class HorseshoeAchievement : BaseAchievement
     {
-        public override void OnInstall()
+        public override void OnBodyRequirementMet()
         {
-            base.OnInstall();
+            base.OnBodyRequirementMet();
             TeleporterInteraction.onTeleporterChargedGlobal += CheckTeleporterCompletion;
         }
 
-        public override void OnUninstall()
+        public override void OnBodyRequirementBroken()
         {
+            base.OnBodyRequirementBroken();
             TeleporterInteraction.onTeleporterChargedGlobal -= CheckTeleporterCompletion;
-            base.OnUninstall();
+        }
+
+        public override BodyIndex LookUpRequiredBodyIndex()
+        {
+            return BodyCatalog.FindBodyIndex("Bandit2Body");
         }
         private void CheckTeleporterCompletion(TeleporterInteraction teleporterInteraction)
         {

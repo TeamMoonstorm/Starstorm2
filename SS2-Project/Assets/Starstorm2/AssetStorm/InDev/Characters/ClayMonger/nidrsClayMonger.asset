@@ -1,0 +1,205 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4f59b83057a85408a1cb4718ca9004, type: 3}
+  m_Name: nidrsClayMonger
+  m_EditorClassIdentifier: 
+  targetItemDisplayRuleSet: {fileID: 11400000, guid: b8de0647719ec8b4ea7aeb26a6314585,
+    type: 2}
+  rules:
+  - keyAssetName: EliteAurelioniteEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteAurelioniteEquipment
+      childName: Head
+      localPos: {x: 0.02972, y: 0.2257, z: 0.22922}
+      localAngles: {x: 277.6613, y: 332.2358, z: 220.2472}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteAurelioniteEquipment
+      childName: Base
+      localPos: {x: -0.0118, y: 0.96391, z: 0.80513}
+      localAngles: {x: 10.84317, y: 357.0014, z: 1.03115}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: EliteBeadEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteBeadSpike
+      childName: Head
+      localPos: {x: 0.19142, y: 0.13207, z: 0.1507}
+      localAngles: {x: 61.26392, y: 43.10885, z: 352.3788}
+      localScale: {x: 0.025, y: 0.025, z: 0.025}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteBeadSpike
+      childName: Base
+      localPos: {x: 0.28082, y: 0.98736, z: 0.5291}
+      localAngles: {x: 17.36509, y: 340.7781, z: 326.7666}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: EliteEarthEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteMendingAntlers
+      childName: Base
+      localPos: {x: 0.02755, y: 0.88605, z: 0.7134}
+      localAngles: {x: 16.64775, y: 358.7766, z: 354.4613}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteMendingAntlers
+      childName: Head
+      localPos: {x: 0.01624, y: 0.28484, z: 0.16492}
+      localAngles: {x: 287.1505, y: 211.6276, z: 338.8249}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: EliteFireEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Base
+      localPos: {x: -0.26346, y: 0.68723, z: 0.77805}
+      localAngles: {x: 47.19468, y: 19.66941, z: 32.27154}
+      localScale: {x: -0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Base
+      localPos: {x: 0.17875, y: 0.5721, z: 0.71973}
+      localAngles: {x: 35.02095, y: 335.9727, z: 326.5924}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Head
+      localPos: {x: 0.11905, y: 0.21283, z: 0.15447}
+      localAngles: {x: 305.7772, y: 171.2624, z: 31.27512}
+      localScale: {x: -0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Head
+      localPos: {x: -0.07023, y: 0.21443, z: 0.15316}
+      localAngles: {x: 305.7772, y: 171.2624, z: 349.5416}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: EliteHauntedEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      childName: Head
+      localPos: {x: -0.03858, y: 0.2201, z: 0.26044}
+      localAngles: {x: 348.2986, y: 353.3813, z: 187.1129}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      childName: Base
+      localPos: {x: 0.0095, y: 1.22223, z: 0.25492}
+      localAngles: {x: 274.5797, y: 54.44696, z: 305.1613}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: EliteIceEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      childName: Head
+      localPos: {x: -0.00002, y: 0.28433, z: 0.24399}
+      localAngles: {x: 347.9269, y: 0, z: 180}
+      localScale: {x: 0.025, y: 0.025, z: 0.025}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      childName: Base
+      localPos: {x: -0.00192, y: 1.44497, z: 0.03424}
+      localAngles: {x: 270.346, y: -0.00134, z: 6.70063}
+      localScale: {x: 0.125, y: 0.125, z: 0.125}
+      limbMask: 0
+  - keyAssetName: EliteLightningEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Head
+      localPos: {x: -0.00001, y: 0.16799, z: 0.19717}
+      localAngles: {x: 333.1346, y: 0, z: 180}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Head
+      localPos: {x: 0.0062, y: 0.25204, z: 0.17267}
+      localAngles: {x: 332.1242, y: 352.1045, z: 192.6144}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Base
+      localPos: {x: -0.0324, y: 0.8024, z: 0.85807}
+      localAngles: {x: 334.7494, y: 1.42692, z: 355.0073}
+      localScale: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Base
+      localPos: {x: -0.00014, y: 1.03579, z: 0.6519}
+      localAngles: {x: 307.9499, y: 5.10356, z: 352.6462}
+      localScale: {x: 0.65, y: 0.65, z: 0.65}
+      limbMask: 0
+  - keyAssetName: EliteLunarEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      childName: Base
+      localPos: {x: 0, y: 0.08389, z: 0.70731}
+      localAngles: {x: 354.1918, y: 180, z: 180}
+      localScale: {x: 1.25, y: 1.25, z: 1.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      childName: Head
+      localPos: {x: -0.00001, y: 0.18481, z: -0.00003}
+      localAngles: {x: 90, y: 0, z: 0}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: ElitePoisonEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      childName: Base
+      localPos: {x: 0, y: 0.9716, z: 0.43734}
+      localAngles: {x: 295.5721, y: 0, z: 0}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      childName: Head
+      localPos: {x: -0.00001, y: 0.14011, z: 0.17823}
+      localAngles: {x: 345.4621, y: 0, z: 0}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: EliteVoidEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAffixVoid
+      childName: Head
+      localPos: {x: 0, y: 0.24493, z: 0.09832}
+      localAngles: {x: 26.7517, y: 0, z: 0}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAffixVoid
+      childName: Base
+      localPos: {x: 0.01221, y: 0.87127, z: 0.69704}
+      localAngles: {x: 353.9099, y: 84.77682, z: 44.58345}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0

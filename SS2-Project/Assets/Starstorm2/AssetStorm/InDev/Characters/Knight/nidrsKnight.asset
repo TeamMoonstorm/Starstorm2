@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4f59b83057a85408a1cb4718ca9004, type: 3}
+  m_Name: nidrsKnight
+  m_EditorClassIdentifier: 
+  targetItemDisplayRuleSet: {fileID: 11400000, guid: 2c535b514a5d2f949bdc7f6014688c56,
+    type: 2}
+  rules:
+  - keyAssetName: WardOnLevel
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarbanner
+      childName: Stomach
+      localPos: {x: 0, y: -0.00002, z: -0.27452}
+      localAngles: {x: 291.3906, y: 180, z: 270}
+      localScale: {x: 0.51499, y: 0.51499, z: 0.51499}
+      limbMask: 0
+  - keyAssetName: ChainLightning
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkulele
+      childName: Chest
+      localPos: {x: 0.00168, y: 0.24728, z: -0.33797}
+      localAngles: {x: 0, y: 187.9173, z: 34.41165}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ChainLightningVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkuleleVoid
+      childName: Chest
+      localPos: {x: 0.00168, y: 0.24728, z: -0.33797}
+      localAngles: {x: 0, y: 187.9173, z: 34.41165}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ExtraLife
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippo
+      childName: Shoulderpad.r
+      localPos: {x: 0.12969, y: 0.16552, z: -0.13465}
+      localAngles: {x: 307.4594, y: 121.6881, z: 232.1279}
+      localScale: {x: 0.37334, y: 0.37334, z: 0.37334}
+      limbMask: 0
+  - keyAssetName: ExtraLifeVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippoVoid
+      childName: Shoulderpad.r
+      localPos: {x: 0.12969, y: 0.16552, z: -0.13465}
+      localAngles: {x: 307.4594, y: 121.6881, z: 232.1279}
+      localScale: {x: 0.37334, y: 0.37334, z: 0.37334}
+      limbMask: 0
+  - keyAssetName: CritGlasses
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlasses
+      childName: Head
+      localPos: {x: -0.00001, y: 0.11262, z: 0.15725}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.31962, y: 0.35105, z: 0.35082}
+      limbMask: 0
+  - keyAssetName: CritGlassesVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlassesVoid
+      childName: Head
+      localPos: {x: -0.00001, y: 0.11262, z: 0.15725}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.31962, y: 0.35105, z: 0.35082}
+      limbMask: 0
+  - keyAssetName: Syringe
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySyringeCluster
+      childName: CalfL
+      localPos: {x: 0.04508, y: 0.02401, z: 0.12473}
+      localAngles: {x: 64.21525, y: 300.3162, z: 289.3332}
+      localScale: {x: 0.32995, y: 0.35775, z: 0.35775}
+      limbMask: 0
+  - keyAssetName: Bandolier
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBandolier
+      childName: Chest
+      localPos: {x: 0.00673, y: 0.15112, z: -0.05422}
+      localAngles: {x: 318.8445, y: 81.34239, z: 276.3165}
+      localScale: {x: 1, y: 1.14386, z: 1}
+      limbMask: 0
+  - keyAssetName: Hoof
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHoof
+      childName: CalfR
+      localPos: {x: 0.08613, y: 0.44538, z: 0.00049}
+      localAngles: {x: 71.48335, y: 275.7155, z: 14.15666}
+      localScale: {x: 0.10135, y: 0.10135, z: 0.09561}
+      limbMask: 0
+    - ruleType: 1
+      displayPrefabName: DisplayHoof
+      childName: CalfR
+      localPos: {x: 0.08613, y: 0.44538, z: 0.00049}
+      localAngles: {x: 71.48335, y: 275.7155, z: 14.15666}
+      localScale: {x: 0.10135, y: 0.10135, z: 0.09561}
+      limbMask: 8

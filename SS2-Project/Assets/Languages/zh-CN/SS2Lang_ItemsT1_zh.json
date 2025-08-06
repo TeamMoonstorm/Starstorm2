@@ -1,24 +1,33 @@
 {
 	"strings": {
 		"SS2_ITEM_ARMEDBACKPACK_NAME": "武装背包",
+		"SS2_ITEM_ARMEDBACKPACK_DESC": "受伤时概率发射一枚导弹，造成<style=cIsDamage>{0}%</style><style=cStack>(每层+{0}%)</style>伤害。所受伤害越高发射概率越大。",
 		"SS2_ITEM_ARMEDBACKPACK_PICKUP": "遭受重创时发射导弹。",
-		"SS2_ITEM_ARMEDBACKPACK_DESC": "受伤时概率发射一枚导弹，造成<style=cIsDamage>{0}%</style> <style=cStack>(每层+{0}%)</style>伤害。所受伤害越高发射概率越大。",
-		"SS2_ITEM_ARMEDBACKPACK_LORE": "运单：（退件）军用背包\r\n单号：823*****\r\n预计送达时间：02/13/2056\r\n运送方式：标准\r\n送货地址：地球，利文洛克，于勒路17号\r\n运单详情：\n\n走路的时候竟然走火了。你们等着收法院传票吧。",
+		"SS2_ITEM_ARMEDBACKPACK_LORE": "运单：（退件）军用背包\r\n运单号：823*****\r\n预计送达时间：2056年2月13日\r\n运送方式：标准\r\n送货地址：地球，利文洛克，于勒路17号\r\n运单详情：\n\n走路的时候竟然走火了。你们等着收法院传票吧。",
+
+		"SS2_ITEM_BLOODTESTER_NAME": "损坏的血液检测仪",
+		"SS2_ITEM_BLOODTESTER_DESC": "每{0}秒，你每拥有<style=cIsUtility>25金钱</style>就快速<style=cIsHealing>回复</style><style=cIsHealing>{1}<style=cStack>(每层+{1})</style>生命值</style>，<style=cIsUtility>金钱需求量会随时间增长</style>",
+		"SS2_ITEM_BLOODTESTER_PICKUP": "定期根据金钱进行治疗。",
+		"SS2_ITEM_BLOODTESTER_LORE": "退件：损坏的血液检测仪\r\n运单号：288*****\r\n预计送达时间：2056年6月17日\r\n运送方式：优先\r\n送货地址：冥王星，狄俄尼索斯制药公司总部\r\n运输详情：\n\n我们需要尽快修理这个设备，以免对公司造成更大的损失。每当我们的MED-E使用它时，它都会给出错误的结果。这不仅影响了我们的工作流程，还让我们不得不自掏腰包赔偿患者，因为错误的诊断让他们打了不必要的针。而且我们无法声称是患者的错，因为所有数据都会立即备份到服务器上。我们不能再花这么多钱了，否则下个季度我们就会破产。\n",
 
 		"SS2_ITEM_COFFEEBAG_NAME": "袋装咖啡",
-		"SS2_ITEM_COFFEEBAG_DESC": "激活一个可交互目标后<style=cIsDamage>攻击速度增加</style><style=cIsDamage>{1}%</style> <style=cStack>(每层+{1}%)</style>，<style=cIsUtility>移动速度</style>提高<style=cIsUtility>{2}%</style> <style=cStack>(每层+{2}%)</style>，持续{0}秒。",
-		"SS2_ITEM_COFFEEBAG_PICKUP": "激活可交互目标时获得短时间的攻击速度加成与移动速度加成。",
-		"SS2_ITEM_COFFEEBAG_LORE": "运单：咖啡\r\n单号：917*****\r\n预计送达时间：12/06/2056\r\n运送方式：标准\r\n送货地址：地球，宾夕法尼亚，鹿巷6430号\r\n运单详情：\n\n嗨，老妈！\n\n就像你年轻时一样，我最近在四处旅行……我还记得你给我讲的，你在我这个年纪时的故事，你说你去了牙买加、罗马尼亚……几乎地球上的所有地方！我希望我能快点回家，这样就能给你讲我的游记了。\n\n你以前给我们寄的咖啡，好像是叫\"Neik深烘咖啡\"?总之，泰坦星这里有一个很不错的咖啡产区，包裹里是我挑的他们最好的咖啡豆，闻着这个味道就让我想回家找你。\n\n我真希望能快点到家，我好想你，想家里的小猫，我等不及想给你讲讲我一路的事情了！\n\n爱你。您的孩子汉娜\n",
+		"SS2_ITEM_COFFEEBAG_DESC": "命中时有<style=cIsDamage>{0}%</style>的几率掉落一个咖啡豆，提供<style=cIsDamage>{1}%攻击速度</style>和<style=cIsUtility>移动速度</style>持续<style=cIsUtility>{3}</style><style=cStack>(每层+{3})</style><style=cIsUtility>秒</style>。",
+		"SS2_ITEM_COFFEEBAG_PICKUP": "掉落可以提高攻击速度和移动速度的咖啡豆。",
+		"SS2_ITEM_COFFEEBAG_LORE": "运单：咖啡\r\n运单号：917*****\r\n预计送达时间：2056年12月6日\r\n运送方式：标准\r\n送货地址：地球，宾夕法尼亚，鹿巷6430号\r\n运单详情：\n\n嗨，老妈！\n\n就像你年轻时一样，我最近在四处旅行……我还记得你给我讲的，你在我这个年纪时的故事，你说你去了牙买加、罗马尼亚……几乎地球上的所有地方！我希望我能快点回家，这样就能给你讲我的游记了。\n\n你以前给我们寄的咖啡，好像是叫\"Neik深烘咖啡\"?总之，泰坦星这里有一个很不错的咖啡产区，包裹里是我挑的他们最好的咖啡豆，闻着这个味道就让我想回家找你。\n\n我真希望能快点到家，我好想你，想家里的小猫，我等不及想给你讲讲我一路的事情了！\n\n爱你。您的孩子汉娜\n",
 
 		"SS2_ITEM_DETRITIVETREMATODE_NAME": "有害吸虫",
-		"SS2_ITEM_DETRITIVETREMATODE_DESC": "<style=cIsDamage>生命值少于{0}%</style>的敌人<style=cIsDamage>持续受到伤害</style>，每秒造成<style=cIsDamage>{1}%</style>的基础伤害<style=cStack>(每层+{1}%)</style>并减少<style=cIsUtility>{2}%移动速度</style>，持续<style=cIsDamage>{3}</style>秒。",
+		"SS2_ITEM_DETRITIVETREMATODE_DESC": "<style=cIsDamage>生命值少于{0}%</style><style=cStack>(每层+{1}%)</style>的敌人<style=cIsDamage>持续受到伤害</style>，每秒造成<style=cIsDamage>{2}%</style>的基础伤害<style=cStack>(每层+{2}%)</style>。",
 		"SS2_ITEM_DETRITIVETREMATODE_PICKUP": "低生命值敌人将持续受到伤害。",
 		"SS2_ITEM_DETRITIVETREMATODE_LORE": "<style=cMono>\r\n$正在转录图像……已完成。\r\n$正在解析……已完成。\r\n$正在输出文本……已完成。\r\n完成！\r\n</style>\r\n\r\n这是富尔敦博士的日志条目，本人为从事UES[已编校]和UES外星生物文献研究和记录的博物学家。这篇日志记录于柯尼亚III雨林探索中，记录位置在西格玛角附近。\n\n---------------------\n\n我在这个星球上遇到了我的第一个外星生命样本！天哪，太神奇了。样本在外观上很像蛔虫，不过明显比蛔虫更大。我决定将它命名为“有害吸虫”（俗名）,我将在下文描述其特征。\n\n•直径约2英寸，长度从4英寸到1.5英尺不等，白色。\n\n•发现在潮湿洞穴中一堆腐烂的肉上。肉的来源不确定，但可以肯定这个环境中有更大的动物。\n\n•在移动一团腐烂的肉后吸虫迅速做出了反应，开始快速嚅动并在不久后放松下来。我旁边的警卫雪佛莱表现得十分抗拒，他可能觉得很恶心。\n\n•当我触摸其中的一只吸虫时，它吸附住了我的手并开始啃咬，非常疼。雪佛莱很快把他弄了下来，我就没事了（不考虑手上的伤口）。\n",
 
-		"SS2_ITEM_DIARY_NAME": "日记",
-		"SS2_ITEM_DIARY_DESC": "从击败<style=cIsDamage>BOSS</style>中获得<style=cIsUtility>{0}%</style><style=cStack>(每层+{0}%)</style><style=cIsUtility>额外经验值</style>。",
-		"SS2_ITEM_DIARY_PICKUP": "打败BOSS获得更多经验。",
+		"SS2_ITEM_DIARY_NAME": "空白的日记簿",
+		"SS2_ITEM_DIARY_DESC": "在每个关卡开始时，<style=cIsUtility>消耗该物品</style>并<style=cIsUtility>获得{0}级</style>。 ",
+		"SS2_ITEM_DIARY_PICKUP": "在每关开始时升级一次，使用即消耗",
 		"SS2_ITEM_DIARY_LORE": "<style=cMono>完整传输14-B走廊区的安全录像。\n\n输出中...\n\n</style>\"所以这个储物容器里就只有这本书吗？\"\n\"基本上是的。除了一些旧家具，就只有这个了。\"\n\"那这本书有什么特别之处吗？如果这就是我们得到的一切，它最好值得看看。\"\n\"我觉得这是一本日记。大约26年前由一位名叫Alan Howizer的人写下。看起来是个相当聪明的家伙，日记说他曾在地球上的一个化学测试工厂工作。\"\n\"就这？这只是一位老人的日记吗？\"\n\"等等，事情没有那么简单。我翻了一下，大约100页的时候，手写发生了变化，果然这本书被另一个人在一个公园的长椅上发现。大约再翻30页，同样的事情再次发生。而后，大约再翻70页，又一次。而且一直都在继续。有几十个不同的人在这本日记中写下他们的美好记忆、奇怪谜团、很多谜底，各种各样的事情。\"\n\"嗯。这东西肯定是知识的宝库，是吧？最后一位主人是谁有线索吗？\"\n\"嗯，实际上是有的。最后一位写在书中的人叫Chel，看起来他们在背后的封面上留了个地址。你打算怎么办？\"\n\n<style=cMono>值得关注的部分结束。</style>",
+
+		"SS2_ITEM_DIARY_CONSUMED_NAME": "写过的日记簿",
+		"SS2_ITEM_DIARY_CONSUMED_DESC": "他们肯定会把这拍成一部电影的。",
+		"SS2_ITEM_DIARY_CONSUMED_PICKUP": "他们肯定会把这拍成一部电影的。",
 
 		"SS2_ITEM_DORMANTFUNGUS_NAME": "休眠真菌",
 		"SS2_ITEM_DORMANTFUNGUS_DESC": "在冲刺时每秒恢复<style=cIsHealing>{0}%</style><style=cStack>(每层+{1}%)</style>的最大生命值。",
@@ -26,35 +35,70 @@
 		"SS2_ITEM_DORMANTFUNGUS_LORE": "<style=cMono>来自研究站Rook的文档\n\n标本-18305第3周笔记</style>\n\n这是我们找到的比较奇怪的样本之一。如果我们放任它，这种真菌似乎会生长在建筑物的几乎所有东西上。墙壁、地板、天花板。它们似乎更喜欢那些一直在运动的东西。我们的衣服、门，甚至一些机械设备。我们将继续监测这种行为。\n\n<style=cMono>标本-18305第5周笔记</style>\n\n该物体继续附着在实验室周围的东西上。我们注意到，它随着附着物的运动而变得更加健康。测试似乎表明它依靠附着物根部吸收的运动产生的热量维持生存。我们将尝试将其移植到一个持续运动的机器上，并监测其健康状况。\n\n<style=cMono>标本-18305第8周笔记</style>\n\n我们把样本固定在实验室的一台旧型号的活塞上。以防发生任何损坏，我们本打算无论如何都要处理掉它。我们将其连接并让其运行了前三周。非常奇怪的是，这个活塞在这个时间范围内被认为会故障。然而，似乎这个物体与机器建立了一种共生关系。我们将继续监测这种行为以寻找更多的负面影响，并探讨这个标本的潜在其他用途。\n",
 
 		"SS2_ITEM_FORK_NAME": "叉子",
-		"SS2_ITEM_FORK_DESC": "提高你<style=cIsDamage>{0}</style> <style=cStack>(每层+{0})</style>的基础伤害。",
+		"SS2_ITEM_FORK_DESC": "增加<style=cIsDamage>{0}%</style> <style=cStack>(每层+{0}%)</style>的基础伤害。",
 		"SS2_ITEM_FORK_PICKUP": "造成更多伤害。",
 		"SS2_ITEM_FORK_LORE": "\"你逗我呢…… 听着，我确实说过我们需要利用一切资源生存，但是我所说的一切资源绝对不包括这个！\"\n\n他举起那银色的餐具，露出了疑惑的表情。 \"你什么意思？万一我们碰到怪物怎么办？\"\n\n一阵沉默\n\n\"我真是服了，咱们都见过这个星球上的怪物了，你不会觉得这玩意儿能对怪物起什么作用吧？\"\n\n他耸了耸肩 \"谁知道呢？\"，他答道，同时把叉子塞回到自己口袋里。\n",
 
+		"SS2_ITEM_GUARDINGAMULET_NAME": "守卫护符",
+		"SS2_ITEM_GUARDINGAMULET_DESC": "从背后受到的伤害减少<style=cIsDamage>{0}%</style><style=cStack>(每层+{0}%)</style>。",
+		"SS2_ITEM_GUARDINGAMULET_PICKUP": "减少来自背后的伤害。",
+		"SS2_ITEM_GUARDINGAMULET_LORE": "",
+
 		"SS2_ITEM_MALICE_NAME": "恶意",
-		"SS2_ITEM_MALICE_DESC": "你的攻击对{0}米内<style=cIsDamage>{1}</style> <style=cStack>(每层+{1})</style>个敌人造成<style=cIsDamage>{2}%</style>的伤害。",
+		"SS2_ITEM_MALICE_DESC": "命中时对{0}米内<style=cIsDamage>{1}</style> <style=cStack>(每层+{1})</style>个敌人造成<style=cIsDamage>{2}%</style>的伤害。",
 		"SS2_ITEM_MALICE_PICKUP": "你的攻击将伤害目标周围的敌人。",
 		"SS2_ITEM_MALICE_LORE": "你太弱了。\n\n肉体上吗？也许不是，你奋战求生，而且打得不错；精神上吗？我的朋友，你太弱了。你奋战你杀戮，你对你的杀戮的感到懊悔。为什么？你和你战斗的那些动物并不恨你。对它们来说你不过是正在逃跑的猎物，或是危险的捕食者；那些巨人？它们没有感情，它们只拿到了毁灭的命令，毁灭的目标是你。\n\n我也了解你，我的朋友。你不希望软弱，你渴望强大，无论是肉体上还是精神上。不要可怜那些没有头脑的野兽，他们仅此而已。请你为了杀戮而战，不仅仅为了生存。\n\n人类的恶意只能带你到这一步了。拿着这个。它会带你走的更远。为了杀戮而战，杀成恐惧本身。\n",
 
 		"SS2_ITEM_MOLTENCOIN_NAME": "融化的硬币",
 		"SS2_ITEM_MOLTENCOIN_DESC": "命中时有<style=cIsDamage>{0}%</style>概率<style=cIsDamage>点燃</style>敌人，造成<style=cIsDamage>200%</style>的基础伤害<style=cStack>(每层+50%)</style>并获得<style=cIsUtility>$1</style> <style=cStack>(每层+$1，总获得量随已通过的关卡数量增加而增加)</style>。",
 		"SS2_ITEM_MOLTENCOIN_PICKUP": "命中时有一定几率点燃敌人并获得金钱。",
-		"SS2_ITEM_MOLTENCOIN_LORE": "运单：融化的硬币\r\n单号：446*****\r\n预计送达时间：09/22/2056\r\n运送方式：标准\r\n送货地址：金星，布里岑，威尼斯警察局\r\n运单详情：\n\n嘿，我发现了帕拉坦广场爆炸案相关的另一个证据。\n\n你知道调查人员因为案发现场过热而一直无法进场调查吧？今早那终于凉快下来了。我在人行道上找到了这个融化的硬币。初步化验表明这个硬币主要由钨制成，表面是一层金色图层。\n\n我也不知道这意味着什么。 也许能当一个幸运符？不管怎样，我都会把它寄给你，说实在的，你需要所有能得到的帮助。我的意思是，7人死亡，18人受伤，近50万财产损失，而你所能得到的证据只是一枚熔化的硬币和一家被炸毁的咖啡馆？好吧，伙计。祝你好运。\n",
+		"SS2_ITEM_MOLTENCOIN_LORE": "运单：融化的硬币\r\n运单号：446*****\r\n预计送达时间：2056年9月22日\r\n运送方式：标准\r\n送货地址：金星，布里岑，威尼斯警察局\r\n运单详情：\n\n嘿，我发现了帕拉坦广场爆炸案相关的另一个证据。\n\n你知道调查人员因为案发现场过热而一直无法进场调查吧？今早那终于凉快下来了。我在人行道上找到了这个融化的硬币。初步化验表明这个硬币主要由钨制成，表面是一层金色图层。\n\n我也不知道这意味着什么。 也许能当一个幸运符？不管怎样，我都会把它寄给你，说实在的，你需要所有能得到的帮助。我的意思是，7人死亡，18人受伤，近50万财产损失，而你所能得到的证据只是一枚熔化的硬币和一家被炸毁的咖啡馆？好吧，伙计。祝你好运。\n",
 
 		"SS2_ITEM_NEEDLES_NAME": "针",
-		"SS2_ITEM_NEEDLES_DESC": "命中时有<style=cIsDamage>{0}%</style> <style=cStack>(每层+{0}%)</style>几率<style=cIsDamage>刺痛</style>敌人，标记他们使对他们的攻击有<style=cIsDamage>100%暴击几率</style>持续<style=cIsDamage>{4}秒</style> <style=cStack>(每层+{4}秒)</style>。",
+		"SS2_ITEM_NEEDLES_DESC": "命中时有<style=cIsDamage>{0}%</style>的几率<style=cIsDamage>刺痛</style>敌人，使接下来对他们的<style=cIsDamage>{1}</style>次攻击<style=cIsDamage>必定暴击</style><style=cStack>(每层+{1}次)</style>。",
 		"SS2_ITEM_NEEDLES_PICKUP": "概率标记敌人使其下次所受伤害必定暴击。",
 		"SS2_ITEM_NEEDLES_LORE": "<style=cMono>UES交付事件报告（ID219560163）已找到。\n\n播放中……</style>\n\n\"交付人员：威尔·斯特森；编号：604。大约22小时前交付人员由于异常包裹有关的外伤被获准进入UES[已编校]的医疗仓。\n\n执勤巡视时，威尔听到有一个箱子在他附近发出巨响。由于担心出现违反运输标准协议运送活体动物的情况，威尔决定检查那个箱子。实际上那个箱子里是一个装满大号缝衣针的小塑料包。包装太紧了，不安全。\n\n最终，有可能时由于判断失误，威尔决定触摸小塑料包。这导致包裹向他的方向爆裂开来，在他身上造成了许多很深的伤口。威尔很幸运地及时被人发现了。他的状态已经稳定，但还需要一段时间才能从失血休克中恢复过来。\"\n\n报告结束。",
 
 		"SS2_ITEM_X4_NAME": "X-4 兴奋剂",
 		"SS2_ITEM_X4_DESC": "缩短次要技能冷却时间<style=cIsUtility>10%</style> <style=cStack>(每层+10%)</style>。使用次要技能<style=cIsHealing>提高被动生命再生速度</style><style=cIsHealing>+2 hp/s</style> <style=cStack>(每层+1 hp/s)</style>持续<style=cIsHealing>3</style>秒。",
 		"SS2_ITEM_X4_PICKUP": "小幅缩短次要技能冷却时间，在使用次要技能后提供治疗。",
-		"SS2_ITEM_X4_LORE": "运单：兴奋剂（X-4）\r\n单号：369*****\r\n预计送达时间：4/12/2057\r\n运送方式：优先\r\n送货地址：地球，巴当艾国家公园，罗密欧33号\r\n运单详情：\n\n附操作手册。若机器反馈540，请不要一次使用超过100ml的兴奋剂。\n\n  此致\n敬礼",
+		"SS2_ITEM_X4_LORE": "运单：兴奋剂（X-4）\r\n运单号：369*****\r\n预计送达时间：2057年4月12日\r\n运送方式：优先\r\n送货地址：地球，巴当艾国家公园，罗密欧33号\r\n运单详情：\n\n附操作手册。若机器反馈540，请不要一次使用超过100ml的兴奋剂。\n\n  此致\n敬礼",
 
 		"SS2_ITEM_SANTAHAT_NAME": "圣诞帽？",
 		"SS2_ITEM_SANTAHAT_DESC": "看起来很欢乐。",
 		"SS2_ITEM_SANTAHAT_PICKUP": "抓住了！",
 		"SS2_ITEM_SANTAHAT_LORE": "圣诞快乐！",
 
-		"SS2_INTERACTABLE_SANTAHAT_CONTEXT": "抓住它！抓住它！"
+		"SS2_INTERACTABLE_SANTAHAT_CONTEXT": "抓住它！抓住它！",
+
+		"SS2_ITEM_CHUNGUS_NAME": "窃笑真菌",
+		"SS2_ITEM_CHUNGUS_DESC": "站立不动<style=cIsHealing>1</style>秒后, 会创造出一片区域，使<style=cIsHealing>3米</style><style=cStack>(每层+1.5米)</style>内的所有友方每秒<style=cIsHealing>恢复</style>相当于你<style=cIsHealing>生命值5.5%</style><style=cStack>(每层+2.75%)</style>的生命值。<style=cIsVoid>使所有休眠真菌无效化</style>。",
+		"SS2_ITEM_CHUNGUS_PICKUP": "站立不动1秒后为附近所有友方提供治疗。<style=cIsVoid>使所有休眠真菌无效化</style>。",
+		"SS2_ITEM_CHUNGUS_LORE": "生灵降生，而后凋零。它们从土地上获取资源，然后平等地回馈土地。生命的恶性循环以自我吞噬的轨迹继续着——\n\n——而真菌在一旁窃笑。\n\n然后，人类出现了。他们建立了帝国。在和平与繁荣中坚持不懈，在饥荒与战争中顽强生存。然而，中心从未稳固。帝国兴起，又衰落——\n\n——而真菌在一旁窃笑。\n\n众神可以诞生，乐园可以建立。这都无关紧要。兄弟情谊如玻璃般破碎，即使在世外桃源，死亡也无处不在。整个世界荒废了——\n\n——而真菌在一旁窃笑。\n\n的确，没有什么是永恒的。星系、银河系，乃至整个宇宙，终将臣服于熵。所有事物都是短暂的，终将化为尘埃——\n\n——而真菌在一旁窃笑。",
+
+		"SS2_ITEM_UNIVERSALCHARGER_NAME": "万能充电器",
+		"SS2_ITEM_UNIVERSALCHARGER_DESC": "每<style=cIsUtility>{0}秒</style><style=cStack>(每层-{1}%)</style>，立即<style=cIsUtility>刷新</style>你下一个<style=cIsUtility>非主要技能</style>的<style=cIsUtility>冷却时间</style>。",
+		"SS2_ITEM_UNIVERSALCHARGER_PICKUP": "激活后定期刷新技能冷却时间。",
+		"SS2_ITEM_UNIVERSALCHARGER_LORE": "支持UESB-A至UESB-ZZ等……",
+
+		"SS2_ITEM_URANIUMHORSESHOE_NAME": "铀马蹄铁",
+		"SS2_ITEM_URANIUMHORSESHOE_DESC": "增加<style=cIsUtility>{0}%</style><style=cStack>(每层+{0}%)</style>的<style=cIsUtility>移动速度</style>和<style=cIsUtility>跳跃高度</style>。",
+		"SS2_ITEM_URANIUMHORSESHOE_PICKUP": "跑得更快，跳得更高。",
+		"SS2_ITEM_URANIUMHORSESHOE_LORE": "有趣",
+
+		"SS2_ITEM_ICETOOL_NAME": "冰攀工具",
+		"SS2_ITEM_ICETOOL_DESC": "当<style=cIsUtility>接触墙壁</style>时，获得<style=cIsUtility>1次</style><style=cStack>(每层+1次)</style>额外跳跃。",
+		"SS2_ITEM_ICETOOL_PICKUP": "接触墙壁时获得一次跳跃。",
+		"SS2_ITEM_ICETOOL_LORE": "",
+
+		"SS2_ITEM_LIGHTBULB_NAME": "奇迹灯泡",
+		"SS2_ITEM_LIGHTBULB_DESC": "技能冷却时间减少。低生命值时会损坏。",
+		"SS2_ITEM_LIGHTBULB_PICKUP": "技能冷却时间减少<style=cIsUtility>8%</style><style=cStack>(每层-8%)</style>。生命值降至<style=cIsHealth>25%</style>以下时会<style=cIsUtility>损坏</style>。",
+		"SS2_ITEM_LIGHTBULB_LORE": "",
+
+		"SS2_ITEM_LIGHTBULB_CONSUMED_NAME": "破碎的灯泡",
+		"SS2_ITEM_LIGHTBULB_CONSUMED_DESC": "一个灵光乍现的残余。",
+		"SS2_ITEM_LIGHTBULB_CONSUMED_PICKUP": "一个灵光乍现的残余。"
+
 	}
 }

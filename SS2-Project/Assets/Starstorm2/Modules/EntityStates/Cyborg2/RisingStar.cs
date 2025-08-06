@@ -14,7 +14,7 @@ namespace EntityStates.Cyborg2
         
         public static float scanAngle = 30f;
 
-        private static float damageCoefficient = 2f;
+        private static float damageCoefficient = 1.5f;
         public static float procCoefficient = 1f;
         public static float baseFireDuration = 0.5f;
         public static float force = 150f;
@@ -48,8 +48,12 @@ namespace EntityStates.Cyborg2
         private float fireStopwatch;
         private float exitTimer;
 
-        private string muzzleString = "CannonR";
+        private string muzzleString = "CannonL";
+        private Animator animator;
+        private Vector3 aimDirection;
 
+        private AimAnimator aimAnimator;
+        private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -57,14 +61,21 @@ namespace EntityStates.Cyborg2
             this.scanInterval = baseScanInterval / this.attackSpeedStat;
 
             this.targets = GetTargets();
-
-
+            base.StartAimMode();
+            animator = base.GetModelAnimator();
 
             this.targetIndicators = new Dictionary<HurtBox, IndicatorInfo>();
 
             this.fireInterval = baseFireDuration / maxShots / this.attackSpeedStat;
             exitTimer = baseExitDuration / attackSpeedStat;
             base.characterMotor.walkSpeedPenaltyCoefficient = walkSpeedPenaltyCoefficient;
+
+            this.aimDirection = base.GetAimRay().direction;
+            aimAnimator = base.GetAimAnimator();
+            if (aimAnimator)
+            {
+                animatorDirectionOverrideRequest = aimAnimator.RequestDirectionOverride(new Func<Vector3>(this.GetAimDirection));
+            }
         }
 
         public override void FixedUpdate()
@@ -113,10 +124,30 @@ namespace EntityStates.Cyborg2
             }
         }
 
+        private Vector3 GetAimDirection()
+        {           
+            return this.aimDirection;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if(this.aimAnimator)
+            {
+                aimAnimator.AimImmediate();
+            }
+            if(this.animator) // bleh why doesnt vanilla do this
+            {
+                this.animator.SetFloat(AnimationParameters.walkSpeed, base.characterMotor.walkSpeed);
+            }
+        }
         public override void OnExit()
         {
             base.OnExit();
-
+            if (this.animatorDirectionOverrideRequest != null)
+            {
+                this.animatorDirectionOverrideRequest.Dispose();
+            }
             base.characterMotor.walkSpeedPenaltyCoefficient = 1;
 
             if (this.targetIndicators != null)
@@ -158,14 +189,15 @@ namespace EntityStates.Cyborg2
             //anim
             this.shotsFired++;
 
-
+            base.PlayAnimation("Gesture, Override", "Primary2");
             EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, base.gameObject, muzzleString, false);
             base.characterBody.AddSpreadBloom(bloom);
             base.AddRecoil(-1f * recoil, -1.5f * recoil, -1f * recoil, 1f * recoil);
             Util.PlayAttackSpeedSound(fireSoundString, base.gameObject, wawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa);         
 
             Ray aimRay = base.GetAimRay();
-            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;         
+            Vector3 direction = hurtBox != null ? (hurtBox.transform.position - aimRay.origin).normalized : aimRay.direction;
+            this.aimDirection = direction;
             if (base.isAuthority)
             {
 
@@ -173,7 +205,7 @@ namespace EntityStates.Cyborg2
                 Vector3 position = hit ? hitInfo.point : aimRay.GetPoint(bulletDistance);
                 if (hurtBox)
                     this.RemoveIndicator(hurtBox);
-                DamageTypeCombo damageType = DamageType.Stun1s;
+                DamageTypeCombo damageType = DamageType.Generic;
                 damageType.damageSource = DamageSource.Secondary;
                 BulletAttack bulletAttack = new BulletAttack
                 {
@@ -197,13 +229,11 @@ namespace EntityStates.Cyborg2
                     hitEffectPrefab = hitEffectPrefab,
                     smartCollision = true,
                     tracerEffectPrefab = tracerPrefab,
+                    stopperMask = LayerIndex.world.mask,
                 };
                 bulletAttack.AddModdedDamageType(SS2.Survivors.Cyborg2.applyCyborgPrime);
                 bulletAttack.Fire();
-            }
-
-            
-
+            }            
         }
 
         private void AddIndicator(HurtBox hurtBox)

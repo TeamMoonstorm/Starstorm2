@@ -1,6 +1,6 @@
 ﻿using RoR2;
 using SS2.Components;
-
+using UnityEngine.Networking;
 namespace EntityStates.Trader.Bag
 {
     public class BagBaseState : BaseState
@@ -21,7 +21,8 @@ namespace EntityStates.Trader.Bag
             base.OnEnter();
             pickupPickerController = GetComponent<PickupPickerController>();
             traderController = GetComponent<TraderController>();
-            pickupPickerController.SetAvailable(enableInteraction);
+            if(NetworkServer.active)
+                pickupPickerController.SetAvailable(enableInteraction);
         }
     }
 }

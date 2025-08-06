@@ -19,7 +19,7 @@ namespace SS2
         {
             purchaseInteraction = GetComponent<PurchaseInteraction>();
             purchaseInteraction.onPurchase.AddListener(ActivateEtherealTerminal);
-
+            TeleporterInteraction.onTeleporterBeginChargingGlobal += DisableShrine;
             childLocator = GetComponent<ChildLocator>();
 
             purchaseCount = 0;
@@ -35,6 +35,18 @@ namespace SS2
                     purchaseInteraction.SetAvailable(true);
                     waitingForRefresh = false;
                 }
+            }
+        }
+
+        private void DisableShrine(TeleporterInteraction _)
+        {
+            if (childLocator != null)
+            {
+                childLocator.FindChild("Loop").gameObject.SetActive(false);
+                childLocator.FindChild("Particles").gameObject.SetActive(false);
+                childLocator.FindChild("Burst").gameObject.SetActive(true);
+                childLocator.FindChild("Symbol").gameObject.SetActive(false);
+                purchaseInteraction.SetAvailable(false);
             }
         }
 
@@ -69,21 +81,11 @@ namespace SS2
             }
             else
             {
-                purchaseInteraction.SetAvailable(false);
+                DisableShrine(null);
                 waitingForRefresh = true;
 
-                if (TeleporterInteraction.instance != null)
-                {
-
-                    TeleporterUpgradeController tuc = TeleporterInteraction.instance.GetComponent<TeleporterUpgradeController>();
-                    if (tuc != null)
-                        tuc.CmdUpdateIsEthereal(true);
-                    else
-                        return;
-
-                    Components.EtherealBehavior.teleIsEthereal = true;
-
-                }
+                if (TeleporterUpgradeController.instance)
+                    TeleporterUpgradeController.instance.UpgradeEthereal();
 
                 CharacterBody body = interactor.GetComponent<CharacterBody>();
                 Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage
@@ -91,14 +93,7 @@ namespace SS2
                     subjectAsCharacterBody = body,
                     baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
                 });
-
-                if (childLocator != null)
-                {
-                    childLocator.FindChild("Loop").gameObject.SetActive(false);
-                    childLocator.FindChild("Particles").gameObject.SetActive(false);
-                    childLocator.FindChild("Burst").gameObject.SetActive(true);
-                }
-
+                
                 Util.PlaySound("EtherealBell", this.gameObject);
 
                 purchaseCount++;
