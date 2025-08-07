@@ -21635,25 +21635,45 @@ MonoBehaviour:
   gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 2466952346865569324}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 4f6d6b84769f03d4888ed5ee1f6919f5, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 6074474949049614108}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: c6111af01ebb4fc4d97ab122998173fc, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 299338572752285507}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: c6111af01ebb4fc4d97ab122998173fc, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 586923045182830388}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: bfc900b5be241f843bdcd164329aaf7a, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   baseLightInfos: []
   corpseFade: 1
   CharacterOnScreen: 0
@@ -21874,10 +21894,22 @@ MonoBehaviour:
   m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
   skins:
   - {fileID: 11400000, guid: fffad6d8356572f489714cca1c6e5aa2, type: 2}
   - {fileID: 11400000, guid: 64e9945e126888d46a8e0f1fce997ef5, type: 2}
   - {fileID: 11400000, guid: 52560a9dd4290734b89720584a41d092, type: 2}
+  prefabInstantiationDatas: []
 --- !u!114 &4763287477861386757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22110,6 +22142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -22145,14 +22178,16 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
+  amputatedMaxHealth: 0
+  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
-  solitudeLevelCount: 0
+  boostAllStatsDisplay: {fileID: 0}
+  currentGrowthNectarBuffCount: 0
+  maxGrowthNectarBuffCount: 0
   wasLucky: 0
   spreadBloomDecayTime: 1
   spreadBloomCurve:
@@ -22182,22 +22217,28 @@ MonoBehaviour:
   _defaultCrosshairPrefab: {fileID: 1373867765511989, guid: 39aeec77944445646b842e6bb3f0a397,
     type: 3}
   hideCrosshair: 0
-  increasePrimaryDamageEffectUpdater: {fileID: 0}
-  protectFromOneShot: 0
-  hasTeleported: 0
+  canAddIncrasePrimaryDamage: 0
+  knockBackFinGroundedTimer: 0
+  runicLensPosition: {x: 0, y: 0, z: 0}
+  meteorVictimBody: {fileID: 0}
+  runicLensStartTime: 0
+  runicLensImpactTime: 0
   runicLensMeteorReady: 0
+  spawnedPickupCount: 0
   aimOriginTransform: {fileID: 8905998632993778413}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: bacc0ee38c6d9424dbba9075f0e80afb, type: 3}
   bodyColor: {r: 1, g: 0.48472303, b: 0, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: EntityStates.Nemmando.Spawn, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &6554963977273606169
@@ -22443,6 +22484,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 1142856669646447870}
   muteWalkMotion: 0
   mass: 100
@@ -22454,6 +22496,7 @@ MonoBehaviour:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
+  useHangtimeGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &237711290478795137
@@ -22521,9 +22564,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 8492389264479114442}
   forceCulled: 0
@@ -22767,7 +22812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1
 --- !u!1 &8609686412036953287
 GameObject:
   m_ObjectHideFlags: 0

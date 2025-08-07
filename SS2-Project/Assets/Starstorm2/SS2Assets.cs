@@ -1,5 +1,4 @@
-﻿using SS2.PostProcess;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,12 +6,10 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using UnityEngine;
-using UnityEngine.Rendering.PostProcessing;
 using MSU;
 using UObject = UnityEngine.Object;
 using Path = System.IO.Path;
 using System.Collections;
-using SS2.Survivors;
 
 namespace SS2
 {
@@ -85,15 +82,16 @@ namespace SS2
 
             asset = _assetBundles[bundle].LoadAsset<TAsset>(name);
 
-#if DEBUG
             if (!asset)
             {
                 SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling \"LoadAsset<TAsset>(string, CommissionBundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
-                    $"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
-
+                    $"Make sure the asset was included in the production bundles if this is a production release.");
+#if DEBUG
+                SS2Log.Debug($"A complete search of all the bundles will be done and the correct bundle enum will be logged.");
                 return LoadAsset<TAsset>(name, SS2Bundle.All);
-            }
 #endif
+            }
+
             return asset;
         }
 
@@ -111,12 +109,11 @@ namespace SS2
             }
             loadedAssets = _assetBundles[bundle].LoadAllAssets<TAsset>();
 
-#if DEBUG
             if (loadedAssets.Length == 0)
             {
                 SS2Log.Warning($"Could not find any asset of type {typeof(TAsset).Name} inside the bundle {bundle}");
             }
-#endif
+
             return loadedAssets;
         }
 
@@ -265,12 +262,10 @@ namespace SS2
                 }
             }
 
-#if DEBUG
             if (loadedAsset)
                 SS2Log.Info($"Asset of type {typeof(TAsset).Name} with name {name} was found inside bundle {foundInBundle}, it is recommended that you load the asset directly.");
             else
                 SS2Log.Warning($"Could not find asset of type {typeof(TAsset).Name} with name {name} in any of the bundles.");
-#endif
 
             return loadedAsset;
         }
@@ -283,10 +278,8 @@ namespace SS2
                 assets.AddRange(bundles.LoadAllAssets<TAsset>());
             }
 
-#if DEBUG
             if (assets.Count == 0)
                 SS2Log.Warning($"Could not find any asset of type {typeof(TAsset).Name} in any of the bundles");
-#endif
 
             return assets.ToArray();
         }
@@ -296,7 +289,7 @@ namespace SS2
             return Directory.GetFiles(AssetBundleFolderPath).Where(filePath => !filePath.EndsWith(".manifest") && Path.GetFileName(filePath) != LOADING_SCREEN_SPRITES).ToArray();
         }
 
-#if DEBUG
+
         private static string GetCallingMethod()
         {
             var stackTrace = new StackTrace();
@@ -337,7 +330,6 @@ namespace SS2
             }
             return stringBuilder.ToString();
         }
-#endif
     }
 
     public abstract class SS2AssetRequest
@@ -409,7 +401,7 @@ namespace SS2
 
             _asset = (TAsset)request.asset;
 
-#if DEBUG
+
             //Asset found, dont try to find it.
             if (_asset)
                 yield break;
@@ -445,7 +437,7 @@ namespace SS2
             {
                 SS2Log.Fatal($"Could not find asset of type {assetTypeName} and name {AssetName} In any of the bundles, exceptions may occur.");
             }
-#endif
+
             yield break;
         }
 
@@ -468,12 +460,11 @@ namespace SS2
                     _assets.AddRange(request.allAssets.OfType<TAsset>());
                 }
 
-#if DEBUG
                 if (_assets.Count == 0)
                 {
                     SS2Log.Warning($"Could not find any asset of type {assetTypeName} in any of the bundles");
                 }
-#endif
+
                 yield break;
             }
 
@@ -482,17 +473,16 @@ namespace SS2
 
             _assets.AddRange(request.allAssets.OfType<TAsset>());
 
-#if DEBUG
+
             if (_assets.Count == 0)
             {
                 SS2Log.Warning($"Could not find any asset of type {assetTypeName} inside the bundle {TargetBundle}");
             }
-#endif
 
             yield break;
         }
 
-#if DEBUG
+
         private static string GetCallingMethod()
         {
             var stackTrace = new StackTrace();
@@ -533,7 +523,6 @@ namespace SS2
             }
             return stringBuilder.ToString();
         }
-#endif
 
         internal SS2AssetRequest(string name, SS2Bundle bundle) : base(name, bundle)
         {

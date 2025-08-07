@@ -15,11 +15,5 @@ namespace SS2.Monsters
         {
             _masterPrefab = AssetCollection.FindAsset<GameObject>("LampMaster");
         }
-
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
     }
 }

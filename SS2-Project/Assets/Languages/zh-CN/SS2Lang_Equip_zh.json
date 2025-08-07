@@ -7,17 +7,22 @@
 
 		"SS2_EQUIP_CLOAKINGHEADBAND_NAME": "隐形头带",
 		"SS2_EQUIP_CLOAKINGHEADBAND_PICKUP": "隐身并加速",
-		"SS2_EQUIP_CLOAKINGHEADBAND_DESC": "<style=cIsUtility>隐身</style>{0}秒。",
+		"SS2_EQUIP_CLOAKINGHEADBAND_DESC": "<style=cIsUtility>隐身</style>并获得<style=cIsUtility>40%移动速度加成</style>，持续{0}秒。",
 		"SS2_EQUIP_CLOAKINGHEADBAND_LORE": "运单：隐形头带\r\n单号：554*****\r\n预计送达时间：08/01/2056\r\n运送方式：标准\r\n送货地址：水星，阿朵拉，克利伯里巷202号西\r\n运单详情：我终于搞到了你要的个人隐形设备。用这个东西匿踪应该是很简单的事情。\n\n现在我要稍微讲解一下这个装置。首先这只是个小型装置，隐身不会持续太长时间，所以你要确保在隐身结束前藏好自己。其次，你需要手动按下头带上的按钮激活装置。确实是有点显眼的动作，但我就只能搞到这样的了。\n\n最后，如果盒子里面看着没东西的话，你就在盒子里面摸索摸索，毕竟不选挥发性处理服务的话比较省钱，而且运的会快一点。记得告诉我使用体验，祝你玩的开心。\n",
 
 		"SS2_EQUIP_GREATERWARBANNER_NAME": "大战旗",
 		"SS2_EQUIP_GREATERWARBANNER_PICKUP": "放置一面大战旗。大战旗提高范围内友方恢复速度与暴击率，降低友方技能冷却时间。",
-		"SS2_EQUIP_GREATERWARBANNER_DESC": "放置一面大战旗，大战旗提高友方<style=cIsHealing>{0}%生命回复</style>，<style=cIsDamage>{1}%暴击率</style>，提供<style=cIsUtility>{2}%冷却时间缩减</style>，最多防止{3}面。",
+		"SS2_EQUIP_GREATERWARBANNER_DESC": "放置一面大战旗，大战旗提高友方<style=cIsHealing>{0}%生命回复</style>，<style=cIsDamage>{1}%暴击率</style>，提供<style=cIsUtility>{2}%冷却时间缩减</style>，最多放置{3}面。",
 		"SS2_EQUIP_GREATERWARBANNER_LORE": "<style=cMono>来自国家古代战争博物馆的录音</style>\n\n有人说，士气是战场上最重要的资源之一。部队的作战效力会随着士气上升指数级上涨。士气受多方面的影响。比方说，口粮的品类，是否能收到家书，甚至是是否有娱乐时间。\n\n一种行之有效的提高士气的方法是使用象征物。许多军队会在着装设计上采用能提振力量的颜色与图案。 许多部队在战斗中携带旗帜以保证士气高昂。\n\n战旗的使用也有许多不同的情况。旗手确实会提高部队士气，据观察，高级别军队特有的旗帜能进一步提高士气，如果上校或将军之类指挥人员的旗帜出现在战场上，部队将展现出额外的战斗力。\n",
+
+		"SS2_EQUIP_MAGNET_NAME": "简易磁铁",
+		"SS2_EQUIP_MAGNET_PICKUP": "将周围的道具吸引向自己，有机会挖掘出宝藏。",
+		"SS2_EQUIP_MAGNET_DESC": "将<style=cIsUtility>{0}米半径内</style>的道具吸引向自己。有<style=cIsUtility>{1}%</style>的几率挖掘出随机宝藏。",
+		"SS2_EQUIP_MAGNET_LORE": "",
 
 		"SS2_EQUIP_MIDAS_NAME": "M.I.D.A.S.",
 		"SS2_EQUIP_MIDAS_PICKUP": "减少你当前生命值的一半并获得等同于损失生命值的金钱。",
-		"SS2_EQUIP_MIDAS_DESC": "牺牲<style=cIsHealth>50%</style>的<style=cIsHealth>当前生命</style>。获得等同于<style=cIsHealth>损失生命值</style>数目的<style=cIsUtility>金钱</style>。",
+		"SS2_EQUIP_MIDAS_DESC": "牺牲<style=cIsHealth>50%</style>的<style=cIsHealth>当前生命</style>。获得等同于<style=cIsHealth>损失生命值</style>数目或一个普通宝箱价格的<style=cIsUtility>金钱</style>，具体取决于哪一个数据更高。",
 		"SS2_EQUIP_MIDAS_LORE": "\"这是什么意思？\"\n\n他们都在想这件事，但她是第一个问出来的。\n\n\"我……美妙的一天开始了？\" 他笑了。\n\n\"孟菲斯再次濒死斯蒂芬\"\n\n\"线粒体在六点被击败\"\n\n\"殡葬业者无视死亡叹息\"\n\n\"真有……诗意。\"他挠了挠下巴。\"想打开吗？\"\n\n\"该死……还是算了。\"",
 
 		"SS2_EQUIP_PRESSURIZEDCANISTER_NAME": "加压罐",
@@ -25,7 +30,20 @@
 		"SS2_EQUIP_PRESSURIZEDCANISTER_DESC": "将你发射到空中，按住跳跃按钮持续获得向上的推力。",
 		"SS2_EQUIP_PRESSURIZEDCANISTER_LORE": "运单：高压气体储罐（24）\r\n单号：182*****\r\n预计送达时间：06/29/2056\r\n运送方式：标准\r\n送货地址：地球，三城区，三城区天然气运输中心\r\n运单详情：\n\n第五次了？第五次往这个地址发高压气罐。我不想评价……我是说，也许你最开始没想到竟然要这么多罐子，多到要额外再买四次……我的意思是，你看，要是一起买的话走批发能便宜……还不算运费的价格，对吧？\n\n不管怎么说，伙计，我不知道你要一百二十个气罐打算干什么，但是祝你用的顺手。\n",
 
-		"SS2_EQUIP_NEMCAPEQUIP_NAME": "Morleys",
+		"SS2_EQUIP_ROCKFRUIT_NAME": "岩果",
+		"SS2_EQUIP_ROCKFRUIT_PICKUP": "转换一个随机物品。",
+		"SS2_EQUIP_ROCKFRUIT_DESC": "<style=cIsUtility>转换</style>你背包中的一个<style=cIsHealth>随机</style>物品为<style=cIsUtility>同等级</style>的另一个物品。",
+		"SS2_EQUIP_ROCKFRUIT_LORE": "",
+
+		"SS2_EQUIP_WHITEFLAG_NAME": "白旗",
+		"SS2_EQUIP_WHITEFLAG_PICKUP": "放置一面白旗，使该区域内的敌人无法使用能力。",
+		"SS2_EQUIP_WHITEFLAG_DESC": "放置一面白旗使<style=cIsUtility>{0}米</style>半径内的敌人<style=cIsUtility>无法使用能力</style>，持续<style=cIsUtility>{1}秒</style>。",
+		"SS2_EQUIP_WHITEFLAG_LORE": "",
+
+		"SS2_SKILL_DISABLED_NAME": "已禁用",
+		"SS2_SKILL_DISABLED_DESCRIPTION": "该技能已被禁用。",
+
+		"SS2_EQUIP_NEMCAPEQUIP_NAME": "莫利斯",
 		"SS2_EQUIP_NEMCAPEQUIP_PICKUP": "为您减压。<style=cIsHealth>吸烟有害健康！</style>",
 		"SS2_EQUIP_NEMCAPEQUIP_DESC": "<style=cIsHealth>燃烧</style><style=cIsHealth>10%最大生命值</style>以消除<style=cIsUtility>25%</style>的<style=cIsUtility>压力</style>，并暂时减少<style=cIsUtility>压力获得量</style><style=cIsUtility>50%</style>持续<style=cIsUtility>8</style>秒。"
 	}
