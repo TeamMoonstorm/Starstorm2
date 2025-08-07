@@ -34,6 +34,8 @@ namespace SS2.Equipments
 
         private GameObject _warbannerObject;
 
+        private static GameObject gwbVFX;
+
         public override bool Execute(EquipmentSlot slot)
         {
             var GBToken = slot.characterBody.gameObject.GetComponent<GreaterBannerToken>();
@@ -79,6 +81,7 @@ namespace SS2.Equipments
         public override void Initialize()
         {
             _warbannerObject = AssetCollection.FindAsset<GameObject>("GreaterWarbannerWard");
+            gwbVFX = AssetCollection.FindAsset<GameObject>("GreaterBannerBuffEffect");
             RegisterTempVisualEffects();
             On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
         }
@@ -108,10 +111,8 @@ namespace SS2.Equipments
 
         private void RegisterTempVisualEffects()
         {
-            // TODO: MSU 2.0
-            /*var effectInstance = SS2Assets.LoadAsset<GameObject>("GreaterBannerBuffEffect", SS2Bundle.Equipments); 
-
-            TempVisualEffectAPI.AddTemporaryVisualEffect(effectInstance.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");*/
+            //todid
+            TempVisualEffectAPI.AddTemporaryVisualEffect(gwbVFX.InstantiateClone("GreaterBannerBuffEffect", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.BuffGreaterBanner); }, true, "MainHurtbox");
         }
 
         public class GreaterBannerToken : MonoBehaviour
