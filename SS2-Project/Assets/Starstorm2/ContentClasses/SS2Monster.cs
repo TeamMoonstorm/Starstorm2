@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using RiskOfOptions.OptionConfigs;
 
 namespace SS2
 {
@@ -29,7 +31,22 @@ namespace SS2
         public GameObject CharacterPrefab { get; private set; }
 
         public abstract void Initialize();
-        public abstract bool IsAvailable(ContentPack contentPack);
+        public virtual bool IsAvailable(ContentPack conentPack)
+        {
+            ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "00 - Enemy Disabling";
+                b.key = $"Disable Enemy: {MSUtil.NicifyString(GetType().Name)}";
+                b.description = "Set this to true if you want to disable this enemy from appearing in game. Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur.";
+                b.configFile = SS2Config.ConfigMonster;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true
+                };
+            }).DoConfigure();
+
+            return !isDisabled;
+        }
 
         public abstract SS2AssetRequest<MonsterAssetCollection> AssetRequest { get; }
 
@@ -39,15 +56,50 @@ namespace SS2
         {
             SS2AssetRequest<MonsterAssetCollection> request = AssetRequest;
 
+            if (request == null)
+            {
+                SS2Log.Warning($"AssetRequest is null for {GetType().Name}");
+                yield break;
+            }
+
             request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
             AssetCollection = request.Asset;
 
-            CharacterPrefab = AssetCollection.bodyPrefab;
-            masterPrefab = AssetCollection.masterPrefab;
-            CardProvider = AssetCollection.monsterCardProvider;
+            if (AssetCollection == null)
+            {
+                SS2Log.Warning($"AssetCollection is null for {GetType().Name}");
+                yield break;
+            }
+
+            if (AssetCollection.bodyPrefab != null)
+            {
+                CharacterPrefab = AssetCollection.bodyPrefab;
+            }
+            else
+            {
+                SS2Log.Warning($"bodyPrefab is null in AssetCollection for {GetType().Name}");
+            }
+
+            if (AssetCollection.masterPrefab != null)
+            {
+                masterPrefab = AssetCollection.masterPrefab;
+            }
+            else
+            {
+                SS2Log.Warning($"masterPrefab is null in AssetCollection for {GetType().Name}");
+            }
+
+            if (AssetCollection.monsterCardProvider != null)
+            {
+                CardProvider = AssetCollection.monsterCardProvider;
+            }
+            else
+            {
+                SS2Log.Warning($"monsterCardProvider is null in AssetCollection for {GetType().Name}");
+            }
         }
 
 

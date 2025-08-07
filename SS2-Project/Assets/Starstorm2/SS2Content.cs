@@ -630,6 +630,11 @@ namespace SS2
             public static BuffDef bdGalvanized;
 
             public static BuffDef bdGalvanizedSource;
+
+            public static BuffDef bdConsecration;
+
+            public static BuffDef bdBloodRush;
+
         }
 
         public static class Elites

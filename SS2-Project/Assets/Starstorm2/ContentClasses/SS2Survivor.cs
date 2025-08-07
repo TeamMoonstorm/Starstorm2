@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using RiskOfOptions.OptionConfigs;
+
 namespace SS2
 {
     /// <summary>
@@ -23,10 +26,34 @@ namespace SS2
         public GameObject CharacterPrefab { get; protected set; }
 
         public abstract void Initialize();
-        public abstract bool IsAvailable(ContentPack contentPack);
+        public virtual bool IsAvailable(ContentPack conentPack)
+        {
+            ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "00 - Survivor Disabling";
+                b.key = $"Disable Survivor: {MSUtil.NicifyString(GetType().Name)}";
+                b.description = "Set this to true if you want to disable this survivor from appearing in game. Why....? Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur.";
+                b.configFile = SS2Config.ConfigSurvivor;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = true
+                };
+            }).DoConfigure();
+
+            return !isDisabled;
+        }
 
         public abstract SS2AssetRequest<SurvivorAssetCollection> AssetRequest { get; }
 
+        protected void SetupDefaultBody(GameObject prefab)
+        {
+            CharacterBody cb = prefab.GetComponent<CharacterBody>();
+            if(cb)
+            {
+                cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+                cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
+            }
+        }
         public virtual IEnumerator LoadContentAsync()
         {
             SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;

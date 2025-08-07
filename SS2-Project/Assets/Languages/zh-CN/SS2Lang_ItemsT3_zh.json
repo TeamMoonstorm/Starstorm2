@@ -1,8 +1,8 @@
 {
 	"strings": {
 		"SS2_ITEM_BABYTOYS_NAME": "婴儿玩具",
-		"SS2_ITEM_BABYTOYS_PICKUP": "在保留全部属性的同时将等级下调{0}级",
 		"SS2_ITEM_BABYTOYS_DESC": "等级下降<style=cIsUtility>{0} <style=cStack>(每层+{0})</style>，</style>但是<style=cIsUtility>保留全部属性</style>。",
+		"SS2_ITEM_BABYTOYS_PICKUP": "在保留全部属性的同时将等级下调{0}级",
 		"SS2_ITEM_BABYTOYS_LORE": "运单：婴儿玩具\r\n单号：013*****\r\n预计送达时间：06/07/2056\r\n运送方式：紧急优先 \r\n送货地址：地球，黄金海岸，431号\r\n运单详情：\n\n嘿亲爱的！真抱歉我去不了，不过请把这些给孩子。他现在很小，但没准有一天就能成为下一个UES的大船长，谁知道呢！我真想快点见到你们两个。自打我生病以来，这里的情况越来越糟糕了。我不想让我的孩子暴露在危险中。我爱你，请务必保重！\r\n",
 
 		"SS2_ITEM_DROIDHEAD_NAME": "机器人头颅",
@@ -10,10 +10,15 @@
 		"SS2_ITEM_DROIDHEAD_PICKUP": "击杀精英敌人时召唤一个临时无人机。",
 		"SS2_ITEM_DROIDHEAD_LORE": "运单：安保机器人\r\n单号：1138****\r\n预计送达时间：05/14/2056\r\n运送方式：优先、易碎品 \r\n送货地址：火星，阿西莫夫，拉卡姆机器人中心\r\n运单详情：\n\n这是我们从被盗的机器人中搜到的为数不多完整器件之一……冥王星上的激进分子偷了一大堆ER-14，在他们的基地用了好一会儿了。具体地说这台是ER-14XPC5VVUFF，就像你记得的那样。我不知道之前发生了什么，我只知道找到这批残骸能拿到大笔的赏金。还有其他的残骸，不过远不如这个完整……至少不会给人造成危险。如果你也要那些的话，请联系我。\n",
 
-		"SS2_ITEM_ERRATICGADGET_NAME": "Erratic Gadget",
-		"SS2_ITEM_ERRATICGADGET_DESC": "Gain <style=cIsDamage>{0}% critical chance</style>. Critical strikes deal <style=cIsDamage>{1}%</style> <style=cStack>(+{1}% per stack)</style> extra damage.",
-		"SS2_ITEM_ERRATICGADGET_PICKUP": "Critical strikes deal extra damage.",
-		"SS2_ITEM_ERRATICGADGET_LORE": "<style=cMono>==========================\n======== CallCutter ========\n===== ALPHA 0.1354.1.12 =====\n==========================\n\nCutting into call TdiM3c4fcQQA.34074... done\nAcquiring audio input from Caller A... done\nCaller B........ done\nEncrypting line... done\nEnable live TTS output?\n>Y\n\n==========================\nTEXT-TO-SPEECH OUTPUT BELOW\n==========================\n</style>\nCaller A: Hey, do you still have the gadget?\nCaller B: Yeah, right here, are we still good to go?\nCaller A: Yes, the deal's still on...\nCaller A: You haven't told anyone about this, right?\nCaller B: What, you think I'm stupid? Of course not!\nCaller A: Good. Keep it that way.\nCaller B: I will, I will... Say, are you sure this thing's safe to just, like, send through the system?\nCaller B: This gadget's some sort of high-end weapon modification, isn't it?\nCaller A: Don't sweat it, the gadget's perfectly safe. UES doesn't check their packages. I've used their mailing system loads before, and I'm still doing just fine.\nCaller B: Eh, if you say so. I'll send it through, and I'm expecting fifteen-thousand credits within the next twenty-four hours, as planned.\nCaller A: As planned. Good doing business with you.\n\n<style=cMono>==========================\n=====CALL DISCONNECTED=====\n==========================\n\nSevering line..... done\nBacking up recording........ done\nSave text output?\n>Y\n",
+		"SS2_ITEM_COMPOSITEINJECTOR_NAME": "组合式喷头",
+		"SS2_ITEM_COMPOSITEINJECTOR_DESC": "获得<style=cIsDamage>1<style=cStack>(每层+1)</style>个额外装备栏</style>。同时触发你的所有装备。",
+		"SS2_ITEM_COMPOSITEINJECTOR_PICKUP": "组合装备物品",
+		"SS2_ITEM_COMPOSITEINJECTOR_LORE": "",
+
+		"SS2_ITEM_ERRATICGADGET_NAME": "不稳定的小装置",
+		"SS2_ITEM_ERRATICGADGET_DESC": "你的闪电会命中<style=cIsDamage>两次</style>。每次攻击有<style=cIsDamage>{0}%</style>的概率发射<style=cIsDamage>链式闪电</style>对最多<style=cIsDamage>{2}</style><style=cStack>(每层+{2})</style>个目标造成<style=cIsDamage>{1}%</style>总伤害。",
+		"SS2_ITEM_ERRATICGADGET_PICKUP": "闪电会命中两次。",
+		"SS2_ITEM_ERRATICGADGET_LORE": "<style=cMono>==========================\n======== CallCutter ========\n===== ALPHA 0.1354.1.12 =====\n==========================\n\n切入通话TdiM3c4fcQQA.34074... 完成\n获取来自呼叫者A的音频输入... 完成\n呼叫者B......... 完成\n加密线路... 完成\n启用实时语音合成输出？\n>是\n\n==========================\n文本 - 语音输出如下\n==========================\n</style>\n呼叫者A：嘿，那个小装置还在你那吗？\n呼叫者B：对，就在这儿，我们还能继续吗？\n呼叫者A: 是的，交易依然有效……\n呼叫者A：你没告诉任何人吧？\n呼叫者B：你觉得我傻吗？当然没有！\n呼叫者A：很好，继续保持。\n呼叫者B：我会的，我会的……话说，你确定这玩意通过系统发送没问题吗？\n呼叫者B：这个小装置是什么高端武器的改装吧？\n呼叫者A：别担心，这个小装置绝对安全。UES不会检查他们的包裹。我以前用过他们的邮寄系统，从没出过问题。\n呼叫者B：嗯，如果你这么说。我会将它发出去，按计划我期待在接下来的24小时内收到一万五千个信用点。\n呼叫者A：按计划。很高兴和你合作。\n\n<style=cMono>==========================\n=====通话断开=====\n==========================\n\n切断线路..... 完成\n备份录音........ 完成\n保存文本输出？\n>是\n",
 
 		"SS2_ITEM_GREENCHOCOLATE_NAME": "绿巧克力",
 		"SS2_ITEM_GREENCHOCOLATE_DESC": "受到不少于你的最大生命值的<style=cIsHealth>{0}%</style>的伤害时，过量的伤害减少<style=cIsDamage>{1}%</style>，获得一个可堆叠增益提高你<style=cIsDamage>{4}%</style>的基础伤害并提高<style=cIsDamage>{5}%</style>暴击几率，持续<style=cIsDamage>{2}</style> <style=cStack>(每层+{3})</style>秒。",
@@ -21,8 +26,8 @@
 		"SS2_ITEM_GREENCHOCOLATE_LORE": "<style=cMono>\r\n信号回声的音频转录完成。正在分配通用令牌。</style>\n\n[嘶嘶声、叮当声]\n\n男人1： 呃，嘿，怪事。\n\n男人2： [叹息声] 啥？\n\n男人1： 你知道有什么诡异的外国巧克力是绿色的吗？\n\n男人2： 你到底在说什么？\n\n男人1： 我在这个保险箱里找到了一些绿色的巧克力，我想问问这算不算正常现象。\n\n男人2： 不，不算，我是说……我觉得不算吧，大概。\n\n[薄塑料折叠声]\n\n男人1： 所以这是啥……你觉得有毒吗？\n\n男人2： 也许没有……呃，而且，上次的肉没有毒，你当时只是胃不舒服。\n\n男人1： 好吧，我姑且先留着了，当应急口粮之类的。\n\n男人2： 也许不是个好主意……随便你吧。\n\n<style=cMono> 请求的转录结束。</style>\n",
 
 		"SS2_ITEM_INSECTICIDE_NAME": "杀虫剂",
-		"SS2_ITEM_INSECTICIDE_DESC": "攻击有<style=cIsDamage>{0}%</style>的几率使敌人<style=cIsDamage>中毒</style>，造成<style=cIsDamage>{1}%</style><style=cStack>(每层+{1}%)</style>基础伤害.",
-		"SS2_ITEM_INSECTICIDE_PICKUP": "攻击时使敌人中毒。",
+		"SS2_ITEM_INSECTICIDE_DESC": "命中时有<style=cIsDamage>{0}%</style>的几率<style=cIsDamage>毒害</style>敌人，造成<style=cIsDamage>{1}%</style><style=cStack>(每层+{1}%)</style>基础伤害.",
+		"SS2_ITEM_INSECTICIDE_PICKUP": "你的攻击将毒害敌人。",
 		"SS2_ITEM_INSECTICIDE_LORE": "退回：REAVE昆虫杀手喷雾剂400克（8瓶）\n物流编号：3528*******\n预计交付：2056年1月6日\n运输方式：标准\n送货地址：金星，伊托基弗拉克图斯，阳伞之路299号\n退货原因：\n\n产品损坏。五罐有明显的物理损坏和变形，其中两罐甚至漏液。其中一罐完全破裂。我看过你们的广告，知道这东西的威力，我觉得最好由你们的专家负责处理，你们自己出钱处理。\n\n我期待退款。",
 
 		"SS2_ITEM_NKOTASHERITAGE_NAME": "恩科塔的遗产",
@@ -31,19 +36,19 @@
 		"SS2_ITEM_NKOTASHERITAGE_LORE": "\"我的朋友们，今天让各位相聚，是因为我有重要的事情要宣布。\n\n首先，我非常沉痛地通知各位，我们最后一位伟大的领导人，我们善良的恩科塔不幸去世了。就我们所知，恩科塔于昨晚在睡梦中安详地离去了，她几年来全部的工作就此宣告结束。话虽如此，没人能接替她的工作，她是家族中的最后一个人，没有在世的兄弟或姐妹，也没有孩子。\n\n在她最后的遗嘱中，她用智慧设计了一个新的开始。是为了我们，为了我们所有人。她的遗愿是，我们社区剩下的所有人，无论是分散开还是一起，都要入世。这也许是很激进的行为，但是我认为这是对这社区来说最好的选择。\n\n遵循恩科塔的遗嘱，她将被埋葬在我们的最终目的地。你们也许需要为恩科塔和这个社区哀悼一段时间，但还请不要拖太久。一周后，一群朝圣者将和我一起前往西部50英里外的灰色大径。你们可以跟我们来，也可以选择自己的道路。完全取决于你们的个人意愿。如果认为自己无法走完，请不要烦恼，恩科塔留下的遗产是精神上的，我们所有人都是她的孩子。她会保护我们，直到我们抵达目的地。\n\n谢谢大家，我建议各位开始收拾物品，为接下来的旅程做好准备。\"\n\n - 恩科塔和达戈村的悼词",
 
 		"SS2_ITEM_PORTABLEREACTOR_NAME": "便携式反应堆",
-		"SS2_ITEM_PORTABLEREACTOR_DESC": "进入关卡时获得<style=cIsUtility>无敌</style>状态，持续<style=cIsUtility>{0}</style> <style=cStack>(每层+{1})</style>秒。",
+		"SS2_ITEM_PORTABLEREACTOR_DESC": "进入关卡时获得<style=cIsUtility>无敌</style>状态和<style=cIsUtility>100%移动速度</style>，持续<style=cIsUtility>{0}</style> <style=cStack>(每层+{1})</style>秒。",
 		"SS2_ITEM_PORTABLEREACTOR_PICKUP": "进入关卡时无敌。",
 		"SS2_ITEM_PORTABLEREACTOR_LORE": "80秒。该死的蜥蜴，真是狡猾。\n\n70秒。她深吸一口气，现在的空气中充满了微生物。\n\n60秒。她数了数子弹。\n\n50秒。还剩两个弹匣，一盒子弹，一颗泡过水的手雷，一把钝刀。完全不够。\n\n40秒。她数了数它们的头。\n\n30秒。蜥蜴看到她的盾牌就远远逃开，它们要么是害怕要么是在等她露出弱点。\n\n20秒。霰弹上膛\n\n10秒。蜥蜴们冲了过来，而她希望自己已经准备好了。",
 
 		"SS2_ITEM_SKATEBOARD_NAME": "迅捷滑板",
-		"SS2_ITEM_SKATEBOARD_DESC": "向<style=cIsUtility>任何方向移动</style>都可以<style=cIsUtility>冲刺</style>。使用技能后获得一个增益，提供<style=cIsUtility>+{0}%</style> <style=cStack>(每层+{1}%)</style> <style=cIsUtility>移动速度</style>持续<style=cIsUtility>{4}</style>秒，最多堆叠<style=cIsUtility>{2}</style>层。",
-		"SS2_ITEM_SKATEBOARD_PICKUP": "向任何方向移动都能冲刺。使用技能使你更快。",
-		"SS2_ITEM_SKATEBOARD_LORE": "<style=cIsHealth>开发中，请阅读下文并在需要时反馈问题\n\n</style><style=cStack>模组开发者的话：这个模组并没有还原starstorm1的同名物品，因为ror2总是允许玩家移动。各位喜欢这个版本的物品吗？在提更改建议前请看看下面的注意事项。\n\n >使所有技能都有“灵巧”特性很酷，但是其代码实现过于臃肿。\n > 向任何方向冲刺怎样？Rob说不怎么样，但我觉得还好。\n >速度提升太多了吗？还是太少了？要保留这个特性吗？</style>",
+		"SS2_ITEM_SKATEBOARD_DESC": "向<style=cIsUtility>任何方向移动</style>都可以<style=cIsUtility>奔跑</style>。使用技能后获得一个增益，提供<style=cIsUtility>+{0}%</style> <style=cStack>(每层+{1}%)</style> <style=cIsUtility>移动速度</style>持续<style=cIsUtility>{4}</style>秒，最多堆叠<style=cIsUtility>{2}</style>层。",
+		"SS2_ITEM_SKATEBOARD_PICKUP": "向任何方向移动都能奔跑。使用技能使你更快。",
+		"SS2_ITEM_SKATEBOARD_LORE": "<style=cIsHealth>开发中，请阅读下文并在需要时反馈问题\n\n</style><style=cStack>模组开发者的话：这个模组并没有还原starstorm1的同名物品，因为ror2总是允许玩家移动。各位喜欢这个版本的物品吗？在提更改建议前请看看下面的注意事项。\n\n >使所有技能都有“灵巧”特性很酷，但是其代码实现过于臃肿。\n > 向任何方向奔跑怎样？Rob说不怎么样，但我觉得还好。\n >速度提升太多了吗？还是太少了？要保留这个特性吗？</style>",
 
-		"SS2_ITEM_BANEFLASK_NAME": "Bane Flask",
-		"SS2_ITEM_BANEFLASK_DESC": "Spread debuffs on kill or something also has a debuff owie that hurts",
-		"SS2_ITEM_BANEFLASK_PICKUP": "Debuffs spread on kill. Attacks apply bane.",
-		"SS2_ITEM_BANEFLASK_LORE": "the green hurts ow!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-		
+		"SS2_ITEM_BANEFLASK_NAME": "剧毒之瓶",
+		"SS2_ITEM_BANEFLASK_DESC": "击杀时传播减益，攻击也会施加某种伤害性减益。",
+		"SS2_ITEM_BANEFLASK_PICKUP": "击杀时传播减益。攻击施加剧毒。.",
+		"SS2_ITEM_BANEFLASK_LORE": "绿色的东西好痛啊！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！"
+
 	}
 }

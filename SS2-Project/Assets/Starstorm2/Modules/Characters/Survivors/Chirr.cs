@@ -42,12 +42,6 @@ namespace SS2.Survivors
 
         private static float _percentHealthRegen = 0.05f;
 
-
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public override void Initialize()
         {
             if (SS2Main.ScepterInstalled)

@@ -20,10 +20,6 @@ namespace SS2.Monsters
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
         private void ChristmasTime()
         {
             CharacterPrefab.GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial = SS2Assets.LoadAsset<Material>("matSantaHat", SS2Bundle.Items);

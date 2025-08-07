@@ -1253,6 +1253,11 @@
 								<Sound Name="nemmandosaberhit" ID="{FBC94B00-8638-4045-B501-CF30674175C9}" ShortID="882063033">
 									<PropertyList>
 										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="Lowpass" Type="int16">
+											<ValueList>
+												<Value>20</Value>
+											</ValueList>
+										</Property>
 										<Property Name="OverridePositioning" Type="bool" Value="True"/>
 										<Property Name="Pitch" Type="int32">
 											<ModifierList>
@@ -1269,7 +1274,7 @@
 										</Property>
 										<Property Name="Volume" Type="Real64">
 											<ValueList>
-												<Value>-6</Value>
+												<Value>-3</Value>
 											</ValueList>
 										</Property>
 									</PropertyList>
@@ -2346,6 +2351,109 @@
 									</ChildrenList>
 									<ActiveSourceList>
 										<ActiveSource Name="superCharge" ID="{2F2334D1-9BBA-4B46-8678-553AB2659475}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="ExecutionerAimSecondary" ID="{D489C43A-15B2-46F3-9709-AAE55B259E1F}" ShortID="370972987">
+									<PropertyList>
+										<Property Name="3DSpatialization" Type="int16" Value="1"/>
+										<Property Name="OverridePositioning" Type="bool" Value="True"/>
+										<Property Name="Pitch" Type="int32">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{8F565908-6529-4E43-A2B4-4666083A3E80}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="50"/>
+															<Property Name="Min" Type="Real64" Value="-50"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>-6</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Attenuation">
+											<ObjectRef Name="BodyAttenuation" ID="{A986EB11-7B06-4BE3-9630-2DEB2646D5C4}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+										</Reference>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="sheathesound" ID="{F95FD593-8B72-4E25-A127-DF9D8C97143F}">
+											<Language>SFX</Language>
+											<AudioFile>sheathesound.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="1057107243"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="sheathesound" ID="{F95FD593-8B72-4E25-A127-DF9D8C97143F}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="ExecutionerExitSecondary" ID="{9355B9B6-6FB6-4C19-84B5-A3228A40ECE4}" ShortID="655135734">
+									<PropertyList>
+										<Property Name="MakeUpGain" Type="Real64">
+											<ValueList>
+												<Value>4</Value>
+											</ValueList>
+										</Property>
+										<Property Name="Pitch" Type="int32">
+											<ValueList>
+												<Value>-800</Value>
+											</ValueList>
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{5930C7F4-3F7F-4025-A229-9C00B1BEE441}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Max" Type="Real64" Value="60"/>
+															<Property Name="Min" Type="Real64" Value="-60"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>3</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="ExeAimStop" ID="{D1953DDC-DA38-48C3-8C19-2BD87EC3DE3F}">
+											<PropertyList>
+												<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+												<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>ExeAimStop.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="641298055"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="ExeAimStop" ID="{D1953DDC-DA38-48C3-8C19-2BD87EC3DE3F}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
 							</ChildrenList>

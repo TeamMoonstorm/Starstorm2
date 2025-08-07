@@ -1,23 +1,28 @@
 {
 	"strings": {
 		"SS2_ITEM_ARMEDBACKPACK_NAME": "Mochila Armada",
+		"SS2_ITEM_ARMEDBACKPACK_DESC": "Chance de disparar um míssil ao receber dano, causando <style=cIsDamage>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style> de dano. A chance aumenta quanto mais dano você recebe.",		
 		"SS2_ITEM_ARMEDBACKPACK_PICKUP": "Dispare um míssil ao receber muito dano.",
-		"SS2_ITEM_ARMEDBACKPACK_DESC": "Chance de disparar um míssil ao receber dano, causando <style=cIsDamage>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style> de dano. A chance aumenta quanto mais dano você recebe.",
 		"SS2_ITEM_ARMEDBACKPACK_LORE": "Pedido: Mochila Militar Marcada Para Devolução\nNúmero de Rastreio: 823****\nPrevisão de Entrega: 13/02/2056\nMétodo de Envio: Padrão\nEndereço de Entrega: 17 Yule Road, Livingrock, Terra\nDetalhes da Entrega:\n\nProblema durante uma caminhada. Prepare seus advogados.",
+		
+		"SS2_ITEM_BLOODTESTER_NAME": "Testador de Sangue Quebrado",
+		"SS2_ITEM_BLOODTESTER_DESC": "A cada {0} segundos, <style=cIsHealing>cure</style> rapidamente em <style=cIsHealing>{1} <style=cStack>(+{1} por acúmulo)</style></style> para cada <style=cIsUtility>25 ouro</style> que você tem. <style=cIsUtility>Escala com o tempo.</style>",
+		"SS2_ITEM_BLOODTESTER_PICKUP": "Cura periodicamente com base no ouro",
+		"SS2_ITEM_BLOODTESTER_LORE": "Pedido: Testador de Sangue Quebrado\nNúmero de Rastreio: 288*****\nPrevisão de Entrega: 06/17/2056\nMétodo de Envio: Prioridade\nEndereço de Entrega: Sede da Dionysus Pharmaceuticals, Plutão\nDetalhes da Entrega:\n\nVamos precisar consertar isso antes que faça mais mal do que bem à nossa empresa. Essa coisa continuou nos dando resultados errados toda vez que nosso MED-E a usava. Não só obstrui nosso fluxo de trabalho, como acabamos tendo que pagar do nosso bolso para os pacientes, já que os diagnosticamos erroneamente e os furamos com agulhas desnecessariamente. E não podemos alegar que o paciente está errado, já que tudo é imediatamente copiado para os servidores. Não podemos continuar desembolsando esse tipo de dinheiro, ou estaremos falidos no próximo trimestre.\n",
 
 		"SS2_ITEM_COFFEEBAG_NAME": "Saco de Café",
-		"SS2_ITEM_COFFEEBAG_DESC": "Ganha <style=cIsDamage>{1}%</style> de <style=cIsDamage>velocidade de ataque</style> e <style=cIsUtility>{2}%</style> <style=cIsUtility>velocidade de movimento</style> por <style=cIsUtility>{0} segundos</style> <style=cStack>(+{0}s por acúmulo)</style> após ativar um item interativo.",
-		"SS2_ITEM_COFFEEBAG_PICKUP": "Ganha uma pequena quantidade de velocidade de ataque e movimento após ativar um item interativo.",
+		"SS2_ITEM_COFFEEBAG_DESC": "Ao golpear tem <style=cIsDamage>{0}%</style> de chance de derrubar um grão de café que garante <style=cIsDamage>{1}% velocidade de ataque e de movimento</style> por <style=cIsUtility>{3}</style> <style=cStack>(+{3} por acúmulo)</style> <style=cIsUtility>segundos</style>.",
+		"SS2_ITEM_COFFEEBAG_PICKUP": "Derruba grãos de café que aumentam a velocidade de ataque e de movimento",
 		"SS2_ITEM_COFFEEBAG_LORE": "Pedido: Café\nNúmero de Rastreio: 917****\nPrevisão de Entrega: 06/12/2056\nMétodo de Envio: Padrão\nEndereço de Entrega: 6430 Deer Lane, Pensilvânia, Terra\nDetalhes da Entrega:\n\nOlá, mãe!\n \nEu tenho viajado, assim como você fez na sua juventude... Eu me lembro de todas as histórias que você costumava me contar de quando tinha a minha idade. Indo para lugares como Jamaica, Romênia, praticamente todos os lugares da Terra! Espero poder visitar minha casa em breve para contar a você sobre todos os lugares que estive.\n\nLembro que havia um café ótimo que você sempre levava de volta para casa... era \"Neik Dark Roast\" ? De qualquer forma, há um ótimo lugar em Titan que cultiva seu próprio café, e é um dos melhores! Ele me lembra de estar em casa com você.\n\nEspero poder vê-la em breve. Sinto sua falta, e sinto falta dos gatos. Eleni mandou um oi, e eu mal posso esperar para contar tudo!\n\nCom amor, Hanan\n",
 
 		"SS2_ITEM_DETRITIVETREMATODE_NAME": "Trematódeo Detritivo",
-		"SS2_ITEM_DETRITIVETREMATODE_DESC": "Inimigos com <style=cIsDamage>menos de {0}% de saúde</style> recebem <style=cIsDamage>dano permanente ao longo do tempo</style>, causando <style=cIsDamage>{1}%</style> de dano base <style=cStack>(+{1}% por acúmulo)</style> e desacelera em <style=cIsUtility>-{2}% a velocidade de movimento</style>.",
+		"SS2_ITEM_DETRITIVETREMATODE_DESC": "Inimigos com <style=cIsDamage>menos de {0}% <style=cStack>(+{1}% por acúmulo)</style> de saúde</style> recebem <style=cIsDamage>dano permanente ao longo do tempo</style>, causando <style=cIsDamage>{2}%</style> de dano base <style=cStack>(+{2}% por acúmulo)</style>.",
 		"SS2_ITEM_DETRITIVETREMATODE_PICKUP": "Inimigos com pouca vida recebem dano ao longo do tempo.",
 		"SS2_ITEM_DETRITIVETREMATODE_LORE": "<style=cMono>$ Transcrevendo imagem... finalizado.\n$ Resolvendo... finalizado.\n$ Emitindo sequências de texto... finalizado.\nCompleto!\n\n\n</style>Este é o diário de bordo de D. Furthen, naturalista a bordo do UES [Redigido] em conjunto com o programa UES Research and Documentation of Outer Life em andamento. Esta entrada foi escrita em Point Sigma, durante uma expedição às densas selvas de Córnea III.\n\n---------------------\n\nEu encontrei minha primeira amostra de vida exterior neste planeta! E que maravilha é, também. A amostra se assemelha a uma minhoca da terra, mas significativamente maior. Atribuí o nome comum deles como 'Trematóide Detritivo' e descreverei suas propriedades abaixo.\n\n• Aproximadamente duas polegadas de diâmetro, variando em tamanho de cerca de quatro polegadas a um pé e meio de comprimento. Coloração branca.\n\n• Esses trematódeos foram encontrados comendo uma pilha de carne podre em uma caverna úmida. A carne era de origem indeterminada, mas a presença de outros animais maiores é emocionante.\n\n• Ao pegar um punhado de carne podre, os trematódeos reagiram rapidamente ao movimento e começaram a se contorcer, antes de relaxar lentamente. O guarda posicionado comigo, Chevry, acho que esse era seu nome, ficou enojado.\n\n• Ao tocar um deles com a mão sem luva para sentir sua textura, um dos trematódeos agarrou minha palma e começou a mastigar. Foi extremamente doloroso, tanto por ter o trematódeo na minha mão quanto quando Chevry cortou a coisa. Apesar disso, com exceção de um leve corte na palma da minha mão, acredito que estou bem.\n",
 
 		"SS2_ITEM_DIARY_NAME": "Diário",
-		"SS2_ITEM_DIARY_DESC": "Ganhe <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style> <style=cIsUtility>a mais de experiência</style> ao derrotar <style=cIsDamage>chefes</style>.",
-		"SS2_ITEM_DIARY_PICKUP": "Ganhe experiência bônus ao derrotar chefes.",
+		"SS2_ITEM_DIARY_DESC": "Ao entrar em uma fase, <style=cIsUtility>ganhe {0} níveis</style> e <style=cIsUtility>consuma este item.</style>",
+		"SS2_ITEM_DIARY_PICKUP": "Sobe de nível ao entrar em uma fase. Consumido no uso.",
 		"SS2_ITEM_DIARY_LORE": "<style=cMono>Transmissão de imagens de segurança concluída da Seção 14-B do Corredor.\n\nImprimindo...\n\n</style>\"Então este livro é a única coisa no recipiente de armazenamento?\"\n\"Praticamente. Além de alguns móveis velhos, é isso.\"\n\"Então, qual é o problema deste livro? Se isso é tudo o que estamos recebendo, é melhor que seja bom.\"\n\"É um diário, eu acho. Escrito pela primeira vez em por um Alan Howizer, cerca de 26 anos atrás. Parecia um cara muito inteligente, disse que trabalhava em uma fábrica de testes químicos na Terra.\"\n\"É isso? Este é apenas o diário de um velho?\"\n\"Espere, é mais do que isso. Enquanto eu estava folheando, cerca de cem páginas, a caligrafia mudou e, com certeza, foi encontrada por uma pessoa diferente em um banco do parque, aparentemente. A mesma coisa novamente, cerca de trinta páginas depois. E novamente, depois de cerca de outras setenta. E continua. Há algumas dúzias de pessoas diferentes que escreveram neste diário, anotando suas boas lembranças, mistérios estranhos, enigmas, suas respostas para esses enigmas, todo tipo de coisa .\"\n \"Huh. Essa coisa deve ser um verdadeiro tesouro de conhecimento então, sim? Alguma pista de quem foi o último dono dele?\"\n\"Uh, sim, na verdade. Alguém chamado Chel foi o último a escrever no livro, e parece que eles deixaram um endereço na contracapa. Por que? No que você está pensando?\"\n\n<style=cMono>Fim da seção notável.</style>",
 
 		"SS2_ITEM_DORMANTFUNGUS_NAME": "Fungo Dormente",
@@ -26,12 +31,17 @@
 		"SS2_ITEM_DORMANTFUNGUS_LORE": "<style=cMono>Documentação da Estação de Pesquisa Rook\n\nEspécime-18305 Notas da Semana 3</style>\n\nEsta é uma das amostras mais estranhas que encontramos. Esse fungo parece que vai crescer em quase tudo no prédio se deixarmos. As paredes, pisos, teto. Eles parecem ter uma preferência por coisas que estão se movendo. Nossas roupas, portas e até algumas máquinas. Continuaremos monitorando esse comportamento.\n\n<style=cMono>Espécime-18305 Notas da Semana 5</style>\n\nO espécime continuou a se fixar às coisas ao redor do laboratório. Observamos que ele se torna mais saudável quanto mais se move com seu objeto anexado. Os testes parecem indicar que subsiste do calor criado pelos movimentos, absorvido por suas raízes. Tentaremos transplantá-lo para uma máquina em movimento constante e monitorar sua integridade.\n\n<style=cMono>Espécime 18305 Notas da Semana 8</style>\n\nDeixamos a amostra anexada a um modelo antigo de pistão do laboratório. Em caso de qualquer dano, tínhamos a intenção de eliminá-lo independentemente. Nós o anexamos e o deixamos funcionando nas 3 semanas anteriores. Mas curiosamente, o pistão deveria ter quebrado nesse período de tempo. No entanto, parece que o sujeito criou uma relação simbiótica com a máquina. Continuaremos monitorando esse comportamento em busca de mais efeitos negativos e possíveis outros usos para esse espécime.\n",
 
 		"SS2_ITEM_FORK_NAME": "Garfo",
-		"SS2_ITEM_FORK_DESC": "Aumenta seu dano base em <style=cIsDamage>{0}</style> <style=cStack>(+{0} por acúmulo)</style>.",
+		"SS2_ITEM_FORK_DESC": "Aumenta seu dano base em <style=cIsDamage>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style>.",
 		"SS2_ITEM_FORK_PICKUP": "Dá mais dano.",
 		"SS2_ITEM_FORK_LORE": "\"Você não pode estar falando sério... Olha, eu sei que nós falamos que precisamos de tudo para sobreviver, mas você tem que entender que eu não fui literal sobre isso!\"\n\nEle ergueu o instrumento de prata, com um olhar questionador em seu rosto. \"O que você quer dizer? E se precisarmos lutar contra um monstro?\"\n\nUm breve silêncio.\n\n\"Por favor, nós dois vimos as criaturas deste planeta. Não me diga que você acha que isso seria o suficiente para lutar contra qualquer coisa aqui.\"\n\nEle deu de ombros. \"Nunca se sabe\", ele respondeu, enquanto guardava o garfo no bolso.\n",
 
+		"SS2_ITEM_GUARDINGAMULET_NAME": "Amuleto de Proteção",
+		"SS2_ITEM_GUARDINGAMULET_DESC": "Reduz o dano recebido de trás em <style=cIsDamage>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style>",
+		"SS2_ITEM_GUARDINGAMULET_PICKUP": "Reduz o dano recebido de trás.",
+		"SS2_ITEM_GUARDINGAMULET_LORE": "",
+
 		"SS2_ITEM_MALICE_NAME": "Malícia",
-		"SS2_ITEM_MALICE_DESC": "Seus ataques causam <style=cIsDamage>{2}%</style> de dano TOTAL até <style=cIsDamage>{1}</style> <style=cStack>(+{1} por acúmulo)</style> inimigos adicionais dentro de {0}m.",
+		"SS2_ITEM_MALICE_DESC": "Seus ataques causam <style=cIsDamage>{0}%</style> de dano TOTAL a até <style=cIsDamage>{1}</style> <style=cStack>(+{1} por acúmulo)</style> inimigos adicionais dentro de <style=cIsDamage>{2}m</style> <style=cStack>(+{3}m por acúmulo)</style>.",
 		"SS2_ITEM_MALICE_PICKUP": "Ataques espalham dano a inimigos próximos.",
 		"SS2_ITEM_MALICE_LORE": "Você é fraco.\n\nFisicamente? Talvez não. Você luta para sobreviver e luta bem o suficiente. Mas na mente? Meu amigo, você é frágil. Você luta e mata, mas sente remorso por aquilo que mata. Por quê? Os animais, eles não sentem remorso por você. Para eles, você é apenas uma presa para ser perseguida ou um predador de que precisam fugir. Esses titãs gigantes? Eles não carregam nenhuma emoção, apenas uma diretriz silenciosa para destruir. Para destruir você.\n\nE eu conheço você. Meu amigo, você não deseja ser fraco. Você deseja ser poderoso, tanto na mente quanto no corpo. Não sinta pena dessas bestas irracionais, pois elas são apenas isso. Lute para matar, não apenas para sobreviver.\n\nMas a malícia do homem só pode levá-lo até certo ponto. Pegue isso. Seja puxado ainda mais. Lute para matar e mate para ser temido.\n",
 
@@ -41,12 +51,12 @@
 		"SS2_ITEM_MOLTENCOIN_LORE": "Pedido: Moeda Derretida\nNúmero de Rastreio: 446*****\nPrevisão de Entrega: 22/09/2056\nMétodo de Envio: Padrão\nEndereço de Entrega: Departamento de Polícia Veneziana, Brithen, Vênus\nDetalhes da Entrega:\n\nEi, encontrei outra evidência relacionada ao bombardeio em Parathan Square alguns dias atrás.\n\nEntão, você sabe como os investigadores tiveram que adiar sua análise porque a área estava muito quente? Bem, o espaço finalmente esfriou esta manhã, e consegui encontrar esta moeda derretida grudada na calçada. Um teste químico rápido diz que provavelmente é feito, principalmente, de tungstênio com um revestimento de ouro, e também não esfriou desde que eu a tirei do chão.\n\nEu não tenho certeza do que isso pode significar, no entanto. Talvez um amuleto de boa sorte ou um cartão de visita? De qualquer forma, estou enviando para você, já que, francamente, você precisa de toda a ajuda possível. Quero dizer, 7 pessoas mortas, 18 feridas, quase meio milhão em danos materiais, e tudo que você tem como evidência é uma moeda derretida e um café explodido? Bem, você tem minha simpatia, cara. Boa sorte no caso.\n",
 
 		"SS2_ITEM_NEEDLES_NAME": "Agulhas",
-		"SS2_ITEM_NEEDLES_DESC": "Ataques não-críticos aumentam em <style=cIsDamage>+{0}% a chance de ataque crítico</style> contra o inimigo golpeado. A chance de ataque crítico adicional é reiniciada após o ataque crítico ser ativado<style=cIsDamage>{1}</style> <style=cStack>(+{1} por acúmulo)</style>.",
-		"SS2_ITEM_NEEDLES_PICKUP": "Golpear um inimigo aumenta a chance de acerto crítico contra ele até que um acerto crítico ocorra.",
+		"SS2_ITEM_NEEDLES_DESC": "<style=cIsDamage>+{0}% de chance</style> ao golpear de garantir <style=cIsDamage>ataques críticos</style> em um inimigo para os próximos <style=cIsDamage>{1}</style> <style=cStack>(+{1} por acúmulo)</style> acertos.",
+		"SS2_ITEM_NEEDLES_PICKUP": "Chance de expor um inimigo a críticos garantidos.",
 		"SS2_ITEM_NEEDLES_LORE": "<style=cMono>ID do Relatório de Incidente de Entrega UES 219560163 encontrado.\n\nReproduzindo...</style>\n\n\"O entregador Will Stetson, número 604, foi admitido na enfermaria médica a bordo do UES [CONFIDENCIAL], cerca de 22 horas atrás, devido a complicações relacionadas ao manuseio de comportamento aberrante de pacotes.\n\nEnquanto fazia suas rondas, Will notou que um dos baús subitamente fez um ruído alto, bastante alto, atrás dele. Preocupado que alguém pudesse ter tentado enviar um animal vivo sob o protocolo Padrão, ele sentiu a necessidade de investigar. Em vez disso, o que havia no baú era um pequeno pacote de plástico contendo um grande número de agulhas de costura particularmente grandes, obviamente embaladas com muita força para garantir a segurança.\n\nFinalmente, e, provavelmente em um lapso de julgamento, Will decidiu tocar no pacote. Isso fez com que o pacote se rompesse repentinamente em sua direção, deixando sua parte frontal superior coberta de cortes profundos. Ele tem sorte de alguém o ter encontrado rapidamente. Ele parece estar indo bem, mas estará se recuperando do choque e da perda de sangue por um tempo.\"\n\nFim do relatório.",
 
 		"SS2_ITEM_X4_NAME": "Estimulante X-4",
-		"SS2_ITEM_X4_DESC": "Reduz o tempo de recarga da habilidade secundária em <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style>. Usar sua habilidade secundária <style=cIsHealing>aumenta a regeneração de saúde base</style> em <style=cIsHealing>+{1} de saúde por segundo</style> <style=cStack>(+{2} de saúde por segundo por acúmulo)</style> por <style=cIsHealing>{3}</style> segundos.",
+		"SS2_ITEM_X4_DESC": "Reduz o tempo de recarga da habilidade secundária em <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style>. Usar sua habilidade secundária <style=cIsHealing>aumenta a regeneração de saúde base</style> em <style=cIsHealing>+{1} por segundo</style> <style=cStack>(+{2} por segundo por acúmulo)</style> por <style=cIsHealing>{3}</style> segundos.",
 		"SS2_ITEM_X4_PICKUP": "Diminui ligeiramente o tempo de recarga da habilidade secundária e concede cura ao usá-la.",
 		"SS2_ITEM_X4_LORE": "Pedido: Estimulante (X-4)\nNúmero de Rastreio: 369*****\nPrevisão de Entrega: 12/04/2057\nMétodo de Envio: Prioritário\nEndereço de Entrega: Romeo 33, Parque Nacional Batang Ai, Terra\nDetalhes da Entrega:\n\nEmbalado, incluindo manual. A máquina apresenta sintomas de um 540? Nesse caso, evite usar mais de 100ml de estimulante.\n\nSaúde.",
 		
@@ -55,6 +65,35 @@
 		"SS2_ITEM_SANTAHAT_PICKUP": "Peguei Você!",
 		"SS2_ITEM_SANTAHAT_LORE": "Feliz Natal!",
 
-		"SS2_INTERACTABLE_SANTAHAT_CONTEXT": "PEGA! PEGA!"
+		"SS2_INTERACTABLE_SANTAHAT_CONTEXT": "PEGA! PEGA!",
+		
+		"SS2_ITEM_CHUNGUS_NAME": "Fungo Risonho",
+		"SS2_ITEM_CHUNGUS_DESC": "Após ficar parado por <style=cIsHealing>1</style> segundos, cria uma zona que <style=cIsHealing>cura</style> em <style=cIsHealing>5.5%</style> <style=cStack>(+2.75% por acúmulo)</style> da sua <style=cIsHealing>vida</style> a cada segundo para todos os aliados dentro de<style=cIsHealing>3m</style> <style=cStack>(+1.5m por acúmulo)</style>. <style=cIsVoid>Corrompe todos os Fungos Dormentes</style>.",
+		"SS2_ITEM_CHUNGUS_PICKUP": "Cura todos os aliados após ficar parado por 1 segundo. <style=cIsVoid>Corrompe todos os fungos dormentes</style>.",
+		"SS2_ITEM_CHUNGUS_LORE": "Os animais vivem, e os animais morrem. Eles tiram da terra, e devolvem em partes iguais. O ciclo vicioso da vida continua sua trajetória oroborreana-\n\n-e o tempo todo, o fungo ri.\n\nEntão, o homem veio. Ele construiu impérios. Persistiu através da paz e prosperidade, e através da fome e guerra. Mesmo assim, o centro nunca se mantém. Impérios nascem, e impérios caem-\n\n-e o tempo todo, o fungo ri.\n\nDeuses poderiam nascer. O paraíso poderia ser fundado. Não importa. Irmandades se quebram como vidro, e a morte reina até mesmo em Arcádia. Mundos inteiros caem em pousio-\n\n-e o tempo todo, o fungo ri.\n\nDe fato, nada dura para sempre. Sistemas estelares, galáxias, o universo inteiro, até mesmo. Tudo se submeterá à entropia, dado o tempo. Tudo é efêmero, tudo será pó-\n\n-e o tempo todo, o fungo ri.",		
+		
+		"SS2_ITEM_UNIVERSALCHARGER_NAME": "Carregador Universal",
+		"SS2_ITEM_UNIVERSALCHARGER_DESC": "A cada <style=cIsUtility>{0} segundos</style> <style=cStack>(-{1}% por acúmulo)</style>, <style=cIsUtility>zere o tempo de recarga</style> da sua próxima <style=cIsUtility>habilidade não primária</style>.",
+		"SS2_ITEM_UNIVERSALCHARGER_PICKUP": "Periodicamente zera o tempo de recarda da sua próxima habilidade.",
+		"SS2_ITEM_UNIVERSALCHARGER_LORE": "Supports UESB-A through UESB-ZZ bla bla bla",
+		
+		"SS2_ITEM_URANIUMHORSESHOE_NAME": "Ferradura de Urânio",
+		"SS2_ITEM_URANIUMHORSESHOE_DESC": "Aumenta a <style=cIsUtility>velocidade de movimento</style> e <style=cIsUtility>altura de salto</style> em <style=cIsUtility>{0}%</style> <style=cStack>(+{0}% por acúmulo)</style>.",
+		"SS2_ITEM_URANIUMHORSESHOE_PICKUP": "Corra mais. Pule mais alto.",
+		"SS2_ITEM_URANIUMHORSESHOE_LORE": "divertido",
+
+		"SS2_ITEM_ICETOOL_NAME": "Picareta de Escalada",
+		"SS2_ITEM_ICETOOL_DESC": "Enquanto estiver <style=cIsUtility>tocando em uma parede</style>, ganhe <style=cIsUtility>+1</style> <style=cStack>(+1 por acúmulo)</style> salto extra.",
+		"SS2_ITEM_ICETOOL_PICKUP": "Ganhe saltos extras enquanto tocar em paredes",
+		"SS2_ITEM_ICETOOL_LORE": "",
+
+		"SS2_ITEM_LIGHTBULB_NAME": "Lâmpada Milagrosa",
+		"SS2_ITEM_LIGHTBULB_PICKUP": "Reduz o tempo de recarga das habilidades em <style=cIsUtility>8%</style> <style=cStack>(-8% por acúmulo)</style>. Cair de <style=cIsHealth>25% de vida</style> <style=cIsUtility>quebra</style> este item.",
+		"SS2_ITEM_LIGHTBULB_DESC": "Reduz o tempo de recarga das habilidades. Quebra com baixa vida.",
+		"SS2_ITEM_LIGHTBULB_LORE": "",
+
+		"SS2_ITEM_LIGHTBULB_CONSUMED_NAME": "Lâmpada Quebrada",
+		"SS2_ITEM_LIGHTBULB_CONSUMED_DESC": "Restos de uma ideia brilhante.",
+		"SS2_ITEM_LIGHTBULB_CONSUMED_PICKUP": "Restos de uma ideia brilhante."
 	}
 }

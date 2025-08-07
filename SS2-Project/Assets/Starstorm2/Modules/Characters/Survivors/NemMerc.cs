@@ -71,11 +71,5 @@ namespace SS2.Survivors
 
             cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>().footstepDustPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").WaitForCompletion();
         }
-
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
     }
 }
