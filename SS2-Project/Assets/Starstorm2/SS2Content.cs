@@ -130,6 +130,7 @@ namespace SS2
                 Events.Init,
                 //Bulwark.Init,
                 //Components.EtherealBehavior.Init,
+                Components.SS2RunManager.Init,
                 Components.VoidBehavior.Init,
                 //Void.Init,
                 Storm.Init,
