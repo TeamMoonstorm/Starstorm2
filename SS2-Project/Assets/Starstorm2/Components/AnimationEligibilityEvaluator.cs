@@ -15,7 +15,7 @@ namespace SS2.Components
             healthComponent = gameObject.GetComponent<HealthComponent>();
             if (!(modelAnimator && body))
             {
-                Debug.Log("Animator and/or CharacterBody not provided to Animation Eligibility Evaluator. Destroying.");
+                SS2Log.Debug("Animator and/or CharacterBody not provided to Animation Eligibility Evaluator. Destroying.");
                 Destroy(this);
             }
         }

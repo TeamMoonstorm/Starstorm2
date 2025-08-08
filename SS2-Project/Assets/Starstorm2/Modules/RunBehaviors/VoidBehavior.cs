@@ -61,8 +61,8 @@ namespace SS2.Components
                 NetworkServer.Spawn(term);
 
 #if DEBUG
-                Debug.Log("TERM : " + term);
-                Debug.Log("placed shrine at: " + position + "pos & " + rotation + "rot");
+                SS2Log.Debug("TERM : " + term);
+                SS2Log.Debug("placed shrine at: " + position + "pos & " + rotation + "rot");
 #endif
             }
         }
