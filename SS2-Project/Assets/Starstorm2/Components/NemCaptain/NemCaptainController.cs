@@ -21,9 +21,10 @@ namespace SS2.Components
         public SkillLocator skillLocator;
         public Animator characterAnimator;
         public EntityStateMachine weaponStateMachine;
-        
+
 
         [Header("Drone Orders")]
+        public SkillDef[][] decks;
         public SkillDef[] deck1;
         public SkillDef[] deck2;
         public SkillDef[] deck3;
@@ -859,7 +860,7 @@ namespace SS2.Components
             int count = list.Count;
             while (count > 1)
             {
-                int swapWith = UnityEngine.Random.RandomRange(0, count);
+                int swapWith = UnityEngine.Random.RandomRangeInt(0, count);
                 count--;
                 T value = list[count];
                 list[count] = list[swapWith];
