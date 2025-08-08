@@ -25,7 +25,7 @@ namespace SS2
         public const string ID_INTERACTABLE = PREFIX + "Interactable";
         public const string ID_MISC = PREFIX + "Miscellaneous";
 
-        private static ExpansionDef fuckyou = ScriptableObject.CreateInstance<ExpansionDef>();
+        private static ExpansionDef expansionDef = ScriptableObject.CreateInstance<ExpansionDef>();
         internal static ConfigFactory ConfigFactory { get; private set; }
         public static ConfigFile ConfigMain { get; private set; }
         public static ConfigFile ConfigItem { get; private set; }
@@ -62,20 +62,36 @@ namespace SS2
         }
 
 
-
         internal SS2Config(BaseUnityPlugin bup)
         {
 
-            ConfigFactory = new ConfigFactory(bup, true);          
+            ConfigFactory = new ConfigFactory(bup, true);
             ConfigMain = CreateConfigFile(ID_MAIN, true);
-            ConfigItem = CreateConfigFile(ID_ITEM, true);           
+            ConfigItem = CreateConfigFile(ID_ITEM, true);
             ConfigSurvivor = CreateConfigFile(ID_SURVIVOR, true);
             ConfigMonster = CreateConfigFile(ID_MONSTER, true);
             ConfigEvent = CreateConfigFile(ID_EVENT, true);
             //ConfigInteractable = CreateConfigFile(ID_INTERACTABLE, true);
-            
+
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
+
+            AddTelemetryBool();
+        }
+
+        private void AddTelemetryBool()
+        {
+            ConfiguredBool enableTelemetry = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "Telemetry";
+                b.key = $"Enable telemetry?";
+                b.description = "Set this to true if you want to enable statistics and crash reporting. No personal data will be collected, and this helps us a ton to improve Starstorm 2!";
+                b.configFile = ConfigMain;
+                b.checkBoxConfig = new CheckBoxConfig
+                {
+                    restartRequired = false
+                };
+            }).DoConfigure();
         }
 
 
@@ -95,26 +111,26 @@ namespace SS2
         }
         private static void EnableItem(ItemDef item, bool enable)
         {
-            item.requiredExpansion = enable && EnableItems.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+            item.requiredExpansion = enable && EnableItems.value ? SS2Content.SS2ContentPack.expansionDefs[0] : expansionDef;
         }
         private static void EnableItem(EquipmentDef item, bool enable)
         {
-            item.requiredExpansion = enable && EnableEquipments.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+            item.requiredExpansion = enable && EnableEquipments.value ? SS2Content.SS2ContentPack.expansionDefs[0] : expansionDef;
         }
         private static void EnableInteractable(ExpansionRequirementComponent item, bool enable)
         {
             if(item)
-                item.requiredExpansion = enable && EnableInteractables.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+                item.requiredExpansion = enable && EnableInteractables.value ? SS2Content.SS2ContentPack.expansionDefs[0] : expansionDef;
         }
         private static void EnableSurvivor(ExpansionRequirementComponent item, bool enable)
         {
             if (item)
-                item.requiredExpansion = enable && EnableSurvivors.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+                item.requiredExpansion = enable && EnableSurvivors.value ? SS2Content.SS2ContentPack.expansionDefs[0] : expansionDef;
         }
         private static void EnableMonster(ExpansionRequirementComponent item, bool enable)
         {
             if (item)
-                item.requiredExpansion = enable && EnableMonsters.value ? SS2Content.SS2ContentPack.expansionDefs[0] : fuckyou;
+                item.requiredExpansion = enable && EnableMonsters.value ? SS2Content.SS2ContentPack.expansionDefs[0] : expansionDef;
         }
 
         internal static ConfigFile CreateConfigFile(string identifier, bool z = false)
