@@ -23,10 +23,13 @@ namespace SS2.Survivors
         public static DamageAPI.ModdedDamageType fearOnHit;
         public static DamageAPI.ModdedDamageType healNovaOnKill;
         public static DeployableSlot Ghoul;
-        
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return true;
+        }
         public override void Initialize()
         {
-            ModifyPrefab();
+            SetupDefaultBody(CharacterPrefab);
 
             fearOnHit = DamageAPI.ReserveDamageType(); // A lot of fear code is in Executioner2. i dont rly like this
             healNovaOnKill = DamageAPI.ReserveDamageType();
@@ -38,6 +41,8 @@ namespace SS2.Survivors
 
             healNovaEffectPrefab = SS2Assets.LoadAsset<GameObject>("HealNovaOnKillEffect", SS2Bundle.NemExecutioner);
             fearEffectPrefab = SS2Assets.LoadAsset<GameObject>("FearEffectRed", SS2Bundle.NemExecutioner);
+            ionOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemExeIonOrbEffect", SS2Bundle.NemExecutioner);
+
             GameObject fearProjectile = SS2Assets.LoadAsset<GameObject>("FearProjectile", SS2Bundle.NemExecutioner);
             if(fearProjectile)
             {
@@ -50,7 +55,7 @@ namespace SS2.Survivors
             return master.GetBody().skillLocator.secondary.maxStock;
         }
 
-
+        #region Events
         public static float healNovaRadius = 32f;
         public static float healNovaPercentHeal = 0.2f;
         public static float healNovaDamageCoefficient = 0.1f;
@@ -125,20 +130,101 @@ namespace SS2.Survivors
                         body.master.aiComponents[0].stateMachine.SetNextState(new EntityStates.AI.Walker.Fear { fearTarget = damageReport.attacker });
                     }
                 }
-                
+            }
+
+            if (damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
+            {
+                var assistTrackers = InstanceTracker.GetInstancesList<AssistTracker>();
+                foreach (var killCpt in assistTrackers)
+                {
+                    if (killCpt.attacker == damageReport.attacker)
+                    {
+                        killCpt.SetTimeAlive(0);
+                        return;
+                    }
+                }
+                //Else add a kill component
+                var killComponent = damageReport.victim.gameObject.AddComponent<AssistTracker>();
+                killComponent.attacker = damageReport.attacker;
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
+        public static GameObject ionOrbEffectPrefab;
+        public static float ionOrbSpeed = 50f;
+        public static float ionOrbMaxDuration = 3f;
+        public class AssistTracker : MonoBehaviour, IOnKilledServerReceiver
         {
-            return true;
-        }
+            public GameObject attacker;
 
-        public void ModifyPrefab()
+            public float duration;
+            private float timeAlive;
+            public void OnKilledServer(DamageReport damageReport)
+            {
+                int orbCount = Executioner2.GetIonCountFromBody(damageReport.victimBody);
+
+                for (int i = 0; i < orbCount; i++)
+                {
+                    NemExecutionerIonOrb ionOrb = new NemExecutionerIonOrb();
+                    ionOrb.origin = transform.position;
+                    ionOrb.target = Util.FindBodyMainHurtBox(attacker);
+                    OrbManager.instance.AddOrb(ionOrb);
+                }
+            }
+
+            public void SetTimeAlive(float newTime)
+            {
+                timeAlive = newTime;
+                bool shouldEnable = timeAlive < duration;
+                enabled = shouldEnable;
+            }
+            private void FixedUpdate()
+            {
+                timeAlive += Time.fixedDeltaTime;
+                if (timeAlive >= duration)
+                {
+                    enabled = false;
+                }
+            }
+
+            private void OnEnable()
+            {
+                InstanceTracker.Add(this);
+            }
+
+            private void OnDisable()
+            {
+                InstanceTracker.Remove(this);
+            }
+        }
+        public class NemExecutionerIonOrb : Orb
         {
-            SetupDefaultBody(CharacterPrefab);
-        }
+            public override void Begin()
+            {
+                duration = Mathf.Min(distanceToTarget / ionOrbSpeed, ionOrbMaxDuration);
 
+                if (target && ionOrbEffectPrefab)
+                {
+                    EffectData effectData = new EffectData
+                    {
+                        origin = origin,
+                        genericFloat = duration
+                    };
+                    effectData.SetHurtBoxReference(target);
+                    EffectManager.SpawnEffect(ionOrbEffectPrefab, effectData, true);
+                }
+            }
+
+            public override void OnArrival()
+            {
+                if (target && target.healthComponent)
+                {
+                    if (target.healthComponent.body.skillLocator.secondary)
+                    {
+                        FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary);
+                    }
+                }
+            }
+        }
 
         public static GameObject fearEffectPrefab;
         public sealed class FearBehavior : BaseBuffBehaviour
@@ -193,5 +279,6 @@ namespace SS2.Survivors
                 }
             }
         }
+        #endregion
     }
 }

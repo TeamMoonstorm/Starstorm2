@@ -35,7 +35,7 @@ namespace EntityStates.Ghoul
                 search.searchOrigin = aimRay.origin;
                 search.searchDirection = aimRay.direction;
                 search.teamMaskFilter = TeamMask.GetEnemyTeams(attackerBody.teamComponent.teamIndex);
-                search.sortMode = BullseyeSearch.SortMode.DistanceAndAngle;
+                search.sortMode = BullseyeSearch.SortMode.Angle;
                 search.viewer = characterBody;
                 search.RefreshCandidates();
                 search.FilterOutGameObject(gameObject);

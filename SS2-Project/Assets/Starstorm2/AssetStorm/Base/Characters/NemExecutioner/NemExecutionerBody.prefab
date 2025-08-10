@@ -866,7 +866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.GenericCharacterSpawnState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.SpawnTeleporterState, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,
@@ -1228,6 +1228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transformPairs:
   - name: DashCenter
+    transform: {fileID: 6963691773886613272}
+  - name: Chest
     transform: {fileID: 6963691773886613272}
 --- !u!114 &7940791196605843830
 MonoBehaviour:

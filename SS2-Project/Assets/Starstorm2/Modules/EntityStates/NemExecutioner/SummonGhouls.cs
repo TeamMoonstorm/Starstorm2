@@ -46,6 +46,9 @@ namespace EntityStates.NemExecutioner
         {
             base.FixedUpdate();
 
+            characterBody.SetAimTimer(2f);
+            characterBody.isSprinting = false;
+
             stopwatch -= Time.fixedDeltaTime;
             if (stopwatch <= 0)
             {

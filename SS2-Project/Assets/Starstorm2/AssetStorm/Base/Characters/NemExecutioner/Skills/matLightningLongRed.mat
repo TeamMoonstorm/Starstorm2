@@ -7,12 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matExpTrail
-  m_Shader: {fileID: 4800000, guid: 55cc3b3fe693a4643b1d006f3e181259, type: 3}
-  m_ValidKeywords: []
+  m_Name: matLightningLongRed
+  m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
+  m_ValidKeywords:
+  - USE_CLOUDS
+  - VERTEXCOLOR
   m_InvalidKeywords:
-  - RoR2/Base/Common/VFX/ExpOrb/matExpTrail.mat
-  - StubbedRoR2/Base/Shaders/HGCloudRemap
+  - _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -23,39 +24,39 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 4b802efae081afa4a85fe1e759000187, type: 3}
+        m_Scale: {x: 0.02, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 4b802efae081afa4a85fe1e759000187, type: 3}
+        m_Scale: {x: 0.01, y: -1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: a5b4a0504b2141768beaf7303f6546a7, type: 2}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Texture: {fileID: 2800000, guid: 4012b41252f8ec0498395f04b65d0289, type: 3}
+        m_Scale: {x: 0.1, y: 1}
+        m_Offset: {x: 1.51, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 82f677dd212040ec89e9e719b066ea17, type: 2}
+        m_Texture: {fileID: 2800000, guid: c8bc9a457d5967c4d9c6e60df3319263, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0
-    - _AlphaBoost: 5.2
-    - _Boost: 1
+    - _AlphaBias: 0.017
+    - _AlphaBoost: 2.77
+    - _AlphaThreshold: 0.046
+    - _Boost: 9.02
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.161
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
     - _DstBlend: 10
     - _ExternalAlpha: 1
-    - _ExtrusionStrength: 0
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
@@ -65,7 +66,7 @@ Material:
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 1
-    - _InvFade: 1
+    - _InvFade: 2
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -85,8 +86,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: 0, b: 0, a: 0}
-    - _EmisColor: {r: 0, g: 0, b: 0, a: 0}
+    - _CutoffScroll: {r: 200, g: 0, b: 180, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 4, g: 4, b: 4, a: 1}
+    - _TintColor: {r: 0.25618547, g: 0.2727835, b: 0.9528302, a: 1}
   m_BuildTextureStacks: []

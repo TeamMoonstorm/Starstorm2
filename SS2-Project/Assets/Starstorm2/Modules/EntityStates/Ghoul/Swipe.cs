@@ -18,7 +18,7 @@ namespace EntityStates.Ghoul
         private static string enterSoundString = "Play_imp_attack_tell";
         public static GameObject leapEffectPrefab;
 
-        private static float flightDuration = 0.8f;
+        private static float flightDuration = 0.4f;
 
         private static float leapDistanceIfNoTarget = 10f;
         public override void OnEnter()
@@ -34,7 +34,7 @@ namespace EntityStates.Ghoul
                 search.searchOrigin = aimRay.origin;
                 search.searchDirection = aimRay.direction;
                 search.teamMaskFilter = TeamMask.GetEnemyTeams(attackerBody.teamComponent.teamIndex);
-                search.sortMode = BullseyeSearch.SortMode.DistanceAndAngle;
+                search.sortMode = BullseyeSearch.SortMode.Angle;
                 search.viewer = characterBody;
                 search.RefreshCandidates();
                 search.FilterOutGameObject(gameObject);
@@ -69,6 +69,7 @@ namespace EntityStates.Ghoul
                 Vector3 direction = between.normalized;
                 Vector3 velocity = new Vector3(hSpeed * direction.x, ySpeed, hSpeed * direction.z);
 
+                characterMotor.Motor.ForceUnground();
                 characterMotor.velocity = velocity;
             }
 
@@ -78,7 +79,6 @@ namespace EntityStates.Ghoul
                 EffectManager.SimpleEffect(leapEffectPrefab, characterBody.footPosition, direction, false);
             }
             Util.PlaySound(enterSoundString, gameObject);
-            StartAimMode(2f);
         }
 
         // TODO: gimme head
@@ -91,7 +91,7 @@ namespace EntityStates.Ghoul
         {
             base.FixedUpdate();
 
-            StartAimMode(2f);
+            characterDirection.forward = characterMotor.velocity;
 
             if(isAuthority && fixedAge >= flightDuration)
             {
@@ -101,11 +101,12 @@ namespace EntityStates.Ghoul
     }
     public class Swipe : BaseGhoulState
     {
-        private static float baseDuration = .5f;
+        private static float baseDuration = .4f;
         private static float damageCoefficient = 1f;
         private static float forceMagnitude = 16f;
         private static float hitHopVelocity = 7f;
-        private static float bleedPercentChance = 20f;
+        private static float hitVelocityMultiplier = 0.2f;
+        private static float bleedPercentChance = 33f;
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
         private static string attackSoundString = "Play_imp_attack";
@@ -181,6 +182,7 @@ namespace EntityStates.Ghoul
         {
             if (characterMotor)
             {
+                characterMotor.velocity *= hitVelocityMultiplier;
                 SmallHop(characterMotor, hitHopVelocity);
             }
         }

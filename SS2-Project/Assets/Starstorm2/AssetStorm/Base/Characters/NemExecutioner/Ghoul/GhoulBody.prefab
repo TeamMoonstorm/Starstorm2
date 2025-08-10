@@ -84,17 +84,7 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
-  baseRendererInfos:
-  - renderer: {fileID: 0}
-    defaultMaterialAddress:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-    defaultMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
-    ignoresMaterialOverrides: 0
+  baseRendererInfos: []
   baseLightInfos: []
   corpseFade: 1
   CharacterOnScreen: 0
@@ -940,7 +930,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.GenericCharacterSpawnState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Ghoul.Unburrow, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.GenericCharacterMain, RoR2, Version=0.0.0.0, Culture=neutral,

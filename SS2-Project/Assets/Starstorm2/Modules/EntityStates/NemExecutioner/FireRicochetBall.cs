@@ -16,7 +16,7 @@ namespace EntityStates.NemExecutioner
 		private static float recoilAmplitude = 1f;
 		private static float fireTime = 0.1f;
 		private static float baseDuration = 0.4f;
-		private static float damageCoefficient = 1f;
+		private static float damageCoefficient = 1.25f;
 		private static float force = 100f;
 		private static string fireSoundString = "Play_mage_m1_shoot";
 

@@ -9,13 +9,13 @@ namespace EntityStates.NemExecutioner
 {
     public class ChargeReap : BaseSkillState
     {
-        private static float baseDuration = 1f;
+        private static float baseDuration = 1.5f;
         private static float maxDashDistance = 45;
         private static float minDashDistance = 10f;
         public static GameObject effectPrefab;
         public static GameObject indicatorPrefab;
         private static Vector3 indicatorScale = new Vector3(5f, 5f, 5f);
-        private static string muzzle;
+        private static string muzzle = "Chest";
         private static string chargeSoundString = "NemmandoDecisiveStrikeCharge";
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
@@ -23,9 +23,11 @@ namespace EntityStates.NemExecutioner
         private static float cameraMaxPitch = 88f;
         private static float cameraMinPitch = -88f;
         private static float cameraPivotVerticalOffset = 1.37f;
-        private static Vector3 cameraPosition = new Vector3(2.6f, -2.0f, -12f);
+        private static float cameraFov = 70f;
+        private static Vector3 cameraPosition = new Vector3(0f, 2.0f, -16f);
         private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
         {
+            fov = cameraFov,
             maxPitch = cameraMaxPitch,
             minPitch = cameraMinPitch,
             pivotVerticalOffset = cameraPivotVerticalOffset,
@@ -173,9 +175,11 @@ namespace EntityStates.NemExecutioner
         private static float cameraMaxPitch = 88f;
         private static float cameraMinPitch = -88f;
         private static float cameraPivotVerticalOffset = 1.37f;
-        private static Vector3 cameraPosition = new Vector3(2.6f, -2.0f, -12f);
+        private static float cameraFov = 90f;
+        private static Vector3 cameraPosition = new Vector3(0, 1f, -12f);
         private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
         {
+            fov = cameraFov,
             maxPitch = cameraMaxPitch,
             minPitch = cameraMinPitch,
             pivotVerticalOffset = cameraPivotVerticalOffset,
@@ -207,7 +211,7 @@ namespace EntityStates.NemExecutioner
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
                     cameraParamsData = cameraParams,
-                    priority = 1f
+                    priority = 2f
                 };
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
             }
