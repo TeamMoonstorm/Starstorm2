@@ -19,63 +19,25 @@ MonoBehaviour:
     serializedFields:
     - fieldName: swingTimeCoefficient
       fieldValue:
-        stringValue: 1.42
+        stringValue: 2.3
         objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 0.8
+        stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
         stringValue: 2.4
         objectValue: {fileID: 0}
-    - fieldName: hitBoxGroupName
-      fieldValue:
-        stringValue: SwordHitbox
-        objectValue: {fileID: 0}
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 3988118091893689303, guid: 902610936f9ce564aa163fec3c1becd3,
-          type: 3}
+        objectValue: {fileID: 0}
     - fieldName: procCoefficient
       fieldValue:
-        stringValue: 0.5
-        objectValue: {fileID: 0}
-    - fieldName: pushAwayForce
-      fieldValue:
-        stringValue: 400
-        objectValue: {fileID: 0}
-    - fieldName: forceVector
-      fieldValue:
-        stringValue: -1 0 0
-        objectValue: {fileID: 0}
-    - fieldName: hitPauseDuration
-      fieldValue:
-        stringValue: 0.05
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
-      fieldValue:
-        stringValue: 
-        objectValue: {fileID: 8025535250578712969, guid: 77b2dfc0ae3c8e642a6cfe70b3f7815f,
-          type: 3}
-    - fieldName: swingEffectMuzzleString
-      fieldValue:
-        stringValue: SwingCenter
-        objectValue: {fileID: 0}
-    - fieldName: mecanimHitboxActiveParameter
-      fieldValue:
-        stringValue: Primary.Hitbox
-        objectValue: {fileID: 0}
-    - fieldName: shorthopVelocityFromHit
-      fieldValue:
-        stringValue: 6.5
-        objectValue: {fileID: 0}
-    - fieldName: beginStateSoundString
-      fieldValue:
-        stringValue: NemmandoSwing
-        objectValue: {fileID: 0}
-    - fieldName: beginSwingSoundString
       fieldValue:
         stringValue: 
         objectValue: {fileID: 0}
@@ -83,27 +45,146 @@ MonoBehaviour:
       fieldValue:
         stringValue: 
         objectValue: {fileID: 0}
-    - fieldName: forceForwardVelocity
+    - fieldName: minSpeedCoefficient
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: maxSpeedCoefficient
+      fieldValue:
+        stringValue: 5.5
+        objectValue: {fileID: 0}
+    - fieldName: interruptSpeedCoefficient
+      fieldValue:
+        stringValue: 0.1
+        objectValue: {fileID: 0}
+    - fieldName: dashAnimationCurve
+      fieldValue:
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.1523919403553009,"weightedMode":0,"tangentMode":0},{"time":0.8857033848762512,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":1.0,"weightedMode":0,"tangentMode":0},{"time":0.9560107588768005,"value":0.0,"inTangent":-25.646848678588868,"outTangent":-25.646848678588868,"inWeight":0.07069096714258194,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        objectValue: {fileID: 0}
+    - fieldName: dodgeSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitboxGroupName
+      fieldValue:
+        stringValue: ShieldBashHitbox
+        objectValue: {fileID: 0}
+    - fieldName: damageType
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"RoR2.DamageType, RoR2, Version=0.0.0.0,
+          Culture=neutral, PublicKeyToken=null","values":"Stun1s"}'
+        objectValue: {fileID: 0}
+    - fieldName: pushForce
       fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: forwardVelocityCurve
+    - fieldName: bonusForce
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[]}'
+        stringValue: 0, 0, 0
         objectValue: {fileID: 0}
-    - fieldName: scaleHitPauseDurationAndVelocityWithAttackSpeed
+    - fieldName: earlyExitPercentTime
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: hitStopDuration
+      fieldValue:
+        stringValue: 0.1
+        objectValue: {fileID: 0}
+    - fieldName: attackRecoil
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: hitHopVelocity
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: swingSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: hitSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: muzzleString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: playbackRateParam
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: earlyExitPriority
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
+        objectValue: {fileID: 0}
+    - fieldName: basePriority
+      fieldValue:
+        stringValue: '{"assemblyQualifiedName":"EntityStates.InterruptPriority, RoR2,
+          Version=0.0.0.0, Culture=neutral, PublicKeyToken=null","values":"PrioritySkill"}'
+        objectValue: {fileID: 0}
+    - fieldName: lockY
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: directionAimOverride
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: testbaseDuration
+      fieldValue:
+        stringValue: 0.28
+        objectValue: {fileID: 0}
+    - fieldName: testminSpeedCoefficient
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: testmaxSpeedCoefficient
+      fieldValue:
+        stringValue: 5.5
+        objectValue: {fileID: 0}
+    - fieldName: testinterruptSpeedCoefficient
+      fieldValue:
+        stringValue: 0.1
+        objectValue: {fileID: 0}
+    - fieldName: testearlyexit
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: attackStartTimeFraction
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: attackEndTimeFraction
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: testfuckingattackendwhyisitnotgettingitfromtheESC
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: forceUnground
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: shieldBuff
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 11400000, guid: e66dae9a809d6aa428fa5bc0221f9a24, type: 2}
+    - fieldName: earlyExitTimeFraction
+      fieldValue:
         stringValue: 0
         objectValue: {fileID: 0}
-    - fieldName: initialSpeedCoefficient
+    - fieldName: testDamage
       fieldValue:
-        stringValue: 6
+        stringValue: 2
         objectValue: {fileID: 0}
-    - fieldName: finalSpeedCoefficient
+    - fieldName: forceFacingDirection
       fieldValue:
-        stringValue: 2.5
+        stringValue: 1
         objectValue: {fileID: 0}

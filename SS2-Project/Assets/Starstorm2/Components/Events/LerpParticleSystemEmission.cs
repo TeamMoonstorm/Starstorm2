@@ -13,7 +13,13 @@ namespace SS2.Components
         void Start()
         {
             emission = particleSystem.emission;
-            initialEmission = emission.rateOverTimeMultiplier;
+            initialEmission = emission.rateOverTimeMultiplier;           
+        }
+
+        private void OnEnable()
+        {
+            if (!particleSystem.isPlaying) //
+                particleSystem.Play();
         }
 
         public void FixedUpdate()

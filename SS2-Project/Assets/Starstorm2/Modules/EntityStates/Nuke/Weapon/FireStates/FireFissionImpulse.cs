@@ -11,6 +11,11 @@ using UnityEngine;
 
 namespace EntityStates.Nuke
 {
+    /// <summary>
+    /// Default utility of nucleator, deals no damage but impulses him a lot.
+    /// <br></br>
+    /// See <see cref="ChargeImpulse"/>
+    /// </summary>
     public class FireFissionImpulse : BaseNukeUtilityState
     {
     }

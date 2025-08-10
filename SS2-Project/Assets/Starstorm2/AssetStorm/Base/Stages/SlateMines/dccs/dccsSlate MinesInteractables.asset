@@ -1,0 +1,470 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2099981080, guid: 45feadaaa90b2d2217207fb8b533753e, type: 3}
+  m_Name: dccsSlate MinesInteractables
+  m_EditorClassIdentifier: 
+  targetCardCategorySelection: {fileID: 11400000, guid: 8544f5b677c66654b9bc79bee641f958,
+    type: 2}
+  categories:
+  - name: Chests
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Chest1/iscChest1.asset
+        _useDirectReference: 0
+      selectionWeight: 24
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Chest2/iscChest2.asset
+        _useDirectReference: 0
+      selectionWeight: 4
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/EquipmentBarrel/iscEquipmentBarrel.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/TripleShop/iscTripleShop.asset
+        _useDirectReference: 0
+      selectionWeight: 4
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/LunarChest/iscLunarChest.asset
+        _useDirectReference: 0
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/CategoryChest/iscCategoryChestDamage.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/CategoryChest/iscCategoryChestHealing.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/CategoryChest/iscCategoryChestUtility.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/CasinoChest/iscCasinoChest.asset
+        _useDirectReference: 0
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 45
+  - name: Barrels
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Barrel1/iscBarrel1.asset
+        _useDirectReference: 0
+      selectionWeight: 10
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 10
+  - name: Shrines
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/ShrineBlood/iscShrineBlood.asset
+        _useDirectReference: 0
+      selectionWeight: 30
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/ShrineBoss/iscShrineBoss.asset
+        _useDirectReference: 0
+      selectionWeight: 10
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/ShrineHealing/iscShrineHealing.asset
+        _useDirectReference: 0
+      selectionWeight: 20
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/ShrineCleanse/iscShrineCleanse.asset
+        _useDirectReference: 0
+      selectionWeight: 3
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 10
+  - name: Drones
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Drones/iscBrokenMissileDrone.asset
+        _useDirectReference: 0
+      selectionWeight: 7
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Drones/iscBrokenEmergencyDrone.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Drones/iscBrokenEquipmentDrone.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 11
+  - name: Misc
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Drones/iscBrokenTurret1.asset
+        _useDirectReference: 0
+      selectionWeight: 7
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 7
+  - name: Rare
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Chest1StealthedVariant/iscChest1Stealthed.asset
+        _useDirectReference: 0
+      selectionWeight: 6
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/RadarTower/iscRadarTower.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 11400000, guid: 27f761b33236e8543b4ab86dc0ca34b8, type: 2}
+        _address: 
+        _useDirectReference: 1
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/ShrineGoldshoresAccess/iscShrineGoldshoresAccess.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/GoldChest/iscGoldChest.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 0.4
+  - name: Duplicators
+    cards:
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Duplicator/iscDuplicator.asset
+        _useDirectReference: 0
+      selectionWeight: 30
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/DuplicatorLarge/iscDuplicatorLarge.asset
+        _useDirectReference: 0
+      selectionWeight: 6
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/DuplicatorMilitary/iscDuplicatorMilitary.asset
+        _useDirectReference: 0
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/DuplicatorWild/iscDuplicatorWild.asset
+        _useDirectReference: 0
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    - spawnCard:
+        _asset: {fileID: 0}
+        _address: RoR2/Base/Scrapper/iscScrapper.asset
+        _useDirectReference: 0
+      selectionWeight: 12
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+    selectionWeight: 8

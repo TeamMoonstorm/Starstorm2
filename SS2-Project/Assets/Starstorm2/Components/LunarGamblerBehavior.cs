@@ -30,7 +30,8 @@ namespace SS2.Components
 		public float hideValueTimer;
 		private void Start()
 		{
-			this.rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
+			if(NetworkServer.active)
+				this.rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
 			this.purchaseInteraction = base.GetComponent<PurchaseInteraction>();
 			this.childLocator = base.GetComponent<ChildLocator>();
 
@@ -56,20 +57,23 @@ namespace SS2.Components
 			{
 				valueProjector.contentProvider = this;
 			}
-			if (!this.isCashOut && this.cursePool.IsEmpty())
+			if (NetworkServer.active)
             {
-				this.waitingForRefresh = false;
-				this.purchaseInteraction.SetAvailable(false);
-            }
-			if (this.waitingForRefresh)
-			{
-				this.refreshTimer -= Time.fixedDeltaTime;
-				if (this.refreshTimer <= 0f && this.purchaseCount < this.maxPurchaseCount)
+				if (!this.isCashOut && this.cursePool.IsEmpty())
 				{
-					this.purchaseInteraction.SetAvailable(true);
 					this.waitingForRefresh = false;
+					this.purchaseInteraction.SetAvailable(false);
 				}
-			}
+				if (this.waitingForRefresh)
+				{
+					this.refreshTimer -= Time.fixedDeltaTime;
+					if (this.refreshTimer <= 0f && this.purchaseCount < this.maxPurchaseCount)
+					{
+						this.purchaseInteraction.SetAvailable(true);
+						this.waitingForRefresh = false;
+					}
+				}
+			}		
 		}
 
 		private int CalculateCashoutValue()

@@ -7,7 +7,7 @@ using SS2;
 using UnityEngine;
 
 
-namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
+namespace SS2.Items
 {
     public class Balloon : SS2Item
     {
@@ -15,8 +15,6 @@ namespace Assets.Starstorm2.Modules.Pickups.Items.Tier2
 
         private const string TOKEN = "SS2_ITEM_BALLOON_DESC";
 
-        //[RiskOfOptionsConfigureField(LITConfig.ITEMS, ConfigDescOverride = "Amount of gravity removed, as a pecent")]
-        //[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float reducedGravity = 0.50f;
         public static float stackingEffect = 0.05f;
 

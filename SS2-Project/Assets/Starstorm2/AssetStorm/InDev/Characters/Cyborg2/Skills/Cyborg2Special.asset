@@ -15,8 +15,9 @@ MonoBehaviour:
   skillName: Special
   skillNameToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_NAME
   skillDescriptionToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_DESCRIPTION
-  keywordTokens: []
-  icon: {fileID: 21300000, guid: 7c7862d4c16d6444ebac8f0603fd6d54, type: 3}
+  keywordTokens:
+  - SS2_KEYWORD_CYBORG_PRIME
+  icon: {fileID: 21300000, guid: 7f51ecd648c85b04ab8706b6abb0bd93, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Cyborg2.FireMagnetBall, Starstorm2, Version=1.0.0.0,
@@ -27,12 +28,16 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
-  cancelSprintingOnActivation: 0
+  cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

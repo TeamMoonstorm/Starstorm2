@@ -67,12 +67,10 @@ namespace SS2
         private static void InitializeDifficulties(List<IContentPiece<SerializableDifficultyDef>> difficulties)
         {
             foreach (var difficulty in difficulties)
-            {
-                difficulty.Initialize();
-
+            {             
                 var asset = difficulty.asset;
                 DifficultyAPI.AddDifficulty(asset);
-
+                difficulty.Initialize();
                 if (difficulty is IContentPackModifier packModifier)
                 {
                     packModifier.ModifyContentPack(_contentPieceProvider.contentPack);

@@ -62,7 +62,7 @@ namespace SS2.Items
                     BlastAttack blastAttack = new BlastAttack();
                     blastAttack.position = body.corePosition;
                     blastAttack.baseDamage = 0f;
-                    blastAttack.baseForce = 600f;
+                    blastAttack.baseForce = 2000f;
                     blastAttack.bonusForce = Vector3.zero;
                     blastAttack.radius = radius;
                     blastAttack.attacker = body.gameObject;

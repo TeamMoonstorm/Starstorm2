@@ -5,10 +5,108 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using MSU;
+using RoR2.ExpansionManagement;
 namespace SS2
 {
     public static class SS2Util
     {
+        public static ExpansionDef DLC1;
+        public static ExpansionDef DLC2;
+        [SystemInitializer(typeof(ExpansionCatalog))]
+        private static void Init()
+        {
+            DLC1 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+            DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
+        }
+
+        public static float IntegrateCurve(AnimationCurve curve, float startTime, float endTime, int steps)
+        {
+            return Integrate(curve.Evaluate, startTime, endTime, steps);
+        }
+
+        // Integrate function f(x) using the trapezoidal rule between x=x_low..x_high
+        public static float Integrate(Func<float, float> f, float x_low, float x_high, int N_steps)
+        {
+            float h = (x_high - x_low) / N_steps;
+            float res = (f(x_low) + f(x_high)) / 2;
+            for (int i = 1; i < N_steps; i++)
+            {
+                res += f(x_low + i * h);
+            }
+            return h * res;
+        }
+
+        public static int GetItemCountForPlayers(ItemDef itemDef)
+        {
+            int count = 0;
+            foreach (PlayerCharacterMasterController playerCharacterMasterController in PlayerCharacterMasterController.instances)
+            {
+                if (playerCharacterMasterController.master)
+                {
+                    int itemCount = playerCharacterMasterController.master.inventory.GetItemCount(itemDef);
+                    count += itemCount;
+                }
+            }
+            return count;
+        }
+        public static int GetItemCountForTeam(ItemDef itemDef, TeamIndex teamIndex)
+        {
+            return GetItemCountForTeam(itemDef.itemIndex, teamIndex);
+        }
+        public static int GetItemCountForTeam(ItemIndex itemIndex, TeamIndex teamIndex)
+        {
+            int count = 0;
+            foreach(TeamComponent member in TeamComponent.GetTeamMembers(teamIndex))
+            {
+                if(member && member.body && member.body.inventory)
+                {
+                    count += member.body.inventory.GetItemCount(itemIndex);
+                }
+            }
+            return count;
+        }
+        public static bool DoesTodayLandWithinASpecificDaysWeek(int desiredDay, int desiredMonth)
+        {
+            var now = DateTime.Now;
+            DateTime thisYearsSpecialWeek = new DateTime(now.Year, desiredMonth, desiredDay);
+            int minDay = desiredDay;
+            int maxDay = desiredDay;
+
+            switch (thisYearsSpecialWeek.DayOfWeek)
+            {
+                case DayOfWeek.Monday:
+                    maxDay += 6;
+                    break;
+                case DayOfWeek.Tuesday:
+                    maxDay += 5;
+                    minDay -= 1;
+                    break;
+                case DayOfWeek.Wednesday:
+                    maxDay += 4;
+                    minDay -= 2;
+                    break;
+                case DayOfWeek.Thursday:
+                    maxDay += 3;
+                    minDay -= 3;
+                    break;
+                case DayOfWeek.Friday:
+                    maxDay += 2;
+                    minDay -= 4;
+                    break;
+                case DayOfWeek.Saturday:
+                    maxDay += 1;
+                    minDay -= 5;
+                    break;
+                case DayOfWeek.Sunday:
+                    minDay -= 6;
+                    break;
+            }
+
+            DateTime minDate = new DateTime(now.Year, desiredMonth, minDay);
+            DateTime maxDate = new DateTime(now.Year, desiredMonth, maxDay);
+
+            return now >= minDate && now <= maxDate;
+        }
         public static string ToRoman(int number)
         {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number), "insert value between 1 and 3999");

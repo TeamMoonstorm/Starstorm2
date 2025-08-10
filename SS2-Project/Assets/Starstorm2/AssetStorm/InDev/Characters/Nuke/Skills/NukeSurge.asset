@@ -19,13 +19,16 @@ MonoBehaviour:
   icon: {fileID: 0}
   activationStateMachineName: Body
   activationState:
-    _typeName: 
+    _typeName: EntityStates.Nuke.ApplySurge, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   interruptPriority: 0
   baseRechargeInterval: 15
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -35,3 +38,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

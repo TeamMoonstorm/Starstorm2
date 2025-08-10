@@ -1,5 +1,4 @@
-﻿using SS2.Buffs;
-using RoR2;
+﻿using RoR2;
 using RoR2.Items;
 using RoR2.Orbs;
 using UnityEngine;

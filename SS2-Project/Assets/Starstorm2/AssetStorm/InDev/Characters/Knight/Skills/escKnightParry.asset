@@ -17,26 +17,22 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: swingTimeCoefficient
+    - fieldName: baseDuration
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: baseDuration
-      fieldValue:
-        stringValue: 10
-        objectValue: {fileID: 0}
     - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 9.5
+        stringValue: 3.5
         objectValue: {fileID: 0}
     - fieldName: hitBoxGroupName
       fieldValue:
-        stringValue: SwordHitbox
+        stringValue: BigHitbox
         objectValue: {fileID: 0}
     - fieldName: hitEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 3988118091893689303, guid: 902610936f9ce564aa163fec3c1becd3,
+        objectValue: {fileID: 7162646827672994295, guid: df30f1ff218cf8843975d273aaf848d8,
           type: 3}
     - fieldName: procCoefficient
       fieldValue:
@@ -44,7 +40,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: pushAwayForce
       fieldValue:
-        stringValue: 40
+        stringValue: 500
         objectValue: {fileID: 0}
     - fieldName: forceVector
       fieldValue:
@@ -52,20 +48,20 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: hitPauseDuration
       fieldValue:
-        stringValue: 0.14
+        stringValue: 0.1
         objectValue: {fileID: 0}
     - fieldName: swingEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 7249953071962714612, guid: d6238779a9bc2924dbd47cf6d73674f0,
+        objectValue: {fileID: 3741879095020577079, guid: 600738f2c2b299b448a969768f309261,
           type: 3}
     - fieldName: swingEffectMuzzleString
       fieldValue:
-        stringValue: SwingLeft
+        stringValue: SwingCenter
         objectValue: {fileID: 0}
     - fieldName: mecanimHitboxActiveParameter
       fieldValue:
-        stringValue: Parry
+        stringValue: Parry.hitbox
         objectValue: {fileID: 0}
     - fieldName: shorthopVelocityFromHit
       fieldValue:
@@ -97,17 +93,17 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: ignoreAttackSpeed
       fieldValue:
-        stringValue: 0
+        stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: buffedPrimarySkill
+    - fieldName: testbaseDuration
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: d60866c11fc8657499529725f9996160, type: 2}
-    - fieldName: buffedUtilitySkill
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: testInputLockDuration
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
-    - fieldName: buffedSpecialSkill
+        stringValue: 0.3
+        objectValue: {fileID: 0}
+    - fieldName: inputtableTime
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}
+        stringValue: 0.3
+        objectValue: {fileID: 0}

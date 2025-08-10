@@ -16,7 +16,9 @@ namespace SS2.Monsters
         {
             if (SS2Main.ChristmasTime)
             {
-                ChristmasTime();
+                SpecialEventPickup pickup = SpecialEventPickup.AddAndSetupComponent(CharacterPrefab.GetComponent<CharacterBody>());
+                pickup.contextToken = "SS2_INTERACTABLE_SANTAHAT_CONTEXT";
+                SS2Main.Instance.StartCoroutine(AwaitForLoad(pickup));
             }
         }
 

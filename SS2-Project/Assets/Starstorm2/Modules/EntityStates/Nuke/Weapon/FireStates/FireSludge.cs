@@ -11,6 +11,11 @@ using R2API.ScriptableObjects;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Fire state of nucleator's primary, fire a glob of nuclear waste towards the enemies. Projectile ghoes faster the more charge it has.
+    /// <br></br>
+    /// <see cref="ChargeSludge"/>
+    /// </summary>
     public class FireSludge : BaseNukeFireState
     {
         public static GameObject projectilePrefab;
@@ -21,7 +26,12 @@ namespace EntityStates.Nuke.Weapon
         [HideInInspector]
         public static GameObject muzzleFlashPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseImpactEffect.prefab").WaitForCompletion();
 
+        private static int leftFireHash = Animator.StringToHash("IrradiateFireL");
+        private static int rightFireHash = Animator.StringToHash("IrradiateFireR");
+        private static int irradiatePlaybackHash = Animator.StringToHash("irradiate.playbackRate");
+
         public string chosenMuzzleString;
+        public int stepIndex;
         public Transform muzzleTransform;
 
         private float duration;
@@ -64,6 +74,9 @@ namespace EntityStates.Nuke.Weapon
                 projectileInfo.target = earlyTarget;
             }
             ProjectileManager.instance.FireProjectile(projectileInfo);
+
+            int chosenHash = stepIndex == 0 ? leftFireHash : rightFireHash;
+            PlayAnimation("UpperBody, Override", chosenHash, irradiatePlaybackHash, duration);
         }
 
         public override void FixedUpdate()

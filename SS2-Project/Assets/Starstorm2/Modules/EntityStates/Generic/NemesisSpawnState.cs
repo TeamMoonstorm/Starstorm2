@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 
 namespace EntityStates.Generic
 {
+
     public class NemesisSpawnState : BaseState
     {
         public static float duration = 3f;
