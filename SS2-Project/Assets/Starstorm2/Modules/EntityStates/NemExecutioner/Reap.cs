@@ -9,13 +9,35 @@ namespace EntityStates.NemExecutioner
 {
     public class ChargeReap : BaseSkillState
     {
-        private static float baseDuration = 1.5f;
+        private static float baseDuration = 1f;
+        private static float maxDashDistance = 45;
+        private static float minDashDistance = 10f;
         public static GameObject effectPrefab;
+        public static GameObject indicatorPrefab;
+        private static Vector3 indicatorScale = new Vector3(5f, 5f, 5f);
         private static string muzzle;
         private static string chargeSoundString = "NemmandoDecisiveStrikeCharge";
+
+        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private static float cameraLerpDuration = 0.5f;
+        private static float cameraMaxPitch = 88f;
+        private static float cameraMinPitch = -88f;
+        private static float cameraPivotVerticalOffset = 1.37f;
+        private static Vector3 cameraPosition = new Vector3(2.6f, -2.0f, -12f);
+        private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = cameraMaxPitch,
+            minPitch = cameraMinPitch,
+            pivotVerticalOffset = cameraPivotVerticalOffset,
+            idealLocalCameraPos = cameraPosition,
+            wallCushion = 0.1f,
+        };
+
         private float duration;
         private uint soundID;
         private GameObject effectInstance;
+        private GameObject indicatorInstance;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -49,23 +71,71 @@ namespace EntityStates.NemExecutioner
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary); //////////////////
             }
-            
+            if (cameraTargetParams)
+            {
+                CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                {
+                    cameraParamsData = cameraParams,
+                    priority = 1f
+                };
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
+            }
+            if(indicatorPrefab)
+            {
+                Ray aimRay = GetAimRay();
+                indicatorInstance = GameObject.Instantiate(indicatorPrefab, aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction));
+                indicatorInstance.transform.localScale = new Vector3(indicatorScale.x, indicatorScale.y, minDashDistance);
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (characterMotor)
+            {
+                characterMotor.velocity = Vector3.zero;
+                characterMotor.useGravity = false;
+            }
+
             if (isAuthority && fixedAge > duration || !IsKeyDownAuthority())
             {
-                outer.SetNextState(new Reap());
+                float t = fixedAge / duration;
+                float dashDistance = Mathf.Lerp(minDashDistance, maxDashDistance, t);
+                outer.SetNextState(new Reap { dashDistance = dashDistance });
             }
+        }
+
+        public override void Update()
+        {
+            base.Update();
+            if(indicatorInstance)
+            {
+                float t = age / duration;
+                float dashDistance = Mathf.Lerp(minDashDistance, maxDashDistance, t);
+                Ray aimRay = GetAimRay();
+                indicatorInstance.transform.SetPositionAndRotation(aimRay.origin, Util.QuaternionSafeLookRotation(aimRay.direction));
+                indicatorInstance.transform.localScale = new Vector3(indicatorScale.x, indicatorScale.y, dashDistance);
+            }
+            
         }
 
         public override void OnExit()
         {
+            if (characterMotor)
+            {
+                characterMotor.useGravity = true;
+            }
             if (effectInstance)
             {
                 Destroy(effectInstance);
+            }
+            if (indicatorInstance)
+            {
+                Destroy(indicatorInstance);
+            }
+            if (cameraTargetParams)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
             }
             AkSoundEngine.StopPlayingID(soundID);
             base.OnExit();
@@ -80,14 +150,13 @@ namespace EntityStates.NemExecutioner
     {
         public static GameObject dashPrefab;
         private static float smallHopVelocity;
-        private static float dashDistance = 35f;
         private static float dashDuration = 0.2f;
         private static string beginSoundString;
         private static string endSoundString;
-        private static float damageCoefficient = 10f;
+        private static float damageCoefficient = 15f;
         private static float procCoefficient = 1;
         public static GameObject hitEffectPrefab;
-        private static float hitPauseDuration = 0.15f;
+        private static float hitPauseDuration = 0.3f;
         private float dashSpeed;
 
         private Transform modelTransform;
@@ -97,7 +166,24 @@ namespace EntityStates.NemExecutioner
         private ChildLocator childLocator;
         private bool inHitPause;
         private float hitPauseTimer;
-        private CameraTargetParams.AimRequest aimRequest;
+
+
+        private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private static float cameraLerpDuration = 0.5f;
+        private static float cameraMaxPitch = 88f;
+        private static float cameraMinPitch = -88f;
+        private static float cameraPivotVerticalOffset = 1.37f;
+        private static Vector3 cameraPosition = new Vector3(2.6f, -2.0f, -12f);
+        private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
+        {
+            maxPitch = cameraMaxPitch,
+            minPitch = cameraMinPitch,
+            pivotVerticalOffset = cameraPivotVerticalOffset,
+            idealLocalCameraPos = cameraPosition,
+            wallCushion = 0.1f,
+        };
+
+        public float dashDistance;
 
         public override void OnEnter()
         {
@@ -118,7 +204,12 @@ namespace EntityStates.NemExecutioner
             }
             if (cameraTargetParams)
             {
-                aimRequest = cameraTargetParams.RequestAimType(CameraTargetParams.AimType.Aura);
+                CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+                {
+                    cameraParamsData = cameraParams,
+                    priority = 1f
+                };
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
             }
 
             dashVector = inputBank.aimDirection;
@@ -144,11 +235,16 @@ namespace EntityStates.NemExecutioner
         public void CreateDashEffect()
         {
             Util.PlaySound("Play_nemmerc_dash", gameObject);
-            Transform transform = childLocator.FindChild("DashCenter");
-            if (transform && Reap.dashPrefab)
+            childLocator = GetModelChildLocator();
+            if(childLocator)
             {
-                UnityEngine.Object.Instantiate<GameObject>(Reap.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(dashVector), transform);
+                Transform transform = childLocator.FindChild("DashCenter");
+                if (transform && Reap.dashPrefab)
+                {
+                    UnityEngine.Object.Instantiate<GameObject>(Reap.dashPrefab, transform.position, Util.QuaternionSafeLookRotation(dashVector), transform);
+                }
             }
+            
         }
 
         public override void FixedUpdate()
@@ -207,9 +303,9 @@ namespace EntityStates.NemExecutioner
             {
                 SmallHop(characterMotor, Reap.smallHopVelocity);
             }
-            if (aimRequest != null)
+            if (cameraTargetParams)
             {
-                aimRequest.Dispose();
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, .1f);
             }
             PlayAnimation("FullBody, Override", "EvisLoopExit", "Special.playbackRate", 1f);
             if (NetworkServer.active)

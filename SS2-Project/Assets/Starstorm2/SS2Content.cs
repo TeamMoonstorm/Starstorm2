@@ -676,6 +676,8 @@ namespace SS2
             public static SurvivorDef survivorKnight;
 
             public static SurvivorDef NemMerc;
+
+            public static SurvivorDef NemExecutioner;
         }
 
         public static class ItemTierDefs

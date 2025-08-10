@@ -21,99 +21,111 @@ namespace SS2.Survivors
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acNemExecutioner", SS2Bundle.NemExecutioner);
 
         public static DamageAPI.ModdedDamageType fearOnHit;
-        public static DamageAPI.ModdedDamageType ricochetOnHit;
         public static DamageAPI.ModdedDamageType healNovaOnKill;
-
+        public static DeployableSlot Ghoul;
         
         public override void Initialize()
         {
             ModifyPrefab();
 
             fearOnHit = DamageAPI.ReserveDamageType(); // A lot of fear code is in Executioner2. i dont rly like this
-            ricochetOnHit = DamageAPI.ReserveDamageType();
+            healNovaOnKill = DamageAPI.ReserveDamageType();
+
+            Ghoul = DeployableAPI.RegisterDeployableSlot(GetMaxGhouls);
+
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
 
-            orbEffectPrefab = SS2Assets.LoadAsset<GameObject>("RicochetBallOrbEffect", SS2Bundle.NemExecutioner);
+            healNovaEffectPrefab = SS2Assets.LoadAsset<GameObject>("HealNovaOnKillEffect", SS2Bundle.NemExecutioner);
             fearEffectPrefab = SS2Assets.LoadAsset<GameObject>("FearEffectRed", SS2Bundle.NemExecutioner);
+            GameObject fearProjectile = SS2Assets.LoadAsset<GameObject>("FearProjectile", SS2Bundle.NemExecutioner);
+            if(fearProjectile)
+            {
+                fearProjectile.GetComponent<RoR2.Projectile.ProjectileDamage>().damageType.AddModdedDamageType(fearOnHit);
+            }
+        }
+
+        private static int GetMaxGhouls(CharacterMaster master, int deployableCountMultiplier)
+        {
+            return master.GetBody().skillLocator.secondary.maxStock;
         }
 
 
-        private static float healNovaRadius = 16f;
-        private static float healNovaPercentHeal = 0.2f;
-        private static float healNovaDamageCoefficient = 0.1f;
-        private static GameObject healNovaEffectPrefab;
+        public static float healNovaRadius = 32f;
+        public static float healNovaPercentHeal = 0.2f;
+        public static float healNovaDamageCoefficient = 0.1f;
+        public static float healOrbSpeed = 60f;
+        public static float healOrbMinDuration = 0.25f;
+        public static GameObject healNovaEffectPrefab;
+        // TODO: HEAL ORB EFFECT!!!!!!!!!!!!!!!!!
         private void OnCharacterDeathGlobal(DamageReport damageReport)
         {
             if (damageReport.damageInfo.HasModdedDamageType(healNovaOnKill))
             {
-                EffectData data = new EffectData
+                Vector3 origin = damageReport.damageInfo.position;
+                if(healNovaEffectPrefab)
                 {
-                    origin = damageReport.damageInfo.position,
-                    scale = healNovaRadius,
-                };
-                EffectManager.SpawnEffect(healNovaEffectPrefab, data, true);
+                    EffectData data = new EffectData
+                    {
+                        origin = origin,
+                        scale = healNovaRadius,
+                    };
+                    EffectManager.SpawnEffect(healNovaEffectPrefab, data, true);
+                }
 
                 SphereSearch search = new SphereSearch();
                 search.mask = LayerIndex.entityPrecise.mask;
                 search.radius = healNovaRadius;
-                search.origin = damageReport.damageInfo.position;
+                search.origin = origin;
+                search.queryTriggerInteraction = QueryTriggerInteraction.Ignore;
                 TeamMask mask = TeamMask.none;
                 mask.AddTeam(damageReport.attackerTeamIndex);
+                search.RefreshCandidates();
                 search.FilterCandidatesByHurtBoxTeam(mask);
                 search.FilterCandidatesByDistinctHurtBoxEntities();
+
+                List<HealthComponent> targets = new List<HealthComponent>();
                 foreach (HurtBox hurtBox in search.GetHurtBoxes())
                 {
-                    if (hurtBox && hurtBox.healthComponent)
+                    if (hurtBox && hurtBox.healthComponent && !targets.Contains(hurtBox.healthComponent))
                     {
-                        float amount = healNovaPercentHeal * hurtBox.healthComponent.fullHealth + healNovaDamageCoefficient * damageReport.damageDealt;
-                        hurtBox.healthComponent.Heal(amount, default(ProcChainMask));
+                        targets.Add(hurtBox.healthComponent);
                     }
                 }
+                foreach (HealthComponent healthComponent in targets)
+                {
+                    float amount = healNovaPercentHeal * healthComponent.fullHealth + healNovaDamageCoefficient * damageReport.damageDealt;
+                    HealOrb healOrb = new HealOrb();
+                    healOrb.origin = origin;
+                    healOrb.target = healthComponent.body.mainHurtBox;
+                    healOrb.healValue = amount;
+
+                    float distance = Vector3.Distance(origin, healthComponent.body.mainHurtBox.transform.position);
+                    float duration = Mathf.Max(distance / healOrbSpeed, healOrbMinDuration);
+                    healOrb.overrideDuration = duration;
+
+                    OrbManager.instance.AddOrb(healOrb);
+                }
+                
             }
         }
 
-
-        private static float orbDuration = 0.125f;
-        private static int orbBounces = 2;
-        private static float orbRange = 12f;
-        private static float orbDamageCoefficient = 1f;
-        private static float orbProcCoefficient = 1f;
-        public static GameObject orbEffectPrefab;
+        public static float fearDuration = 3f;
         private void OnServerDamageDealt(DamageReport damageReport)
         {
             if(damageReport.damageInfo.HasModdedDamageType(fearOnHit))
             {
-                damageReport.victimBody.AddBuff(SS2Content.Buffs.BuffFearRed);
-                // TODO: unify fear code
-            }
-            if (damageReport.damageInfo.HasModdedDamageType(ricochetOnHit))
-            {
-                CharacterBody body = damageReport.attackerBody;
-
-                CustomLightningOrb orb = new CustomLightningOrb();
-                orb.orbEffectPrefab = orbEffectPrefab;
-
-                orb.duration = orbDuration;
-                orb.bouncesRemaining = orbBounces - 1;
-                orb.range = orbRange;
-                orb.damageCoefficientPerBounce = orbProcCoefficient;
-                orb.damageValue = damageReport.damageInfo.damage * orbDamageCoefficient;
-                orb.damageType = DamageType.Generic;
-                orb.isCrit = damageReport.damageInfo.crit;
-                orb.damageColorIndex = DamageColorIndex.Default;
-                orb.procCoefficient = orbProcCoefficient;
-                orb.origin = damageReport.victimBody.corePosition;
-                orb.teamIndex = body.teamComponent.teamIndex;
-                orb.attacker = body.gameObject;
-                orb.procChainMask = default(ProcChainMask);
-                orb.bouncedObjects = new List<HealthComponent>();
-                HurtBox hurtbox = orb.PickNextTarget(damageReport.victimBody.corePosition, damageReport.victim);
-                if (hurtbox)
+                CharacterBody body = damageReport.victimBody;
+                if(body)
                 {
-                    orb.target = hurtbox;
-                    OrbManager.instance.AddOrb(orb);
+                    body.AddTimedBuff(SS2Content.Buffs.BuffFearRed, fearDuration);
+                    // TODO: unify fear code
+                    if (body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0])
+                    {
+                        body.master.aiComponents[0].stateMachine.SetNextState(new EntityStates.AI.Walker.Fear { fearTarget = damageReport.attacker });
+                    }
                 }
+                
             }
         }
 
@@ -132,7 +144,7 @@ namespace SS2.Survivors
         public sealed class FearBehavior : BaseBuffBehaviour
         {
             [BuffDefAssociation]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFear;
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffFearRed;
 
             private GameObject effectInstance;
             private static string activationSoundString = "Play_voidman_R_pop";

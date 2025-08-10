@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 399283824084823173}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 5, z: 1.5}
+  m_LocalScale: {x: 12, y: 7, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1368387427829229733}
@@ -145,6 +145,10 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 4679615209990779776, guid: 136125105198b584fb13528d45b3b0e8,
     type: 3}
+  ghostPrefabReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
@@ -169,7 +173,7 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 5
+  lifetime: 2
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 50
   updateAfterFiring: 1
@@ -222,7 +226,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
@@ -243,9 +247,9 @@ MonoBehaviour:
   force: 0
   damageColorIndex: 0
   damageType:
-    damageType: 0
+    damageType: 32
     damageTypeExtended: 0
-    damageSource: 0
+    damageSource: 4
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &2128436679934840937

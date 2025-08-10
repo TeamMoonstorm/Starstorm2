@@ -48,10 +48,10 @@ namespace SS2
         protected void SetupDefaultBody(GameObject prefab)
         {
             CharacterBody cb = prefab.GetComponent<CharacterBody>();
-            if(cb)
+            if (cb)
             {
-                cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-                cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").Completed += (x) => { cb.preferredPodPrefab = x.Result; };
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab ").Completed += (x) => { cb._defaultCrosshairPrefab = x.Result; };
             }
         }
         public virtual IEnumerator LoadContentAsync()

@@ -43,6 +43,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 34.26, y: -14.058, z: -17.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -93,7 +94,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _masterIndex: -1
-  bodyPrefab: {fileID: 8477274550451897653, guid: 4737ce5d2dc287e47b4abd095f55246c,
+  bodyPrefab: {fileID: 8230893109977790486, guid: c1741ce8c50f46841b3717f40642e354,
     type: 3}
   spawnOnStart: 0
   _teamIndex: 2
@@ -101,8 +102,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   destroyOnBodyDeath: 1
+  ExtraBossMissileMoneyRemainder: 0
+  trackedFreeUnlocks: 0
+  trackedMissileCount: 0
   isBoss: 0
   preventGameOver: 0
+  _seekerRevivedOnce: 0
+  _seekerRevitalize: 0
+  seekerSelfRevive: 0
+  devotionInventoryPrefab: {fileID: 0}
+  devotionInventoryUpdaterRef: {fileID: 0}
+  devotionItem: 0
+  devotedEvolutionTracker: 0
+  isDevotedMinion: 0
+  summonerRef: {fileID: 0}
 --- !u!114 &114606437657475356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +129,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemAcquisitionOrder: 
+  beadAppliedHealth: 0
+  beadAppliedShield: 0
+  beadAppliedRegen: 0
+  beadAppliedDamage: 0
 --- !u!114 &114296186603762178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 1357070253, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebugStateChanges: 0
   fullVision: 1
   neverRetaliateFriendlies: 0
   enemyAttentionDuration: 5
@@ -138,9 +156,12 @@ MonoBehaviour:
       PublicKeyToken=null
   isHealer: 0
   enemyAttention: 0
+  prioritizePlayers: 0
   aimVectorDampTime: 0.2
   aimVectorMaxSpeed: 360
   selectedSkilldriverName: 
+  shouldMissFirstOffScreenShot: 0
+  forceUpdateEveryFrame: 0
   debugEnemyHurtBox: {fileID: 0}
 --- !u!114 &114536761397771821
 MonoBehaviour:
@@ -161,6 +182,7 @@ MonoBehaviour:
   mainStateType:
     _typeName: EntityStates.AI.Walker.Wander, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  debug: 0
 --- !u!114 &114313476461523313
 MonoBehaviour:
   m_ObjectHideFlags: 0

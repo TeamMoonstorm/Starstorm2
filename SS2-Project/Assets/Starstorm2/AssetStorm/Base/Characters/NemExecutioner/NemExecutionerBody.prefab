@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 7820916163167745477}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 1.13}
-  m_LocalScale: {x: 5, y: 5, z: 4}
+  m_LocalScale: {x: 9, y: 5, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 933542963448473044}
@@ -394,7 +394,7 @@ MonoBehaviour:
   aimOriginTransform: {fileID: 1232235581757514855}
   hullClassification: 0
   portraitIcon: {fileID: 0}
-  bodyColor: {r: 1, g: 1, b: 1, a: 1}
+  bodyColor: {r: 0.9607843, g: 0, b: 0.23137255, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
   altDeathBodyName: 
@@ -1139,6 +1139,21 @@ MonoBehaviour:
   - {fileID: 2511275716387627675}
   mainHurtBox: {fileID: 2950252958760992463}
   bullseyeCount: 1
+--- !u!114 &3191980655223836842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558249324658114414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groupName: Reap
+  hitBoxes:
+  - {fileID: 7344104668731856492}
 --- !u!114 &4513493424637055662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1211,7 +1226,9 @@ MonoBehaviour:
   m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  transformPairs: []
+  transformPairs:
+  - name: DashCenter
+    transform: {fileID: 6963691773886613272}
 --- !u!114 &7940791196605843830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1381,21 +1398,6 @@ MonoBehaviour:
   skins:
   - {fileID: 11400000, guid: 1f6bbda32f842974693a87dbfc68242a, type: 2}
   prefabInstantiationDatas: []
---- !u!114 &3191980655223836842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 558249324658114414}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupName: Reap
-  hitBoxes:
-  - {fileID: 7344104668731856492}
 --- !u!4 &933542963448473044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c99544edcb4d6e348963a9447393422e,
@@ -1435,6 +1437,12 @@ SkinnedMeshRenderer:
 --- !u!137 &6220340028705862736 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: -2509292995171060113, guid: c99544edcb4d6e348963a9447393422e,
+    type: 3}
+  m_PrefabInstance: {fileID: 828140185556615743}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6963691773886613272 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1451806313326164697, guid: c99544edcb4d6e348963a9447393422e,
     type: 3}
   m_PrefabInstance: {fileID: 828140185556615743}
   m_PrefabAsset: {fileID: 0}

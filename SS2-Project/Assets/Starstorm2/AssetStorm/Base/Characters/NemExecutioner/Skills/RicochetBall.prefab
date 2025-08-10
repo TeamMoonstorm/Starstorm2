@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3375864233255432890}
   - component: {fileID: -1828637385208854079}
   - component: {fileID: -3067848407407523535}
-  - component: {fileID: 8079321790806102478}
+  - component: {fileID: 1886759086222961407}
   - component: {fileID: 3637621954154524211}
   - component: {fileID: 8699733587297061666}
   m_Layer: 14
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lifetime: 2
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 80
+  desiredForwardSpeed: 100
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -164,7 +164,7 @@ MonoBehaviour:
     damageSource: 1
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
---- !u!114 &8079321790806102478
+--- !u!114 &1886759086222961407
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -173,15 +173,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 5327964118185576246}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 1952984350, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 11500000, guid: dce711ee8c282634792b959db6d66d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyWhenNotAlive: 1
   destroyOnWorld: 1
   impactEffect: {fileID: 3182263332172778092, guid: 74ec88f4d2e6ea24aa749c2ff385480a,
     type: 3}
-  hitSoundString: 
-  enemyHitSoundString: 
+  orbDuration: 0.125
+  orbBounces: 2
+  orbRange: 16
+  orbDamageCoefficient: 1
+  orbDamageCoefficientPerBounce: 1
+  orbProcCoefficient: 1
+  canProcErraticGadget: 1
+  orbEffectPrefab: {fileID: 2947658090592721586, guid: b0f90843bcfa4054985725afd87ab1ba,
+    type: 3}
 --- !u!54 &3637621954154524211
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -194,10 +200,10 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!135 &8699733587297061666
 SphereCollider:
   m_ObjectHideFlags: 0

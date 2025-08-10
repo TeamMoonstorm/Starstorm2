@@ -3,7 +3,7 @@ using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
 using RoR2.Orbs;
-
+using R2API;
 namespace EntityStates.NemExecutioner
 {
 	public class FireRicochetBall : BaseSkillState
@@ -14,9 +14,9 @@ namespace EntityStates.NemExecutioner
 		public string muzzleName;
 		private static float bloom = 1f;
 		private static float recoilAmplitude = 1f;
-		private static float fireTime = 0.5f;
-		private static float baseDuration = 0.5f;
-		private static float damageCoefficient = 2f;
+		private static float fireTime = 0.1f;
+		private static float baseDuration = 0.4f;
+		private static float damageCoefficient = 1f;
 		private static float force = 100f;
 		private static string fireSoundString = "Play_mage_m1_shoot";
 
