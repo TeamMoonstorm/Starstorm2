@@ -469,6 +469,8 @@ namespace SS2
 
             public static BuffDef BuffFear;
 
+            public static BuffDef BuffFearRed;
+
             public static BuffDef BuffGouge;
 
             public static BuffDef bdHakai;

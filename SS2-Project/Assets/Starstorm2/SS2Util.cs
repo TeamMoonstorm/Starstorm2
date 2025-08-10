@@ -9,6 +9,10 @@ namespace SS2
 {
     public static class SS2Util
     {
+        public static bool HasFearBuff(this CharacterBody body) // :/
+        {
+            return body.HasBuff(SS2Content.Buffs.BuffFear) || body.HasBuff(SS2Content.Buffs.BuffFearRed);
+        }
         public static string ToRoman(int number)
         {
             if ((number < 0) || (number > 3999)) throw new ArgumentOutOfRangeException(nameof(number), "insert value between 1 and 3999");
