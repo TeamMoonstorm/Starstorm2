@@ -28,13 +28,6 @@
       "dependencies": {},
       "hash": "de4cf6a8a31364a1e9f900b357a1ee8cb7692ec8"
     },
-    "com.thetimesweeper.henryeditortools": {
-      "version": "https://github.com/TheTimeSweeper/HenryEditorTools.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "3b769b0778b86c404acb86956d1bcca4cdf1f764"
-    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -59,13 +52,15 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.collections": {
-      "version": "file:com.unity.collections",
+      "version": "1.5.1",
       "depth": 0,
-      "source": "embedded",
+      "source": "registry",
       "dependencies": {
         "com.unity.burst": "1.6.6",
-        "com.unity.test-framework": "1.1.31"
-      }
+        "com.unity.test-framework": "1.1.31",
+        "com.unity.nuget.mono-cecil": "1.11.4"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
@@ -103,6 +98,13 @@
       "source": "git",
       "dependencies": {},
       "hash": "faf93100110c30bfeec46d5367928c18f73a6ce1"
+    },
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.11.4",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
     },
     "com.unity.postprocessing": {
       "version": "2.3.0",
@@ -152,7 +154,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "962f6e04d4261f4ce6e687a1c06de9bbb3ca28f1"
+      "hash": "790a508dcd45526e338e06b771026b875f9f04a0"
     },
     "jace-locationsofprecipitation": {
       "version": "https://github.com/JaceDaDorito/jace-locationsofprecipitation.git",
@@ -187,12 +189,6 @@
     },
     "riskofthunder-bepinex_gui": {
       "version": "file:BepInEx_GUI",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
-    "riskofthunder-burstsofrain": {
-      "version": "file:BurstsOfRain",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -447,7 +443,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "69844dd8ab9af39c2c5d1c4646004fc4bba052ba"
+      "hash": "eca4ae395782e886692e55b77f92a5de10a5df2d"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
