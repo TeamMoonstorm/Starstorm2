@@ -31,7 +31,7 @@ namespace SS2
         public static ConfigFile ConfigItem { get; private set; }
         public static ConfigFile ConfigArtifact { get; private set; }
         public static ConfigFile ConfigSurvivor { get; private set; }
-        //public static ConfigFile ConfigMonster { get; private set; }
+        public static ConfigFile ConfigMonster { get; private set; }
         public static ConfigFile ConfigEvent { get; private set; }
         //public static ConfigFile ConfigInteractable { get; private set; }
         public static ConfigFile ConfigMisc { get; private set; }
@@ -70,7 +70,7 @@ namespace SS2
             ConfigMain = CreateConfigFile(ID_MAIN, true);
             ConfigItem = CreateConfigFile(ID_ITEM, true);           
             ConfigSurvivor = CreateConfigFile(ID_SURVIVOR, true);
-            //ConfigMonster = CreateConfigFile(ID_MONSTER, true);
+            ConfigMonster = CreateConfigFile(ID_MONSTER, true);
             ConfigEvent = CreateConfigFile(ID_EVENT, true);
             //ConfigInteractable = CreateConfigFile(ID_INTERACTABLE, true);
             

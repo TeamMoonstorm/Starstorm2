@@ -1,7 +1,13 @@
   **Warning: content spoilers below!**
 ### 0.6.23
 * General
-    * Add some graceful error handling to our SS2Monster base class
+    * Add some graceful error handling to our SS2Monster base class.
+    * Moved some of the debug only logs to production builds so your bug report logs contain more useful errors for us when debugging!
+    * Added config options for disabling enemies and survivors (why would you do that).
+    * New PT-BR translation for items thanks to Balorfist
+    * Updated Chinese translation thanks to EternitySwarmCrowm
+* Items
+    * Fixed bug with Greater Warbanner's VFX overlay not displaying
 * Executioner
     * New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
     * Ion Manipulators no longer gains ion charges over time.

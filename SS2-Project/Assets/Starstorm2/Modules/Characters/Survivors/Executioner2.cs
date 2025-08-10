@@ -133,11 +133,6 @@ namespace SS2.Survivors
             BodiesThatGiveSuperCharge = new ReadOnlyCollection<BodyIndex>(indices);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         public void ModifyPrefab()
         {
             SetupDefaultBody(CharacterPrefab);

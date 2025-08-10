@@ -22,12 +22,7 @@ namespace SS2.Monsters
             }
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
-        private IEnumerator AwaitForLoad(SpecialEventPickup pickup)
+        private void ChristmasTime()
         {
             CharacterPrefab.GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial = SS2Assets.LoadAsset<Material>("matSantaHat", SS2Bundle.Items);
             CharacterPrefab.GetComponent<CharacterBody>().doNotReassignToTeamBasedCollisionLayer = true; // idk what the layers do but it breaks the itneraction if switched

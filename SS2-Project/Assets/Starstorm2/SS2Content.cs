@@ -448,6 +448,8 @@ namespace SS2
             public static ItemDef PrimalBirthright;
 
 
+            public static ItemDef GalvanicCore;
+
         }
 
         public static class Equipments
@@ -708,6 +710,10 @@ namespace SS2
             public static BuffDef bdMongerSlippery;
 
             public static BuffDef bdWardenSurgeBuff;
+
+            public static BuffDef bdGalvanized;
+
+            public static BuffDef bdGalvanizedSource;
 
             public static BuffDef bdConsecration;
 
