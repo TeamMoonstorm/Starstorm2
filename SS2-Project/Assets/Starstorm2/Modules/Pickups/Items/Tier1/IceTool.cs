@@ -6,7 +6,6 @@ using UnityEngine;
 using R2API;
 using UnityEngine.AddressableAssets;
 using Path = System.IO.Path;
-using R2API.Models;
 using System.Collections.Generic;
 namespace SS2.Items
 {
@@ -19,49 +18,49 @@ namespace SS2.Items
         public override void Initialize()
         {
             _effect = AssetCollection.FindAsset<GameObject>("WallJumpEffect");
-            string loader = Path.Combine(RuntimePath, "ror2-base-loader_text_assets_all.bundle");
-            var runtimeLoader = Addressables.LoadAssetAsync<RuntimeAnimatorController>("RoR2/Base/Loader/animLoader.controller").WaitForCompletion();
-            AnimatorModifications loaderMods = new AnimatorModifications(SS2Main.Instance.Info.Metadata);
+            //string loader = Path.Combine(RuntimePath, "ror2-base-loader_text_assets_all.bundle");
+            //var runtimeLoader = Addressables.LoadAssetAsync<RuntimeAnimatorController>("RoR2/Base/Loader/animLoader.controller").WaitForCompletion();
+            //AnimatorModifications loaderMods = new AnimatorModifications(SS2Main.Instance.Info.Metadata);
 
-            var loaderJumpF = CreateDefaultJumpState();
-            loaderJumpF.Name = "SS2-JumpIceToolF";
-            loaderJumpF.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolFront", SS2Bundle.Vanilla); // idk if you can get assets right from fbx
+            //var loaderJumpF = CreateDefaultJumpState();
+            //loaderJumpF.Name = "SS2-JumpIceToolF";
+            //loaderJumpF.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolFront", SS2Bundle.Vanilla); // idk if you can get assets right from fbx
 
-            var loaderJumpB = CreateDefaultJumpState();
-            loaderJumpB.Name = "SS2-JumpIceToolB";
-            loaderJumpB.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolBack", SS2Bundle.Vanilla);
+            //var loaderJumpB = CreateDefaultJumpState();
+            //loaderJumpB.Name = "SS2-JumpIceToolB";
+            //loaderJumpB.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolBack", SS2Bundle.Vanilla);
 
-            var loaderJumpL = CreateDefaultJumpState();
-            loaderJumpL.Name = "SS2-JumpIceToolL";
-            loaderJumpL.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolLeft", SS2Bundle.Vanilla);
+            //var loaderJumpL = CreateDefaultJumpState();
+            //loaderJumpL.Name = "SS2-JumpIceToolL";
+            //loaderJumpL.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolLeft", SS2Bundle.Vanilla);
 
-            var loaderJumpR = CreateDefaultJumpState();
-            loaderJumpR.Name = "SS2-JumpIceToolR";
-            loaderJumpR.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolRight", SS2Bundle.Vanilla);
+            //var loaderJumpR = CreateDefaultJumpState();
+            //loaderJumpR.Name = "SS2-JumpIceToolR";
+            //loaderJumpR.Clip = SS2Assets.LoadAsset<AnimationClip>("LoaderArmature_IceToolRight", SS2Bundle.Vanilla);
 
-            loaderMods.NewStates.Add("Body", new List<State>{ loaderJumpF, loaderJumpB, loaderJumpL, loaderJumpR });
-            AnimationsAPI.AddModifications(loader, runtimeLoader, loaderMods);
-            var animLoader = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Loader/LoaderBody.prefab").WaitForCompletion().GetComponentInChildren<Animator>();
-            AnimationsAPI.AddAnimatorController(animLoader, runtimeLoader);
+            //loaderMods.NewStates.Add("Body", new List<State>{ loaderJumpF, loaderJumpB, loaderJumpL, loaderJumpR });
+            //AnimationsAPI.AddModifications(loader, runtimeLoader, loaderMods);
+            //var animLoader = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Loader/LoaderBody.prefab").WaitForCompletion().GetComponentInChildren<Animator>();
+            //AnimationsAPI.AddAnimatorController(animLoader, runtimeLoader);
         }
-        public State CreateDefaultJumpState()
-        {
-            State jumpState = new State
-            {
-                ClipBundlePath = AnimationPath,
-                Speed = 1,
-                WriteDefaultValues = true
-            };
-            var transition = new Transition
-            {
-                DestinationStateName = "AscendDescend",
-                TransitionDuration = 1f,
-                ExitTime = 0.337f,
-                HasExitTime = true
-            };
-            jumpState.Transitions.Add(transition);
-            return jumpState;
-        }
+        //public State CreateDefaultJumpState()
+        //{
+        //    State jumpState = new State
+        //    {
+        //        ClipBundlePath = AnimationPath,
+        //        Speed = 1,
+        //        WriteDefaultValues = true
+        //    };
+        //    var transition = new Transition
+        //    {
+        //        DestinationStateName = "AscendDescend",
+        //        TransitionDuration = 1f,
+        //        ExitTime = 0.337f,
+        //        HasExitTime = true
+        //    };
+        //    jumpState.Transitions.Add(transition);
+        //    return jumpState;
+        //}
 
         public override bool IsAvailable(ContentPack contentPack)
         {

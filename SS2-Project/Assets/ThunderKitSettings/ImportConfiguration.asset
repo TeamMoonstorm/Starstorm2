@@ -26,7 +26,7 @@ MonoBehaviour:
   m_Name: Import Project Settings
   m_EditorClassIdentifier: 
   enabled: 1
-  IncludedSettings: 0
+  IncludedSettings: -1
 --- !u!114 &-8315720199539273624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -79,6 +79,19 @@ MonoBehaviour:
   m_Name: Configure Addressable Graphics Settings
   m_EditorClassIdentifier: 
   enabled: 1
+--- !u!114 &-4487266838087919412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a6266570ba40d41bad5cf59676ab77, type: 3}
+  m_Name: Install RoR2MultiplayerHLAPI
+  m_EditorClassIdentifier: 
+  enabled: 0
 --- !u!114 &-4468814151955721376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -574,19 +587,6 @@ MonoBehaviour:
     - R2API_ContentManagement
     - HookGenPatcher
     - R2API_Core
---- !u!114 &-4487266838087919412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6a6266570ba40d41bad5cf59676ab77, type: 3}
-  m_Name: Install RoR2MultiplayerHLAPI
-  m_EditorClassIdentifier: 
-  enabled: 0
 --- !u!114 &5620793616671611181
 MonoBehaviour:
   m_ObjectHideFlags: 0
