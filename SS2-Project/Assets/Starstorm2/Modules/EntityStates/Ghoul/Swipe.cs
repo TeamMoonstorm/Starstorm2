@@ -111,7 +111,7 @@ namespace EntityStates.Ghoul
         private static float forceMagnitude = 16f;
         private static float hitHopVelocity = 7f;
         private static float hitVelocityMultiplier = 0.2f;
-        private static float bleedPercentChance = 33f;
+        private static float bleedPercentChance = 25f;
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
         private static string attackSoundString = "Play_imp_attack";

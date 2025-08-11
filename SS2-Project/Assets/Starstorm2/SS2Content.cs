@@ -637,6 +637,8 @@ namespace SS2
 
             public static BuffDef bdBloodRush;
 
+            public static BuffDef BuffNemExeRegen;
+
         }
 
         public static class Elites

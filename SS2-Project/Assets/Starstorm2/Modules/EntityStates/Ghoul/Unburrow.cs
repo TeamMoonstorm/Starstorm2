@@ -39,6 +39,7 @@ namespace EntityStates.Ghoul
                 search.viewer = characterBody;
                 search.RefreshCandidates();
                 search.FilterOutGameObject(gameObject);
+                search.FilterOutGameObject(attackerObject);
 
                 HurtBox target = null;
                 foreach (HurtBox hurtBox in search.GetResults())
@@ -61,6 +62,7 @@ namespace EntityStates.Ghoul
                     targetPosition = hit.point;
                 }
 
+
                 float verticalDistance = targetPosition.y - characterBody.footPosition.y;
                 Vector3 between = targetPosition - characterBody.footPosition;
                 float horizontalDistance = new Vector3(between.x, 0, between.z).magnitude;
@@ -71,6 +73,7 @@ namespace EntityStates.Ghoul
                 Vector3 direction = between.normalized;
                 Vector3 velocity = new Vector3(hSpeed * direction.x, ySpeed, hSpeed * direction.z);
 
+                characterMotor.Motor.ForceUnground();
                 characterMotor.velocity = velocity;
             }
 

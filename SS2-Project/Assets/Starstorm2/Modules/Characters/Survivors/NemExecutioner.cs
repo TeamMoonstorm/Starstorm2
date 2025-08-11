@@ -23,14 +23,20 @@ namespace SS2.Survivors
         public static DamageAPI.ModdedDamageType fearOnHit;
         public static DamageAPI.ModdedDamageType healNovaOnKill;
         public static DeployableSlot Ghoul;
+        public static BodyIndex bodyIndex; // TODO: SS2Content BodyPrefabs
+        public static GameObject bodyPrefab;
+        public static BodyIndex ghoulBodyIndex;
+        public static GameObject ghoulBodyPrefab;
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
         }
         public override void Initialize()
         {
-            SetupDefaultBody(CharacterPrefab);
-            SetupDefaultBody(SS2Assets.LoadAsset<GameObject>("GhoulBody", SS2Bundle.NemExecutioner));
+            bodyPrefab = CharacterPrefab;
+            SetupDefaultBody(bodyPrefab);
+            ghoulBodyPrefab = SS2Assets.LoadAsset<GameObject>("GhoulBody", SS2Bundle.NemExecutioner);
+            SetupDefaultBody(ghoulBodyPrefab);
 
             CharacterPrefab.AddComponent<RemoveAllSecondaryStock>(); // :/
 
@@ -41,8 +47,10 @@ namespace SS2.Survivors
 
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
 
             healNovaEffectPrefab = SS2Assets.LoadAsset<GameObject>("HealNovaOnKillEffect", SS2Bundle.NemExecutioner);
+            healNovaOrbEffect = SS2Assets.LoadAsset<GameObject>("HealNovaOrbEffect", SS2Bundle.NemExecutioner);
             fearEffectPrefab = SS2Assets.LoadAsset<GameObject>("FearEffectRed", SS2Bundle.NemExecutioner);
             ionOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemExeIonOrbEffect", SS2Bundle.NemExecutioner);
 
@@ -67,14 +75,24 @@ namespace SS2.Survivors
             }
         }
 
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void SetBodyIndex()
+        {
+            bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+            ghoulBodyIndex = ghoulBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+        }
+
         #region Events
-        public static float healNovaRadius = 16f;
+
+        #region HealNovaOnKill
+        public static float healNovaRadius = 24f;
         public static float healNovaPercentHeal = 0.2f;
-        public static float healNovaDamageCoefficient = 0.05f;
         public static float healOrbSpeed = 60f;
         public static float healOrbMinDuration = 0.25f;
+        public static float healNovaPercentHealthRegen = 0.05f;
+        public static float healNovaBuffDuration = 4f;
         public static GameObject healNovaEffectPrefab;
-        // TODO: HEAL ORB EFFECT!!!!!!!!!!!!!!!!!
+        public static GameObject healNovaOrbEffect;
         private void OnCharacterDeathGlobal(DamageReport damageReport)
         {
             if (damageReport.damageInfo.HasModdedDamageType(healNovaOnKill))
@@ -111,7 +129,7 @@ namespace SS2.Survivors
                 }
                 foreach (HealthComponent healthComponent in targets)
                 {
-                    float amount = healNovaPercentHeal * healthComponent.fullHealth + healNovaDamageCoefficient * damageReport.damageDealt;
+                    float amount = healNovaPercentHeal * healthComponent.fullHealth;
                     HealOrb healOrb = new HealOrb();
                     healOrb.origin = origin;
                     healOrb.target = healthComponent.body.mainHurtBox;
@@ -123,10 +141,55 @@ namespace SS2.Survivors
 
                     OrbManager.instance.AddOrb(healOrb);
                 }
-                
             }
         }
 
+        public class HealOrb : Orb
+        {
+            public float healValue;
+            public bool scaleOrb = true;
+            public float overrideDuration = 0.3f;
+            public override void Begin()
+            {
+                if (target)
+                {
+                    duration = overrideDuration;
+                    float scale = scaleOrb ? Mathf.Min(healValue / target.healthComponent.fullHealth, 1f) : 1f;
+                    EffectData effectData = new EffectData
+                    {
+                        scale = scale,
+                        origin = origin,
+                        genericFloat = duration
+                    };
+                    effectData.SetHurtBoxReference(target);
+                    EffectManager.SpawnEffect(healNovaOrbEffect, effectData, true);
+                }
+            }
+
+            public override void OnArrival()
+            {
+                if (target)
+                {
+                    HealthComponent healthComponent = target.healthComponent;
+                    if (healthComponent)
+                    {
+                        healthComponent.Heal(healValue, default(ProcChainMask), true);
+                        healthComponent.body.AddTimedBuff(SS2Content.Buffs.BuffNemExeRegen, healNovaBuffDuration);
+                    }
+                }
+            }
+        }
+        
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (sender.HasBuff(SS2Content.Buffs.BuffNemExeRegen))
+            {
+                args.baseRegenAdd += sender.maxHealth * healNovaPercentHealthRegen;
+            }
+        }
+        #endregion
+
+        #region Fear+Ion Orbs
         public static float fearDuration = 3f;
         private void OnServerDamageDealt(DamageReport damageReport)
         {
@@ -144,7 +207,7 @@ namespace SS2.Survivors
                 }
             }
 
-            if (damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
+            if (damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
             {
                 var assistTrackers = InstanceTracker.GetInstancesList<AssistTracker>();
                 foreach (var tracker in assistTrackers)
@@ -176,7 +239,7 @@ namespace SS2.Survivors
             {
                 if(enabled)
                 {
-                    int orbCount = Executioner2.GetIonCountFromBody(damageReport.victimBody);
+                    int orbCount = GetIonCountFromBody(damageReport.victimBody);
 
                     for (int i = 0; i < orbCount; i++)
                     {
@@ -243,6 +306,39 @@ namespace SS2.Survivors
                 }
             }
         }
+        public static int GetIonCountFromBody(CharacterBody body)
+        {
+            if (body == null) return 1;
+            if (body.bodyIndex == BodyIndex.None) return 1;
+
+            int value = 1;
+
+
+            switch (body.hullClassification)
+            {
+                case HullClassification.Human:
+                    value = 1;
+                    break;
+                case HullClassification.Golem:
+                    value = 1;
+                    break;
+                case HullClassification.BeetleQueen:
+                    value = 1;
+                    break;
+                default:
+                    value = 1;
+                    break;
+            }
+            if (body.isChampion)
+            {
+                value = 3;
+            }
+            if (body.isElite)
+            {
+                value *= 1;
+            }
+            return value;
+        }
 
         public static GameObject fearEffectPrefab;
         public sealed class FearBehavior : BaseBuffBehaviour
@@ -297,6 +393,8 @@ namespace SS2.Survivors
                 }
             }
         }
+        #endregion
+
         #endregion
     }
 }

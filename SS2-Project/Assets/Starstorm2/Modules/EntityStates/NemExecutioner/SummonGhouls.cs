@@ -70,16 +70,21 @@ namespace EntityStates.NemExecutioner
 
         public void SetupSummonedInventory([NotNull] MasterSummon masterSummon, [NotNull] Inventory summonedInventory)
         {
-            summonedInventory.GiveItem(RoR2Content.Items.HealthDecay, summonLifetime);
+            summonedInventory.GiveItem(SS2Content.Items.HealthDecayWithRegen, summonLifetime);
         }
 
         private void SummonGhoul()
         {
             if (NetworkServer.active)
             {
+                Ray aimRay = GetAimRay();
+                Vector3 direction = aimRay.direction;
+                direction.y = 0;
+                aimRay.direction = direction.normalized;
+                Vector3 origin = aimRay.GetPoint(summonRadius);
                 Vector2 randomCircle = UnityEngine.Random.insideUnitCircle * summonRadius;
                 // random circle point + summon transform position
-                Vector3 randomPosition = new Vector3(randomCircle.x + summonTransform.position.x, summonTransform.position.y, randomCircle.y + summonTransform.position.z);
+                Vector3 randomPosition = new Vector3(randomCircle.x + origin.x, origin.y, randomCircle.y + origin.z);
 
                 Vector3 hitPosition = randomPosition;
                 if (Physics.Raycast(randomPosition + Vector3.up * up, Vector3.down, out RaycastHit hit, down, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
@@ -91,12 +96,13 @@ namespace EntityStates.NemExecutioner
                 {
                     masterPrefab = masterPrefab,
                     position = hitPosition,
-                    rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                    rotation = Util.QuaternionSafeLookRotation(aimRay.direction),
                     summonerBodyObject = gameObject,
                     ignoreTeamMemberLimit = true,
                     inventorySetupCallback = this,
                 }.Perform();
 
+                // TODO: GHOUL POOL!!!!!!!! POOL GHOULS!!!!!!!!!!
                 Deployable deployable = characterMaster.gameObject.AddComponent<Deployable>();
                 deployable.onUndeploy = new UnityEvent();
                 deployable.onUndeploy.AddListener(new UnityAction(characterMaster.TrueKill));
