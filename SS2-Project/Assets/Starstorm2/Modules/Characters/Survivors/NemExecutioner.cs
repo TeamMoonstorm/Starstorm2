@@ -30,6 +30,9 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             SetupDefaultBody(CharacterPrefab);
+            SetupDefaultBody(SS2Assets.LoadAsset<GameObject>("GhoulBody", SS2Bundle.NemExecutioner));
+
+            CharacterPrefab.AddComponent<RemoveAllSecondaryStock>(); // :/
 
             fearOnHit = DamageAPI.ReserveDamageType(); // A lot of fear code is in Executioner2. i dont rly like this
             healNovaOnKill = DamageAPI.ReserveDamageType();
@@ -55,10 +58,19 @@ namespace SS2.Survivors
             return master.GetBody().skillLocator.secondary.maxStock;
         }
 
+        public class RemoveAllSecondaryStock : MonoBehaviour
+        {
+            private void Start()
+            {
+                GetComponent<SkillLocator>().secondary.RemoveAllStocks();
+                Destroy(this);
+            }
+        }
+
         #region Events
-        public static float healNovaRadius = 32f;
+        public static float healNovaRadius = 16f;
         public static float healNovaPercentHeal = 0.2f;
-        public static float healNovaDamageCoefficient = 0.1f;
+        public static float healNovaDamageCoefficient = 0.05f;
         public static float healOrbSpeed = 60f;
         public static float healOrbMinDuration = 0.25f;
         public static GameObject healNovaEffectPrefab;
@@ -124,7 +136,7 @@ namespace SS2.Survivors
                 if(body)
                 {
                     body.AddTimedBuff(SS2Content.Buffs.BuffFearRed, fearDuration);
-                    // TODO: unify fear code
+                    // TODO: FUCKING GROSS !!!!!!!!!!!!! unify fear code
                     if (body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0])
                     {
                         body.master.aiComponents[0].stateMachine.SetNextState(new EntityStates.AI.Walker.Fear { fearTarget = damageReport.attacker });
@@ -135,23 +147,25 @@ namespace SS2.Survivors
             if (damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
             {
                 var assistTrackers = InstanceTracker.GetInstancesList<AssistTracker>();
-                foreach (var killCpt in assistTrackers)
+                foreach (var tracker in assistTrackers)
                 {
-                    if (killCpt.attacker == damageReport.attacker)
+                    if (tracker.gameObject == damageReport.victim.gameObject && tracker.attacker == damageReport.attacker)
                     {
-                        killCpt.SetTimeAlive(0);
+                        tracker.SetTimeAlive(0);
                         return;
                     }
                 }
                 //Else add a kill component
                 var killComponent = damageReport.victim.gameObject.AddComponent<AssistTracker>();
                 killComponent.attacker = damageReport.attacker;
+                killComponent.duration = ionOrbAssistDuration;
             }
         }
 
         public static GameObject ionOrbEffectPrefab;
         public static float ionOrbSpeed = 50f;
         public static float ionOrbMaxDuration = 3f;
+        public static float ionOrbAssistDuration = 3f;
         public class AssistTracker : MonoBehaviour, IOnKilledServerReceiver
         {
             public GameObject attacker;
@@ -160,14 +174,17 @@ namespace SS2.Survivors
             private float timeAlive;
             public void OnKilledServer(DamageReport damageReport)
             {
-                int orbCount = Executioner2.GetIonCountFromBody(damageReport.victimBody);
-
-                for (int i = 0; i < orbCount; i++)
+                if(enabled)
                 {
-                    NemExecutionerIonOrb ionOrb = new NemExecutionerIonOrb();
-                    ionOrb.origin = transform.position;
-                    ionOrb.target = Util.FindBodyMainHurtBox(attacker);
-                    OrbManager.instance.AddOrb(ionOrb);
+                    int orbCount = Executioner2.GetIonCountFromBody(damageReport.victimBody);
+
+                    for (int i = 0; i < orbCount; i++)
+                    {
+                        NemExecutionerIonOrb ionOrb = new NemExecutionerIonOrb();
+                        ionOrb.origin = transform.position;
+                        ionOrb.target = Util.FindBodyMainHurtBox(attacker);
+                        OrbManager.instance.AddOrb(ionOrb);
+                    }
                 }
             }
 
@@ -182,16 +199,16 @@ namespace SS2.Survivors
                 timeAlive += Time.fixedDeltaTime;
                 if (timeAlive >= duration)
                 {
-                    enabled = false;
+                    Destroy(this);
                 }
             }
 
-            private void OnEnable()
+            private void Awake()
             {
                 InstanceTracker.Add(this);
             }
 
-            private void OnDisable()
+            private void OnDestroy()
             {
                 InstanceTracker.Remove(this);
             }
@@ -218,7 +235,8 @@ namespace SS2.Survivors
             {
                 if (target && target.healthComponent)
                 {
-                    if (target.healthComponent.body.skillLocator.secondary)
+                    GenericSkill secondary = target.healthComponent.body.skillLocator.secondary;
+                    if (secondary)
                     {
                         FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary);
                     }

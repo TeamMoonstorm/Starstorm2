@@ -224,8 +224,7 @@ namespace SS2.Survivors
             if (body.bodyIndex == BodyIndex.None) return 1;
 
             int value = 1;
-            if (body.isChampion)
-                value = 3;
+            
 
             switch (body.hullClassification)
             {
@@ -242,7 +241,11 @@ namespace SS2.Survivors
                     value = 1;
                     break;
             }
-            if(body.isElite)
+            if (body.isChampion)
+            {
+                value = 5;
+            }
+            if (body.isElite)
             {
                 value *= 2;
             }

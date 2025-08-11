@@ -13,7 +13,7 @@ namespace EntityStates.Ghoul
         //
         private static float searchDistance = 40f;
         private static float searchAngle = 30f;
-        private static string enterSoundString = "Play_imp_attack_tell";
+        private static string enterSoundString = "Play_imp_spawn";
         public static GameObject leapEffectPrefab;
 
         private static float flightDuration = 0.8f;

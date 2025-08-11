@@ -51,7 +51,10 @@ namespace SS2
             if (cb)
             {
                 UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").Completed += (x) => { cb.preferredPodPrefab = x.Result; };
-                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab ").Completed += (x) => { cb._defaultCrosshairPrefab = x.Result; };
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").Completed += (x) => { cb._defaultCrosshairPrefab = x.Result; };
+
+                var foot = cb.GetComponent<ModelLocator>().modelTransform.GetComponent<FootstepHandler>();
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/GenericFootstepDust.prefab").Completed += (x) => { foot.footstepDustPrefab = x.Result; }; 
             }
         }
         public virtual IEnumerator LoadContentAsync()

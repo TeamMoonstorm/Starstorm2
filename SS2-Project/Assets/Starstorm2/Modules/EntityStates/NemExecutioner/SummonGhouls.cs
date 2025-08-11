@@ -11,7 +11,7 @@ namespace EntityStates.NemExecutioner
     public class SummonGhouls : BaseSkillState, MasterSummon.IInventorySetupCallback
     {
         public static GameObject masterPrefab;
-        private static int summonLifetime = 30;
+        private static int summonLifetime = 24;
         private static float baseSummonInterval = 0.2f;
         private static float summonRadius = 8f;
         private static string summonTransformString = "Summon";
@@ -24,6 +24,10 @@ namespace EntityStates.NemExecutioner
         private float stopwatch;
         private Transform summonTransform;
 
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Pain;
+        }
         public override void OnEnter()
         {
             base.OnEnter();
@@ -96,7 +100,7 @@ namespace EntityStates.NemExecutioner
                 Deployable deployable = characterMaster.gameObject.AddComponent<Deployable>();
                 deployable.onUndeploy = new UnityEvent();
                 deployable.onUndeploy.AddListener(new UnityAction(characterMaster.TrueKill));
-                characterBody.master.AddDeployable(deployable, DeployableSlot.EngiTurret);
+                characterBody.master.AddDeployable(deployable, SS2.Survivors.NemExecutioner.Ghoul);
             }
             
         }

@@ -374,7 +374,7 @@ GameObject:
   - component: {fileID: 5028552090576784906}
   - component: {fileID: 2848191372905167112}
   - component: {fileID: 1663853433916423639}
-  m_Layer: 22
+  m_Layer: 8
   m_Name: GhoulBody
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -454,7 +454,7 @@ MonoBehaviour:
   inLava: 0
   baseNameToken: SS2_GHOUL_BODY_NAME
   subtitleNameToken: SS2_GHOUL_BODY_SUBTITLE
-  bodyFlags: 0
+  bodyFlags: 1
   lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
@@ -531,7 +531,7 @@ MonoBehaviour:
   hullClassification: 0
   portraitIcon: {fileID: 0}
   bodyColor: {r: 1, g: 1, b: 1, a: 1}
-  doNotReassignToTeamBasedCollisionLayer: 0
+  doNotReassignToTeamBasedCollisionLayer: 1
   isChampion: 0
   altDeathBodyName: 
   currentVehicle: {fileID: 0}
@@ -753,7 +753,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathStateMachine: {fileID: 5720056034075308046}
   deathState:
-    _typeName: EntityStates.Commando.DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Ghoul.DeathState, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine:
   - {fileID: 5028552090576784906}
@@ -814,8 +814,8 @@ MonoBehaviour:
   m_Script: {fileID: 952828898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: Play_ui_player_death
-  barkSound: 
+  deathSound: Play_imp_death
+  barkSound: Play_imp_idle_VO
   openSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage

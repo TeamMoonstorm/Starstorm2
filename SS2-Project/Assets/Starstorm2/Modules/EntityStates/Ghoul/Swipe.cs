@@ -19,6 +19,7 @@ namespace EntityStates.Ghoul
         public static GameObject leapEffectPrefab;
 
         private static float flightDuration = 0.4f;
+        private static float maxHeight = 10f;
 
         private static float leapDistanceIfNoTarget = 10f;
         public override void OnEnter()
@@ -60,6 +61,10 @@ namespace EntityStates.Ghoul
                 }
 
                 float verticalDistance = targetPosition.y - characterBody.footPosition.y;
+                if (verticalDistance > maxHeight)
+                {
+                    verticalDistance = maxHeight;
+                }
                 Vector3 between = targetPosition - characterBody.footPosition;
                 float horizontalDistance = new Vector3(between.x, 0, between.z).magnitude;
                 horizontalDistance = Mathf.Abs(horizontalDistance);

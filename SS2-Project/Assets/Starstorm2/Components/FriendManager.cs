@@ -90,11 +90,19 @@ namespace SS2
         }
 
         [ClientRpc]
-        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count = 1)
+        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count = 1, bool obeyMaxStock = true)
         {
             if(Util.HasEffectiveAuthority(bodyObject))
             {
-                bodyObject.GetComponent<SkillLocator>().GetSkill((SkillSlot)skillSlot).stock += count;
+                GenericSkill skill = bodyObject.GetComponent<SkillLocator>().GetSkill((SkillSlot)skillSlot);
+                if (skill)
+                {
+                    skill.stock += count;
+                    if(obeyMaxStock && skill.stock > skill.maxStock)
+                    {
+                        skill.stock = skill.maxStock;
+                    }
+                }
             }
         }
     }

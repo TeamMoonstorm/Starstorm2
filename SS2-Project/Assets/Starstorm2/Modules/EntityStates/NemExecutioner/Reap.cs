@@ -23,11 +23,9 @@ namespace EntityStates.NemExecutioner
         private static float cameraMaxPitch = 88f;
         private static float cameraMinPitch = -88f;
         private static float cameraPivotVerticalOffset = 1.37f;
-        private static float cameraFov = 70f;
         private static Vector3 cameraPosition = new Vector3(0f, 2.0f, -16f);
         private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
         {
-            fov = cameraFov,
             maxPitch = cameraMaxPitch,
             minPitch = cameraMinPitch,
             pivotVerticalOffset = cameraPivotVerticalOffset,
@@ -171,15 +169,13 @@ namespace EntityStates.NemExecutioner
 
 
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
-        private static float cameraLerpDuration = 0.5f;
+        private static float cameraLerpDuration = 0.25f;
         private static float cameraMaxPitch = 88f;
         private static float cameraMinPitch = -88f;
         private static float cameraPivotVerticalOffset = 1.37f;
-        private static float cameraFov = 90f;
         private static Vector3 cameraPosition = new Vector3(0, 1f, -12f);
         private CharacterCameraParamsData cameraParams = new CharacterCameraParamsData
         {
-            fov = cameraFov,
             maxPitch = cameraMaxPitch,
             minPitch = cameraMinPitch,
             pivotVerticalOffset = cameraPivotVerticalOffset,
