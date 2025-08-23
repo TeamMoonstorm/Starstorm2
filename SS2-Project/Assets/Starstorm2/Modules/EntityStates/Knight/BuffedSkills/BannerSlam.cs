@@ -2,87 +2,48 @@
 using UnityEngine;
 using RoR2;
 using RoR2.Skills;
-using EntityStates.Knight;
 using UnityEngine.Networking;
+using MSU.Config;
+using SS2;
 
-namespace Assets.Starstorm2.Modules.EntityStates.Knight.BuffedSkills
+namespace EntityStates.Knight
 {
-    public class BannerSlam : BaseState
+    public class BannerSlam : BannerSpecial
     {
-        public static int duration;
-        public static int swingTimeCoefficient;
-        public static SkillDef originalSkillRef;
+        [SerializeField]
+        public float barrierMultiplier = 0.4f;
 
-        public static SkillDef buffedSkillRef;
-        public static GameObject knightBannerWard;
-        public static GameObject slowBuffWard;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
+        public static float TestBarrierMultiplier = 0.4f;
 
-        private GameObject slowBuffWardInstance;
-        public override void OnEnter()
+        protected override void FireImpact()
         {
-            base.OnEnter();
-            if (NetworkServer.active)
+            base.FireImpact();
+            barrierMultiplier = TestBarrierMultiplier;
+
+            for (int i = 0; i < CharacterBody.readOnlyInstancesList.Count; i++)
             {
-                Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-                GameObject bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
-
-                bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                NetworkServer.Spawn(bannerObject);
-
-                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-                slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
-            }
-
-            if (base.isAuthority)
-            {
-                new BlastAttack
+                CharacterBody character = CharacterBody.readOnlyInstancesList[i];
+                if (character.teamComponent.teamIndex == characterBody.teamComponent.teamIndex &&
+                    (character.transform.position - transform.position).sqrMagnitude < impactRadius * impactRadius)
                 {
-                    attacker = base.gameObject,
-                    baseDamage = damageStat,
-                    baseForce = 20f,
-                    bonusForce = Vector3.up,
-                    crit = false,
-                    damageType = DamageType.Generic,
-                    falloffModel = BlastAttack.FalloffModel.Linear,
-                    procCoefficient = 0.1f,
-                    radius = 8f,
-                    position = base.characterBody.footPosition,
-                    attackerFiltering = AttackerFiltering.NeverHitSelf,
-                    impactEffect = EffectCatalog.FindEffectIndexFromPrefab(SS2.Survivors.Knight.KnightImpactEffect),
-                    teamIndex = base.teamComponent.teamIndex,
-                }.Fire();
+                    character.healthComponent.AddBarrier(characterBody.healthComponent.fullCombinedHealth * barrierMultiplier);
+                }
             }
         }
 
-        public override void FixedUpdate()
+        public override void OnEnter()
         {
-            base.FixedUpdate();
-            outer.SetNextStateToMain();
+            base.OnEnter();
+
+            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
         }
 
         public override void OnExit()
         {
-            if (base.isAuthority)
-            {
-                GenericSkill primarySkill = skillLocator.primary;
-                GenericSkill utilitySkill = skillLocator.utility;
-                GenericSkill specialSkill = skillLocator.special;
-
-                primarySkill.UnsetSkillOverride(gameObject, SwingSword.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-                utilitySkill.UnsetSkillOverride(gameObject, SpinUtility.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-                specialSkill.UnsetSkillOverride(gameObject, BannerSpecial.buffedSkillRef, GenericSkill.SkillOverridePriority.Contextual);
-
-                specialSkill.DeductStock(1);
-            }
-
-            outer.SetNextStateToMain();
             base.OnExit();
-        }
 
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return InterruptPriority.PrioritySkill;
+            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
         }
     }
 

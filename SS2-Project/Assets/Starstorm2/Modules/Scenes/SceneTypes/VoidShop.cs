@@ -33,7 +33,7 @@ namespace SS2.Scenes
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
     }
 }

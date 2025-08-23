@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1756662517, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: skinNakedButton
+  m_EditorClassIdentifier: 
+  mainPanelStyle:
+    material: {fileID: 0}
+    sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    color: {r: 0.14901961, g: 0.19215687, b: 0.32156864, a: 0.5921569}
+  headerPanelStyle:
+    material: {fileID: 0}
+    sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+    color: {r: 0.14901961, g: 0.19215687, b: 0.32156864, a: 0.5921569}
+  headerTextStyle:
+    font: {fileID: 11400000, guid: b6dfb61bd72414747ab672ffec084f8b, type: 2}
+    fontSize: 36
+    alignment: 514
+    color: {r: 1, g: 1, b: 1, a: 1}
+  detailPanelStyle:
+    material: {fileID: 2100000, guid: be99e165dd964a1468d5245b3c5a65da, type: 2}
+    sprite: {fileID: 21300000, guid: 9e549331ceda3144b8569be4f343af05, type: 3}
+    color: {r: 0.7830189, g: 0.7830189, b: 0.7830189, a: 0.4}
+  detailTextStyle:
+    font: {fileID: 0}
+    fontSize: 0
+    alignment: 0
+    color: {r: 0, g: 0, b: 0, a: 0}
+  bodyTextStyle:
+    font: {fileID: 0}
+    fontSize: 24
+    alignment: 0
+    color: {r: 1, g: 1, b: 1, a: 1}
+  buttonStyle:
+    material: {fileID: 2100000, guid: be99e165dd964a1468d5245b3c5a65da, type: 2}
+    sprite: {fileID: 21300000, guid: 9e549331ceda3144b8569be4f343af05, type: 3}
+    colors:
+      m_NormalColor: {r: 1, g: 1, b: 1, a: 0.27450982}
+      m_HighlightedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0.54509807}
+      m_PressedColor: {r: 0.1882353, g: 0.1882353, b: 0.1882353, a: 1}
+      m_SelectedColor: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0.54509807}
+      m_DisabledColor: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 0.28627452}
+      m_ColorMultiplier: 1
+      m_FadeDuration: 0.1
+    interactableTextStyle:
+      font: {fileID: 11400000, guid: 200a0c3b376849840b68b6c041c4b227, type: 2}
+      fontSize: 24
+      alignment: 514
+      color: {r: 1, g: 1, b: 1, a: 1}
+    disabledTextStyle:
+      font: {fileID: 11400000, guid: 200a0c3b376849840b68b6c041c4b227, type: 2}
+      fontSize: 18
+      alignment: 514
+      color: {r: 0.6226415, g: 0.6226415, b: 0.6226415, a: 1}
+    recommendedWidth: 200
+    recommendedHeight: 48
+  scrollRectStyle:
+    backgroundPanelStyle:
+      material: {fileID: 0}
+      sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+      color: {r: 0.14901961, g: 0.19215687, b: 0.32156864, a: 0.5921569}
+    scrollbarBackgroundStyle:
+      material: {fileID: 0}
+      sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
+      color: {r: 0.14901961, g: 0.19215687, b: 0.32156864, a: 0.5921569}
+    scrollbarHandleColors:
+      m_NormalColor: {r: 0.83137256, g: 0.83137256, b: 0.83137256, a: 0.007843138}
+      m_HighlightedColor: {r: 0.77254903, g: 0.7019608, b: 0.3019608, a: 1}
+      m_PressedColor: {r: 1, g: 0.7921569, b: 0.2509804, a: 1}
+      m_SelectedColor: {r: 0.77254903, g: 0.7019608, b: 0.3019608, a: 1}
+      m_DisabledColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 0}
+      m_ColorMultiplier: 1
+      m_FadeDuration: 0.03
+    scrollbarHandleImage: {fileID: 0}

@@ -153,10 +153,10 @@ GameObject:
   - component: {fileID: 3392066282591506201}
   - component: {fileID: 3401652348721732444}
   - component: {fileID: 3342692693899578875}
-  - component: {fileID: 3345141381231401769}
   - component: {fileID: 3342515253303587609}
   - component: {fileID: 3342220135409953235}
   - component: {fileID: 3342752394676136457}
+  - component: {fileID: 6550369256326310533}
   m_Layer: 13
   m_Name: CoffeeBeanPickup
   m_TagString: Untagged
@@ -257,20 +257,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
---- !u!114 &3345141381231401769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3454404577717790497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1788389205, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 7
-  resetAgeOnDisable: 0
 --- !u!114 &3342515253303587609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blinkFrequency: 20
-  delayBeforeBeginningBlinking: 6
+  delayBeforeBeginningBlinking: 8
   blinkingRootObject: {fileID: 3454945921802938642}
 --- !u!114 &3342220135409953235
 MonoBehaviour:
@@ -325,6 +311,23 @@ MonoBehaviour:
   singletonArrayIndex: -1
   serverPosition: {x: 0, y: 0, z: 0}
   serverRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6550369256326310533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454404577717790497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0e7b7637ef87444aadbe4226d86da41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gravity: {fileID: 3342170518237482777}
+  velocity: {fileID: 3342220135409953235}
+  blink: {fileID: 3342515253303587609}
+  beanis: {fileID: 8071568559002677509}
+  duration: 9
 --- !u!1 &3454750214552642647
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,7 +372,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
+  m_Radius: 7
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3342170518237482777
 MonoBehaviour:
@@ -399,6 +402,7 @@ GameObject:
   - component: {fileID: 3457187043140684450}
   - component: {fileID: 3394848811704937144}
   - component: {fileID: 8071568559002677509}
+  - component: {fileID: 9105516428976735696}
   m_Layer: 10
   m_Name: PickupTrigger
   m_TagString: Untagged
@@ -446,11 +450,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a7699ead895da4c83679645af6bde9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialized: 0
+  pooler: {fileID: 6550369256326310533}
   baseObject: {fileID: 3454404577717790497}
   teamFilter: {fileID: 3342692693899578875}
-  ownerBody: {fileID: 0}
   pickupEffect: {fileID: 4033601953410969474, guid: 449d0b4741394634ba0db30de814b1cc,
     type: 3}
+--- !u!114 &9105516428976735696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3454918705108232692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8258ea15b8f74c4889ce485d21cbbb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &3454945921802938642
 GameObject:
   m_ObjectHideFlags: 0

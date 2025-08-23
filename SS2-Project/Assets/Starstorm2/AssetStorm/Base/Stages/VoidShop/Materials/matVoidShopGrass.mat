@@ -8,19 +8,19 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: matVoidShopGrass
-  m_Shader: {fileID: 0}
-  m_ValidKeywords: []
-  m_InvalidKeywords:
+  m_Shader: {fileID: 14000, guid: 0000000000000000f000000000000000, type: 0}
+  m_ValidKeywords:
   - EFFECT_BUMP
   - EFFECT_HUE_VARIATION
-  - EFFECT_SUBSURFACE
   - GEOM_TYPE_LEAF
+  m_InvalidKeywords:
+  - EFFECT_SUBSURFACE
   - USE_EMISSION
-  - _WINDQUALITY_BEST
+  - _WINDQUALITY_PALM
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 1
-  m_CustomRenderQueue: 2450
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:

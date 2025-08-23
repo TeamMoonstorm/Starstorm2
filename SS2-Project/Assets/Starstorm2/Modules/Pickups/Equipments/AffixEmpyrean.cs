@@ -21,7 +21,7 @@ namespace SS2.Equipments
         public static List<String> whitelistedEliteDefStrings = new List<String>();
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enabled Elite types, separated by commas. Default: \"EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,ElitePoisonEquipment,EliteEarthEquipment\"")]
-        public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment";
+        public static string eliteDefEnabledStrings = "EliteFireEquipment,EliteIceEquipment,EliteLightningEquipment,EliteEarthEquipment,ElitePurpleEquipment";
         public static void AddEliteToWhitelist(EliteDef eliteDef) => whitelistedEliteDefs.Add(eliteDef);
 
         public override void Initialize()
@@ -112,7 +112,7 @@ namespace SS2.Equipments
             {
                 SS2Log.Fatal("AffixEmpyrean.CreateWhitelist(): Failed to create whitelist. Using default.");
                 SS2Log.Fatal(e);
-                whitelistedEliteDefs = new List<EliteDef> { RoR2Content.Elites.Fire, RoR2Content.Elites.Ice, RoR2Content.Elites.Lightning, DLC1Content.Elites.Earth };
+                whitelistedEliteDefs = new List<EliteDef> { RoR2Content.Elites.Fire, RoR2Content.Elites.Ice, RoR2Content.Elites.Lightning, DLC1Content.Elites.Earth, SS2Content.Elites.edPurple };
             }
         }
 

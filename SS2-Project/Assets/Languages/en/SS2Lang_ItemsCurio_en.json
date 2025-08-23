@@ -1,0 +1,65 @@
+{
+	"strings": {
+		"SS2_ITEM_BLEEDOUT_NAME": "Bleedout",
+		"SS2_ITEM_BLEEDOUT_PICKUP": "Upon dying, instead enter a bleedout state. Recharges over time.",
+		"SS2_ITEM_BLEEDOUT_DESC": "Upon taking <style=cIsHealth>lethal damage</style>, instead bleed out for <style=cIsHealth>100%</style> of your <style=cIsHealth>maximum health</style>. Recharges every <style=cIsUtility>4</style> minutes <style=cStack>(-20% per stack)</style>.",
+		"SS2_ITEM_BLEEDOUT_LORE": "???",	
+
+		"SS2_ITEM_DEBUFFMISSILES_NAME": "DebuffMissiles",
+		"SS2_ITEM_DEBUFFMISSILES_PICKUP": "Chance to fire a void shard on hit. Chance increases per debuff.",
+		"SS2_ITEM_DEBUFFMISSILES_DESC": "For each <style=cIsDamage>debuff</style> on an enemy, gain a <style=cIsDamage>3%<style=cStack> (+1% per stack)</style></style> chance to fire a void shard for <style=cIsDamage>400%</style> TOTAL damage.",
+		"SS2_ITEM_DEBUFFMISSILES_LORE": "???",
+		
+		"SS2_ITEM_ELITEDAMAGEBONUS_NAME": "EliteDamageBonus",
+		"SS2_ITEM_ELITEDAMAGEBONUS_PICKUP": "Reduce the cooldowns of your skills when attacking elite monsters.",
+		"SS2_ITEM_ELITEDAMAGEBONUS_DESC": "Hitting an elite monster with a <style=cIsUtility>skill</style> has a <style=cIsUtility>30%</style> <style=cStack>(+10% per stack)</style> chance to <style=cIsUtility>reduce your cooldowns</style> by <style=cIsUtility>0.5</style> seconds.",
+		"SS2_ITEM_ELITEDAMAGEBONUS_LORE": "???",
+		
+		"SS2_ITEM_HITLIST_NAME": "HitList",
+		"SS2_ITEM_HITLIST_PICKUP": "Attack marked enemies to gain gold, and a permanent damage boost on kill.",
+		"SS2_ITEM_HITLIST_DESC": "Every <style=cIsUtility>30</style> <style=cStack>(-20% per stack)</style> seconds, <style=cIsDamage>mark</style> an enemy. Killing <style=cIsDamage>marked</style> enemies increases your <style=cIsDamage>damage permanently</style> by <style=cIsDamage>2%</style>.",
+		"SS2_ITEM_HITLIST_LORE": "???",
+		
+		"SS2_ITEM_ITEMONBOSSKILL_NAME": "ItemOnBossKill",
+		"SS2_ITEM_ITEMONBOSSKILL_PICKUP": "Bosses drop items.",
+		"SS2_ITEM_ITEMONBOSSKILL_DESC": "Bosses drop an <style=cIsUtility>item</style> on kill. <style=cStack>(Item rarity increases per stack)</style>",
+		"SS2_ITEM_ITEMONBOSSKILL_LORE": "???",
+		
+		"SS2_ITEM_ITEMONELITEKILL_NAME": "ItemOnEliteKill",
+		"SS2_ITEM_ITEMONELITEKILL_PICKUP": "Elites drop items.",
+		"SS2_ITEM_ITEMONELITEKILL_DESC": "Elites have a <style=cIsUtility>6%</style><style=cStack> (+2% per stack)</style> chance to drop an <style=cIsUtility>item</style> on kill.",
+		"SS2_ITEM_ITEMONELITEKILL_LORE": "???",
+		
+		"SS2_ITEM_MAXHPONKILL_NAME": "MaxHpOnKill",
+		"SS2_ITEM_MAXHPONKILL_PICKUP": "Killing an enemy permanently increases your maximum health.",
+		"SS2_ITEM_MAXHPONKILL_DESC": "Killing an enemy increases your <style=cIsHealing>health permanently</style> by <style=cIsHealing>2</style> <style=cStack>(+1 per stack)</style>.",
+		"SS2_ITEM_MAXHPONKILL_LORE": "???",
+		
+		"SS2_ITEM_OPTIONFROMCHEST_NAME": "OptionFromChest",
+		"SS2_ITEM_OPTIONFROMCHEST_PICKUP": "Chests grant a choice between 3 items.",
+		"SS2_ITEM_OPTIONFROMCHEST_DESC": "Chests have a <style=cIsUtility>50%</style> chance to grant a choice between <style=cIsUtility>3</style> items. <style=cStack>(Item rarity increases per stack)</style>",
+		"SS2_ITEM_OPTIONFROMCHEST_LORE": "???",
+		
+		"SS2_ITEM_SCRAPFROMCHEST_NAME": "ScrapFromChest",
+		"SS2_ITEM_SCRAPFROMCHEST_PICKUP": "Chests drop extra scrap.",
+		"SS2_ITEM_SCRAPFROMCHEST_DESC": "Chests have a <style=cIsUtility>33%</style><style=cStack> (+11% per stack) </style>chance to drop extra <style=cIsUtility>scrap</style>.",
+		"SS2_ITEM_SCRAPFROMCHEST_LORE": "???",
+		
+		"SS2_ITEM_SHELLPIECE_NAME": "ShellPiece",
+		"SS2_ITEM_SHELLPIECE_PICKUP": "Block lethal damage. Recharges each stage.",
+		"SS2_ITEM_SHELLPIECE_DESC": "Upon taking <style=cIsHealth>lethal damage</style>, instead become <style=cIsUtility>invulnerable</style> for <style=cIsUtility>3</style> seconds. Recharges each stage.",
+		"SS2_ITEM_SHELLPIECE_LORE": "???",
+		
+		"SS2_ITEM_SHIELDGATE_NAME": "ShieldGate",
+		"SS2_ITEM_SHIELDGATE_PICKUP": "Killing an enemy permanently increases your shield.",
+		"SS2_ITEM_SHIELDGATE_DESC": "Killing an enemy increases your <style=cIsUtility>shield permanently</style> by <style=cIsUtility>2</style> <style=cStack>(+1 per stack)</style>.",
+		"SS2_ITEM_SHIELDGATE_LORE": "???",
+		
+		"SS2_ITEM_SNAKEEYES_NAME": "SnakeEyes",
+		"SS2_ITEM_SNAKEEYES_PICKUP": "Shrines grant permanent critical chance. Critical chance over 100% has a chance to reduce your cooldowns.",
+		"SS2_ITEM_SNAKEEYES_DESC": "Using a Shrine increases your <style=cIsDamage>critical chance permanently</style> by <style=cIsDamage>2%<style=cStack> (+1% per stack)</style></style>. <style=cIsDamage>Critical chance</style> over <style=cIsDamage>100%</style> grants a chance to <style=cIsUtility>reduce your cooldowns</style> by <style=cIsUtility>1</style> second.",
+		"SS2_ITEM_SNAKEEYES_LORE": "???",
+		
+
+	}
+}

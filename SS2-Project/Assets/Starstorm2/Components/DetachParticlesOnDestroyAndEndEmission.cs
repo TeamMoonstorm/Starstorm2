@@ -8,13 +8,16 @@ namespace SS2
         {
             foreach (var particleSystem in particleSystems)
             {
-                var main = particleSystem.main;
-                var emission = particleSystem.emission;
+                if(particleSystem)
+                {
+                    var main = particleSystem.main;
+                    var emission = particleSystem.emission;
 
-                main.stopAction = ParticleSystemStopAction.Destroy;
-                emission.enabled = false;
-                particleSystem.Stop();
-                particleSystem.transform.SetParent(null);
+                    main.stopAction = ParticleSystemStopAction.Destroy;
+                    emission.enabled = false;
+                    particleSystem.Stop();
+                    particleSystem.transform.SetParent(null);
+                }             
             }
         }
 

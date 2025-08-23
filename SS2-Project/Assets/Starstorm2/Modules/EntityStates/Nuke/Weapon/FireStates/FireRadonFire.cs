@@ -10,6 +10,11 @@ using UnityEngine;
 
 namespace EntityStates.Nuke.Weapon
 {
+    /// <summary>
+    /// Fire state of nucleator's alt secondary, a dual flamethrower. Based off Artificer's Flamethrower, lacks any kind of vfx... that should be fixed.
+    /// <br></br>
+    /// See <see cref="ChargeFire"/>
+    /// </summary>
     public class FireRadonFire : BaseNukeFireState
     {
         public static float duration;
