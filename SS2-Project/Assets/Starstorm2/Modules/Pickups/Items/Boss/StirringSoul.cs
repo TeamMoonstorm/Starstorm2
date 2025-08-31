@@ -4,10 +4,7 @@ using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
 using MSU;
-using System.Collections;
 using MSU.Config;
-using RoR2.ContentManagement;
-using System.Collections.Generic;
 
 namespace SS2.Items
 {
@@ -17,28 +14,16 @@ namespace SS2.Items
 
         private static GameObject _monsterSoulPickup;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for souls to drop an item. (1 = 100%)")]
-        public static float chance = 2f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance to gain soul initially. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_STIRRINGSOUL_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        public static float initChance = 0.005f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Soul gain chance cap. (1 = 100%)")]
+        public static float maxChance = 0.1f;
 
         public override void Initialize()
         {
             _monsterSoulPickup = AssetCollection.FindAsset<GameObject>("MonsterSoul");
-            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
-        }
-
-        private void OnCharacterDeathGlobal(DamageReport report)
-        {
-            if (!NetworkServer.active) return;
-            if (Run.instance.isRunStopwatchPaused || !report.victimMaster) return;
-            if (report.attackerMaster && report.attackerMaster.inventory.GetItemCount(SS2Content.Items.StirringSoul) > 0)
-            {
-                GameObject soul = GameObject.Instantiate(_monsterSoulPickup, report.victimBody.corePosition, Random.rotation);
-                soul.GetComponent<TeamFilter>().teamIndex = report.attackerTeamIndex;
-                SoulPickup pickup = soul.GetComponentInChildren<SoulPickup>();
-                pickup.team = soul.GetComponent<TeamFilter>();
-                pickup.chance = chance;
-                NetworkServer.Spawn(soul);
-            }
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
