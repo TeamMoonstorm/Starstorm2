@@ -1,4 +1,4 @@
-﻿using RoR2;
+﻿﻿using RoR2;
 using UnityEngine;
 using System;
 using SS2.Components;
@@ -16,9 +16,7 @@ namespace SS2.Monsters
         {
             if (SS2Main.ChristmasTime)
             {
-                SpecialEventPickup pickup = SpecialEventPickup.AddAndSetupComponent(CharacterPrefab.GetComponent<CharacterBody>());
-                pickup.contextToken = "SS2_INTERACTABLE_SANTAHAT_CONTEXT";
-                SS2Main.Instance.StartCoroutine(AwaitForLoad(pickup));
+                ChristmasTime();
             }
         }
 
