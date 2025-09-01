@@ -4,7 +4,10 @@ using RoR2.Items;
 using UnityEngine;
 using UnityEngine.Networking;
 using MSU;
+using System.Collections;
 using MSU.Config;
+using RoR2.ContentManagement;
+using System.Collections.Generic;
 
 namespace SS2.Items
 {
