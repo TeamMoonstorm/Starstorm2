@@ -10,7 +10,7 @@ namespace SS2
     public class HideUnlocks
     {
         [SystemInitializer]
-        public static void Hook()
+        private static void Hook()
         {
             //character unlocks
             On.RoR2.CharacterSelectBarController.Awake += CharacterSelectBarController_Awake;
