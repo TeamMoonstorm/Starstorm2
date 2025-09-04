@@ -23,7 +23,7 @@ namespace SS2.Scenes
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }
