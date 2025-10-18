@@ -56,7 +56,7 @@ namespace SS2.Survivors
             SetupFearExecute();
             ModifyPrefab();
 
-            taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
+            taserVFX = AssetCollection.FindAsset<GameObject>("TaserOrbEffect");
 
             //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // :3
         }
