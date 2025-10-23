@@ -17,11 +17,9 @@ GameObject:
   - component: {fileID: 114913155263267210}
   - component: {fileID: 5106241497757258897}
   - component: {fileID: 114633511895228720}
-  - component: {fileID: 7965184760809406810}
   - component: {fileID: 5896886204542518088}
   - component: {fileID: 8702565035162338784}
   - component: {fileID: 4317499283649376065}
-  - component: {fileID: 5810999834201012634}
   - component: {fileID: -2996686873313377993}
   m_Layer: 0
   m_Name: LampBossMaster
@@ -201,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: HideAtLowHealth
+  customName: BigLampAtLowHealth
   skillSlot: 2
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
@@ -215,12 +213,12 @@ MonoBehaviour:
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
-  maxTimesSelected: 2
+  maxTimesSelected: -1
   moveTargetType: 0
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 3
+  movementType: 1
   moveInputScale: 1
   aimType: 2
   ignoreNodeGraph: 0
@@ -231,7 +229,7 @@ MonoBehaviour:
   driverUpdateTimerOverride: 4
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
-  nextHighPriorityOverride: {fileID: 5810999834201012634}
+  nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &114633511895228720
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -244,7 +242,7 @@ MonoBehaviour:
   m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: BuffNearby
+  customName: SummonLamps
   skillSlot: 1
   requiredSkill: {fileID: 0}
   requireSkillReady: 1
@@ -274,49 +272,6 @@ MonoBehaviour:
   driverUpdateTimerOverride: 2
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &7965184760809406810
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255514408908605}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: BackAwayBeforePrimary
-  skillSlot: 0
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 1
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 5
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 1
-  movementType: 3
-  moveInputScale: 1
-  aimType: 2
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 1
-  driverUpdateTimerOverride: 4
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 1
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &5896886204542518088
 MonoBehaviour:
@@ -447,49 +402,6 @@ MonoBehaviour:
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
---- !u!114 &5810999834201012634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1255514408908605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: RunWhileHiding
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: Infinity
-  selectionRequiresTargetLoS: 0
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 2
-  moveInputScale: 2
-  aimType: 1
-  ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: 6
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 114633511895228720}
 --- !u!114 &-2996686873313377993
 MonoBehaviour:
   m_ObjectHideFlags: 0

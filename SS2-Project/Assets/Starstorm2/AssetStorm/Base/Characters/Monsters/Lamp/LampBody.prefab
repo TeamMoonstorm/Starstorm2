@@ -237,8 +237,8 @@ MonoBehaviour:
   baseMaxHealth: 90
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 6
-  baseAcceleration: 80
+  baseMoveSpeed: 8
+  baseAcceleration: 15
   baseJumpPower: 0
   baseDamage: 6
   baseAttackSpeed: 1
@@ -246,7 +246,7 @@ MonoBehaviour:
   baseArmor: 10
   baseVisionDistance: Infinity
   baseJumpCount: 1
-  sprintingSpeedMultiplier: 3
+  sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
   levelMaxHealth: 27
   levelRegen: 0
@@ -717,7 +717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deathSound: FollowerVO
-  barkSound: FollowerVO
+  barkSound: 
   openSound: 
   landingSound: 
   fallDamageSound: 
