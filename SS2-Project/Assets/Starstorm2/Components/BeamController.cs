@@ -26,10 +26,10 @@ namespace SS2
         public LineRenderer lineRenderer;
         public float lingerAfterBrokenDuration;
         [SyncVar(hook = nameof(OnSyncTarget))]
-        private HurtBoxReference netTarget;
+        private SS2HurtBoxReference netTarget;
         private float stopwatchServer;
         private bool broken;
-        private HurtBoxReference previousHurtBoxReference;
+        private SS2HurtBoxReference previousHurtBoxReference;
         private HurtBox cachedHurtBox;
         private float scaleFactorVelocity;
         private float maxLineWidth = 0.3f;
@@ -46,7 +46,7 @@ namespace SS2
             [Server]
             set
             {
-                this.netTarget = HurtBoxReference.FromHurtBox(value);
+                this.netTarget = SS2HurtBoxReference.FromHurtBox(value);
                 this.UpdateCachedHurtBox();
             }
         }
@@ -88,7 +88,7 @@ namespace SS2
         {
             this.UpdateBeamVisuals();
         }
-        private void OnSyncTarget(HurtBoxReference newValue)
+        private void OnSyncTarget(SS2HurtBoxReference newValue)
         {
             this.netTarget = newValue;
             this.UpdateCachedHurtBox();

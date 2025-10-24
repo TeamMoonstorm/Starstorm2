@@ -19,10 +19,10 @@ MonoBehaviour:
   icon: {fileID: 0}
   activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.LampBoss.SpawnBigLamp, Starstorm2, Version=1.0.0.0, Culture=neutral,
-      PublicKeyToken=null
+    _typeName: EntityStates.LampBoss.PrepSpawnBigLamp, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 30
+  baseRechargeInterval: 60
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

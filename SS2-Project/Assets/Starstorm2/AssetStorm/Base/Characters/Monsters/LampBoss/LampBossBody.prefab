@@ -14652,6 +14652,7 @@ GameObject:
   - component: {fileID: 75334026404347736}
   - component: {fileID: 1414763866400334972}
   - component: {fileID: 4933840783724198189}
+  - component: {fileID: 1275679051288141967}
   m_Layer: 0
   m_Name: mdlLampBoss
   m_TagString: Untagged
@@ -14957,6 +14958,54 @@ MonoBehaviour:
   smoothdamp: 0.3
   initialVerticalOffset: 15
   crouchOriginOverride: {fileID: 0}
+--- !u!114 &1275679051288141967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3502845028911919073}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 80205854, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  printTime: 2
+  printCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  age: 0
+  disableWhenFinished: 1
+  paused: 0
+  materialPrintCutoffPostSkinApplying: 1
+  startingPrintHeight: 9.5
+  maxPrintHeight: -5
+  startingPrintBias: 4
+  maxPrintBias: 2
+  animateFlowmapPower: 0
+  startingFlowmapPower: 0
+  maxFlowmapPower: 0
 --- !u!1 &3600490444291051112
 GameObject:
   m_ObjectHideFlags: 0
@@ -22434,7 +22483,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5765261338628485881}
   - component: {fileID: 7496361300183835963}
-  - component: {fileID: 6534830262100441915}
   m_Layer: 0
   m_Name: LampBossMesh
   m_TagString: Untagged
@@ -22709,27 +22757,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.6127877, y: 7.2707586, z: 2.1585677}
     m_Extent: {x: 4.229158, y: 7.636072, z: 5.8522987}
   m_DirtyAABB: 0
---- !u!95 &6534830262100441915
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8388622102248444104}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8399510329431431644
 GameObject:
   m_ObjectHideFlags: 0

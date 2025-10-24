@@ -56,7 +56,6 @@ namespace SS2
                 {
                     DebuffBodyServer(body);
                 }
-                this.cycleIndex++;
             }
             if (this.previousCycle.timeSince >= this.cycleInterval)
             {
@@ -87,7 +86,10 @@ namespace SS2
 
         private void DebuffBodyServer(CharacterBody body)
         {
-            body.AddTimedBuff(this.buffDef, buffDuration);
+            if (body.bodyIndex != Monsters.Lamp.BodyIndex && body.bodyIndex != Monsters.LampBoss.BodyIndex && body.gameObject != gameObject)
+            {
+                body.AddTimedBuff(this.buffDef, buffDuration);
+            }
             if (FriendlyFireManager.ShouldSplashHitProceed(body.healthComponent, teamComponent.teamIndex))
             {
                 LampCameraPullAttachment.AddPullToBody(body.gameObject, this, buffDuration);

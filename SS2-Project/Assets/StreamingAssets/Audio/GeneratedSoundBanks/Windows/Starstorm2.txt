@@ -26,6 +26,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	670255117	ChirrSpitBombImpact			\Default Work Unit\Chirr\ChirrSpitBombImpact	
 	709034819	ChirrFireSpitBomb			\Default Work Unit\Chirr\ChirrFireSpitBomb	
 	752795878	NemmandoSubmissionFire			\Default Work Unit\Nemmando\NemmandoSubmissionFire	
+	808131589	WayfarerEndBigLamp			\Default Work Unit\Wayfarer\WayfarerEndBigLamp	
 	874728115	ChirrDashStart			\Default Work Unit\Chirr\ChirrDashStart	
 	892248604	SS_WindAmbience			\Default Work Unit\Environment\Ambient\SS_WindAmbience	
 	950548496	NemmandoSheathSword			\Default Work Unit\Nemmando\NemmandoSheathSword	
@@ -41,6 +42,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1172202385	ChirrFirePrimary			\Default Work Unit\Chirr\ChirrFirePrimary	
 	1177423987	NemmandoCSS			\Default Work Unit\Nemmando\NemmandoCSS	
 	1211800949	Play_nemmerc_dash_start			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash_start	
+	1229124563	Play_WayfarerBigLampLoop			\Default Work Unit\Wayfarer\Play_WayfarerBigLampLoop	
 	1235706518	JetBootsExplosion			\Default Work Unit\Items\JetBootsExplosion	
 	1250309938	NemmandoDecisiveStrikeCharge			\Default Work Unit\Nemmando\NemmandoDecisiveStrikeCharge	
 	1316900923	LampBullet			\Default Work Unit\Follower\LampBullet	
@@ -49,11 +51,13 @@ Event	ID	Name			Wwise Object Path	Notes
 	1371804952	Play_ethereal_firePillar_loop			\Default Work Unit\Ethereal\Play_ethereal_firePillar_loop	
 	1373732423	CyborgSpecialPlace			\Default Work Unit\Cyborg\CyborgSpecialPlace	
 	1389751463	NemHuntressBowMax			\Default Work Unit\Nemesis Huntress\NemHuntressBowMax	
+	1422521957	Stop_WayfarerBigLampLoop			\Default Work Unit\Wayfarer\Stop_WayfarerBigLampLoop	
 	1435965638	UniversalCharger			\Default Work Unit\Items\UniversalCharger	
 	1440739445	ChirrGrabStart			\Default Work Unit\Chirr\ChirrGrabStart	
 	1442912802	ExecutionerExitSecondary			\Default Work Unit\Executioner\ExecutionerExitSecondary	
 	1499433712	ExecutionerSpecialCast			\Default Work Unit\Executioner\ExecutionerSpecialCast	
 	1520542387	ProcTrematodes			\Default Work Unit\Items\ProcTrematodes	
+	1568555694	WayfarerBigLampDeath			\Default Work Unit\Wayfarer\WayfarerBigLampDeath	
 	1573671621	LampImpact			\Default Work Unit\Follower\LampImpact	
 	1611310971	Play_nemmerc_utility_enter			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_utility_enter	
 	1642533830	NemmandoSwingDecisive			\Default Work Unit\Nemmando\NemmandoSwingDecisive	
@@ -64,6 +68,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1925425774	ExecutionerMaxCharge			\Default Work Unit\Executioner\ExecutionerMaxCharge	
 	2015914139	NemmandoShootCrit			\Default Work Unit\Nemmando\NemmandoShootCrit	
 	2068834138	NemmandoSubmissionCharge			\Default Work Unit\Nemmando\NemmandoSubmissionCharge	
+	2120771151	FollowerDeath			\Default Work Unit\Follower\FollowerDeath	
 	2165644167	NemmandoChargeBeam			\Default Work Unit\Nemmando\NemmandoChargeBeam	
 	2187217924	SpawnMGR			\Default Work Unit\Nemmando\SpawnMGR	
 	2250290942	WayfarerIdleStart			\Default Work Unit\Wayfarer\WayfarerIdleStart	
@@ -122,10 +127,12 @@ Event	ID	Name			Wwise Object Path	Notes
 	3396808549	ExecutionerSupercharge			\Default Work Unit\Executioner\ExecutionerSupercharge	
 	3463916741	ChirrGrabThrow			\Default Work Unit\Chirr\ChirrGrabThrow	
 	3464571447	ProcAmulet			\Default Work Unit\Items\ProcAmulet	
+	3514444044	WayfarerStartBigLamp			\Default Work Unit\Wayfarer\WayfarerStartBigLamp	
 	3663148423	NemHuntressFireBow			\Default Work Unit\Nemesis Huntress\NemHuntressFireBow	
 	3671834949	NemmandoShootClassic			\Default Work Unit\Nemmando\NemmandoShootClassic	
 	3698808448	EtherealActivaGlobal			\Default Work Unit\Ethereal\EtherealActivaGlobal	
 	3733468431	NemmandoCharacterSelect			\Default Work Unit\Nemmando\NemmandoCharacterSelect	
+	3741535224	WayfarerRaiseBigLamp			\Default Work Unit\Wayfarer\WayfarerRaiseBigLamp	
 	3750145159	StrangeCan			\Default Work Unit\Items\StrangeCan	
 	3799852474	RainbowAffixSpawn			\Default Work Unit\Empyrean\RainbowAffixSpawn	
 	3870731187	DiaryLevelUp			\Default Work Unit\Items\DiaryLevelUp	
@@ -155,6 +162,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	5091085	NemmandoSubmissionCharge	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSubmissionCharge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSubmissionCharge		36228
 	14785789	EtherealActivate	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ethactivate_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Ethereal\EtherealActivate		270205
 	17038591	item_proc_moltencoin_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_moltencoin_03_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\MoltenCoin\item_proc_moltencoin_03		31958
+	17062297	lamp_lower1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_lower1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerEndBigLamp\lamp_lower1		143437
 	20548445	knifepull	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\draven_skin13_sfx_audio_43_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\nemmerc_secondary_lunge\knifepull		53048
 	22802676	HE ULTED MONKAW	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\HE ULTED MONKAW_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\HE ULTED MONKAW		447913
 	23053059	knife_NM_thrown_stright	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\knife_NM_thrown_stright_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\brian\knife_NM_thrown_stright		56638
@@ -164,11 +172,13 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	36144116	EtherealPillarSpawn	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\pillarspawn2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Ethereal\EtherealPillarSpawn		104971
 	43053855	chirr_step_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_01		12550
 	43533750	fullChargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\fullCharge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\fullChargeExe		121717
+	49638076	WayfarerStartBigLamp	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_loop_start2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerStartBigLamp		214014
 	51700066	PF_NM_2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\PF_NM_2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\brian\PF_NM_2		87373
 	55113206	item_proc_erraticgadget_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_erraticgadget_02_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\ErraticGadget\item_proc_erraticgadget_02		26052
 	57255358	NemmandoShoot2Crit	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot2Crit_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoShootCrit\NemmandoShoot2Crit		53376
 	58295564	chirr_step_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_02_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_02		10599
 	59938249	chargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\charge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\chargeExe		57530
+	69534286	lamp_explode2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_explode2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\FollowerDeath\lamp_explode2		149430
 	69768090	item_pickup_coffeebean_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_pickup_coffeebean_03_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\PickupCoffeeBean\item_pickup_coffeebean_03		27035
 	82598891	CyborgUtility	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\CyborgUtility_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Cyborg\CyborgUtility		81053
 	83181747	WayfarerVO3	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\cry1_v2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\idleVO\WayfarerVO3		157446
@@ -202,6 +212,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	215151188	DecisiveCharge	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\DecisiveCharge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\DecisiveCharge		84141
 	216505171	NemmandoSwing2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSwing2_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSwingCrit\NemmandoSwing2		30560
 	219323898	72244847	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\72244847_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\FireLeaves\72244847		17551
+	220308178	lamp_raise2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_raise2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerRaiseBigLamp\lamp_raise2		217235
 	235333974	chirr_step_07	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_07_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_07		7618
 	239656552	item_proc_diaryLevel_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_diaryLevel_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\item_proc_diaryLevel_01		52407
 	241025732	263171907	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\263171907_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\LeafHit\263171907		14951
@@ -237,8 +248,10 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	422329283	item_pickup_coffeebean_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_pickup_coffeebean_01_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\PickupCoffeeBean\item_pickup_coffeebean_01		8557
 	423172737	ExecutionerUtility	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ExecutionerUtility_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\ExecutionerUtility		110349
 	428394710	NemmandoShoot2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot2_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoShoot\NemmandoShoot2		52769
+	435657582	lamp_lower2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_lower2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerEndBigLamp\lamp_lower2		160347
 	437301329	item_crypticsource_start_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_crypticsource_start_03_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\CrypticSource\CrypticSourceStage1\item_crypticsource_start_03		95868
 	438122999	nucleator_m1_charge_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\nucleator_m1_charge_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nucleator\nucleator_m1_charge_01		97954
+	449328052	lamp_explode1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_explode1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\FollowerDeath\lamp_explode1		150606
 	453785391	chirr_sprint_end_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_sprint_end_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\chirr_sprint_end_01		41409
 	459602224	item_proc_lqspeaker_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_lqspeaker_02_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\LowQualitySpeaker\LowQualitySpeaker\item_proc_lqspeaker_02		38655
 	465172932	NemmandoSwingSaberDecisive	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSwingSaberBig_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoSwingSaberDecisive		82392
@@ -305,7 +318,8 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	921835037	FollowerCast	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\babyability_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Follower\FollowerCast		119243
 	934019888	453799481	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\453799481_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\LeafHit\453799481		15935
 	934322958	maybeCloneSpawn	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\draven_skin13_sfx_audio_56_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\maybeCloneSpawn		110659
-	949467665	item_proc_trematode_init1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_trematode_init1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\item_proc_trematode_init1		43311
+	944222157	lamp_raise1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_raise1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerRaiseBigLamp\lamp_raise1		223115
+	949467665	item_proc_trematode_init1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_trematode_init1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\Trematode\item_proc_trematode_init1		43311
 	951110745	maybeBlinkStart	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\draven_skin13_sfx_audio_47_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Mercenary\maybe\maybeBlinkStart		39636
 	953880137	item_proc_explodejump_v3_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_explodejump_v3_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\JetBoot\item_proc_explodejump_v3_01		52061
 	965386340	utiltiygrabflyup	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\utiltiygrabflyup_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\utiltiygrabflyup		112500
@@ -314,6 +328,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	978048950	VoidAmbience1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\VoidAmbience1_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\VoidAmbience\VoidAmbience1		574736
 	981345431	NemmandoShoot1Crit	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot1Crit_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Nemesis Commando\NemmandoShootCrit\NemmandoShoot1Crit		68560
 	991143574	item_proc_moltencoin_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_moltencoin_02_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\MoltenCoin\item_proc_moltencoin_02		34991
+	997055151	WayfarerBigLampLoop	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_loop_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Wayfarer\WayfarerBigLampLoop		234214
 	1004833416	chirr_step_05	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_05_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Chirr\Step\chirr_step_05		11058
 	1016269948	ExecutionerSpecialActivate	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ExecutionerSpecialActivate_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Executioner\ExecutionerSpecialActivate		84824
 	1019695934	WindAmbience2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\WindAmbience2_17A248E1.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Environment\Ambient\WindAmbience2		661385

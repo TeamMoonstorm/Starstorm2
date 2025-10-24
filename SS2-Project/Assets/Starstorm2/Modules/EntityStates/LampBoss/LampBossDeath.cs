@@ -31,10 +31,6 @@ namespace EntityStates.LampBoss
             hasPlayedEffect = false;
             if (characterMotor)
                 characterMotor.enabled = false;
-            //if (modelLocator && initialEffect)
-            //EffectManager.
-
-            //FindModelChild("GlowParticles").gameObject.SetActive(true);
 
             isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
 

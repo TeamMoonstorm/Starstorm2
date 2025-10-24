@@ -4,13 +4,74 @@ using UnityEngine.Networking;
 
 namespace EntityStates.LampBoss
 {
+    public class PrepSpawnBigLamp : BaseSkillState
+    {
+        public static GameObject muzzleEffectPrefab;
+        private static string muzzleName = "LanternL";
+        private static float baseDuration = 1.33f;
+        private static string enterSoundString = "WayfarerRaiseBigLamp";
+        private static float walkSpeedCoefficient = 0.25f;
+
+        private float duration;
+        private GameObject effectInstance;
+        private Transform muzzle;
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Stun;
+        }
+
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
+            duration = baseDuration / attackSpeedStat;
+
+            PlayAnimation("FullBody, Override", "HoldLamp");//, "Primary.playbackRate", duration);
+            characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
+
+            muzzle = FindModelChild(muzzleName);
+            if (muzzleEffectPrefab && muzzle)
+            {
+                effectInstance = GameObject.Instantiate(muzzleEffectPrefab, muzzle.transform.position, Quaternion.identity);
+            }
+
+            Util.PlaySound(enterSoundString, gameObject);
+        }
+
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (fixedAge >= duration && isAuthority)
+            {
+                outer.SetNextState(new SpawnBigLamp());
+            }
+        }
+        public override void Update()
+        {
+            base.Update();
+            if (effectInstance)
+            {
+                effectInstance.transform.position = muzzle.transform.position;
+            }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+            characterMotor.walkSpeedPenaltyCoefficient = 1f;
+        }
+    }
     public class SpawnBigLamp : BaseSkillState
     {
         private static BodyIndex bigLamp = BodyIndex.None;
         public static GameObject muzzleEffectPrefab;
         public static GameObject bodyPrefab;
         private static float duration = 30f;
-        private static string enterSoundString = "Play_grandparent_attack3_sun_spawn";
+        private static string enterSoundString = "WayfarerStartBigLamp";
+        private static string startLoopSoundString = "Play_WayfarerBigLampLoop"; // TODO: PUT THIS ON THE BIG LAMP DUMB FUCK!!!!!!!!!!!!!!!
+        private static string stopLoopSoundString = "Stop_WayfarerBigLampLoop";
         private static float walkSpeedCoefficient = 0.25f;
 
         private CharacterBody bigLampInstanceBody;
@@ -59,13 +120,14 @@ namespace EntityStates.LampBoss
 
             if (fixedAge >= duration && isAuthority)
             {
-                outer.SetNextStateToMain();
+                outer.SetNextState(new LowerBigLamp());
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
+            Util.PlaySound(stopLoopSoundString, gameObject);
             CharacterBody.onBodyDestroyGlobal -= OnBodyDestroyGlobal;
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
             if (NetworkServer.active)
@@ -78,12 +140,24 @@ namespace EntityStates.LampBoss
         }
     }
 
-    public class OwieMyLamp : BaseState
+    public class LowerBigLamp : BaseState
     {
+        private static string enterSoundString = "WayfarerEndBigLamp";
         public override void OnEnter()
         {
             base.OnEnter();
+            Util.PlaySound(enterSoundString, gameObject);
+            outer.SetNextStateToMain();
+        }
+    }
 
+    public class OwieMyLamp : BaseState
+    {
+        private static string enterSoundString;// = "WayfarerBigLampDeath";
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            Util.PlaySound(enterSoundString, gameObject);
             Chat.AddMessage("owwww ow ow owie owww");
             outer.SetNextStateToMain();
         }
