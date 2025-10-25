@@ -32,7 +32,7 @@ namespace SS2
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
 
-        [SystemInitializer(typeof(DifficultyCatalog))]
+        [SystemInitializer]
         internal static void Init()
         {
             //Save default level cap

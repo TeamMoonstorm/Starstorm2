@@ -24,6 +24,7 @@ namespace SS2
         {
             teamComponent = GetComponent<TeamComponent>();
         }
+
         private void FixedUpdate()
         {
             if (NetworkServer.active)

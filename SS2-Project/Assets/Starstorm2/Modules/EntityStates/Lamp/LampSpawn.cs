@@ -23,7 +23,7 @@ namespace EntityStates.Lamp
         private static float printStartHeight = -100f;
         private static float printMaxHeight = -100f;
         private static float printStartBias = 3.33f;
-        private static float printMaxBias = 0.9f;
+        private static float printMaxBias = 0.4f;
         public override void OnEnter()
         {
             base.duration = realDuration;

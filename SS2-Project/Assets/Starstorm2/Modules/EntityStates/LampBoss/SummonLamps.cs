@@ -28,7 +28,7 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             duration = baseDuration / attackSpeedStat;
 
-            FindModelChild("GlowParticles").gameObject.SetActive(true);
+            //FindModelChild("GlowParticles").gameObject.SetActive(true);
             PlayCrossfade("FullBody, Override", "SecondaryBuff", "Secondary.playbackRate", duration, 0.05f);
         }
 

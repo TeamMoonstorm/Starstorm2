@@ -13,14 +13,14 @@ namespace EntityStates.Lamp
         private static float baseDuration = 6f;
         private static float buffDuration = 4f;
         private static float tickInterval = 0.2f;
-        private static float totalDamageCoefficient = 8f;
+        private static float totalDamageCoefficient = 6f;
         
         private static DamageType damageType = DamageType.Generic;
         private static float procCoefficientPerTick = 0.4f;
         private static float totalHealCoefficient = 8f;
         private static float enemyPrioritySearchRadius = 19f;
-        private static float searchRadius = 24f;
-        private static float beamBreakDistance = 32f;
+        private static float searchRadius = 27f;
+        private static float beamBreakDistance = 36f;
         private static int maxBeams = 1;
         private static bool ignoreMass = true;
 
@@ -29,7 +29,7 @@ namespace EntityStates.Lamp
         private static float maxHeightDiff = 15f;
         private static float forceCoefficientAtMaxHeightDiff = 2f;
 
-        private static float selfUpSpeed = 4.5f;
+        private static float selfUpSpeed = 3f;
 
         public static GameObject healBeamPrefab;
         public static GameObject healBeamPrefabBlue;
@@ -44,6 +44,7 @@ namespace EntityStates.Lamp
         private float healRate;
         private float damageRate;
         private bool shouldFlyUp;
+        private Transform muzzle;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -60,7 +61,7 @@ namespace EntityStates.Lamp
             healRate = totalHealCoefficient * damageStat / duration;
             damageRate = totalDamageCoefficient * damageStat / duration;
 
-            Transform transform = FindModelChild("Muzzle");
+            muzzle = FindModelChild("Muzzle");
             if (NetworkServer.active)
             {
                 hits = new List<HurtBox>();
@@ -99,7 +100,7 @@ namespace EntityStates.Lamp
                     {
                         beamCount++;
                         GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
-                        GameObject beamInstance = Object.Instantiate(beam, transform);
+                        GameObject beamInstance = Object.Instantiate(beam, muzzle);
                         BeamController beamController = beamInstance.GetComponent<BeamController>();
                         beamController.onTickServer.AddListener(OnTickServer);
                         beamController.tickInterval = tickInterval;
@@ -150,7 +151,7 @@ namespace EntityStates.Lamp
 
         private bool CanHeal(CharacterBody body)
         {
-            return body.master && body.healthComponent.alive && !body.hasCloakBuff && body.bodyIndex != base.characterBody.bodyIndex && body.bodyIndex != SS2.Monsters.LampBoss.BodyIndex; /// characyerbody typefields !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            return body.master && body.healthComponent.alive && !body.hasCloakBuff && body.bodyIndex != base.characterBody.bodyIndex && body.bodyIndex != SS2.Monsters.LampBoss.BodyIndex && body.bodyIndex != SS2.Monsters.Lamp.BodyIndex; /// characyerbody typefields !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }
 
         private bool ShouldDamage(HurtBox target)
@@ -187,7 +188,8 @@ namespace EntityStates.Lamp
                 if (beam && beam.target)
                 {
                     Vector3 between = beam.target.transform.position - transform.position;
-                    if (between.sqrMagnitude > beamBreakDistance * beamBreakDistance)
+                    bool hasLoS = !Physics.Linecast(beam.target.transform.position, transform.position, out RaycastHit raycastHit, LayerIndex.world.mask, QueryTriggerInteraction.Ignore);
+                    if (!hasLoS || between.sqrMagnitude > beamBreakDistance * beamBreakDistance)
                     {
                         if (NetworkServer.active)
                         {

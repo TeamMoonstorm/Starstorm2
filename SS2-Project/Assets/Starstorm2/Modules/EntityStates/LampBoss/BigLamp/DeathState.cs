@@ -16,6 +16,11 @@ namespace EntityStates.BigLamp
             {
                 controller.enabled = false;
             }
+            var vfx = FindModelChild("VfxRoot");
+            if (vfx)
+            {
+                vfx.gameObject.SetActive(false);
+            }
             if (effectPrefab)
             {
                 EffectManager.SimpleEffect(effectPrefab, transform.position, Quaternion.identity, false);

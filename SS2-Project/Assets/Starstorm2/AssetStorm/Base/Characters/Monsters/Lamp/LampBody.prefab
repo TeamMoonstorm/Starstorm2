@@ -835,7 +835,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5676345
+  m_Radius: 0.81
   m_Height: 3.206652
   m_Direction: 1
   m_Center: {x: 0.29226336, y: -0.64840263, z: 0.000000083586436}
@@ -1047,8 +1047,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.0086975
-  m_Height: 2.8402574
+  m_Radius: 1.31
+  m_Height: 3.84
   m_Direction: 1
   m_Center: {x: -0.12624565, y: -1.1559047, z: 0.000000059768716}
 --- !u!114 &997403291196401144
@@ -1771,11 +1771,11 @@ MonoBehaviour:
   age: 0
   disableWhenFinished: 1
   paused: 0
-  materialPrintCutoffPostSkinApplying: 0
-  startingPrintHeight: 0
-  maxPrintHeight: 0
-  startingPrintBias: 0
-  maxPrintBias: 0
+  materialPrintCutoffPostSkinApplying: 1
+  startingPrintHeight: -100
+  maxPrintHeight: -100
+  startingPrintBias: 3.33
+  maxPrintBias: 0.9
   animateFlowmapPower: 0
   startingFlowmapPower: 0
   maxFlowmapPower: 0
@@ -2149,7 +2149,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.64028746
+  m_Radius: 0.97
   m_Height: 2.4173374
   m_Direction: 1
   m_Center: {x: -0.1402878, y: -0.37077633, z: 0.000000006476536}

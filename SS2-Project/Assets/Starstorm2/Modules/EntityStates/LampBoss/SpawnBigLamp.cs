@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using SS2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -8,7 +9,7 @@ namespace EntityStates.LampBoss
     {
         public static GameObject muzzleEffectPrefab;
         private static string muzzleName = "LanternL";
-        private static float baseDuration = 1.33f;
+        private static float baseDuration = 1.5f;
         private static string enterSoundString = "WayfarerRaiseBigLamp";
         private static float walkSpeedCoefficient = 0.25f;
 
@@ -75,6 +76,7 @@ namespace EntityStates.LampBoss
         private static float walkSpeedCoefficient = 0.25f;
 
         private CharacterBody bigLampInstanceBody;
+        private bool bigLampResolved;
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Stun;
@@ -100,15 +102,34 @@ namespace EntityStates.LampBoss
                 GameObject bigLampInstance = GameObject.Instantiate(bodyPrefab);
                 bigLampInstanceBody = bigLampInstance.GetComponent<CharacterBody>();
                 bigLampInstanceBody.teamComponent.teamIndex = teamComponent.teamIndex;
+                bigLampResolved = true;
                 bigLampInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(gameObject, "LanternL");
             }
+            if (isAuthority)
+            {
+                CharacterBody.onBodyStartGlobal += ResolveLampInstance;
+                CharacterBody.onBodyDestroyGlobal += OnBodyDestroyGlobal;
+            }
             Util.PlaySound(enterSoundString, gameObject);
-            CharacterBody.onBodyDestroyGlobal += OnBodyDestroyGlobal;
+            
+        }
+
+        private void ResolveLampInstance(CharacterBody body)
+        {
+            if (bigLampResolved)
+            {
+                return;
+            }
+            if (body.bodyIndex == bigLamp && body.TryGetComponent(out NetworkedBodyAttachment attachment) && attachment.Network_attachedBodyObject == gameObject)
+            {
+                bigLampResolved = true;
+                bigLampInstanceBody = body;
+            }
         }
 
         private void OnBodyDestroyGlobal(CharacterBody body)
         {
-            if (isAuthority && body.bodyIndex == bigLamp && body.TryGetComponent(out NetworkedBodyAttachment attachment) && attachment.Network_attachedBodyObject == gameObject)
+            if (body.bodyIndex == bigLamp && body.TryGetComponent(out NetworkedBodyAttachment attachment) && attachment.Network_attachedBodyObject == gameObject)
             {
                 outer.SetNextState(new OwieMyLamp());
             }    
@@ -118,17 +139,33 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if (fixedAge >= duration && isAuthority)
+            if (isAuthority)
+            {
+                FixedUpdateAuthority();
+            }
+        }
+        private void FixedUpdateAuthority()
+        {
+            if (bigLampResolved)
+            {
+                if (!bigLampInstanceBody || !bigLampInstanceBody.healthComponent.alive)
+                {
+                    outer.SetNextState(new OwieMyLamp());
+                    return;
+                }
+            }
+            if (fixedAge >= duration)
             {
                 outer.SetNextState(new LowerBigLamp());
             }
         }
-
         public override void OnExit()
         {
             base.OnExit();
             Util.PlaySound(stopLoopSoundString, gameObject);
+            CharacterBody.onBodyStartGlobal -= ResolveLampInstance;
             CharacterBody.onBodyDestroyGlobal -= OnBodyDestroyGlobal;
+            
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
             if (NetworkServer.active)
             {
@@ -153,13 +190,23 @@ namespace EntityStates.LampBoss
 
     public class OwieMyLamp : BaseState
     {
+        private static float duration = 3f;
         private static string enterSoundString;// = "WayfarerBigLampDeath";
         public override void OnEnter()
         {
             base.OnEnter();
             Util.PlaySound(enterSoundString, gameObject);
             Chat.AddMessage("owwww ow ow owie owww");
-            outer.SetNextStateToMain();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (isAuthority && fixedAge >= duration)
+            {
+                outer.SetNextStateToMain();
+            }
         }
     }
 }
