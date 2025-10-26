@@ -13,6 +13,143 @@
 						<Property Name="TimeStretch" Type="Real32" Value="80"/>
 					</PropertyList>
 				</Effect>
+				<Effect Name="attackSpeed" ID="{0F65234B-33A3-43C3-800F-CF06C9831156}" PluginName="Wwise Time Stretch" CompanyID="0" PluginID="130" PluginType="3">
+					<PropertyList>
+						<Property Name="WindowSize" Type="int32" Value="256"/>
+					</PropertyList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{F0E850E6-589D-477B-A98F-92A5E3B51A79}" ShortID="436768964">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="TimeStretch"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="attackSpeed" ID="{FB70EDB6-3B35-413B-BC46-766319535D8A}" WorkUnitID="{E15D9B7A-C827-4C42-95B2-D5614A124B85}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{B3D227F9-6B7A-4969-AF14-E640E1513FC6}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="1"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>150.164</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>50</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+				</Effect>
+				<Effect Name="Meter_SFX" ID="{13D1EA62-9EB3-4947-80D9-BFD8966005B4}" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+					<PropertyList>
+						<Property Name="ApplyDownstreamVolume" Type="bool" Value="True"/>
+						<Property Name="MeterMode" Type="int32" Value="1"/>
+						<Property Name="Min" Type="Real32" Value="-96"/>
+						<Property Name="ReleaseTime" Type="Real32" Value="0"/>
+					</PropertyList>
+					<PluginData>
+	<GameParameter Name="Meter_SFX" ID="{DC7DD792-076D-455A-9FA2-23CA94D0AEB8}"/>
+</PluginData>
+				</Effect>
+				<Effect Name="Meter_Char" ID="{EC1981F1-51F6-4C97-AD3E-1FC062F3C1AD}" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+					<PropertyList>
+						<Property Name="ApplyDownstreamVolume" Type="bool" Value="True"/>
+						<Property Name="Min" Type="Real32" Value="-96"/>
+					</PropertyList>
+					<PluginData>
+	<GameParameter Name="Meter_Character" ID="{0D1729B2-339D-4819-B147-BC6EAAD2747F}"/>
+</PluginData>
+				</Effect>
+				<Effect Name="Meter_UI" ID="{434AA51F-DE5B-40C6-A621-97B0ED1F0C6F}" PluginName="Wwise Meter" CompanyID="0" PluginID="129" PluginType="3">
+					<PropertyList>
+						<Property Name="ApplyDownstreamVolume" Type="bool" Value="True"/>
+						<Property Name="Min" Type="Real32" Value="-96"/>
+					</PropertyList>
+					<PluginData>
+	<GameParameter Name="Meter_UI" ID="{1D44DA28-3430-4F86-A423-A87412843CDF}"/>
+</PluginData>
+				</Effect>
+				<Effect Name="engi_VO" ID="{8F034C7E-74FC-432D-BC1C-96C263E6B8F1}" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+					<PropertyList>
+						<Property Name="DistortionDrive" Type="Real32" Value="6"/>
+						<Property Name="DistortionTone" Type="Real32" Value="0"/>
+						<Property Name="DistortionType" Type="int32" Value="1"/>
+						<Property Name="PostEQBand3FilterType" Type="int32" Value="3"/>
+						<Property Name="PostEQBand3Frequency" Type="Real32" Value="3225"/>
+						<Property Name="PreEQBand1Enable" Type="bool" Value="True"/>
+						<Property Name="PreEQBand1FilterType" Type="int32" Value="4"/>
+						<Property Name="PreEQBand1Frequency" Type="Real32" Value="533"/>
+						<Property Name="PreEQBand3Enable" Type="bool" Value="True"/>
+						<Property Name="PreEQBand3FilterType" Type="int32" Value="3"/>
+						<Property Name="PreEQBand3Frequency" Type="Real32" Value="4660"/>
+						<Property Name="Rectification" Type="Real32" Value="7"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="bandit" ID="{7D61DCC9-6A07-40C3-B53A-151EC10A5468}" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+					<PropertyList>
+						<Property Name="DistortionDrive" Type="Real32" Value="15"/>
+						<Property Name="DistortionTone" Type="Real32" Value="0"/>
+						<Property Name="DistortionType" Type="int32" Value="1"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="elite_distortion" ID="{11BE28A4-6F09-4162-BB83-A8ED03067491}" PluginName="Wwise Guitar Distortion" CompanyID="0" PluginID="126" PluginType="3">
+					<PropertyList>
+						<Property Name="DistortionDrive" Type="Real32" Value="100"/>
+						<Property Name="DistortionTone" Type="Real32" Value="0"/>
+						<Property Name="DistortionType" Type="int32" Value="1"/>
+						<Property Name="PostEQBand3Frequency" Type="Real32" Value="605"/>
+						<Property Name="Rectification" Type="Real32" Value="53"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="GoldGat" ID="{B28E6D4F-91F6-4B0C-9204-8A59574623B5}" PluginName="Wwise Time Stretch" CompanyID="0" PluginID="130" PluginType="3">
+					<PropertyList>
+						<Property Name="TimeStretch" Type="Real32" Value="39"/>
+						<Property Name="WindowSize" Type="int32" Value="4096"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="Piercing" ID="{A9995541-9A1D-40B0-8676-AFBF17B2DE04}" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+					<PropertyList>
+						<Property Name="FrequencyBand2" Type="Real32" Value="8000"/>
+						<Property Name="GainBand2" Type="Real32" Value="-10"/>
+						<Property Name="OnOffBand1" Type="bool" Value="False"/>
+						<Property Name="OnOffBand2" Type="bool" Value="False"/>
+						<Property Name="OnOffBand3" Type="bool" Value="False"/>
+						<Property Name="QFactorBand2" Type="Real32" Value="1.2"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="LowMidDip" ID="{2F253BAF-AEBB-4EAB-A678-C519C52D30D6}" PluginName="Wwise Parametric EQ" CompanyID="0" PluginID="105" PluginType="3">
+					<PropertyList>
+						<Property Name="FilterTypeBand2" Type="int32" Value="4"/>
+						<Property Name="FrequencyBand2" Type="Real32" Value="93"/>
+						<Property Name="GainBand2" Type="Real32" Value="-9.5"/>
+						<Property Name="OnOffBand1" Type="bool" Value="False"/>
+						<Property Name="OnOffBand3" Type="bool" Value="False"/>
+						<Property Name="QFactorBand2" Type="Real32" Value="0.5"/>
+					</PropertyList>
+				</Effect>
+				<Effect Name="New_Wwise_Recorder" ID="{BDD40C87-5424-443E-9942-59CC951DF730}" PluginName="Wwise Recorder" CompanyID="0" PluginID="132" PluginType="3">
+					<PropertyList>
+						<Property Name="AuthoringFilename" Type="string" Value="C:\Users\Nick Kallman\Desktop\Record3.wav"/>
+						<Property Name="DownmixToStereo" Type="bool" Value="False"/>
+					</PropertyList>
+				</Effect>
 			</ChildrenList>
 		</WorkUnit>
 	</Effects>
