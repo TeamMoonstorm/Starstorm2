@@ -36,6 +36,7 @@ namespace SS2
         public static ConfigFile ConfigEvent { get; private set; }
         //public static ConfigFile ConfigInteractable { get; private set; }
         public static ConfigFile ConfigMisc { get; private set; }
+        public static ConfigFile ConfigAccessibility { get; private set; }
 
         internal static ConfiguredBool EnableItems;
         public static ConfiguredBool EnableEquipments;
@@ -62,6 +63,7 @@ namespace SS2
             ModSettingsManager.SetModIcon(icon, GUID(ID_INTERACTABLE), MODNAME(ID_INTERACTABLE));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ARTIFACT), MODNAME(ID_ARTIFACT));
             ModSettingsManager.SetModIcon(icon, GUID(ID_MISC), MODNAME(ID_MISC));
+            ModSettingsManager.SetModIcon(icon, GUID(ID_ACCESSIBILITY), MODNAME(ID_ACCESSIBILITY));
             ModSettingsManager.SetModDescription("A general content mod adapting ideas from Risk of Rain 1's Starstorm", SS2Main.GUID, SS2Main.MODNAME);
         }
 
@@ -80,6 +82,7 @@ namespace SS2
             
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
+            ConfigAccessibility = CreateConfigFile(ID_ACCESSIBILITY, true);
         }
 
 
