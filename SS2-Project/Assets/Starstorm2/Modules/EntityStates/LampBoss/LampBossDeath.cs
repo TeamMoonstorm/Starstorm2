@@ -32,7 +32,7 @@ namespace EntityStates.LampBoss
             if (characterMotor)
                 characterMotor.enabled = false;
 
-            isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.LampBoss.HesBlue;
+            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
 
             hasPlayedEffect = true;
             var effect = isBlue ? deathVFXblue : deathVFX;
