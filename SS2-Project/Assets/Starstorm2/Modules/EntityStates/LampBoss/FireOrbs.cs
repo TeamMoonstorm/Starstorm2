@@ -40,7 +40,7 @@ namespace EntityStates.LampBoss
 
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
 
-            bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            bool isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.LampBoss.HesBlue;
             projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
             Util.PlayAttackSpeedSound("WayfarerAttack", gameObject, attackSpeedStat);

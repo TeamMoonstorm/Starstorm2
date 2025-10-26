@@ -58,7 +58,7 @@ namespace EntityStates.Lamp
 
             characterModel.invisibilityCount--;
             //PlayAnimation("Body", "Spawn");
-            bool isBlue = modelTransform.GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            bool isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.Lamp.HesBlue;
             var effect = isBlue ? spawnVFXblue : spawnVFX;
             EffectManager.SimpleEffect(effect, muzzle ? muzzle.position : characterBody.corePosition, Quaternion.identity, false);
             Util.PlaySound(spawnSoundString, gameObject);

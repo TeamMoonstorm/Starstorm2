@@ -196,7 +196,6 @@ namespace EntityStates.LampBoss
         {
             base.OnEnter();
             Util.PlaySound(enterSoundString, gameObject);
-            Chat.AddMessage("owwww ow ow owie owww");
         }
 
         public override void FixedUpdate()

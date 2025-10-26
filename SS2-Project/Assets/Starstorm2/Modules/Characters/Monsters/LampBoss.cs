@@ -15,6 +15,7 @@ namespace SS2.Monsters
         public override SS2AssetRequest<MonsterAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<MonsterAssetCollection>("acLampBoss", SS2Bundle.Monsters);
 
         public static BodyIndex BodyIndex;
+        public static SkinIndex HesBlue;
         public static GameObject lampBuffEffectPrefab;
         public override void Initialize()
         {
@@ -40,7 +41,11 @@ namespace SS2.Monsters
             }*/
 
             lampBuffEffectPrefab = SS2Assets.LoadAsset<GameObject>("LampBuffEffect", SS2Bundle.Monsters);
-            RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
+            RoR2Application.onLoad += () =>
+            {
+                BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
+                HesBlue = SS2Assets.LoadAsset<SkinDef>("skinLampBossChained", SS2Bundle.Monsters).skinIndex;
+            };
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
             On.RoR2.CameraModes.CameraModeBase.ApplyLookInput += CameraModeBase_ApplyLookInput;
         }

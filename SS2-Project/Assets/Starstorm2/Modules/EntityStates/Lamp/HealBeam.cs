@@ -54,7 +54,7 @@ namespace EntityStates.Lamp
 
             originalMoveSpeed = characterBody.moveSpeed;
 
-            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.Lamp.HesBlue;
 
 
             duration = baseDuration / attackSpeedStat;

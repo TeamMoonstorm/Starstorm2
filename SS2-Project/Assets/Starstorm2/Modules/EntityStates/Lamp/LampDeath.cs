@@ -37,7 +37,7 @@ namespace EntityStates.Lamp
             Util.PlaySound(deathSoundString, gameObject);
             Util.PlaySound(deathVoiceSoundString, gameObject);
 
-            isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.Lamp.HesBlue;
             var effect = isBlue ? deathVFXblue : deathVFX;
             EffectManager.SimpleEffect(effect, muzzle.position, muzzle.rotation, false);
 
