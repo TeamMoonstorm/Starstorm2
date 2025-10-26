@@ -20,7 +20,7 @@ namespace SS2.Monsters
             RoR2Application.onLoad += () =>
             {
                 BodyIndex = BodyCatalog.FindBodyIndex("LampBody");
-                HesBlue = SS2Assets.LoadAsset<SkinDef>("skinLampBlue", SS2Bundle.Monsters)?.skinIndex;
+                HesBlue = SS2Assets.LoadAsset<SkinDef>("skinLampBlue", SS2Bundle.Monsters).skinIndex;
             };
         }
     }
