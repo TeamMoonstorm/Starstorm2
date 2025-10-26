@@ -24,6 +24,7 @@ namespace SS2
         public const string ID_EVENT = PREFIX + "Events";
         public const string ID_INTERACTABLE = PREFIX + "Interactable";
         public const string ID_MISC = PREFIX + "Miscellaneous";
+        public const string ID_ACCESSIBILITY = PREFIX + "Accessibility";
 
         private static ExpansionDef fuckyou = ScriptableObject.CreateInstance<ExpansionDef>();
         internal static ConfigFactory ConfigFactory { get; private set; }
@@ -41,6 +42,9 @@ namespace SS2
         public static ConfiguredBool EnableInteractables;
         public static ConfiguredBool EnableSurvivors;
         public static ConfiguredBool EnableMonsters;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0-1", configNameOverride = "Flashing Effects")]
+        public static float FlashingEffectsIntensity = 1f;
 
         internal static IEnumerator RegisterToModSettingsManager()
         {

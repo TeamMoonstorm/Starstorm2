@@ -2420,6 +2420,7 @@ GameObject:
   - component: {fileID: 114871087785645772}
   - component: {fileID: 114872685499969723}
   - component: {fileID: 114353378277366524}
+  - component: {fileID: 5609312584655662278}
   m_Layer: 0
   m_Name: AffixStormSpawn
   m_TagString: Untagged
@@ -2483,6 +2484,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeOnStart: 1
   shakeOnEnable: 0
+  shakeOnDelay: 0
+  startDelay: 1
   wave:
     amplitude: 4
     frequency: 200
@@ -2523,6 +2526,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackedParticleSystem: {fileID: 0}
+--- !u!114 &5609312584655662278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463258888072463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2759224d0f9797e41b72af50c807d9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 108105027053541985}
+  pps:
+  - {fileID: 665551304119425270}
 --- !u!1 &1499427581413391
 GameObject:
   m_ObjectHideFlags: 0
