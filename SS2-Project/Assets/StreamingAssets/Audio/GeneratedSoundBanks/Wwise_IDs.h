@@ -197,7 +197,13 @@ namespace AK
 
     namespace GAME_PARAMETERS
     {
+        static const AkUniqueID ATTACKSPEED = 2450313110U;
+        static const AkUniqueID METER_CHARACTER = 1514947204U;
+        static const AkUniqueID METER_SFX = 2969259856U;
+        static const AkUniqueID METER_UI = 1871679725U;
+        static const AkUniqueID MUSIC = 3991942870U;
         static const AkUniqueID PLAYERHEALTH = 151362964U;
+        static const AkUniqueID VOLUME_MASTER = 3695994288U;
         static const AkUniqueID VOLUME_MSX = 3729143042U;
         static const AkUniqueID VOLUME_SFX = 3673881719U;
     } // namespace GAME_PARAMETERS
@@ -211,8 +217,24 @@ namespace AK
 
     namespace BUSSES
     {
+        static const AkUniqueID AMBIENCE = 85412153U;
+        static const AkUniqueID BOSS = 1560169506U;
+        static const AkUniqueID CHARACTER = 436743010U;
+        static const AkUniqueID ENEMY = 2299321487U;
+        static const AkUniqueID ENV_FX = 1769218552U;
+        static const AkUniqueID HDR = 931844945U;
+        static const AkUniqueID ITEMS = 2151963051U;
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
+        static const AkUniqueID SFX_BUS = 213475909U;
+        static const AkUniqueID UI = 1551306167U;
     } // namespace BUSSES
+
+    namespace AUX_BUSSES
+    {
+        static const AkUniqueID ENV_CAVE = 2743725558U;
+        static const AkUniqueID ENV_FOREST = 1058811110U;
+        static const AkUniqueID GHOSTFX = 3598493772U;
+    } // namespace AUX_BUSSES
 
     namespace AUDIO_DEVICES
     {
