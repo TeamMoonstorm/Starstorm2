@@ -24,6 +24,7 @@ namespace SS2
         Chirr,
         NemCommando,
         NemMercenary,
+        NemExecutioner,
        // Nuke,
         Equipments,
         Items,
@@ -49,6 +50,7 @@ namespace SS2
         private const string CHIRR = "ss2chirr";
         private const string NEMCOMMANDO = "ss2nemcommando";
         private const string NEMMERCENARY = "ss2nemmercenary";
+        private const string NEMEXECUTIONER = "ss2nemexecutioner";
         //private const string NUKE = "ss2nuke";
         private const string EQUIPS = "ss2equipments";
         private const string ITEMS = "ss2items";
@@ -188,6 +190,7 @@ namespace SS2
                 case CHIRR: commissionBundleEnum = SS2Bundle.Chirr; break;
                 case NEMCOMMANDO: commissionBundleEnum = SS2Bundle.NemCommando; break;
                 case NEMMERCENARY: commissionBundleEnum = SS2Bundle.NemMercenary; break;
+                case NEMEXECUTIONER: commissionBundleEnum = SS2Bundle.NemExecutioner; break;
                 case EQUIPS: commissionBundleEnum = SS2Bundle.Equipments; break;
                 case ITEMS: commissionBundleEnum = SS2Bundle.Items; break;
                 case EVENTS: commissionBundleEnum = SS2Bundle.Events; break;

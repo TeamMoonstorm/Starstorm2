@@ -5,7 +5,7 @@ using UnityEngine;
 using RoR2.Orbs;
 using static SS2.Items.ErraticGadget;
 using MSU;
-namespace SS2.Components
+namespace SS2
 {
     // copy of ror2.orbs.lgihtningorb
     public class CustomLightningOrb : Orb
@@ -13,6 +13,22 @@ namespace SS2.Components
         public GameObject orbEffectPrefab;
         public float duration = 0.033f;
         public bool canProcGadget;
+        public bool canBounceOnSameTarget;
+        public float damageValue;
+        public GameObject attacker;
+        public GameObject inflictor;
+        public int bouncesRemaining;
+        public List<HealthComponent> bouncedObjects;
+        public TeamIndex teamIndex;
+        public bool isCrit;
+        public ProcChainMask procChainMask;
+        public float procCoefficient = 1f;
+        public DamageColorIndex damageColorIndex;
+        public float range = 20f;
+        public float damageCoefficientPerBounce = 1f;
+        public DamageType damageType;
+
+        private BullseyeSearch search;
         public override void Begin()
         {
             base.duration = duration;
@@ -64,6 +80,7 @@ namespace SS2.Components
                     if (hurtBox)
                     {
                         CustomLightningOrb lightningOrb = new CustomLightningOrb();
+                        lightningOrb.duration = duration;
                         lightningOrb.canProcGadget = this.canProcGadget;
                         lightningOrb.canBounceOnSameTarget = this.canBounceOnSameTarget;
                         lightningOrb.search = this.search;
@@ -152,34 +169,6 @@ namespace SS2.Components
             }
             return hurtBox;
         }
-        public bool canBounceOnSameTarget;
-
-        public float damageValue;
-
-        public GameObject attacker;
-
-        public GameObject inflictor;
-
-        public int bouncesRemaining;
-
-        public List<HealthComponent> bouncedObjects;
-
-        public TeamIndex teamIndex;
-
-        public bool isCrit;
-
-        public ProcChainMask procChainMask;
-
-        public float procCoefficient = 1f;
-
-        public DamageColorIndex damageColorIndex;
-
-        public float range = 20f;
-
-        public float damageCoefficientPerBounce = 1f;
-
-        public DamageType damageType;
-
-        private BullseyeSearch search;
+       
     }
 }

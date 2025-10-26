@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine.Networking;
 namespace EntityStates.Executioner2
@@ -108,6 +109,10 @@ namespace EntityStates.Executioner2
             characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
             characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
             characterMotor.velocity = Vector3.zero;
+
+            characterDirection.targetVector = dashVector;
+            characterDirection.moveVector = Vector3.zero;
+            characterDirection.forward = dashVector;
         }
 
         private void DoImpactAuthority()
@@ -205,6 +210,7 @@ namespace EntityStates.Executioner2
             gameObject.layer = originalLayer;
             characterMotor.Motor.RebuildCollidableLayers();
             characterMotor.onHitGroundAuthority -= OnGroundHit;
+            characterMotor.onMovementHit -= OnMovementHit;
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
 
             if(outer.nextState is not ExecuteImpact)
@@ -298,7 +304,12 @@ namespace EntityStates.Executioner2
                 }
             }
             if (characterDirection)
+            {
+                characterDirection.targetVector = direction; // idk which one makes it not suck
+                characterDirection.moveVector = Vector3.zero;
                 characterDirection.forward = direction;
+            }
+                
 
             if (isAuthority && fixedAge >= duration)
             {

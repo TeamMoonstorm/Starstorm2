@@ -52,7 +52,7 @@ namespace EntityStates.Executioner2
             hasFired = false;
             characterBody.outOfCombatStopwatch = 0f;
 
-            PlayAnimation("Gesture, Override", "Primary", "Primary.playbackRate", duration);
+            PlayAnimation("Gesture, Override", "FireTaser");
         }
 
         public override void OnExit()

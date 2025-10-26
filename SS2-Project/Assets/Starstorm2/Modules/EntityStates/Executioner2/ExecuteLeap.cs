@@ -201,6 +201,8 @@ namespace EntityStates.Executioner2
 
             characterMotor.moveDirection = inputBank.moveVector;
             characterDirection.forward = inputBank.aimDirection;
+            characterDirection.targetVector = inputBank.aimDirection;
+            characterDirection.moveVector = Vector3.zero;
         }
 
         public override void OnExit()

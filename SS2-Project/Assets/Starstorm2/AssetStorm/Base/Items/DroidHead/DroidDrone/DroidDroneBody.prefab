@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: 0.5, y: 0.5, z: 0.5, w: 0.5}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3572558034971394925}
   - {fileID: 3228796961590415145}
@@ -58,6 +59,7 @@ Transform:
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3228796961590415137}
   m_Father: {fileID: 3228796961590415147}
@@ -90,6 +92,7 @@ Transform:
   m_LocalRotation: {x: 0.5, y: -0.49999997, z: -0.5, w: -0.5}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3228796961590415147}
   m_RootOrder: 2
@@ -105,10 +108,12 @@ SkinnedMeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -173,6 +178,7 @@ Transform:
   m_LocalRotation: {x: -0.000000026692543, y: 0.00000002669254, z: 0.7071068, w: 0.7071067}
   m_LocalPosition: {x: -0.6493072, y: -0.43793204, z: -0.000000113621354}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3228796961590415151}
   - {fileID: 4514571410081503363}
@@ -210,6 +216,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 440658306320331654}
   - {fileID: 3228796961590415139}
@@ -219,7 +226,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5048431146816019807
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -232,10 +239,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &3471163212672562290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,13 +305,26 @@ MonoBehaviour:
   body: {fileID: 5183731759428634912}
   itemDisplayRuleSet: {fileID: 11400000, guid: c06bd0c787f433945bd604e060ccc697, type: 2}
   autoPopulateLightInfos: 1
+  gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 3228796961593368067}
     defaultMaterial: {fileID: 2100000, guid: c110b9f3b05ea9845b9f82024ffc9d9b, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   baseLightInfos: []
+  corpseFade: 1
+  CharacterOnScreen: 0
+  visibilityChecker: {fileID: 0}
+  activeOverlays: 0
+  oldOverlays: 0
+  hitFlashValue: 0
+  healFlashValue: 0
+  oldHit: 0
+  oldHeal: 0
+  oldFade: 0
+  forceUpdate: 0
 --- !u!114 &2004212013703121597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -345,6 +367,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3228796961590415145}
   m_RootOrder: 0
@@ -375,6 +398,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7419256349559829006}
   m_RootOrder: 1
@@ -406,6 +430,7 @@ Transform:
     w: 1}
   m_LocalPosition: {x: 0, y: 0.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3228796961590415145}
   m_RootOrder: 1
@@ -436,6 +461,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3228796961590415147}
   m_Father: {fileID: 7419256349559829006}
@@ -490,6 +516,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3781836410550631104}
   - {fileID: 4819866530768522509}
@@ -542,9 +569,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  CharacterIsVisible: 0
+  cost: -1
+  dontCull: 0
+  BaseImportance: 0
+  Importance: -1
+  inLava: 0
   baseNameToken: SS2_DROIDDRONE_NAME
   subtitleNameToken: 
   bodyFlags: 2
+  lavaCooldown: 0.2
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 255
@@ -570,6 +604,16 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
+  amputatedMaxHealth: 0
+  amputateMaxHealthMinimum: 1
+  extraSecondaryFromSkill: 0
+  extraSpecialFromSkill: 0
+  increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
+  allSkillsDisabled: 0
+  isTeleporting: 0
+  boostAllStatsDisplay: {fileID: 0}
+  currentGrowthNectarBuffCount: 0
+  maxGrowthNectarBuffCount: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.45
   spreadBloomCurve:
@@ -580,16 +624,26 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  canAddIncrasePrimaryDamage: 0
+  knockBackFinGroundedTimer: 0
+  runicLensPosition: {x: 0, y: 0, z: 0}
+  meteorVictimBody: {fileID: 0}
+  runicLensStartTime: 0
+  runicLensImpactTime: 0
+  runicLensMeteorReady: 0
+  spawnedPickupCount: 0
   aimOriginTransform: {fileID: 4819866530768522509}
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: c99e5ff113d85a1458f82d162d5b5c2f, type: 3}
   bodyColor: {r: 0.65882355, g: 0.63529414, b: 0.61960787, a: 0}
+  doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: EntityStates.Uninitialized, Assembly-CSharp
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &987556339088198427
@@ -606,11 +660,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 5183731759428634912}
+  forceCulled: 0
 --- !u!114 &6212782930011967558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -624,6 +681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveVector: {x: 0, y: 0, z: 0}
+  rawMoveData: {x: 0, y: 0}
 --- !u!114 &5831722445351971071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,7 +694,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
+  cameraParams: {fileID: 11400000, guid: 3689e21683e79a246b1a395b07559984, type: 2}
   cameraPivotTransform: {fileID: 0}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -790,6 +848,7 @@ MonoBehaviour:
     _typeName: EntityStates.FlyState, Assembly-CSharp
   mainStateType:
     _typeName: EntityStates.FlyState, Assembly-CSharp
+  debug: 0
 --- !u!114 &7841301034612863430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -807,6 +866,7 @@ MonoBehaviour:
     _typeName: EntityStates.Idle, Assembly-CSharp
   mainStateType:
     _typeName: EntityStates.Idle, Assembly-CSharp
+  debug: 0
 --- !u!114 &4361863693020644682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,6 +908,8 @@ MonoBehaviour:
   _skillFamily: {fileID: 11400000, guid: 6abc4f436d22d1a4b908a84246040404, type: 2}
   skillName: Gun
   hideInCharacterSelect: 0
+  baseStock: 0
+  baseRechargeStopwatch: 0
   hasExecutedSuccessfully: 0
 --- !u!114 &5597557955761834151
 MonoBehaviour:
@@ -875,6 +937,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlightInteractor: 0
+  aimOffset: {x: 0, y: 0, z: 0}
+  useAimOffset: 0
+  drawDebugRay: 0
+  debugRayLength: 5
 --- !u!54 &8056709540586720842
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -904,12 +970,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _modelTransform: {fileID: 3228796961590415147}
+  modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 3781836410550631104}
+  modelScaleCompensation: 1
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 1
   dontReleaseModelOnDeath: 0
   preserveModel: 0
+  forceCulled: 0
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
@@ -958,6 +1027,7 @@ MonoBehaviour:
     _typeName: EntityStates.Drone.DeathState, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine: []
+  bypassDeathLayerChange: 0
 --- !u!1 &6282127154329199403
 GameObject:
   m_ObjectHideFlags: 0
@@ -986,6 +1056,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3228796961590415137}
   m_RootOrder: 0
@@ -1047,6 +1118,7 @@ Transform:
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3228796961590415147}
   m_RootOrder: 0

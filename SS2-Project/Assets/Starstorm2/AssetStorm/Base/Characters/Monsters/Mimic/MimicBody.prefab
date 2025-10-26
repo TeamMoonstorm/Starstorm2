@@ -378,6 +378,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -465,6 +466,7 @@ MonoBehaviour:
   bodyColor: {r: 1, g: 1, b: 1, a: 0}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -720,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 0}
+  cameraParams: {fileID: 11400000, guid: 3689e21683e79a246b1a395b07559984, type: 2}
   cameraPivotTransform: {fileID: 8649644948894060862}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -2960,7 +2962,19 @@ MonoBehaviour:
   m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
   skins: []
+  prefabInstantiationDatas: []
 --- !u!114 &2856333781242216057
 MonoBehaviour:
   m_ObjectHideFlags: 0

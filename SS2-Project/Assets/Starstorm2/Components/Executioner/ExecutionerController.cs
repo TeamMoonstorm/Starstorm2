@@ -57,7 +57,7 @@ namespace SS2.Components
             if (!secondary)
                 return;
 
-            targetChargeLevel = (secondary.stock * 10f / secondary.maxStock * 10f) * 0.01f; //this is stupid but it wouldn't work normally for some reason.
+            targetChargeLevel = (float)secondary.stock / (float)secondary.maxStock; //this is stupid but it wouldn't work normally for some reason. // lrn 2 cast bro
 
             if (chargeLevel != targetChargeLevel)
             {       //this is also stupid
@@ -71,16 +71,12 @@ namespace SS2.Components
                     chargeLevel = 0.99f;
             }
 
-            //Debug.Log("chargeLevel: " + chargeLevel);
-            //Debug.Log("targetChargeLevel: " + targetChargeLevel);
-
             if (modelAnimator)
                 modelAnimator.SetFloat("chargeLevel", chargeLevel);
         }
 
         public void OnDamageDealtServer(DamageReport report)
         {
-            //This will break is anyone renames that skilldef's identifier
             if (report.victim.gameObject != report.attacker && !report.victimBody.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
             {
                 //Debug.Log("adding killcpt");

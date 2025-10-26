@@ -265,12 +265,14 @@ MonoBehaviour:
   bodyColor: {r: 0.6348462, g: 1, b: 0, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: EntityStates.Uninitialized, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &5142088099896263475
@@ -497,6 +499,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 7084199255585225353}
   muteWalkMotion: 0
   mass: 100
@@ -508,6 +511,7 @@ MonoBehaviour:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
+  useHangtimeGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &4256054803697361099
@@ -536,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 11400000, guid: b3d312efb034b2444af75deb0bc00dd2, type: 2}
+  cameraParams: {fileID: 11400000, guid: 3689e21683e79a246b1a395b07559984, type: 2}
   cameraPivotTransform: {fileID: 8684971115604686679}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -575,9 +579,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 1679090673574041123}
   forceCulled: 0

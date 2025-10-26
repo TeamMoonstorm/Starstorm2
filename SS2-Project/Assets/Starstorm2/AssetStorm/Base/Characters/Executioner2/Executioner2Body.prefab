@@ -333,6 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -420,6 +421,7 @@ MonoBehaviour:
   bodyColor: {r: 0.5803922, g: 0.34901962, b: 0.50980395, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -476,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraParams: {fileID: 11400000, guid: 0f32a1587e7bad248a563caf83e62fe4, type: 2}
+  cameraParams: {fileID: 11400000, guid: 3689e21683e79a246b1a395b07559984, type: 2}
   cameraPivotTransform: {fileID: 6302003674388442814}
   fovOverride: 0
   recoil: {x: 0, y: 0}
@@ -3548,10 +3550,22 @@ MonoBehaviour:
   m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
   skins:
   - {fileID: 11400000, guid: fce2219708ddbb0499ac302a36929286, type: 2}
   - {fileID: 11400000, guid: 7b89a2afe815acd4b851f64629c8b8d4, type: 2}
   - {fileID: 11400000, guid: ba9411ce5cb34704c9e62c00b5e3a4b8, type: 2}
+  prefabInstantiationDatas: []
 --- !u!114 &5184045265845585086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3679,30 +3693,50 @@ MonoBehaviour:
   gameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 4690740898355004422}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: d3987dd872cd9264f978c31fb5b41f49, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 237583115033736604}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 2d01694c365ad694e9d76cec4711f4d5, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 5063524800975684055}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 94fdb687c87211346a8011447c9fe442, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 5024349271547562868}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: dc9d29b7020c71f4097ea1ca6d121725, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 5833890857666900794}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 658cf25c021b2ba49ab2d49992cdbc9b, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
