@@ -19,6 +19,11 @@ namespace SS2
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
 
+        public static bool HasFearBuff(this CharacterBody body) // :/
+        {
+            return body.HasBuff(SS2Content.Buffs.BuffFear) || body.HasBuff(SS2Content.Buffs.BuffFearRed);
+        }
+
         public static float IntegrateCurve(AnimationCurve curve, float startTime, float endTime, int steps)
         {
             return Integrate(curve.Evaluate, startTime, endTime, steps);
