@@ -37,6 +37,8 @@ namespace EntityStates.Executioner2
         private Vector3 currentDirection;
         private Vector3 directionVelocity;
 
+        private bool playedExitAnimation;
+        private static float asodiyhbeajbde = 0.33f;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -45,7 +47,7 @@ namespace EntityStates.Executioner2
             debuffCheckStopwatch = 0f;
             duration = baseDuration;
             Util.PlayAttackSpeedSound("ExecutionerUtility", gameObject, 1.0f);
-            PlayAnimation("FullBody, Override", "Utility", "Utility.playbackRate", duration * 1.65f);
+            PlayAnimation("FullBody, Override", "Dash", "Utility.playbackRate", duration * asodiyhbeajbde);
 
             HopIfAirborne();
 
@@ -150,6 +152,10 @@ namespace EntityStates.Executioner2
         {
             base.OnExit();
             characterDirection.turnSpeed = 720f;
+            if (!playedExitAnimation)
+            {
+                PlayAnimation("FullBody, Override", "BufferEmpty");
+            }
         }
 
         public override void FixedUpdate()
@@ -162,6 +168,7 @@ namespace EntityStates.Executioner2
             Vector3 direction = inExecuteLeap ? inputBank.moveVector : characterDirection.forward;
             if(inExecuteLeap)
             {
+                playedExitAnimation = true; // no exit anim if slammin
                 direction = Vector3.SmoothDamp(currentDirection, direction, ref directionVelocity, 360f / turnSpeed * 0.25f);
                 currentDirection = direction;
             }
@@ -185,8 +192,17 @@ namespace EntityStates.Executioner2
 
             if (fixedAge >= duration)
             {
-                if(!inExecuteLeap)
+                if (!playedExitAnimation)
+                {
+                    PlayAnimation("FullBody, Override", "DashEnd");
+                    playedExitAnimation = true;
+                }
+
+                if(isAuthority && !inExecuteLeap)
+                {
                     outer.SetNextStateToMain();
+                }
+                    
             }
                 
         }

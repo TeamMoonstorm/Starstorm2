@@ -38,7 +38,7 @@ namespace EntityStates.AI.Walker
 				{
 					this.aiUpdateTimer = BaseAIState.cvAIUpdateInterval.value;
 					this.UpdateAI(BaseAIState.cvAIUpdateInterval.value);
-					if (!base.body.HasBuff(SS2Content.Buffs.BuffFear))
+					if (!base.body.HasFearBuff())
 					{
 						this.outer.SetNextState(new LookBusy()); // MIGHT NEED TO GO BACK TO COMBAT INSTEAD.
 					}

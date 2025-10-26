@@ -8,7 +8,7 @@ namespace EntityStates.Executioner2
     {
         private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
-        private static string muzzle;
+        private static string muzzle = "MuzzleCrush";
         private static string chargeSoundString = "Play_voidman_m2_chargeUp";
         private float duration;
         private uint soundID;
@@ -18,7 +18,7 @@ namespace EntityStates.Executioner2
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             soundID = Util.PlayAttackSpeedSound(chargeSoundString, base.gameObject, attackSpeedStat);
-            PlayAnimation("Gesture, Override", "Consecration", "Secondary.playbackRate", duration);
+            PlayAnimation("Gesture, Override", "Crush", "Secondary.playbackRate", duration);
             characterBody.SetAimTimer(duration + 1f);
             Transform muzzleTransform = FindModelChild(muzzle) ?? characterBody.coreTransform;
             if (muzzleTransform && effectPrefab)
@@ -68,6 +68,7 @@ namespace EntityStates.Executioner2
         private static float buffDuration = 6f;
         private static float cooldownDeduction = 1f;
         private static string activationSoundString = "Play_voidman_m2_shoot_fullCharge";
+        private static string muzzleString = "MuzzleCrush";
         public static GameObject effectPrefab;
         public static GameObject orbEffectPrefab;
         private float duration;
@@ -78,7 +79,7 @@ namespace EntityStates.Executioner2
             Util.PlaySound(activationSoundString, gameObject);
             if (effectPrefab)
             {
-                EffectManager.SimpleEffect(effectPrefab, characterBody.coreTransform.position, Quaternion.identity, false);
+                EffectManager.SimpleMuzzleFlash(effectPrefab, gameObject, muzzleString, false);
             }
 
             int stock = skillLocator.secondary.stock;
@@ -103,9 +104,11 @@ namespace EntityStates.Executioner2
                     if(buffDuration > 0)
                         characterBody.AddTimedBuff(SS2Content.Buffs.bdConsecration, buffDuration);
 
+                    Transform muzzle = FindModelChild(muzzleString);
+                    Vector3 position = muzzle ? muzzle.position : characterBody.corePosition;
                     EffectData effectData = new EffectData
                     {
-                        origin = characterBody.corePosition,
+                        origin = position,
                         genericFloat = 0.4f
                     };
                     effectData.SetHurtBoxReference(characterBody.mainHurtBox);

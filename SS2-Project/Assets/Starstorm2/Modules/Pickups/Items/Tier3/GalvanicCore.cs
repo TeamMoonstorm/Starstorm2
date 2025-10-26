@@ -13,6 +13,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using RoR2.Orbs;
+using SS2.Components;
 
 namespace SS2.Items
 {
@@ -36,9 +37,19 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_GALVANICCORE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
         public static float speedPenalty = .8f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking chance to stun on hit. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+        public static float stunChanceStacking = .1f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of the aura around stunned enemies. (1 = 1m radius)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", 5)]
+        public static float baseAuraRadius = 15;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking radius increase of the aura around stunned enemies. (1 = 1m radius)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", 6)]
+        public static float scalingAuraRadius = 5;
         public static GameObject stunVFX;
         public static GameObject galvanicAura;
-        private static GameObject gwbVFX;
 
         public static GameObject galvOrbVFX;
         public static GameObject galvOrbHit;
@@ -50,32 +61,25 @@ namespace SS2.Items
             On.RoR2.SetStateOnHurt.OnTakeDamageServer += SetStateDamageGalvanic;
             On.RoR2.SetStateOnHurt.SetStun += SetStunAddGalvanicAura;
 
-            //On.RoR2.CharacterBody.OnBuffFirstStackGained += FirstStackGainedGalvanized;
             On.RoR2.CharacterBody.OnBuffFinalStackLost += FinalBuffStackLostPreventHealing;
-
             IL.RoR2.CharacterBody.RecalculateStats += RecalculateStatsPreventHealing;
-
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsGalvanized;
 
 
-            stunVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/StunChanceOnHit/ImpactStunGrenade.prefab").WaitForCompletion(); //LegacyResourcesAPI.Load<GameObject>("Prefabs/Effects/ImpactEffects/ImpactStunGrenade")
-            
+            stunVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/StunChanceOnHit/ImpactStunGrenade.prefab").WaitForCompletion();
             galvanicAura = AssetCollection.FindAsset<GameObject>("GalvanicAura");
-            gwbVFX = AssetCollection.FindAsset<GameObject>("GreaterBannerBuffEffectTEMP");
 
             galvOrbVFX = AssetCollection.FindAsset<GameObject>("GalvanicOrbEffect");
             galvOrbHit = AssetCollection.FindAsset<GameObject>("GalvanicHitEffect");
-
-            //TempVisualEffectAPI.AddTemporaryVisualEffect(galvAuraVFX.InstantiateClone("GalvanicAuraTempEffectInstance", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.bdGalvanizedSource); }, true, "MainHurtbox");
-            TempVisualEffectAPI.AddTemporaryVisualEffect(gwbVFX.InstantiateClone("GreaterBannerBuffEffectTWOTEMP", false), (CharacterBody body) => { return body.HasBuff(SS2Content.Buffs.bdGalvanized); }, true, "MainHurtbox");
 
             healthPenaltyCalculated = ((-healthPenalty) / (healthPenalty - 1f)); //makes the value input into the config accurate (ex .2 actually removes 20% of health)
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
+
         private void RecalculateStatsPreventHealing(ILContext il)
         {
             ILCursor c = new ILCursor(il);
@@ -87,7 +91,6 @@ namespace SS2.Items
                 x => x.MatchLdloc(118) //the first variable before the proc chain mask
             );
 
-            SS2Log.Warning("wawa " + ILFound + " | " + label);
             if (ILFound && label != null)
             {
                 c.Index += 1;
@@ -97,7 +100,6 @@ namespace SS2.Items
                     var token = self.gameObject.GetComponent<GalvanizedMarker>();
                     if(token && token.preventHeal)
                     {
-                        SS2Log.Warning("Preventing Healing via preventHeal");
                         token.preventHeal = false;
                         return false;
                     }
@@ -107,40 +109,19 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Error("Galvanic Core prevent curse healing hook failed.");
+                SS2Log.Fatal("Galvanic Core prevent curse healing hook failed.");
                 //maybe implment a failsafe with the damage fixing? it'd still kill at low health, but would prevent the item from Not Being Fun
             }
         }
 
         private void FinalBuffStackLostPreventHealing(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
         {
-            //float? health = null;
-
             if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
-                //health = self.healthComponent.health;
-                //self.SetAmputateMaxHealth(self.amputatedMaxHealth - healthPenaltyCalculated);
-                //SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
-                var token = self.gameObject.GetComponent<GalvanizedMarker>();
-                if (!token)
-                {
-                    token = self.gameObject.AddComponent<GalvanizedMarker>();
-                }
+                var token = MSU.MSUtil.EnsureComponent<GalvanizedMarker>(self.gameObject);
                 token.preventHeal = true;
-
-
             }
             orig(self, buffDef);
-            //if (buffDef == SS2Content.Buffs.bdGalvanized && health != null)
-            //{
-            //    //self.SetAmputateMaxHealth(self.amputatedMaxHealth - healthPenaltyCalculated);
-            //    ////self.RecalculateStats();
-            //    //float intendedHealth = self.healthComponent.fullHealth / (1 - healthPenalty);
-            //    //self.healthComponent.Networkhealth = health.Value - (intendedHealth * healthPenalty);
-            //    
-            //    SS2Log.Warning("awwawa : " + self.healthComponent.health + " | " + self.cursePenalty);
-            //    
-            //}
         }
 
         private void RecalculateStatsGalvanized(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
@@ -148,21 +129,9 @@ namespace SS2.Items
             if (sender.GetBuffCount(SS2Content.Buffs.bdGalvanized) > 0)
             {
                 args.baseCurseAdd += healthPenaltyCalculated;
-                args.damageMultAdd *= (1 - damagePenalty); ////////////// RecalcStatsAPi changed. dunno what this does sry
+                //args.damageTotalMult *= (1 - damagePenalty);
                 args.moveSpeedReductionMultAdd += speedPenalty;
             }
-            //SS2Log.Warning("wawa 3");
-            //var token = sender.gameObject.GetComponent<GalvanizedMarker>();
-            //if (token && token.preventHeal)
-            //{
-            //    token.preventHeal = false;
-            //    var hc = sender.healthComponent;
-            //
-            //    //float intendedHealth = self.healthComponent.fullHealth / (1 - healthPenalty);
-            //    //sender.healthComponent.Networkhealth = health.Value - (intendedHealth * healthPenalty);
-            //    sender.healthComponent.Networkhealth = hc.health - (hc.fullHealth * healthPenalty);
-            //}
-            //SS2Log.Warning("health: " + sender.healthComponent.health);
         }
 
         private void SetStunAddGalvanicAura(On.RoR2.SetStateOnHurt.orig_SetStun orig, SetStateOnHurt self, float duration)
@@ -171,10 +140,8 @@ namespace SS2.Items
             if(self.targetStateMachine)
             {
                 var cb = self.targetStateMachine.GetComponent<CharacterBody>();
-                //SS2Log.Warning("waaawa. : ");
                 if (cb && cb.healthComponent.lastHitAttacker) 
                 { 
-                    //SS2Log.Warning("cb.healthComponent.lastHitAttacker : " + cb.healthComponent.lastHitAttacker);
                     var attacker = cb.healthComponent.lastHitAttacker.GetComponent<CharacterBody>();
                     if (attacker.inventory.GetItemCount(SS2Content.Items.GalvanicCore) > 0)
                     {
@@ -201,7 +168,12 @@ namespace SS2.Items
             CharacterMaster attackerMaster = damageReport.attackerMaster;
             if (!victim.isInFrozenState && self.canBeStunned && attackerMaster && attackerMaster.inventory)
             {
-                if(attackerMaster.inventory.GetItemCount(SS2Content.Items.GalvanicCore) > 0 && Util.CheckRoll(stunChance * 100, attackerMaster))
+                var count = attackerMaster.inventory.GetItemCount(SS2Content.Items.GalvanicCore);
+                var combinedStunChance = stunChance + (stunChanceStacking * (count - 1));
+
+                var calculatedStunChance = combinedStunChance / (combinedStunChance + 1);
+
+                if (count > 0 && Util.CheckRoll(calculatedStunChance * 100, attackerMaster))
                 {
                     EffectManager.SimpleImpactEffect(stunVFX, damageInfo.position, -damageInfo.force, true);
                     self.SetStun(2f);
@@ -216,13 +188,34 @@ namespace SS2.Items
 
             private GameObject aura;
 
+            public bool doVFX = true;
             public float timer;
+
+            private int attackerStacks = 1;
+            private float radiusSquared = baseAuraRadius * baseAuraRadius;
+            private TeamIndex attackerTeam = TeamIndex.Player;
 
             protected override void OnFirstStackGained()
             {
                 base.OnFirstStackGained();
                 aura = UnityEngine.Object.Instantiate(galvanicAura, characterBody.corePosition, Quaternion.identity);
                 aura.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(characterBody.gameObject, null);
+
+                if(characterBody.healthComponent.lastHitAttacker 
+                    && characterBody.healthComponent.lastHitAttacker.TryGetComponent<CharacterBody>(out var attacker)){
+
+                    attackerStacks = attacker.GetItemCount(SS2Content.Items.GalvanicCore);
+                    if(attackerStacks > 1) //If they only have one stack, the default values will work
+                    {
+                        float sizeMultiplier = 1 + ((attackerStacks - 1) * (scalingAuraRadius / baseAuraRadius));
+                        aura.transform.localScale = new Vector3(sizeMultiplier, sizeMultiplier, sizeMultiplier);
+                        float radius = baseAuraRadius * sizeMultiplier;
+                        radiusSquared = radius * radius;
+                    }
+
+                    attackerTeam = attacker.teamComponent.teamIndex;
+                }
+                AttemptBuff();
             }
 
             protected override void OnAllStacksLost()
@@ -240,53 +233,64 @@ namespace SS2.Items
                 if(timer > .25 && NetworkServer.active)
                 {
                     timer = 0;
+                    AttemptBuff();
+                }
+            }
+
+            private void AttemptBuff()
+            {
+                if(characterBody.healthComponent && characterBody.healthComponent.alive)
+                {
                     for (TeamIndex teamIndex = TeamIndex.Neutral; teamIndex < TeamIndex.Count; teamIndex += 1)
                     {
-                        if (teamIndex != TeamIndex.Player)
+                        if (teamIndex != attackerTeam)
                         {
-                            foreach(var member in TeamComponent.GetTeamMembers(teamIndex))
-                            {
-                                SS2Log.Warning(": " + member + " | " + member.GetComponent<CharacterBody>());
-                            }
-                            BuffTeam(TeamComponent.GetTeamMembers(teamIndex), 15^2, characterBody.corePosition);
+                            BuffTeam(TeamComponent.GetTeamMembers(teamIndex), radiusSquared, characterBody.corePosition);
                         }
                     }
+                    doVFX = !doVFX; //Makes it so we only spawn the VFX orbs every other tick of the buffward, reducing particle spam
+                }
+                else
+                {
+                    characterBody.RemoveBuff(SS2Content.Buffs.bdGalvanizedSource); //If we're dead or broken, immediately destroy this behavior
                 }
             }
 
             private void BuffTeam(IEnumerable<TeamComponent> recipients, float radiusSqr, Vector3 currentPosition)
             {
-                SS2Log.Warning("Buff Team Started");
                 foreach (TeamComponent teamComponent in recipients)
                 {
                     Vector3 vector = teamComponent.transform.position - currentPosition;
                     vector.y = 0f;
-
                     if (vector.sqrMagnitude <= radiusSqr)
                     {
-                        CharacterBody component = teamComponent.GetComponent<CharacterBody>();
-                        if (component && !component.HasBuff(SS2Content.Buffs.bdGalvanizedSource))
+                        CharacterBody targetBody = teamComponent.GetComponent<CharacterBody>();
+                        if (!targetBody)
+                        {
+                            continue;
+                        }
+
+                        targetBody.AddTimedBuff(SS2Content.Buffs.bdGalvanized.buffIndex, .4f);
+                        if (targetBody == characterBody)
+                        {
+                            continue; //If they're the source of VFX, we don't need to send an orb at them
+                        }
+
+                        if (doVFX && targetBody.mainHurtBox && targetBody.healthComponent && targetBody.healthComponent.alive)
                         {
                             GalvanicOrb galvOrb = new GalvanicOrb();
+                            galvOrb.origin = characterBody.corePosition;
+
+                            galvOrb.duration = 0.1f;
                             galvOrb.origin = characterBody.aimOrigin;
+                            galvOrb.teamIndex = characterBody.teamComponent.teamIndex;
 
-                            if (component.mainHurtBox)
-                            {
-                                    SS2Log.Warning("wawa : " + characterBody.corePosition + " | " + component.mainHurtBox.transform.position);
-                                    galvOrb.target = component.mainHurtBox;
-                                    OrbManager.instance.AddOrb(galvOrb);
-                            }
-                            component.AddTimedBuff(SS2Content.Buffs.bdGalvanized.buffIndex, .4f);
+                            galvOrb.target = targetBody.mainHurtBox;
+                            OrbManager.instance.AddOrb(galvOrb);
                         }
-                        else if (component)
-                        {
-                            SS2Log.Warning("Had Buff: " + component);
-                        }
-
                     }
                 }
             }
-        
         }
     
         public class GalvanizedMarker : MonoBehaviour
@@ -312,10 +316,8 @@ namespace SS2.Items
 
             public override void OnArrival() 
             {
-                base.OnArrival();
-            }
 
-            public GameObject attacker;
+            }
 
             public TeamIndex teamIndex;
         }

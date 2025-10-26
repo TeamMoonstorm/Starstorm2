@@ -148,6 +148,7 @@ namespace EntityStates.NemMerc
                 inventoryToCopy = null,//copyInventory ? base.characterBody.inventory : null,
                 //inventoryItemCopyFilter = ItemFilter,
                 summonerBodyObject = base.gameObject,
+                ignoreTeamMemberLimit = true,
                 loadout = loadout,
                 preSpawnSetupCallback = (master) =>
                 {
