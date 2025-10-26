@@ -37,6 +37,17 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_GALVANICCORE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
         public static float speedPenalty = .8f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking chance to stun on hit. (1 = 100%)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+        public static float stunChanceStacking = .1f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius of the aura around stunned enemies. (1 = 1m radius)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", 5)]
+        public static float baseAuraRadius = 15;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Stacking radius increase of the aura around stunned enemies. (1 = 1m radius)")]
+        [FormatToken("SS2_ITEM_GALVANICCORE_DESC", 6)]
+        public static float scalingAuraRadius = 5;
         public static GameObject stunVFX;
         public static GameObject galvanicAura;
 
@@ -89,7 +100,6 @@ namespace SS2.Items
                     var token = self.gameObject.GetComponent<GalvanizedMarker>();
                     if(token && token.preventHeal)
                     {
-                        SS2Log.Warning("Preventing Healing via preventHeal");
                         token.preventHeal = false;
                         return false;
                     }
@@ -99,7 +109,7 @@ namespace SS2.Items
             }
             else
             {
-                SS2Log.Error("Galvanic Core prevent curse healing hook failed.");
+                SS2Log.Fatal("Galvanic Core prevent curse healing hook failed.");
                 //maybe implment a failsafe with the damage fixing? it'd still kill at low health, but would prevent the item from Not Being Fun
             }
         }
@@ -108,11 +118,7 @@ namespace SS2.Items
         {
             if (buffDef == SS2Content.Buffs.bdGalvanized)
             {
-                var token = self.gameObject.GetComponent<GalvanizedMarker>();
-                if (!token)
-                {
-                    token = self.gameObject.AddComponent<GalvanizedMarker>();
-                }
+                var token = MSU.MSUtil.EnsureComponent<GalvanizedMarker>(self.gameObject);
                 token.preventHeal = true;
             }
             orig(self, buffDef);
@@ -162,7 +168,12 @@ namespace SS2.Items
             CharacterMaster attackerMaster = damageReport.attackerMaster;
             if (!victim.isInFrozenState && self.canBeStunned && attackerMaster && attackerMaster.inventory)
             {
-                if(attackerMaster.inventory.GetItemCount(SS2Content.Items.GalvanicCore) > 0 && Util.CheckRoll(stunChance * 100, attackerMaster))
+                var count = attackerMaster.inventory.GetItemCount(SS2Content.Items.GalvanicCore);
+                var combinedStunChance = stunChance + (stunChanceStacking * (count - 1));
+
+                var calculatedStunChance = combinedStunChance / (combinedStunChance + 1);
+
+                if (count > 0 && Util.CheckRoll(calculatedStunChance * 100, attackerMaster))
                 {
                     EffectManager.SimpleImpactEffect(stunVFX, damageInfo.position, -damageInfo.force, true);
                     self.SetStun(2f);
@@ -180,12 +191,30 @@ namespace SS2.Items
             public bool doVFX = true;
             public float timer;
 
+            private int attackerStacks = 1;
+            private float radiusSquared = baseAuraRadius * baseAuraRadius;
+            private TeamIndex attackerTeam = TeamIndex.Player;
+
             protected override void OnFirstStackGained()
             {
                 base.OnFirstStackGained();
                 aura = UnityEngine.Object.Instantiate(galvanicAura, characterBody.corePosition, Quaternion.identity);
                 aura.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(characterBody.gameObject, null);
 
+                if(characterBody.healthComponent.lastHitAttacker 
+                    && characterBody.healthComponent.lastHitAttacker.TryGetComponent<CharacterBody>(out var attacker)){
+
+                    attackerStacks = attacker.GetItemCount(SS2Content.Items.GalvanicCore);
+                    if(attackerStacks > 1) //If they only have one stack, the default values will work
+                    {
+                        float sizeMultiplier = 1 + ((attackerStacks - 1) * (scalingAuraRadius / baseAuraRadius));
+                        aura.transform.localScale = new Vector3(sizeMultiplier, sizeMultiplier, sizeMultiplier);
+                        float radius = baseAuraRadius * sizeMultiplier;
+                        radiusSquared = radius * radius;
+                    }
+
+                    attackerTeam = attacker.teamComponent.teamIndex;
+                }
                 AttemptBuff();
             }
 
@@ -210,12 +239,20 @@ namespace SS2.Items
 
             private void AttemptBuff()
             {
-                for (TeamIndex teamIndex = TeamIndex.Neutral; teamIndex < TeamIndex.Count; teamIndex += 1)
+                if(characterBody.healthComponent && characterBody.healthComponent.alive)
                 {
-                    if (teamIndex != TeamIndex.Player)
+                    for (TeamIndex teamIndex = TeamIndex.Neutral; teamIndex < TeamIndex.Count; teamIndex += 1)
                     {
-                        BuffTeam(TeamComponent.GetTeamMembers(teamIndex), 15 * 15, characterBody.corePosition);
+                        if (teamIndex != attackerTeam)
+                        {
+                            BuffTeam(TeamComponent.GetTeamMembers(teamIndex), radiusSquared, characterBody.corePosition);
+                        }
                     }
+                    doVFX = !doVFX; //Makes it so we only spawn the VFX orbs every other tick of the buffward, reducing particle spam
+                }
+                else
+                {
+                    characterBody.RemoveBuff(SS2Content.Buffs.bdGalvanizedSource); //If we're dead or broken, immediately destroy this behavior
                 }
             }
 
@@ -227,15 +264,19 @@ namespace SS2.Items
                     vector.y = 0f;
                     if (vector.sqrMagnitude <= radiusSqr)
                     {
-                        CharacterBody component = teamComponent.GetComponent<CharacterBody>();
-                        component.AddTimedBuff(SS2Content.Buffs.bdGalvanized.buffIndex, .4f);
-                        if (!component || component.HasBuff(SS2Content.Buffs.bdGalvanizedSource))
+                        CharacterBody targetBody = teamComponent.GetComponent<CharacterBody>();
+                        if (!targetBody)
                         {
                             continue;
                         }
 
-                        if (doVFX && component.mainHurtBox && component.healthComponent && component.healthComponent.alive
-                        && characterBody && characterBody.healthComponent && characterBody.healthComponent.alive)
+                        targetBody.AddTimedBuff(SS2Content.Buffs.bdGalvanized.buffIndex, .4f);
+                        if (targetBody == characterBody)
+                        {
+                            continue; //If they're the source of VFX, we don't need to send an orb at them
+                        }
+
+                        if (doVFX && targetBody.mainHurtBox && targetBody.healthComponent && targetBody.healthComponent.alive)
                         {
                             GalvanicOrb galvOrb = new GalvanicOrb();
                             galvOrb.origin = characterBody.corePosition;
@@ -244,13 +285,8 @@ namespace SS2.Items
                             galvOrb.origin = characterBody.aimOrigin;
                             galvOrb.teamIndex = characterBody.teamComponent.teamIndex;
 
-                            galvOrb.target = component.mainHurtBox;
+                            galvOrb.target = targetBody.mainHurtBox;
                             OrbManager.instance.AddOrb(galvOrb);
-                            doVFX = false;
-                        }
-                        else
-                        {
-                            doVFX = true;
                         }
                     }
                 }
