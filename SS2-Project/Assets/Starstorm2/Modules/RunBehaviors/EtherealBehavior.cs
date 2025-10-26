@@ -18,7 +18,7 @@ namespace SS2
         public static EtherealBehavior instance { get; private set; }
         public static event Action<EtherealBehavior> onEtherealTeleporterChargedGlobal;
         public static event Action<EtherealBehavior> onDifficultyUpdatedGlobal;
-        private static int defaultLevelCap;
+        private static int defaultLevelCap = 99;
         public Run run;
         public static bool alwaysReplaceNewts = true; // dont forget to default to false later
         public static Dictionary<DifficultyIndex, DifficultyIndex> diffDicts = new Dictionary<DifficultyIndex, DifficultyIndex>();
@@ -31,7 +31,9 @@ namespace SS2
         public int etherealStagesCompleted;
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
-        internal static IEnumerator Init()
+
+        [SystemInitializer]
+        internal static void Init()
         {
             //Save default level cap
             defaultLevelCap = Run.ambientLevelCap;
@@ -45,7 +47,6 @@ namespace SS2
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
             SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab, portalPrefab });         
-            yield return null;
         }
 
         public static void AddEtherealDifficulty(DifficultyIndex baseDifficulty, SerializableDifficultyDef etherealDef)

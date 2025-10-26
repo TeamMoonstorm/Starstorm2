@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escLampSpawnBigLamp
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.LampBoss.SpawnBigLamp, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: muzzleEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3327776421185739566, guid: f279ba0b68d8f4d40af268482e465418,
+          type: 3}
+    - fieldName: bodyPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6247988356714774623, guid: f3f5982d4e6454a4f9b4983cf3c81ab5,
+          type: 3}
