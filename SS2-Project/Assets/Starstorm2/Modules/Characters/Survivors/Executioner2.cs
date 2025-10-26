@@ -56,7 +56,7 @@ namespace SS2.Survivors
             SetupFearExecute();
             ModifyPrefab();
 
-            taserVFX = LegacyResourcesAPI.Load<GameObject>(path);
+            taserVFX = AssetCollection.FindAsset<GameObject>("TaserOrbEffect");
 
             //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // :3
         }
@@ -67,7 +67,7 @@ namespace SS2.Survivors
             {
                 args.armorAdd += 60f;
             }
-            if(sender.HasBuff(SS2Content.Buffs.BuffFear))
+            if(sender.HasFearBuff())
             {
                 args.moveSpeedReductionMultAdd += 0.33f;
             }
@@ -141,7 +141,7 @@ namespace SS2.Survivors
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
         {
             var hbv = orig(self);
-            if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasBuff(SS2Content.Buffs.BuffFear))
+            if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasFearBuff())
             {
                 hbv.cullFraction += 0.15f;//might stack too crazy if it's 30% like Freeze
             }
@@ -163,7 +163,7 @@ namespace SS2.Survivors
                     c.Emit(OpCodes.Ldarg_0);//self
                     c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
                     {
-                        if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
+                        if (self.body.HasFearBuff())
                         {
                             if (executeFraction < 0f) executeFraction = 0f;
                             executeFraction += 0.15f;
@@ -177,7 +177,7 @@ namespace SS2.Survivors
                         c.Emit(OpCodes.Ldarg_0);//self
                         c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
                         {
-                            if (self.body.HasBuff(SS2Content.Buffs.BuffFear))
+                            if (self.body.HasFearBuff())
                             {
                                 if (executeFraction < 0f) executeFraction = 0f;
                                 executeFraction += 0.15f;
@@ -206,7 +206,7 @@ namespace SS2.Survivors
                     c.Emit(OpCodes.Ldarg_0);
                     c.EmitDelegate<Func<bool, CharacterBody, bool>>((hasBuff, self) =>
                     {
-                        return hasBuff || self.HasBuff(SS2Content.Buffs.BuffFear);
+                        return hasBuff || self.HasFearBuff();
                     });
                 }
                 else
@@ -224,8 +224,7 @@ namespace SS2.Survivors
             if (body.bodyIndex == BodyIndex.None) return 1;
 
             int value = 1;
-            if (body.isChampion)
-                value = 3;
+            
 
             switch (body.hullClassification)
             {
@@ -242,7 +241,11 @@ namespace SS2.Survivors
                     value = 1;
                     break;
             }
-            if(body.isElite)
+            if (body.isChampion)
+            {
+                value = 5;
+            }
+            if (body.isElite)
             {
                 value *= 2;
             }
@@ -285,6 +288,7 @@ namespace SS2.Survivors
                 if (effectInstance) Destroy(effectInstance);
                 effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
                 Util.PlaySound(activationSoundString, gameObject);
+
             }
 
             private void Update()

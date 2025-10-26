@@ -129,7 +129,7 @@ namespace SS2.Items
             if (sender.GetBuffCount(SS2Content.Buffs.bdGalvanized) > 0)
             {
                 args.baseCurseAdd += healthPenaltyCalculated;
-                args.damageTotalMult *= (1 - damagePenalty);
+                //args.damageTotalMult *= (1 - damagePenalty);
                 args.moveSpeedReductionMultAdd += speedPenalty;
             }
         }

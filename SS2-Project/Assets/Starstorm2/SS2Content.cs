@@ -469,6 +469,8 @@ namespace SS2
 
             public static BuffDef BuffFear;
 
+            public static BuffDef BuffFearRed;
+
             public static BuffDef BuffGouge;
 
             public static BuffDef bdHakai;
@@ -635,6 +637,8 @@ namespace SS2
 
             public static BuffDef bdBloodRush;
 
+            public static BuffDef BuffNemExeRegen;
+
         }
 
         public static class Elites
@@ -674,6 +678,8 @@ namespace SS2
             public static SurvivorDef survivorKnight;
 
             public static SurvivorDef NemMerc;
+
+            public static SurvivorDef NemExecutioner;
         }
 
         public static class ItemTierDefs
