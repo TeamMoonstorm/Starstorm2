@@ -11,6 +11,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ValidKeywords:
   - DITHER
+  - FORCE_SPEC
+  - FRESNEL_EMISSION
   - USE_VERTEX_COLORS
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -71,7 +73,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FresnelRamp:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 12f0f02e427f1c94282fc0d5e71184e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GreenChannelNormalTex:
@@ -133,7 +135,7 @@ Material:
     - _EliteIndex: 0
     - _EmPower: 1
     - _EnableCutout: 0
-    - _FEON: 0
+    - _FEON: 1
     - _Fade: 1
     - _FadeBias: 0
     - _FlowEmissionStrength: 1
@@ -144,9 +146,9 @@ Material:
     - _FlowSpeed: 1
     - _FlowTextureScaleFactor: 1
     - _FlowmapOn: 0
-    - _ForceSpecOn: 0
-    - _FresnelBoost: 1
-    - _FresnelPower: 1
+    - _ForceSpecOn: 1
+    - _FresnelBoost: 2
+    - _FresnelPower: 0.75
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -156,7 +158,7 @@ Material:
     - _LimbRemovalOn: 0
     - _Metallic: 0
     - _Mode: 0
-    - _NormalStrength: 1
+    - _NormalStrength: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _PrintBias: 0
@@ -180,7 +182,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.30588236}
     - _EmColor: {r: 0.9803922, g: 1, b: 0.5686275, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}

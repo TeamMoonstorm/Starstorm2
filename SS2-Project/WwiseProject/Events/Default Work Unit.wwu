@@ -1460,6 +1460,90 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="WayfarerStartBigLamp" ID="{B27786FE-B8B8-490F-8E84-5EBC4381104D}">
+							<ChildrenList>
+								<Action Name="" ID="{9C5C63CC-60C6-41BF-8D8F-5BAAA5D69179}" ShortID="1052352946">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerStartBigLamp" ID="{523D626C-0131-4C63-ACA1-A2C9BC95D03F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_WayfarerBigLampLoop" ID="{E5745162-331B-4A8C-9CDA-0E27CB93F4C6}">
+							<ChildrenList>
+								<Action Name="" ID="{07E53791-2FC5-4550-B9EF-C5651C6A3160}" ShortID="65819736">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampLoop" ID="{0561617B-EC27-4F69-A820-99D86FB031C8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_WayfarerBigLampLoop" ID="{1E8E4A2C-4041-48C9-8F1E-4502C7D4F056}">
+							<ChildrenList>
+								<Action Name="" ID="{6E618F55-58C5-4E2A-88D7-8ACD86F0E225}" ShortID="844967532">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampLoop" ID="{0561617B-EC27-4F69-A820-99D86FB031C8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerEndBigLamp" ID="{29C46DD1-843A-4B1C-BE59-EF947C17E100}">
+							<ChildrenList>
+								<Action Name="" ID="{BE9E42ED-99CB-4694-AC14-29F23A40A070}" ShortID="1040771118">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerEndBigLamp" ID="{472389E7-14F6-4A31-A75E-BC0A7BEA0FA8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerRaiseBigLamp" ID="{08769EB3-BD0C-446D-B53C-5DF750DE49C9}">
+							<ChildrenList>
+								<Action Name="" ID="{29632807-DEEE-405F-B6CD-DC6966EFBE17}" ShortID="953080521">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerRaiseBigLamp" ID="{B8FA1845-D07E-48C8-AE84-036193CF67F1}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerBigLampDeath" ID="{075F1202-B622-4AED-8C6D-C77AE2707B22}">
+							<ChildrenList>
+								<Action Name="" ID="{BBA52DFC-2000-41F7-BA9D-2E5CF26F364C}" ShortID="997508935">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampDeath" ID="{FBD0F4EA-3B47-4EA0-8786-D498A825E49E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Nucleator" ID="{B1FE5094-3E9D-4BA2-9E60-922603707F9E}" ShortID="401688656">
@@ -1675,6 +1759,20 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="FollowerCast" ID="{153B157B-0A74-4B77-8BED-A3FC3FD26669}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="FollowerDeath" ID="{692B00BE-0D70-44E5-A891-ABD2794F0DFB}">
+							<ChildrenList>
+								<Action Name="" ID="{BCEA31F7-66AC-4918-92D6-28D416F33EDF}" ShortID="1042424195">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FollowerDeath" ID="{F4C64297-9B1B-42E1-BC13-4271B645B52F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

@@ -29,7 +29,7 @@ namespace SS2.Components
         private OverlayController chargeOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
 
-        [SyncVar(hook = "OnRepairModified")]
+        [SyncVar(hook = nameof(OnChargeModified))]
         private float _charge;
         public float charge
         {
@@ -44,25 +44,6 @@ namespace SS2.Components
             get
             {
                 return charge >= chargeMax;
-            }
-        }
-
-        public float Network_charge
-        {
-            get
-            {
-                return _charge;
-            }
-            [param: In]
-            set
-            {
-                if (NetworkServer.localClientActive && syncVarHookGuard)
-                {
-                    syncVarHookGuard = true;
-                    OnChargeModified(value);
-                    syncVarHookGuard = false;
-                }
-                SetSyncVar<float>(value, ref _charge, 1U);
             }
         }
 
@@ -127,52 +108,53 @@ namespace SS2.Components
             if (isMaxCharge && amount > 0)
                 amount = 0f;
 
-            Network_charge = Mathf.Clamp(charge + amount, 0f, chargeMax);
-            Debug.Log("DEBUGGER What is Network_charge? " + Network_charge);
+            _charge = Mathf.Clamp(charge + amount, 0f, chargeMax);
+            Debug.Log("DEBUGGER What is Network_charge? " + _charge);
         }
 
         private void OnChargeModified(float newCharge)
         {
-            Network_charge = newCharge;
+            _charge = newCharge;
         }
 
         //let him cook
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write(_charge);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write(_charge);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
+        //          who let him cook he broke weaver
+        //public override bool OnSerialize(NetworkWriter writer, bool forceAll)
+        //{
+        //    if (forceAll)
+        //    {
+        //        writer.Write(_charge);
+        //        return true;
+        //    }
+        //    bool flag = false;
+        //    if ((syncVarDirtyBits & 1U) != 0U)
+        //    {
+        //        if (!flag)
+        //        {
+        //            writer.WritePackedUInt32(syncVarDirtyBits);
+        //            flag = true;
+        //        }
+        //        writer.Write(_charge);
+        //    }
+        //    if (!flag)
+        //    {
+        //        writer.WritePackedUInt32(syncVarDirtyBits);
+        //    }
+        //    return flag;
+        //}
 
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _charge = reader.ReadSingle();
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                OnChargeModified(reader.ReadSingle());
-            }
-        }
+        //public override void OnDeserialize(NetworkReader reader, bool initialState)
+        //{
+        //    if (initialState)
+        //    {
+        //        _charge = reader.ReadSingle();
+        //        return;
+        //    }
+        //    int num = (int)reader.ReadPackedUInt32();
+        //    if ((num & 1) != 0)
+        //    {
+        //        OnChargeModified(reader.ReadSingle());
+        //    }
+        //}
     }
 }

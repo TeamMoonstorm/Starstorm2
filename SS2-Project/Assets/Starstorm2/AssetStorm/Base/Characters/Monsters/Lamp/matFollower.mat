@@ -9,7 +9,9 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matFollower
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - DITHER
+  - PRINT_CUTOFF
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -101,12 +103,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _PrintRamp:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 5665f1b03af84914096fccaede94dd32, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SliceAlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
+        m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _SplatmapTex:
         m_Texture: {fileID: 0}
@@ -123,13 +125,13 @@ Material:
     - _DecalLayer: 0
     - _Depth: 0.2
     - _DetailNormalMapScale: 1
-    - _DitherOn: 0
+    - _DitherOn: 1
     - _DoubleColorsOn: 0
     - _DstBlend: 0
-    - _EliteBrightnessMax: 1
-    - _EliteBrightnessMin: 0
+    - _EliteBrightnessMax: 1.27
+    - _EliteBrightnessMin: -0.37
     - _EliteIndex: 0
-    - _EmPower: 1
+    - _EmPower: 1.16
     - _EnableCutout: 0
     - _FEON: 0
     - _Fade: 1
@@ -157,21 +159,21 @@ Material:
     - _NormalStrength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _PrintBias: 0
-    - _PrintBoost: 1
-    - _PrintDirection: 0
-    - _PrintEmissionToAlbedoLerp: 0
-    - _PrintOn: 0
+    - _PrintBias: 0.2
+    - _PrintBoost: 2
+    - _PrintDirection: 1
+    - _PrintEmissionToAlbedoLerp: 0.612
+    - _PrintOn: 1
     - _RampInfo: 0
     - _SecondarySmoothness: 0
-    - _SliceAlphaDepth: 0.1
-    - _SliceBandHeight: 1
-    - _SliceHeight: 5
+    - _SliceAlphaDepth: 1
+    - _SliceBandHeight: 2.16
+    - _SliceHeight: -25
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
-    - _SpecularExponent: 1
+    - _SpecularExponent: 1.09
     - _SpecularHighlights: 1
-    - _SpecularStrength: 0
+    - _SpecularStrength: 0.2
     - _SplatmapOn: 0
     - _SplatmapTileScale: 1
     - _SrcBlend: 1
@@ -179,7 +181,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmColor: {r: 0.9150943, g: 0.8722029, b: 0.45323068, a: 1}
+    - _EmColor: {r: 1, g: 0.95585054, b: 0.3820755, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

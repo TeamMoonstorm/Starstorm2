@@ -63,10 +63,10 @@ namespace SS2.Items
                 if (attackCounter >= 5)
                 {
                     attackCounter %= 5f;
-                    Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
+                    //Util.PlayAttackSpeedSound("LampBullet", gameObject, body.attackSpeed);
                     float damage = body.damage * (2f + stack);
                     Vector3 muzzlePos = body.inputBank.aimOrigin;
-                    SS2Log.Info("lampDisplay.Count: " + lampDisplay.Count);
+
                     if (displayPos != null)
                     {
                         muzzlePos = displayPos.position;

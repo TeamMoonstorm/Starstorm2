@@ -62,6 +62,7 @@ namespace AK
         static const AkUniqueID EXECUTIONERSUPERCHARGE = 3396808549U;
         static const AkUniqueID EXECUTIONERUTILITY = 2830854628U;
         static const AkUniqueID FOLLOWERCAST = 3057152170U;
+        static const AkUniqueID FOLLOWERDEATH = 2120771151U;
         static const AkUniqueID FOLLOWERIDLESTART = 2970410379U;
         static const AkUniqueID FOLLOWERIDLESTOP = 2787513641U;
         static const AkUniqueID FOLLOWERSPAWN = 134703416U;
@@ -104,7 +105,6 @@ namespace AK
         static const AkUniqueID NEMMANDOSWINGSABER = 113243767U;
         static const AkUniqueID NEMMANDOSWINGSABERDECISIVE = 1052053089U;
         static const AkUniqueID NUCLEATORCHARGEPRIMARY = 420124658U;
-        static const AkUniqueID PAUSE_SS2MUSIC = 4250249077U;
         static const AkUniqueID PICKUPCOFFEEBEAN = 4059362439U;
         static const AkUniqueID PLAY_CHIRRCSS = 2871870429U;
         static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
@@ -125,7 +125,7 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
-        static const AkUniqueID PLAY_SS2MUSIC = 3445128363U;
+        static const AkUniqueID PLAY_WAYFARERBIGLAMPLOOP = 1229124563U;
         static const AkUniqueID PROCAMULET = 3464571447U;
         static const AkUniqueID PROCERRATICGADGETCHAIN = 3050313720U;
         static const AkUniqueID PROCERRATICGADGETLIGHTNING = 3125516253U;
@@ -144,19 +144,23 @@ namespace AK
         static const AkUniqueID STOP_CHIRRSPITBOMBLOOP = 1032313774U;
         static const AkUniqueID STOP_ETHEREAL_FIREPILLAR_LOOP = 2875515542U;
         static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
+        static const AkUniqueID STOP_WAYFARERBIGLAMPLOOP = 1422521957U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;
         static const AkUniqueID UNIVERSALCHARGER = 1435965638U;
-        static const AkUniqueID UNPAUSE_SS2MUSIC = 3968783764U;
         static const AkUniqueID VOIDAMBIENT = 2533932213U;
         static const AkUniqueID WASTELANDERPRIMARY = 2333188815U;
         static const AkUniqueID WASTELANDERPRIMARYCRIT = 1319272055U;
         static const AkUniqueID WASTELANDERSECONDARY = 342360847U;
         static const AkUniqueID WAYFARERATTACK = 2495495812U;
+        static const AkUniqueID WAYFARERBIGLAMPDEATH = 1568555694U;
         static const AkUniqueID WAYFARERDEATH = 2635526886U;
+        static const AkUniqueID WAYFARERENDBIGLAMP = 808131589U;
         static const AkUniqueID WAYFARERIDLESTART = 2250290942U;
         static const AkUniqueID WAYFARERIDLESTOP = 3127064350U;
+        static const AkUniqueID WAYFARERRAISEBIGLAMP = 3741535224U;
         static const AkUniqueID WAYFARERSPAWN = 1131808197U;
+        static const AkUniqueID WAYFARERSTARTBIGLAMP = 3514444044U;
         static const AkUniqueID WAYFARERVO = 2393435613U;
     } // namespace EVENTS
 
@@ -175,18 +179,6 @@ namespace AK
                 static const AkUniqueID SONG_NEMESIS_START = 231224994U;
             } // namespace STATE
         } // namespace GAMEPLAYSONGCHOICE
-
-        namespace SLATEMINES
-        {
-            static const AkUniqueID GROUP = 1760388128U;
-
-            namespace STATE
-            {
-                static const AkUniqueID NONE = 748895195U;
-                static const AkUniqueID SLATEMINESAREA_LOOP = 867807600U;
-                static const AkUniqueID SLATEMINESBOSS_LOOP = 3433192536U;
-            } // namespace STATE
-        } // namespace SLATEMINES
 
     } // namespace STATES
 

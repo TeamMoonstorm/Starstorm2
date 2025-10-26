@@ -1,14 +1,16 @@
-﻿namespace EntityStates.Runshroom
+﻿using UnityEngine;
+
+namespace EntityStates.Runshroom
 {
     public class RushroomDeath : GenericCharacterDeath
     {
         public override void OnEnter()
         {
             base.OnEnter();
-            VFXListComponent component = characterBody.GetComponent<VFXListComponent>();
-            if (component)
+            Transform trail = FindModelChild("TrailEffect");
+            if(trail)
             {
-                component.TurnOffVFX();
+                trail.gameObject.SetActive(false);
             }
         }
 

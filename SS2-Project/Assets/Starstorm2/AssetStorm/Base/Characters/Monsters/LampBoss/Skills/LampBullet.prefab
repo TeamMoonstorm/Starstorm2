@@ -38,6 +38,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -103,14 +104,22 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 1901559459492316, guid: 10b82b65e77f54a43ac09e8592a6569f,
     type: 3}
+  ghostPrefabReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
+  localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
+  CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!54 &8255421005352417062
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -142,6 +151,10 @@ MonoBehaviour:
   positionTransmitInterval: 0.033333335
   interpolationFactor: 1
   allowClientsideCollision: 0
+  checkForLocalPlayerAuthority: 0
+  singletonArrayIndex: -1
+  serverPosition: {x: 0, y: 0, z: 0}
+  serverRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &8126620737831467704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,8 +177,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: -0.0037807184
-      value: 0.9976415
+      time: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 136
@@ -175,8 +188,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.02
       value: 1
-      inSlope: 0.19771615
-      outSlope: 0.19771615
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -184,8 +197,8 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0.075
       value: 0
-      inSlope: -0.017504906
-      outSlope: -0.017504906
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
       inWeight: 1
@@ -195,7 +208,7 @@ MonoBehaviour:
       value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 136
+      tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
       outWeight: 0.33333334
@@ -266,18 +279,23 @@ MonoBehaviour:
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
   explosionEffect: {fileID: 0}
+  preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 0
   childrenProjectilePrefab: {fileID: 0}
   childrenCount: 0
   childrenDamageCoefficient: 0
+  childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0
   rangeRollDegrees: 0
   minPitchDegrees: 0
   rangePitchDegrees: 0
+  minYawDegrees: 0
+  rangeYawDegrees: 0
   useLocalSpaceForChildren: 0
+  useChildRotation: 0
   applyDot: 0
   dotIndex: -1
   dotDuration: 0
@@ -286,6 +304,7 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
+  timedDebuffs: []
   impactEffect: {fileID: 8366333857707230014, guid: 85928708162673a4693a39393d6ff240,
     type: 3}
   lifetimeExpiredSoundString: 
@@ -293,12 +312,16 @@ MonoBehaviour:
   offsetForLifetimeExpiredSound: 0
   destroyOnEnemy: 1
   destroyOnWorld: 1
+  destroyOnDistance: 0
+  maxDistance: 0
   impactOnWorld: 1
   timerAfterImpact: 0
   lifetime: 6
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
+  minimumPhysicsStepsToKeepAliveAfterImpact: 0
   transformSpace: 0
+  explodeOnLifeTimeExpiration: 0
 --- !u!114 &1544590413938858180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,7 +373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yAxisOnly: 0
-  rotationSpeed: 38
+  rotationSpeed: 35
 --- !u!114 &585382038847608727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,6 +390,9 @@ MonoBehaviour:
   crit: 0
   force: 0
   damageColorIndex: 0
-  damageType: 0
+  damageType:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295

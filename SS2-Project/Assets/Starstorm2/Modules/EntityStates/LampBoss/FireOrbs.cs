@@ -16,6 +16,8 @@ namespace EntityStates.LampBoss
         public static GameObject blueProjectilePrefab;
         public static string muzzleString;
         public static float maxOrbCount;
+
+        private static float walkSpeedCoefficient = 0.5f;
         private float orbCount = 0;
 
         private float timer;
@@ -36,7 +38,9 @@ namespace EntityStates.LampBoss
             animator = GetModelAnimator();
             aimRay = GetAimRay();
 
-            bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
+            characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
+
+            bool isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.LampBoss.HesBlue;
             projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
             Util.PlayAttackSpeedSound("WayfarerAttack", gameObject, attackSpeedStat);
@@ -93,9 +97,14 @@ namespace EntityStates.LampBoss
                 outer.SetNextStateToMain();
         }
 
+        public override void OnExit()
+        {
+            base.OnExit();
+            characterMotor.walkSpeedPenaltyCoefficient = 1f;
+        }
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.PrioritySkill;
+            return InterruptPriority.Pain;
         }
     }
 }
