@@ -77,14 +77,10 @@ namespace EntityStates.Executioner2
         private void OnGroundHit(ref CharacterMotor.HitGroundInfo hitGroundInfo)
         {
             DoImpactAuthority();
-
-            SS2Log.Debug("floor :P");
         }
 
         private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
         {
-            SS2Log.Debug(movementHitInfo.hitCollider.gameObject);
-
             if(isAuthority)
                 DoImpactAuthority();
         }
