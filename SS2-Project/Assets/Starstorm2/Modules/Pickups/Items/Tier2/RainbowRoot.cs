@@ -16,30 +16,27 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRainbowRoot", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of armor gained upon pickup. Does not scale with stack count. (1 = 1 armor)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, 0)]
-        public static float baseArmor = 20;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "The portion of your health each branch has. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float branchHealth = .25f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float baseAmount = .25f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How many hits it takes to break a branch, regardless of branch health. (1 = 1 hit)")]
+        [FormatToken(token, 1)]
+        public static int maxHits = 20;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Portion of damage prevented to be gained as barrier per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float scalingAmount = .15f;
-
+        public static GameObject branchObject;
 
         public override void Initialize()
         {
-
+            branchObject = AssetCollection.FindAsset<GameObject>("RainbowRootBranch");
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
+        public sealed class RootBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RainbowRoot;
@@ -48,7 +45,13 @@ namespace SS2.Items
             int hits;
             int charges;
             float cd;
-
+            bool needsVisualAdjustment = false;
+            float currentDesiredRatio;
+            float visualTimer = 0;
+            //List<GameObject> branches = new List<GameObject>();
+            List<RainbowRootBranchInstance> branchInstances = new List<RainbowRootBranchInstance>();
+            List<RainbowRootBranchInstance> branchAll = new List<RainbowRootBranchInstance>();
+            
             private void Awake()
             {
                 base.Awake();
@@ -58,24 +61,75 @@ namespace SS2.Items
             private void Refresh()
             {
 
-                totalHealth = body.maxHealth * .25f;
-                hits = 20;
+                totalHealth = body.maxHealth * branchHealth;
+                hits = maxHits;
                 charges = 3;
+                needsVisualAdjustment = false;
                 SS2Log.Info("Refresh  " + totalHealth + " | " + hits + " | " + charges + " | " + cd);
                 cd = 0;
+
+
+                for(int i = 0; i < branchInstances.Count; ++i)
+                {
+                    Destroy(branchInstances[i].branch);
+                }
+                branchInstances.Clear();
+
+                var ratio = 360 / charges;
+                for (int i = 0; i < charges; ++i)
+                {
+                    Vector3 vec = new Vector3(0, ratio * i, 0);
+                    var tempBranch = Instantiate(branchObject, body.gameObject.transform.position, Quaternion.Euler(vec), body.gameObject.transform);
+                    var tempStruct = new RainbowRootBranchInstance
+                    {
+                        rotation = ratio * i,
+                        branch = tempBranch
+                    };
+                    //branches.Add(tempBranch);
+                    branchInstances.Add(tempStruct);
+                }
 
             }
 
             private void FixedUpdate()
             {
-                if (charges <= 0)
+                if (charges < 3)
                 {
-                    cd += Time.deltaTime;
+                    var mult = 1f;
+                    if(charges <= 0)
+                    {
+                        mult = 2f;
+                    }
+                    cd += Time.deltaTime * mult;
                     SS2Log.Info("cd: " + cd);
-                    if (cd > (15 / MSUtil.InverseHyperbolicScaling(1, .5f, 15, stack)))
+                    if (cd > (20 / MSUtil.InverseHyperbolicScaling(1, .5f, 10, stack)))
                     {
                         SS2Log.Info("Refresh at: " + cd);
                         Refresh();
+                    }
+                }
+
+                if(needsVisualAdjustment)
+                {
+                    visualTimer += Time.deltaTime;
+                    for (int i = 0; i < branchInstances.Count; ++i)
+                    {
+                        float current = branchInstances[i].rotation;
+                        var result = Mathf.Lerp(current, currentDesiredRatio * i, visualTimer);
+                        branchInstances[i].branch.transform.rotation = Quaternion.Euler(new Vector3(0, result, 0));
+                    }
+
+                    if (visualTimer > 1)
+                    {
+                        needsVisualAdjustment = false;
+                        visualTimer = 0;
+                        for (int i = 0; i < branchInstances.Count; ++i)
+                        {
+                            var calculated = currentDesiredRatio * i;
+                            var instance = branchInstances[i];
+                            instance.branch.transform.rotation = Quaternion.Euler(new Vector3(0, calculated, 0));
+                            instance.rotation = calculated;
+                        }
                     }
                 }
             }
@@ -84,22 +138,34 @@ namespace SS2.Items
             {
                 if (charges > 0)
                 {
-                    SS2Log.Info("AAAAAAAAAAAAAAA " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits);
                     totalHealth -= damageReport.damageInfo.damage;
                     --hits;
-                    SS2Log.Info("2 " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits);
                     if (hits <= 0 || totalHealth <= 0)
                     {
                         --charges;
                         hits = 20;
                         totalHealth = body.maxHealth * .25f;
-                        SS2Log.Info("RESETING  " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits + " | " + charges);
                         body.healthComponent.AddBarrierAuthority(body.maxHealth * .25f);
+
+                        Destroy(branchInstances[0].branch);
+                        //branchInstances[0].branch.SetActive(false);
+                        branchInstances.RemoveAt(0);
+
+                        if(charges > 1)
+                        {
+                            needsVisualAdjustment = true;
+                            currentDesiredRatio = 360 / charges;
+                        }
                     }
                 }
             }
         }
 
+        public struct RainbowRootBranchInstance
+        {
+            public float rotation;
+            public GameObject branch;
+        }
     }
 }
 
