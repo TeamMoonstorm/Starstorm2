@@ -15,7 +15,7 @@ namespace EntityStates.Runshroom
         private static float force = 14f;
 
         private static float fireTime = 0.75f;
-        private static string enterSoundString = ""; // FUCK
+        private static string enterSoundString = "Play_runshroom_charge"; 
 
         private bool hasFired;
         private bool hasWaited;

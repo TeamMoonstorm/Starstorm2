@@ -43,7 +43,7 @@ namespace EntityStates.Lamp
                 characterBody.AddSpreadBloom(0.33f * recoil);
                 Ray aimRay = GetAimRay();
 
-            bool isBlue = SkinCatalog.FindCurrentSkinDefForBodyInstance(gameObject).skinIndex == SS2.Monsters.Lamp.HesBlue;
+            bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
             GameObject projectile = isBlue ? blueProjectilePrefab : projectilePrefab;
 
             Util.PlayAttackSpeedSound("LampBullet", gameObject, characterBody.attackSpeed);

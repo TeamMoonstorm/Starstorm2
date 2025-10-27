@@ -156,6 +156,11 @@ namespace EntityStates.Executioner2
                     indicatorInstance.transform.position = hit.point;
                     indicatorInstance.transform.up = hit.normal;
                 }
+                else
+                {
+                    indicatorInstance.transform.position = aimRay.GetPoint(1000f);
+                    indicatorInstance.transform.up = Vector3.up;
+                }
 
                 // prevent spherecast jank so we dont go up/sideways
                 Vector3 between = indicatorInstance.transform.position - aimRay.origin;
@@ -166,7 +171,11 @@ namespace EntityStates.Executioner2
                     indicatorInstance.transform.position = hitTuah.point;
                     indicatorInstance.transform.up = hitTuah.normal;
                 }
-
+                else
+                {
+                    indicatorInstance.transform.position = aimRay.GetPoint(1000f);
+                    indicatorInstance.transform.up = Vector3.up;
+                }
             }
         }
 

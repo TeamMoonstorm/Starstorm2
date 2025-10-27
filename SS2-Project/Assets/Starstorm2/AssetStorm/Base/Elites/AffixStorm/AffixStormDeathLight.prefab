@@ -4697,6 +4697,7 @@ GameObject:
   - component: {fileID: 584721023941915568}
   - component: {fileID: 1934029510007492135}
   - component: {fileID: 3101376577479476920}
+  - component: {fileID: 3525986997404376722}
   m_Layer: 0
   m_Name: AffixStormDeathLight
   m_TagString: Untagged
@@ -4758,6 +4759,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakeOnStart: 1
   shakeOnEnable: 0
+  shakeOnDelay: 0
+  startDelay: 1
   wave:
     amplitude: 4
     frequency: 200
@@ -4798,6 +4801,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackedParticleSystem: {fileID: 0}
+--- !u!114 &3525986997404376722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4122535245062234530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2759224d0f9797e41b72af50c807d9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 2908164521334538947}
+  pps:
+  - {fileID: 1582163354803303729}
 --- !u!1 &5625360126699751065
 GameObject:
   m_ObjectHideFlags: 0

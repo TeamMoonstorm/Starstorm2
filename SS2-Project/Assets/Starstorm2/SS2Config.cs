@@ -24,6 +24,7 @@ namespace SS2
         public const string ID_EVENT = PREFIX + "Events";
         public const string ID_INTERACTABLE = PREFIX + "Interactable";
         public const string ID_MISC = PREFIX + "Miscellaneous";
+        public const string ID_ACCESSIBILITY = PREFIX + "Accessibility";
 
         private static ExpansionDef fuckyou = ScriptableObject.CreateInstance<ExpansionDef>();
         internal static ConfigFactory ConfigFactory { get; private set; }
@@ -35,12 +36,16 @@ namespace SS2
         public static ConfigFile ConfigEvent { get; private set; }
         //public static ConfigFile ConfigInteractable { get; private set; }
         public static ConfigFile ConfigMisc { get; private set; }
+        public static ConfigFile ConfigAccessibility { get; private set; }
 
         internal static ConfiguredBool EnableItems;
         public static ConfiguredBool EnableEquipments;
         public static ConfiguredBool EnableInteractables;
         public static ConfiguredBool EnableSurvivors;
         public static ConfiguredBool EnableMonsters;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0-1", configNameOverride = "Flashing Effects")]
+        public static float FlashingEffectsIntensity = 1f;
 
         internal static IEnumerator RegisterToModSettingsManager()
         {
@@ -58,6 +63,7 @@ namespace SS2
             ModSettingsManager.SetModIcon(icon, GUID(ID_INTERACTABLE), MODNAME(ID_INTERACTABLE));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ARTIFACT), MODNAME(ID_ARTIFACT));
             ModSettingsManager.SetModIcon(icon, GUID(ID_MISC), MODNAME(ID_MISC));
+            ModSettingsManager.SetModIcon(icon, GUID(ID_ACCESSIBILITY), MODNAME(ID_ACCESSIBILITY));
             ModSettingsManager.SetModDescription("A general content mod adapting ideas from Risk of Rain 1's Starstorm", SS2Main.GUID, SS2Main.MODNAME);
         }
 
@@ -76,6 +82,7 @@ namespace SS2
             
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
+            ConfigAccessibility = CreateConfigFile(ID_ACCESSIBILITY, true);
         }
 
 

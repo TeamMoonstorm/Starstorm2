@@ -1849,6 +1849,10 @@
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Nemesis Mercenary" ID="{08711AC6-8742-4325-BD1D-7D992E614C4D}" ShortID="1024204966">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="21"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
 					<ChildrenList>
 						<Event Name="Play_nemmerc_dash" ID="{7AD2D221-77D4-46B1-81D4-59D33E4E6750}">
 							<ChildrenList>
@@ -2226,6 +2230,70 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="emp_spawn_v3_6" ID="{2A103986-CA6B-4D17-AFD5-4C0C12C09E42}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Runshroom" ID="{4A33A041-BC31-4B36-8A04-4995CB366A9C}" ShortID="363680073">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="23"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="Play_runshroom_explode" ID="{F5EC1273-B505-4630-B13D-72418E988BF0}">
+							<ChildrenList>
+								<Action Name="" ID="{E6B2F806-93D4-46A5-8056-E9639404554B}" ShortID="475130986">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="rushrum_explode" ID="{EFD5BDAD-FD44-4877-8215-CBEDD71F1022}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_spawn" ID="{08086D22-D762-4856-A087-EAD8AC5AA5E6}">
+							<ChildrenList>
+								<Action Name="" ID="{C4DE76E7-1942-498B-86F5-0AF5A444A802}" ShortID="844387138">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomSpawn" ID="{B38CAF2E-CF9D-44A7-8851-B7E9697ECBD2}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_charge" ID="{E99736D6-59FD-4938-BC7A-B09230FCB306}">
+							<ChildrenList>
+								<Action Name="" ID="{D0B61423-8748-4682-BA1F-0A1E31724CCE}" ShortID="589857606">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomCharge" ID="{C6ED917A-97E2-489D-AA5A-0274400C5747}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_step" ID="{F09B4865-BF81-4606-A12A-A7776FCAAC67}">
+							<ChildrenList>
+								<Action Name="" ID="{C1D83FC4-52BF-4A9F-8AEA-A583E374B24B}" ShortID="412076577">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomStep" ID="{0C2CB5ED-B670-4977-8BE2-879E407C8EEF}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

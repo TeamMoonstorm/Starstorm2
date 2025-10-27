@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 1921025160587639568}
   - component: {fileID: 4874420261151767653}
   - component: {fileID: 851151563386535620}
+  - component: {fileID: 5263165339115901769}
   m_Layer: 0
   m_Name: ExecutionerSlamCameraEffect
   m_TagString: Untagged
@@ -113,6 +114,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 1
   resetAgeOnDisable: 0
+--- !u!114 &5263165339115901769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6593714948895794994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2759224d0f9797e41b72af50c807d9bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights: []
+  pps:
+  - {fileID: 6593714949895347735}
 --- !u!1 &6593714949895347729
 GameObject:
   m_ObjectHideFlags: 0
