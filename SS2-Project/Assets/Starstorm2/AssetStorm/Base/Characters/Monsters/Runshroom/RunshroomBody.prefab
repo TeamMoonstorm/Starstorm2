@@ -4152,7 +4152,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseFootstepString: Play_minimushroom_step
+  baseFootstepString: Play_runshroom_step
   baseFootliftString: 
   sprintFootstepOverrideString: 
   sprintFootliftOverrideString: 
@@ -9688,9 +9688,7 @@ MonoBehaviour:
   deathState:
     _typeName: EntityStates.Runshroom.RushroomDeath, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  idleStateMachine:
-  - {fileID: 0}
-  - {fileID: 0}
+  idleStateMachine: []
   bypassDeathLayerChange: 0
 --- !u!114 &6992000892810832392
 MonoBehaviour:
@@ -9825,8 +9823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitThreshold: 0.1
   targetStateMachine: {fileID: 2943242161096139363}
-  idleStateMachine:
-  - {fileID: 0}
+  idleStateMachine: []
   hurtState:
     _typeName: EntityStates.HurtState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   canBeHitStunned: 1
