@@ -44,8 +44,8 @@ namespace SS2
         public static ConfiguredBool EnableSurvivors;
         public static ConfiguredBool EnableMonsters;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0-1", configNameOverride = "Flashing Effects")]
-        public static float FlashingEffectsIntensity = 1f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0%-100%", configNameOverride = "Flashing Effects")]
+        public static float FlashingEffectsIntensity = 100f;
 
         internal static IEnumerator RegisterToModSettingsManager()
         {

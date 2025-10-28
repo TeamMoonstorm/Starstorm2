@@ -125,6 +125,12 @@ namespace EntityStates.Executioner2
                     priority = 1f
                 };
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
+
+                var packStateMachine = EntityStateMachine.FindByCustomName(gameObject, "JumpPack");
+                if (packStateMachine)
+                {
+                    packStateMachine.SetNextStateToMain();
+                }
             }    
         }
 

@@ -12,7 +12,7 @@ namespace SS2
         private float intensity;
         private void Awake()
         {
-            intensity = Mathf.Clamp01(SS2Config.FlashingEffectsIntensity);
+            intensity = Mathf.Clamp01(SS2Config.FlashingEffectsIntensity / 100f);
 
             for (int i = 0; i < lights.Length; i++)
             {
@@ -27,10 +27,15 @@ namespace SS2
             {
                 if (pps[i].TryGetComponent(out PostProcessDuration ppDuration))
                 {
-                    for (int k = 0; k < ppDuration.ppWeightCurve.keys.Length; k++)
+                    // directly modifying the keyframe array just doesnt work i guess
+                    Keyframe[] keys = HG.ArrayUtils.Clone(ppDuration.ppWeightCurve.keys);
+                    for (int k = 0; k < keys.Length; k++)
                     {
-                        ppDuration.ppWeightCurve.keys[k].value *= intensity;
+                        var key = keys[k];
+                        key.value *= intensity;
+                        keys[k] = key;
                     }
+                    ppDuration.ppWeightCurve.keys = keys;
                 }
                 pps[i].weight *= intensity;
             }

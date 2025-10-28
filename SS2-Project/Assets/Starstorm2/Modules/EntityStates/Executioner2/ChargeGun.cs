@@ -1,37 +1,41 @@
 ﻿using SS2;
 using RoR2;
 using RoR2.Skills;
+using RoR2.UI;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
 
 namespace EntityStates.Executioner2
 {
     public class ChargeGun : BaseSkillState
     {
-        public static float baseDuration = .3f;
-
+        private static float baseDuration = 1.2f;
+        private static float durationWithWhichYouWillNeedToHaveBeenInThisStateOrHadAtLeastOneStockToBeAbleToSetTheSkillOverride = 0.175f;
         private static float camEntryDuration = 0.2f;
         private static float camExitDuration = 0.4f;
 
         private static string enterSoundString = "ExecutionerAimSecondary";
         private static string exitSoundString = "ExecutionerExitSecondary";
 
+        public static GameObject crosshairOverridePrefab;
         [SerializeField]
         public SkillDef primaryOverride;
 
         private bool thisFuckingSucks;
 
+        private EntityStateMachine weapon;
         private float duration;
 
+        private float overrideStopwatch;
         private bool useAltCamera = false;
-
+        private bool overrideSet;
+        private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
         {
             maxPitch = 70f,
             minPitch = -70f,
-            pivotVerticalOffset = 1f,
+            pivotVerticalOffset = cameraPivotVerticalOffset,
             idealLocalCameraPos = chargeCameraPos,
             wallCushion = 0.1f,
         };
@@ -40,10 +44,12 @@ namespace EntityStates.Executioner2
         {
             maxPitch = 70f,
             minPitch = -70f,
-            pivotVerticalOffset = 1f,
+            pivotVerticalOffset = cameraPivotVerticalOffset,
             idealLocalCameraPos = altCameraPos,
             wallCushion = 0.1f,
         };
+
+        private static float cameraPivotVerticalOffset = 1.37f;
 
         private static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
 
@@ -61,9 +67,17 @@ namespace EntityStates.Executioner2
 
             CameraSwap();
 
+            if (skillLocator.secondary.stock > 0)
+            {
+                SetSkillOverride();
+            }
 
-            skillLocator.primary.SetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            if (crosshairOverridePrefab)
+            {
+                crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(characterBody, crosshairOverridePrefab, CrosshairUtils.OverridePriority.Skill);
+            }
 
+            weapon = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
         }
 
         private void CameraSwap()
@@ -94,6 +108,27 @@ namespace EntityStates.Executioner2
             }
         }
 
+        private void SetSkillOverride()
+        {
+            overrideStopwatch += Time.fixedDeltaTime;
+            if (!overrideSet && overrideStopwatch >= durationWithWhichYouWillNeedToHaveBeenInThisStateOrHadAtLeastOneStockToBeAbleToSetTheSkillOverride)
+            {
+                overrideSet = true;
+                skillLocator.primary.SetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            }
+            
+        }
+
+        private void UnsetSkillOverride()
+        {
+            overrideStopwatch = 0f;
+            if (overrideSet)
+            {
+                overrideSet = false;
+                skillLocator.primary.UnsetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            }
+        }
+
         public override void Update()
         {
             base.Update();
@@ -109,16 +144,23 @@ namespace EntityStates.Executioner2
         {
             base.FixedUpdate();
 
-            characterBody.isSprinting = false;
-            characterBody.aimTimer = 2f;
-
-            if (skillLocator.secondary.stock > 0)
+            if (weapon.state is not Executioner2.Dash)
             {
-                skillLocator.primaryBonusStockSkill.stock = 1;
+                characterBody.isSprinting = false;
+                characterBody.aimTimer = 2f;
             }
             else
             {
-                skillLocator.primary.stock = 0; // override skill has requiredStock 1
+                characterBody.aimTimer = 0f;
+            }
+
+            if (skillLocator.secondary.stock > 0)
+            {
+                SetSkillOverride();
+            }
+            else
+            {
+                UnsetSkillOverride();
             }
 
             if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
@@ -134,7 +176,7 @@ namespace EntityStates.Executioner2
 
             if (isAuthority)
             {
-                if (!inputBank.skill2.down || inputBank.skill3.down || inputBank.skill4.down)
+                if (!inputBank.skill2.down)
                 {
                     outer.SetNextStateToMain();
                     return;
@@ -150,19 +192,18 @@ namespace EntityStates.Executioner2
         public override void OnExit()
         {
             base.OnExit();
+            UnsetSkillOverride();
             PlayCrossfade("Gesture, Override", "BufferEmpty", "Secondary.playbackRate", duration, 0.3f);
             Util.PlaySound(exitSoundString, gameObject);
             if (cameraTargetParams)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
             }
-
-            skillLocator.primary.UnsetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
+            if (crosshairOverrideRequest != null)
+            {
+                crosshairOverrideRequest.Dispose();
+            }
             
-            skillLocator.primary.RemoveAllStocks();
-            float rechargeInterval = skillLocator.primary.baseRechargeInterval;
-            float cooldownRestore = rechargeInterval * (1 - (1 / attackSpeedStat));
-            skillLocator.primary.RunRecharge(cooldownRestore);
         }
     }
 }

@@ -122,6 +122,7 @@ namespace AK
         static const AkUniqueID PLAY_RUNSHROOM_EXPLODE = 3490687111U;
         static const AkUniqueID PLAY_RUNSHROOM_SPAWN = 1059372549U;
         static const AkUniqueID PLAY_RUNSHROOM_STEP = 1108501478U;
+        static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
         static const AkUniqueID PLAY_WAYFARERBIGLAMPLOOP = 1229124563U;
         static const AkUniqueID PROCAMULET = 3464571447U;
@@ -136,10 +137,12 @@ namespace AK
         static const AkUniqueID REMUNERATIONSPAWN2 = 3276263843U;
         static const AkUniqueID SIGILACTIVATION = 2800331071U;
         static const AkUniqueID SPAWNMGR = 2187217924U;
+        static const AkUniqueID SS_WINDAMBIENCE = 892248604U;
         static const AkUniqueID STIRRINGSOUL = 3982623506U;
         static const AkUniqueID STOP_CHIRRCSS = 3156814475U;
         static const AkUniqueID STOP_CHIRRSPITBOMBLOOP = 1032313774U;
         static const AkUniqueID STOP_ETHEREAL_FIREPILLAR_LOOP = 2875515542U;
+        static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STOP_WAYFARERBIGLAMPLOOP = 1422521957U;
         static const AkUniqueID STRANGECAN = 3750145159U;
         static const AkUniqueID SWIFTSKATEBOARD = 961366952U;

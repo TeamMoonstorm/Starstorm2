@@ -7,12 +7,12 @@ namespace EntityStates.Executioner
     public class FirePistol : BaseSkillState
     {
         [FormatToken("SS2_EXECUTIONER_PISTOL_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
-        public static float damageCoefficient;
-        public static float procCoefficient;
-        public static float baseDuration;
-        public static float recoil;
-        public static float spreadBloom;
-        public static float force;
+        private static float damageCoefficient = 1.8f;
+        private static float procCoefficient = 1f;
+        private static float baseDuration = 0.42f;
+        private static float recoil = 2f;
+        private static float spreadBloom = 0.75f;
+        private static float force = 120f;
 
         private static float bulletRadius = .7f;
         [HideInInspector]
