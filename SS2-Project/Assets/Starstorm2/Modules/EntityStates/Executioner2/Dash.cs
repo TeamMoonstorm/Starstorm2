@@ -11,14 +11,14 @@ namespace EntityStates.Executioner2
 {
     public class Dash : BaseSkillState
     {
-        public static float baseDuration = 0.6f;
-        public static float speedMultiplier = 3.0f;
-        public static float debuffRadius = 12f;
+        private static float baseDuration = 0.75f;
+        private static float speedMultiplier = 2.4f;
+        private static float debuffRadius = 11f;
         [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
-        public static float debuffDuration = 4.0f;
-        public static float debuffCheckInterval = 0.0333333f;
-        public static float hopVelocity; // = 17f;
-        private static float turnSpeed = 360f; // = 17f;
+        private static float debuffDuration = 4.0f;
+        private static float debuffCheckInterval = 0.0333333f;
+        private static float hopVelocity = 17f;
+        private static float turnSpeed = 360f;
 
         private float debuffCheckStopwatch;
         private float duration;
@@ -27,9 +27,12 @@ namespace EntityStates.Executioner2
         private List<HealthComponent> fearedTargets = new List<HealthComponent>();
         private Animator animator;
 
+        public static GameObject fearTracerEffect;
+        public static GameObject fearTracerEffectMastery;
         public static GameObject dashEffect;
         public static GameObject dashEffectMastery;
         public static Material dashMasteryMaterial;
+        public static Material dashMaterial;
         public static string ExhaustL;
         public static string ExhaustR;
 
@@ -38,6 +41,7 @@ namespace EntityStates.Executioner2
         private Vector3 directionVelocity;
 
         private bool playedExitAnimation;
+        private bool inMasterySkin;
         private static float asodiyhbeajbde = 0.33f;
         public override void OnEnter()
         {
@@ -60,7 +64,7 @@ namespace EntityStates.Executioner2
             fearSearch.radius = debuffRadius;
 
             string skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
-            bool inMasterySkin = skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY";
+            inMasterySkin = skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY";
             //create dash aoe
             if (NetworkServer.active)
             {
@@ -84,20 +88,10 @@ namespace EntityStates.Executioner2
             if (modelTransform)
             {
                 TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
-                // yknow i probably should have done !skinNameToken so its easier to understand but this works and i dont wanna change it so idk - b
-                if (inMasterySkin)
-                {
-                    temporaryOverlay.duration = 1.3f * baseDuration; // doing this because otherwise it just makes him flash white ??? i still have no idea why this doesnt happen with the huntress one bc the settings are the same :((( -b
-                }
-                else
-                {
-                    temporaryOverlay.duration = 1.5f * baseDuration;
-                }
-
+                temporaryOverlay.duration = duration * 1.3f;
                 temporaryOverlay.animateShaderAlpha = true;
-                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 1f, 0f);
+                temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
-
 
                 if (inMasterySkin)
                 {
@@ -105,11 +99,9 @@ namespace EntityStates.Executioner2
                 }
                 else
                 {
-                    temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
+                    temporaryOverlay.originalMaterial = dashMaterial;
                 }
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 
@@ -138,8 +130,17 @@ namespace EntityStates.Executioner2
                     if (body && body != base.characterBody)
                     {
                         body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
-
-                        if(body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0])
+                        var effectPrefab = inMasterySkin ? fearTracerEffectMastery : fearTracerEffect;
+                        if (effectPrefab)
+                        {
+                            EffectData effectData = new EffectData
+                            {
+                                origin = body.corePosition,
+                                start = characterBody.corePosition,
+                            };
+                            EffectManager.SpawnEffect(effectPrefab, effectData, true);
+                        }
+                        if(body.master && body.master.aiComponents.Length > 0 && body.master.aiComponents[0]) // THIS SUCKS!!!!!
                         {
                             body.master.aiComponents[0].stateMachine.SetNextState(new AI.Walker.Fear { fearTarget = base.gameObject });
                         }

@@ -14,7 +14,7 @@ using R2API;
 using RoR2.ContentManagement;
 using RoR2.Orbs;
 using R2API.Utils;
-
+using MSU.Config;
 namespace SS2.Survivors
 {
     public sealed class Executioner2 : SS2Survivor
@@ -38,6 +38,9 @@ namespace SS2.Survivors
                 "ScavLunar4Body",
                 "ShopkeeperBody"
         };
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Use Ion Manipulators' alternate camera position by default.")]
+        public static bool DefaultAltCameraConfig = false;
 
         public static void AddBodyToSuperChargeCollection(string body)
         {

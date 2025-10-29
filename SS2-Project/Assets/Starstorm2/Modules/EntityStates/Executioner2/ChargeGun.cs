@@ -1,4 +1,4 @@
-﻿using SS2;
+﻿using SS2.Components;
 using RoR2;
 using RoR2.Skills;
 using RoR2.UI;
@@ -26,7 +26,7 @@ namespace EntityStates.Executioner2
         private float duration;
 
         private float overrideStopwatch;
-        private bool useAltCamera = false;
+        private ExecutionerController controller;
         private bool overrideSet;
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
 
@@ -51,9 +51,9 @@ namespace EntityStates.Executioner2
 
         private static float cameraPivotVerticalOffset = 1.37f;
 
-        private static Vector3 chargeCameraPos = new Vector3(1.2f, -0.65f, -6.1f);
+        private static Vector3 chargeCameraPos = new Vector3(1.2f, -0.75f, -6.1f);
 
-        private static Vector3 altCameraPos = new Vector3(-1.2f, -0.65f, -6.1f);
+        private static Vector3 altCameraPos = new Vector3(-1.2f, -0.75f, -6.1f);
         public override void OnEnter()
         {
             base.OnEnter();
@@ -65,6 +65,7 @@ namespace EntityStates.Executioner2
 
             characterBody.SetAimTimer(2f);
 
+            controller = GetComponent<ExecutionerController>();
             CameraSwap();
 
             if (skillLocator.secondary.stock > 0)
@@ -82,7 +83,7 @@ namespace EntityStates.Executioner2
 
         private void CameraSwap()
         {
-            if (useAltCamera)
+            if (controller && controller.useAltCamera)
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
 
@@ -114,6 +115,7 @@ namespace EntityStates.Executioner2
             if (!overrideSet && overrideStopwatch >= durationWithWhichYouWillNeedToHaveBeenInThisStateOrHadAtLeastOneStockToBeAbleToSetTheSkillOverride)
             {
                 overrideSet = true;
+                PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
                 skillLocator.primary.SetSkillOverride(this, primaryOverride, GenericSkill.SkillOverridePriority.Replacement);
             }
             
@@ -135,7 +137,11 @@ namespace EntityStates.Executioner2
 
             if (Input.GetKeyDown(KeyCode.V) && isAuthority)
             {
-                useAltCamera = !useAltCamera;
+                if (controller)
+                {
+                    controller.useAltCamera = !controller.useAltCamera;
+                }
+                
                 CameraSwap();
             }
         }
@@ -161,17 +167,6 @@ namespace EntityStates.Executioner2
             else
             {
                 UnsetSkillOverride();
-            }
-
-            if (!thisFuckingSucks && skillLocator.secondary.stock == 0)
-            {
-                thisFuckingSucks = true;
-                PlayCrossfade("Gesture, Override", "FireIonGunStart", "Secondary.playbackRate", duration, 0.3f);
-            }
-
-            if (thisFuckingSucks && skillLocator.secondary.stock >= 1)
-            {
-                thisFuckingSucks = false;
             }
 
             if (isAuthority)

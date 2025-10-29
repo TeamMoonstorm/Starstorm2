@@ -40,7 +40,6 @@ namespace EntityStates.Executioner2
 
         public int shotsToFire;
         public int shotsFired = 0;
-
         private float duration;
         private float extraDuration;
         private LampBehavior lamp = null;
@@ -218,7 +217,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Frozen;
+            return fixedAge > duration ? InterruptPriority.PrioritySkill : InterruptPriority.Frozen;
         }
     }
 }

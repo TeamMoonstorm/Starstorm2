@@ -116,52 +116,59 @@ namespace EntityStates.Executioner2
 
         private void CheckMapZones(Vector3 position)
         {
-            List<MapZone> instancesList = InstanceTracker.GetInstancesList<MapZone>();
-            bool inAnyTriggerExitMapZone = false;
-            MapZone angryMapZone = null;
-            foreach (MapZone mapZone in instancesList)
+            if (!Util.IsPositionWithinMapBounds(position))
             {
-                if (mapZone.gameObject.activeSelf && mapZone.zoneType == MapZone.ZoneType.OutOfBounds)
-                {
-                    // If a mapzone would teleport us back to the stage when we are outside of it
-                    if (!inAnyTriggerExitMapZone && mapZone.triggerType == MapZone.TriggerType.TriggerExit)
-                    {
-                        // and we are inside any one of them
-                        if (mapZone.IsPointInsideMapZone(position))
-                        {
-                            // then we are probably inside of the map
-                            inAnyTriggerExitMapZone = true;
-                        }
-                        else
-                        {
-                            angryMapZone = mapZone;
-                        }
-                    }
-                    // unless...................................
-
-                    // If a mapzone would teleport us back to the stage when we are inside of it
-                    if (mapZone.triggerType == MapZone.TriggerType.TriggerEnter)
-                    {
-                        // and we are inside any one of them
-                        if (mapZone.IsPointInsideMapZone(position))
-                        {
-                            // then we are outside of the map
-                            angryMapZone = mapZone;
-                            break;
-                        }
-                    }
-                    // i think
-                }
-            }
-            if (angryMapZone)
-            {
-                // set our layer back to something that collides with mapzones to make MapZone.TeleportBody teleport us back
-                gameObject.layer = LayerIndex.defaultLayer.intVal;
-                angryMapZone.TeleportBody(characterBody);
-                gameObject.layer = LayerIndex.projectile.intVal;
-
                 DoImpactAuthority();
             }
+
+            // i think im stupid 
+
+            //List<MapZone> instancesList = InstanceTracker.GetInstancesList<MapZone>();
+            //bool inAnyTriggerExitMapZone = false;
+            //MapZone angryMapZone = null;
+            //foreach (MapZone mapZone in instancesList)
+            //{
+            //    if (mapZone.gameObject.activeSelf && mapZone.zoneType == MapZone.ZoneType.OutOfBounds)
+            //    {
+            //        // If a mapzone would teleport us back to the stage when we are outside of it
+            //        if (!inAnyTriggerExitMapZone && mapZone.triggerType == MapZone.TriggerType.TriggerExit)
+            //        {
+            //            // and we are inside any one of them
+            //            if (mapZone.IsPointInsideMapZone(position))
+            //            {
+            //                // then we are probably inside of the map
+            //                inAnyTriggerExitMapZone = true;
+            //            }
+            //            else
+            //            {
+            //                angryMapZone = mapZone;
+            //            }
+            //        }
+            //        // unless...................................
+
+            //        // If a mapzone would teleport us back to the stage when we are inside of it
+            //        if (mapZone.triggerType == MapZone.TriggerType.TriggerEnter)
+            //        {
+            //            // and we are inside any one of them
+            //            if (mapZone.IsPointInsideMapZone(position))
+            //            {
+            //                // then we are outside of the map
+            //                angryMapZone = mapZone;
+            //                break;
+            //            }
+            //        }
+            //        // i think
+            //    }
+            //}
+            //if (angryMapZone)
+            //{
+            //    // set our layer back to something that collides with mapzones to make MapZone.TeleportBody teleport us back
+            //    gameObject.layer = LayerIndex.defaultLayer.intVal;
+            //    angryMapZone.TeleportBody(characterBody);
+            //    gameObject.layer = LayerIndex.projectile.intVal;
+
+            //    DoImpactAuthority();
+            //}
         }
 
         private static bool FUCK = true;
