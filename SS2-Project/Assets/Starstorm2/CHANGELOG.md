@@ -5,10 +5,12 @@
 	* Add some graceful error handling to our SS2Monster base class.
 	* Moved some of the debug only logs to production builds so your bug report logs contain more useful errors for us when debugging!
 	* Added config options for disabling enemies and survivors (why would you do that).
+	* Fixed Condemned Bond pickup not appearing for clients.
 	* New PT-BR translation for items thanks to Balorfist
 	* Updated Chinese translation thanks to EternitySwarmCrowm
 	* New config option to lower the intensity of certain flashing effects.
 		* DISCLAIMER: This is not a universal solution for flashing. Currently, only Executioner and Stormborn monsters are affected
+
 * Items
 	* (NEW) Galvanic Core - 10% (+10% per stack) chance on hit to stun. Stunned enemies apply razed to enemies within 15m (+5m per stack), reducing their maximum health by 20%, damage by 30%, and movement speed by 80%.
 	* Coffee Bag adjusted. 

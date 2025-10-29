@@ -116,8 +116,17 @@ namespace EntityStates.Executioner2
 
         private void CheckMapZones(Vector3 position)
         {
-            if (!Util.IsPositionWithinMapBounds(position))
+            // MAJOR BUG!!!!!::::
+            // If an Executioner that isn't on the player team and isn't an invading doppelganger moves out of bounds while using Execute, they will be erroneously teleported back to the map instead of killed!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (!Util.IsPositionWithinMapBounds(position)) 
             {
+                Vector3 teleportPosition = Run.instance.FindSafeTeleportPosition(characterBody, null, 0f, 123f); //???
+                TeleportHelper.TeleportBody(characterBody, teleportPosition, false);
+                GameObject teleportEffectPrefab = Run.instance.GetTeleportEffectPrefab(characterBody.gameObject);
+                if (teleportEffectPrefab)
+                {
+                    EffectManager.SimpleEffect(teleportEffectPrefab, teleportPosition, Quaternion.identity, true);
+                }
                 DoImpactAuthority();
             }
 

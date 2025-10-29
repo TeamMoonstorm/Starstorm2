@@ -31,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3543115728058321877}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &8682832934265311040
 TrailRenderer:
@@ -96,7 +96,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.7764706}
+      key0: {r: 1, g: 1, b: 1, a: 0.36078432}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -190,6 +190,7 @@ GameObject:
   - component: {fileID: 999322504401459614}
   - component: {fileID: 1085505890235728862}
   - component: {fileID: 1085931124708273424}
+  - component: {fileID: 8487650852739101431}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -208,7 +209,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3925325235589326559}
   m_Father: {fileID: 3543115728058321877}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
@@ -2744,6 +2746,19 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &8487650852739101431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997422026232722893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackedParticleSystem: {fileID: 1085505890235728862}
 --- !u!1 &2722756038910414453
 GameObject:
   m_ObjectHideFlags: 0
@@ -2757,6 +2772,7 @@ GameObject:
   - component: {fileID: 1923205653086747762}
   - component: {fileID: 4662597904279025220}
   - component: {fileID: 2529874827113667376}
+  - component: {fileID: 8515218622489162250}
   m_Layer: 0
   m_Name: ExecutionerDashEffect
   m_TagString: Untagged
@@ -2777,7 +2793,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 999322504401459614}
-  - {fileID: 3925325235589326559}
   - {fileID: 8678569428533260192}
   - {fileID: 8678189115623496471}
   - {fileID: 5409252927829921950}
@@ -2859,6 +2874,20 @@ MonoBehaviour:
   radius: 10
   scaleShakeRadiusWithLocalScale: 0
   amplitudeTimeDecay: 1
+--- !u!114 &8515218622489162250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2722756038910414453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6c2065f12b707b41a72f36de2341ec2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particleSystems:
+  - {fileID: 1085505890235728862}
 --- !u!1 &3922721074139810444
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,13 +2913,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3922721074139810444}
-  m_LocalRotation: {x: 0.5, y: -0, z: -0, w: 0.8660254}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 1.3333333, y: 1.3333329, z: 1.3333329}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3543115728058321877}
-  m_RootOrder: 1
+  m_Father: {fileID: 999322504401459614}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 60, y: 0, z: 0}
 --- !u!198 &3798713579689147551
 ParticleSystem:
@@ -2931,7 +2960,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 1
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -5455,7 +5484,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3543115728058321877}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!96 &8730716167178741675
 TrailRenderer:
@@ -5634,7 +5663,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3543115728058321877}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &8790252102867156849
 Light:
