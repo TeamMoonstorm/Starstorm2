@@ -64,7 +64,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
         public class IceToolBodyBehavior : BaseItemBodyBehavior

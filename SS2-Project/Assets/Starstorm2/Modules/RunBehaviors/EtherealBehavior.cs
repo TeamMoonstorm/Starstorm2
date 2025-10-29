@@ -57,6 +57,11 @@ namespace SS2
         }
         private void Start()
         {
+            if (!SS2Config.enableBeta) //  i fucking hate configs ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            {
+                Destroy(this);
+                return;
+            }
             run = GetComponentInParent<Run>();
             instance = this;
             Run.ambientLevelCap = defaultLevelCap;

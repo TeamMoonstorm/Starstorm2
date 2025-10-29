@@ -29,7 +29,7 @@ namespace SS2.Survivors
         public static GameObject ghoulBodyPrefab;
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
         public override void Initialize()
         {

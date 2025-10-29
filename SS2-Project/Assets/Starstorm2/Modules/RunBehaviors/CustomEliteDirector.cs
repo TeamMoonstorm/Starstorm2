@@ -222,7 +222,7 @@ namespace SS2.Components
             return EliteCreditCost <= eliteCredit && totalCost * CostRequirement <= combatDirector.monsterCredit;
         }
 
-        // this is just because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
+        // this is virtual because Empyreans were subtracting extra for reasons i do not fully understand. but i already liked their spawn rate and didnt want to change it
         public virtual void SubtractCost(float baseCost, ref float totalCost, CombatDirector combatDirector) 
         {
             float originalCost = totalCost;
@@ -257,6 +257,11 @@ namespace SS2.Components
 
         public override void MakeElite(CharacterBody body)
         {
+            if (SS2Config.enableBeta == false)
+            {
+                MakeEmpyreanOLDstupidFUCK(body);
+                return;
+            }
             var inventory = body.inventory;
 
             inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
@@ -292,8 +297,10 @@ namespace SS2.Components
                 rewards.expReward *= 30;
                 rewards.goldReward *= 30;
             }
+
             // create separate class for drop component. create catalog of super elites somewhere
             body.gameObject.AddComponent<OnBossKilledServer>().drop = CustomEliteDirector.instance.treasureRng.NextElementUniform(new ItemIndex[] { SS2Content.Items.ShardEarth.itemIndex, SS2Content.Items.ShardFire.itemIndex, SS2Content.Items.ShardIce.itemIndex, SS2Content.Items.ShardLightning.itemIndex }); // hi
+            
             if (body.TryGetComponent(out RigidbodyMotor motor))
             {
                 motor.canTakeImpactDamage = false; // i hate this shit so much. wisps and jellies take up all these spawns in the first loop and they die instantly
@@ -303,6 +310,50 @@ namespace SS2.Components
         {
             bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
             bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState());
+        }
+
+        public void MakeEmpyreanOLDstupidFUCK(CharacterBody body)
+        {
+            var inventory = body.inventory;
+
+            inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
+            inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
+
+            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
+            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
+            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
+            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
+            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
+
+            int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
+            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
+            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
+            if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (body.rigidbody) body.rigidbody.mass = 2000f;
+            // remove level cap
+            if (Run.instance.ambientLevel >= Run.ambientLevelCap)
+            {
+                int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
+                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+            }
+
+            EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
+            if (bodyMachine)
+            {
+                bodyMachine.initialStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.AffixEmpyrean.SpawnState));
+                bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState()); // why does this work for stormborn but not here ?>>???
+            }
+
+
+            DeathRewards rewards = body.GetComponent<DeathRewards>();
+            if (rewards)
+            {
+                rewards.expReward *= 15;
+                rewards.goldReward *= 15;
+            }
         }
     }
 

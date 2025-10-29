@@ -27,10 +27,10 @@ namespace SS2.Items
             On.RoR2.UI.ScrapperInfoPanelHelper.ShowInfo += ReplaceScrapIcon;
             On.RoR2.ScrapperController.BeginScrapping += ReturnNanobots;
         }
-        
+
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
         // give back original nanobots and make it so only one orb spawns
         private void ReturnNanobots(On.RoR2.ScrapperController.orig_BeginScrapping orig, ScrapperController self, int intPickupIndex)

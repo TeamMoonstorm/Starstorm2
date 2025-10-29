@@ -43,6 +43,10 @@ namespace SS2
 
         public static int GetItemCountForPlayers(ItemDef itemDef)
         {
+            if (itemDef == null)
+            {
+                return 0;
+            }
             int count = 0;
             foreach (PlayerCharacterMasterController playerCharacterMasterController in PlayerCharacterMasterController.instances)
             {
