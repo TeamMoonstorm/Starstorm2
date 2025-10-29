@@ -24,7 +24,7 @@ namespace EntityStates.Executioner2
         public static GameObject indicatorPrefab;
         public static GameObject jumpEffect;
         public static GameObject jumpEffectMastery;
-        public static Material jumpMaterialMastery;
+
         public static string ExhaustL;
         public static string ExhaustR;
         private bool controlledExit = false;
@@ -66,32 +66,6 @@ namespace EntityStates.Executioner2
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
             flyVector = Vector3.up;
 
-            Transform modelTransform = GetModelTransform();
-            if (modelTransform)
-            {
-                TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
-
-                temporaryOverlay.animateShaderAlpha = true;
-
-                temporaryOverlay.destroyComponentOnEnd = true;
-
-                if (exeController.inMasterySkin)
-                {
-                    temporaryOverlay.duration = .3f * duration;
-                    temporaryOverlay.originalMaterial = jumpMaterialMastery;
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 100f);
-                }
-                else
-                {
-                    temporaryOverlay.duration = 1.5f * duration;
-                    temporaryOverlay.originalMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Huntress/matHuntressFlashBright.mat").WaitForCompletion();
-                    temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0.5f, 0.5f, 0f);
-                }
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
-            }
-
             Util.PlaySound("ExecutionerSpecialCast", gameObject);
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
             StartAimMode();
@@ -125,6 +99,12 @@ namespace EntityStates.Executioner2
                     priority = 1f
                 };
                 camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraLerpDuration);
+
+                var packStateMachine = EntityStateMachine.FindByCustomName(gameObject, "JumpPack");
+                if (packStateMachine)
+                {
+                    packStateMachine.SetNextStateToMain();
+                }
             }    
         }
 

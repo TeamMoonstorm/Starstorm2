@@ -13,8 +13,11 @@ namespace EntityStates.Executioner2
         public static float procCoefficient;
         public static float recoil;
         private static float maxDuration = 10f;
+        private static float acceleration = 1f;
         private static float walkSpeedCoefficient = 1.5f;
         private static float verticlalSpeed = 100f;
+        private static float maxVerticalSpeed = 300f;
+        private static float durationForMaxSpeed = 3f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
         public static GameObject impactEffectPrefab;
@@ -92,10 +95,18 @@ namespace EntityStates.Executioner2
                 FixedUpdateAuthority();
         }
 
+        private float mapCheckTimer = 0.33f;
         private void FixedUpdateAuthority()
         {
             characterDirection.forward = dashVector;
             HandleMovement();
+
+            mapCheckTimer -= Time.fixedDeltaTime;
+            if (mapCheckTimer <= 0)
+            {
+                mapCheckTimer = 0.33f;
+                CheckMapZones(transform.position);
+            }
 
             if (fixedAge > maxDuration || characterMotor.Motor.GroundingStatus.IsStableOnGround)
             {
@@ -103,10 +114,69 @@ namespace EntityStates.Executioner2
             }
         }
 
+        private void CheckMapZones(Vector3 position)
+        {
+            if (!Util.IsPositionWithinMapBounds(position))
+            {
+                DoImpactAuthority();
+            }
+
+            // i think im stupid 
+
+            //List<MapZone> instancesList = InstanceTracker.GetInstancesList<MapZone>();
+            //bool inAnyTriggerExitMapZone = false;
+            //MapZone angryMapZone = null;
+            //foreach (MapZone mapZone in instancesList)
+            //{
+            //    if (mapZone.gameObject.activeSelf && mapZone.zoneType == MapZone.ZoneType.OutOfBounds)
+            //    {
+            //        // If a mapzone would teleport us back to the stage when we are outside of it
+            //        if (!inAnyTriggerExitMapZone && mapZone.triggerType == MapZone.TriggerType.TriggerExit)
+            //        {
+            //            // and we are inside any one of them
+            //            if (mapZone.IsPointInsideMapZone(position))
+            //            {
+            //                // then we are probably inside of the map
+            //                inAnyTriggerExitMapZone = true;
+            //            }
+            //            else
+            //            {
+            //                angryMapZone = mapZone;
+            //            }
+            //        }
+            //        // unless...................................
+
+            //        // If a mapzone would teleport us back to the stage when we are inside of it
+            //        if (mapZone.triggerType == MapZone.TriggerType.TriggerEnter)
+            //        {
+            //            // and we are inside any one of them
+            //            if (mapZone.IsPointInsideMapZone(position))
+            //            {
+            //                // then we are outside of the map
+            //                angryMapZone = mapZone;
+            //                break;
+            //            }
+            //        }
+            //        // i think
+            //    }
+            //}
+            //if (angryMapZone)
+            //{
+            //    // set our layer back to something that collides with mapzones to make MapZone.TeleportBody teleport us back
+            //    gameObject.layer = LayerIndex.defaultLayer.intVal;
+            //    angryMapZone.TeleportBody(characterBody);
+            //    gameObject.layer = LayerIndex.projectile.intVal;
+
+            //    DoImpactAuthority();
+            //}
+        }
+
         private static bool FUCK = true;
         public void HandleMovement()
         {
-            characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
+            float t = Mathf.Clamp01(fixedAge / durationForMaxSpeed);
+            float speed = Mathf.Lerp(verticlalSpeed, maxVerticalSpeed, t);
+            characterMotor.rootMotion += dashVector * speed * Time.fixedDeltaTime;
             characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
             characterMotor.velocity = Vector3.zero;
 

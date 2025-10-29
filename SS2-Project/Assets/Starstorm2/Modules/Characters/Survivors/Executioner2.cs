@@ -14,7 +14,7 @@ using R2API;
 using RoR2.ContentManagement;
 using RoR2.Orbs;
 using R2API.Utils;
-
+using MSU.Config;
 namespace SS2.Survivors
 {
     public sealed class Executioner2 : SS2Survivor
@@ -39,6 +39,9 @@ namespace SS2.Survivors
                 "ShopkeeperBody"
         };
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Use Ion Manipulators' alternate camera position by default.")]
+        public static bool DefaultAltCameraConfig = false;
+
         public static void AddBodyToSuperChargeCollection(string body)
         {
             bodiesThatGiveSuperCharge.Add(body);
@@ -58,7 +61,7 @@ namespace SS2.Survivors
 
             taserVFX = AssetCollection.FindAsset<GameObject>("TaserOrbEffect");
 
-            //IL.RoR2.Orbs.OrbEffect.Start += OrbEffect_Start; // :3
+            IL.RoR2.Orbs.OrbEffect.Reset += OrbEffect_Reset; // :3
         }
 
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
@@ -87,7 +90,7 @@ namespace SS2.Survivors
             }
         }
 
-        private void OrbEffect_Start(ILContext il)
+        private void OrbEffect_Reset(MonoMod.Cil.ILContext il)
         {
             ILCursor cursor = new ILCursor(il);
 
@@ -96,11 +99,13 @@ namespace SS2.Survivors
                 instruction => instruction.MatchLdarg(0),
                 instruction => instruction.MatchLdfld<OrbEffect>(nameof(OrbEffect.startPosition))
                 );
+
             if (ILFound)
             {
                 cursor.Emit(OpCodes.Ldarg_0);
                 cursor.Emit(OpCodes.Ldfld, typeof(OrbEffect).GetFieldCached(nameof(OrbEffect.targetTransform)));
-                cursor.Emit(OpCodes.Ldloc_0);
+                cursor.Emit(OpCodes.Ldarg_0);
+                cursor.Emit(OpCodes.Ldfld, typeof(OrbEffect).GetFieldCached(nameof(OrbEffect._effectComponent)));
                 cursor.EmitDelegate<Func<Vector3, Transform, EffectComponent, Vector3>>((startPosition, targetTransform, effectComponent) =>
                 {
                     if (targetTransform == null)
@@ -109,13 +114,11 @@ namespace SS2.Survivors
                     }
                     return startPosition;
                 });
-                SS2Log.Info("Added OrbEffect_Start hook :D");
-                //Debug.Log("Added OrbEffect_Start hook :D");
+                SS2Log.Info("Added OrbEffect_Reset hook :D");
             }
             else
             {
-                SS2Log.Error("OrbEffect_Start hook failed.");
-                //Debug.Log("ah shit");  soulless but informative
+                SS2Log.Fatal("OrbEffect_Reset hook failed.");
             }
         }
 

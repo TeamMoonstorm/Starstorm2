@@ -23,10 +23,12 @@ namespace SS2.Components
 
         private bool axeVisible = false;
 
+        public bool useAltCamera = false;
         public bool inMasterySkin { get; private set; }
 
         private void Awake()
         {
+            useAltCamera = Survivors.Executioner2.DefaultAltCameraConfig;
             secondary = GetComponent<SkillLocator>().secondary;
             modelLocator = GetComponent<ModelLocator>();
         }

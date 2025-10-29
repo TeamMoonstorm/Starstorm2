@@ -12,19 +12,20 @@ namespace EntityStates.Executioner2
     {
         [FormatToken("SS2_EXECUTIONER_IONGUN_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         private static float damageCoefficient = 3.5f;
-        public static float damageBurstCoefficient = 0.5f;
-        public static float procCoefficient = 1.0f;
-        public static float baseDuration = 0.085f;
-        public static float recoil = 0.6f;
+        private static float damageBurstCoefficient = 0.5f;
+        private static float procCoefficient = 1.0f;
+        private static float baseDuration = 0.115f;
+        private static float extraDurationOnLastShot = 0.42f; // same duration as FirePistol
+        private static float recoil = 0.6f;
         private static bool useAimAssist = true;
         private static float aimSnapAngle = 15f;
         private static float aimSnapAnglePerShot = 1f;
         private static float aimSnapRange = 70f;
-        public static float range = 200f;
-        public static float force = 200f;
-        public static float spreadBloomValue = 0.8f;
+        private static float range = 200f;
+        private static float force = 200f;
+        private static float spreadBloomValue = 0.4f;
         //public static int minimumShotBurst = 5;
-        public static string muzzleString = "Muzzle";
+        private static string muzzleString = "Muzzle";
         public static GameObject ionEffectPrefab;
         public static GameObject muzzlePrefabMastery;
         public static GameObject tracerPrefabMastery;
@@ -39,9 +40,8 @@ namespace EntityStates.Executioner2
 
         public int shotsToFire;
         public int shotsFired = 0;
-
         private float duration;
-
+        private float extraDuration;
         private LampBehavior lamp = null;
 
         public override void OnEnter()
@@ -55,6 +55,7 @@ namespace EntityStates.Executioner2
                 return;
 
             duration = baseDuration / attackSpeedStat;
+            extraDuration = extraDurationOnLastShot / attackSpeedStat;
 
             if (!fullBurst)
             {
@@ -104,7 +105,11 @@ namespace EntityStates.Executioner2
                     outer.SetNextState(nextState);
                     return;
                 }
-                outer.SetNextStateToMain();
+
+                if (fixedAge >= duration + extraDuration)
+                {
+                    outer.SetNextStateToMain();
+                }
             }
         }
 
@@ -212,7 +217,7 @@ namespace EntityStates.Executioner2
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Frozen;
+            return fixedAge > duration ? InterruptPriority.PrioritySkill : InterruptPriority.Frozen;
         }
     }
 }

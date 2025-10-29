@@ -184,7 +184,7 @@ namespace EntityStates.Executioner2
                         taserOrb.procCoefficient = procCoefficient;
                         taserOrb.target = null;
                         taserOrb.damageColorIndex = DamageColorIndex.Default;
-                        taserOrb.damageType = DamageType.Generic;
+                        taserOrb.damageType = DamageTypeCombo.GenericPrimary;
                         taserOrb.targetPosition = ray;
                         taserOrb.attackerAimVector = aimRay.direction;
                         taserOrb.skinNameToken = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken;
