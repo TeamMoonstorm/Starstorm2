@@ -49,7 +49,7 @@ namespace SS2
     {
         public static ConfiguredBool ReworkedStorm = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
         {
-            b.section = "Storms";
+            b.section = "0.7";
             b.key = "Enable Storm Rework";
             b.description = "Enables Starstorm 2's unfinished Storm rework, which will be shipped fully with version 0.7.0.";
             b.configFile = SS2Config.ConfigBeta;

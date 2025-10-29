@@ -46,9 +46,6 @@ namespace SS2.Items
 			}
 		}
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-    }
+		public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+	}
 }

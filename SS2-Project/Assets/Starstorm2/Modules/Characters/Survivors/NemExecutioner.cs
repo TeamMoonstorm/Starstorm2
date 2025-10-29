@@ -59,6 +59,12 @@ namespace SS2.Survivors
             {
                 fearProjectile.GetComponent<RoR2.Projectile.ProjectileDamage>().damageType.AddModdedDamageType(fearOnHit);
             }
+
+            RoR2Application.onLoadFinished += () =>
+            {
+                bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+                ghoulBodyIndex = ghoulBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+            };
         }
 
         private static int GetMaxGhouls(CharacterMaster master, int deployableCountMultiplier)
@@ -74,14 +80,6 @@ namespace SS2.Survivors
                 Destroy(this);
             }
         }
-
-        [SystemInitializer(typeof(BodyCatalog))]
-        private static void SetBodyIndex()
-        {
-            bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-            ghoulBodyIndex = ghoulBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-        }
-
         #region Events
 
         #region HealNovaOnKill

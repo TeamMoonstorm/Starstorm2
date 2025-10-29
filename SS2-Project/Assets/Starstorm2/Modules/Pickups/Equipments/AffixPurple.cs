@@ -42,11 +42,8 @@ namespace SS2.Equipments
             IL.RoR2.DotController.EvaluateDotStacksForType += EvaluateDotStacksForType;
             On.RoR2.GlobalEventManager.OnHitAllProcess += OnHitAllProcess;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
-        }       
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
         }
+        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
         public override bool Execute(EquipmentSlot slot)
         {
             return false;

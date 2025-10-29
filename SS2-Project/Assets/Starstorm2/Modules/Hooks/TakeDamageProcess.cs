@@ -20,14 +20,13 @@ namespace SS2.Hooks
             ILCursor c = new ILCursor(il);
 
             bool ILFound = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(12),
                 x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
                 x => x.MatchLdarg(0),
                 x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
             );
-            c.Index += 3;
             if (ILFound)
             {
+                c.Index += 2;
                 c.Emit(OpCodes.Ldarg_0); // hc
                 c.Emit(OpCodes.Ldarg_1); // damageinfo
                 c.Emit(OpCodes.Ldloc, 4); // combined health before damage

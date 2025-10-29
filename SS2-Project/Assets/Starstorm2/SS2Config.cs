@@ -50,8 +50,14 @@ namespace SS2
         [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0%-100%. Currently targets Stormborn monsters and Executioner's `Execute` skill.\nDISCLAIMER: This is not a universal solution for photosensitivity. Only certain visual effects from Starstorm 2 are reduced.", configNameOverride = "Flashing Effects")]
         public static float FlashingEffectsIntensity = 100f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_BETA, configDescOverride = "Enabled in-dev content from the 0.7 update. EXPECT instability. DO NOT EXPECT support or bug fixes.")]
-        public static bool enableBeta = false;
+        public static ConfiguredBool enableBeta = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.section = "0.7";
+            b.key = "Enable 0.7 Beta";
+            b.description = "Enabled in-dev content from the 0.7 update. EXPECT instability. DO NOT EXPECT support or bug fixes.";
+            b.configFile = SS2Config.ConfigBeta;
+        }).DoConfigure();
+
 
         internal static IEnumerator RegisterToModSettingsManager()
         {

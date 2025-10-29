@@ -55,7 +55,7 @@ namespace SS2.Components
             var position = new Vector3(-156f, 41f, 63f);
             var rotation = Quaternion.Euler(0, 282, 0);
 
-            if (NetworkServer.active && currStage == "arena" && Run.instance.IsExpansionEnabled(SS2Assets.LoadAsset<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main)))
+            if (NetworkServer.active && currStage == "arena")
             {
                 GameObject term = Instantiate(rockPrefab, position, rotation);
                 NetworkServer.Spawn(term);
