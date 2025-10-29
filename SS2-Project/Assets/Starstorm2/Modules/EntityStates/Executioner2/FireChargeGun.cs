@@ -24,6 +24,7 @@ namespace EntityStates.Executioner2
         private static float range = 200f;
         private static float force = 200f;
         private static float spreadBloomValue = 0.4f;
+        private static float selfKnockbackForce = 250f;
         //public static int minimumShotBurst = 5;
         private static string muzzleString = "Muzzle";
         public static GameObject ionEffectPrefab;
@@ -126,6 +127,7 @@ namespace EntityStates.Executioner2
                 AddRecoil(-2f * recoil, -3f * recoil, -1f * recoil, 1f * recoil);
                 characterBody.AddSpreadBloom(spreadBloomValue * 1.0f);
                 Ray ray = GetAimRay();
+                characterMotor.ApplyForce(-selfKnockbackForce * ray.direction, false, false);
 
                 Vector3 vec = ray.direction;
 

@@ -71,7 +71,9 @@ namespace SS2
                 }
                 if (option.pickupIndex == PickupIndex.none)
                 {
+#if DEBUG
                     SS2Log.Error($"TradeDef {base.name} has invalid PickupDef");
+#endif
                 }
             }
         }

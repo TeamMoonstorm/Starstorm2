@@ -47,16 +47,10 @@ namespace SS2
         public static ConfiguredBool EnableSurvivors;
         public static ConfiguredBool EnableMonsters;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0%-100%. Currently targets Stormborn monsters and Executioner's `Execute` skill.\nDISCLAIMER: This is not a universal solution for photosensitivity. Only certain visual effects from Starstorm 2 are reduced.", configNameOverride = "Flashing Effects")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0%-100%. Currently targets Stormborn monsters and Executioner's `Execution` skill.\nDISCLAIMER: This is not a universal solution for photosensitivity. Only certain visual effects from Starstorm 2 are reduced.", configNameOverride = "Flashing Effects")]
         public static float FlashingEffectsIntensity = 100f;
 
-        public static ConfiguredBool enableBeta = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
-        {
-            b.section = "0.7";
-            b.key = "Enable 0.7 Beta";
-            b.description = "Enabled in-dev content from the 0.7 update. EXPECT instability. DO NOT EXPECT support or bug fixes.";
-            b.configFile = SS2Config.ConfigBeta;
-        }).DoConfigure();
+        public static ConfiguredBool enableBeta;
 
 
         internal static IEnumerator RegisterToModSettingsManager()
@@ -96,6 +90,14 @@ namespace SS2
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
             ConfigBeta = CreateConfigFile(ID_BETA, true);
+            enableBeta = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "0.7";
+                b.key = "Enable 0.7 Beta";
+                b.description = "Enabled in-dev content from the 0.7 update. EXPECT instability. DO NOT EXPECT support or bug fixes.";
+                b.configFile = SS2Config.ConfigBeta;
+            }).DoConfigure();
+
             ConfigAccessibility = CreateConfigFile(ID_ACCESSIBILITY, true);
         }
 
