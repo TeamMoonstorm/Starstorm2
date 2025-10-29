@@ -116,9 +116,7 @@ namespace SS2.Equipments
                     temporaryOverlay.animateShaderAlpha = true;
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
-
-                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                    //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                    temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
 
                     CharacterModel cm = modelTransform.GetComponent<CharacterModel>();
                     CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;
