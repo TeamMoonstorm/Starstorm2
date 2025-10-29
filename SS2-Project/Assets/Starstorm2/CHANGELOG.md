@@ -2,11 +2,11 @@
 ### 0.6.23
 * General
 	* Added a cap to the amount of Starstorm 2's sound effects that can play at once. Should improve performance for items like Insecticide and Erratic Gadget.
-    * Add some graceful error handling to our SS2Monster base class.
-    * Moved some of the debug only logs to production builds so your bug report logs contain more useful errors for us when debugging!
-    * Added config options for disabling enemies and survivors (why would you do that).
-    * New PT-BR translation for items thanks to Balorfist
-    * Updated Chinese translation thanks to EternitySwarmCrowm
+	* Add some graceful error handling to our SS2Monster base class.
+	* Moved some of the debug only logs to production builds so your bug report logs contain more useful errors for us when debugging!
+	* Added config options for disabling enemies and survivors (why would you do that).
+	* New PT-BR translation for items thanks to Balorfist
+	* Updated Chinese translation thanks to EternitySwarmCrowm
 	* New config option to lower the intensity of certain flashing effects.
 		* DISCLAIMER: This is not a universal solution for flashing. Currently, only Executioner and Stormborn monsters are affected
 * Items
@@ -16,21 +16,23 @@
 		* NEW: 10% chance on hit to drop a coffee bean that grants 8% attack speed and movement speed for 5 seconds. Maximum cap of 40% (+40% per stack).
 		* Increased pickup radius and lifetime of coffee beans.
 	* Buffed Molten Coin burn damage (100% => 200%). Gold amount now scales with difficulty instead of stages cleared.
-    * Fixed bug with Greater Warbanner's VFX overlay not displaying
+	* Fixed bug with Greater Warbanner's VFX overlay not displaying
 * Executioner
-    * New model, animations, and VFX.
-    * New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
-    * Ion Manipulators 
+	* New model, animations, and VFX.
+	* New Alternate Secondary: Consecration - Consume Ion Charges to heal, gain movement speed, and reduce your cooldowns.
+	* Ion Manipulators 
 		* No longer gains Ion Charges over time. Instead, Service Pistol is fired at 0 Ion Charges.
 		* No longer shocks and pierces enemies. 
 		* Added new crosshair
 	* Increased Crowd Dispersion cooldown (6 seconds -> 7 seconds).
-	* Hitting a single target with Execution now restores 3 ion charges.
-	* Execution now extends the duration of Crowd Dispersion.
-	* Execution can no longer be held to aim.
+	* Execution
+		* Hitting a single target now restores 3 ion charges.
+		* Execution now extends the duration of Crowd Dispersion.
+		* Execution can no longer be held to aim.
 * Enemies
 	* Reworked Follower and Wayfarer
-	* New SFX for Rushrum
+	* Added SFX for Rushrum.
+	* Increased hurtbox sizes for Follower and Rushrum.
 * Interactables
 	* Added Security Chest
 * ... and so much more!
