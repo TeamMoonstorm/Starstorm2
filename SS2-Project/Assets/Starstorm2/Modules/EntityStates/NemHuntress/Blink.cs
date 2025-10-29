@@ -93,7 +93,7 @@ namespace EntityStates.NemHuntress
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                     temporaryOverlay.destroyComponentOnEnd = true;
                     temporaryOverlay.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matHuntressFlashBright");
-                    temporaryOverlay.AddToCharacetrModel(modelTransform.GetComponent<CharacterModel>());
+                    temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
 
                     TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                     temporaryOverlay2.duration = 0.7f;

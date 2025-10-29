@@ -43,8 +43,6 @@ namespace EntityStates.NemMerc
 
             //anim
 
-            // POST PROCESSING!!! NEED TO LEARN THIS REAL QUICK
-            //HELMET GLOW!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             Transform modelTransform = base.GetModelTransform();
             TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
             temporaryOverlay.duration = Scan.hologramDuration;
@@ -52,9 +50,7 @@ namespace EntityStates.NemMerc
             temporaryOverlay.animateShaderAlpha = true; // hopoo shitcode. stopwatch doesnt run w/o this
             temporaryOverlay.destroyComponentOnEnd = true;
             temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemMercGlow", SS2Bundle.NemMercenary);
-
-            // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-            // temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+            temporaryOverlay.AddToCharatcerModel(modelTransform.GetComponent<CharacterModel>());
 
 
             // GAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
