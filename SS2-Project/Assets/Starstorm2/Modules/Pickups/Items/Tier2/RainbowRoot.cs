@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using SS2.Components;
 
 namespace SS2.Items
 {
@@ -46,48 +47,88 @@ namespace SS2.Items
             int charges;
             float cd;
             bool needsVisualAdjustment = false;
+            bool needsSpawnAdjustment = false;
+            float removalTimer = 0;
+            float creationTimer = 0;
             float currentDesiredRatio;
-            float visualTimer = 0;
-            //List<GameObject> branches = new List<GameObject>();
+
             List<RainbowRootBranchInstance> branchInstances = new List<RainbowRootBranchInstance>();
-            List<RainbowRootBranchInstance> branchAll = new List<RainbowRootBranchInstance>();
+            List<RainbowRootBranchInstance> branchStorage = new List<RainbowRootBranchInstance>();
             
             private void Awake()
             {
                 base.Awake();
-                Refresh();
+                Setup();
             }
 
-            private void Refresh()
+            private void Setup()
             {
-
                 totalHealth = body.maxHealth * branchHealth;
                 hits = maxHits;
                 charges = 3;
                 needsVisualAdjustment = false;
-                SS2Log.Info("Refresh  " + totalHealth + " | " + hits + " | " + charges + " | " + cd);
                 cd = 0;
 
+                var ratio = 360 / charges;
+                for (int i = 0; i < charges; ++i)
+                {
+                    float angle = ratio * i;
+                    Vector3 vec = new Vector3(0, angle, 0);
+
+                    var tempBranch = Instantiate(branchObject, body.gameObject.transform.position, Quaternion.Euler(vec), body.gameObject.transform);
+                    var tempStruct = new RainbowRootBranchInstance
+                    {
+                        rotation = angle,
+                        branch = tempBranch
+                    };
+                    branchStorage.Add(tempStruct);
+                    branchInstances.Add(tempStruct);
+                }
+
+                needsSpawnAdjustment = true;
+
+            }
+
+            private void Refresh()
+            {
+                totalHealth = body.maxHealth * branchHealth;
+                hits = maxHits;
+                charges = 3;
+                needsVisualAdjustment = false;
+                cd = 0;
 
                 for(int i = 0; i < branchInstances.Count; ++i)
                 {
-                    Destroy(branchInstances[i].branch);
+                    CleanupInstance(branchInstances[i]);
                 }
                 branchInstances.Clear();
 
                 var ratio = 360 / charges;
                 for (int i = 0; i < charges; ++i)
                 {
-                    Vector3 vec = new Vector3(0, ratio * i, 0);
-                    var tempBranch = Instantiate(branchObject, body.gameObject.transform.position, Quaternion.Euler(vec), body.gameObject.transform);
-                    var tempStruct = new RainbowRootBranchInstance
+                    float angle = ratio * i;
+                    Vector3 vec = new Vector3(0, angle, 0);
+
+                    var instance = branchStorage[i];
+                    instance.rotation = angle;
+
+                    var branch = instance.branch;
+                    var child = branch.transform.GetChild(0);
+
+                    child.transform.rotation = Quaternion.identity;
+
+                    branch.transform.rotation = Quaternion.Euler(vec);
+                    branch.transform.localScale = Vector3.zero;
+
+                    branch.SetActive(true);
+                    if(child.TryGetComponent<RotateObject>(out var rotate))
                     {
-                        rotation = ratio * i,
-                        branch = tempBranch
-                    };
-                    //branches.Add(tempBranch);
-                    branchInstances.Add(tempStruct);
+                        rotate.enabled = true;
+                    }
+                    branchInstances.Add(instance);
                 }
+
+                needsSpawnAdjustment = true;
 
             }
 
@@ -101,34 +142,55 @@ namespace SS2.Items
                         mult = 2f;
                     }
                     cd += Time.deltaTime * mult;
-                    SS2Log.Info("cd: " + cd);
+                    //SS2Log.Info("cd: " + cd);
                     if (cd > (20 / MSUtil.InverseHyperbolicScaling(1, .5f, 10, stack)))
                     {
-                        SS2Log.Info("Refresh at: " + cd);
                         Refresh();
                     }
                 }
 
                 if(needsVisualAdjustment)
                 {
-                    visualTimer += Time.deltaTime;
+                    removalTimer += Time.deltaTime;
                     for (int i = 0; i < branchInstances.Count; ++i)
                     {
                         float current = branchInstances[i].rotation;
-                        var result = Mathf.Lerp(current, currentDesiredRatio * i, visualTimer);
+                        var result = Mathf.Lerp(current, currentDesiredRatio * i, removalTimer);
                         branchInstances[i].branch.transform.rotation = Quaternion.Euler(new Vector3(0, result, 0));
                     }
 
-                    if (visualTimer > 1)
+                    if (removalTimer > 1)
                     {
                         needsVisualAdjustment = false;
-                        visualTimer = 0;
+                        removalTimer = 0;
                         for (int i = 0; i < branchInstances.Count; ++i)
                         {
                             var calculated = currentDesiredRatio * i;
                             var instance = branchInstances[i];
                             instance.branch.transform.rotation = Quaternion.Euler(new Vector3(0, calculated, 0));
                             instance.rotation = calculated;
+                        }
+                    }
+                }
+
+                if (needsSpawnAdjustment)
+                {
+                    creationTimer += Time.deltaTime;
+                    for (int i = 0; i < branchInstances.Count; ++i)
+                    {
+                        var result = Mathf.Lerp(0, 1, creationTimer);
+                        var instance = branchInstances[i];
+                        instance.branch.transform.localScale = new Vector3(result, result, result);
+                    }
+
+                    if (creationTimer > 1)
+                    {
+                        needsSpawnAdjustment = false;
+                        creationTimer = 0;
+                        for (int i = 0; i < branchInstances.Count; ++i)
+                        {
+                            var instance = branchInstances[i];
+                            instance.branch.transform.localScale = new Vector3(1, 1, 1);
                         }
                     }
                 }
@@ -147,11 +209,11 @@ namespace SS2.Items
                         totalHealth = body.maxHealth * .25f;
                         body.healthComponent.AddBarrierAuthority(body.maxHealth * .25f);
 
-                        Destroy(branchInstances[0].branch);
-                        //branchInstances[0].branch.SetActive(false);
+                        CleanupInstance(branchInstances[0]);
+
                         branchInstances.RemoveAt(0);
 
-                        if(charges > 1)
+                        if(charges != 0)
                         {
                             needsVisualAdjustment = true;
                             currentDesiredRatio = 360 / charges;
@@ -159,6 +221,26 @@ namespace SS2.Items
                     }
                 }
             }
+
+            public void CleanupInstance(RainbowRootBranchInstance instance)
+            {
+                instance.rotation = 0;
+                var branch = instance.branch;
+
+                var child = instance.branch.transform.GetChild(0);
+                if (child)
+                {
+                    var rotate = child.GetComponent<RotateObject>();
+                    rotate.enabled = false;
+                    child.transform.rotation = Quaternion.identity;
+
+                }
+
+                branch.SetActive(false);
+                branch.transform.rotation = Quaternion.identity;
+                branch.transform.localScale = Vector3.zero;
+            }
+
         }
 
         public struct RainbowRootBranchInstance
