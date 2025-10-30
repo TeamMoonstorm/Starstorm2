@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
 using MSU.Config;
+using SS2.Components;
 
 namespace SS2.Items
 {
@@ -16,30 +17,27 @@ namespace SS2.Items
         private const string token = "SS2_ITEM_RAINBOWROOT_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acRainbowRoot", SS2Bundle.Items);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of armor gained upon pickup. Does not scale with stack count. (1 = 1 armor)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 1, 0)]
-        public static float baseArmor = 20;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "The portion of your health each branch has. (1 = 100%)")]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        public static float branchHealth = .25f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base portion of damage prevented to be gained as barrier. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float baseAmount = .25f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How many hits it takes to break a branch, regardless of branch health. (1 = 1 hit)")]
+        [FormatToken(token, 1)]
+        public static int maxHits = 20;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Portion of damage prevented to be gained as barrier per stack. (1 = 100%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float scalingAmount = .15f;
-
+        public static GameObject branchObject;
 
         public override void Initialize()
         {
-
+            branchObject = AssetCollection.FindAsset<GameObject>("RainbowRootBranch");
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
-        public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
+        public sealed class RootBehavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.RainbowRoot;
@@ -48,34 +46,152 @@ namespace SS2.Items
             int hits;
             int charges;
             float cd;
+            bool needsVisualAdjustment = false;
+            bool needsSpawnAdjustment = false;
+            float removalTimer = 0;
+            float creationTimer = 0;
+            float currentDesiredRatio;
 
+            List<RainbowRootBranchInstance> branchInstances = new List<RainbowRootBranchInstance>();
+            List<RainbowRootBranchInstance> branchStorage = new List<RainbowRootBranchInstance>();
+            
             private void Awake()
             {
                 base.Awake();
-                Refresh();
+                Setup();
+            }
+
+            private void Setup()
+            {
+                totalHealth = body.maxHealth * branchHealth;
+                hits = maxHits;
+                charges = 3;
+                needsVisualAdjustment = false;
+                cd = 0;
+
+                var ratio = 360 / charges;
+                for (int i = 0; i < charges; ++i)
+                {
+                    float angle = ratio * i;
+                    Vector3 vec = new Vector3(0, angle, 0);
+
+                    var tempBranch = Instantiate(branchObject, body.gameObject.transform.position, Quaternion.Euler(vec), body.gameObject.transform);
+                    var tempStruct = new RainbowRootBranchInstance
+                    {
+                        rotation = angle,
+                        branch = tempBranch
+                    };
+                    branchStorage.Add(tempStruct);
+                    branchInstances.Add(tempStruct);
+                }
+
+                needsSpawnAdjustment = true;
+
             }
 
             private void Refresh()
             {
-
-                totalHealth = body.maxHealth * .25f;
-                hits = 20;
+                totalHealth = body.maxHealth * branchHealth;
+                hits = maxHits;
                 charges = 3;
-                SS2Log.Info("Refresh  " + totalHealth + " | " + hits + " | " + charges + " | " + cd);
+                needsVisualAdjustment = false;
                 cd = 0;
+
+                for(int i = 0; i < branchInstances.Count; ++i)
+                {
+                    CleanupInstance(branchInstances[i]);
+                }
+                branchInstances.Clear();
+
+                var ratio = 360 / charges;
+                for (int i = 0; i < charges; ++i)
+                {
+                    float angle = ratio * i;
+                    Vector3 vec = new Vector3(0, angle, 0);
+
+                    var instance = branchStorage[i];
+                    instance.rotation = angle;
+
+                    var branch = instance.branch;
+                    var child = branch.transform.GetChild(0);
+
+                    child.transform.rotation = Quaternion.identity;
+
+                    branch.transform.rotation = Quaternion.Euler(vec);
+                    branch.transform.localScale = Vector3.zero;
+
+                    branch.SetActive(true);
+                    if(child.TryGetComponent<RotateObject>(out var rotate))
+                    {
+                        rotate.enabled = true;
+                    }
+                    branchInstances.Add(instance);
+                }
+
+                needsSpawnAdjustment = true;
 
             }
 
             private void FixedUpdate()
             {
-                if (charges <= 0)
+                if (charges < 3)
                 {
-                    cd += Time.deltaTime;
-                    SS2Log.Info("cd: " + cd);
-                    if (cd > (15 / MSUtil.InverseHyperbolicScaling(1, .5f, 15, stack)))
+                    var mult = 1f;
+                    if(charges <= 0)
                     {
-                        SS2Log.Info("Refresh at: " + cd);
+                        mult = 2f;
+                    }
+                    cd += Time.deltaTime * mult;
+                    //SS2Log.Info("cd: " + cd);
+                    if (cd > (20 / MSUtil.InverseHyperbolicScaling(1, .5f, 10, stack)))
+                    {
                         Refresh();
+                    }
+                }
+
+                if(needsVisualAdjustment)
+                {
+                    removalTimer += Time.deltaTime;
+                    for (int i = 0; i < branchInstances.Count; ++i)
+                    {
+                        float current = branchInstances[i].rotation;
+                        var result = Mathf.Lerp(current, currentDesiredRatio * i, removalTimer);
+                        branchInstances[i].branch.transform.rotation = Quaternion.Euler(new Vector3(0, result, 0));
+                    }
+
+                    if (removalTimer > 1)
+                    {
+                        needsVisualAdjustment = false;
+                        removalTimer = 0;
+                        for (int i = 0; i < branchInstances.Count; ++i)
+                        {
+                            var calculated = currentDesiredRatio * i;
+                            var instance = branchInstances[i];
+                            instance.branch.transform.rotation = Quaternion.Euler(new Vector3(0, calculated, 0));
+                            instance.rotation = calculated;
+                        }
+                    }
+                }
+
+                if (needsSpawnAdjustment)
+                {
+                    creationTimer += Time.deltaTime;
+                    for (int i = 0; i < branchInstances.Count; ++i)
+                    {
+                        var result = Mathf.Lerp(0, 1, creationTimer);
+                        var instance = branchInstances[i];
+                        instance.branch.transform.localScale = new Vector3(result, result, result);
+                    }
+
+                    if (creationTimer > 1)
+                    {
+                        needsSpawnAdjustment = false;
+                        creationTimer = 0;
+                        for (int i = 0; i < branchInstances.Count; ++i)
+                        {
+                            var instance = branchInstances[i];
+                            instance.branch.transform.localScale = new Vector3(1, 1, 1);
+                        }
                     }
                 }
             }
@@ -84,22 +200,54 @@ namespace SS2.Items
             {
                 if (charges > 0)
                 {
-                    SS2Log.Info("AAAAAAAAAAAAAAA " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits);
                     totalHealth -= damageReport.damageInfo.damage;
                     --hits;
-                    SS2Log.Info("2 " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits);
                     if (hits <= 0 || totalHealth <= 0)
                     {
                         --charges;
                         hits = 20;
                         totalHealth = body.maxHealth * .25f;
-                        SS2Log.Info("RESETING  " + damageReport.damageInfo.damage + " | " + totalHealth + " | " + hits + " | " + charges);
                         body.healthComponent.AddBarrierAuthority(body.maxHealth * .25f);
+
+                        CleanupInstance(branchInstances[0]);
+
+                        branchInstances.RemoveAt(0);
+
+                        if(charges != 0)
+                        {
+                            needsVisualAdjustment = true;
+                            currentDesiredRatio = 360 / charges;
+                        }
                     }
                 }
             }
+
+            public void CleanupInstance(RainbowRootBranchInstance instance)
+            {
+                instance.rotation = 0;
+                var branch = instance.branch;
+
+                var child = instance.branch.transform.GetChild(0);
+                if (child)
+                {
+                    var rotate = child.GetComponent<RotateObject>();
+                    rotate.enabled = false;
+                    child.transform.rotation = Quaternion.identity;
+
+                }
+
+                branch.SetActive(false);
+                branch.transform.rotation = Quaternion.identity;
+                branch.transform.localScale = Vector3.zero;
+            }
+
         }
 
+        public struct RainbowRootBranchInstance
+        {
+            public float rotation;
+            public GameObject branch;
+        }
     }
 }
 
