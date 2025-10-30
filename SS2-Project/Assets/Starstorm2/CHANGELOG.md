@@ -10,7 +10,6 @@
 	* Updated Chinese translation thanks to EternitySwarmCrowm
 	* New config option to lower the intensity of certain flashing effects.
 		* DISCLAIMER: This is not a universal solution for flashing. Currently, only Executioner and Stormborn monsters are affected
-
 * Items
 	* (NEW) Galvanic Core - 10% (+10% per stack) chance on hit to stun. Stunned enemies apply razed to enemies within 15m (+5m per stack), reducing their maximum health by 20%, damage by 30%, and movement speed by 80%.
 	* Coffee Bag adjusted. 
@@ -31,6 +30,8 @@
 		* Hitting a single target now restores 3 ion charges.
 		* Execution now extends the duration of Crowd Dispersion.
 		* Execution can no longer be held to aim.
+* Chirr
+	* New textures and Mastery skin.
 * Enemies
 	* Reworked Follower and Wayfarer
 	* Added SFX for Rushrum.

@@ -45,6 +45,8 @@ namespace EntityStates.Lamp
         private float damageRate;
         private bool shouldFlyUp;
         private Transform muzzle;
+
+        private bool resolvedAnyBeam = false;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -116,6 +118,19 @@ namespace EntityStates.Lamp
                     }
                 }
             }
+
+            if (isAuthority)
+            {
+                BeamController.onBeamStartGlobal += ResolveBeam;
+            }
+        }
+
+        private void ResolveBeam(BeamController beam)
+        {
+            if (beam.ownership.ownerObject == gameObject)
+            {
+                resolvedAnyBeam = true;
+            }
         }
 
         private void OnTickServer(BeamController beam)
@@ -162,6 +177,7 @@ namespace EntityStates.Lamp
         public override void OnExit()
         {
             PlayCrossfade("Body", "Idle", 0.3f);
+            BeamController.onBeamStartGlobal -= ResolveBeam;
             if (NetworkServer.active && healBeams.Count > 0)
             {
                 foreach (BeamController beam in healBeams)
@@ -181,36 +197,43 @@ namespace EntityStates.Lamp
             if (shouldFlyUp)
                 rigidbodyMotor.AddDisplacement(Vector3.up * selfUpSpeed * Time.fixedDeltaTime);
 
-            bool anyBeamsAlive = false;
-            for (int i = 0; i < healBeams.Count; i++)
+            if (NetworkServer.active)
             {
-                var beam = healBeams[i];
-                if (beam && beam.target)
+                for (int i = 0; i < healBeams.Count; i++)
                 {
-                    Vector3 between = beam.target.transform.position - transform.position;
-                    bool hasLoS = !Physics.Linecast(beam.target.transform.position, transform.position, out RaycastHit raycastHit, LayerIndex.world.mask, QueryTriggerInteraction.Ignore);
-                    if (!hasLoS || between.sqrMagnitude > beamBreakDistance * beamBreakDistance)
+                    var beam = healBeams[i];
+                    if (beam && beam.target)
                     {
-                        if (NetworkServer.active)
+                        Vector3 between = beam.target.transform.position - transform.position;
+                        bool hasLoS = !Physics.Linecast(beam.target.transform.position, transform.position, out RaycastHit raycastHit, LayerIndex.world.mask, QueryTriggerInteraction.Ignore);
+                        if (!hasLoS || between.sqrMagnitude > beamBreakDistance * beamBreakDistance)
                         {
                             beam.BreakServer();
                         }
-                    }
-                    else
-                    {
-                        anyBeamsAlive = true;
-                        if (ShouldDamage(beam.target))
+                        else
                         {
-                            Lifto(beam.target);
+                            if (ShouldDamage(beam.target))
+                            {
+                                Lifto(beam.target);
+                            }
                         }
+
                     }
-                    
                 }
             }
 
-            if ((fixedAge >= duration || !anyBeamsAlive) && isAuthority)
+            if (isAuthority)
             {
-                outer.SetNextStateToMain();
+                bool shouldExit = fixedAge >= duration;
+                if (resolvedAnyBeam && BeamController.GetBeamCountForOwner(gameObject) == 0)
+                {
+                    shouldExit = true;
+                }
+                if (shouldExit)
+                {
+                    outer.SetNextStateToMain();
+                }
+                
             }
         }
 

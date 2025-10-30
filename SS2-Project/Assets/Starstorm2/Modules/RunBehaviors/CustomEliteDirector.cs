@@ -77,7 +77,7 @@ namespace SS2.Components
 
         public void FixedUpdate()
         {
-            if(NetworkServer.active)
+            if(NetworkServer.active && Run.instance)
             {
                 timer += Time.fixedDeltaTime;
                 if (timer > directorTickInterval)

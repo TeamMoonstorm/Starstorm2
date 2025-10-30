@@ -169,6 +169,10 @@ namespace SS2
 
         private void FixedUpdate()
         {
+            if (currentTimeline == null || currentTimeline.events == null) // TODO: FIGURE OUT WTF THIS MEANS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            {
+                return;
+            }
             // start events when their starttimes have passed
             if (!NetworkServer.active || !Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
             for (int i = 0; i < currentTimeline.events.Count; i++)

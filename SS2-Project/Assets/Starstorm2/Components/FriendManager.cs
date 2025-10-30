@@ -74,7 +74,7 @@ namespace SS2
 			}
 		}
         [ClientRpc]
-        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count = 1, bool obeyMaxStock = true)
+        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count = 1, bool obeyMaxStock = false)
         {
             if (Util.HasEffectiveAuthority(bodyObject))
             {

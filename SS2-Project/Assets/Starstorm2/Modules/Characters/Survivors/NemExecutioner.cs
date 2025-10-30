@@ -299,7 +299,7 @@ namespace SS2.Survivors
                     GenericSkill secondary = target.healthComponent.body.skillLocator.secondary;
                     if (secondary)
                     {
-                        FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary);
+                        FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary, 1, true);
                     }
                 }
             }

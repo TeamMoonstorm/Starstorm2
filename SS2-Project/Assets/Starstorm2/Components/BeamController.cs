@@ -12,6 +12,7 @@ namespace SS2
     [RequireComponent(typeof(GenericOwnership))]
     public class BeamController : NetworkBehaviour
     {
+        public static event Action<BeamController> onBeamStartGlobal;
         [Serializable]
         public class OnTickUnityEvent : UnityEvent<BeamController>
         {
@@ -64,6 +65,10 @@ namespace SS2
         {
             base.OnStartClient();
             this.UpdateCachedHurtBox();
+        }
+        private void Start()
+        {
+            onBeamStartGlobal?.Invoke(this);
         }
         private void OnDestroy()
         {

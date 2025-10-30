@@ -24,7 +24,7 @@ namespace EntityStates.Executioner2
         private static float range = 200f;
         private static float force = 200f;
         private static float spreadBloomValue = 0.4f;
-        private static float selfKnockbackForce = 350f;
+        private static float selfKnockbackForce = 250f;
         //public static int minimumShotBurst = 5;
         private static string muzzleString = "Muzzle";
         public static GameObject ionEffectPrefab;
