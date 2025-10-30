@@ -50,7 +50,7 @@ namespace EntityStates.NemMerc
             temporaryOverlay.animateShaderAlpha = true; // hopoo shitcode. stopwatch doesnt run w/o this
             temporaryOverlay.destroyComponentOnEnd = true;
             temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemMercGlow", SS2Bundle.NemMercenary);
-            temporaryOverlay.AddToCharatcerModel(modelTransform.GetComponent<CharacterModel>());
+            temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
 
 
             // GAS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

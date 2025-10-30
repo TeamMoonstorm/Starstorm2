@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using MSU;
 namespace SS2.Components
 {
     public class VoidBehavior : MonoBehaviour
@@ -20,10 +21,8 @@ namespace SS2.Components
 
         internal static IEnumerator Init()
         {
-            //init prefab
-            rockPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables), "BondPickup", true);
-            rockPrefab.RegisterNetworkPrefab();
-
+            SS2Content.SS2ContentPack.AddContentFromAssetCollection(SS2Assets.LoadAsset<AssetCollection>("acVoidRock", SS2Bundle.Interactables)); // this is stupid. we should be doing this automatically
+            rockPrefab = SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables);
             yield return null;
         }
 
