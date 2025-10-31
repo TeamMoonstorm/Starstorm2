@@ -29,7 +29,7 @@ namespace SS2.Survivors
         public static GameObject ghoulBodyPrefab;
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
         public override void Initialize()
         {
@@ -205,7 +205,7 @@ namespace SS2.Survivors
                 }
             }
 
-            if (damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
+            if (damageReport.attacker && damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
             {
                 var assistTrackers = InstanceTracker.GetInstancesList<AssistTracker>();
                 foreach (var tracker in assistTrackers)
@@ -235,7 +235,7 @@ namespace SS2.Survivors
             private float timeAlive;
             public void OnKilledServer(DamageReport damageReport)
             {
-                if(enabled)
+                if (enabled)
                 {
                     int orbCount = GetIonCountFromBody(damageReport.victimBody);
 

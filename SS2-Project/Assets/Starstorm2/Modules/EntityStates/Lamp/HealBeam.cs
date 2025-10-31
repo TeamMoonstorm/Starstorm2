@@ -13,7 +13,7 @@ namespace EntityStates.Lamp
         private static float baseDuration = 6f;
         private static float buffDuration = 4f;
         private static float tickInterval = 0.2f;
-        private static float totalDamageCoefficient = 6f;
+        private static float totalDamageCoefficient = 9f;
         
         private static DamageType damageType = DamageType.Generic;
         private static float procCoefficientPerTick = 0.4f;

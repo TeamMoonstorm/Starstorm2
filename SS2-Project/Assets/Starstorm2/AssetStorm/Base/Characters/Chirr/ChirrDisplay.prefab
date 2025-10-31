@@ -666,6 +666,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: mdlChirr
       objectReference: {fileID: 0}
+    - target: {fileID: 995489206571073104, guid: bdbc47bdb9af36242b2a02a35fe4b79a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.045498006
+      objectReference: {fileID: 0}
+    - target: {fileID: 995489206571073104, guid: bdbc47bdb9af36242b2a02a35fe4b79a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.06291846
+      objectReference: {fileID: 0}
     - target: {fileID: 1108104017481384040, guid: bdbc47bdb9af36242b2a02a35fe4b79a,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1222,7 +1232,6 @@ MonoBehaviour:
   _avatar: {fileID: 0}
   skins:
   - {fileID: 11400000, guid: 81666155377897646b71916d18b7ccfc, type: 2}
-  - {fileID: 11400000, guid: 94d49b55b6e8b94438a0a5e4996e5b3d, type: 2}
   prefabInstantiationDatas: []
 --- !u!114 &2990692761609101736
 MonoBehaviour:

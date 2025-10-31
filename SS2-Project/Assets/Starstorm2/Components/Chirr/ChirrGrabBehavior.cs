@@ -201,16 +201,16 @@ namespace SS2.Components
         {
             if (collision.gameObject.layer == LayerIndex.world.intVal || collision.gameObject.layer == LayerIndex.entityPrecise.intVal)
             {
-
-                Util.PlaySound("ChirrThrowHitGround", base.gameObject);
                 if (NetworkServer.active)
                 {
-                    EffectManager.SpawnEffect(DroppedState.hitGroundEffect, new EffectData
+                    if (DroppedState.hitGroundEffect)
                     {
-                        origin = this.characterBody.footPosition,
-                        scale = 1.25f,
-                    }, true);
-
+                        EffectManager.SpawnEffect(DroppedState.hitGroundEffect, new EffectData
+                        {
+                            origin = this.characterBody.footPosition,
+                            scale = 1.25f,
+                        }, true);
+                    }
 
                     if (this.inflictor)
                     {

@@ -31,7 +31,7 @@
 		* Execution now extends the duration of Crowd Dispersion.
 		* Execution can no longer be held to aim.
 * Chirr
-	* New textures and Mastery skin.
+	* New textures.
 * Enemies
 	* Reworked Follower and Wayfarer
 	* Added SFX for Rushrum.
