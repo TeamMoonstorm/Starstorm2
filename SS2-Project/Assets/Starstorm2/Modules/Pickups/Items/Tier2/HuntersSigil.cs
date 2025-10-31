@@ -58,7 +58,7 @@ namespace SS2.Items
 
         private void OnServerDamageDealt(DamageReport damageReport)
         {
-            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.BuffChocolate))
+            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.BuffSigil))
                 EffectManager.SimpleImpactEffect(_damageBonusEffect, damageReport.damageInfo.position, Vector3.zero, true);
         }
 

@@ -16,6 +16,7 @@ namespace EntityStates.NemMerc
 		private bool m2Buffered;
 
         private EntityStateMachine weapon;
+		private static string redirectSoundString = "Play_nemmerc_utility_enter";
 
 		public override void OnEnter()
 		{
@@ -47,9 +48,7 @@ namespace EntityStates.NemMerc
 				temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 				temporaryOverlay.destroyComponentOnEnd = true;
 				temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                //temporaryOverlay.AddToCharacerModel(this.characterModel);
+                temporaryOverlay.AddToCharacterModel(this.characterModel);
 
             }
 
@@ -135,9 +134,7 @@ namespace EntityStates.NemMerc
 					temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 					temporaryOverlay.destroyComponentOnEnd = true;
 					temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-
-                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                    //temporaryOverlay.AddToCharacerModel(this.characterModel);
+                    temporaryOverlay.AddToCharacterModel(this.characterModel);
 				}
 			}
 			if (!this.isDashing)
@@ -163,7 +160,7 @@ namespace EntityStates.NemMerc
 						if(this.m2Buffered)
                         {
 							// NNEED A BETTER DASH START SOUND HERE
-							Util.PlaySound(NemAssaulter.beginSoundString, base.gameObject); // THIS SUCKS I THINK
+							Util.PlaySound(NemAssaulter.redirectSoundString, base.gameObject); // THIS SUCKS I THINK
 
 							this.m2Buffered = false;
 							base.skillLocator.secondary.DeductStock(1);
@@ -186,9 +183,7 @@ namespace EntityStates.NemMerc
 							temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
 							temporaryOverlay2.destroyComponentOnEnd = true;
 							temporaryOverlay2.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matMercEvisTarget");
-
-                            // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                            //temporaryOverlay2.AddToCharacerModel(this.characterModel);
+                            temporaryOverlay2.AddToCharacterModel(this.characterModel);
 						}
 					}
 					base.characterMotor.rootMotion += this.dashVector * this.dashSpeed * Time.fixedDeltaTime;

@@ -60,7 +60,8 @@ namespace EntityStates.Nemmando
             speedCoefficient = Util.Remap(charge, 0f, 1f, initialMinSpeedCoefficient, initialMaxSpeedCoefficient);
             recoil = Util.Remap(charge, 0f, 1f, minRecoil, maxRecoil);
 
-            if (GetTeam() == TeamIndex.Monster) speedCoefficient = 0f;
+            // >:3
+            //if (GetTeam() == TeamIndex.Monster) speedCoefficient = 0f; 
 
             childLocator = GetModelChildLocator();
 
@@ -103,9 +104,7 @@ namespace EntityStates.Nemmando
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matDoppelganger");
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                // temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 

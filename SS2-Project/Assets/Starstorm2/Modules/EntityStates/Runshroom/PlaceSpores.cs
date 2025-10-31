@@ -6,88 +6,121 @@ namespace EntityStates.Runshroom
 {
     public class PlaceSpores : BaseSkillState
     {
-        private GameObject projectilePrefab;
+        public static GameObject projectilePrefab;
+        public static GameObject effectPrefab;
+
+        private static float blastDamageCoefficient = 1.5f * 0.4f;
+        private static float procCoefficient = 1f;
+        private static float blastRadius = 6.5f;
+        private static float force = 14f;
+
+        private static float fireTime = 0.75f;
+        private static string enterSoundString = "Play_runshroom_charge"; 
+
         private bool hasFired;
         private bool hasWaited;
-        public static float baseDuration;
-        public static float damageCoefficient = 1f;
-        public static float projectileVelocity = 40f;
+        private static float baseDuration = 1.3f;
+        private static float damageCoefficient = 1.5f;
         public static GameObject chargeEffectPrefab;
         private float duration;
         private Animator animator;
         private ChildLocator childLocator;
-
-        private float originalMoveSpeed;
-
+        private GameObject chargeEffectInstance;
         public override void OnEnter()
         {
             base.OnEnter();
-            projectilePrefab = MiniMushroom.SporeGrenade.projectilePrefab;
-            originalMoveSpeed = characterBody.moveSpeed;
-            characterBody.moveSpeed = 0f;
-            PlayCrossfade("Body", "ToIdle", 0.05f);
             duration = baseDuration / attackSpeedStat;
             childLocator = GetModelChildLocator();
             //characterBody.SetAimTimer(duration * 1.5f);
             hasFired = false;
             hasWaited = false;
             animator = GetModelAnimator();
+
+            if (chargeEffectPrefab)
+            {
+                chargeEffectInstance = Object.Instantiate(chargeEffectPrefab, characterBody.corePosition, Quaternion.identity);
+                
+            }
+            PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.1f);
+            Util.PlaySound(enterSoundString, gameObject);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            characterBody.moveSpeed = 0f;
-
-            if (fixedAge >= duration * 0.2f)
-            {
-                if (!hasWaited)
-                {
-                    hasWaited = true;
-                    GameObject chargeEffectPrefabInstance = Object.Instantiate(chargeEffectPrefab);
-                    chargeEffectPrefabInstance.transform.SetParent(childLocator.FindChild("TippyTop"));
-                    //chargeEffectPrefabInstance.transform.position = Vector3.zero;
-                    chargeEffectPrefabInstance.transform.position = childLocator.FindChild("TippyTop").position;
-                    PlayCrossfade("Body", "Attack", "Primary.playbackRate", duration, 0.1f);
-                }
-            }
-
-            if (animator.GetFloat("Attack") > 0.5f && !hasFired)
+            if (fixedAge >= fireTime * duration && !hasFired)
             {
                 hasFired = true;
-                if (isAuthority)
-                    FireProjectile();
+                
+                FireProjectile();
+
             }
 
-            if (fixedAge >= duration * 1.2f && hasFired)
+            if (fixedAge >= duration && hasFired)
                 outer.SetNextStateToMain();
         }
-
+        public override void Update()
+        {
+            base.Update();
+            if (chargeEffectInstance)
+            {
+                chargeEffectInstance.transform.position = characterBody.corePosition;
+            }
+        }
         public void FireProjectile()
         {
-            float damage = damageCoefficient * damageStat;
-            Ray aimRay = GetAimRay();
-            DamageTypeCombo damageType = DamageType.Generic;
-            damageType.damageSource = DamageSource.Primary;
-            ProjectileManager.instance.FireProjectile(
-                projectilePrefab,
-                aimRay.origin,
-                Util.QuaternionSafeLookRotation(Vector3.down),
-                gameObject,
-                damage,
-                0f,
-                RollCrit(),
-                DamageColorIndex.Default,
-                null,
-                projectileVelocity,
-                damageType);
+            if (chargeEffectInstance)
+            {
+                Destroy(chargeEffectInstance);
+            }
+            EffectManager.SimpleEffect(effectPrefab, characterBody.corePosition, Quaternion.identity, false);
+
+            if (isAuthority)
+            {
+                bool crit = RollCrit();
+
+                BlastAttack blastAttack = new BlastAttack();
+                blastAttack.position = characterBody.corePosition;
+                blastAttack.baseDamage = characterBody.damage * blastDamageCoefficient;
+                blastAttack.baseForce = force;
+                blastAttack.radius = blastRadius;
+                blastAttack.attacker = gameObject;
+                blastAttack.teamIndex = teamComponent.teamIndex;
+                blastAttack.crit = crit;
+                blastAttack.procCoefficient = procCoefficient;
+                blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+                blastAttack.damageType = DamageType.Generic;
+                blastAttack.damageType.damageSource = DamageSource.Primary;
+                blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
+                blastAttack.Fire();
+
+                float damage = damageCoefficient * damageStat;
+                Ray aimRay = GetAimRay();
+                DamageTypeCombo damageType = DamageType.Generic;
+                damageType.damageSource = DamageSource.Primary;
+                ProjectileManager.instance.FireProjectile(
+                    projectilePrefab,
+                    characterBody.corePosition,
+                    Quaternion.identity,
+                    gameObject,
+                    damage,
+                    0f,
+                    crit,
+                    DamageColorIndex.Default,
+                    null,
+                    damageType);
+            }
+            
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            characterBody.moveSpeed = originalMoveSpeed;
+            if (chargeEffectInstance)
+            {
+                Destroy(chargeEffectInstance);
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

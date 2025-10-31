@@ -8,7 +8,6 @@ using System.Collections;
 using EntityStates.Cyborg2;
 using System.Linq.Expressions;
 using RoR2.ContentManagement;
-using SS2.Buffs;
 using UnityEngine.Networking;
 using System.Collections.Generic;
 namespace SS2.Survivors
@@ -67,13 +66,22 @@ namespace SS2.Survivors
             }
 
             ModifyPrefab();
-
-            On.RoR2.GenericSkill.RunRecharge += BuffTeleporter_AddRecharge;
+            On.RoR2.HealthComponent.GetHealthBarValues += AddSuck;
             primedEffectPrefab = SS2Assets.LoadAsset<GameObject>("CyborgPrimeEffect", SS2Bundle.Indev);
             primedExplosionPrefab = SS2Assets.LoadAsset<GameObject>("CyborgPassiveExplosion", SS2Bundle.Indev);
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
             RoR2Application.onFixedUpdate += ProcessQueue;
             Stage.onStageStartGlobal += (_) => explosionRequests.Clear();
+        }
+
+        private HealthComponent.HealthBarValues AddSuck(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
+        {
+            HealthComponent.HealthBarValues result = orig(self);
+            if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasBuff(SS2Content.Buffs.BuffBloonTrap))
+            {
+                result.cullFraction = Mathf.Max(result.cullFraction, 0.1f);
+            }
+            return result;
         }
 
         private void ProcessQueue()
@@ -94,7 +102,7 @@ namespace SS2.Survivors
                 blastAttack.baseDamage = bombRequest.damageTotal;
                 blastAttack.baseForce = 600f;
                 blastAttack.bonusForce = Vector3.zero;
-                blastAttack.radius = 5f;
+                blastAttack.radius = 6f;
                 blastAttack.attacker = bombRequest.attacker;
                 blastAttack.inflictor = bombRequest.attacker;
                 blastAttack.teamIndex = bombRequest.teamIndex;
@@ -118,7 +126,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
@@ -178,34 +186,7 @@ namespace SS2.Survivors
                     crit = damageInfo.crit,
                     teamIndex = attackerBody.teamComponent.teamIndex,
                 });
-            }
-
-            
-        }
-        private void BuffTeleporter_AddRecharge(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)
-        {
-            if (self.characterBody.HasBuff(SS2Content.Buffs.BuffCyborgTeleporter))
-            {
-                dt *= 1f / (1 - cooldownReduction);
-            }
-            orig(self, dt);
-        }
-
-        public sealed class CyborgTeleBuffBehavior : BaseBuffBehaviour
-        {
-            [BuffDefAssociation()]
-            private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffCyborgTeleporter;
-
-            private void FixedUpdate()
-            {
-                if (!NetworkServer.active)
-                    return;
-
-                float maxHP = characterBody.healthComponent.fullHealth;
-                characterBody.healthComponent.AddBarrier(maxHP * percentHealthShieldPerSecond * Time.fixedDeltaTime);
-            }
-        }
-
-        
+            }        
+        }        
     }
 }

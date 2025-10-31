@@ -28,7 +28,7 @@ namespace SS2.Components
         }
         private void OnTriggerStay(Collider other)
         {
-            if (NetworkServer.active && alive && TeamComponent.GetObjectTeam(other.gameObject) == team.teamIndex)
+            if (NetworkServer.active && alive && other && TeamComponent.GetObjectTeam(other.gameObject) == team.teamIndex)
             {
                 CharacterBody body = other.GetComponent<CharacterBody>();
                 if (body)

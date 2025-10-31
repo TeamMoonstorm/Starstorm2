@@ -67,7 +67,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
         //N: Maybe this can be reduced to just a RecalcStatsAPI call? that'd be ideal.

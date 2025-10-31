@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using MSU;
 namespace SS2.Components
 {
     public class VoidBehavior : MonoBehaviour
@@ -20,10 +21,8 @@ namespace SS2.Components
 
         internal static IEnumerator Init()
         {
-            //init prefab
-            rockPrefab = PrefabAPI.InstantiateClone(SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables), "BondPickup", true);
-            rockPrefab.RegisterNetworkPrefab();
-
+            SS2Content.SS2ContentPack.AddContentFromAssetCollection(SS2Assets.LoadAsset<AssetCollection>("acVoidRock", SS2Bundle.Interactables)); // this is stupid. we should be doing this automatically
+            rockPrefab = SS2Assets.LoadAsset<GameObject>("VoidRockPickup", SS2Bundle.Interactables);
             yield return null;
         }
 
@@ -55,7 +54,7 @@ namespace SS2.Components
             var position = new Vector3(-156f, 41f, 63f);
             var rotation = Quaternion.Euler(0, 282, 0);
 
-            if (NetworkServer.active && currStage == "arena" && Run.instance.IsExpansionEnabled(SS2Assets.LoadAsset<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main)))
+            if (NetworkServer.active && currStage == "arena")
             {
                 GameObject term = Instantiate(rockPrefab, position, rotation);
                 NetworkServer.Spawn(term);

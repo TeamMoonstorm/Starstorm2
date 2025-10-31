@@ -34,6 +34,32 @@
       "source": "builtin",
       "dependencies": {}
     },
+    "com.unity.assetbundlebrowser": {
+      "version": "https://github.com/Unity-Technologies/AssetBundles-Browser.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "ad2a81ec3068eafd48753df1825a8dd7201ce60c"
+    },
+    "com.unity.burst": {
+      "version": "1.8.18",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.mathematics": "1.2.1",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.collections": {
+      "version": "file:com.unity.collections",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.unity.burst": "1.6.6",
+        "com.unity.test-framework": "1.1.31"
+      }
+    },
     "com.unity.editorcoroutines": {
       "version": "1.0.0",
       "depth": 1,
@@ -55,6 +81,13 @@
       "dependencies": {
         "com.unity.test-framework": "1.1.9"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.mathematics": {
+      "version": "1.2.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.multiplayer-hlapi": {
@@ -107,18 +140,19 @@
         "com.unity.modules.imgui": "1.0.0"
       }
     },
+    "com.yasirkula.assetusagedetector": {
+      "version": "https://github.com/yasirkula/UnityAssetUsageDetector.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "790a508dcd45526e338e06b771026b875f9f04a0"
+    },
     "jace-locationsofprecipitation": {
       "version": "https://github.com/JaceDaDorito/jace-locationsofprecipitation.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
       "hash": "d23f3e51b5cb701b7fa923762bedc4de0f2ad926"
-    },
-    "kingenderbrine-propersave": {
-      "version": "file:ProperSave",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "mmhook-assemblies": {
       "version": "file:mmhook-assemblies",
@@ -150,6 +184,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "riskofthunder-burstsofrain": {
+      "version": "file:BurstsOfRain",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "riskofthunder-fixplugintypesserialization": {
       "version": "file:FixPluginTypesSerialization",
       "depth": 0,
@@ -176,6 +216,12 @@
     },
     "riskofthunder-r2api_artifactcode": {
       "version": "file:R2API_ArtifactCode",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "riskofthunder-r2api_characterbody": {
+      "version": "file:R2API_CharacterBody",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
@@ -347,6 +393,13 @@
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
+    },
+    "riskofthunder-ror2_thunder_burster": {
+      "version": "https://github.com/risk-of-thunder/RoR2ThunderBurster.git#0.0.2",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9cbfd8c807e887111227b98f2803991c653d4717"
     },
     "riskofthunder-ror2bepinexpack": {
       "version": "file:RoR2BepInExPack",

@@ -13,8 +13,11 @@ namespace EntityStates.Executioner2
         public static float procCoefficient;
         public static float recoil;
         private static float maxDuration = 10f;
+        private static float acceleration = 1f;
         private static float walkSpeedCoefficient = 1.5f;
         private static float verticlalSpeed = 100f;
+        private static float maxVerticalSpeed = 300f;
+        private static float durationForMaxSpeed = 3f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
         public static GameObject impactEffectPrefab;
@@ -37,7 +40,7 @@ namespace EntityStates.Executioner2
         };
         private static Vector3 slamCameraPosition = new Vector3(0, 0, -9f);
 
-        private int originalLayer;
+        private Transform collisionTransform;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -53,18 +56,20 @@ namespace EntityStates.Executioner2
             PlayAnimation("FullBody, Override", "SpecialSwing", "Special.playbackRate", duration * 0.8f);
 
             characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-            characterMotor.onHitGroundAuthority += OnGroundHit;
-            characterMotor.onMovementHit += OnMovementHit;
             characterBody.isSprinting = true;
 
             characterBody.SetAimTimer(duration);
 
-            originalLayer = gameObject.layer;
-            gameObject.layer = LayerIndex.projectile.intVal;
-            characterMotor.Motor.RebuildCollidableLayers();
+            
 
             if (isAuthority)
             {
+                gameObject.AddComponent<TeleportHandler>().state = this;
+                characterMotor.onHitGroundAuthority += OnGroundHit;
+                characterMotor.onMovementHit += OnMovementHit;
+
+                collisionTransform = FindModelChild("SlamCollision");
+
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
                     cameraParamsData = slamCameraParams,
@@ -74,6 +79,15 @@ namespace EntityStates.Executioner2
             }
         }
 
+        private class TeleportHandler : MonoBehaviour, ITeleportHandler
+        {
+            public ExecuteSlam state;
+            public void OnTeleport(Vector3 oldPosition, Vector3 newPosition)
+            {
+                state.DoImpactAuthority();
+                Destroy(this);
+            }
+        }
         private void OnGroundHit(ref CharacterMotor.HitGroundInfo hitGroundInfo)
         {
             DoImpactAuthority();
@@ -81,7 +95,7 @@ namespace EntityStates.Executioner2
 
         private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
         {
-            if(isAuthority)
+            if (isAuthority)
                 DoImpactAuthority();
         }
 
@@ -97,7 +111,32 @@ namespace EntityStates.Executioner2
             characterDirection.forward = dashVector;
             HandleMovement();
 
-            if (fixedAge > maxDuration || characterMotor.Motor.GroundingStatus.IsStableOnGround)
+            bool shouldImpactThisFrame = fixedAge > maxDuration || characterMotor.Motor.GroundingStatus.IsStableOnGround;
+            // fuck nonalloc shit makes no sense
+            Collider[] hits = Physics.OverlapBox(collisionTransform.position, collisionTransform.lossyScale * 0.5f, collisionTransform.rotation, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+            for (int i = 0; i < hits.Length; i++)
+            {
+                if (hits[i])
+                {
+                    HurtBox hurtBox = hits[i].GetComponent<HurtBox>();
+
+                    if (hurtBox)
+                    {
+                        if (hurtBox.healthComponent.gameObject != gameObject)
+                        {
+                            shouldImpactThisFrame = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        // we hit da world
+                        shouldImpactThisFrame = true;
+                        break;
+                    }
+                }
+            }
+            if (shouldImpactThisFrame)
             {
                 DoImpactAuthority();
             }
@@ -106,7 +145,9 @@ namespace EntityStates.Executioner2
         private static bool FUCK = true;
         public void HandleMovement()
         {
-            characterMotor.rootMotion += dashVector * verticlalSpeed * Time.fixedDeltaTime;
+            float t = Mathf.Clamp01(fixedAge / durationForMaxSpeed);
+            float speed = Mathf.Lerp(verticlalSpeed, maxVerticalSpeed, t);
+            characterMotor.rootMotion += dashVector * speed * Time.fixedDeltaTime;
             characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
             characterMotor.velocity = Vector3.zero;
 
@@ -194,7 +235,7 @@ namespace EntityStates.Executioner2
                     EffectManager.SimpleEffect(slamEffect, position, Quaternion.identity, true);
                 }
             }
-            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition, dashVector = dashVector });
+            outer.SetNextState(new ExecuteImpact { soloTarget = soloTarget, targetPosition = hitPosition, dashVector = dashVector, hitAnyEnemies = result.hitCount > 0 });
             if (characterMotor)
             {
                 characterMotor.velocity = Vector3.zero;
@@ -207,10 +248,7 @@ namespace EntityStates.Executioner2
             base.OnExit();
             characterBody.hideCrosshair = false;
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
-            gameObject.layer = originalLayer;
-            characterMotor.Motor.RebuildCollidableLayers();
-            characterMotor.onHitGroundAuthority -= OnGroundHit;
-            characterMotor.onMovementHit -= OnMovementHit;
+
             characterBody.bodyFlags -= CharacterBody.BodyFlags.IgnoreFallDamage;
 
             if(outer.nextState is not ExecuteImpact)
@@ -222,6 +260,18 @@ namespace EntityStates.Executioner2
             {
                 cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 1.2f);
             }
+            if (isAuthority)
+            {
+                characterMotor.onHitGroundAuthority -= OnGroundHit;
+                characterMotor.onMovementHit -= OnMovementHit;
+
+                if (gameObject.TryGetComponent(out TeleportHandler tp))
+                {
+                    Destroy(tp);
+                }
+            }
+
+            
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
@@ -234,13 +284,14 @@ namespace EntityStates.Executioner2
     {
         private static int chargesToGrant = 3;
         public bool soloTarget;
+        public bool hitAnyEnemies;
         public Vector3 targetPosition;
         public Vector3 dashVector;
         private static float baseHitPauseDuration = 2f;
         private static float hitPauseDurationSolo = .45f;
         private static float duration = 0.5f;
         private static float axeFadeOutDuratoin = .9f;
-        private static float ionOrbSpeed = 8f;
+        private static float ionOrbSpeed = 30f;
 
         private float hitPauseDuration;
         private ExecutionerController exeController;
@@ -277,7 +328,12 @@ namespace EntityStates.Executioner2
                     RoR2.Orbs.OrbManager.instance.AddOrb(ionOrb);
                 }
             }
-            if(soloTarget)
+
+            if (!hitAnyEnemies)
+            {
+                direction = characterDirection.forward; // wtf is even going on anymore
+            }
+            else if(soloTarget)
             {
                 direction = targetPosition - transform.position;
             }

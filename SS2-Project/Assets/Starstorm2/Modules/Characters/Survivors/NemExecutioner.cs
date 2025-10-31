@@ -59,6 +59,12 @@ namespace SS2.Survivors
             {
                 fearProjectile.GetComponent<RoR2.Projectile.ProjectileDamage>().damageType.AddModdedDamageType(fearOnHit);
             }
+
+            RoR2Application.onLoadFinished += () =>
+            {
+                bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+                ghoulBodyIndex = ghoulBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
+            };
         }
 
         private static int GetMaxGhouls(CharacterMaster master, int deployableCountMultiplier)
@@ -74,14 +80,6 @@ namespace SS2.Survivors
                 Destroy(this);
             }
         }
-
-        [SystemInitializer(typeof(BodyCatalog))]
-        private static void SetBodyIndex()
-        {
-            bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-            ghoulBodyIndex = ghoulBodyPrefab.GetComponent<CharacterBody>().bodyIndex;
-        }
-
         #region Events
 
         #region HealNovaOnKill
@@ -207,7 +205,7 @@ namespace SS2.Survivors
                 }
             }
 
-            if (damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
+            if (damageReport.attacker && damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)
             {
                 var assistTrackers = InstanceTracker.GetInstancesList<AssistTracker>();
                 foreach (var tracker in assistTrackers)
@@ -237,7 +235,7 @@ namespace SS2.Survivors
             private float timeAlive;
             public void OnKilledServer(DamageReport damageReport)
             {
-                if(enabled)
+                if (enabled)
                 {
                     int orbCount = GetIonCountFromBody(damageReport.victimBody);
 
@@ -301,7 +299,7 @@ namespace SS2.Survivors
                     GenericSkill secondary = target.healthComponent.body.skillLocator.secondary;
                     if (secondary)
                     {
-                        FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary);
+                        FriendManager.instance.RpcAddStock(target.healthComponent.gameObject, (int)SkillSlot.Secondary, 1, true);
                     }
                 }
             }

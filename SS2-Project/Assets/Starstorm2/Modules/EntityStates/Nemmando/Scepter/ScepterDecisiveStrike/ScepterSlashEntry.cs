@@ -107,9 +107,7 @@ namespace EntityStates.Nemmando
                 temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay.destroyComponentOnEnd = true;
                 temporaryOverlay.originalMaterial = Resources.Load<Material>("Materials/matDoppelganger");
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
             }
         }
 

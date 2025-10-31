@@ -8291,6 +8291,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6154062678371439610}
+  - {fileID: 4791562048317995487}
   m_Father: {fileID: 9164132031281168824}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 2.359745, y: 41.963665, z: 2.594453}
@@ -14239,6 +14240,70 @@ CharacterJoint:
   m_EnablePreprocessing: 1
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!1 &3041665425324016500
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4791562048317995487}
+  - component: {fileID: 5387813635905973499}
+  - component: {fileID: 3874056761933696336}
+  m_Layer: 17
+  m_Name: HeadHurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4791562048317995487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041665425324016500}
+  m_LocalRotation: {x: -0, y: 5.8203686e-14, z: 5.6340674e-14, w: 1}
+  m_LocalPosition: {x: -0, y: 0.118, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4650140801694805234}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 2.359745, y: 41.963665, z: 2.594453}
+--- !u!135 &5387813635905973499
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041665425324016500}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3874056761933696336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3041665425324016500}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthComponent: {fileID: 3637720372149095376}
+  isBullseye: 0
+  isSniperTarget: 1
+  damageModifier: 0
+  hurtBoxGroup: {fileID: 4745701622652819094}
+  indexInGroup: 1
 --- !u!1 &3095298957279649541
 GameObject:
   m_ObjectHideFlags: 0
@@ -21783,6 +21848,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurtBoxes:
   - {fileID: 821857045234665215}
+  - {fileID: 3874056761933696336}
   mainHurtBox: {fileID: 821857045234665215}
   bullseyeCount: 1
 --- !u!114 &123723285962256348

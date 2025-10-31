@@ -24,6 +24,8 @@ namespace SS2
         public const string ID_EVENT = PREFIX + "Events";
         public const string ID_INTERACTABLE = PREFIX + "Interactable";
         public const string ID_MISC = PREFIX + "Miscellaneous";
+        public const string ID_BETA = PREFIX + "Beta Content";
+        public const string ID_ACCESSIBILITY = PREFIX + "Accessibility";
 
         private static ExpansionDef fuckyou = ScriptableObject.CreateInstance<ExpansionDef>();
         internal static ConfigFactory ConfigFactory { get; private set; }
@@ -35,12 +37,21 @@ namespace SS2
         public static ConfigFile ConfigEvent { get; private set; }
         //public static ConfigFile ConfigInteractable { get; private set; }
         public static ConfigFile ConfigMisc { get; private set; }
+        public static ConfigFile ConfigBeta { get; private set; }
+        public static ConfigFile ConfigAccessibility { get; private set; }
+       
 
         internal static ConfiguredBool EnableItems;
         public static ConfiguredBool EnableEquipments;
         public static ConfiguredBool EnableInteractables;
         public static ConfiguredBool EnableSurvivors;
         public static ConfiguredBool EnableMonsters;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ACCESSIBILITY, configDescOverride = "Intensity of certain flashing effects, from 0%-100%. Currently targets Stormborn monsters and Executioner's `Execution` skill.\nDISCLAIMER: This is not a universal solution for photosensitivity. Only certain visual effects from Starstorm 2 are reduced.", configNameOverride = "Flashing Effects")]
+        public static float FlashingEffectsIntensity = 100f;
+
+        public static ConfiguredBool enableBeta;
+
 
         internal static IEnumerator RegisterToModSettingsManager()
         {
@@ -58,6 +69,8 @@ namespace SS2
             ModSettingsManager.SetModIcon(icon, GUID(ID_INTERACTABLE), MODNAME(ID_INTERACTABLE));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ARTIFACT), MODNAME(ID_ARTIFACT));
             ModSettingsManager.SetModIcon(icon, GUID(ID_MISC), MODNAME(ID_MISC));
+            ModSettingsManager.SetModIcon(icon, GUID(ID_BETA), MODNAME(ID_BETA));
+            ModSettingsManager.SetModIcon(icon, GUID(ID_ACCESSIBILITY), MODNAME(ID_ACCESSIBILITY));
             ModSettingsManager.SetModDescription("A general content mod adapting ideas from Risk of Rain 1's Starstorm", SS2Main.GUID, SS2Main.MODNAME);
         }
 
@@ -76,6 +89,16 @@ namespace SS2
             
             ConfigArtifact = CreateConfigFile(ID_ARTIFACT, true);
             ConfigMisc = CreateConfigFile(ID_MISC, true);
+            ConfigBeta = CreateConfigFile(ID_BETA, true);
+            enableBeta = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "0.7";
+                b.key = "Enable 0.7 Beta";
+                b.description = "Enabled in-dev content from the 0.7 update. EXPECT instability. DO NOT EXPECT support or bug fixes.";
+                b.configFile = SS2Config.ConfigBeta;
+            }).DoConfigure();
+
+            ConfigAccessibility = CreateConfigFile(ID_ACCESSIBILITY, true);
         }
 
 

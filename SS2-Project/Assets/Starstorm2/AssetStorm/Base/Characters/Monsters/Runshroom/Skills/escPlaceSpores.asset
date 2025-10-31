@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: escPlaceSpores
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Runshroom.PlaceSpores, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: damageCoefficient
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: projectileVelocity
+      fieldValue:
+        stringValue: 30
+        objectValue: {fileID: 0}
+    - fieldName: chargeEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1711397062456820, guid: 3fa2a5dd79bed3242aa0a302fe702ef4,
+          type: 3}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1321966914045773, guid: c8db2a4752af7f848a38221074b39109,
+          type: 3}
+    - fieldName: effectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1944505545542342, guid: d44a0ea76e77bc945961745109d43cd3,
+          type: 3}
+    - fieldName: fireTime
+      fieldValue:
+        stringValue: 0.55
+        objectValue: {fileID: 0}
+    - fieldName: enterSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}

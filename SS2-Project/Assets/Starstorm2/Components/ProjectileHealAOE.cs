@@ -13,7 +13,9 @@ namespace SS2.Components
         public float percentHeal = .2f;
         public float healDamageCoefficient = 1f;
 		public float orbTravelDuration = 0.5f;
+		public bool canHealOwner = true;
 
+		public GameObject impactEffectPrefab;
         private ProjectileController projectileController;
         private TeamFilter teamFilter;
         private ProjectileDamage projectileDamage;
@@ -46,7 +48,8 @@ namespace SS2.Components
 			for (int i = 0; i < hurtBoxes.Length; i++)
 			{
 				HealthComponent healthComponent = hurtBoxes[i].healthComponent;
-				if (!list.Contains(healthComponent))
+				bool ownerRequirement = canHealOwner || (healthComponent && healthComponent.gameObject != projectileController.owner.gameObject);
+				if (!list.Contains(healthComponent) && ownerRequirement)
 				{
 					list.Add(healthComponent);
 				}
@@ -61,8 +64,16 @@ namespace SS2.Components
 				healOrb.overrideDuration = this.orbTravelDuration;
 				OrbManager.instance.AddOrb(healOrb);
 			}
-			//EffectManager.SimpleEffect(EntityStates.AffixEarthHealer.Heal.effectPrefab, base.transform.position, Quaternion.identity, true);
-			
+			if(impactEffectPrefab)
+            {
+				EffectData effectData = new EffectData
+				{
+					scale = radius,
+					origin = base.transform.position
+				};
+				EffectManager.SpawnEffect(impactEffectPrefab, effectData, true);
+			}
+
 		}
 
         public void OnProjectileImpact(ProjectileImpactInfo impactInfo)

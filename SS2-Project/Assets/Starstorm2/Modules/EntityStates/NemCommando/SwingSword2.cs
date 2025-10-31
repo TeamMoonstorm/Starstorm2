@@ -14,7 +14,7 @@ namespace EntityStates.NemCommando
     {
         public static float swingTimeCoefficient = 1.71f;
         private static float reloadDelay = 0.5f;
-        [FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
+        //[FormatToken("SS2_NEMMANDO_PRIMARY_BLADE_DESCRIPTION", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100)]
         public static float TokenModifier_dmgCoefficient => new SwingSword2().damageCoefficient;
         public int swingSide;
         private bool inCombo = false;

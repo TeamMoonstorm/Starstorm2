@@ -1460,6 +1460,90 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="WayfarerStartBigLamp" ID="{B27786FE-B8B8-490F-8E84-5EBC4381104D}">
+							<ChildrenList>
+								<Action Name="" ID="{9C5C63CC-60C6-41BF-8D8F-5BAAA5D69179}" ShortID="1052352946">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerStartBigLamp" ID="{523D626C-0131-4C63-ACA1-A2C9BC95D03F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_WayfarerBigLampLoop" ID="{E5745162-331B-4A8C-9CDA-0E27CB93F4C6}">
+							<ChildrenList>
+								<Action Name="" ID="{07E53791-2FC5-4550-B9EF-C5651C6A3160}" ShortID="65819736">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampLoop" ID="{0561617B-EC27-4F69-A820-99D86FB031C8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_WayfarerBigLampLoop" ID="{1E8E4A2C-4041-48C9-8F1E-4502C7D4F056}">
+							<ChildrenList>
+								<Action Name="" ID="{6E618F55-58C5-4E2A-88D7-8ACD86F0E225}" ShortID="844967532">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampLoop" ID="{0561617B-EC27-4F69-A820-99D86FB031C8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerEndBigLamp" ID="{29C46DD1-843A-4B1C-BE59-EF947C17E100}">
+							<ChildrenList>
+								<Action Name="" ID="{BE9E42ED-99CB-4694-AC14-29F23A40A070}" ShortID="1040771118">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerEndBigLamp" ID="{472389E7-14F6-4A31-A75E-BC0A7BEA0FA8}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerRaiseBigLamp" ID="{08769EB3-BD0C-446D-B53C-5DF750DE49C9}">
+							<ChildrenList>
+								<Action Name="" ID="{29632807-DEEE-405F-B6CD-DC6966EFBE17}" ShortID="953080521">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerRaiseBigLamp" ID="{B8FA1845-D07E-48C8-AE84-036193CF67F1}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="WayfarerBigLampDeath" ID="{075F1202-B622-4AED-8C6D-C77AE2707B22}">
+							<ChildrenList>
+								<Action Name="" ID="{BBA52DFC-2000-41F7-BA9D-2E5CF26F364C}" ShortID="997508935">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="WayfarerBigLampDeath" ID="{FBD0F4EA-3B47-4EA0-8786-D498A825E49E}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Nucleator" ID="{B1FE5094-3E9D-4BA2-9E60-922603707F9E}" ShortID="401688656">
@@ -1680,6 +1764,20 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="FollowerDeath" ID="{692B00BE-0D70-44E5-A891-ABD2794F0DFB}">
+							<ChildrenList>
+								<Action Name="" ID="{BCEA31F7-66AC-4918-92D6-28D416F33EDF}" ShortID="1042424195">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="FollowerDeath" ID="{F4C64297-9B1B-42E1-BC13-4271B645B52F}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Nemesis Huntress" ID="{CC591652-3A6B-4EBF-AC0A-C55FAB27902E}" ShortID="937343913">
@@ -1751,6 +1849,10 @@
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Nemesis Mercenary" ID="{08711AC6-8742-4325-BD1D-7D992E614C4D}" ShortID="1024204966">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="21"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
 					<ChildrenList>
 						<Event Name="Play_nemmerc_dash" ID="{7AD2D221-77D4-46B1-81D4-59D33E4E6750}">
 							<ChildrenList>
@@ -1929,20 +2031,6 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="maybeCloneSpawn" ID="{DADF0D47-DC07-40E8-BE09-25036FA67AF9}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
-						<Event Name="Play_nemmerc_primary_fire3" ID="{148B2AEC-FFE6-4F67-A53D-93BF754675DE}">
-							<ChildrenList>
-								<Action Name="" ID="{AF3701FD-3AA8-409D-B471-F4A6B0AFE8FB}" ShortID="621246181">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="PF_NM_2" ID="{08A43265-8642-4BBB-AF0F-DD38DF3BC305}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -2128,6 +2216,84 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="emp_spawn_v3_6" ID="{2A103986-CA6B-4D17-AFD5-4C0C12C09E42}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Runshroom" ID="{4A33A041-BC31-4B36-8A04-4995CB366A9C}" ShortID="363680073">
+					<PropertyList>
+						<Property Name="Color" Type="int16" Value="23"/>
+						<Property Name="OverrideColor" Type="bool" Value="True"/>
+					</PropertyList>
+					<ChildrenList>
+						<Event Name="Play_runshroom_explode" ID="{F5EC1273-B505-4630-B13D-72418E988BF0}">
+							<ChildrenList>
+								<Action Name="" ID="{E6B2F806-93D4-46A5-8056-E9639404554B}" ShortID="475130986">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="rushrum_explode" ID="{EFD5BDAD-FD44-4877-8215-CBEDD71F1022}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_spawn" ID="{08086D22-D762-4856-A087-EAD8AC5AA5E6}">
+							<ChildrenList>
+								<Action Name="" ID="{C4DE76E7-1942-498B-86F5-0AF5A444A802}" ShortID="844387138">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomSpawn" ID="{B38CAF2E-CF9D-44A7-8851-B7E9697ECBD2}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_charge" ID="{E99736D6-59FD-4938-BC7A-B09230FCB306}">
+							<ChildrenList>
+								<Action Name="" ID="{D0B61423-8748-4682-BA1F-0A1E31724CCE}" ShortID="589857606">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomCharge" ID="{C6ED917A-97E2-489D-AA5A-0274400C5747}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_step" ID="{F09B4865-BF81-4606-A12A-A7776FCAAC67}">
+							<ChildrenList>
+								<Action Name="" ID="{C1D83FC4-52BF-4A9F-8AEA-A583E374B24B}" ShortID="412076577">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomStep" ID="{0C2CB5ED-B670-4977-8BE2-879E407C8EEF}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_idle_vo" ID="{713947B5-05DC-4AD7-A418-BA63FE15D518}">
+							<ChildrenList>
+								<Action Name="" ID="{8E9B1508-D866-448D-B92A-B46C3DB913F1}" ShortID="123882503">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomBark" ID="{6A9EF953-053F-4299-B31F-F52C553EEC48}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

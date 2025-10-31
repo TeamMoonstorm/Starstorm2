@@ -4700,7 +4700,8 @@ MonoBehaviour:
   m_Script: {fileID: -1175172885, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  panelPrefab: {fileID: 0}
+  panelPrefab: {fileID: 7364735613814103181, guid: 167063e4bf4abd24db605ac8126f0208,
+    type: 3}
   onPickupSelected:
     m_PersistentCalls:
       m_Calls:
@@ -4775,15 +4776,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 720c19d8e540e9446a4f2e378778a6b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rewardControllerPrefab: {fileID: 683425583528693915, guid: fa233c9050967f84c9271cb0168c0f49,
+    type: 3}
   esm: {fileID: 8305973606314702422}
-  modelLocator: {fileID: 0}
-  childLocator: {fileID: 0}
   pickupPickerController: {fileID: 3411196135211828814}
-  commonValue: 0.1
-  uncommonValue: 0.35
-  rareValue: 0.6
-  lunarValue: 0.45
-  favoriteItem: {fileID: 0}
+  dropTable: {fileID: 11400000, guid: d158d94723eef384687a5e25add5039b, type: 2}
+  t1Min: 10
+  t1Max: 35
+  t2Min: 40
+  t2Max: 60
+  t3Min: 80
+  t3Max: 110
+  bossMin: 75
+  bossMax: 120
+  potentialRewards:
+  - value: 0
+  - value: 0
+  - value: 0
+  - value: 0
 --- !u!114 &8070888946082544307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5125,7 +5135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6445132320682464400
 Transform:
   m_ObjectHideFlags: 0

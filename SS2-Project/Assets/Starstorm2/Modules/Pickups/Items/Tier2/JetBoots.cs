@@ -149,7 +149,7 @@ namespace SS2.Items
 
             //SS2Log.Info("DEBUGGING Getting blast position");
 
-            EffectManager.SpawnEffect(_explosionEffectPrefab, new EffectData
+            EffectManager.SpawnEffect(GlobalEventManager.CommonAssets.igniteOnKillExplosionEffectPrefab, new EffectData ///////////////////////////////////////////
             {
                 origin = position,
                 scale = blastRadius,

@@ -64,20 +64,25 @@ namespace SS2.Modules
             if (!NetworkServer.active)
                 return;
             
-            if (body.baseNameToken == "TOOLBOT_BODY_NAME")
+            if (body && body.modelLocator && body.modelLocator.modelBaseTransform && body.baseNameToken == "TOOLBOT_BODY_NAME")
             {
+                ModelSkinController msc = body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>();
                 //Debug.Log("is toolbot");
-                if (body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>().skins[body.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+                if (msc && msc.skins[body.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
                 {
                     //Debug.Log("is lunar");
                     LoopSoundWhileCharacterMoving lswcm = body.GetComponent<LoopSoundWhileCharacterMoving>();
-                    //lswcm.enabled = false;
-                    lswcm.startSoundName = "Play_lunar_golem_idle_loop";
-                    lswcm.stopSoundName = "Stop_lunar_golem_idle_loop";
-                    lswcm.minSpeed = 0;
-                    //it's just like an idle sound except i couldn't get it to actually work as an idle sound for some reason..
 
-                    //Debug.Log("modified lunar idle sounds! :)");
+                    if (lswcm != null)
+                    {
+                        //lswcm.enabled = false;
+                        lswcm.startSoundName = "Play_lunar_golem_idle_loop";
+                        lswcm.stopSoundName = "Stop_lunar_golem_idle_loop";
+                        lswcm.minSpeed = 0;
+                        //it's just like an idle sound except i couldn't get it to actually work as an idle sound for some reason..
+
+                        //Debug.Log("modified lunar idle sounds! :)");
+                    }
                 }
             }
         }

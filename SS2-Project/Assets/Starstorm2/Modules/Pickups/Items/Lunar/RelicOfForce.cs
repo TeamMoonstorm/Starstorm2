@@ -74,7 +74,7 @@ namespace SS2.Items
 
             public void OnDamageDealtServer(DamageReport damageReport)
             {
-                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && !damageReport.damageInfo.HasModdedDamageType(Malice.MaliceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
+                if (!damageReport.damageInfo.HasModdedDamageType(relicForceDamageType) && damageReport.damageInfo.procCoefficient > 0 && damageReport.attacker && damageReport.victimBody)
                 {
                     int count = damageReport.attackerBody.inventory.GetItemCount(SS2Content.Items.RelicOfForce); //im pretty sure using stack here made the mod break and im just not having it rn, this works
                     if (count > 0)

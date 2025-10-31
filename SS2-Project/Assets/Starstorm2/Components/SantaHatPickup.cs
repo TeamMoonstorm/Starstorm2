@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+using JetBrains.Annotations;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;

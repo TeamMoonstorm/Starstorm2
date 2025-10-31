@@ -250,8 +250,8 @@ MonoBehaviour:
   baseMaxHealth: 90
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 6
-  baseAcceleration: 80
+  baseMoveSpeed: 8
+  baseAcceleration: 15
   baseJumpPower: 0
   baseDamage: 6
   baseAttackSpeed: 1
@@ -259,7 +259,7 @@ MonoBehaviour:
   baseArmor: 10
   baseVisionDistance: Infinity
   baseJumpCount: 1
-  sprintingSpeedMultiplier: 3
+  sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
   levelMaxHealth: 27
   levelRegen: 0
@@ -768,8 +768,8 @@ MonoBehaviour:
   m_Script: {fileID: 952828898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathSound: FollowerVO
-  barkSound: FollowerVO
+  deathSound: 
+  barkSound: 
   openSound: 
   landingSound: 
   fallDamageSound: 
@@ -835,7 +835,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.5676345
+  m_Radius: 0.81
   m_Height: 3.206652
   m_Direction: 1
   m_Center: {x: 0.29226336, y: -0.64840263, z: 0.000000083586436}
@@ -1047,8 +1047,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 1.0086975
-  m_Height: 2.8402574
+  m_Radius: 1.31
+  m_Height: 3.84
   m_Direction: 1
   m_Center: {x: -0.12624565, y: -1.1559047, z: 0.000000059768716}
 --- !u!114 &997403291196401144
@@ -1513,6 +1513,7 @@ GameObject:
   - component: {fileID: 260741068241964868}
   - component: {fileID: 5924985964426969284}
   - component: {fileID: 9206172986931743947}
+  - component: {fileID: 9174760077218997268}
   m_Layer: 0
   m_Name: mdlLamp
   m_TagString: Untagged
@@ -1625,6 +1626,8 @@ MonoBehaviour:
     transform: {fileID: 8643074798831608337}
   - name: Chest
     transform: {fileID: 5835352641920804580}
+  - name: GlassMesh
+    transform: {fileID: 2050849984783485566}
 --- !u!114 &260741068241964868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1728,6 +1731,54 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6adafccaf67ed9a469e037507d6953d6, type: 2}
   - {fileID: 11400000, guid: 6f414cd4c1e31824ba105be84e8587d3, type: 2}
   prefabInstantiationDatas: []
+--- !u!114 &9174760077218997268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7374164075010974851}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 80205854, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  printTime: 1
+  printCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  age: 0
+  disableWhenFinished: 1
+  paused: 0
+  materialPrintCutoffPostSkinApplying: 1
+  startingPrintHeight: -100
+  maxPrintHeight: -100
+  startingPrintBias: 3.33
+  maxPrintBias: 0.9
+  animateFlowmapPower: 0
+  startingFlowmapPower: 0
+  maxFlowmapPower: 0
 --- !u!1 &7381040789808828390
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2149,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.64028746
+  m_Radius: 0.97
   m_Height: 2.4173374
   m_Direction: 1
   m_Center: {x: -0.1402878, y: -0.37077633, z: 0.000000006476536}

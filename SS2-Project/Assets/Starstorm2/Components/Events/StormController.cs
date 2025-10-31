@@ -16,13 +16,73 @@ namespace SS2.Components
     public class StormController : NetworkBehaviour
     {
         public static StormController instance;
-
-        public static readonly Xoroshiro128Plus chargeRng = new Xoroshiro128Plus(0UL);
-        public static readonly Xoroshiro128Plus mobChargeRng = new Xoroshiro128Plus(0UL);
-        public static readonly Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
         public static PickupDropTable dropTable;
+        
         public static bool shouldShowObjective = false; // weather radio? config setting?
         private static Color etherealTextColor = new Color(.204f, .921f, .561f);
+
+
+        // OLD SHIT FUC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// </summary>
+        public static readonly Xoroshiro128Plus chargeRng = new Xoroshiro128Plus(0UL);
+        public static readonly Xoroshiro128Plus mobChargeRng = new Xoroshiro128Plus(0UL);
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// </summary>
 
         [SystemInitializer]
         //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK
@@ -37,22 +97,12 @@ namespace SS2.Components
 
         private static void OnStageStartGlobal(Stage stage)
         {
-            if(Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            if (Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
             {
                 chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
                 mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
-                treasureRng.ResetSeed(Run.instance.treasureRng.nextUlong);
-
-                //FIXME: Events should only be spawned via the GameplayEventManager Spawn method! -N
-                GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
-
-                var evt = stormController.GetComponent<GameplayEvent>();
-                evt.doNotAnnounceEnd = true;
-                evt.doNotAnnounceStart = true;
-
-                NetworkServer.Spawn(stormController);
             }
-   
+
         }
 
 
@@ -102,7 +152,13 @@ namespace SS2.Components
         public bool IsPermanent { get; private set; }
 
         private float levelPercentComplete;
-        private Run.FixedTimeStamp stormStartTime;
+        public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
+        public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
+        [NonSerialized]
+        public Run.FixedTimeStamp stormStartTime;
+
+        [NonSerialized]
+        public bool hasStarted;
 
         private EntityStateMachine stateMachine;
 
@@ -113,6 +169,7 @@ namespace SS2.Components
             if (StormController.instance)
             {
                 Debug.LogError("Only one StormController can exist at a time.");
+                Destroy(base.gameObject);
                 return;
             }
             StormController.instance = this;
@@ -124,44 +181,27 @@ namespace SS2.Components
                 StormController.instance = null;
             }
         }
+        private void Awake()
+        {
+            this.stateMachine = base.GetComponent<EntityStateMachine>();
+        }
 
         private void Start()
         {
-            InstantiateEffect();
-            this.stateMachine = base.GetComponent<EntityStateMachine>();
+            InstantiateEffect();         
             this.SetEffectIntensity(this.effectIntensity);
-
+            timeRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
+            treasureRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
 #if DEBUG
             shouldShowObjective = true;
 #endif
-
-            stormStartTime = Run.FixedTimeStamp.now + UnityEngine.Random.Range(180, 360); // TODO: Event director that handles this. this fucking sux lol
-
             DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
             MaxStormLevel = Mathf.FloorToInt(difficulty.scalingValue) + 1;
             MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 4); // drizzle 2, monsoon/typhoon+ 4
 
-            IsPermanent = difficulty.scalingValue >= Typhoon.sdd.scalingValue; // TODO: RunFlags. difficulties r a shit
+            IsPermanent = Run.instance.GetEventFlag("PermanentStorms");
             if (shouldShowObjective)
-                ObjectivePanelController.collectObjectiveSources += StormObjective;
-         
-        }
-             
-        private EntityState InstantiateInitialState()
-        {
-
-            return new Calm();
-        }
-        // TODO: Stage cooldown on skipping the initial "calm" level
-        public bool AttemptSkip(int consecutiveSkips = 0)
-        {
-            if (!EtherealBehavior.instance) return false; // ????????? todo: fix shitty ethereal behavior
-            float chance = 0;
-            int etherealsCompleted = EtherealBehavior.instance.etherealsCompleted;
-            if (etherealsCompleted > 0)
-                chance = (25f + 10f * (etherealsCompleted - 1)) * Mathf.Pow(0.5f, consecutiveSkips);
-            bool doSkip = Util.CheckRoll(chance);
-            return doSkip;
+                ObjectivePanelController.collectObjectiveSources += StormObjective;        
         }
 
         private void OnDestroy()
@@ -229,6 +269,7 @@ namespace SS2.Components
 
         public void OnStormLevelCompleted()
         {
+            hasStarted = true;
             this.stormLevel++;
         }
 
@@ -263,6 +304,7 @@ namespace SS2.Components
             
         }
 
+        #region hud stuff
         private void StormObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)
         {
             dest.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
@@ -417,6 +459,7 @@ namespace SS2.Components
                 }
             }
         }
+        #endregion
     }
 }
 

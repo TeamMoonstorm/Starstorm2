@@ -1,13 +1,12 @@
 ﻿using MSU;
 using RoR2;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using RoR2.ContentManagement;
 using R2API;
 using EntityStates;
-using System;
-using UnityEngine.Networking;
+using MSU.Config;
+using RoR2.Skills;
 
 namespace SS2.Survivors
 {
@@ -15,20 +14,22 @@ namespace SS2.Survivors
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
         
-        public SS2AssetRequest<AssetCollection> ExtraKnightAssets => SS2Assets.LoadAssetAsync<AssetCollection>("acKnightExtra", SS2Bundle.Indev);
-
-        public static GameObject KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
-        public static GameObject KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-        public static GameObject KnightDroppod = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+        public static GameObject KnightImpactEffect;
+        public static GameObject KnightCrosshair;
+        public static GameObject KnightDroppod;
+        public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
 
-
+        public static SerializableEntityStateType ShieldStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.Shield));
 
         public static float dodgeFOV = EntityStates.Commando.DodgeState.dodgeFOV;
 
         public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.25f, -6.1f);
         public static Vector3 altCameraPos = new Vector3(-1.2f, -0.25f, -6.1f);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float BannerBuffRegen = 0.2f;
 
         
         public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
@@ -51,41 +52,11 @@ namespace SS2.Survivors
 
         public AssetCollection ExtraAssetCollection { get; set; }
 
-        public static float reducedGravity = 0.10f;
+        public static float reducedGravity = 0.07f;
 
         public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
 
         private static float stunDebuffDuration = 3f;
-
-        public override IEnumerator LoadContentAsync()
-        {
-            SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
-            SS2AssetRequest<AssetCollection> extraRequest = ExtraKnightAssets;
-
-            request.StartLoad();
-            while (!request.IsComplete)
-                yield return null;
-
-            AssetCollection = request.Asset;
-
-            CharacterPrefab = AssetCollection.bodyPrefab;
-            masterPrefab = AssetCollection.masterPrefab;
-            survivorDef = AssetCollection.survivorDef;
-
-
-            extraRequest.StartLoad();
-            while (!extraRequest.IsComplete)
-                yield return null;
-
-            ExtraAssetCollection = extraRequest.Asset;
-
-        }
-
-        public override void ModifyContentPack(ContentPack contentPack)
-        {
-            contentPack.AddContentFromAssetCollection(ExtraAssetCollection);
-            contentPack.AddContentFromAssetCollection(AssetCollection);
-        }
 
         public override void Initialize()
         {
@@ -93,6 +64,15 @@ namespace SS2.Survivors
             Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
+            KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
+
+            AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedPrimaryLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarPrimaryReplacementSkill>("RoR2/Base/LunarSkillReplacements/LunarPrimaryReplacement.asset").WaitForCompletion();
+            //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedUtilityLunar").upgradedFrom = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/LunarSkillReplacements/LunarUtilityReplacement.asset").WaitForCompletion();
+            //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedSpecialLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarDetonatorSkill>("RoR2/Base/LunarSkillReplacements/LunarDetonatorSpecialReplacement.asset").WaitForCompletion();
+
+            KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
+            KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
+            KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
 
             RegisterKnightDamageTypes();
             ModifyPrefab();
@@ -124,11 +104,14 @@ namespace SS2.Survivors
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb._defaultCrosshairPrefab = KnightCrosshair;
             cb.preferredPodPrefab = KnightDroppod;
+
+            EntityStateMachine bodyState = EntityStateMachine.FindByCustomName(cb.gameObject, "Body");
+            bodyState.mainStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.MainState));
         }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
@@ -140,24 +123,22 @@ namespace SS2.Survivors
                 args.damageMultAdd += 0.2f;
             }
 
-            if (sender.HasBuff(SS2Content.Buffs.bdShield))
+            if (sender.HasBuff(SS2Content.Buffs.bdKnightShield))
             {
                 args.armorAdd += 200f;
-                args.moveSpeedReductionMultAdd += 0.6f;
+                //args.moveSpeedReductionMultAdd += 0.6f;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
             {
-                args.baseJumpPowerAdd += 1f;
                 args.baseMoveSpeedAdd += 0.1f;
-                args.jumpPowerMultAdd += 0.5f;
                 args.damageMultAdd += 0.2f;
+                args.regenMultAdd += BannerBuffRegen;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
             {
-                args.attackSpeedReductionMultAdd += 2;
-                args.moveSpeedReductionMultAdd += 2;
+                args.moveSpeedReductionMultAdd += 1;
             }
 
             if (sender.HasBuff(SS2Content.Buffs.bdKnightStunAttack))
@@ -187,7 +168,6 @@ namespace SS2.Survivors
                         return;
                     }
 
-                    // TODO: No clue if this will work
                     characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
                 }
             }

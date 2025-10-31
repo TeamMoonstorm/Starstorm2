@@ -106,7 +106,7 @@ namespace SS2.Items
             //sound is on the buffdef
             //Util.PlaySound("StrangeCan", report.victim.gameObject);
             CharacterBody body = report.attackerBody;
-            if (!body || (body && !body.inventory)) return;
+            if (!body || !body.inventory) return;
 
             int stack = body.inventory.GetItemCount(ItemDef);
             if (stack <= 0) return;
@@ -124,8 +124,22 @@ namespace SS2.Items
                     damageMultiplier = damageCoefficient,
                 };
                 DotController.InflictDot(ref dotInfo);
-
                 EffectManager.SimpleEffect(_procEffect, report.damageInfo.position, Quaternion.identity, true);
+
+                // refresh stacks
+                DotController dotController = DotController.FindDotController(body.gameObject);
+                if (!dotController) return;
+                int j = 0;
+                List<DotController.DotStack> dotStackList = dotController.dotStackList;
+                while (j < dotStackList.Count)
+                {
+                    if (dotStackList[j].dotIndex == DotIndex)
+                    {
+                        dotStackList[j].timer = Mathf.Max(dotStackList[j].timer, buffDuration);
+                    }
+                    j++;
+                }
+                
             }
         }
     }

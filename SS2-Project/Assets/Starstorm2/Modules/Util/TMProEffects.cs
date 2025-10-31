@@ -7,11 +7,12 @@ namespace SS2
 {
     //ty for permission to use this Mystic :)
 
-    //TODO: make not suck and tell mythic
     internal static class TMProEffects
     {
         private static bool enabled = true;
-        public static void Init()
+
+        [SystemInitializer]
+        private static void Init()
         {
             On.RoR2.UI.ChatBox.Start += ChatBox_Start;
             On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
@@ -90,10 +91,11 @@ namespace SS2
 
             public void Start()
             {
-                if (textComponent && textComponent.isActiveAndEnabled)
-                {
-                    textComponent.ForceMeshUpdate();
-                }
+                // idk what this does but it was spitting out errors on startup
+                //if (textComponent && textComponent.isActiveAndEnabled)
+                //{
+                //    textComponent.ForceMeshUpdate(true, false);
+                //}
                 TMPro_EventManager.TEXT_CHANGED_EVENT.Add(ON_TEXT_CHANGED);
             }
             private void OnDestroy()
@@ -112,6 +114,7 @@ namespace SS2
                 {
                     textChanged = true;
                     // dumb fucking hack. textmeshpro is buggy as shit. wont work if both old and new text have links 
+                    // if you make a new effect make sure you also check for it here ----->
                     if(this.enabled && textComponent != null && textComponent.textInfo != null && textComponent.textInfo.linkInfo != null && textComponent.text != null && !textComponent.text.Contains("textWavy") && !textComponent.text.Contains("textShaky"))
                     {
                         this.textComponent.textInfo.linkInfo = new TMPro.TMP_LinkInfo[0]; // fuck tmpro wtf is this. linkinfos never get cleared when text changes

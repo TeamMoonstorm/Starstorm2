@@ -71,7 +71,11 @@ namespace SS2.Components
                         EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("TeleportDashEffect", SS2Bundle.Indev), body.corePosition, Quaternion.LookRotation(dest - body.corePosition), true);
 					
 						TeleportHelper.TeleportBody(body, dest);
-
+                        SetStateOnHurt setStateOnHurt = body.GetComponent<SetStateOnHurt>();
+                        if(setStateOnHurt)
+                        {
+                            setStateOnHurt.SetStun(2);
+                        }
                         if(body.modelLocator && body.modelLocator.modelTransform)
                         {
                             Transform modelTransform = body.modelLocator.modelTransform;
@@ -83,9 +87,7 @@ namespace SS2.Components
                                 temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                                 temporaryOverlay2.destroyComponentOnEnd = true;
                                 temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matTeleportOverlay", SS2Bundle.Indev);
-
-                                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                                //temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                                temporaryOverlay2.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
                             }
                         }
 					}

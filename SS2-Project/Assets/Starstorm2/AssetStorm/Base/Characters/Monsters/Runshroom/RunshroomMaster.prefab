@@ -19,7 +19,6 @@ GameObject:
   - component: {fileID: 1668289143856072441}
   - component: {fileID: 2187727747860522999}
   - component: {fileID: 926221688169684891}
-  - component: {fileID: 3335875423174812004}
   - component: {fileID: 3820541615900473959}
   m_Layer: 0
   m_Name: RunshroomMaster
@@ -38,6 +37,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -96,8 +96,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   destroyOnBodyDeath: 1
+  ExtraBossMissileMoneyRemainder: 0
+  trackedFreeUnlocks: 0
+  trackedMissileCount: 0
   isBoss: 0
   preventGameOver: 1
+  _seekerRevivedOnce: 0
+  _seekerRevitalize: 0
+  seekerSelfRevive: 0
+  devotionInventoryPrefab: {fileID: 0}
+  devotionInventoryUpdaterRef: {fileID: 0}
+  devotionItem: 0
+  devotedEvolutionTracker: 0
+  isDevotedMinion: 0
+  summonerRef: {fileID: 0}
 --- !u!114 &5353263629313137040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemAcquisitionOrder: 
+  beadAppliedHealth: 0
+  beadAppliedShield: 0
+  beadAppliedRegen: 0
+  beadAppliedDamage: 0
 --- !u!114 &5540868535476222772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 1357070253, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showDebugStateChanges: 0
   fullVision: 0
   neverRetaliateFriendlies: 0
   enemyAttentionDuration: 5
@@ -145,9 +162,12 @@ MonoBehaviour:
       PublicKeyToken=null
   isHealer: 0
   enemyAttention: 0
+  prioritizePlayers: 0
   aimVectorDampTime: 0.05
   aimVectorMaxSpeed: 90
   selectedSkilldriverName: 
+  shouldMissFirstOffScreenShot: 0
+  forceUpdateEveryFrame: 0
   debugEnemyHurtBox: {fileID: 0}
 --- !u!114 &6495939233140612475
 MonoBehaviour:
@@ -168,6 +188,7 @@ MonoBehaviour:
   mainStateType:
     _typeName: EntityStates.AI.Walker.Wander, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  debug: 0
 --- !u!114 &6853769915948190030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +211,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 6
+  maxDistance: 4
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -233,7 +254,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 25
+  maxDistance: 32
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -276,7 +297,7 @@ MonoBehaviour:
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 6
+  maxDistance: 12
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
   selectionRequiresAimTarget: 0
@@ -332,49 +353,6 @@ MonoBehaviour:
   moveInputScale: 0.75
   aimType: 4
   ignoreNodeGraph: 0
-  shouldSprint: 0
-  shouldFireEquipment: 0
-  shouldTapButton: 0
-  buttonPressType: 0
-  driverUpdateTimerOverride: -1
-  resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 0
-  nextHighPriorityOverride: {fileID: 0}
---- !u!114 &3335875423174812004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 320081282386812563}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1811796171, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  customName: ChaseOffNodegraph
-  skillSlot: -1
-  requiredSkill: {fileID: 0}
-  requireSkillReady: 0
-  requireEquipmentReady: 0
-  minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
-  minTargetHealthFraction: -Infinity
-  maxTargetHealthFraction: Infinity
-  minDistance: 0
-  maxDistance: 5
-  selectionRequiresTargetLoS: 1
-  selectionRequiresOnGround: 0
-  selectionRequiresAimTarget: 0
-  maxTimesSelected: -1
-  moveTargetType: 0
-  activationRequiresTargetLoS: 0
-  activationRequiresAimTargetLoS: 0
-  activationRequiresAimConfirmation: 0
-  movementType: 1
-  moveInputScale: 1
-  aimType: 1
-  ignoreNodeGraph: 1
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0

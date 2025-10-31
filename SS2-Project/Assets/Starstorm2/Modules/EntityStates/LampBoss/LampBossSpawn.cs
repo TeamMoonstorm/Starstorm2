@@ -7,17 +7,66 @@ namespace EntityStates.LampBoss
     {
         public static GameObject spawnVFX;
         public static GameObject spawnVFXblue;
-        public static string muzzleString;
+        private static string childString = "BodyMesh";
         private Transform muzzle;
-        private EffectData effectData;
+
+        private static float realDuration = 3.7f;
+        private static float printTime = 3.7f;
+        private static float printStartHeight = 9.5f;
+        private static float printMaxHeight = -5f;
+        private static float printStartBias = 6f;
+        private static float printMaxBias = 2f;
+
+        private Animator animator;
+        private AimAnimator aimAnimator;
+
+
         public override void OnEnter()
         {
+            base.damageStat = realDuration;
             base.OnEnter();
-            muzzle = GetModelChildLocator().FindChild(muzzleString);
+
+            // TODO: SPAWN ANIMATION!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            animator = GetModelAnimator();
+            animator.enabled = false;
+            aimAnimator = GetAimAnimator();
+            aimAnimator.enabled = false;
+
             bool isBlue = GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[characterBody.skinIndex].nameToken == "SS2_SKIN_LAMP_BLUE";
             var effect = isBlue ? spawnVFXblue : spawnVFX;
             Util.PlaySound("WayfarerSpawn", gameObject);
-            EffectManager.SimpleEffect(effect, new Vector3(muzzle.position.x, muzzle.position.y + 10, muzzle.position.z), muzzle.rotation, true);
+            if (effect)
+            {
+                GameObject effectInstance = GameObject.Instantiate(effect, transform.position, Quaternion.identity);
+                var bodyMesh = FindModelChild(childString).GetComponent<SkinnedMeshRenderer>();
+                var ps = effectInstance.GetComponent<ParticleSystem>();
+
+                var shape = ps.shape;
+                shape.shapeType = ParticleSystemShapeType.SkinnedMeshRenderer;
+                shape.skinnedMeshRenderer = bodyMesh;
+            }
+
+            Transform modelTransform = base.GetModelTransform();
+            if (modelTransform)
+            {
+                var printController = modelTransform.GetComponent<PrintController>();
+                printController.enabled = false;
+                printController.printTime = printTime;
+                printController.startingPrintHeight = printStartHeight;
+                printController.maxPrintHeight = printMaxHeight;
+                printController.startingPrintBias = printStartBias;
+                printController.maxPrintBias = printMaxBias;
+                printController.enabled = true;
+            }
+        }
+
+        public override void OnExit()
+        {
+            base.OnExit();
+
+            animator.enabled = true;
+            aimAnimator.enabled = true;
+            
         }
     }
 }

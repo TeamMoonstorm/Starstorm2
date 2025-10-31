@@ -1,110 +1,116 @@
 ﻿using MSU;
+using MSU.Config;
+using RoR2;
 using RoR2.Skills;
-using System.Linq.Expressions;
+using SS2;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
-    class SwingSword : BasicMeleeAttack, SteppedSkillDef.IStepSetter
+    class SwingSword : BaseKnightMeleeAttack
     {
-        public static float swingTimeCoefficient;
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
-        public static GameObject beamProjectile;
-        public static SkillDef buffedSkillRef;
+        //[FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
-        public int swingSide = 0;
 
-        public static float baseDurationBeforeInterruptable;
-        public static float comboFinisherBaseDurationBeforeInterruptable;
-        private float durationBeforeInterruptable;
-        public static float comboFinisherhitPauseDuration;
+        public static float swingTimeCoefficient;
+        public static float finisherSwingTimeCoefficient;
 
-        public static float comboFinisherDamageCoefficient;
+        public static float finisherAttackStart;
+        public static float finisherAttackEnd;
+        public static float finisherEarlyExit;
+        public static float finisherHitPause;
+        public static float finisherDamage;
+        public static float finisherBaseDuration;
 
-        private bool isComboFinisher => swingSide == 2;
+        private string animationStateName = "SwingSword0";
+        private Transform swordPivot;
 
-        public override void OnEnter()
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testDuration = 1;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testDamage = 3f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherDuration = 1;
+        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
+        public static float testFinisherDamage = 5f;
+
+        private void SetupMelee()
         {
-            base.OnEnter();
-            animator = GetModelAnimator();
-
-            if (isComboFinisher)
-            {
-                //swingEffectPrefab = comboFinisherSwingEffectPrefab;
-                hitPauseDuration = comboFinisherhitPauseDuration;
-                damageCoefficient = comboFinisherDamageCoefficient;
-            }
-
-            durationBeforeInterruptable = (isComboFinisher ? (comboFinisherBaseDurationBeforeInterruptable / attackSpeedStat) : (baseDurationBeforeInterruptable / attackSpeedStat));
-        }
-
-        public override void PlayAnimation()
-        {
-           string animationStateName = "SwingSword0";
-
-            switch (swingSide)
+            damageCoefficient = testDamage;
+            baseDuration = testDuration;
+            finisherDamage = testFinisherDamage;
+            finisherBaseDuration= testFinisherDuration;
+            switch (swingIndex)
             {
                 case 0:
                     animationStateName = "SwingSword0";
-                    swingEffectMuzzleString = "SwingRight";
+                    muzzleString = "Swing1Muzzle";
                     break;
                 case 1:
                     animationStateName = "SwingSword1";
-                    swingEffectMuzzleString = "SwingLeft";
-                    break;
-                case 2:
-                    animationStateName = "SwingSword3";
-                    swingEffectMuzzleString = "SwingLeft";
+                    muzzleString = "Swing2Muzzle";
                     break;
                 default:
-                    animationStateName = "SwingSword0";
-                    swingEffectMuzzleString = "SwingLeft";
+                case 2:
+                    animationStateName = "SwingSword3";
+                    muzzleString = "SwingStabMuzzle";
+                    hitboxGroupName = "SpearHitbox";
+
+                    swingSoundString = "NemmandoSwing";
+
+                    hitStopDuration = finisherHitPause;
+                    damageCoefficient = finisherDamage;
+                    baseDuration = finisherBaseDuration;
+
+                    swingTimeCoefficient = finisherSwingTimeCoefficient;
+                    attackStartTimeFraction = finisherAttackStart;
+                    attackEndTimeFraction = finisherAttackEnd;
+                    earlyExitTimeFraction = finisherEarlyExit;
                     break;
             }
 
+            attackStartTimeFraction *= swingTimeCoefficient;
+            attackEndTimeFraction *= swingTimeCoefficient;
+            earlyExitTimeFraction *= swingTimeCoefficient;
+            hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
+        }
+
+        public override void OnEnter()
+        {
+            SetupMelee();
+            swordPivot = FindModelChild("HitboxAnchor");
+            base.OnEnter();
+            this.attack.damageType.damageSource = DamageSource.Primary;
+        }
+
+        public override void PlayAttackAnimation()
+        {
             if (base.isGrounded & !base.GetModelAnimator().GetBool("isMoving"))
             {
                 PlayCrossfade("FullBody, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
-            } else
+            } 
+            else
             {
-                PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
-            }         
-        }
+                PlayCrossfade("FullBody, Override", "BufferEmpty", 0.1f);
+            }
+            PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
 
-        void SteppedSkillDef.IStepSetter.SetStep(int i)
-        {
-            swingSide = i;
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write((byte)swingSide);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            swingSide = (int)reader.ReadByte();
         }
 
         public override void FixedUpdate()
         {
+            Vector3 direction = this.GetAimRay().direction;
+            direction.y = Mathf.Max(direction.y, direction.y * 0.5f);
+            swordPivot.rotation = Util.QuaternionSafeLookRotation(direction);
+
             base.FixedUpdate();
         }
 
         public override void OnExit()
         {
+            swordPivot.transform.localRotation = Quaternion.identity;
             base.OnExit();
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            if (!(base.fixedAge < durationBeforeInterruptable))
-            {
-                return InterruptPriority.Skill;
-            }
-            return InterruptPriority.PrioritySkill;
         }
     }
 }
