@@ -17,7 +17,7 @@ namespace SS2.Interactables
         {
             Stage.onServerStageBegin += SpawnTable;
 
-            FUCK = SS2Assets.LoadAsset<Material>("tmpBombDropshadowHologramCursed", SS2Bundle.Interactables);
+            FUCK = SS2Assets.LoadAsset<Material>("tmpBombDropshadowHologramCursed", SS2Bundle.Base);
             FUCK.shader = LegacyShaderAPI.Find("TextMeshPro/Distance Field");
         }
 
