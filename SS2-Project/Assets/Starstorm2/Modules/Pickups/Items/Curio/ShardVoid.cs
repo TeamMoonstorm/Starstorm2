@@ -13,7 +13,7 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            On.EntityStates.VoidCamp.Deactivate.OnEnter += SpawnVoidShard;
+            //On.EntityStates.VoidCamp.Deactivate.OnEnter += SpawnVoidShard;
         }
 
         private void SpawnVoidShard(On.EntityStates.VoidCamp.Deactivate.orig_OnEnter orig, Deactivate self)
@@ -45,6 +45,7 @@ namespace SS2.Items
 				}
 			}
 		}
+
 
 		public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
 	}

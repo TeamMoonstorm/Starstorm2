@@ -20,6 +20,11 @@ namespace SS2.Components
 
         public void OnKilledServer(DamageReport report)
         {
+            if (!attacker)
+            {
+                return;
+            }
+
             int orbCount = 1;
             CharacterBody body = GetComponent<CharacterBody>();
             if (body)

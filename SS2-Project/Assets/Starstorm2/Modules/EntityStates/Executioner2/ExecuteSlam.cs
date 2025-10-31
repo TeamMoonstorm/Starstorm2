@@ -291,7 +291,7 @@ namespace EntityStates.Executioner2
         private static float hitPauseDurationSolo = .45f;
         private static float duration = 0.5f;
         private static float axeFadeOutDuratoin = .9f;
-        private static float ionOrbSpeed = 8f;
+        private static float ionOrbSpeed = 30f;
 
         private float hitPauseDuration;
         private ExecutionerController exeController;

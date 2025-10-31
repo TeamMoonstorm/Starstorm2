@@ -36,8 +36,6 @@
 	* Reworked Follower and Wayfarer
 	* Added SFX for Rushrum.
 	* Increased hurtbox sizes for Follower and Rushrum.
-* Interactables
-	* Added Security Chest
 * ... and so much more!
 
 ### 0.6.22

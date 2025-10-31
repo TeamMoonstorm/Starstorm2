@@ -92,6 +92,8 @@ namespace EntityStates.Events
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
+                    if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(true);
+
                     bossDirector.onSpawnedServer.AddListener(modifyBoss = new UnityAction<GameObject>(ModifySpawnedBoss));
                 }
 

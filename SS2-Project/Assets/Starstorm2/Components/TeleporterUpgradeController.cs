@@ -114,7 +114,7 @@ namespace SS2
             {
                 if (portalIndicator) Destroy(portalIndicator);
                 EtherealBehavior.instance.OnEtherealTeleporterCharged();
-                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.Indev), 20f, 900f, "hehe oortal");
+                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.SharedStages), 20f, 30f, "hehe oortal");
             }               
         }
 
@@ -168,7 +168,7 @@ namespace SS2
         {
             if(upgrade)
             {
-                Material stormOverlay = SS2Assets.LoadAsset<Material>("matStormTeleporterOverlay", SS2Bundle.Equipments);
+                Material stormOverlay = SS2Assets.LoadAsset<Material>("matStormTeleporterOverlay", SS2Bundle.Events);
                 AppendMaterial(teleBase.gameObject.GetComponent<Renderer>(), stormOverlay);
                 AppendMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), stormOverlay);
                 AppendMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), stormOverlay);
