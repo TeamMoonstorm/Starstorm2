@@ -111,7 +111,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)

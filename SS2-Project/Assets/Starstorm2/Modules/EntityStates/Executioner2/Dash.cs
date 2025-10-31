@@ -15,7 +15,7 @@ namespace EntityStates.Executioner2
         private static float speedMultiplier = 2.4f;
         private static float debuffRadius = 11f;
         [FormatToken("SS2_EXECUTIONER_DASH_DESCRIPTION",   0)]
-        private static float debuffDuration = 4.0f;
+        private static float debuffDuration = 3.5f;
         private static float debuffCheckInterval = 0.0333333f;
         private static float hopVelocity = 17f;
         private static float turnSpeed = 360f;

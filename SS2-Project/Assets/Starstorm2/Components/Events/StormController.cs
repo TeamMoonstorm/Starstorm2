@@ -21,15 +21,89 @@ namespace SS2.Components
         public static bool shouldShowObjective = false; // weather radio? config setting?
         private static Color etherealTextColor = new Color(.204f, .921f, .561f);
 
+
+        // OLD SHIT FUC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// </summary>
+        public static readonly Xoroshiro128Plus chargeRng = new Xoroshiro128Plus(0UL);
+        public static readonly Xoroshiro128Plus mobChargeRng = new Xoroshiro128Plus(0UL);
+        /// <summary>
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// 
+        /// </summary>
+
         [SystemInitializer]
         //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK
         static void Init()
         {
             // custom drop table? maybe?
             // souls soon.............
+
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
+            Stage.onStageStartGlobal += OnStageStartGlobal;
         }
 
+        private static void OnStageStartGlobal(Stage stage)
+        {
+            if (Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            {
+                chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+                mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+            }
+
+        }
 
 
         // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

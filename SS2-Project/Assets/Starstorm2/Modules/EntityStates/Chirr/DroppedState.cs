@@ -7,15 +7,15 @@ namespace EntityStates.Chirr
     // probably worth to turn this into a general-use "body launch" state, and set the parameters when instantiating the state.
     public class DroppedState : BaseState
 	{
-		public static float bounceForce = 2000f;
-		public static float force = 800f;
-		public static float blastRadius = 10f;
-		public static float procCoefficient = 1f;
-		public static float damageCoefficient = 15f;
-		public static float absoluteMaxTime = 8f;
+		internal static float bounceForce = 2000f;
+		internal static float force = 800f;
+		internal static float blastRadius = 10f;
+		internal static float procCoefficient = 1f;
+		internal static float damageCoefficient = 15f;
+		internal static float absoluteMaxTime = 8f;
 		public GameObject inflictor;
 		public Vector3 initialVelocity;
-		public static GameObject hitGroundEffect = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Beetle/BeetleGuardGroundSlam.prefab").WaitForCompletion();
+		public static GameObject hitGroundEffect;
 
 		public float extraGravity;
 		public bool friendlyDrop;
@@ -229,7 +229,6 @@ namespace EntityStates.Chirr
 				else if (this.tempRigidbody)
 					this.tempRigidbody.velocity = Vector3.zero;
 
-				Util.PlaySound("ChirrThrowHitGround", base.gameObject);
 				if (base.isAuthority) // authority because server doesnt see clients hitting the ground
 				{
 					EffectManager.SpawnEffect(hitGroundEffect, new EffectData

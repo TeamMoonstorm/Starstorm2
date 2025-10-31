@@ -93,9 +93,7 @@ namespace EntityStates.NemHuntress
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                     temporaryOverlay.destroyComponentOnEnd = true;
                     temporaryOverlay.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matHuntressFlashBright");
-
-                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                    //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                    temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
 
                     TemporaryOverlayInstance temporaryOverlay2 = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                     temporaryOverlay2.duration = 0.7f;
@@ -103,9 +101,7 @@ namespace EntityStates.NemHuntress
                     temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                     temporaryOverlay2.destroyComponentOnEnd = true;
                     temporaryOverlay2.originalMaterial = LegacyResourcesAPI.Load<Material>("Materials/matHuntressFlashExpanded");
-
-                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                    //temporaryOverlay2.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                    temporaryOverlay2.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
                 }    
             }
 

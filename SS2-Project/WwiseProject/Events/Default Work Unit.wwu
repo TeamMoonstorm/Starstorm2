@@ -2036,20 +2036,6 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Play_nemmerc_primary_fire3" ID="{148B2AEC-FFE6-4F67-A53D-93BF754675DE}">
-							<ChildrenList>
-								<Action Name="" ID="{AF3701FD-3AA8-409D-B471-F4A6B0AFE8FB}" ShortID="621246181">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="PF_NM_2" ID="{08A43265-8642-4BBB-AF0F-DD38DF3BC305}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
 					</ChildrenList>
 				</Folder>
 				<Folder Name="Elites" ID="{2773EFB8-1825-4137-B93E-C852D3052340}" ShortID="594742518"/>
@@ -2294,6 +2280,20 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="RunshroomStep" ID="{0C2CB5ED-B670-4977-8BE2-879E407C8EEF}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_runshroom_idle_vo" ID="{713947B5-05DC-4AD7-A418-BA63FE15D518}">
+							<ChildrenList>
+								<Action Name="" ID="{8E9B1508-D866-448D-B92A-B46C3DB913F1}" ShortID="123882503">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="RunshroomBark" ID="{6A9EF953-053F-4299-B31F-F52C553EEC48}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

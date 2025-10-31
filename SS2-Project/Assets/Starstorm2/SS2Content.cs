@@ -322,8 +322,6 @@ namespace SS2
 
             public static ItemDef VoidRock;
 
-            public static ItemDef VoidRockTracker;
-
             public static ItemDef BloodTester;
 
             public static ItemDef FieldAccelerator;

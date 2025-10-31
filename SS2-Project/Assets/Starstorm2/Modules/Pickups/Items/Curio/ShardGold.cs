@@ -14,7 +14,7 @@ namespace SS2.Items
 		public override void Initialize()
 		{
            // On.RoR2.MultiOptionPickerPanel.KillPanel += GrantGoldShard; // when the item thingy is finished
-            On.RoR2.HalcyoniteShrineInteractable.DropRewards += SpawnGoldShard; // when the shrine is finished
+            //On.RoR2.HalcyoniteShrineInteractable.DropRewards += SpawnGoldShard; // when the shrine is finished
 		}
 
         private void GrantGoldShard(On.RoR2.MultiOptionPickerPanel.orig_KillPanel orig, MultiOptionPickerPanel self)
@@ -55,9 +55,6 @@ namespace SS2.Items
 			}
         }
 
-		public override bool IsAvailable(ContentPack contentPack)
-		{
-			return true;
-		}
+		public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
 	}
 }

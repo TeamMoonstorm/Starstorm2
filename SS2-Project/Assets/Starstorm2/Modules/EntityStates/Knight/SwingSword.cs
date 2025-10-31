@@ -9,7 +9,7 @@ namespace EntityStates.Knight
 {
     class SwingSword : BaseKnightMeleeAttack
     {
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
+        //[FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
 
         public static float swingTimeCoefficient;

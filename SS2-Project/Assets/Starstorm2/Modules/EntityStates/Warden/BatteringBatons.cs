@@ -7,7 +7,6 @@ namespace EntityStates.Warden
     public class BatteringBatons : BaseWardenMeleeAttack
     {
         public static float swingTimeCoefficient;
-        [FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static GameObject beamProjectile;
 
         public static float baseDurationBeforeInterruptable;

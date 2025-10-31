@@ -62,49 +62,55 @@ namespace SS2
             
             EventTimeline eventTimeline = new EventTimeline();
             if (currentEventSelection == null || Run.instance.stageClearCount == 0) return eventTimeline;
-            float stormTime = 0; // jank ass bandaid for now.
+            float stormTime = 0; // jank ass bandaid for now. push back storm with more events
             // nemesis invasions always appear when available.
             if (TryAddNemesisInvader(ref eventTimeline))
             {
                 stormTime += 45f;
             }
-            // pick elite event. should be mostly normalized across the run as the rewards are important
-            WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
-            if (EtherealBehavior.instance.runIsEthereal)
-                eliteEventChance += 17.5f;
-            if (eliteEvents.Count > 0)
+            if (                                                                    SS2Config.enableBeta) // FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             {
-                if (Util.CheckRoll(eliteEventChance))
+                // pick elite event. should be mostly normalized across the run as the rewards are important
+                WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
+                if (EtherealBehavior.instance.runIsEthereal)
+                    eliteEventChance += 17.5f;
+                if (eliteEvents.Count > 0)
                 {
-                    eliteEventChance = 25f;
-                    EventCard eliteEvent = eliteEvents.Evaluate(this.rng.nextNormalizedFloat);
-                    float startTime = UnityEngine.Random.Range(30f, 120f);//////////////////////////////////////////////////////////////////////////////////////////////////////
-                    eventTimeline.AddEvent(eliteEvent.eventPrefab, startTime);
-                    stormTime += 45f;
-                }
-                else
-                {
-                    eliteEventChance += 25f;
-                }
-            }
-            // misc events can be thrown in mostly randomly
-            int miscEventCount = UnityEngine.Random.Range(0, 1 + Run.instance.loopClearCount);      /// ??? lmao   
-            if (miscEventCount > 0)
-            {
-                float startTime = 0f;
-                WeightedSelection<EventCard> miscEvents = currentEventSelection.GenerateMiscEventWeightedSelection();
-                if(miscEvents.Count > 0)
-                {
-                    for (int i = 0; i < miscEventCount; i++)
+                    if (Util.CheckRoll(eliteEventChance))
                     {
-                        int index = miscEvents.EvaluateToChoiceIndex(this.rng.nextNormalizedFloat);
-                        EventCard miscEvent = miscEvents.GetChoice(index).value;
-                        miscEvents.RemoveChoice(index);
-                        startTime += UnityEngine.Random.Range(90f, 300f); /////////////////////////////////////////////////////////////////////////////////////////////
-                        eventTimeline.AddEvent(miscEvent.eventPrefab, startTime);
+                        eliteEventChance = 25f;
+                        EventCard eliteEvent = eliteEvents.Evaluate(this.rng.nextNormalizedFloat);
+                        float startTime = UnityEngine.Random.Range(30f, 120f);//////////////////////////////////////////////////////////////////////////////////////////////////////
+                        eventTimeline.AddEvent(eliteEvent.eventPrefab, startTime);
+                        stormTime += 45f;
                     }
-                }               
+                    else
+                    {
+                        eliteEventChance += 25f;
+                    }
+                }
+                // misc events can be thrown in mostly randomly
+                int miscEventCount = UnityEngine.Random.Range(0, 1 + Run.instance.loopClearCount);      /// ??? lmao   
+                if (miscEventCount > 0)
+                {
+                    float startTime = 0f;
+                    WeightedSelection<EventCard> miscEvents = currentEventSelection.GenerateMiscEventWeightedSelection();
+                    if (miscEvents.Count > 0)
+                    {
+                        for (int i = 0; i < miscEventCount; i++)
+                        {
+                            int index = miscEvents.EvaluateToChoiceIndex(this.rng.nextNormalizedFloat);
+                            EventCard miscEvent = miscEvents.GetChoice(index).value;
+                            miscEvents.RemoveChoice(index);
+                            startTime += UnityEngine.Random.Range(90f, 300f); /////////////////////////////////////////////////////////////////////////////////////////////
+                            eventTimeline.AddEvent(miscEvent.eventPrefab, startTime);
+                        }
+                    }
+                }
             }
+            
+
+
             // pick mostly random storm start time.
             if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
             {
@@ -163,6 +169,10 @@ namespace SS2
 
         private void FixedUpdate()
         {
+            if (currentTimeline == null || currentTimeline.events == null) // TODO: FIGURE OUT WTF THIS MEANS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            {
+                return;
+            }
             // start events when their starttimes have passed
             if (!NetworkServer.active || !Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
             for (int i = 0; i < currentTimeline.events.Count; i++)

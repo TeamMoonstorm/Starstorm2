@@ -15,7 +15,7 @@ namespace SS2
 			Run.onRunStartGlobal += (run) =>
 			{
 				if (!NetworkServer.active) return; // ???
-				instance = UnityEngine.Object.Instantiate<GameObject>(SS2Assets.LoadAsset<GameObject>("FriendManager", SS2Bundle.Chirr), run.transform).GetComponent<FriendManager>();
+				instance = UnityEngine.Object.Instantiate<GameObject>(SS2Assets.LoadAsset<GameObject>("FriendManager", SS2Bundle.Base), run.transform).GetComponent<FriendManager>();
 				NetworkServer.Spawn(instance.gameObject);
 			};
 		}
@@ -74,7 +74,7 @@ namespace SS2
 			}
 		}
         [ClientRpc]
-        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count = 1, bool obeyMaxStock = true)
+        public void RpcAddStock(GameObject bodyObject, int skillSlot, int count, bool obeyMaxStock)
         {
             if (Util.HasEffectiveAuthority(bodyObject))
             {

@@ -228,9 +228,7 @@ namespace EntityStates.NemMerc
                 temporaryOverlay2.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 temporaryOverlay2.destroyComponentOnEnd = true;
                 temporaryOverlay2.originalMaterial = SS2Assets.LoadAsset<Material>("matNemergize", SS2Bundle.NemMercenary);
-
-                // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                //temporaryOverlay2.AddToCharacerModel(this.modelTransform.GetComponent<CharacterModel>());
+                temporaryOverlay2.AddToCharacterModel(this.modelTransform.GetComponent<CharacterModel>());
             }
 
             base.characterMotor.useGravity = true;

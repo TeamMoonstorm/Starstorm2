@@ -7,11 +7,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 999322504401459614, guid: 92c4590f2b3fffe4eaea63155bc52089,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1085931124708273424, guid: 92c4590f2b3fffe4eaea63155bc52089,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e30d450ae982e264f93dd7869d022a17, type: 2}
+    - target: {fileID: 1085931124708273424, guid: 92c4590f2b3fffe4eaea63155bc52089,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7c51a735ac77227479f89a9e9f3e5227, type: 2}
     - target: {fileID: 2722756038910414453, guid: 92c4590f2b3fffe4eaea63155bc52089,
         type: 3}
       propertyPath: m_Name

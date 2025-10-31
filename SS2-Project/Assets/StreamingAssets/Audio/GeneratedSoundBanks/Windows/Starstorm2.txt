@@ -6,7 +6,6 @@ Event	ID	Name			Wwise Object Path	Notes
 	202915568	Augury			\Default Work Unit\Items\Augury	
 	263522455	Play_Soft_Rain			\Default Work Unit\Environment\Ambient\Play_Soft_Rain	
 	280596056	Play_nemmerc_dash			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_dash	
-	282242656	Play_nemmerc_primary_fire3			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire3	
 	282242657	Play_nemmerc_primary_fire2			\Default Work Unit\Nemesis Mercenary\Play_nemmerc_primary_fire2	
 	295786462	ChirrFireSpecial			\Default Work Unit\Chirr\ChirrFireSpecial	
 	342360847	WastelanderSecondary			\Default Work Unit\Executioner\WastelanderSecondary	
@@ -49,6 +48,7 @@ Event	ID	Name			Wwise Object Path	Notes
 	1250309938	NemmandoDecisiveStrikeCharge			\Default Work Unit\Nemmando\NemmandoDecisiveStrikeCharge	
 	1316900923	LampBullet			\Default Work Unit\Follower\LampBullet	
 	1319272055	WastelanderPrimaryCrit			\Default Work Unit\Executioner\WastelanderPrimaryCrit	
+	1331158188	Play_runshroom_idle_vo			\Default Work Unit\Runshroom\Play_runshroom_idle_vo	
 	1367909893	EtherealPillarIdle			\Default Work Unit\Ethereal\EtherealPillarIdle	
 	1371804952	Play_ethereal_firePillar_loop			\Default Work Unit\Ethereal\Play_ethereal_firePillar_loop	
 	1389751463	NemHuntressBowMax			\Default Work Unit\Nemesis Huntress\NemHuntressBowMax	
@@ -159,6 +159,7 @@ Effect plug-ins	ID	Name	Type				Notes
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	954426	attack	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\attack_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Boss\Wayfarer\WayfarerAttack\attack		294867
 	5091085	NemmandoSubmissionCharge	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoSubmissionCharge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Nemesis Commando\NemmandoSubmissionCharge		36228
+	6164730	rushrum_idle1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\rushrum_idle1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Runshroom\RunshroomBark\rushrum_idle1		74270
 	14785789	EtherealActivate	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\ethactivate_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Affixes\Ethereal\EtherealActivate		270205
 	17038591	item_proc_moltencoin_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_moltencoin_03_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\MoltenCoin\item_proc_moltencoin_03		31958
 	17062297	lamp_lower1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_lower1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Boss\Wayfarer\WayfarerEndBigLamp\lamp_lower1		143437
@@ -172,13 +173,13 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	43053855	chirr_step_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Chirr\Step\chirr_step_01		12550
 	43533750	fullChargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\fullCharge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Executioner\fullChargeExe		121717
 	49638076	WayfarerStartBigLamp	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_loop_start2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Boss\Wayfarer\WayfarerStartBigLamp		214014
-	51700066	PF_NM_2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\PF_NM_2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Nemesis Mercenary\brian\PF_NM_2		87373
 	55113206	item_proc_erraticgadget_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_erraticgadget_02_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\ErraticGadget\item_proc_erraticgadget_02		26052
 	57255358	NemmandoShoot2Crit	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\NemmandoShoot2Crit_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Nemesis Commando\NemmandoShootCrit\NemmandoShoot2Crit		53376
 	58295564	chirr_step_02	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\chirr_step_02_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Chirr\Step\chirr_step_02		10599
 	59938249	chargeExe	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\charge_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Executioner\chargeExe		57530
 	69534286	lamp_explode2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_explode2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Follower\FollowerDeath\lamp_explode2		149430
 	69768090	item_pickup_coffeebean_03	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_pickup_coffeebean_03_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\PickupCoffeeBean\item_pickup_coffeebean_03		27035
+	82936802	rushrum_idle_laugh4	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\rushrum_idle_laugh4_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Runshroom\RunshroomBark\rushrum_idle_laugh4		80901
 	83181747	WayfarerVO3	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\cry1_v2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Boss\Wayfarer\idleVO\WayfarerVO3		157446
 	83732315	rushrum_spawn1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\rushrum_spawn1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Runshroom\RunshroomSpawn\rushrum_spawn1		70893
 	83880130	item_proc_universalcharger	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_crypticsource_start_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\item_proc_universalcharger		97647
@@ -323,6 +324,7 @@ In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	944222157	lamp_raise1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\lamp_raise1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Boss\Wayfarer\WayfarerRaiseBigLamp\lamp_raise1		223115
 	949467665	item_proc_trematode_init1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_trematode_init1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\Trematode\item_proc_trematode_init1		43311
 	951110745	maybeBlinkStart	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\draven_skin13_sfx_audio_47_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Nemesis Mercenary\maybeBlinkStart		39636
+	953396280	rushrum_idle2	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\rushrum_idle2_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Runshroom\RunshroomBark\rushrum_idle2		79342
 	953880137	item_proc_explodejump_v3_01	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\item_proc_explodejump_v3_01_874B2913.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Items\JetBoot\item_proc_explodejump_v3_01		52061
 	965386340	utiltiygrabflyup	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\utiltiygrabflyup_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Survivors\Chirr\utiltiygrabflyup		112500
 	971680702	rushrum_footstep1	C:\Users\natep\Documents\GitHub\Starstorm2\SS2-Project\WwiseProject\.cache\Windows\SFX\rushrum_footstep1_28044A83.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX Mixer\Enemies\Monster\Runshroom\RunshroomStep\rushrum_footstep1		13294

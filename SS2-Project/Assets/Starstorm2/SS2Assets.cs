@@ -86,7 +86,7 @@ namespace SS2
 
             if (!asset)
             {
-                SS2Log.Warning($"The method \"{GetCallingMethod()}\" is calling \"LoadAsset<TAsset>(string, CommissionBundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
+                SS2Log.Error($"The method \"{GetCallingMethod()}\" is calling \"LoadAsset<TAsset>(string, CommissionBundle)\" with the arguments \"{typeof(TAsset).Name}\", \"{name}\" and \"{bundle}\", however, the asset could not be found.\n" +
                     $"Make sure the asset was included in the production bundles if this is a production release.");
 #if DEBUG
                 SS2Log.Debug($"A complete search of all the bundles will be done and the correct bundle enum will be logged.");

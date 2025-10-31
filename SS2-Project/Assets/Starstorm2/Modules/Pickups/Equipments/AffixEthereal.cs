@@ -26,6 +26,7 @@ namespace SS2.Equipments
             return false;
         }
 
+        public static GameObject projectilePrefab;
         public override void Initialize()
         {
             Material matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
@@ -33,6 +34,7 @@ namespace SS2.Equipments
             // Used for suicide buff
             BuffDef buffHakai = AssetCollection.FindAsset<BuffDef>("bdHakai");
             Material matHakaiOverlay = AssetCollection.FindAsset<Material>("matHakaiOverlay");
+            projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
             // Add relevant hooks
             //IL.RoR2.HealthComponent.TakeDamageProcess += EtherealDeathIL; // MOVED TO Hooks.TakeDamageProcess
 
@@ -82,7 +84,7 @@ namespace SS2.Equipments
         {
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdHakai;
-            public static GameObject projectilePrefab = SS2Assets.LoadAsset<GameObject>("EtherealCircle", SS2Bundle.Equipments);
+            
 
             private static float baseTimerDur = 5f;
             private float timer;
@@ -116,9 +118,7 @@ namespace SS2.Equipments
                     temporaryOverlay.animateShaderAlpha = true;
                     temporaryOverlay.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
                     temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHakaiOverlay", SS2Bundle.Equipments);
-
-                    // TODO: No longer needed post-SOTS, leaving in for now but need to remove later
-                    //temporaryOverlay.AddToCharacerModel(modelTransform.GetComponent<CharacterModel>());
+                    temporaryOverlay.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
 
                     CharacterModel cm = modelTransform.GetComponent<CharacterModel>();
                     CharacterModel.RendererInfo[] rendererInfos = cm.baseRendererInfos;

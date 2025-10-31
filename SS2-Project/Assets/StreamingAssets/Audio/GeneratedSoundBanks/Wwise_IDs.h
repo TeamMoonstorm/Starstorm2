@@ -112,7 +112,6 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_KNIFE_THROW = 2890061578U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE = 2406586433U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE2 = 282242657U;
-        static const AkUniqueID PLAY_NEMMERC_PRIMARY_FIRE3 = 282242656U;
         static const AkUniqueID PLAY_NEMMERC_PRIMARY_RELOAD = 1171975898U;
         static const AkUniqueID PLAY_NEMMERC_SECONDARY_LUNGE = 576705642U;
         static const AkUniqueID PLAY_NEMMERC_SPECIAL = 428808189U;
@@ -120,6 +119,7 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
         static const AkUniqueID PLAY_RUNSHROOM_CHARGE = 610217428U;
         static const AkUniqueID PLAY_RUNSHROOM_EXPLODE = 3490687111U;
+        static const AkUniqueID PLAY_RUNSHROOM_IDLE_VO = 1331158188U;
         static const AkUniqueID PLAY_RUNSHROOM_SPAWN = 1059372549U;
         static const AkUniqueID PLAY_RUNSHROOM_STEP = 1108501478U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;

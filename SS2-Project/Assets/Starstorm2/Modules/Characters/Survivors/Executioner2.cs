@@ -28,6 +28,7 @@ namespace SS2.Survivors
         public static GameObject taserVFX;
         public static GameObject taserVFXFade;
         public static GameObject fearEffectPrefab;
+        public static GameObject executeEffectPrefab;
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
@@ -53,6 +54,7 @@ namespace SS2.Survivors
             plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
             plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
             fearEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerFearEffect");
+            executeEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerExecuteEffect");
 
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
@@ -141,12 +143,14 @@ namespace SS2.Survivors
             SetupDefaultBody(CharacterPrefab);
         }
 
+
+        private static float fearExecutionThreshold = 0.15f;
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
         {
             var hbv = orig(self);
             if (!self.body.bodyFlags.HasFlag(CharacterBody.BodyFlags.ImmuneToExecutes) && self.body.HasFearBuff())
             {
-                hbv.cullFraction += 0.15f;//might stack too crazy if it's 30% like Freeze
+                hbv.cullFraction += fearExecutionThreshold;//might stack too crazy if it's 30% like Freeze
             }
             return hbv;
         }
@@ -169,7 +173,7 @@ namespace SS2.Survivors
                         if (self.body.HasFearBuff())
                         {
                             if (executeFraction < 0f) executeFraction = 0f;
-                            executeFraction += 0.15f;
+                            executeFraction += fearExecutionThreshold;
                         }
                         return executeFraction;
                     });
@@ -183,7 +187,7 @@ namespace SS2.Survivors
                             if (self.body.HasFearBuff())
                             {
                                 if (executeFraction < 0f) executeFraction = 0f;
-                                executeFraction += 0.15f;
+                                executeFraction += fearExecutionThreshold;
                             }
                             return executeFraction;
                         });
@@ -263,6 +267,7 @@ namespace SS2.Survivors
             private static string activationSoundString = "Play_voidman_R_pop";
             private Collider bodyCollider;
             private int previousBuffCount;
+            private bool hasDied;
             private void OnEnable()
             {
                 previousBuffCount = buffCount;
@@ -281,8 +286,14 @@ namespace SS2.Survivors
                 {
                     OnStackGained();
                 }
-                if (!base.characterBody.healthComponent.alive)
+                if (!base.characterBody.healthComponent.alive && !hasDied)
+                {
+                    hasDied = true;
+                    // im DUMB and LAZY and FORGOT HOW TO ILHOOK
+                    EffectManager.SpawnEffect(executeEffectPrefab, new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
                     Destroy(this.effectInstance);
+                }
+                    
                 previousBuffCount = buffCount;
             }
 
@@ -290,8 +301,16 @@ namespace SS2.Survivors
             {
                 if (effectInstance) Destroy(effectInstance);
                 effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
-                Util.PlaySound(activationSoundString, gameObject);
+                Util.PlaySound(activationSoundString, gameObject); //?????????????
 
+            }
+
+            private void OnDestroy()
+            {
+                if (hasAnyStacks && !hasDied && characterBody && !characterBody.healthComponent.alive) // fuck wisps!!
+                {
+                    EffectManager.SpawnEffect(executeEffectPrefab, new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
+                }
             }
 
             private void Update()

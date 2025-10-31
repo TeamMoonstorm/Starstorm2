@@ -39,14 +39,18 @@ namespace SS2
             defaultLevelCap = Run.ambientLevelCap;
 
             //Create difficulty indicies dict
-            AddEtherealDifficulty(DifficultyIndex.Easy, SS2Assets.LoadAsset<SerializableDifficultyDef>("Deluge", SS2Bundle.Base));
-            AddEtherealDifficulty(DifficultyIndex.Normal, SS2Assets.LoadAsset<SerializableDifficultyDef>("Tempest", SS2Bundle.Base));
-            AddEtherealDifficulty(DifficultyIndex.Hard, SS2Assets.LoadAsset<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base));
+            if (SS2Config.enableBeta) // AAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            {
+                AddEtherealDifficulty(DifficultyIndex.Easy, SS2Assets.LoadAsset<SerializableDifficultyDef>("Deluge", SS2Bundle.Base));
+                AddEtherealDifficulty(DifficultyIndex.Normal, SS2Assets.LoadAsset<SerializableDifficultyDef>("Tempest", SS2Bundle.Base));
+                AddEtherealDifficulty(DifficultyIndex.Hard, SS2Assets.LoadAsset<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base));
+            }
+            
 
             //Initialize related prefabs
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
-            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab, portalPrefab });         
+            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });         
         }
 
         public static void AddEtherealDifficulty(DifficultyIndex baseDifficulty, SerializableDifficultyDef etherealDef)
@@ -57,6 +61,11 @@ namespace SS2
         }
         private void Start()
         {
+            if (!SS2Config.enableBeta) //  i fucking hate configs ////////////////////////////////////////////////////////////////////////////////////////////////////////
+            {
+                Destroy(this);
+                return;
+            }
             run = GetComponentInParent<Run>();
             instance = this;
             Run.ambientLevelCap = defaultLevelCap;
