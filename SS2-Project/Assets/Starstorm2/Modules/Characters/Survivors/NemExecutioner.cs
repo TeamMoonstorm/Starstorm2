@@ -27,15 +27,17 @@ namespace SS2.Survivors
         public static GameObject bodyPrefab;
         public static BodyIndex ghoulBodyIndex;
         public static GameObject ghoulBodyPrefab;
+
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
+
         public override void Initialize()
         {
             bodyPrefab = CharacterPrefab;
             SetupDefaultBody(bodyPrefab);
-            ghoulBodyPrefab = SS2Assets.LoadAsset<GameObject>("GhoulBody", SS2Bundle.NemExecutioner);
+            ghoulBodyPrefab = SS2Assets.LoadAsset<GameObject>("SS2GhoulBody", SS2Bundle.NemExecutioner);
             SetupDefaultBody(ghoulBodyPrefab);
 
             CharacterPrefab.AddComponent<RemoveAllSecondaryStock>(); // :/

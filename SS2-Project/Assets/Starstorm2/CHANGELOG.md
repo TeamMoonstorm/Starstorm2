@@ -1,4 +1,15 @@
   **Warning: content spoilers below!**
+### 0.6.25
+* General
+	* Removed more unfinished content
+
+### 0.6.24
+* General
+	* Disabled some unfinished skills
+	* Fixed incompat with Mortician
+* Engineer
+	* Updated skill icons for Laser Focus and Rapid Displacement
+
 ### 0.6.23
 * General
 	* Added a cap to the amount of Starstorm 2's sound effects that can play at once. Should improve performance for items like Insecticide and Erratic Gadget.
