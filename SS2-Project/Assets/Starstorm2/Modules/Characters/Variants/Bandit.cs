@@ -31,17 +31,17 @@ namespace SS2.Survivors
         {
             _bdBanditTranquilizer = assetCollection.FindAsset<BuffDef>("bdBanditTranquilizer");
             _bdBanditSleep = assetCollection.FindAsset<BuffDef>("bdBanditSleep");
-
+            
             RegisterTranquilizer();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
-
+            
             SkillDef sdTranquilizerGun = assetCollection.FindAsset<SkillDef>("sdTranquilizerGun");
-
+            
             GameObject banditBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Body.prefab").WaitForCompletion();
-
+            
             SkillLocator skillLocator = banditBodyPrefab.GetComponent<SkillLocator>();
             SkillFamily skillFamilyPrimary = skillLocator.primary.skillFamily;
-
+            
             AddSkill(skillFamilyPrimary, sdTranquilizerGun);
         }
 
@@ -99,7 +99,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }
