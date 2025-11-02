@@ -75,11 +75,6 @@ namespace SS2.Items
             healthPenaltyCalculated = ((-healthPenalty) / (healthPenalty - 1f)); //makes the value input into the config accurate (ex .2 actually removes 20% of health)
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return true;
-        }
-
         private void RecalculateStatsPreventHealing(ILContext il)
         {
             ILCursor c = new ILCursor(il);

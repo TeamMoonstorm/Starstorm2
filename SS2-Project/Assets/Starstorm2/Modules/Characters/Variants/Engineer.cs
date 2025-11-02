@@ -76,7 +76,7 @@ namespace SS2.Survivors
             SkillFamily skillFamilySecondary = skillLocator.secondary.skillFamily;
 
             AddSkill(skillFamilyPrimary, sdLaserFocus);
-            AddSkill(skillFamilyUtility, sdQuantumTranslocator);
+            //AddSkill(skillFamilyUtility, sdQuantumTranslocator); too fast too soon
             AddSkill(skillFamilyUtility, sdRapidDisplacement);
 
             EngiFocusDamage = DamageAPI.ReserveDamageType();
