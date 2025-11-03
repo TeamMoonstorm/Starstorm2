@@ -1,3 +1,4 @@
+using EntityStates.Railgunner.Reload;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -6,9 +7,9 @@ namespace EntityStates.Railgunner
 {
     public class RailgunnerRoll : BaseSkillState
     {
-        public static float duration = 0.5f;
-        public static float initialSpeedCoefficient = 5f;
-        public static float finalSpeedCoefficient = 2.5f;
+        public static float duration = 0.7f;
+        public static float initialSpeedCoefficient = 5.5f;
+        public static float finalSpeedCoefficient = 3f;
 
         public static string dodgeSoundString = "HenryRoll";
         public static float dodgeFOV = Commando.DodgeState.dodgeFOV;
@@ -17,6 +18,8 @@ namespace EntityStates.Railgunner
         private Vector3 forwardDirection;
         private Animator animator;
         private Vector3 previousPosition;
+
+
 
         public override void OnEnter()
         {
@@ -52,6 +55,16 @@ namespace EntityStates.Railgunner
             {
                 //characterBody.AddTimedBuff(HenryBuffs.armorBuff, 3f * duration);
                 //characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
+            }
+
+            if (isAuthority)
+            {
+                EntityStateMachine entityStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
+
+                if (entityStateMachine && entityStateMachine.state is Reloading reloadState && !reloadState.hasAttempted)
+                {
+                    entityStateMachine.SetNextState(new BoostConfirm());
+                }
             }
         }
 
@@ -90,9 +103,8 @@ namespace EntityStates.Railgunner
         public override void OnExit()
         {
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
-            base.OnExit();
-
             characterMotor.disableAirControlUntilCollision = false;
+            base.OnExit();
         }
 
         public override void OnSerialize(NetworkWriter writer)
