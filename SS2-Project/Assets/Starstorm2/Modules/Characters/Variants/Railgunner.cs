@@ -22,7 +22,7 @@ namespace SS2.Survivors
             SkillFamily utilitySkillFamility = skillLocator.utility.skillFamily;
 
 
-            SkillDef railGunnerRoll = assetCollection.FindAsset<SkillDef>("sdRailRoll");
+            SkillDef railGunnerRoll = assetCollection.FindAsset<SkillDef>("sdRailgunnerRoll");
 
             AddSkill(utilitySkillFamility, railGunnerRoll);
         }
