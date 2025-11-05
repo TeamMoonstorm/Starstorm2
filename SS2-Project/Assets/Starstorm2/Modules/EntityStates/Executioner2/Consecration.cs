@@ -91,7 +91,6 @@ namespace EntityStates.Executioner2
             {
                 effect = effectPrefabMastery;
                 orb = orbEffectPrefabMastery;
-                SS2Log.Debug($"effect is {effect.name}");
             }
             
             if (effect)
