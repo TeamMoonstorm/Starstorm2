@@ -71,9 +71,6 @@ namespace SS2.Survivors
             taserVFXMastery = AssetCollection.FindAsset<GameObject>("TaserOrbEffectMastery");
 
             IL.RoR2.Orbs.OrbEffect.Reset += OrbEffect_Reset; // :3
-            
-            //nvm on this thought it would be easy to get the regular cripple not to show up but itll be like running getcomponent every frame unless i make a new fear buff which :( .,.,.,.
-            //TempVisualEffectAPI.AddTemporaryVisualEffect(crippleEffectPrefabMastery.InstantiateClone("ExecutionerCrippleMastery", false),(CharacterBody body) => body.GetComponent<FearBehavior>() != null && body.GetComponent<FearBehavior>().inMasterySkin, true);
         }
 
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
