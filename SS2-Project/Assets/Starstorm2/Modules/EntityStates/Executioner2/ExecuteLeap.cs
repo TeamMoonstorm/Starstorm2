@@ -22,6 +22,7 @@ namespace EntityStates.Executioner2
         private static float axeFadeInDuration = .8f;
 
         public static GameObject indicatorPrefab;
+        public static GameObject indicatorPrefabMastery;
         public static GameObject jumpEffect;
         public static GameObject jumpEffectMastery;
 
@@ -70,9 +71,10 @@ namespace EntityStates.Executioner2
             PlayAnimation("FullBody, Override", "SpecialJump", "Special.playbackRate", duration);
             StartAimMode();
 
-            if (indicatorPrefab)
+            GameObject indicator = exeController.inMasterySkin ? indicatorPrefabMastery : indicatorPrefab;
+            if (indicator)
             {
-                indicatorInstance = GameObject.Instantiate(indicatorPrefab);
+                indicatorInstance = GameObject.Instantiate(indicator);
                 indicatorInstance.transform.localScale = Vector3.one * ExecuteSlam.slamRadius;
                 indicatorInstance.GetComponent<TeamFilter>().teamIndex = teamComponent.teamIndex;
                 UpdateIndicator();
