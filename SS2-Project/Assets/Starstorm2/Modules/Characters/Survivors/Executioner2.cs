@@ -26,7 +26,7 @@ namespace SS2.Survivors
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
         public static GameObject taserVFX;
-        public static GameObject taserVFXFade;
+        public static GameObject taserVFXMastery;
         public static GameObject fearEffectPrefab;
         public static GameObject executeEffectPrefab;
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
@@ -62,7 +62,12 @@ namespace SS2.Survivors
             ModifyPrefab();
 
             taserVFX = AssetCollection.FindAsset<GameObject>("TaserOrbEffect");
+            taserVFXMastery = AssetCollection.FindAsset<GameObject>("TaserOrbEffectMastery");
 
+            if (!taserVFXMastery)
+                SS2Log.Warning("failed to load taser mastery !!");
+            if (!taserVFX)
+                SS2Log.Warning("failed to load taser !!");
             IL.RoR2.Orbs.OrbEffect.Reset += OrbEffect_Reset; // :3
         }
 
