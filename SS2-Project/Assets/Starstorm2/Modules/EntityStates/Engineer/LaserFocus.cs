@@ -24,6 +24,12 @@ namespace EntityStates.Engi
         [SerializeField]
         public static float maxDistance = 25f;
 
+        [SerializeField]
+        public static GameObject laserPrefab;
+
+        [SerializeField]
+        public static GameObject hitsparkPrefab;
+
         public float baseDuration = 1f;
         private float duration;
         private float fireTimer;
@@ -34,10 +40,6 @@ namespace EntityStates.Engi
 
         //public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
         //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
-
-        public GameObject hitsparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Hitspark1.prefab").WaitForCompletion();
-        public GameObject hitsparkPrefab2 = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/HitsparkRailgunnerPistol.prefab").WaitForCompletion();
-        public GameObject laserPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/LaserEngiTurret.prefab").WaitForCompletion();
 
         private GameObject leftLaserInstance;
         private Transform leftLaserInstanceEnd;
@@ -169,7 +171,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleLeft",
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab, // i would do % 4 but then the first hit procs it :(
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab : null,
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,
@@ -190,7 +192,7 @@ namespace EntityStates.Engi
                     force = 0,
                     falloffModel = BulletAttack.FalloffModel.None,
                     muzzleName = "MuzzleRight",
-                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab2 : hitsparkPrefab,
+                    hitEffectPrefab = counter == 4 || counter == 8 ? hitsparkPrefab : null,
                     isCrit = isCrit,
                     HitEffectNormal = false,
                     smartCollision = true,

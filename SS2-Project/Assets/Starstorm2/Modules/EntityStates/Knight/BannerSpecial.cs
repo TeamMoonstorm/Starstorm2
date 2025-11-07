@@ -33,6 +33,7 @@ namespace EntityStates.Knight
             base.OnEnter();
 
             PlayAnimation("FullBody, Override", "SpecialLeapStart");
+            Util.PlaySound("Play_item_proc_warbanner", gameObject);
 
             base.OnEnter();
             previousAirControl = base.characterMotor.airControl;
@@ -119,6 +120,8 @@ namespace EntityStates.Knight
                 };
 
                 ModifyBlastAttack(blastAttack);
+
+                Util.PlaySound("Play_huntress_R_snipe_shoot", gameObject);
 
                 blastAttack.Fire();
             }
