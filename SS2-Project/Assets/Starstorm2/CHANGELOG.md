@@ -2,7 +2,7 @@
 ### 0.6.26
 * General
 	* Fixed X4 and Insecticide not appearing in game
-	* Various multiplayer fixes related to unregistered skills and effects
+	* Various fixes for certain projectiles and effects not appearing on clients
 * Items
 	* Galvanic Core's stun chance now scales with proc coefficient.
 	* Field Accelerator no longer prevents a certain portal from spawning

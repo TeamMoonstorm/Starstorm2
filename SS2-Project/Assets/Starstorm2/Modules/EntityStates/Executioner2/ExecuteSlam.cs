@@ -292,7 +292,7 @@ namespace EntityStates.Executioner2
         {
             base.OnHitSingleTargetAuthority();
 
-            activatorSkillSlot.RunRecharge(activatorSkillSlot.CalculateFinalRechargeInterval() * cooldownRefreshFraction);
+            skillLocator.special?.RunRecharge(skillLocator.special.CalculateFinalRechargeInterval() * cooldownRefreshFraction);
         }
     }
     public class ExecuteImpact : BaseCharacterMain
