@@ -2109,6 +2109,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7899462848190576036}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &3633129946344880634 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6902892279803087966, guid: 3d307a95d45d0274ebf3c8c71bcd1ad1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7899462848190576036}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &3729753267754604281 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6801061392147735389, guid: 3d307a95d45d0274ebf3c8c71bcd1ad1,
@@ -2474,7 +2480,7 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
-  - renderer: {fileID: 0}
+  - renderer: {fileID: 3633129946344880634}
     defaultMaterialAddress:
       m_AssetGUID: 
       m_SubObjectName: 

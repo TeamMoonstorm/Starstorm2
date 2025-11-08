@@ -192,8 +192,7 @@ namespace EntityStates.Executioner2
                 damage *= 2f;
                 procMultiplier = 2;
                 soloTarget = true;
-                GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
-                cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+                OnHitSingleTargetAuthority();
             }
 
             bool crit = RollCrit();
@@ -241,6 +240,12 @@ namespace EntityStates.Executioner2
                 characterMotor.velocity = Vector3.zero;
             }
         }
+
+        public virtual void OnHitSingleTargetAuthority()
+        {
+            GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
+            cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+        }
         
 
         public override void OnExit()
@@ -280,6 +285,16 @@ namespace EntityStates.Executioner2
         }
     }
 
+    public class ExecuteSlamScepter : ExecuteSlam
+    {
+        private static float cooldownRefreshFraction = 0.5f;
+        public override void OnHitSingleTargetAuthority()
+        {
+            base.OnHitSingleTargetAuthority();
+
+            activatorSkillSlot.RunRecharge(activatorSkillSlot.CalculateFinalRechargeInterval() * cooldownRefreshFraction);
+        }
+    }
     public class ExecuteImpact : BaseCharacterMain
     {
         private static int chargesToGrant = 3;
