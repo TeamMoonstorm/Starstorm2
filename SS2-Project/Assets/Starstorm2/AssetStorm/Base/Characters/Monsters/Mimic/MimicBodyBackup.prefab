@@ -739,6 +739,7 @@ GameObject:
   - component: {fileID: 6449461314649773876}
   - component: {fileID: 8119593420475265400}
   - component: {fileID: 2866754830441582408}
+  - component: {fileID: 2840944846519075068}
   m_Layer: 0
   m_Name: MimicBodyBackup
   m_TagString: Untagged
@@ -1723,6 +1724,20 @@ MonoBehaviour:
   maxGreenBias: 0.5
   minBlueBias: -2
   maxBlueBias: -2
+--- !u!114 &2840944846519075068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096113393629376220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &7529557886211184285
 GameObject:
   m_ObjectHideFlags: 0
