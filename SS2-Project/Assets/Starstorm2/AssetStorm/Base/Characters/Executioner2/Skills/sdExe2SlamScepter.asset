@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: NemMercScepterClone
+  m_Name: sdExe2SlamScepter
   m_EditorClassIdentifier: 
-  skillName: Clone
-  skillNameToken: SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_NAME
-  skillDescriptionToken: SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_CLONE_DESCRIPTION
+  skillName: ExecutionerExecute
+  skillNameToken: SS2_EXECUTIONER2_EXECUTION_SCEPTER_NAME
+  skillDescriptionToken: SS2_EXECUTIONER2_EXECUTION_SCEPTER_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 65b353fce623db643ab3de2f5524beb5, type: 3}
-  activationStateMachineName: Weapon
+  icon: {fileID: 21300000, guid: 89ed51e8dd4901548bc49d5cdefdb9f4, type: 3}
+  activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.NemMerc.SpawnCloneScepter, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.Executioner2.ExecuteLeapScepter, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  interruptPriority: 1
-  baseRechargeInterval: 16
+  interruptPriority: 2
+  baseRechargeInterval: 9
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
@@ -30,15 +30,15 @@ MonoBehaviour:
   attackSpeedBuffsRestockSpeed: 0
   attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
-  fullRestockOnAssign: 0
+  fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
+  beginSkillCooldownOnSkillEnd: 1
   isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
-  isCombatSkill: 0
-  mustKeyPress: 1
+  isCombatSkill: 1
+  mustKeyPress: 0
   triggeredByPressRelease: 0
   autoHandleLuminousShot: 1
   hideStockCount: 0
