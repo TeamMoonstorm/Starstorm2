@@ -135,7 +135,7 @@ namespace EntityStates.Pyro
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                BulletAttack bulet = new BulletAttack
+                BulletAttack bullet = new BulletAttack
                 {
                     owner = gameObject,
                     weapon = gameObject,
@@ -155,8 +155,8 @@ namespace EntityStates.Pyro
                     smartCollision = true,
                     damageType = damageType,
                 };
-                DamageAPI.AddModdedDamageType(bulet, SS2.Survivors.Pyro.FlamethrowerDamageType);
-                bulet.Fire();
+                DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Pyro.FlamethrowerDamageType);
+                bullet.Fire();
 
                 if (flamethrowerTransform)
                     flamethrowerTransform.forward = aimRay.direction;

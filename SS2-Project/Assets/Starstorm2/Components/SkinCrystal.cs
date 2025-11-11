@@ -12,6 +12,7 @@ namespace SS2
         public string bodyString;
         public BodyIndex bodyIndex;
         public int skinUnlockID;
+        public GameObject model;
 
         [SerializeField]
         public PurchaseInteraction purchaseInteraction;
@@ -22,11 +23,21 @@ namespace SS2
 
             if (purchaseInteraction == null)
             {
-                SS2Log.Error("Skin Crystal failed to find body index or purchase interaction.");
+                SS2Log.Error("SkinCrystal.Start : Skin Crystal failed to find body index or purchase interaction.");
                 return;
             }
 
             bodyIndex = BodyCatalog.FindBodyIndex(bodyString);
+
+            purchaseInteraction = GetComponent<PurchaseInteraction>();
+            purchaseInteraction.onPurchase.AddListener(UpdateState);
+        }
+
+        public void UpdateState(Interactor interactor)
+        {
+            EntityStateMachine esm = GetComponent<EntityStateMachine>();
+            EntityStates.CrystalPickup.DestroyCrystal nextState = new EntityStates.CrystalPickup.DestroyCrystal();
+            esm.SetNextState(nextState);
         }
     }
 }

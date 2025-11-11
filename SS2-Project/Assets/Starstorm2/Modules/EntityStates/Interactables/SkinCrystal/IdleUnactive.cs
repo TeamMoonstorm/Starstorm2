@@ -26,6 +26,12 @@ namespace EntityStates.CrystalPickup
         {
             base.OnEnter();
             scc = GetComponent<SkinCrystal>();
+            if (scc == null)
+            {
+                SS2Log.Error("CrystalPickup.idleUnactive : Failed to find SkinCrystal component! How? Destroying object.");
+                Destroy(gameObject);
+                return;
+            }
 
             hits = new List<HurtBox>();
             search = new SphereSearch();
@@ -57,6 +63,7 @@ namespace EntityStates.CrystalPickup
                         {
                             IdleActive nextState = new IdleActive();
                             outer.SetNextState(nextState);
+                            return;
                         }
                     }
                 }

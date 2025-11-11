@@ -718,6 +718,8 @@ namespace SS2
 
             public static BuffDef BuffNemExeRegen;
 
+            public static BuffDef bdDUTDrift;
+
         }
 
         public static class Elites
