@@ -34,7 +34,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
 
         private void DUTDrift(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
