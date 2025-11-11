@@ -44,7 +44,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
 
         private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
@@ -73,6 +73,7 @@ namespace SS2.Survivors
                 }
             }
 
+            // ofmg kill urp ast self
             if (self.body.baseNameToken == "SS2_PYRO_NAME")
             {
                 //needs redone
