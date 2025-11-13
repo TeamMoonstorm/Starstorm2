@@ -21,7 +21,9 @@ namespace EntityStates.Executioner2
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
         public static GameObject impactEffectPrefab;
+        public static GameObject impactEffectPrefabMastery;
         public static GameObject soloImpactEffectPrefab;
+        public static GameObject soloImpactEffectPrefabMastery;
         public static GameObject cameraEffectPrefab;
         public static float duration = 1f;
         public Vector3 dashVector = Vector3.zero;
@@ -195,7 +197,16 @@ namespace EntityStates.Executioner2
                 GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
                 cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
             }
-
+            GameObject impact = impactEffectPrefab;
+            if (exeController.inMasterySkin)
+            {
+                impact = soloTarget ? soloImpactEffectPrefabMastery : impactEffectPrefabMastery;
+            }
+            else
+            {
+                impact = soloTarget ? soloImpactEffectPrefab : impactEffectPrefab;
+            }
+            
             bool crit = RollCrit();
             DamageTypeCombo damageType = DamageType.Generic;
             damageType.damageSource = DamageSource.Special;
@@ -210,8 +221,8 @@ namespace EntityStates.Executioner2
                 baseDamage = characterBody.damage * damage,
                 damageColorIndex = DamageColorIndex.Default,
                 falloffModel = BlastAttack.FalloffModel.None,
-                attackerFiltering = AttackerFiltering.NeverHitSelf,
-                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(soloTarget ? soloImpactEffectPrefab : impactEffectPrefab),
+                attackerFiltering = AttackerFiltering.NeverHitSelf, 
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impact),
                 damageType = damageType,
             };
             var result = blast.Fire();

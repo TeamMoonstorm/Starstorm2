@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   OverrideManifest: 1
-  targetpipeline: {fileID: 11400000, guid: 7e3cdab7913f96043a8b4a597136ebc5, type: 2}
+  targetpipeline: {fileID: 11400000, guid: aef4103e08541c748aa705db54e8b3f9, type: 2}
 --- !u!114 &-6716489534761352844
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69,6 +69,28 @@ MonoBehaviour:
   - {fileID: -6716489534761352844}
   - {fileID: -7782781527810731362}
   - {fileID: -3560350482831712343}
+  - {fileID: 8670464520431248306}
   QuickAccess: 0
   manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
     type: 2}
+--- !u!114 &8670464520431248306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77f65d4371163fb4695da79ab8df0e84, type: 3}
+  m_Name: ExecuteProcess
+  m_EditorClassIdentifier: 
+  Active: 1
+  PerManifest: 0
+  ListType: 1
+  Manifests: []
+  workingDirectory: C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2
+  executable: Risk of Rain 2.exe
+  arguments:
+  - --doorstop-enabled true
+  - --doorstop-target-assembly "C:\Users\icebrah\AppData\Roaming\com.kesomannen.gale\riskofrain2\profiles\Default\BepInEx\core\BepInEx.Preloader.dll"
