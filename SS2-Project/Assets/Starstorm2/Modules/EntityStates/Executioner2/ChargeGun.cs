@@ -17,6 +17,7 @@ namespace EntityStates.Executioner2
         private static string exitSoundString = "ExecutionerExitSecondary";
 
         public static GameObject crosshairOverridePrefab;
+        public static GameObject crosshairOverridePrefabMastery;
         [SerializeField]
         public SkillDef primaryOverride;
 
@@ -73,9 +74,10 @@ namespace EntityStates.Executioner2
                 SetSkillOverride();
             }
 
-            if (crosshairOverridePrefab)
+            GameObject crosshair = GetComponent<ExecutionerController>() && gameObject.GetComponent<ExecutionerController>().inMasterySkin ? crosshairOverridePrefabMastery : crosshairOverridePrefab;
+            if (crosshair)
             {
-                crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(characterBody, crosshairOverridePrefab, CrosshairUtils.OverridePriority.Skill);
+                crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(characterBody, crosshair, CrosshairUtils.OverridePriority.Skill);
             }
 
             weapon = EntityStateMachine.FindByCustomName(gameObject, "Weapon");
