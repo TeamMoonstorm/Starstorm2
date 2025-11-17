@@ -6,7 +6,6 @@ using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
 using UnityEngine.Networking;
-using static AkMIDIEvent;
 
 namespace SS2
 {
