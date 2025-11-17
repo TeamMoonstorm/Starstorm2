@@ -25,12 +25,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 938160675141573363}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.02, z: -0.17}
-  m_LocalScale: {x: 1.9724101, y: 1.1, z: 0.6654927}
+  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: -0.18819007, z: 0.6772861}
+  m_LocalScale: {x: 2.2682712, y: 2.34927, z: 2.106832}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2916652237211352672}
+  m_Father: {fileID: 1391696195087818449}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &854865122542811823
@@ -2679,10 +2679,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.35, z: 0.72}
   m_LocalScale: {x: 1.15, y: 2.1357, z: 3.1658227}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 2099590047141730043}
+  m_Children: []
   m_Father: {fileID: 1391696195087818449}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!198 &7697752567071553626
 ParticleSystem:
@@ -2862,7 +2861,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 4.73
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -3295,23 +3294,23 @@ ParticleSystem:
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
-        key1: {r: 1, g: 1, b: 1, a: 0.30980393}
-        key2: {r: 0, g: 0, b: 0, a: 0.08235294}
-        key3: {r: 0, g: 0, b: 0, a: 0.08235294}
+        key1: {r: 1, g: 1, b: 1, a: 0.08235294}
+        key2: {r: 0.8741734, g: 0.5426491, b: 0.86273295, a: 0.08235294}
+        key3: {r: 0.99451035, g: 0.36320752, b: 1, a: 0.08235294}
         key4: {r: 0, g: 0, b: 0, a: 0.08235294}
         key5: {r: 0, g: 0, b: 0, a: 0}
         key6: {r: 0, g: 0, b: 0, a: 0}
         key7: {r: 0, g: 0, b: 0, a: 0}
         ctime0: 0
         ctime1: 65535
-        ctime2: 0
-        ctime3: 0
+        ctime2: 65535
+        ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 49537
+        atime1: 65535
         atime2: 65535
         atime3: 65535
         atime4: 65535
@@ -3320,7 +3319,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 3
+        m_NumAlphaKeys: 2
       minGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -5316,6 +5315,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2099590047141730043}
   - {fileID: 2916652237211352672}
   - {fileID: 1374462473564852071}
   m_Father: {fileID: 0}
@@ -5433,7 +5433,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1391696195087818449}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &1619237249252983955
 Light:
