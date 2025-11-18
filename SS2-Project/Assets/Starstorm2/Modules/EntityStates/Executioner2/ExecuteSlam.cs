@@ -298,7 +298,7 @@ namespace EntityStates.Executioner2
 
     public class ExecuteSlamScepter : ExecuteSlam
     {
-        private static float cooldownRefreshFraction = 0.5f;
+        private static float cooldownRefreshFraction = 0.35f;
         public override void OnHitSingleTargetAuthority()
         {
             base.OnHitSingleTargetAuthority();
