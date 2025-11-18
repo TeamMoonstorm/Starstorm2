@@ -2,7 +2,7 @@
 	"strings": {
 		"SS2_EQUIP_BACKTHRUSTER_NAME": "Propulseur arrière",
 		"SS2_EQUIP_BACKTHRUSTER_PICKUP": "Se déplacer rapidement en ligne droite accumule de la vitesse.",
-		"SS2_EQUIP_BACKTHRUSTER_DESC": "Pendant {0} secondes, accumulez rapidement jusqu'à <style=cIsUtility>{1} vitesse de déplacement</style> lorsque vous vous déplacez en ligne droite..",
+		"SS2_EQUIP_BACKTHRUSTER_DESC": "Pendant {0} secondes, accumulez rapidement jusqu'à <style=cIsUtility>{1} vitesse de déplacement</style> lorsque vous vous déplacez en ligne droite.",
 		"SS2_EQUIP_BACKTHRUSTER_LORE": "<style=cMono>Transcription audio complète à partir des échos du signal. Attribution de jetons génériques.</style>\n\nHOMME 1 : C'est une idée terrible, tu sais.\n[Métal cliquetant]\n\nHOMME 2 : Tu dis ça à propos de chaque idée que j'ai.\n\nHOMME 1 : Parce que toutes tes idées sont terribles.\n\n[Toussotement du moteur]\n\nHOMME 2 : Rrgh, oh, allez, quoi ! Tu fonctionnais très bien il y a juste une minute.\n\nHOMME 1 : Peut-être qu'il sait qu'il est attaché à ton dos, et non à une cargaison.\n\nHOMME 2 : Oh, bonne observation ! Je parie qu'il y a une sécurité quelconque dessus... Ah, la voilà.\n\n[click]\n\nHOMME 1 : Je... n'aurais pas dû dire quoi que ce soit.\n\nHOMME 2 : Non, c'est bon ! D'accord, fais-moi le décompte.\n\nHOMME 1 : Ugh... D'accord. Trois-\n\n[décollage du propulseur]\n\n<style=cMono>Fin de la transcription demandée.</style>",
 
 		"SS2_EQUIP_CLOAKINGHEADBAND_NAME": "Serre-tête de camouflage",
@@ -14,6 +14,10 @@
 		"SS2_EQUIP_GREATERWARBANNER_PICKUP": "Placez une bannière de guerre supérieure qui augmente la régénération, la chance de coup critique et réduit les temps de recharge.",
 		"SS2_EQUIP_GREATERWARBANNER_DESC": "Placez une bannière de guerre supérieure qui accorde <style=cIsHealing>+{0}% de régénération de santé</style>, <style=cIsDamage>{1}% de chance de coup critique</style> et <style=cIsUtility>{2}% de réduction du temps de recharge des compétences</style>. Peut placer jusqu'à {3} bannières à la fois.",
 		"SS2_EQUIP_GREATERWARBANNER_LORE": "<style=cMono>Enregistrement du Musée terrien des tactiques et de la guerre.</style>\n\nCertains disent que l'une des ressources les plus importantes sur le champ de bataille est le moral. La fonctionnalité d'une unité est exponentiellement augmentée en fonction de l'humeur des troupes qui la composent. Cela peut être augmenté ou diminué par divers moyens. Par exemple, la qualité de leur logement ou de leur nourriture, les nouvelles qu'ils ont entendues de chez eux, ou même le temps passé de manière récréative.\n\nCependant, une méthode éprouvée et vraie d'augmenter le moral d'une unité est l'utilisation de la symbolique. De nombreuses armées portaient des couleurs et des designs symbolisant leurs croyances et leur force. De nombreuses unités portaient des drapeaux afin de maintenir leur moral élevé au combat.\n\nL'utilisation de cette méthode a également connu des variations. Alors qu'un porteur de drapeau pour une unité augmentera le moral, il a été observé que les drapeaux propres aux rangs militaires plus élevés augmenteront encore davantage le moral de l'unité. Si le drapeau d'un colonel ou d'un général apparaît sur le champ de bataille, les troupes seront encouragées par le pouvoir qu'il représente, et augmenteront à leur tour leur propre habileté au combat.\n",
+		
+		"SS2_EQUIP_MAGNET_NAME": "Aimant simpliste",
+		"SS2_EQUIP_MAGNET_PICKUP": "Attirez les collectables environnants vers vous.",
+		"SS2_EQUIP_MAGNET_DESC": "Attirez les collectables dans un rayon de <style=cIsUtility>{0}m</style> vers vous.",
 
 		"SS2_EQUIP_MIDAS_NAME": "M.I.D.A.S.",
 		"SS2_EQUIP_MIDAS_PICKUP": "Perdez une partie de votre santé actuelle et gagnez cette somme en or.",
@@ -25,8 +29,19 @@
 		"SS2_EQUIP_PRESSURIZEDCANISTER_DESC": "Lancez-vous dans les airs. Gagnez <style=cIsUtility>1 saut supplémentaire</style> qui expire s'il n'est pas utilisé avant l'atterrissage.",
 		"SS2_EQUIP_PRESSURIZEDCANISTER_LORE": "Commande : Cartouche d'air sous pression (24)\nNuméro de suivi : 182*****\nLivraison estimée : 29/06/2056\nMode d'expédition : Standard / Fragile\nAdresse de livraison : Centre d'expédition de gaz Tri-City, Tri-City, Terre\nDétails de l'envoi :\n\nC'est, euh, la cinquième, c'est ça maintenant ? Cinquième commande de cartouches d'air sous pression à cette adresse. Bon, je ne vais pas juger, je veux dire, peut-être que vous ne saviez pas que vous auriez besoin de plus de cartouches, hein, quatre fois de suite, mais bon, vous savez quand même que vous économisez pas mal quand vous achetez en gros, non ?\n\nPeu importe, mec. Je veux dire, je ne sais pas vraiment pourquoi vous auriez besoin de cent vingt cartouches d'air au total sur une période d'environ deux mois, mais je suppose que chacun ses choix.\n",
 
+		"SS2_EQUIP_ROCKFRUIT_NAME": "Fruit-rocher",
+		"SS2_EQUIP_ROCKFRUIT_PICKUP": "Transmutez un objet aléatoire.",
+		"SS2_EQUIP_ROCKFRUIT_DESC": "<style=cIsUtility>Transmutez</style> un objet <style=cIsHealth>aléatoire</style> de votre inventaire vers un autre du <style=cIsUtility>même rang</style>.",
+
+		"SS2_EQUIP_WHITEFLAG_NAME": "Drapeau blanc",
+		"SS2_EQUIP_WHITEFLAG_PICKUP": "Placez un drapeau blanc qui désactive toutes les compétences dans une zone.",
+		"SS2_EQUIP_WHITEFLAG_DESC": "Placez un drapeau blanc qui <style=cIsUtility>désactive toutes les compétences</style> à moins de <style=cIsUtility>{0}m</style>. Dure <style=cIsUtility>{1} secondes</style>.",
+
+		"SS2_SKILL_DISABLED_NAME": "Désactivé",
+		"SS2_SKILL_DISABLED_DESCRIPTION": "Cette compétence a été désactivée.",
+
 		"SS2_EQUIP_NEMCAPEQUIP_NAME": "Morleys",
-		"SS2_EQUIP_NEMCAPEQUIP_PICKUP": "Réduisez le stress de votre situation. <style=cIsHealth>Fumer est mauvais pour vous !</style>",
-		"SS2_EQUIP_NEMCAPEQUIP_DESC": "<style=cIsHealth>Brûlez-vous</style> pour <style=cIsHealth>10% de votre santé maximale</style> afin de supprimer <style=cIsUtility>25%</style> de votre <style=cIsUtility>stress</style> et de réduire temporairement le <style=cIsUtility>gain de stress</style> de <style=cIsUtility>50%</style> pendant <style=cIsUtility>8</style> secondes."
+		"SS2_EQUIP_NEMCAPEQUIP_PICKUP": "Réduisez le stress de votre situation. <style=cIsHealth>Fumer tue !</style>",
+		"SS2_EQUIP_NEMCAPEQUIP_DESC": "<style=cIsHealth>Enflammez-vous</style> pour <style=cIsHealth>10% de votre santé maximale</style> afin de supprimer <style=cIsUtility>25%</style> de votre <style=cIsUtility>stress</style> et de réduire temporairement le <style=cIsUtility>gain de stress</style> de <style=cIsUtility>50%</style> pendant <style=cIsUtility>8</style> secondes."
 	}
 }

@@ -2,12 +2,15 @@
 using UnityEngine;
 using UnityEngine.Networking;
 using SS2;
+using SS2.Components;
+
 namespace EntityStates.Executioner2
 {
     public class ChargeConsecration : BaseSkillState
     {
         private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
+        public static GameObject effectPrefabMastery;
         private static string muzzle = "MuzzleCrush";
         private static string chargeSoundString = "Play_voidman_m2_chargeUp";
         private float duration;
@@ -21,9 +24,10 @@ namespace EntityStates.Executioner2
             PlayAnimation("Gesture, Override", "Crush", "Secondary.playbackRate", duration);
             characterBody.SetAimTimer(duration + 1f);
             Transform muzzleTransform = FindModelChild(muzzle) ?? characterBody.coreTransform;
-            if (muzzleTransform && effectPrefab)
+            GameObject effect = GetComponent<ExecutionerController>() && GetComponent<ExecutionerController>().inMasterySkin ? effectPrefabMastery : effectPrefab;
+            if (muzzleTransform && effect)
             {
-                effectInstance = UnityEngine.Object.Instantiate<GameObject>(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
+                effectInstance = UnityEngine.Object.Instantiate<GameObject>(effect, muzzleTransform.position, muzzleTransform.rotation);
                 effectInstance.transform.parent = muzzleTransform;
                 ScaleParticleSystemDuration component = effectInstance.GetComponent<ScaleParticleSystemDuration>();
                 ObjectScaleCurve component2 = effectInstance.GetComponent<ObjectScaleCurve>();
@@ -70,16 +74,28 @@ namespace EntityStates.Executioner2
         private static string activationSoundString = "Play_voidman_m2_shoot_fullCharge";
         private static string muzzleString = "MuzzleCrush";
         public static GameObject effectPrefab;
+        public static GameObject effectPrefabMastery;
         public static GameObject orbEffectPrefab;
+        public static GameObject orbEffectPrefabMastery;
         private float duration;
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             Util.PlaySound(activationSoundString, gameObject);
-            if (effectPrefab)
+
+            GameObject effect = effectPrefab;
+            GameObject orb = orbEffectPrefab;
+
+            if (GetComponent<ExecutionerController>() && gameObject.GetComponent<ExecutionerController>().inMasterySkin)
             {
-                EffectManager.SimpleMuzzleFlash(effectPrefab, gameObject, muzzleString, false);
+                effect = effectPrefabMastery;
+                orb = orbEffectPrefabMastery;
+            }
+            
+            if (effect)
+            {
+                EffectManager.SimpleMuzzleFlash(effect, gameObject, muzzleString, false);
             }
 
             int stock = skillLocator.secondary.stock;
@@ -92,7 +108,7 @@ namespace EntityStates.Executioner2
                     skillLocator.DeductCooldownFromAllSkillsAuthority(cooldownDeduction);
                 }
             }
-
+            
             if (NetworkServer.active)
             {
                 float missingHealth = healthComponent.fullHealth - healthComponent.health;
@@ -112,7 +128,7 @@ namespace EntityStates.Executioner2
                         genericFloat = 0.4f
                     };
                     effectData.SetHurtBoxReference(characterBody.mainHurtBox);
-                    EffectManager.SpawnEffect(orbEffectPrefab, effectData, true);
+                    EffectManager.SpawnEffect(orb, effectData, true);
                 }
 
                 //SS2Util.RefreshAllBuffStacks(characterBody, SS2Content.Buffs.bdConsecration, buffDuration);

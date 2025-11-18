@@ -28,9 +28,12 @@ namespace SS2.Survivors
         public static GameObject plumeEffect;
         public static GameObject plumeEffectLarge;
         public static GameObject taserVFX;
-        public static GameObject taserVFXFade;
+        public static GameObject taserVFXMastery;
         public static GameObject fearEffectPrefab;
+        public static GameObject fearEffectPrefabMastery;
         public static GameObject executeEffectPrefab;
+        public static GameObject executeEffectPrefabMastery;
+        public static GameObject crippleEffectPrefabMastery;
         public static ReadOnlyCollection<BodyIndex> BodiesThatGiveSuperCharge { get; private set; }
         private static HashSet<string> bodiesThatGiveSuperCharge = new HashSet<string>
         {
@@ -56,7 +59,10 @@ namespace SS2.Survivors
             plumeEffect = AssetCollection.FindAsset<GameObject>("exePlume");
             plumeEffectLarge = AssetCollection.FindAsset<GameObject>("exePlumeBig");
             fearEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerFearEffect");
+            fearEffectPrefabMastery = AssetCollection.FindAsset<GameObject>("ExecutionerFearEffectMastery");
             executeEffectPrefab = AssetCollection.FindAsset<GameObject>("ExecutionerExecuteEffect");
+            executeEffectPrefabMastery = AssetCollection.FindAsset<GameObject>("ExecutionerExecuteEffectMastery");
+            crippleEffectPrefabMastery = AssetCollection.FindAsset<GameObject>("ExecutionerCrippleMastery");
 
             BodyCatalog.availability.CallWhenAvailable(UpdateSuperChargeList);
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
@@ -64,6 +70,7 @@ namespace SS2.Survivors
             ModifyPrefab();
 
             taserVFX = AssetCollection.FindAsset<GameObject>("TaserOrbEffect");
+            taserVFXMastery = AssetCollection.FindAsset<GameObject>("TaserOrbEffectMastery");
 
             IL.RoR2.Orbs.OrbEffect.Reset += OrbEffect_Reset; // :3
 
@@ -279,6 +286,7 @@ namespace SS2.Survivors
             private Collider bodyCollider;
             private int previousBuffCount;
             private bool hasDied;
+            public bool inMasterySkin;
             private void OnEnable()
             {
                 previousBuffCount = buffCount;
@@ -301,7 +309,10 @@ namespace SS2.Survivors
                 {
                     hasDied = true;
                     // im DUMB and LAZY and FORGOT HOW TO ILHOOK
-                    EffectManager.SpawnEffect(executeEffectPrefab, new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
+                    EffectManager.SpawnEffect(
+                        inMasterySkin ? executeEffectPrefabMastery : executeEffectPrefab,
+                        new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
+
                     Destroy(this.effectInstance);
                 }
                     
@@ -311,16 +322,18 @@ namespace SS2.Survivors
             private void OnStackGained()
             {
                 if (effectInstance) Destroy(effectInstance);
-                effectInstance = GameObject.Instantiate(fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                
+                effectInstance = Instantiate(inMasterySkin ? fearEffectPrefabMastery : fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
                 Util.PlaySound(activationSoundString, gameObject); //?????????????
-
             }
 
             private void OnDestroy()
             {
                 if (hasAnyStacks && !hasDied && characterBody && !characterBody.healthComponent.alive) // fuck wisps!!
                 {
-                    EffectManager.SpawnEffect(executeEffectPrefab, new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
+                    EffectManager.SpawnEffect(
+                        inMasterySkin ? executeEffectPrefabMastery : executeEffectPrefab,
+                        new EffectData() { origin = characterBody.corePosition, scale = characterBody.radius }, false);
                 }
             }
 
