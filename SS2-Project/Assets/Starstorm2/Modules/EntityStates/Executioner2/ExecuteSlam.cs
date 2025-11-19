@@ -194,8 +194,7 @@ namespace EntityStates.Executioner2
                 damage *= 2f;
                 procMultiplier = 2;
                 soloTarget = true;
-                GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
-                cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+                OnHitSingleTargetAuthority();
             }
             GameObject impact = impactEffectPrefab;
             if (exeController.inMasterySkin)
@@ -252,6 +251,12 @@ namespace EntityStates.Executioner2
                 characterMotor.velocity = Vector3.zero;
             }
         }
+
+        public virtual void OnHitSingleTargetAuthority()
+        {
+            GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
+            cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+        }
         
 
         public override void OnExit()
@@ -291,6 +296,16 @@ namespace EntityStates.Executioner2
         }
     }
 
+    public class ExecuteSlamScepter : ExecuteSlam
+    {
+        private static float cooldownRefreshFraction = 0.35f;
+        public override void OnHitSingleTargetAuthority()
+        {
+            base.OnHitSingleTargetAuthority();
+
+            skillLocator.special?.RunRecharge(skillLocator.special.CalculateFinalRechargeInterval() * cooldownRefreshFraction);
+        }
+    }
     public class ExecuteImpact : BaseCharacterMain
     {
         private static int chargesToGrant = 3;

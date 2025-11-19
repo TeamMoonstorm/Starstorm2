@@ -1,4 +1,18 @@
   **Warning: content spoilers below!**
+### 0.6.26
+* General
+	* Fixed X4 and Insecticide not appearing in game
+	* Various fixes for certain projectiles and effects not appearing on clients
+* Items
+	* Galvanic Core's stun chance now scales with proc coefficient.
+	* Field Accelerator no longer prevents a certain portal from spawning
+* Executioner
+	* Lowered max stock of Consecration from 10 to 5.
+	* Added Ancient Scepter upgrade for Execution
+	* Luminous Shot charges are now only granted when firing Ion Bullets.
+* Interactables
+	* Security Chest no longer appears with the Starstorm 2 expansion disabled.
+	
 ### 0.6.25
 * General
 	* Removed more unfinished content

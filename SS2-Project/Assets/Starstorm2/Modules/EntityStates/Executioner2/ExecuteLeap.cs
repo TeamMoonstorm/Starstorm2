@@ -166,10 +166,10 @@ namespace EntityStates.Executioner2
             if (fixedAge >= duration)
             {
                 controlledExit = true;
-                ExecuteSlam nextState = new ExecuteSlam();
+                
                 Vector3 direction = (indicatorInstance.transform.position - characterBody.footPosition).normalized;
                 direction = Vector3.RotateTowards(Vector3.down, direction, maxAngleTuah * Mathf.Deg2Rad, 0f);
-                nextState.dashVector = direction.normalized;
+                var nextState = InstantiateNextState(direction.normalized);
                 outer.SetNextState(nextState);
             }
             else
@@ -177,6 +177,11 @@ namespace EntityStates.Executioner2
                 HandleMovement();
             }
                
+        }
+
+        public virtual EntityState InstantiateNextState(Vector3 dashVector)
+        {
+            return new ExecuteSlam { dashVector = dashVector };
         }
 
         public void HandleMovement()
@@ -220,6 +225,14 @@ namespace EntityStates.Executioner2
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Frozen;
+        }
+    }
+
+    public class ExecuteLeapScepter : ExecuteLeap
+    {
+        public override EntityState InstantiateNextState(Vector3 dashVector)
+        {
+            return new ExecuteSlamScepter { dashVector = dashVector };
         }
     }
 }

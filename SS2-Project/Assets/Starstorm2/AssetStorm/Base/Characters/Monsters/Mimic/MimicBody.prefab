@@ -307,6 +307,7 @@ GameObject:
   - component: {fileID: 3983665486774065554}
   - component: {fileID: 1910719767865975805}
   - component: {fileID: 1575090190004021582}
+  - component: {fileID: -2211438647156215478}
   m_Layer: 0
   m_Name: MimicBody
   m_TagString: Player
@@ -959,6 +960,20 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 1
   canBeFrozen: 1
+--- !u!114 &-2211438647156215478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 841571876604781267}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
 --- !u!1 &868517396139855199
 GameObject:
   m_ObjectHideFlags: 0

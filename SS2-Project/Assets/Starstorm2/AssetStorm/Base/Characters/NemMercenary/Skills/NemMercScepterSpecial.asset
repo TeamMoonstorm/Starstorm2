@@ -16,7 +16,7 @@ MonoBehaviour:
   skillNameToken: SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_NAME
   skillDescriptionToken: SS2_NEMESIS_MERCENARY_SPECIAL_SCEPTER_SCAN_DESCRIPTION
   keywordTokens: []
-  icon: {fileID: 21300000, guid: aeec2154b1546f748b77f7ea5160f242, type: 3}
+  icon: {fileID: 21300000, guid: 01dd549eb80a7a04aadce7a7ae7ff483, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.NemMerc.ScanScepter, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -27,12 +27,18 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 1
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0

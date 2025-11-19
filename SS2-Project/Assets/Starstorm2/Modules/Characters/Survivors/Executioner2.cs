@@ -15,6 +15,8 @@ using RoR2.ContentManagement;
 using RoR2.Orbs;
 using R2API.Utils;
 using MSU.Config;
+using RoR2.Skills;
+using System.Runtime.CompilerServices;
 namespace SS2.Survivors
 {
     public sealed class Executioner2 : SS2Survivor
@@ -71,8 +73,17 @@ namespace SS2.Survivors
             taserVFXMastery = AssetCollection.FindAsset<GameObject>("TaserOrbEffectMastery");
 
             IL.RoR2.Orbs.OrbEffect.Reset += OrbEffect_Reset; // :3
-        }
 
+            if (SS2Main.ScepterInstalled)
+            {
+                ScepterCompat();
+            }
+        }
+        [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
+        public void ScepterCompat()
+        {
+            AncientScepter.AncientScepterItem.instance.RegisterScepterSkill(SS2Assets.LoadAsset<SkillDef>("sdExe2SlamScepter", SS2Bundle.Executioner2), "Executioner2Body", SkillSlot.Special, 0);
+        }
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
             if(sender.HasBuff(SS2Content.Buffs.BuffExecutionerArmor))
