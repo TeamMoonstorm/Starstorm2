@@ -6,6 +6,7 @@
 	* Fixed X4 and Insecticide not appearing in game
 	* Various fixes for certain projectiles and effects not appearing on clients
 * Items
+    * Double the cost of the chest Lunar Birthright grants.
 	* Galvanic Core's stun chance now scales with proc coefficient.
 	* Field Accelerator no longer prevents a certain portal from spawning
 * Executioner
