@@ -2,6 +2,7 @@
 ### 0.6.26
 * General
     * Updated mod for Alloyed Collective
+    * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
 	* Various fixes for certain projectiles and effects not appearing on clients
 * Items

@@ -32,15 +32,20 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            _useEffect = AssetCollection.FindAsset<GameObject>("CompositeInjectorEffect");
-            // 10 hooks lol
-            var hook = new Hook(typeof(EquipmentIcon).GetMethod(nameof(EquipmentIcon.GenerateDisplayData), (System.Reflection.BindingFlags)(-1)), typeof(CompositeInjector).GetMethod(nameof(EquipmentIcon_GenerateDisplayData), (System.Reflection.BindingFlags)(-1)));
-            On.RoR2.UI.HUD.Awake += AddIcons;
-            On.RoR2.EquipmentDef.AttemptGrant += EquipmentDef_AttemptGrant;
-            EquipmentSlot.onServerEquipmentActivated += ActivateAllEquipment;
-            IL.RoR2.Inventory.UpdateEquipment += Inventory_UpdateEquipment;
+            //_useEffect = AssetCollection.FindAsset<GameObject>("CompositeInjectorEffect");
+            //// 10 hooks lol
+            //var hook = new Hook(typeof(EquipmentIcon).GetMethod(nameof(EquipmentIcon.GenerateDisplayData), (System.Reflection.BindingFlags)(-1)), typeof(CompositeInjector).GetMethod(nameof(EquipmentIcon_GenerateDisplayData), (System.Reflection.BindingFlags)(-1)));
+            //On.RoR2.UI.HUD.Awake += AddIcons;
+            //On.RoR2.EquipmentDef.AttemptGrant += EquipmentDef_AttemptGrant;
+            //EquipmentSlot.onServerEquipmentActivated += ActivateAllEquipment;
+            //IL.RoR2.Inventory.UpdateEquipment += Inventory_UpdateEquipment;
             
-            On.RoR2.EquipmentSlot.Update += EquipmentSlot_Update;
+            //On.RoR2.EquipmentSlot.Update += EquipmentSlot_Update;
+        }
+
+        public override bool IsAvailable(ContentPack conentPack)
+        {
+            return false;
         }
 
         #region Gameplay Mechanics
