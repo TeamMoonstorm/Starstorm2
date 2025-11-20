@@ -34,7 +34,7 @@ namespace SS2.Items
                             //
                             // VFX HERE
                             //
-                            chest.dropPickup = scrapIndex;
+                            chest.currentPickup = new UniquePickup(scrapIndex);
                             chest.dropCount++;
                         }
                     }
