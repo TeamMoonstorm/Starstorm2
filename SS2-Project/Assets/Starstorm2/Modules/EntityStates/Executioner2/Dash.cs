@@ -130,6 +130,14 @@ namespace EntityStates.Executioner2
                     if (body && body != base.characterBody)
                     {
                         body.AddTimedBuff(SS2Content.Buffs.BuffFear, debuffDuration);
+                        
+                        //im knowsies probably not best practice to grab a buff behavior like this but couldnts find a better solution ,..,,. 
+                        var fear = body.GetComponent<SS2.Survivors.Executioner2.FearBehavior>();
+                        if (fear)
+                        {
+                            fear.inMasterySkin = inMasterySkin;
+                        }
+
                         var effectPrefab = inMasterySkin ? fearTracerEffectMastery : fearTracerEffect;
                         if (effectPrefab)
                         {

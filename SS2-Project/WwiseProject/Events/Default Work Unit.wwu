@@ -750,20 +750,6 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="RemunerationSpawn" ID="{1DD71AB7-48F6-4F7E-A9C7-9D4DC1AB0CFE}">
-							<ChildrenList>
-								<Action Name="" ID="{FB3B51AE-B850-496F-A73A-F9AD5B60005F}" ShortID="973270854">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="coinflipgoodenoughidc" ID="{B050698D-53C9-4319-94F5-736009574D73}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
 						<Event Name="RemunerationSpawn2" ID="{A79A7D99-F9DF-45FA-918E-960A00FE5D67}">
 							<ChildrenList>
 								<Action Name="" ID="{7CB54975-8055-4E33-91C6-069C354B081D}" ShortID="402263092">
@@ -885,34 +871,6 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="CrypticSourceStage1" ID="{D4F27B9C-B5AD-4495-82A3-6D4143CE6C18}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
-						<Event Name="CrypticSourceStage3" ID="{7DABEC0A-5C89-4BED-962E-F2575D753A63}">
-							<ChildrenList>
-								<Action Name="" ID="{BA3B704F-92DB-489E-8524-40333F710531}" ShortID="381071675">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="CrypticSourceStage3" ID="{0678DE48-64FE-4EF8-AD99-B2A17320869C}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-							</ChildrenList>
-						</Event>
-						<Event Name="CrypticSourceStage2" ID="{6137278D-0851-462A-9597-81C2B5F0BFC8}">
-							<ChildrenList>
-								<Action Name="" ID="{4D8DC24B-3C8E-46EA-A894-A0FA49993886}" ShortID="787744285">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="1"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="CrypticSourceStage2" ID="{664C9C3E-9EA5-4244-8FCD-9AA2274D8E50}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

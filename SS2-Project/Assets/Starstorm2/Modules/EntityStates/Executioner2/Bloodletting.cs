@@ -4,12 +4,15 @@ using UnityEngine.Networking;
 using SS2;
 using SS2.Orbs;
 using RoR2.Orbs;
+using SS2.Components;
+
 namespace EntityStates.Executioner2
 {
     public class ChargeBloodletting : BaseSkillState
     {
         private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
+        public static GameObject effectPrefabMastery;
         private static string muzzle;
         private static string chargeSoundString = "Play_voidman_R_activate";
         private float duration;
@@ -23,9 +26,10 @@ namespace EntityStates.Executioner2
             PlayAnimation("Gesture, Override", "Bloodletting", "Utility.playbackRate", duration);
             characterBody.SetAimTimer(duration + 1f);
             Transform muzzleTransform = FindModelChild(muzzle) ?? characterBody.coreTransform;
-            if (muzzleTransform && effectPrefab)
+            GameObject vfx = GetComponent<ExecutionerController>() && GetComponent<ExecutionerController>().inMasterySkin ? effectPrefabMastery : effectPrefab;
+            if (muzzleTransform && vfx)
             {
-                effectInstance = UnityEngine.Object.Instantiate<GameObject>(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
+                effectInstance = UnityEngine.Object.Instantiate<GameObject>(vfx, muzzleTransform.position, muzzleTransform.rotation);
                 effectInstance.transform.parent = muzzleTransform;
                 ScaleParticleSystemDuration component = effectInstance.GetComponent<ScaleParticleSystemDuration>();
                 ObjectScaleCurve component2 = effectInstance.GetComponent<ObjectScaleCurve>();
@@ -76,15 +80,17 @@ namespace EntityStates.Executioner2
         private static int chargesToGrant = 0;
         private static string activationSoundString = "Play_voidman_R_pop";
         public static GameObject effectPrefab;
+        public static GameObject effectPrefabMastery;
         private float duration;
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             Util.PlaySound(activationSoundString, gameObject);
-            if (effectPrefab)
+            GameObject vfx = GetComponent<ExecutionerController>() && GetComponent<ExecutionerController>().inMasterySkin ? effectPrefabMastery : effectPrefab;
+            if (vfx)
             {
-                EffectManager.SimpleEffect(effectPrefab, characterBody.coreTransform.position, Quaternion.identity, false);
+                EffectManager.SimpleEffect(vfx, characterBody.coreTransform.position, Quaternion.identity, false);
             }
             if (NetworkServer.active)
             {

@@ -276,9 +276,9 @@ namespace EntityStates.Lamp
                 else
                 {
                     Rigidbody rigidbody = healthComponent.body.rigidbody;
-                    useGravity = rigidbody.useGravity;
                     if (rigidbody)
                     {
+                        useGravity = rigidbody.useGravity;
                         currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
                         mass = rigidbody.mass;
                     }

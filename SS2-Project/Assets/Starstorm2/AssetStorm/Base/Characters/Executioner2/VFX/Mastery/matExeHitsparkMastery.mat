@@ -10,9 +10,10 @@ Material:
   m_Name: matExeHitsparkMastery
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
+  - USE_CLOUDS
   - VERTEXCOLOR
   m_InvalidKeywords:
-  - RoR2/Base/Common/VFX/matOmniHitspark1.mat
+  - EMISSIONFROMALBEDO
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -22,71 +23,46 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BumpMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
         m_Texture: {fileID: 2800000, guid: 7d141824ada450747b17a50e01bef09a, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 1, y: 2}
     - _Cloud2Tex:
         m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailAlbedoMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailMask:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _DetailNormalMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _EmissionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 3, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d1d3441ed2427d348a3a760980d3737c, type: 3}
+        m_Texture: {fileID: 2800000, guid: ad3089e3c473bf34b8bb99374ca192d2, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _MetallicGlossMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _OcclusionMap:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _ParallaxMap:
-        m_Texture: {fileID: 0}
+    - _NormalTex:
+        m_Texture: {fileID: 2800000, guid: 82ff0c87a4edbf74a925249e18142b11, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 642d799e00c65d74e9433ea6357ea409, type: 3}
+        m_Texture: {fileID: 2800000, guid: b7842d306d7e3ad46adaa56e6e78c60f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.021
-    - _AlphaBoost: 2.95
-    - _Boost: 2
+    - _AlphaBias: 0
+    - _AlphaBoost: 1.6
+    - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
+    - _CloudNormalMap: 0
     - _CloudOffsetOn: 0
-    - _CloudsOn: 0
+    - _CloudsOn: 1
     - _Cull: 0
-    - _Cutoff: 0.5
+    - _Cutoff: 0.451
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: 0.05
+    - _DistortionStrength: 0.08
     - _DstBlend: 10
+    - _EmissionFromAlbedo: 1
     - _ExternalAlpha: 1
+    - _ExtrusionStrength: 0
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
@@ -99,12 +75,16 @@ Material:
     - _InvFade: 0
     - _Metallic: 0
     - _Mode: 0
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
     - _OffsetAmount: 0
     - _Parallax: 0.02
+    - _RampInfo: 4
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
+    - _SpecularStrength: 0
     - _SrcBlend: 5
     - _UVSec: 0
     - _UseUV1On: 0
@@ -115,7 +95,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 0, g: -10, b: 0, a: -8}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoffScroll: {r: 1, g: 3, b: 0, a: 0}
+    - _EmissionColor: {r: 0, g: 0.093223184, b: 0.49019608, a: 1}
+    - _TintColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
   m_BuildTextureStacks: []

@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using SS2.Orbs;
 using static SS2.Orbs.ExecutionerTaserOrb;
 using R2API;
+using SS2.Components;
 
 namespace EntityStates.Executioner2
 {
@@ -20,13 +21,8 @@ namespace EntityStates.Executioner2
         public static float recoil = 0f;
         public static float spreadBloom = 0.75f;
         public static float force = 200f;
-
-        [HideInInspector]
-        private static GameObject muzzleEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Muzzleflash1.prefab").WaitForCompletion();
-        [HideInInspector]
-        private static GameObject tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoDefault.prefab").WaitForCompletion();
-        [HideInInspector]
-        private static GameObject hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommando.prefab").WaitForCompletion();
+        public static GameObject muzzleEffectPrefab;
+        public static GameObject muzzleEffectPrefabMastery;
 
         private float duration;
         private float fireDuration;
@@ -102,8 +98,9 @@ namespace EntityStates.Executioner2
                 }
 
                 //Transform source = component.FindChild("Muzzle");
-                if (muzzleEffectPrefab)
-                    EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleString, false);
+                GameObject muzzle = GetComponent<ExecutionerController>() && GetComponent<ExecutionerController>().inMasterySkin ? muzzleEffectPrefabMastery : muzzleEffectPrefab;
+                if (muzzle)
+                    EffectManager.SimpleMuzzleFlash(muzzle, gameObject, muzzleString, false);
 
                 if (NetworkServer.active)
                 {

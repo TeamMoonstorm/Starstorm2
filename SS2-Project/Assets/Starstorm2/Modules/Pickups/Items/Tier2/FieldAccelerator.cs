@@ -179,9 +179,9 @@ namespace SS2.Items
 
                 if (displayChildLocator != null)
                 {
-                    displayChildLocator.FindChild("Passive").gameObject.SetActive(false);
-                    displayChildLocator.FindChild("Burst").gameObject.GetComponent<ParticleSystem>().Emit(40);
-                    displayChildLocator.FindChild("Ring").gameObject.GetComponent<ParticleSystem>().Emit(1);
+                    displayChildLocator.FindChild("Passive")?.gameObject.SetActive(false);
+                    displayChildLocator.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
+                    displayChildLocator.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
                     //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
                 }
             }

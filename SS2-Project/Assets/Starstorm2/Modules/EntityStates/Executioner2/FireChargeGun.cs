@@ -84,6 +84,10 @@ namespace EntityStates.Executioner2
             Shoot();
 
             skillLocator.secondary.DeductStock(1);
+            if (characterBody.inventory?.GetItemCount(DLC2Content.Items.IncreasePrimaryDamage) > 0 && characterBody.canAddIncrasePrimaryDamage) // / /////// / / /// // //// //
+            {
+                characterBody.AddIncreasePrimaryDamageStack();
+            }
             shotsFired++;
         }
 

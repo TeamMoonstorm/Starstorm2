@@ -16,8 +16,6 @@ namespace SS2.Orbs
 		public Vector3 attackerAimVector;
 		public override void Begin()
 		{
-            taserVFXMastery = SS2Assets.LoadAsset<GameObject>("exeTaserOrbBlack", SS2Bundle.Executioner2);
-
             base.duration = 0.1f;
 
 			EffectData effectData = new EffectData
@@ -28,21 +26,27 @@ namespace SS2.Orbs
 			};
 
             effectData.SetHurtBoxReference(this.target);
-
+            
             if (skinNameToken != null)
 			{
-				if (skinNameToken == "SS2_SKIN_EXECUTIONER2_MASTERY") // michelangelo ? leonardo>? davinci ? theyre all dead . I REmain. you understand ? I REMAIN. as a starstorm contributor.,.,..
+				//turning this into a switch statement in case more skins change ,.,.. and if else felt more evil .,.,,. 
+				switch (skinNameToken)
 				{
-					EffectManager.SpawnEffect(taserVFXMastery, effectData, true);
-
+					case "SS2_SKIN_EXECUTIONER2_MASTERY":
+					{
+						EffectManager.SpawnEffect(Executioner2.taserVFXMastery, effectData, true);
+						break;
+					}
+					default:
+					{
+						EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+						break;
+					}
 				}
-				else
-				{
-					EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
-				}
-			} else
+			} 
+            else
 			{
-                Debug.Log("something wrong happened .,. oh well !");
+				SS2Log.Warning("something wrong happened .,. oh well !");
             }
 
         }

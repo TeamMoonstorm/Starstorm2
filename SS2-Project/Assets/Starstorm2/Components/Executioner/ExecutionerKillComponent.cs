@@ -30,13 +30,6 @@ namespace SS2.Components
             if (body)
                 orbCount = SS2.Survivors.Executioner2.GetIonCountFromBody(body);
 
-            //if (report.victimBody.teamComponent.teamIndex == TeamIndex.Lunar)
-            //    orbCount *= 2;
-            //if (report.victimBody.isElite)
-            //    orbCount *= 2;
-            //if (report.damageInfo.damageType.damageType.HasFlag(DamageType.BypassOneShotProtection))
-            //    orbCount *= 2;
-
             //Christ we should really just scale the size of the orb or some shit...
             for (int i = 0; i < orbCount; i++)
             {
