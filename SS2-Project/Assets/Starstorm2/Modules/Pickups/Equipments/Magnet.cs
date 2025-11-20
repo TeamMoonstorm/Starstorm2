@@ -36,6 +36,12 @@ namespace SS2.Equipments
             return true;
         }
 
+        // TODO: Magnet is disabled due to AC removing Start method from gravitate pickup
+        public override bool IsAvailable(ContentPack conentPack)
+        {
+            return false;
+        }
+
         public override void Initialize()
         {
             _magnetPrefab = AssetCollection.FindAsset<GameObject>("PickupMagnetController");

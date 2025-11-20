@@ -6,28 +6,28 @@ namespace EntityStates.DroneTable
 {
     public abstract class DroneTableBaseState : EntityState
     {
-        //protected DropPodController PodController { get; private set; }
+    //    //protected DropPodController PodController { get; private set; }
 
-        protected RefabricatorInteractionToken refabController;
-        protected PurchaseInteraction purchaseInter;
+    //    protected RefabricatorInteractionToken refabController;
+    //    protected PurchaseInteraction purchaseInter;
 
-        protected virtual bool enableInteraction
-        {
-            get
-            {
-                return false;
-            }
-        }
+    //    protected virtual bool enableInteraction
+    //    {
+    //        get
+    //        {
+    //            return false;
+    //        }
+    //    }
 
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            refabController = GetComponent<RefabricatorInteractionToken>();
-            purchaseInter = GetComponent<PurchaseInteraction>();
-            if (NetworkServer.active)
-            {
-                purchaseInter.SetAvailable(enableInteraction);
-            }
-        }
+    //    public override void OnEnter()
+    //    {
+    //        base.OnEnter();
+    //        refabController = GetComponent<RefabricatorInteractionToken>();
+    //        purchaseInter = GetComponent<PurchaseInteraction>();
+    //        if (NetworkServer.active)
+    //        {
+    //            purchaseInter.SetAvailable(enableInteraction);
+    //        }
+    //    }
     }
 }

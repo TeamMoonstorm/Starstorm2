@@ -25,7 +25,7 @@ namespace SS2.Items
             RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
             On.EntityStates.Scrapper.WaitToBeginScrapping.FixedUpdate += CheckNanobots;
             On.RoR2.UI.ScrapperInfoPanelHelper.ShowInfo += ReplaceScrapIcon;
-            On.RoR2.ScrapperController.BeginScrapping += ReturnNanobots;
+            On.RoR2.ScrapperController.BeginScrapping_int += ReturnNanobots;
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -33,7 +33,7 @@ namespace SS2.Items
             return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
         // give back original nanobots and make it so only one orb spawns
-        private void ReturnNanobots(On.RoR2.ScrapperController.orig_BeginScrapping orig, ScrapperController self, int intPickupIndex)
+        private void ReturnNanobots(On.RoR2.ScrapperController.orig_BeginScrapping_int orig, ScrapperController self, int intPickupIndex)
         {
             bool isNanobots = false;
             PickupDef pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));

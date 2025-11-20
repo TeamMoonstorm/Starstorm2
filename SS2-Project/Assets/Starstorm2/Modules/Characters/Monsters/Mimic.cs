@@ -34,7 +34,7 @@ namespace SS2.Monsters
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
 			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
-			On.RoR2.CharacterMaster.Respawn += RespawnMimicFixHitboxes;
+			On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool += RespawnMimicFixHitboxes;
 			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
 			On.RoR2.HealthComponent.TakeDamageProcess += TakeDamagePreventAnnoyingRechest;
 
@@ -112,7 +112,7 @@ namespace SS2.Monsters
 		}
 
 		//Makes it so Respawned mimics via Dios and Void Dios are not invulnerable until purchased.
-        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
+        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn_Vector3_Quaternion_bool orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
         {
 			var output = orig(self, footPosition, rotation, wasRevivedMidStage);
 
