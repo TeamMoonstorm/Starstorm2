@@ -134,9 +134,9 @@ namespace SS2
         {
             stormIcon.gameObject.SetActive(isStorm && !ti.isCharged);
             etherealIcon.gameObject.SetActive(isEthereal && !ti.isCharged);
-            Vector3 position = ti.bossShrineIndicator.transform.localPosition;
+            Vector3 position = ti._bossShrineIndicator.transform.localPosition;
             float z = 0;
-            if (ti.bossShrineIndicator.activeSelf)
+            if (ti._bossShrineIndicator.activeSelf)
             {
                 z += iconHeightOffset;
             }
