@@ -1,6 +1,7 @@
   **Warning: content spoilers below!**
 ### 0.6.26
 * General
+    * Updated mod for Alloyed Collective
 	* Fixed X4 and Insecticide not appearing in game
 	* Various fixes for certain projectiles and effects not appearing on clients
 * Items
