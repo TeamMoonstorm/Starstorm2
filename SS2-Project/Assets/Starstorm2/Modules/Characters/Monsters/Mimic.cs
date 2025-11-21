@@ -33,7 +33,8 @@ namespace SS2.Monsters
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
-			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			// TODO: Zen needs to fix post-AC
+			//On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
 			On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool += RespawnMimicFixHitboxes;
 			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
 			On.RoR2.HealthComponent.TakeDamageProcess += TakeDamagePreventAnnoyingRechest;
@@ -131,153 +132,154 @@ namespace SS2.Monsters
         //Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping.
         private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
 		{
-			bool printed = false;
-			self.pingHighlight.enabled = false;
-			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
-			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
-			self.transform.localScale = Vector3.one;
-			self.positionIndicator.targetTransform = (self.pingTarget ? self.pingTarget.transform : null);
-			self.positionIndicator.defaultPosition = self.transform.position;
-			IDisplayNameProvider displayNameProvider = self.pingTarget ? self.pingTarget.GetComponentInParent<IDisplayNameProvider>() : null;
-			self.pingType = PingIndicator.PingType.Default;
-			self.pingObjectScaleCurve.enabled = false;
-			self.pingObjectScaleCurve.enabled = true;
-			GameObject[] array = self.defaultPingGameObjects;
-			for (int i = 0; i < array.Length; i++)
-			{
-				array[i].SetActive(false);
-			}
-			array = self.enemyPingGameObjects;
-			for (int i = 0; i < array.Length; i++)
-			{
-				array[i].SetActive(false);
-			}
-			array = self.interactablePingGameObjects;
-			for (int i = 0; i < array.Length; i++)
-			{
-				array[i].SetActive(false);
-			}
-			if (self.pingTarget)
-			{
-				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
-				if (displayNameProvider != null)
-				{
-					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
-					if (pingc && pingc.isInteractable)
-					{
-						self.pingType = PingIndicator.PingType.Interactable;
-						string ownerName = self.GetOwnerName();
-						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
+			// TODO: Zen needs to fix post-AC
+			//bool printed = false;
+			//self.pingHighlight.enabled = false;
+			//self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
+			//self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
+			//self.transform.localScale = Vector3.one;
+			//self.positionIndicator.targetTransform = (self.pingTarget ? self.pingTarget.transform : null);
+			//self.positionIndicator.defaultPosition = self.transform.position;
+			//IDisplayNameProvider displayNameProvider = self.pingTarget ? self.pingTarget.GetComponentInParent<IDisplayNameProvider>() : null;
+			//self.pingType = PingIndicator.PingType.Default;
+			//self.pingObjectScaleCurve.enabled = false;
+			//self.pingObjectScaleCurve.enabled = true;
+			//GameObject[] array = self.defaultPingGameObjects;
+			//for (int i = 0; i < array.Length; i++)
+			//{
+			//	array[i].SetActive(false);
+			//}
+			//array = self.enemyPingGameObjects;
+			//for (int i = 0; i < array.Length; i++)
+			//{
+			//	array[i].SetActive(false);
+			//}
+			//array = self.interactablePingGameObjects;
+			//for (int i = 0; i < array.Length; i++)
+			//{
+			//	array[i].SetActive(false);
+			//}
+			//if (self.pingTarget)
+			//{
+			//	ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
+			//	if (displayNameProvider != null)
+			//	{
+			//		MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
+			//		if (pingc && pingc.isInteractable)
+			//		{
+			//			self.pingType = PingIndicator.PingType.Interactable;
+			//			string ownerName = self.GetOwnerName();
+			//			var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
 						
-						string text;
-						if (gdnp) 
-						{
-							text = Language.GetString(gdnp.displayToken);
-                        }
-						else
-						{
-							text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
-						}
+			//			string text;
+			//			if (gdnp) 
+			//			{
+			//				text = Language.GetString(gdnp.displayToken);
+   //                     }
+			//			else
+			//			{
+			//				text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+			//			}
 
-						self.pingText.enabled = true;
-						self.pingText.text = ownerName;
+			//			self.pingText.enabled = true;
+			//			self.pingText.text = ownerName;
 
-						self.pingColor = self.interactablePingColor;
-						self.pingDuration = self.interactablePingDuration;
-						self.pingTargetPurchaseInteraction = self.pingTarget.GetComponent<PurchaseInteraction>();
-						Sprite interactableIcon = PingIndicator.GetInteractableIcon(self.pingTarget);
-						SpriteRenderer component3 = self.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
-						array = self.interactablePingGameObjects;
-						for (int i = 0; i < array.Length; i++)
-						{
-							array[i].SetActive(true);
-						}
-						Renderer componentInChildren;
-						if (modelLocator)
-						{
-							componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
-						}
-						else
-						{
-							componentInChildren = self.pingTarget.GetComponentInChildren<Renderer>();
-						}
-						if (componentInChildren)
-						{
-							self.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
-							self.pingHighlight.targetRenderer = componentInChildren;
-							self.pingHighlight.strength = 1f;
-							self.pingHighlight.isOn = true;
-							self.pingHighlight.enabled = true;
-						}
-						component3.sprite = interactableIcon;
-						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
-						{
-							PingIndicator.sharedStringBuilder.Clear();
-							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
-							int num = self.pingTargetPurchaseInteraction.cost;
-							if (self.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
-							{
-								num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
-							}
-							costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
-						}
-						else
-						{
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
-						}
-						self.pingText.color = self.textBaseColor * self.pingColor;
-						self.fixedTimer = self.pingDuration;
-						printed = true;
-                    }
-                    else if(pingc && !pingc.isInteractable)
-                    {
-						string ownerName = self.GetOwnerName();
-						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
+			//			self.pingColor = self.interactablePingColor;
+			//			self.pingDuration = self.interactablePingDuration;
+			//			self.pingTargetPurchaseInteraction = self.pingTarget.GetComponent<PurchaseInteraction>();
+			//			Sprite interactableIcon = PingIndicator.GetInteractableIcon(self.pingTarget);
+			//			SpriteRenderer component3 = self.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
+			//			array = self.interactablePingGameObjects;
+			//			for (int i = 0; i < array.Length; i++)
+			//			{
+			//				array[i].SetActive(true);
+			//			}
+			//			Renderer componentInChildren;
+			//			if (modelLocator)
+			//			{
+			//				componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
+			//			}
+			//			else
+			//			{
+			//				componentInChildren = self.pingTarget.GetComponentInChildren<Renderer>();
+			//			}
+			//			if (componentInChildren)
+			//			{
+			//				self.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
+			//				self.pingHighlight.targetRenderer = componentInChildren;
+			//				self.pingHighlight.strength = 1f;
+			//				self.pingHighlight.isOn = true;
+			//				self.pingHighlight.enabled = true;
+			//			}
+			//			component3.sprite = interactableIcon;
+			//			if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
+			//			{
+			//				PingIndicator.sharedStringBuilder.Clear();
+			//				CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
+			//				int num = self.pingTargetPurchaseInteraction.cost;
+			//				if (self.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
+			//				{
+			//					num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
+			//				}
+			//				costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
+			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
+			//			}
+			//			else
+			//			{
+			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
+			//			}
+			//			self.pingText.color = self.textBaseColor * self.pingColor;
+			//			self.fixedTimer = self.pingDuration;
+			//			printed = true;
+   //                 }
+   //                 else if(pingc && !pingc.isInteractable)
+   //                 {
+			//			string ownerName = self.GetOwnerName();
+			//			string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
 
-						self.pingText.enabled = true;
-						self.pingText.text = ownerName;
+			//			self.pingText.enabled = true;
+			//			self.pingText.text = ownerName;
 
-						self.pingColor = self.enemyPingColor;
-						self.pingDuration = self.enemyPingDuration;
-						array = self.enemyPingGameObjects;
-						for (int i = 0; i < array.Length; i++)
-						{
-							array[i].SetActive(true);
-						}
-						if (modelLocator)
-						{
-							Transform modelTransform = modelLocator.modelTransform;
-							if (modelTransform)
-							{
-								CharacterModel component2 = modelTransform.GetComponent<CharacterModel>();
-								if (component2)
-								{
-									bool flag = false;
-									foreach (CharacterModel.RendererInfo rendererInfo in component2.baseRendererInfos)
-									{
-										if (!rendererInfo.ignoreOverlays && !flag)
-										{
-											self.pingHighlight.highlightColor = Highlight.HighlightColor.teleporter;
-											self.pingHighlight.targetRenderer = rendererInfo.renderer;
-											self.pingHighlight.strength = 1f;
-											self.pingHighlight.isOn = true;
-											self.pingHighlight.enabled = true;
-											break;
-										}
-									}
-								}
-							}
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
-							printed = true;
-						}
-					}
-				}
-			}
-            if (!printed)
-            {
-				orig(self);
-			}
+			//			self.pingColor = self.enemyPingColor;
+			//			self.pingDuration = self.enemyPingDuration;
+			//			array = self.enemyPingGameObjects;
+			//			for (int i = 0; i < array.Length; i++)
+			//			{
+			//				array[i].SetActive(true);
+			//			}
+			//			if (modelLocator)
+			//			{
+			//				Transform modelTransform = modelLocator.modelTransform;
+			//				if (modelTransform)
+			//				{
+			//					CharacterModel component2 = modelTransform.GetComponent<CharacterModel>();
+			//					if (component2)
+			//					{
+			//						bool flag = false;
+			//						foreach (CharacterModel.RendererInfo rendererInfo in component2.baseRendererInfos)
+			//						{
+			//							if (!rendererInfo.ignoreOverlays && !flag)
+			//							{
+			//								self.pingHighlight.highlightColor = Highlight.HighlightColor.teleporter;
+			//								self.pingHighlight.targetRenderer = rendererInfo.renderer;
+			//								self.pingHighlight.strength = 1f;
+			//								self.pingHighlight.isOn = true;
+			//								self.pingHighlight.enabled = true;
+			//								break;
+			//							}
+			//						}
+			//					}
+			//				}
+			//				Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
+			//				printed = true;
+			//			}
+			//		}
+			//	}
+			//}
+   //         if (!printed)
+   //         {
+			//	orig(self);
+			//}
 		}
 
 		//How the mimic steals items, using a custom damage type
