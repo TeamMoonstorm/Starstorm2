@@ -48,7 +48,9 @@ namespace SS2.Components
 					this.leaderObject = ai.leader.gameObject;
                 }
 				this.teamIndex = master.teamIndex;
-				this.itemStacks = HG.ArrayUtils.Clone(this.master.inventory.itemStacks);
+				// TODO: Needs to be rewrtten post-AC
+				//this.itemStacks = HG.ArrayUtils.Clone(this.master.inventory.itemStacks);
+				this.itemStacks = new int[0]; // fix later
 				this.itemAcquisitionOrder = this.master.inventory.itemAcquisitionOrder; // reference fix later			
             }
 			public GameObject leaderObject;
@@ -294,7 +296,9 @@ namespace SS2.Components
             {
 				Inventory inventory = master.inventory;
 				inventory.itemAcquisitionOrder.Clear();
-				int[] array = inventory.itemStacks;
+				// TODO: needs to be rewritten post-AC
+				//int[] array = inventory.itemStacks;
+				int[] array = new int[0]; // Band-aid to get it to compile
 				int num = 0;
 				HG.ArrayUtils.SetAll<int>(array, num);
 				master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
