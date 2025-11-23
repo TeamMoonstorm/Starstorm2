@@ -64,7 +64,7 @@ namespace EntityStates.AffixEmpyrean
 				}, true); // transmit was false but it still played twice ???????????????????????????????????????
 			}
 
-			characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreKnockback;
+			characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreKnockup;
 			
 			Transform modelTransform = base.GetModelTransform();
 			if (modelTransform)
@@ -109,7 +109,7 @@ namespace EntityStates.AffixEmpyrean
 
 			}
 
-			characterBody.bodyFlags &= CharacterBody.BodyFlags.IgnoreKnockback;
+			characterBody.bodyFlags &= CharacterBody.BodyFlags.IgnoreKnockup;
 			if (animator) animator.enabled = true;
 			if (aimAnimator)
 			{

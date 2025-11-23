@@ -28,7 +28,7 @@ namespace SS2.Items
         private void EnableVoidParticles(On.RoR2.PickupDisplay.orig_RebuildModel orig, PickupDisplay self, GameObject modelObjectOverride)
         {
             orig(self, modelObjectOverride);
-            PickupDef pickupDef = PickupCatalog.GetPickupDef(self.pickupIndex);
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(self.pickupState.pickupIndex);
             ItemIndex itemIndex = (pickupDef != null) ? pickupDef.itemIndex : ItemIndex.None;
             if (itemIndex != ItemIndex.None && ItemCatalog.GetItemDef(itemIndex).tier == SS2Content.ItemTierDefs.Sibylline.tier)
             {

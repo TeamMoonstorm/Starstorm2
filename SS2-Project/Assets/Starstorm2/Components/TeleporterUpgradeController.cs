@@ -134,23 +134,36 @@ namespace SS2
         {
             stormIcon.gameObject.SetActive(isStorm && !ti.isCharged);
             etherealIcon.gameObject.SetActive(isEthereal && !ti.isCharged);
-            Vector3 position = ti.bossShrineIndicator.transform.localPosition;
+            Vector3 position = ti._bossShrineCounter.transform.localPosition;
             float z = 0;
-            if (ti.bossShrineIndicator.activeSelf)
+
+            // Buns: Adding a cautious null check here post-AC since I dont understand how this code worked previously and dont 
+            // wanna break someones game over an indicator error
+            if (position != null)
             {
-                z += iconHeightOffset;
+                // Buns: The new bossShrineCounter added support for multiple indicators and removed activeSelf param
+                // Buns: idk if this will work but need to fix the compile error to get SS2 to work so YOLO
+                // TODO: Might be the source of a bug!
+                if (ti._bossShrineCounter.indicatorCount == 0)
+                {
+                    z += iconHeightOffset;
+                }
+                else if (ti._bossShrineCounter.indicatorCount >= 1)
+                {
+                    z += iconHeightOffset * ti._bossShrineCounter.indicatorCount;
+                }
+
+                if (isEthereal)
+                {
+                    etherealIcon.transform.localPosition = position + Vector3.forward * z;
+                    z += iconHeightOffset;
+                }
+                if (isStorm)
+                {
+                    stormIcon.transform.localPosition = position + Vector3.forward * z;
+                    z += iconHeightOffset;
+                }
             }
-            if(isEthereal)
-            {
-                etherealIcon.transform.localPosition = position + Vector3.forward * z;
-                z += iconHeightOffset;
-            }
-            if(isStorm)
-            {
-                stormIcon.transform.localPosition = position + Vector3.forward * z;
-                z += iconHeightOffset;
-            }
-            
         }
 
         [Server]

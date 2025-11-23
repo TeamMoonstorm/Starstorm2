@@ -1,9 +1,12 @@
   **Warning: content spoilers below!**
 ### 0.6.26
 * General
+    * Updated mod for Alloyed Collective
+    * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
 	* Various fixes for certain projectiles and effects not appearing on clients
 * Items
+    * Double the cost of the chest Lunar Birthright grants.
 	* Galvanic Core's stun chance now scales with proc coefficient.
 	* Field Accelerator no longer prevents a certain portal from spawning
 * Executioner

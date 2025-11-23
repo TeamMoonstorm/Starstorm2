@@ -30,8 +30,13 @@ namespace SS2.Components
                 if(!convertBehavior) convertBehavior = this.target.healthComponent.gameObject.AddComponent<ConvertBehavior>();
                 convertBehavior.lifetime = this.buffDuration;
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
+
                 convertBehavior.chirrFriendTracker = this.tracker;
-                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Survivors.Chirr.ConvertDotIndex, buffDuration);
+                // Buns: ORBEEZ WHAT SHOULD MAX STOCKS BE
+                // Because of overloading weirdness I have to add max stacks optional param. Putting in a random value for now
+                // For the same reason above I also had to add a damage multi, default to 1.0 since that seems fine for this
+                // TODO: Dont use this obsolete method
+                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Survivors.Chirr.ConvertDotIndex, buffDuration, 1.0f, 5);
             }
 
         }

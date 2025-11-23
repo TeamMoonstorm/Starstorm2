@@ -35,7 +35,7 @@ namespace SS2.Items
                     self.itemDropCount++;
                     self.itemDropAge -= self.timeBetweenDrops;
                     self.itemDropAge += self.GetDeltaTime();///
-                    self.chestBehavior.dropPickup = PickupCatalog.FindPickupIndex(SS2Content.Items.ScavengersFortune.itemIndex);
+                    self.chestBehavior.currentPickup = new UniquePickup(PickupCatalog.FindPickupIndex(SS2Content.Items.ScavengersFortune.itemIndex));
                     self.chestBehavior.ItemDrop();
                 }             
             }

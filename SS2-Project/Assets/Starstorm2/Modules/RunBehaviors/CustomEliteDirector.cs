@@ -278,7 +278,7 @@ namespace SS2.Components
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
-            int extraLoops = Mathf.CeilToInt(extraStages / Run.stagesPerLoop);
+            int extraLoops = Mathf.CeilToInt(extraStages / 5); // Run.stagesPerLoop); was removed in AC update but its 5 anyways, TODO: Make this a static int somewhere instead of magic number
             inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraStages * extraLoops * extraLoops * extraLoops * 2); ///
             inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 20 * extraLoops); // teehee
@@ -328,7 +328,7 @@ namespace SS2.Components
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
-            int extraLoops = Mathf.FloorToInt(extraStages / Run.stagesPerLoop);
+            int extraLoops = Mathf.FloorToInt(extraStages / 5); // Run.stagesPerLoop); was removed in AC update but its 5 anyways, TODO: Make this a static int somewhere instead of magic number
             //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
             inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

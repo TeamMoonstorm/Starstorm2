@@ -30,7 +30,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount the price of the Legendary chest is multiplied by. (1 = 100%, normal value for current level)")]
         [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float priceModifier = 1f;
+        public static float priceModifier = 2.1f;
 
         public GameObject indevChest; // this probably not be here in a live build i just wanted to do it fast
         public InteractableSpawnCard indevCard;

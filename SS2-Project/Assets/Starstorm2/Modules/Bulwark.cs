@@ -34,8 +34,9 @@ namespace SS2
                 {
                     RunArtifactManager.instance.SetArtifactEnabledServer(artifactDef, false);
                 }
+                // Buns: I had to change this from pickupIndex to pickupState / uniquePickup for Alloyed Collective but idk if it will work
                 //replace the current artifact pickup with the blessed blade of the bulwark
-                self.artifactPickup.NetworkpickupIndex = PickupCatalog.FindPickupIndex(SS2Content.Equipments.equipDivineRight.equipmentIndex);
+                self.artifactPickup.Network_pickupState = new UniquePickup(PickupCatalog.FindPickupIndex(SS2Content.Equipments.equipDivineRight.equipmentIndex));
             }
         }
     }
