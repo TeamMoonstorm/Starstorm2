@@ -32,11 +32,15 @@ namespace SS2.Components
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
 
                 convertBehavior.chirrFriendTracker = this.tracker;
-                // Buns: ORBEEZ WHAT SHOULD MAX STOCKS BE
-                // Because of overloading weirdness I have to add max stacks optional param. Putting in a random value for now
-                // For the same reason above I also had to add a damage multi, default to 1.0 since that seems fine for this
-                // TODO: Dont use this obsolete method
-                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Survivors.Chirr.ConvertDotIndex, buffDuration, 1.0f, 5);
+
+                var inflictDotInfo = new InflictDotInfo
+                {
+                    victimObject = target.healthComponent.gameObject,
+                    attackerObject = attacker,
+                    dotIndex = Survivors.Chirr.ConvertDotIndex,
+                    duration = buffDuration,
+                };
+                DotController.InflictDot(ref inflictDotInfo);
             }
 
         }
