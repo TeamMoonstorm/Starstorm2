@@ -74,9 +74,7 @@ namespace SS2.Monsters
 			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
 			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
 
-		    var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
 			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
-			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
 			mid.Info.Visual = ping;
 
@@ -92,14 +90,11 @@ namespace SS2.Monsters
 
         private string GetBestBodyNameRenameMimic(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
         {
-            if (bodyObject)
-            {
-				var mpc = bodyObject.GetComponent<MimicPingCorrecter>();
-                if (mpc.isInteractable)
-                {
-					var gdnp = bodyObject.GetComponent<GenericDisplayNameProvider>();
+            if (bodyObject && bodyObject.TryGetComponent<MimicPingCorrecter>(out var mpc) && mpc.isInteractable)
+			{
+				if(bodyObject.TryGetComponent<GenericDisplayNameProvider>(out var gdnp)){
 					return gdnp.GetDisplayName();
-                }
+				}
             }
 			return orig(bodyObject);
         }

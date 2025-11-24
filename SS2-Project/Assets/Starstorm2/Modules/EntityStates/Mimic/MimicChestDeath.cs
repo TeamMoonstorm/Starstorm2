@@ -65,6 +65,10 @@ namespace EntityStates.Mimic
 
             mimicInventory = gameObject.GetComponent<MimicInventoryManager>();
 
+            if (TryGetComponent<SpecialObjectAttributes>(out var soa))
+            {
+                soa.grabbable = false;
+            }
         }
 
         public override void FixedUpdate()
