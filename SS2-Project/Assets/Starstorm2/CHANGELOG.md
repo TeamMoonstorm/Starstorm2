@@ -1,10 +1,14 @@
   **Warning: content spoilers below!**
 ### 0.6.26
 * General
+    * Re-adding Ukrainian translation since its causing a crash during loading for some users. 
+
+### 0.6.26
+* General
     * Updated mod for Alloyed Collective
     * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
-    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns
+    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns. Thanks to LordVGames for the fix!
 	* Various fixes for certain projectiles and effects not appearing on clients
     * Added an updated French translation thanks to DarSitam
     * Damglador requested to remove the Ukrainian translation as they wanted it to be in their own mod
@@ -16,6 +20,7 @@
 	* Lowered max stock of Consecration from 10 to 5.
 	* Added Ancient Scepter upgrade for Execution
 	* Luminous Shot charges are now only granted when firing Ion Bullets.
+    * Fixes and skin specific VFX to Mastery skin. Contribution by Bread!
 * Interactables
 	* Security Chest no longer appears with the Starstorm 2 expansion disabled.
 	
