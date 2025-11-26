@@ -33,8 +33,12 @@ namespace SS2.Items
             //???
             _objectPrefab = AssetCollection.FindAsset<GameObject>("ObjectFieldAccelerator"); // 
 
+            // TODO Switch to a more generic solution
+            // Per Chinchi's advice "the more generic solution would be to hook TeleporterInteraction.Awake and add the component dynamically"
+
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed+= (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/DLC3/conduitcanyon/Teleporter_ConduitCanyon_Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver
@@ -77,9 +81,13 @@ namespace SS2.Items
                 {
                     var teleInstance = TeleporterInteraction.instance;
                     FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
-                    displayInstance = fatb.displayInstance;
-                    if (displayInstance != null)
-                        displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+
+                    if (fatb != null)
+                    {
+                        displayInstance = fatb.displayInstance;
+                        if (displayInstance != null)
+                            displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+                    }
                 }
             }
 
@@ -92,11 +100,14 @@ namespace SS2.Items
                 {
                     FieldAcceleratorTeleporterBehavior fatb = teleInstance.GetComponent<FieldAcceleratorTeleporterBehavior>();
 
-                    fatb.RecalcRadius();
+                    if (fatb != null)
+                    {
+                        fatb.RecalcRadius();
 
-                    displayInstance = fatb.displayInstance;
-                    if (displayInstance != null)
-                        displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+                        displayInstance = fatb.displayInstance;
+                        if (displayInstance != null)
+                            displayHurtbox = displayInstance.GetComponent<HurtBoxGroup>().mainHurtBox;
+                    }
                 }
             }
 
