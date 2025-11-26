@@ -24,11 +24,9 @@ namespace EntityStates.CrystalPickup
 
             onPickup?.Invoke(gameObject);
 
-            if (NetworkServer.active)
-            {
-                // kms
-            }
-        }   
+            // TO-DO: fucking fancy ! effect and that sound from returns
 
+            Destroy(gameObject);
+        }   
     }
 }

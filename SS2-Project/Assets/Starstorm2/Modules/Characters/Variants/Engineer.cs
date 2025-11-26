@@ -100,27 +100,25 @@ namespace SS2.Survivors
 
         private void EngiFocusDamageHook(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
         {
-            var dmg = damageInfo.HasModdedDamageType(EngiFocusDamage);
-            var proc = damageInfo.HasModdedDamageType(EngiFocusDamageProc);
-            if (dmg || proc)
+            bool dmg = damageInfo.HasModdedDamageType(EngiFocusDamage);
+            bool proc = damageInfo.HasModdedDamageType(EngiFocusDamageProc);
+            int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
+
+            bool rampDamage = (dmg || proc) && (count > 0);
+            if (rampDamage)
             {
-                int count = self.body.GetBuffCount(SS2Content.Buffs.bdEngiFocused);
-                if (proc && count < 5)
+                damageInfo.damage *= 1 + (count * .15f);
+            }
+
+            if (proc)
+            {
+                SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
+                if (count < 5)
                 {
-                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
                     self.body.AddTimedBuffAuthority(SS2Content.Buffs.bdEngiFocused.buffIndex, 5);
-
-                }
-                else if (proc)
-                {
-                    SS2Util.RefreshAllBuffStacks(self.body, SS2Content.Buffs.bdEngiFocused, 5);
-                }
-
-                if (count > 0)
-                {
-                    damageInfo.damage *= 1 + (count * .15f);
                 }
             }
+
             orig(self, damageInfo);
         }
 
