@@ -40,7 +40,7 @@ With Art/Modelling/Animation/Sound/Music contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk (French)
+* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk & DarSitam (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
 * Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
