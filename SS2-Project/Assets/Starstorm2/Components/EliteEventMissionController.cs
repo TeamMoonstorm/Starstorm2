@@ -235,7 +235,7 @@ namespace SS2
                 inventory.GiveItemPermanent(SS2Content.Items.MultiElite); // enables multiple buffs from elite equipments, enables multiple elite equipment displays, fixes elite overlays after first slot
                 
                 // TODO: Use the non-obsolete method here
-                inventory.SetEquipmentIndexForSlot(eliteEquipment.equipmentIndex, (uint)inventory._equipmentStateSlots.Length); // set the last equipment slot
+                inventory.SetEquipmentIndex(eliteEquipment.equipmentIndex, isRemovingEquipment: false); // set the last equipment slot
                 
                 int boostDamage = inventory.GetItemCountPermanent(RoR2Content.Items.BoostDamage) - 10;
                 if (boostDamage > 0)
