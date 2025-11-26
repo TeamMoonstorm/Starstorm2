@@ -954,6 +954,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 1
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 2
@@ -1097,6 +1098,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 11
@@ -1271,6 +1273,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 7
@@ -1730,6 +1733,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 3
@@ -13193,6 +13197,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 1
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 16
@@ -13505,6 +13510,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 8
@@ -13678,6 +13684,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 6
@@ -14143,6 +14150,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 12
@@ -14410,6 +14418,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 1
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 0
@@ -14975,6 +14984,7 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: 1dacc103cb400a14fabaf291fb76c155, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 7496361300183835963}
     defaultMaterialAddress:
@@ -15026,6 +15036,7 @@ MonoBehaviour:
     ignoreOverlays: 1
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos:
   - light: {fileID: 3222297799237268357}
     defaultColor: {r: 1, g: 0.9241097, b: 0.4198113, a: 1}
@@ -15033,9 +15044,13 @@ MonoBehaviour:
     defaultColor: {r: 1, g: 0.9241097, b: 0.4198113, a: 1}
   - light: {fileID: 5244800496352039960}
     defaultColor: {r: 1, g: 0.9241097, b: 0.4198113, a: 1}
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0
@@ -15204,8 +15219,12 @@ MonoBehaviour:
   focusPointTransform: {fileID: 1961617240986217056}
   cameraPositionTransform: {fileID: 2844413243993394339}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  modelPositionOffset: {x: 0, y: 0, z: 0}
   minDistance: 5
   maxDistance: 33
+  triggerOnLogbook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1414763866400334972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15284,6 +15303,8 @@ MonoBehaviour:
   animateFlowmapPower: 0
   startingFlowmapPower: 0
   maxFlowmapPower: 0
+  onlyDisablePrintingWhenFinished: 0
+  ignoreMaterialsWithPrintControllers: 0
 --- !u!1 &3600490444291051112
 GameObject:
   m_ObjectHideFlags: 0
@@ -15411,6 +15432,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 1
@@ -15490,6 +15512,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 9
@@ -16220,6 +16243,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 14
@@ -17315,6 +17339,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 4
@@ -17752,6 +17777,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 10
@@ -18498,6 +18524,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 5
@@ -19513,6 +19540,7 @@ GameObject:
   - component: {fileID: 5463082695210396622}
   - component: {fileID: 2542371684249613105}
   - component: {fileID: 588138893588654368}
+  - component: {fileID: -3415408944033250655}
   m_Layer: 0
   m_Name: LampBossBody
   m_TagString: Player
@@ -19595,6 +19623,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_LAMPBOSS_BODY_SUBTITLE
   bodyFlags: 0
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 2400
@@ -19620,8 +19649,6 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
@@ -19630,6 +19657,7 @@ MonoBehaviour:
   boostAllStatsDisplay: {fileID: 0}
   currentGrowthNectarBuffCount: 0
   maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
   spreadBloomCurve:
@@ -19658,6 +19686,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -19666,13 +19696,18 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 555182216547160847}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 2
   portraitIcon: {fileID: 2800000, guid: b1dbc74954320f940bfe16bb38e39707, type: 3}
   bodyColor: {r: 0.15686275, g: 0.15686275, b: 0.15686275, a: 0}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 1
   altDeathBodyName: 
+  vehicleIdleStateMachine: []
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -19697,6 +19732,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 4455791905270396094}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -19706,6 +19742,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &522060211003833984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19799,9 +19837,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: e11e192f558513444af4a2ae494aaa52, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &7638051873760091780
 MonoBehaviour:
@@ -19817,9 +19859,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: ade620e3679180f4e956ce4621a08d4a, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &4579502563727109885
 MonoBehaviour:
@@ -19835,9 +19881,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: b933699a9555d4d43b488f6fb8d948f2, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &1289159700226355564
 MonoBehaviour:
@@ -19853,9 +19903,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 0f77af602c672654fae4017fbd0b65ed, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &1452498615768964533
 MonoBehaviour:
@@ -19872,6 +19926,7 @@ MonoBehaviour:
   deathSound: WayfarerVO
   barkSound: WayfarerVO
   openSound: 
+  jumpSound: 
   landingSound: 
   fallDamageSound: 
   aliveLoopStart: WayfarerIdleStart
@@ -19913,11 +19968,15 @@ MonoBehaviour:
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &3856787831360919285
@@ -19969,6 +20028,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 45
   turnSoundName: 
 --- !u!114 &6342970677023390433
@@ -19992,6 +20052,7 @@ MonoBehaviour:
   isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 1862279346882973295}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &4842733286244294406
 MonoBehaviour:
@@ -20006,6 +20067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
 --- !u!114 &8859707073591302313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20042,6 +20104,10 @@ MonoBehaviour:
   idleStateMachine:
   - {fileID: 5196130493268893978}
   - {fileID: 5196130493268893978}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!114 &4926167046335849318
 MonoBehaviour:
@@ -20175,6 +20241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 5
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 6511347711517125075}
   idleStateMachine:
   - {fileID: 5196130493268893978}
@@ -20183,6 +20250,8 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 0
+  isFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &6148087049430162008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20198,6 +20267,7 @@ MonoBehaviour:
   logUnlockableName: 
   logUnlockableDef: {fileID: 11400000, guid: 8ee4988f7a1dd53469d7c99b8b60554f, type: 2}
   bossDropTable: {fileID: 11400000, guid: c00037202b135a246b569f370bf47c1f, type: 2}
+  overrideBossDropRewards: 0
   bossPickup:
     pickupName: 
 --- !u!114 &5463082695210396622
@@ -20244,6 +20314,50 @@ MonoBehaviour:
   ownerAttachChildName: LanternL
   spawnEffectPrefab: {fileID: 0}
   killEffectPrefab: {fileID: 0}
+--- !u!114 &-3415408944033250655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6728286786640769543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1231560309, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbable: 0
+  breakoutState:
+    _typeName: 
+  dodgeState:
+    _typeName: 
+  breakoutStateMachineName: 
+  massOverride: 0
+  damageOverride: -1
+  damageTypeOverride:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
+  collisionToDisable: []
+  renderersToDisable: []
+  behavioursToDisable: []
+  childObjectsToDisable: []
+  pickupDisplaysToDisable: []
+  lightsToDisable: []
+  objectsToDetach: []
+  soundEventsToStop: []
+  soundEventsToPlay: []
+  childSpecialObjectAttributes: []
+  indicatorOffset: {fileID: 0}
+  hullClassification: 0
+  maxDurability: 0
+  orientToFloor: 0
+  durability: 0
+  useSkillHighlightRenderers: 0
+  skillHighlightRenderers: []
+  isVoid: 0
+  bestName: 
+  portraitIcon: {fileID: 0}
 --- !u!1 &6773993861153216580
 GameObject:
   m_ObjectHideFlags: 0
@@ -21377,6 +21491,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 1
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 15
@@ -22825,6 +22940,7 @@ MonoBehaviour:
   healthComponent: {fileID: 6342970677023390433}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 81179489079014442}
   indexInGroup: 13

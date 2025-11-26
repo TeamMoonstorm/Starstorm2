@@ -1,4 +1,6 @@
 ﻿using EntityStates.Mimic;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using MSU;
 using R2API;
 using RoR2;
@@ -33,8 +35,11 @@ namespace SS2.Monsters
 			_masterPrefab = AssetCollection.FindAsset<GameObject>("MimicMaster");
 
 			GlobalEventManager.onServerDamageDealt += ServerDamageStealItem;
-			On.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
-			On.RoR2.CharacterMaster.Respawn += RespawnMimicFixHitboxes;
+
+			IL.RoR2.UI.PingIndicator.RebuildPing += RebuildPingOverrideInteractable;
+			On.RoR2.Util.GetBestBodyName += GetBestBodyNameRenameMimic;
+
+			On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool += RespawnMimicFixHitboxes;
 			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
 			On.RoR2.HealthComponent.TakeDamageProcess += TakeDamagePreventAnnoyingRechest;
 
@@ -69,9 +74,7 @@ namespace SS2.Monsters
 			itemStarburst = AssetCollection.FindAsset<GameObject>("Chest1Starburst");
 			zipperVFX = AssetCollection.FindAsset<GameObject>("ChestUnzipReal");
 
-		    var pip = AssetCollection.FindAsset<GameObject>("MimicBodyNew").GetComponent<PingInfoProvider>();
 			var ping = Addressables.LoadAssetAsync<Sprite>("RoR2/Base/ChestIcon_1.png").WaitForCompletion();
-			pip.pingIconOverride = ping;
 			var mid = AssetCollection.FindAsset<InspectDef>("idMimic");
 			mid.Info.Visual = ping;
 
@@ -85,7 +88,18 @@ namespace SS2.Monsters
 
 		}
 
-		//Along with code in Rechest, prevents mimic from annoyingly rechesting at range when damaged recently.
+        private string GetBestBodyNameRenameMimic(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
+        {
+            if (bodyObject && bodyObject.TryGetComponent<MimicPingCorrecter>(out var mpc) && mpc.isInteractable)
+			{
+				if(bodyObject.TryGetComponent<GenericDisplayNameProvider>(out var gdnp)){
+					return gdnp.GetDisplayName();
+				}
+            }
+			return orig(bodyObject);
+        }
+
+        //Along with code in Rechest, prevents mimic from annoyingly rechesting at range when damaged recently.
         private void TakeDamagePreventAnnoyingRechest(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
         {
 			orig(self, damageInfo);
@@ -112,7 +126,7 @@ namespace SS2.Monsters
 		}
 
 		//Makes it so Respawned mimics via Dios and Void Dios are not invulnerable until purchased.
-        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
+        private CharacterBody RespawnMimicFixHitboxes(On.RoR2.CharacterMaster.orig_Respawn_Vector3_Quaternion_bool orig, CharacterMaster self, Vector3 footPosition, Quaternion rotation, bool wasRevivedMidStage)
         {
 			var output = orig(self, footPosition, rotation, wasRevivedMidStage);
 
@@ -128,157 +142,68 @@ namespace SS2.Monsters
 			return output;
         }
 
-        //Replicating the code of this function until it reaches the point where I can ensure that this IS a mimic, to fix JUST the mimic's ping.
-        private void RebuildPingOverrideInteractable(On.RoR2.UI.PingIndicator.orig_RebuildPing orig, RoR2.UI.PingIndicator self)
+		private void RebuildPingOverrideInteractable(ILContext il)
 		{
-			bool printed = false;
-			self.pingHighlight.enabled = false;
-			self.transform.rotation = Util.QuaternionSafeLookRotation(self.pingNormal);
-			self.transform.position = (self.pingTarget ? self.pingTarget.transform.position : self.pingOrigin);
-			self.transform.localScale = Vector3.one;
-			self.positionIndicator.targetTransform = (self.pingTarget ? self.pingTarget.transform : null);
-			self.positionIndicator.defaultPosition = self.transform.position;
-			IDisplayNameProvider displayNameProvider = self.pingTarget ? self.pingTarget.GetComponentInParent<IDisplayNameProvider>() : null;
-			self.pingType = PingIndicator.PingType.Default;
-			self.pingObjectScaleCurve.enabled = false;
-			self.pingObjectScaleCurve.enabled = true;
-			GameObject[] array = self.defaultPingGameObjects;
-			for (int i = 0; i < array.Length; i++)
+			ILCursor c = new(il);
+
+			//int displayProviderVarIndex = -1;
+			//if (!c.TryGotoNext(
+			//		x => x.MatchCallOrCallvirt(AccessTools.PropertyGetter(typeof(PingIndicator), nameof(PingIndicator.pingTarget))),
+			//		x => x.MatchCallOrCallvirt<GameObject>(nameof(GameObject.GetComponentInParent)))
+			//	|| !c.TryGotoNext(
+			//		x => x.MatchStloc(out displayProviderVarIndex)))
+			//{
+			//	SS2Log.Fatal($"Failed IL Hook {il.Method.Name} #1");
+			//	return;
+			//}
+
+			// Locate the code section that does
+			// if (displayNameProvider != null)
+			// {
+			//     DoStuff();
+			// }
+			ILLabel afterDisplayNameProviderNullCheck = null;
+			if (!c.TryGotoNext(
+					MoveType.After,
+					x => x.MatchStloc(2),
+					x => x.MatchLdloc(0),
+					x => x.MatchBrfalse(out afterDisplayNameProviderNullCheck)))
 			{
-				array[i].SetActive(false);
+				SS2Log.Fatal($"Failed IL Hook {il.Method.Name}");
+				return;
 			}
-			array = self.enemyPingGameObjects;
-			for (int i = 0; i < array.Length; i++)
+
+			// And turn it into
+			// if (displayNameProvider != null)
+			// {
+			//     if (pingTarget.TryGetComponent<MimicController>(out var controller))
+			//     {
+			//         DoOurStuff();
+			//     }
+			//     else DoStuff();
+			// }
+			c.Emit(OpCodes.Ldarg_0);
+			c.EmitDelegate<Func<PingIndicator, bool>>(self =>
 			{
-				array[i].SetActive(false);
-			}
-			array = self.interactablePingGameObjects;
-			for (int i = 0; i < array.Length; i++)
-			{
-				array[i].SetActive(false);
-			}
-			if (self.pingTarget)
-			{
-				ModelLocator modelLocator = self.pingTarget.GetComponent<ModelLocator>();
-				if (displayNameProvider != null)
+				if (self.pingTarget.TryGetComponent<MimicPingCorrecter>(out var controller))
 				{
-					MimicPingCorrecter pingc = self.pingTarget.GetComponent<MimicPingCorrecter>();
-					if (pingc && pingc.isInteractable)
+					if (controller.isInteractable)
 					{
 						self.pingType = PingIndicator.PingType.Interactable;
-						string ownerName = self.GetOwnerName();
-						var gdnp = self.pingTarget.GetComponent<GenericDisplayNameProvider>();
-						
-						string text;
-						if (gdnp) 
-						{
-							text = Language.GetString(gdnp.displayToken);
-                        }
-						else
-						{
-							text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
-						}
-
-						self.pingText.enabled = true;
-						self.pingText.text = ownerName;
-
-						self.pingColor = self.interactablePingColor;
-						self.pingDuration = self.interactablePingDuration;
-						self.pingTargetPurchaseInteraction = self.pingTarget.GetComponent<PurchaseInteraction>();
-						Sprite interactableIcon = PingIndicator.GetInteractableIcon(self.pingTarget);
-						SpriteRenderer component3 = self.interactablePingGameObjects[0].GetComponent<SpriteRenderer>();
-						array = self.interactablePingGameObjects;
-						for (int i = 0; i < array.Length; i++)
-						{
-							array[i].SetActive(true);
-						}
-						Renderer componentInChildren;
-						if (modelLocator)
-						{
-							componentInChildren = modelLocator.modelTransform.GetComponentInChildren<Renderer>();
-						}
-						else
-						{
-							componentInChildren = self.pingTarget.GetComponentInChildren<Renderer>();
-						}
-						if (componentInChildren)
-						{
-							self.pingHighlight.highlightColor = Highlight.HighlightColor.interactive;
-							self.pingHighlight.targetRenderer = componentInChildren;
-							self.pingHighlight.strength = 1f;
-							self.pingHighlight.isOn = true;
-							self.pingHighlight.enabled = true;
-						}
-						component3.sprite = interactableIcon;
-						if (self.pingTargetPurchaseInteraction && self.pingTargetPurchaseInteraction.costType != CostTypeIndex.None)
-						{
-							PingIndicator.sharedStringBuilder.Clear();
-							CostTypeDef costTypeDef = CostTypeCatalog.GetCostTypeDef(self.pingTargetPurchaseInteraction.costType);
-							int num = self.pingTargetPurchaseInteraction.cost;
-							if (self.pingTargetPurchaseInteraction.costType.Equals(CostTypeIndex.Money) && TeamManager.LongstandingSolitudesInParty() > 0)
-							{
-								num = (int)((float)num * TeamManager.GetLongstandingSolitudeItemCostScale());
-							}
-							costTypeDef.BuildCostStringStyled(num, PingIndicator.sharedStringBuilder, false, true);
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE_WITH_COST"), ownerName, text, PingIndicator.sharedStringBuilder.ToString()));
-						}
-						else
-						{
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_INTERACTABLE"), ownerName, text));
-						}
-						self.pingText.color = self.textBaseColor * self.pingColor;
-						self.fixedTimer = self.pingDuration;
-						printed = true;
-                    }
-                    else if(pingc && !pingc.isInteractable)
-                    {
-						string ownerName = self.GetOwnerName();
-						string text = ((MonoBehaviour)displayNameProvider) ? Util.GetBestBodyName(((MonoBehaviour)displayNameProvider).gameObject) : "";
-
-						self.pingText.enabled = true;
-						self.pingText.text = ownerName;
-
-						self.pingColor = self.enemyPingColor;
-						self.pingDuration = self.enemyPingDuration;
-						array = self.enemyPingGameObjects;
-						for (int i = 0; i < array.Length; i++)
-						{
-							array[i].SetActive(true);
-						}
-						if (modelLocator)
-						{
-							Transform modelTransform = modelLocator.modelTransform;
-							if (modelTransform)
-							{
-								CharacterModel component2 = modelTransform.GetComponent<CharacterModel>();
-								if (component2)
-								{
-									bool flag = false;
-									foreach (CharacterModel.RendererInfo rendererInfo in component2.baseRendererInfos)
-									{
-										if (!rendererInfo.ignoreOverlays && !flag)
-										{
-											self.pingHighlight.highlightColor = Highlight.HighlightColor.teleporter;
-											self.pingHighlight.targetRenderer = rendererInfo.renderer;
-											self.pingHighlight.strength = 1f;
-											self.pingHighlight.isOn = true;
-											self.pingHighlight.enabled = true;
-											break;
-										}
-									}
-								}
-							}
-							Chat.AddMessage(string.Format(Language.GetString("PLAYER_PING_ENEMY"), ownerName, text));
-							printed = true;
-						}
+						self.targetTransformToFollow = self.pingTarget.transform;
 					}
+					else
+					{
+						self.pingType = PingIndicator.PingType.Enemy;
+						self.targetTransformToFollow = self.pingTarget.GetComponent<CharacterBody>().coreTransform;
+					}
+					return true;
 				}
-			}
-            if (!printed)
-            {
-				orig(self);
-			}
+				return false;
+			});
+			c.Emit(OpCodes.Brtrue, afterDisplayNameProviderNullCheck);
 		}
+
 
 		//How the mimic steals items, using a custom damage type
 		private void ServerDamageStealItem(DamageReport obj)

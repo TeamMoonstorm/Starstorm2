@@ -48,13 +48,17 @@ namespace SS2.Components
 					this.leaderObject = ai.leader.gameObject;
                 }
 				this.teamIndex = master.teamIndex;
-				this.itemStacks = HG.ArrayUtils.Clone(this.master.inventory.itemStacks);
+				permanentItemStacks = ItemCatalog.RequestItemStackArray();
+				tempItemTimers = new float[permanentItemStacks.Length];
+				master.inventory.WriteAllPermanentItemStacks(permanentItemStacks);
+				master.inventory.WriteAllTempItemRawValues(tempItemTimers);
 				this.itemAcquisitionOrder = this.master.inventory.itemAcquisitionOrder; // reference fix later			
             }
 			public GameObject leaderObject;
 			public CharacterMaster master;
 			public TeamIndex teamIndex;
-			public int[] itemStacks;
+			public int[] permanentItemStacks;
+			public float[] tempItemTimers;
 			public List<ItemIndex> itemAcquisitionOrder;		
 		}
 
@@ -290,14 +294,16 @@ namespace SS2.Components
 
 			master.inventory.RemoveItem(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
 
-			if(this.currentFriend.itemStacks != null && this.currentFriend.itemStacks.Length > 0) // ........
+			if(this.currentFriend.permanentItemStacks != null && this.currentFriend.permanentItemStacks.Length > 0) // ........
             {
 				Inventory inventory = master.inventory;
 				inventory.itemAcquisitionOrder.Clear();
-				int[] array = inventory.itemStacks;
-				int num = 0;
-				HG.ArrayUtils.SetAll<int>(array, num);
-				master.inventory.AddItemsFrom(this.currentFriend.itemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
+				inventory.effectiveItemStacks.Clear();
+				master.inventory.AddItemsFrom(this.currentFriend.permanentItemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
+				for (int i = 0; i < currentFriend.tempItemTimers.Length; i++)
+				{
+					inventory.GiveItemTemp((ItemIndex)i, currentFriend.tempItemTimers[i]);
+				}
 			}
 			if (master.TryGetComponent(out BaseAI ai))
 			{

@@ -25,25 +25,25 @@ namespace SS2.Components
 
             if (NetworkServer.active)
             {
-                var item = dropTable.GenerateDropPreReplacement(Run.instance.treasureRng);
-                var itemIndex = PickupCatalog.GetPickupDef(item).itemIndex;
+                var pickup = dropTable.GeneratePickupPreReplacement(Run.instance.treasureRng);
+                var itemIndex = PickupCatalog.GetPickupDef(pickup.pickupIndex).itemIndex;
                 var def = ItemCatalog.GetItemDef(itemIndex);
                 var cb = GetComponent<CharacterBody>();
 
                 if (cb && cb.inventory)
                 {
-                    if (cb.inventory.GetItemCount(RoR2Content.Items.UseAmbientLevel) <= 0)
+                    if (cb.inventory.GetItemCountEffective(RoR2Content.Items.UseAmbientLevel) <= 0)
                     {
-                        cb.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+                        cb.inventory.GiveItemPermanent(RoR2Content.Items.UseAmbientLevel);
                     }
 #if DEBUG
                     SS2Log.Warning("giving items ");
 #endif
-                    if (cb.inventory.GetItemCount(RoR2Content.Items.ExtraLifeConsumed) <= 0 && cb.inventory.GetItemCount(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
+                    if (cb.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLifeConsumed) <= 0 && cb.inventory.GetItemCountEffective(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
                     {
                         if (def.DoesNotContainTag(ItemTag.AIBlacklist))
                         {
-                            cb.inventory.GiveItem(itemIndex);
+                            cb.inventory.GiveItemPermanent(itemIndex);
                         }
                         AddItem(itemIndex);
                     }

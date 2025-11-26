@@ -5,19 +5,19 @@ namespace EntityStates.DroneTable
     public class Idle : DroneTableBaseState
     {
 
-        protected override bool enableInteraction
-        {
-            get
-            {
-                return true;
-            }
-        }
+        //protected override bool enableInteraction
+        //{
+        //    get
+        //    {
+        //        return true;
+        //    }
+        //}
 
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            var scrapRoot = this.gameObject.transform.Find("ScrapRoot").gameObject;
-            scrapRoot.SetActive(false);
-        }
+        //public override void OnEnter()
+        //{
+        //    base.OnEnter();
+        //    var scrapRoot = this.gameObject.transform.Find("ScrapRoot").gameObject;
+        //    scrapRoot.SetActive(false);
+        //}
     }
 }

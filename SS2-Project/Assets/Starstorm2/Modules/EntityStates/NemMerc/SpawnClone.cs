@@ -146,7 +146,6 @@ namespace EntityStates.NemMerc
                 position = position,
                 rotation = base.characterBody.transform.rotation,
                 inventoryToCopy = null,//copyInventory ? base.characterBody.inventory : null,
-                //inventoryItemCopyFilter = ItemFilter,
                 summonerBodyObject = base.gameObject,
                 ignoreTeamMemberLimit = true,
                 loadout = loadout,
@@ -154,28 +153,14 @@ namespace EntityStates.NemMerc
                 {
                     master.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = cloneLifetime;
 
+                    // TODO: Delete below code before mergining. Seems like we dont need this
                     // HAVE TO DO THIS MANUALLY. MasterSummon.inventoryItemCopyFilter does NOTHING! HEEHAHAHAEHEAH! GOOD ONE HOPO!!!!!!!!!!
                     master.inventory.itemAcquisitionOrder.Clear();
-                    int[] array = master.inventory.itemStacks;
-                    int num = 0;
-                    HG.ArrayUtils.SetAll<int>(array, num);
-                    master.inventory.AddItemsFrom(base.characterBody.inventory, ItemFilter);
-                    master.inventory.CopyEquipmentFrom(base.characterBody.inventory);
+                    master.inventory.CloneItemInventory(base.characterBody.inventory);
+                    master.inventory.CopyEquipmentFrom(base.characterBody.inventory, true);
                     master.onBodyStart += (body) =>
                     {
                         body.GetComponent<NemMercCloneTracker>().ownerTracker = this.tracker;
-
-                        ////COPY BAND COOLDOWNS
-                        //// SHOULD PROBABLY JUST DISABLE BANDS LMAO
-                        //float ringcd = base.characterBody.GetBuffCount(RoR2Content.Buffs.ElementalRingsCooldown);
-                        //int num12 = 1; //  c v
-                        //while ((float)num12 <= ringcd)
-                        //{
-                        //    body.AddTimedBuff(RoR2Content.Buffs.ElementalRingsCooldown, (float)num12);
-                        //    num12++;
-                        //}
-
-
 
                         var bitch = body.gameObject.AddComponent<StupidFuckingCooldownSetter>();
                         bitch.primaryStock = base.skillLocator.primary.stock;

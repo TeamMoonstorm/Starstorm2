@@ -138,6 +138,8 @@ namespace EntityStates.Mimic
 			effectData.SetNetworkedObjectReference(this.gameObject);
 			EffectManager.SpawnEffect(SS2.Monsters.Mimic.leapLandVFX, effectData, transmit: true);
 
+			DamageTypeCombo damageTypeCombo = DamageType.Generic;
+			damageTypeCombo.damageSource = DamageSource.Secondary;
 			return new BlastAttack
 			{
 				attacker = gameObject,
@@ -145,7 +147,7 @@ namespace EntityStates.Mimic
 				baseForce = blastForce,
 				bonusForce = blastBonusForce,
 				crit = isCritAuthority,
-				damageType = DamageType.Generic,
+				damageType = damageTypeCombo,
 				falloffModel = BlastAttack.FalloffModel.None,
 				procCoefficient = blastProcCoefficient,
 				radius = blastRadius,

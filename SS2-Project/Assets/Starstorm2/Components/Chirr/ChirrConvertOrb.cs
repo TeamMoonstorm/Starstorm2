@@ -30,8 +30,17 @@ namespace SS2.Components
                 if(!convertBehavior) convertBehavior = this.target.healthComponent.gameObject.AddComponent<ConvertBehavior>();
                 convertBehavior.lifetime = this.buffDuration;
                 convertBehavior.convertHealthFraction = this.convertHealthFraction;
+
                 convertBehavior.chirrFriendTracker = this.tracker;
-                DotController.InflictDot(this.target.healthComponent.gameObject, this.attacker, Survivors.Chirr.ConvertDotIndex, buffDuration);
+
+                var inflictDotInfo = new InflictDotInfo
+                {
+                    victimObject = target.healthComponent.gameObject,
+                    attackerObject = attacker,
+                    dotIndex = Survivors.Chirr.ConvertDotIndex,
+                    duration = buffDuration,
+                };
+                DotController.InflictDot(ref inflictDotInfo);
             }
 
         }

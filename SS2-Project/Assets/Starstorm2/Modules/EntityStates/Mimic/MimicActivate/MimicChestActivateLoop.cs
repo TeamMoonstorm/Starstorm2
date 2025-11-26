@@ -112,6 +112,8 @@ namespace EntityStates.Mimic
 
 		protected BlastAttack.Result DetonateAuthority()
 		{
+			DamageTypeCombo damageTypeCombo = DamageType.Generic;
+			damageTypeCombo.damageSource = DamageSource.Special;
 			var attack =  new BlastAttack
 			{
 				attacker = gameObject,
@@ -119,7 +121,7 @@ namespace EntityStates.Mimic
 				baseForce = blastForce,
 				bonusForce = blastBonusForce,
 				crit = isCritAuthority,
-				damageType = DamageType.Generic,
+				damageType = damageTypeCombo,
 				falloffModel = BlastAttack.FalloffModel.None,
 				procCoefficient = blastProcCoefficient,
 				radius = blastRadius,
