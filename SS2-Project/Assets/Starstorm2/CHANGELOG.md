@@ -4,7 +4,10 @@
     * Updated mod for Alloyed Collective
     * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
+    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns
 	* Various fixes for certain projectiles and effects not appearing on clients
+    * Added an updated French translation thanks to DarSitam
+    * Damglador requested to remove the Ukrainian translation as they wanted it to be in their own mod
 * Items
     * Double the cost of the chest Lunar Birthright grants.
 	* Galvanic Core's stun chance now scales with proc coefficient.
