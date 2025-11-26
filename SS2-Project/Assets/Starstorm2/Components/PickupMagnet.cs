@@ -10,7 +10,8 @@ namespace SS2.Components
         [SystemInitializer]
         static void Init()
         {
-            On.RoR2.GravitatePickup.Start += AddToList;
+            // TODO: AC removed the .Start method, need to find suitable replacement or rewrite
+            //On.RoR2.GravitatePickup.Start += AddToList;
             RoR2Application.onFixedUpdate += CleanList;
         }
 
@@ -29,11 +30,11 @@ namespace SS2.Components
             }
         }
 
-        private static void AddToList(On.RoR2.GravitatePickup.orig_Start orig, GravitatePickup self)
-        {
-            orig(self);
-            trackedPickups.Add(self);
-        }
+        //private static void AddToList(On.RoR2.GravitatePickup.orig_Start orig, GravitatePickup self)
+        //{
+        //    orig(self);
+        //    trackedPickups.Add(self);
+        //}
 
         private float stopwatch;
         private struct Pickup

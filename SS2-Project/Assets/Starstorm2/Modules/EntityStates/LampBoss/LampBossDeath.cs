@@ -44,7 +44,7 @@ namespace EntityStates.LampBoss
         {
             base.FixedUpdate();
 
-            if ((animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect && NetworkServer.active)
+            if ((animator && animator.GetFloat(mecanimPerameter) > 0.5f) || (fixedAge > 2.7f) && !hasPlayedEffect && NetworkServer.active)
             {
                 hasPlayedEffect = true;
                 var effect = isBlue ? deathVFXblue : deathVFX;

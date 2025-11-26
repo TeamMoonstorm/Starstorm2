@@ -950,6 +950,7 @@ MonoBehaviour:
   healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 7235874750812297475}
   indexInGroup: 1
@@ -984,6 +985,37 @@ Transform:
   - {fileID: 5591290974871053217}
   m_Father: {fileID: 540558700216175089}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2836459827656706280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 302341380999168906}
+  m_Layer: 0
+  m_Name: Indicator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &302341380999168906
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2836459827656706280}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6166521934363533396}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2946782025224464511
 GameObject:
@@ -1760,7 +1792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8587798272451852950}
   - component: {fileID: 7944009873553095298}
-  - component: {fileID: 8735624458578661965}
+  - component: {fileID: 2652524043841059452}
   m_Layer: 0
   m_Name: CrabChestLegs
   m_TagString: Untagged
@@ -1916,7 +1948,7 @@ SkinnedMeshRenderer:
     m_Center: {x: 3.9083557, y: 17.189804, z: 11.828461}
     m_Extent: {x: 182.10052, y: 92.2762, z: 85.23752}
   m_DirtyAABB: 0
---- !u!114 &8735624458578661965
+--- !u!114 &2652524043841059452
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2932,6 +2964,7 @@ Transform:
   - {fileID: 979248173636531635}
   - {fileID: 6737193236768347196}
   - {fileID: 8627176573576524806}
+  - {fileID: 302341380999168906}
   m_Father: {fileID: 772282224586069585}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2984,8 +3017,12 @@ MonoBehaviour:
   focusPointTransform: {fileID: 0}
   cameraPositionTransform: {fileID: 0}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  modelPositionOffset: {x: 0, y: 0, z: 0}
   minDistance: 0.75
   maxDistance: 2
+  triggerOnLogbook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1125792128492804356
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3089,11 +3126,17 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: 253da703c8938ef42a103e45db4c2b5e, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos: []
+  fullBodyPing: 1
   baseLightInfos: []
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0
@@ -3385,6 +3428,8 @@ GameObject:
   - component: {fileID: 6449461314649773876}
   - component: {fileID: 8119593420475265400}
   - component: {fileID: -8898214638666698048}
+  - component: {fileID: 2170935777624408277}
+  - component: {fileID: 4450646946248128791}
   m_Layer: 0
   m_Name: MimicBodyNew
   m_TagString: Untagged
@@ -3467,6 +3512,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_MIMIC_BODY_SUBTITLE
   bodyFlags: 2
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 450
@@ -3492,8 +3538,6 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
@@ -3502,6 +3546,7 @@ MonoBehaviour:
   boostAllStatsDisplay: {fileID: 0}
   currentGrowthNectarBuffCount: 0
   maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
   spreadBloomCurve:
@@ -3530,6 +3575,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -3538,13 +3585,18 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 598047175825370784}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: f212889ee8ae7ed4b8258c0a6a642b32, type: 3}
   bodyColor: {r: 1, g: 1, b: 1, a: 0}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
   altDeathBodyName: 
+  vehicleIdleStateMachine: []
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -3569,6 +3621,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 772282224586069585}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -3578,6 +3631,8 @@ MonoBehaviour:
   normalizeToFloor: 1
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &2419130156160556710
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3671,9 +3726,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: d802eadffc8761b4eb0a98d96b89eaf5, type: 2}
   skillName: Primary
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 1
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &8951885386975192111
 MonoBehaviour:
@@ -3689,9 +3748,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 809b99eacffc7694486d5f74d4234db2, type: 2}
   skillName: Secondary
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 1
-  baseRechargeStopwatch: 8
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &7663706305434898604
 MonoBehaviour:
@@ -3707,9 +3770,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: c2b0c851130576b45aba4bfcd77bd1e1, type: 2}
   skillName: Utility
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 1
-  baseRechargeStopwatch: 30
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &4197711499876587367
 MonoBehaviour:
@@ -3725,9 +3792,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 58019b9438f10cc4f809c2435d953eef, type: 2}
   skillName: Special
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 1
-  baseRechargeStopwatch: 99
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &4920568081266704867
 MonoBehaviour:
@@ -3744,6 +3815,7 @@ MonoBehaviour:
   deathSound: Play_UI_chest_unlock
   barkSound: 
   openSound: 
+  jumpSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage
   aliveLoopStart: 
@@ -3785,11 +3857,15 @@ MonoBehaviour:
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &5256114729885995905
@@ -3841,6 +3917,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 720
   turnSoundName: 
 --- !u!114 &7538489209536380576
@@ -3864,6 +3941,7 @@ MonoBehaviour:
   isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 7449245300196216573}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &2750225509477351148
 MonoBehaviour:
@@ -3878,6 +3956,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
 --- !u!114 &586781760088188860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3913,6 +3992,10 @@ MonoBehaviour:
       PublicKeyToken=null
   idleStateMachine:
   - {fileID: 2609938590425968862}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!114 &4914945048991705734
 MonoBehaviour:
@@ -4046,6 +4129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 5
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 8227779406635474821}
   idleStateMachine:
   - {fileID: 2609938590425968862}
@@ -4054,6 +4138,8 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 1
   canBeFrozen: 1
+  isFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &946040045462687264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4066,8 +4152,6 @@ MonoBehaviour:
   m_Script: {fileID: 871971028, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupIndex:
-    value: 0
   targetRenderer: {fileID: 7656122838603369738}
   strength: 1
   highlightColor: 0
@@ -4098,8 +4182,11 @@ MonoBehaviour:
   setUnavailableOnTeleporterActivated: 0
   isShrine: 0
   isGoldShrine: 0
+  isDrone: 0
   shouldProximityHighlight: 1
   saleStarCompatible: 0
+  disableSpawnOnInteraction: 0
+  allowRemoteOpInteraction: 0
   requiredExpansion: {fileID: 0}
   lastActivator: {fileID: 0}
   lockGameObject: {fileID: 0}
@@ -4238,6 +4325,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDetailedPurchaseServer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8769408873676659687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4267,6 +4357,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pingIconOverride: {fileID: 21300000, guid: 638df60685202684ea83e197629c8562, type: 3}
+  isWeakSpot: 0
+  forceUseHitOriginForPosition: 0
+  networkedBodyAttachmentOverride: {fileID: 0}
 --- !u!114 &4066714400053438238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4365,8 +4458,74 @@ MonoBehaviour:
   logUnlockableName: 
   logUnlockableDef: {fileID: 11400000, guid: f288acf60e7e8cd4f86f6b53fa75ec02, type: 2}
   bossDropTable: {fileID: 0}
+  overrideBossDropRewards: 0
   bossPickup:
     pickupName: 
+--- !u!114 &2170935777624408277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096113393629376220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -144590133, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+  requireEntitlementIfPlayerControlled: 0
+--- !u!114 &4450646946248128791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096113393629376220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1231560309, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbable: 1
+  breakoutState:
+    _typeName: 
+  dodgeState:
+    _typeName: 
+  breakoutStateMachineName: 
+  massOverride: 250
+  damageOverride: -1
+  damageTypeOverride:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
+  collisionToDisable: []
+  renderersToDisable:
+  - {fileID: 7656122838603369738}
+  - {fileID: 7944009873553095298}
+  - {fileID: 4753897946817976973}
+  behavioursToDisable:
+  - {fileID: 946040045462687264}
+  - {fileID: 4180917173228779840}
+  - {fileID: 8769408873676659687}
+  - {fileID: 0}
+  childObjectsToDisable: []
+  pickupDisplaysToDisable: []
+  lightsToDisable: []
+  objectsToDetach: []
+  soundEventsToStop: []
+  soundEventsToPlay: []
+  childSpecialObjectAttributes: []
+  indicatorOffset: {fileID: 302341380999168906}
+  hullClassification: 0
+  maxDurability: 0
+  orientToFloor: 0
+  durability: 0
+  useSkillHighlightRenderers: 0
+  skillHighlightRenderers: []
+  isVoid: 0
+  bestName: 
+  portraitIcon: {fileID: 0}
 --- !u!1 &7175305916529430826
 GameObject:
   m_ObjectHideFlags: 0
@@ -4555,6 +4714,7 @@ MonoBehaviour:
   healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 1
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 7235874750812297475}
   indexInGroup: 3
@@ -4685,6 +4845,7 @@ MonoBehaviour:
   healthComponent: {fileID: 7538489209536380576}
   isBullseye: 0
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 7235874750812297475}
   indexInGroup: 2
@@ -5209,7 +5370,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2957898185778204187}
   - component: {fileID: 4753897946817976973}
-  - component: {fileID: 7300252444956159322}
+  - component: {fileID: 230478052141790227}
   m_Layer: 0
   m_Name: CrabChestInside
   m_TagString: Untagged
@@ -5366,7 +5527,7 @@ SkinnedMeshRenderer:
     m_Center: {x: -1.0009003, y: 4.050701, z: -104.85537}
     m_Extent: {x: 100.2028, y: 53.363422, z: 109.23676}
   m_DirtyAABB: 0
---- !u!114 &7300252444956159322
+--- !u!114 &230478052141790227
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5445,6 +5606,7 @@ MonoBehaviour:
   healthComponent: {fileID: 7538489209536380576}
   isBullseye: 1
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 7235874750812297475}
   indexInGroup: 0

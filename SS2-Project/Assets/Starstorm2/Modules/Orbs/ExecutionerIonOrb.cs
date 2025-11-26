@@ -22,14 +22,14 @@ namespace SS2.Orbs
         {
             var helper = new ParallelMultiStartAssetLoadCoroutine();
             helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectBlack", SS2Bundle.Executioner2);
+            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner2);
 
             helper.Start();
             while (!helper.IsDone)
                 yield return null;
 
             _orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffect");
-            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectBlack");
+            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectMastery");
             yield break;
         }
 

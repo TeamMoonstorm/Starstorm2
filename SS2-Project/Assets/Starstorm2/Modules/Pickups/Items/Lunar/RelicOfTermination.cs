@@ -113,7 +113,7 @@ namespace SS2.Items
                         Nameplate np = self.indicator.GetComponent<Nameplate>();
                         if (np)
                         {
-                            np.SetBody(self.body);
+                            np.body = self.body;
                         }
                         self.gameObject.AddComponent<TerminationMarkerToken>();
                         return;

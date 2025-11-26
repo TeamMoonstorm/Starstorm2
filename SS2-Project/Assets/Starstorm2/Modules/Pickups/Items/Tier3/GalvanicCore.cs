@@ -168,7 +168,7 @@ namespace SS2.Items
 
                 var calculatedStunChance = combinedStunChance / (combinedStunChance + 1);
 
-                if (count > 0 && Util.CheckRoll(calculatedStunChance * 100, attackerMaster))
+                if (count > 0 && Util.CheckRoll(calculatedStunChance * 100 * damageInfo.procCoefficient, attackerMaster))
                 {
                     EffectManager.SimpleImpactEffect(stunVFX, damageInfo.position, -damageInfo.force, true);
                     self.SetStun(2f);

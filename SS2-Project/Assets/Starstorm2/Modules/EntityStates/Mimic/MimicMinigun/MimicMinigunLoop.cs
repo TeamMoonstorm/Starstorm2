@@ -123,7 +123,9 @@ namespace EntityStates.Mimic.Weapon
 			bool isCrit = !critEndTime.hasPassed;
 			float damage = bulletDamage * damageStat;
 			Ray aimRay = GetAimRay();
-			
+
+			DamageTypeCombo damageTypeCombo = DamageType.Generic;
+			damageTypeCombo.damageSource = DamageSource.Primary;
 			new BulletAttack
 			{
 				bulletCount = (uint)baseBulletCount,
@@ -131,7 +133,7 @@ namespace EntityStates.Mimic.Weapon
 				origin = aimRay.origin,
 				damage = damage,
 				damageColorIndex = DamageColorIndex.Default,
-				damageType = DamageType.Generic,
+				damageType = damageTypeCombo,
 				falloffModel = BulletAttack.FalloffModel.None,
 				maxDistance = bulletMaxDistance,
 				force = 0,

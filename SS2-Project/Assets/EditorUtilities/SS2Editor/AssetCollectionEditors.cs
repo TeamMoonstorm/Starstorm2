@@ -17,7 +17,7 @@ using UnityEngine.Networking;
 using System.Linq;
 namespace Moonstorm.Starstorm2.Editor
 {
-    [CustomEditor(typeof(ExtendedAssetCollection))]
+    [CustomEditor(typeof(ExtendedAssetCollection), editorForChildClasses: true)]
     public class AssetCollectionEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
@@ -25,6 +25,10 @@ namespace Moonstorm.Starstorm2.Editor
             base.OnInspectorGUI();
             EditorGUILayout.BeginVertical("box");
 
+            if (GUILayout.Button("Auto Find"))
+            {
+                AddFromContainingFolder();
+            }
             if (GUILayout.Button("Add Selected Objects"))
             {
                 AddSelection();
@@ -34,6 +38,40 @@ namespace Moonstorm.Starstorm2.Editor
             //    RemoveDuplicates();
             //}
             EditorGUILayout.EndVertical();
+        }
+        private void AddFromContainingFolder()
+        {
+            Undo.RecordObject(target, "Add assets to AssetCollection");
+
+            UnityEngine.Object[] objects = Selection.objects;
+
+            string path = GetFolderPath(target);
+            if (!string.IsNullOrEmpty(path))
+            {
+                string[] guids = AssetDatabase.FindAssets("*", new string[] { path });
+                List<UnityEngine.Object> folderObjects = new List<UnityEngine.Object>();
+                foreach (string guid in guids)
+                {
+                    var pathh = AssetDatabase.GUIDToAssetPath(guid);
+                    // LOADALLASSETSATPATH WOULDNT WORK IDKKKKKKKKKKKKKKKKKKKKKKKKKK
+                    folderObjects.Add(AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(pathh));
+                }
+                objects = folderObjects.ToArray();
+            }
+
+
+            ExtendedAssetCollection assetCollection = (ExtendedAssetCollection)target;
+
+            for (int i = 0; i < objects.Length; i++)
+            {
+                UnityEngine.Object ob = (UnityEngine.Object)objects[i];
+                if (ob && IsAsset(ob) && !assetCollection.assets.Contains(ob)) //we O^50 in this bitch
+                    ArrayUtils.ArrayInsert<UnityEngine.Object>(ref assetCollection.assets, 0, ob);
+            }
+
+            EditorUtility.SetDirty(target);
+            //assetCollection.OnValidate(); // is this even right?
+
         }
 
         private void AddSelection()
@@ -80,6 +118,17 @@ namespace Moonstorm.Starstorm2.Editor
             assetCollection.OnValidate();
         }
 
+        public static string GetFolderPath(UnityEngine.Object target)
+        {
+            string path = AssetDatabase.GetAssetPath(target);
+            string folder = path.Remove(path.LastIndexOf("/")); // ?
+            Debug.Log("Auto Finding assets at path " + folder);
+            if (!string.IsNullOrEmpty(folder) && Directory.Exists(folder))
+            {
+                return Path.GetDirectoryName(folder) + @"\" + Path.GetFileName(folder);
+            }
+            return null;
+        }
         public static string GetSelectedFolderPath()
         {
             string path = null;
@@ -160,48 +209,48 @@ namespace Moonstorm.Starstorm2.Editor
             return false;
         }
     }
-    [CustomEditor(typeof(BodyAssetCollection))]
-    public class BodyAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(SurvivorAssetCollection))]
-    public class SurvivorAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(MonsterAssetCollection))]
-    public class MonsterAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(ArtifactAssetCollection))]
-    public class ArtifactAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(EquipmentAssetCollection))]
-    public class EquipmentAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(EliteAssetCollection))]
-    public class EliteAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(InteractableAssetCollection))]
-    public class InteractableAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
-    [CustomEditor(typeof(ItemAssetCollection))]
-    public class ItemAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
+    //[CustomEditor(typeof(BodyAssetCollection))]
+    //public class BodyAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(SurvivorAssetCollection))]
+    //public class SurvivorAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(MonsterAssetCollection))]
+    //public class MonsterAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(ArtifactAssetCollection))]
+    //public class ArtifactAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(EquipmentAssetCollection))]
+    //public class EquipmentAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(EliteAssetCollection))]
+    //public class EliteAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(InteractableAssetCollection))]
+    //public class InteractableAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
+    //[CustomEditor(typeof(ItemAssetCollection))]
+    //public class ItemAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
 
-    [CustomEditor(typeof(SceneAssetCollection))]
-    public class SceneAssetCollectionEditor : AssetCollectionEditor
-    {
-    }
+    //[CustomEditor(typeof(SceneAssetCollection))]
+    //public class SceneAssetCollectionEditor : AssetCollectionEditor
+    //{
+    //}
 
-    [CustomEditor(typeof(VanillaSurvivorAssetCollection))]
-    public class VanillaSurvivorAssetCollectionEditor : AssetCollectionEditor
-    {
+    //[CustomEditor(typeof(VanillaSurvivorAssetCollection))]
+    //public class VanillaSurvivorAssetCollectionEditor : AssetCollectionEditor
+    //{
 
-    }
+    //}
 }
 #endif

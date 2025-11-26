@@ -30,7 +30,7 @@ namespace EntityStates.RemunerationOption
 				{
 					this.itemDropCount += 1f;
 					this.itemDropAge -= this.timeBetweenDrops;
-					this.chestBehavior.dropPickup = PickupCatalog.FindPickupIndex(RoR2Content.MiscPickups.LunarCoin.miscPickupIndex); // VOID COIN
+					this.chestBehavior.currentPickup = new UniquePickup(PickupCatalog.FindPickupIndex(RoR2Content.MiscPickups.LunarCoin.miscPickupIndex)); // VOID COIN
 					this.chestBehavior.ItemDrop();
 				}
 				if (base.fixedAge >= Opening.duration)

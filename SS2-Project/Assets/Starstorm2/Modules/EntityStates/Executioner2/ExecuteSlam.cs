@@ -21,7 +21,9 @@ namespace EntityStates.Executioner2
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
         public static GameObject impactEffectPrefab;
+        public static GameObject impactEffectPrefabMastery;
         public static GameObject soloImpactEffectPrefab;
+        public static GameObject soloImpactEffectPrefabMastery;
         public static GameObject cameraEffectPrefab;
         public static float duration = 1f;
         public Vector3 dashVector = Vector3.zero;
@@ -192,10 +194,18 @@ namespace EntityStates.Executioner2
                 damage *= 2f;
                 procMultiplier = 2;
                 soloTarget = true;
-                GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
-                cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
+                OnHitSingleTargetAuthority();
             }
-
+            GameObject impact = impactEffectPrefab;
+            if (exeController.inMasterySkin)
+            {
+                impact = soloTarget ? soloImpactEffectPrefabMastery : impactEffectPrefabMastery;
+            }
+            else
+            {
+                impact = soloTarget ? soloImpactEffectPrefab : impactEffectPrefab;
+            }
+            
             bool crit = RollCrit();
             DamageTypeCombo damageType = DamageType.Generic;
             damageType.damageSource = DamageSource.Special;
@@ -210,8 +220,8 @@ namespace EntityStates.Executioner2
                 baseDamage = characterBody.damage * damage,
                 damageColorIndex = DamageColorIndex.Default,
                 falloffModel = BlastAttack.FalloffModel.None,
-                attackerFiltering = AttackerFiltering.NeverHitSelf,
-                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(soloTarget ? soloImpactEffectPrefab : impactEffectPrefab),
+                attackerFiltering = AttackerFiltering.NeverHitSelf, 
+                impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impact),
                 damageType = damageType,
             };
             var result = blast.Fire();
@@ -240,6 +250,12 @@ namespace EntityStates.Executioner2
             {
                 characterMotor.velocity = Vector3.zero;
             }
+        }
+
+        public virtual void OnHitSingleTargetAuthority()
+        {
+            GameObject cameraEffect = GameObject.Instantiate(cameraEffectPrefab, characterBody.transform);
+            cameraEffect.GetComponent<LocalCameraEffect>().targetCharacter = gameObject;
         }
         
 
@@ -280,6 +296,16 @@ namespace EntityStates.Executioner2
         }
     }
 
+    public class ExecuteSlamScepter : ExecuteSlam
+    {
+        private static float cooldownRefreshFraction = 0.35f;
+        public override void OnHitSingleTargetAuthority()
+        {
+            base.OnHitSingleTargetAuthority();
+
+            skillLocator.special?.RunRecharge(skillLocator.special.CalculateFinalRechargeInterval() * cooldownRefreshFraction);
+        }
+    }
     public class ExecuteImpact : BaseCharacterMain
     {
         private static int chargesToGrant = 3;

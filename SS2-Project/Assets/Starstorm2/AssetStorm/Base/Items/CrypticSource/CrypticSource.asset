@@ -18,12 +18,16 @@ MonoBehaviour:
   pickupToken: SS2_ITEM_CRYPTICSOURCE_PICKUP
   descriptionToken: SS2_ITEM_CRYPTICSOURCE_DESC
   loreToken: EARLY_ACCESS_LORE
-  unlockableDef: {fileID: 11400000, guid: 0e4b497f12726dd4d9ac6043e60dc532, type: 2}
+  unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 5493388495282764137, guid: 40787727f912b8543aa069f572f4b3fe,
     type: 3}
+  pickupModelReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   pickupIconSprite: {fileID: 21300000, guid: fb0ec7b31c28d254bb0ee0fa2f674fc8, type: 3}
   isConsumed: 0
   hidden: 0
   canRemove: 1
-  tags: 0100000008000000
+  tags: 01000000080000001f000000
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
