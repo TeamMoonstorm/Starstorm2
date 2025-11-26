@@ -165,7 +165,7 @@ namespace SS2.Items
                 foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
                     if (pcmc.master && pcmc.master.inventory)
-                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                        acceleratorCount += pcmc.master.inventory.GetItemCountPermanent(SS2Content.Items.FieldAccelerator) + pcmc.master.inventory.GetItemCountTemp(SS2Content.Items.FieldAccelerator);
                 }
 
 
@@ -179,9 +179,9 @@ namespace SS2.Items
 
                 if (displayChildLocator != null)
                 {
-                    displayChildLocator.FindChild("Passive")?.gameObject.SetActive(false);
-                    displayChildLocator.FindChild("Burst")?.gameObject.GetComponent<ParticleSystem>().Emit(40);
-                    displayChildLocator.FindChild("Ring")?.gameObject.GetComponent<ParticleSystem>().Emit(1);
+                    displayChildLocator.FindChild("Passive")?.gameObject?.SetActive(false);
+                    displayChildLocator.FindChild("Burst")?.gameObject?.GetComponent<ParticleSystem>()?.Emit(40);
+                    displayChildLocator.FindChild("Ring")?.gameObject?.GetComponent<ParticleSystem>()?.Emit(1);
                     //Util.PlaySound("AcceleratorBoot", displayInstance.gameObject);
                 }
             }
@@ -220,7 +220,7 @@ namespace SS2.Items
                 foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
                 {
                     if (pcmc.master && pcmc.master.inventory)
-                        acceleratorCount += pcmc.master.inventory.GetItemCount(SS2Content.Items.FieldAccelerator);
+                        acceleratorCount += pcmc.master.inventory.GetItemCountPermanent(SS2Content.Items.FieldAccelerator) + pcmc.master.inventory.GetItemCountTemp(SS2Content.Items.FieldAccelerator);
                 }
 
                 if (acceleratorCount == 0)

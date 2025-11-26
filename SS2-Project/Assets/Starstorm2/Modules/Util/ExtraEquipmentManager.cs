@@ -167,9 +167,13 @@ namespace SS2
                     return;
                 }
                 this.enabledEquipmentDisplays.Add(index);
-                if (model.itemDisplayRuleSet)
+                if (model && model.itemDisplayRuleSet)
                 {
                     DisplayRuleGroup itemDisplayRuleGroup = model.itemDisplayRuleSet.GetEquipmentDisplayRuleGroup(index);
+                    if (itemDisplayRuleGroup.isEmpty)
+                    {
+                        return;
+                    }
                     this.InstantiateDisplayRuleGroup(itemDisplayRuleGroup, index);
                 }
             }
@@ -212,7 +216,7 @@ namespace SS2
 
             private void InstantiateDisplayRuleGroup(DisplayRuleGroup displayRuleGroup, EquipmentIndex equipmentIndex)
             {
-                if (displayRuleGroup.rules != null)
+                if (model && displayRuleGroup.rules != null)
                 {
                     for (int i = 0; i < displayRuleGroup.rules.Length; i++)
                     {
@@ -239,6 +243,10 @@ namespace SS2
                                 {
                                     equipmentIndex = equipmentIndex
                                 };
+                                if (item2.itemDisplay == null)
+                                {
+                                    return;
+                                }
                                 item2.Apply(model, itemDisplayRule.followerPrefab, transform, itemDisplayRule.localPos, Quaternion.Euler(itemDisplayRule.localAngles), itemDisplayRule.localScale);
                                 this.parentedPrefabDisplays.Add(item2);
                             }
