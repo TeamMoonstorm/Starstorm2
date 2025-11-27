@@ -1,34 +1,33 @@
 {
   "strings": {
+
     "SS2_ITEM_RELICOFDUALITY_NAME": "对偶遗物",
 
-
     "SS2_ITEM_RELICOFEXTINCTION_NAME": "灭绝遗物",
-  
 
     "SS2_ITEM_RELICOFFORCE_NAME": "力量遗物",
     "SS2_ITEM_RELICOFFORCE_PICKUP": "你所有的攻击额外造成一次伤害。<style=cDeath>降低攻击速度，延长冷却时间</style>。",
-    "SS2_ITEM_RELICOFFORCE_DESC": "所有攻击造成额外<style=cIsDamage>1</style> <style=cStack>(每层+1)</style>次伤害，造成原本伤害的<style=cIsDamage>{1}%</style>。<style=cIsUtility>连续攻击</style>同一个敌人会提高<style=cIsDamage>{1}%</style>伤害，最高至原本伤害的<style=cIsDamage>{2}%</style>。<style=cDeath>减少攻击速度并延长技能冷却时间的{0}%</style> <style=cStack>(每层-{0}%)</style>。",
+    "SS2_ITEM_RELICOFFORCE_DESC": "所有攻击造成额外<style=cIsDamage>1</style> <style=cStack>（每层+1）</style>次伤害，造成原本伤害的<style=cIsDamage>{1}%</style>。<style=cIsUtility>连续攻击</style>同一个敌人会提高<style=cIsDamage>{1}%</style>伤害，最高至原本伤害的<style=cIsDamage>{2}%</style>。<style=cDeath>减少攻击速度并延长技能冷却时间的{0}%</style> <style=cStack>（每层-{0}%）</style>。",
     "SS2_ITEM_RELICOFFORCE_LORE": "啊，年轻人，你回来了！还背了这么大的一个包！全是刚捡到的，对吧？\n\n嗯……包很沉但是不怎么满。你……你是偷偷藏了什么东西吗，年轻人？\n\n……你找到了什么很沉的东西…，我懂了。抱歉，我不该怀疑你的。让我看看你找到的东西吧。\n\n啊！年轻人，你确实没有骗我。这个东西，很小，但是很难举起来……它分出来的这几块，每块都和整体一样重？这，这太神奇了！\n\n我会把它和你找到的其他神奇小玩意儿放在一起。这样的东西要是落到坏人的手里就糟了。至于你，年轻人……我看你的包要修一修了吧，跟我来。",
 
     "SS2_ITEM_RELICOFMASS_NAME": "质量遗物",
-    "SS2_ITEM_RELICOFMASS_PICKUP": "你的生命值翻倍， <style=cDeath>但是你有了很大惯性</style>。",
-    "SS2_ITEM_RELICOFMASS_DESC": "<style=cIsHealing>提高最大生命值</style>的<style=cIsHealing>100%</style> <style=cStack>(每层+100%)</style>。<style=cDeath>减慢你运动时的加速度</style>使其变为原来的<style=cDeath>8</style> <style=cStack>(每层+8)</style>分之1。",
-    "SS2_ITEM_RELICOFMASS_LORE": "啊，欢迎回来，年轻人!你找到什么了？\n\n呃……从那个荒原上捡到的垃圾吗？嗯，你愿意的话就自己留着吧……还有其他的吗？\n\n啊，这是？给我看看，年轻人。\n\n啊，你找到的，这个，这个形状？坚定……但不忠诚，强大的同时也很脆弱。至少可以说……奇特。你在哪捡来的，年轻人？\n\n在那颗星球上捡来的？啊，不能算个好消息。这觉得不是那些沙丘人造的。太复杂了，太强大了。也不是利莫里亚造的。年轻人，这不是你偷来的吧？\n\n你没偷？好吧，我要留下这个“形状”，对于不理解的你来说它太危险了。\n\n哦，年轻人，别这样。你干了件很了不起的事情，我只是想保证它被妥善保管。跟我来，我们拿你的奖励。",
+    "SS2_ITEM_RELICOFMASS_DESC": "<style=cIsHealing>提高最大生命值</style><style=cIsHealing>{0}%</style><style=cStack>（每层+{0}%）</style>。<style=cDeath>减慢你移动时的加速度</style>至原来的<style=cDeath>{1}</style><style=cStack>（每层+{1}）</style>分之一。",
+    "SS2_ITEM_RELICOFMASS_PICKUP": "生命值翻倍。<style=cDeath>你的移动带有惯性</style>。",
+    "SS2_ITEM_RELICOFMASS_LORE": "啊，欢迎回来！年轻人，找到什么了？\n\n嗯……又从荒原上捡来的杂物？好吧，喜欢就自己留着吧。还有其他发现吗？\n\n啊，还真有？拿来我瞧瞧，年轻人。\n\n哦！你找到的这个形态！它坚毅却不忠诚，强大却又脆弱。至少可以说……是个奇特的形态。你在哪儿发现的，年轻人？\n\n……在这颗星球上找到的？嗯……令人担忧。这绝非沙民所造——过于复杂，过于强大。也非利莫里亚人的手艺。告诉我，年轻人，你不是偷来的吧？\n\n……不是偷的。明白了。好吧，我想保管这个形态。若不解其本质，此物甚是危险。\n\n哦，我的年轻人，别这般沮丧。此形态确实非凡，我依然赞赏你的发现。我只是想确保它安然无恙。来，或许该给你些奖励。随我来。",
 
     "SS2_ITEM_RELICOFTERMINATION_NAME": "终止遗物",
     "SS2_ITEM_RELICOFTERMINATION_PICKUP": "每{0}秒标记一名敌人。如果及时击败被标记的敌人会掉落一件物品；如果未能及时击败，则不掉落任何物品。被标记敌人的<style=cDeath>生命，伤害，速度，攻击均会大幅提升。</style>",
-    "SS2_ITEM_RELICOFTERMINATION_DESC": "每<style=cIsUtility>{0}</style> <style=cStack>(每层-{1}%)</style> <style=cIsUtility>秒</style><style=cIsDamage>标记</style>一名新生成的敌人。其<style=cDeath>生命值增加{3}%</style>、<style=cDeath>造成的伤害提高{2}%</style>、<style=cDeath>移动速度增加{4}%</style>、<style=cDeath>攻击速度增加{5}%</style>。如果及时将其击败则<style=cIsDamage>掉落一件物品。</style><style=cStack>（掉落物的品质随物品堆叠层数增多而增高）</style>；如果未能及时将其击败则<style=cIsDamage>不会掉落任何物品</style>，并延缓下一次标记。",
+    "SS2_ITEM_RELICOFTERMINATION_DESC": "每<style=cIsUtility>{0}</style> <style=cStack>（每层-{1}%）</style> <style=cIsUtility>秒</style><style=cIsDamage>标记</style>一名新生成的敌人。其<style=cDeath>生命值增加{3}%</style>、<style=cDeath>造成的伤害提高{2}%</style>、<style=cDeath>移动速度增加{4}%</style>、<style=cDeath>攻击速度增加{5}%</style>。如果及时将其击败则<style=cIsDamage>掉落一件物品。</style><style=cStack>（掉落物的品质随物品堆叠层数增多而增高）</style>；如果未能及时将其击败则<style=cIsDamage>不会掉落任何物品</style>，并延缓下一次标记。",
     "SS2_ITEM_RELICOFTERMINATION_LORE": "年轻人，看到你回来我太高兴了！你又找到什么了？\n\n你找到有意思的东西了？快给我看看！没什么好藏着掖着的，年轻人。\n\n这次这是?哦，它是空心的，很坚固。晃起来有响声，就像腰苹果一样。真是个奇怪的东西。\n\n哦？什么，有怪物在追你？天哪……没跟你到这儿来，对吧？\n\n……外面没人……当然，当然。这很隐蔽很安全，对吧年轻人？\n\n对，我要把这个东西拿走，放在不会招引怪物的地方……\n\n我懂我懂，害怕是很正常的……但是如果被某个倒霉的人捡到的话，也许就会发生惨剧了……你也不忍心这种事情发生吧？\n\n我们在这里很安全……年轻人，出去这么久你一定很饿了，跟我来。",
     "SS2_ITEM_RELICOFTERMINATION_PREFIX": "终端 {0}",
 
     "SS2_ITEM_RELICOFECHELON_NAME": "阶梯遗物",
-    
 
     "SS2_ITEM_PRIMAL_BIRTHRIGHT_NAME": "原始天命",
     "SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC": "每关提供<style=cIsUtility>{0}</style><style=cStack>（每层+{1}）</style>个传奇宝箱，<style=cDeath>但必须开启宝箱，领取你的天命后才能离开当前关卡</style>。",
     "SS2_ITEM_PRIMAL_BIRTHRIGHT_PICKUP": "每关提供一个传奇宝箱，<style=cDeath>但必须领取天命后方可离开</style>。",
     "SS2_ITEM_PRIMAL_BIRTHRIGHT_LORE": "卷轴上的符号于你而言陌生难辨。虽不解其形，却莫名通晓其意——力量、意志、权柄，以及一则讯息。\n\n\"统治之权唯经力量与智慧方能赢得，仅此二者。非他人所能赐予，非血统所能继承。唯力量自证其正当。\"\n你再度垂首。舰体闪烁的微光在碎片中投下诡谲形影。反射的暗影交织成象，聚为轮廓。\n\n两道人影在黎明映照下蹒跚徘徊，矮壮笨拙。一粒种子落入一人发间，他笑而植回土壤。另一粒坠入他人掌心，他轻柔启壳，欲窥生长之秘。\n\n日移影长，暮色中拖曳巍峨暗痕。恰似通往光明的诡谲门扉。\n\n一道暗影骤然疯长，延展至天地俱墨。孤独影子在囚笼中挣扎，与墨海难分彼此，倔强拒斥消亡。\n\n唯余一影驻留光中。它矗立于初升朝阳之前，吞噬光芒。金辉环绕成冠，映照出灼目刺眼、无形无状、自私不移的轮廓——与周遭世界格格不入。\n\n你眯起双眼，符号已赋新意。\n\n\"这不公平。\""
+
   }
 
 }
