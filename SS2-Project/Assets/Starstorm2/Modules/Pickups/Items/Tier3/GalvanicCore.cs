@@ -83,7 +83,7 @@ namespace SS2.Items
                 x => x.MatchBleUn(out label), //the if else's jump statement
                 x => x.MatchLdarg(0),
                 x => x.MatchCallOrCallvirt<CharacterBody>("get_healthComponent"),
-                x => x.MatchLdloc(118) //the first variable before the proc chain mask
+                x => x.MatchLdloc(152) //the first variable before the proc chain mask
             );
 
             if (ILFound && label != null)
