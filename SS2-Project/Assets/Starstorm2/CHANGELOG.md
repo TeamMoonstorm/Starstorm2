@@ -2,6 +2,9 @@
 ### 0.6.26
 * General
     * Re-adding Ukrainian translation since its causing a crash during loading for some users. 
+    * Deleted plead.mp4
+    * Updated French translation thanks to DarSitam!
+    * Updated Chinese translation thanks to EternitySwarmCrowm!
 
 ### 0.6.26
 * General
