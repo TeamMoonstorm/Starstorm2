@@ -78,35 +78,40 @@ namespace SS2.Items
         private void RecalculateStatsPreventHealing(ILContext il)
         {
             ILCursor c = new ILCursor(il);
-            ILLabel? label = null;
-            bool ILFound = c.TryGotoNext(MoveType.Before,
-                x => x.MatchBleUn(out label), //the if else's jump statement
-                x => x.MatchLdarg(0),
-                x => x.MatchCallOrCallvirt<CharacterBody>("get_healthComponent"),
-                x => x.MatchLdloc(152) //the first variable before the proc chain mask
-            );
-
-            if (ILFound && label != null)
-            {
-                c.Index += 1;
-                c.Emit(OpCodes.Ldarg, 0);
-                c.EmitDelegate<Func<CharacterBody, bool>>((self) =>
-                {
-                    var token = self.gameObject.GetComponent<GalvanizedMarker>();
-                    if(token && token.preventHeal)
-                    {
-                        token.preventHeal = false;
-                        return false;
-                    }
-                    return true;
-                });
-                c.Emit(OpCodes.Brfalse, label);
-            }
-            else
+            int varIndex = -1;
+            ILLabel label = null;
+            if (!c.TryGotoNext(
+                    x => x.MatchCallOrCallvirt(nameof(CharacterBody), "get_maxBarrier")
+                && !c.TryGotoNext(
+                    x => x.MatchCallOrCallvirt(nameof(CharacterBody), "get_maxHealth"),
+                    x => x.MatchLdloc(out _),
+                    x => x.MatchSub())
+                // we let the stloc be its own match to allow for gaps from the above sequence
+                && !c.TryGotoNext(
+                    x => x.MatchStloc(out varIndex))
+                && !c.TryGotoNext(
+                    MoveType.After,
+                    x => x.MatchLdloc(varIndex),
+                    x => x.MatchLdcR4(0),
+                    x => x.MatchBleUn(out label))))
             {
                 SS2Log.Fatal("Galvanic Core prevent curse healing hook failed.");
-                //maybe implment a failsafe with the damage fixing? it'd still kill at low health, but would prevent the item from Not Being Fun
+                return;
             }
+
+            c.Emit(OpCodes.Ldarg, 0);
+            c.EmitDelegate<Func<CharacterBody, bool>>((self) =>
+            {
+                var token = self.gameObject.GetComponent<GalvanizedMarker>();
+                if (token && token.preventHeal)
+                {
+                    token.preventHeal = false;
+                    return false;
+                }
+                return true;
+            });
+            c.Emit(OpCodes.Brfalse, label);
+
         }
 
         private void FinalBuffStackLostPreventHealing(On.RoR2.CharacterBody.orig_OnBuffFinalStackLost orig, CharacterBody self, BuffDef buffDef)
