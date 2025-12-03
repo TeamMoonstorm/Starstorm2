@@ -27,7 +27,7 @@ namespace SS2.Unlocks.Pickups
 			public override void OnInstall()
 			{
 				base.OnInstall();
-				beetleQueenIndex = BodyCatalog.FindBodyIndex("BeetleQueenBody");
+				beetleQueenIndex = BodyCatalog.FindBodyIndex("BeetleQueen2Body");
 				GlobalEventManager.onCharacterDeathGlobal += this.OnCharacterDeath;
 			}
 
