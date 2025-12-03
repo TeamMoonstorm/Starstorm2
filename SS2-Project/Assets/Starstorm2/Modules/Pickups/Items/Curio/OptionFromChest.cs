@@ -36,7 +36,8 @@ namespace SS2.Items
             //SS2.Items.OptionFromChest.ChestRoll(On.RoR2.ChestBehavior + orig_Roll orig, RoR2.ChestBehavior self)(at C:/ Users / color / Desktop / code / Starstorm2 / SS2 - Project / Assets / Starstorm2 / Modules / Pickups / Items / Curio / OptionFromChest.cs:28)
             //(wrapper dynamic - method) MonoMod.Utils.DynamicMethodDefinition.Hook<RoR2.ChestBehavior::Roll> ? -1221049132(RoR2.ChestBehavior)(at IL_0019)
             //RoR2.ChestBehavior.Start()(at<f06ee9a3ef5741e1a8136dd7fb5aa0d7>:IL_004D)
-            bool valid = self && self.dropTable && (dropTable = (BasicPickupDropTable)self.dropTable) != null;
+            // Buns: I made the fix Chinchi suggested, but leaving it disabled since I dont have time to test it right now
+            bool valid = self && self.dropTable && (self.dropTable as BasicPickupDropTable != null);
             if (!valid)
             {
                 orig(self);
