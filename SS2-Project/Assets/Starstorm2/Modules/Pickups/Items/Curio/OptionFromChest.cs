@@ -1,16 +1,21 @@
-﻿using RoR2;
-using UnityEngine;
-using RoR2.ContentManagement;
-using System;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using RoR2;
+using RoR2.ContentManagement;
+using SS2.ItemTiers;
+using System;
+using System.Drawing;
+using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace SS2.Items
 {
     public sealed class OptionFromChest : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("OptionFromChest", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        
+        // Buns: Disabling this since it causes a bug in sol haunt preventing people from unlocking Drifter. Look at TODO Below for where bug happens
+        public override bool IsAvailable(ContentPack contentPack) => false;
 
         private static GameObject optionPrefab;
         public override void Initialize()
@@ -25,6 +30,12 @@ namespace SS2.Items
             int option = SS2Util.GetItemCountForPlayers(SS2Content.Items.OptionFromChest);
             float tier1Coefficient = Mathf.Pow(0.7f, option);
             BasicPickupDropTable dropTable = null;
+            // TODO: It seems the bug is happening on this cast to BasicPickupDropTable
+            //[Error: Unity Log] InvalidCastException: Specified cast is not valid.
+            //Stack trace:
+            //SS2.Items.OptionFromChest.ChestRoll(On.RoR2.ChestBehavior + orig_Roll orig, RoR2.ChestBehavior self)(at C:/ Users / color / Desktop / code / Starstorm2 / SS2 - Project / Assets / Starstorm2 / Modules / Pickups / Items / Curio / OptionFromChest.cs:28)
+            //(wrapper dynamic - method) MonoMod.Utils.DynamicMethodDefinition.Hook<RoR2.ChestBehavior::Roll> ? -1221049132(RoR2.ChestBehavior)(at IL_0019)
+            //RoR2.ChestBehavior.Start()(at<f06ee9a3ef5741e1a8136dd7fb5aa0d7>:IL_004D)
             bool valid = self && self.dropTable && (dropTable = (BasicPickupDropTable)self.dropTable) != null;
             if (!valid)
             {
