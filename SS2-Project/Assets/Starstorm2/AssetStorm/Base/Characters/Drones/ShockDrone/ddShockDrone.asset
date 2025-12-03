@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -163847809, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: ddShockDrone
+  m_EditorClassIdentifier: 
+  bodyPrefab: {fileID: 3342532623090860830, guid: 32a2ec2343a6e9343a354af53260c88a,
+    type: 3}
+  displayPrefab: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: b5605a7a6143f0240b6485c574b07422, type: 3}
+  remoteOpBody: {fileID: 0}
+  remoteOpCost: 0
+  droneBrokenSpawnCard: {fileID: 11400000, guid: c19ed6ace57ce81458342d5bb3a4bebc,
+    type: 2}
+  canDrop: 1
+  canScrap: 1
+  canCombine: 1
+  nameToken: SS2_DRONE_SHOCK_NAME
+  pickupToken: SS2_DRONE_SHOCK_PICKUP
+  descriptionToken: SS2_DRONE_SHOCK_DESCRIPTION
+  skillDescriptionToken: SS2_DRONE_SHOCK_SKILL_DESCRIPTION
+  droneTechCommandToken: DRONE_COMMAND_GENERIC
+  droneType: 1
+  tier: 0
+  colorOverride: 0
+  desiredSortPosition: 5.5
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
