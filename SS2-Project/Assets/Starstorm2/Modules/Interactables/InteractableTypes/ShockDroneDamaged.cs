@@ -7,6 +7,7 @@ using RoR2.ContentManagement;
 using System.Collections;
 using SS2.Modules;
 using System.Linq;
+using RoR2.Skills;
 
 namespace SS2.Interactables
 {
@@ -46,6 +47,29 @@ namespace SS2.Interactables
                     field.SetValue(newComponent, value);
                 }
             }
+
+            var/*stinky var*/ skillFamily = SS2Assets.LoadAsset<SkillFamily>("sfShockDroneCommand", SS2Bundle.Interactables);
+            skillFamily.variants = new SkillFamily.Variant[1];
+            var/*stinky var*/ skillDef = Addressables.LoadAssetAsync<SkillDef>("RoR2/DLC3/Drone Tech/CommandGeneric.asset").WaitForCompletion();
+            skillFamily.variants[0] = new SkillFamily.Variant
+            {
+                skillDef = skillDef,
+                unlockableDef = null,
+                viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null)
+            };
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            if (AssetCollection.FindAsset<DroneDef>("ddShockDrone") == null)
+            {
+                DroneDef droneDef = SS2Assets.LoadAsset<DroneDef>("ddShockDrone", SS2Bundle.Interactables);
+                if (droneDef)
+                {
+                    contentPack.droneDefs.AddSingle(droneDef);
+                }
+            }
+            base.ModifyContentPack(contentPack);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

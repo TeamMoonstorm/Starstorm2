@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -163847809, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: ddCloneDrone
+  m_EditorClassIdentifier: 
+  bodyPrefab: {fileID: 3342532623090860830, guid: 4d59641af6b4d5f41aa95e2455bafa50,
+    type: 3}
+  displayPrefab: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: eacd5e13b02bac44f8674c3cb9b56c4b, type: 3}
+  remoteOpBody: {fileID: 0}
+  remoteOpCost: 0
+  droneBrokenSpawnCard: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa,
+    type: 2}
+  canDrop: 1
+  canScrap: 1
+  canCombine: 1
+  nameToken: SS2_DRONE_CLONE_NAME
+  pickupToken: SS2_DRONE_CLONE_PICKUP
+  descriptionToken: SS2_DRONE_CLONE_DESCRIPTION
+  skillDescriptionToken: SS2_DRONE_CLONE_SKILL_DESCRIPTION
+  droneTechCommandToken: DRONE_COMMAND_GENERIC
+  droneType: 2
+  tier: 2
+  colorOverride: 0
+  desiredSortPosition: 18
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
