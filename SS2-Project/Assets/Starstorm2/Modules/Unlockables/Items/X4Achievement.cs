@@ -26,13 +26,15 @@ namespace SS2.Unlocks.Pickups
 			public override void OnInstall()
 			{
 				base.OnInstall();
+				uniqueBossKills = new List<BodyIndex>();
                 Run.onRunDestroyGlobal += Reset;
 				GlobalEventManager.onCharacterDeathGlobal += this.OnCharacterDeath;
 			}
 
             private void Reset(Run obj)
             {
-				uniqueBossKills.Clear();
+				if (uniqueBossKills != null)
+					uniqueBossKills.Clear();
             }
 
             public override void OnUninstall()
@@ -44,7 +46,11 @@ namespace SS2.Unlocks.Pickups
 
 			private void OnCharacterDeath(DamageReport damageReport)
 			{
-				if (damageReport.victimIsChampion && IsCurrentBody(damageReport.attackerBody) && !uniqueBossKills.Contains(damageReport.victimBodyIndex))
+				if (uniqueBossKills == null)
+					uniqueBossKills = new List<BodyIndex>();
+	
+				// Redundant null check bc we're fly like that
+				if (uniqueBossKills != null && damageReport.victimIsChampion && IsCurrentBody(damageReport.attackerBody) && !uniqueBossKills.Contains(damageReport.victimBodyIndex))
 				{
 					uniqueBossKills.Add(damageReport.victimBodyIndex);
 					if (uniqueBossKills.Count >= 7) Grant();

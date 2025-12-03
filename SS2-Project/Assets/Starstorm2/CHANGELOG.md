@@ -1,10 +1,14 @@
   **Warning: content spoilers below!**
-### 0.6.26
+### 0.6.27
 * General
     * Re-adding Ukrainian translation since its causing a crash during loading for some users. 
     * Deleted plead.mp4
     * Updated French translation thanks to DarSitam!
     * Updated Chinese translation thanks to EternitySwarmCrowm!
+* Items
+    * Additional NRE checks to X4Achievement that should resolve some bugs and crashes folks got.
+* Monsters
+    * Additional nullchecks for Wayfarer death state and Follower beam, and their associated buffs for some rare race conditions folks were experiencing. 
 
 ### 0.6.26
 * General
