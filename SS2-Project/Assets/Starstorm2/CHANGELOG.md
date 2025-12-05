@@ -5,10 +5,16 @@
     * Deleted plead.mp4
     * Updated French translation thanks to DarSitam!
     * Updated Chinese translation thanks to EternitySwarmCrowm!
+    * Additional NRE checks on our CustomEliteDirector to fix a NRE with Simulacrum
 * Items
     * Additional NRE checks to X4Achievement that should resolve some bugs and crashes folks got.
 * Monsters
     * Additional nullchecks for Wayfarer death state and Follower beam, and their associated buffs for some rare race conditions folks were experiencing. 
+* Drones
+    * Made Shock drone use the electric damage type so its buffed by faulty conductor
+    * SS2 Drones now should now function with drone combiner
+* Operator
+    * Add Shock and Duplicator drone compat for Operator. Currently they only have basic ram skills. We will give both our drones unique skills in a future update.
 
 ### 0.6.26
 * General

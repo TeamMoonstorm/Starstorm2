@@ -421,8 +421,8 @@ MonoBehaviour:
   - submoduleName: R2API_Execute
     description: R2API_Execute
     dependedncyID: RiskofThunder-R2API_Execute
-    shouldInstall: 0
-    isHardDependency: 1
+    shouldInstall: 1
+    isHardDependency: 0
     dependencies:
     - BepInExPack
     - R2API_Core
@@ -579,7 +579,7 @@ MonoBehaviour:
   - submoduleName: R2API_Teams
     description: R2API_Teams
     dependedncyID: RiskofThunder-R2API_Teams
-    shouldInstall: 0
+    shouldInstall: 1
     isHardDependency: 0
     dependencies:
     - BepInExPack
