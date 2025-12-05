@@ -96,13 +96,15 @@ namespace SS2.Components
 
         public void ModifySpawn(CombatDirector director, SpawnCard.SpawnResult spawnResult)
         {
+            if (director == null)
+                return;
             if (spawnResult.spawnedInstance == null || spawnResult.spawnRequest == null || spawnResult.spawnRequest.spawnCard == null)
                 return;
             CharacterMaster cm = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
             if (cm == null || cm.bodyInstanceObject == null)
                 return;
             CharacterBody body = cm.bodyInstanceObject.GetComponent<CharacterBody>();
-            if (body == null)
+            if (body == null || body.inventory == null)
                 return;
             if (spawnResult.spawnRequest.spawnCard.eliteRules != SpawnCard.EliteRules.Default)
                 return;
@@ -115,7 +117,7 @@ namespace SS2.Components
                 totalCost *= 18f;
                 SS2Log.Info($"CharacterBody {body} has a Super Elite buff. Multiplying totalCost by 18 ({baseCost} => {totalCost})");             
             }
-            else if (body.eliteBuffCount > 0)
+            else if (body.eliteBuffCount > 0 && director.currentActiveEliteTier != null)
             {
                 totalCost *= director.currentActiveEliteTier.costMultiplier;
             }
@@ -150,7 +152,7 @@ namespace SS2.Components
                     }
                 }
             }           
-            if(highestCostAffix != null)
+            if(highestCostAffix != null && body.gameObject != null)
             {
                 EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
                 if(bodyMachine)
