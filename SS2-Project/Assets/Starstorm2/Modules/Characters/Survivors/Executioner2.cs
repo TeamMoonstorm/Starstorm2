@@ -173,52 +173,64 @@ namespace SS2.Survivors
             return hbv;
         }
 
+        private void FearExecuteThreshold(CharacterBody victimBody, ref float executeFraction)
+        {
+            if ((victimBody.HasBuff(SS2Content.Buffs.BuffFear) || victimBody.HasBuff(SS2Content.Buffs.BuffFearRed)) && executeFraction < 0f) 
+            {
+                executeFraction = fearExecutionThreshold;
+            }
+        }
+
         private void SetupFearExecute() //thanks moffein, hope you're doing well ★
         {
+        
             On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
-            IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
-            {
-                bool error = true;
-                ILCursor c = new ILCursor(il);
+            //R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
 
-                if (c.TryGotoNext(x => x.MatchLdloc(74), x => x.MatchLdcR4(0)))
-                {
-                    c.Index++;
-                    c.Emit(OpCodes.Ldarg_0);//self
-                    c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-                    {
-                        if (self.body.HasFearBuff())
-                        {
-                            if (executeFraction < 0f) executeFraction = 0f;
-                            executeFraction += fearExecutionThreshold;
-                        }
-                        return executeFraction;
-                    });
+            // TODO: This should be good to remove with new ExecuteAPI
+            //IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
+            //{
+            //    bool error = true;
+            //    ILCursor c = new ILCursor(il);
 
-                    if (c.TryGotoNext(x => x.MatchLdloc(74)))
-                    {
-                        c.Index++;
-                        c.Emit(OpCodes.Ldarg_0);//self
-                        c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-                        {
-                            if (self.body.HasFearBuff())
-                            {
-                                if (executeFraction < 0f) executeFraction = 0f;
-                                executeFraction += fearExecutionThreshold;
-                            }
-                            return executeFraction;
-                        });
-                        error = false;
-                    }
-                }
+            //    if (c.TryGotoNext(x => x.MatchLdloc(74), x => x.MatchLdcR4(0)))
+            //    {
+            //        c.Index++;
+            //        c.Emit(OpCodes.Ldarg_0);//self
+            //        c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
+            //        {
+            //            if (self.body.HasFearBuff())
+            //            {
+            //                if (executeFraction < 0f) executeFraction = 0f;
+            //                executeFraction += fearExecutionThreshold;
+            //            }
+            //            return executeFraction;
+            //        });
 
-                if (error)
-                {
-                    SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
-                }
+            //        if (c.TryGotoNext(x => x.MatchLdloc(74)))
+            //        {
+            //            c.Index++;
+            //            c.Emit(OpCodes.Ldarg_0);//self
+            //            c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
+            //            {
+            //                if (self.body.HasFearBuff())
+            //                {
+            //                    if (executeFraction < 0f) executeFraction = 0f;
+            //                    executeFraction += fearExecutionThreshold;
+            //                }
+            //                return executeFraction;
+            //            });
+            //            error = false;
+            //        }
+            //    }
 
-            };
+            //    if (error)
+            //    {
+            //        SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
+            //    }
+
+            //};
 
             IL.RoR2.CharacterBody.UpdateAllTemporaryVisualEffects += (il) =>
             {
