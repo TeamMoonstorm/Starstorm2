@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -163847809, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: ddDroidDrone
+  m_EditorClassIdentifier: 
+  bodyPrefab: {fileID: 5977874916511045093, guid: bde6261894f2854478563f3fe920f8f5,
+    type: 3}
+  displayPrefab: {fileID: 0}
+  iconSprite: {fileID: 21300000, guid: eacd5e13b02bac44f8674c3cb9b56c4b, type: 3}
+  remoteOpBody: {fileID: 0}
+  remoteOpCost: 0
+  droneBrokenSpawnCard: {fileID: 11400000, guid: db50f44ce7e65dd4dab947ea99fdfbaa,
+    type: 2}
+  canDrop: 0
+  canScrap: 0
+  canCombine: 0
+  nameToken: SS2_DROIDDRONE_NAME
+  pickupToken: SS2_DROIDDRONE_PICKUP
+  descriptionToken: SS2_DROIDDRONE_DESCRIPTION
+  skillDescriptionToken: DRONE_GUNNER_SKILL_DESCRIPTION
+  droneTechCommandToken: DRONE_GUNNER_COMMAND
+  droneType: 1
+  tier: 2
+  colorOverride: 0
+  desiredSortPosition: 19
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
