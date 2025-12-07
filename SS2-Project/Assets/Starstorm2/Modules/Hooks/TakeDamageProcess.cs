@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using MonoMod.Cil;
-using Mono.Cecil.Cil;
-using RoR2;
+﻿using RoR2;
 
 namespace SS2.Hooks
 {
@@ -12,37 +7,22 @@ namespace SS2.Hooks
         [SystemInitializer]
         public static void Initialize()
         {
-            IL.RoR2.HealthComponent.TakeDamageProcess += DeathIL;
+            GlobalEventManager.onServerDamageDealt += OnAffixEtherealLethalDamageTaken;
         }
 
-        private static void DeathIL(ILContext il)
+        private static void OnAffixEtherealLethalDamageTaken(DamageReport damageReport)
         {
-            ILCursor c = new ILCursor(il);
+            if (!damageReport.victimBody || !damageReport.victimBody.healthComponent)
+                return;
 
-            bool ILFound = c.TryGotoNext(MoveType.Before,
-                x => x.MatchCallOrCallvirt<GlobalEventManager>(nameof(GlobalEventManager.ServerDamageDealt)),
-                x => x.MatchLdarg(0),
-                x => x.MatchCallOrCallvirt<HealthComponent>("get_alive")
-            );
-            if (ILFound)
-            {
-                c.Index += 2;
-                c.Emit(OpCodes.Ldarg_0); // hc
-                c.Emit(OpCodes.Ldarg_1); // damageinfo
-                c.Emit(OpCodes.Ldloc, 4); // combined health before damage
-                c.EmitDelegate<Action<HealthComponent, DamageInfo, float>>(OnLethalDamageTaken);
-            }
-            else
-            {
-                SS2Log.Fatal("AffixEthereal.EtherealDeathIL(): Failed to find IL match.");
-            }
+            HealthComponent healthComponent = damageReport.victimBody.healthComponent;
+            if (healthComponent.alive)
+                return;
 
-        }
+            CharacterBody body = damageReport.victimBody;
+            DamageInfo damageInfo = damageReport.damageInfo;
+            float combinedHealthBeforeDamage = damageReport.combinedHealthBeforeDamage;
 
-        public static void OnLethalDamageTaken(HealthComponent healthComponent, DamageInfo damageInfo, float combinedHealthBeforeDamage) // poorly named
-        {
-            if (healthComponent.health > 0) return; ///
-            CharacterBody body = healthComponent.body;
             //bleedout
             if (body.HasBuff(SS2Content.Buffs.BuffBleedoutReady))
             {
