@@ -4,6 +4,7 @@ using RoR2.ContentManagement;
 using System;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using System.Collections.Generic;
 
 namespace SS2.Items
 {
@@ -20,6 +21,10 @@ namespace SS2.Items
             IL.RoR2.ChestBehavior.BaseItemDrop += BaseItemDrop; 
         }
         //lower the tier 1 weight of chests, increasing "rarity"
+        // TODO: This hook is not a clean way to override loot generation.
+        // We really ought to roll up our own droptable, akin to FreeChestDropTable,
+        // then we won't even need this hook and we can just generate items from
+        // our droptable directly in the ILHook below.
         private void ChestRoll(On.RoR2.ChestBehavior.orig_Roll orig, ChestBehavior self)
         {
             int option = SS2Util.GetItemCountForPlayers(SS2Content.Items.OptionFromChest);
@@ -47,13 +52,16 @@ namespace SS2.Items
         private void BaseItemDrop(ILContext il)
         {
             ILCursor c = new ILCursor(il);
+
+            // Find where the createPickupInfo is created and put our cursor after it to populate the potential options
             // GenericPickupController.CreatePickupInfo createPickupInfo = default(GenericPickupController.CreatePickupInfo);
+            int createPickupInfoVarIndex = -1;
             bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdloca(3),
+                x => x.MatchLdloca(out createPickupInfoVarIndex),
                 x => x.MatchInitobj<GenericPickupController.CreatePickupInfo>());
             if (b)
             {
-                c.Emit(OpCodes.Ldloc_3); // createpickupinfo
+                c.Emit(OpCodes.Ldloc, createPickupInfoVarIndex); // createpickupinfo
                 c.Emit(OpCodes.Ldarg_0); // chestbehavior
                 c.EmitDelegate<Func<GenericPickupController.CreatePickupInfo, ChestBehavior, GenericPickupController.CreatePickupInfo>>((info, chest) =>
                 {
@@ -64,13 +72,16 @@ namespace SS2.Items
                         //
                         // VFX HERE
                         //
+                        List<UniquePickup> uniquePickups = new List<UniquePickup>();
+                        // See the TODO comment above to generate loot from our own custom droptable instead
+                        chest.dropTable.GenerateDistinctPickupsPreReplacement(uniquePickups, 3, chest.rng);
                         info.prefabOverride = optionPrefab;
-                        info.pickerOptions = PickupPickerController.GenerateOptionsFromArray(chest.dropTable.GenerateUniqueDrops(3, chest.rng));
+                        info.pickerOptions = PickupPickerController.GenerateOptionsFromList(uniquePickups);
                         info.pickupIndex = PickupCatalog.FindPickupIndex(PickupCatalog.GetPickupDef(chest.dropPickup).itemTier); // idk if we need to do this? void potentials use the pickupdef for the tier
                     }
                     return info;
                 });
-                c.Emit(OpCodes.Stloc_3);
+                c.Emit(OpCodes.Stloc, createPickupInfoVarIndex);
             }
             else
             {
