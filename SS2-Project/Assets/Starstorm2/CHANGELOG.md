@@ -1,7 +1,7 @@
   **Warning: content spoilers below!**
 ### 0.6.27
 * General
-    * Re-adding Ukrainian translation since its causing a crash during loading for some users. 
+    * Lots of various fixes/cleanups to our IL Hooks that should improve stability and catch some uncommon errors. Thanks to Chinchi for this work!
     * Deleted plead.mp4
     * Updated French translation thanks to DarSitam!
     * Updated Chinese translation thanks to EternitySwarmCrowm!
@@ -14,7 +14,7 @@
     * Made Shock drone use the electric damage type so its buffed by faulty conductor
     * SS2 Drones now should now function with drone combiner
 * Operator
-    * Add Shock and Duplicator drone compat for Operator. Currently they only have basic ram skills. We will give both our drones unique skills in a future update.
+    * Add Shock, Security, and Duplicator drone compat for Operator. Currently they only have basic ram skills. We will give both our drones unique skills in a future update. Thanks to Chicken for this addition!
 
 ### 0.6.26
 * General
