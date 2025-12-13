@@ -2,13 +2,13 @@
 using RoR2;
 using RoR2.ContentManagement;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MonoMod.Cil;
 using Mono.Cecil.Cil;
 using System.Linq;
 using MSU.Config;
+using R2API.Utils;
 
 namespace SS2.Equipments
 {
@@ -39,23 +39,36 @@ namespace SS2.Equipments
         {
             ILCursor c = new ILCursor(il);
 
-            bool ILFound = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdsfld(typeof(RoR2Content.Buffs), nameof(RoR2Content.Buffs.AffixBlue)),
-                x => x.MatchCallOrCallvirt<CharacterBody>(nameof(CharacterBody.HasBuff)),
-                x => x.MatchBrfalse(out _),
-                x => x.MatchLdarg(0),
-                x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth"),
-                x => x.MatchLdcR4(0.5f)
+            // Locate the following section and change the coefficient 0.5 -> 0.1
+            // if (HasBuff(RoR2Content.Buffs.AffixBlue))
+            // {
+            //     num76 = maxHealth * 0.5f;
+            //     ...
+            // }
+            //
+            // Since new instructions may have been inserted in various places, e.g.,
+            // - if (HasBuff(RoR2Content.Buffs.AffixBlue) || HasBuff(SomeOtherBuff))
+            // - num = maxHealth * modifiedValue
+            // - num = (maxHealth * 0.5f followed by an EmitDelegate)
+            // we just match snippets of the above section in order to be generic
+            // and we focus on putting our cursor before the stloc, i.e., the `num =` part.
+            bool ILFound = c.TryGotoNext(
+                    x => x.MatchLdsfld(typeof(RoR2Content.Buffs), nameof(RoR2Content.Buffs.AffixBlue)),
+                    x => x.MatchCallOrCallvirt<CharacterBody>(nameof(CharacterBody.HasBuff))
+                ) && c.TryGotoNext(
+                    x => x.MatchCallOrCallvirt(typeof(CharacterBody).GetPropertyGetter(nameof(CharacterBody.maxHealth))),
+                    x => x.MatchLdcR4(out _)
+                ) && c.TryGotoNext(
+                    x => x.MatchStloc(out _)
                 );
             if (ILFound)
             {
-
                 c.Emit(OpCodes.Ldarg_0);
                 c.EmitDelegate<Func<float, CharacterBody, float>>((defaultPercentage, body) =>
                 {
                     if (body.HasBuff(SS2Content.Buffs.bdEmpyrean))
                     {
-                        return 0.1f;
+                        return body.maxHealth * 0.1f;
                     }
                     return defaultPercentage;
                 });
@@ -63,13 +76,13 @@ namespace SS2.Equipments
             else
             {
                 SS2Log.Fatal("Failed to find IL match for Empyrean hook 1!");
+                return;
             }
 
+            // We now want to be a couple of lines after the previous match, where we
+            // want our cursor after the maxHealth so we can modify it.
+            // num75 += maxHealth;
             bool ILFound2 = c.TryGotoNext(MoveType.After,
-                x => x.MatchSub(),
-                x => x.MatchCallOrCallvirt<CharacterBody>("set_maxHealth"),
-                x => x.MatchLdloc(out _),
-                x => x.MatchLdarg(0),
                 x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth")
                 );
             if (ILFound2)

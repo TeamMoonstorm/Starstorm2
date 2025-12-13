@@ -14,6 +14,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using RoR2.Orbs;
 using SS2.Components;
+using R2API.Utils;
 
 namespace SS2.Items
 {
@@ -78,27 +79,47 @@ namespace SS2.Items
         private void RecalculateStatsPreventHealing(ILContext il)
         {
             ILCursor c = new ILCursor(il);
+            // this.maxBarrier = this.maxHealth + this.maxShield;
+            // if (NetworkServer.active)
+            // {
+            //     float num117 = this.maxHealth - maxHealth;
+            //     float num118 = this.maxShield - maxShield;
+            //     if (num117 > 0f)
+            //     {
+            //         this.healthComponent.Heal(num117, default(ProcChainMask), false);
+            //     }
+            //     ...
+            // }
+            //
+            // In the above code section, we want to home in to `if (num117 > 0f)`
+            // 1. First we get to "maxBarrier ="
+            // 2. Then we move on to this.maxHealth
+            // 3. The next stloc after that should be num117, so we cache its variable
+            //    index. We don't care what else happens in the between and the gaps are
+            //    intentional because mods may inject their own instructions anywhere here.
+            // 4. Profit
             int varIndex = -1;
             ILLabel label = null;
             if (!c.TryGotoNext(
-                    x => x.MatchCallOrCallvirt(nameof(CharacterBody), "get_maxBarrier")
-                && !c.TryGotoNext(
-                    x => x.MatchCallOrCallvirt(nameof(CharacterBody), "get_maxHealth"),
+                    x => x.MatchCallOrCallvirt(typeof(CharacterBody).GetPropertySetter(nameof(CharacterBody.maxBarrier))))
+                || !c.TryGotoNext(
+                    x => x.MatchCallOrCallvirt(typeof(CharacterBody).GetPropertyGetter(nameof(CharacterBody.maxHealth))),
                     x => x.MatchLdloc(out _),
                     x => x.MatchSub())
                 // we let the stloc be its own match to allow for gaps from the above sequence
-                && !c.TryGotoNext(
+                || !c.TryGotoNext(
                     x => x.MatchStloc(out varIndex))
-                && !c.TryGotoNext(
+                || !c.TryGotoNext(
                     MoveType.After,
                     x => x.MatchLdloc(varIndex),
                     x => x.MatchLdcR4(0),
-                    x => x.MatchBleUn(out label))))
+                    x => x.MatchBleUn(out label)))
             {
                 SS2Log.Fatal("Galvanic Core prevent curse healing hook failed.");
                 return;
             }
 
+            // Append our healing condition after `if (num117 > 0f)`
             c.Emit(OpCodes.Ldarg, 0);
             c.EmitDelegate<Func<CharacterBody, bool>>((self) =>
             {
