@@ -1,6 +1,13 @@
 ﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using RoR2;
+using RoR2.ContentManagement;
+using SS2.ItemTiers;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using UnityEngine;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 namespace SS2.Items
 {
