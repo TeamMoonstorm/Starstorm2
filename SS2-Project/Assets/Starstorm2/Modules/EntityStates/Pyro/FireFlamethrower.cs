@@ -1,5 +1,6 @@
 ﻿using R2API;
 using RoR2;
+using RoR2.Projectile;
 using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,6 +37,7 @@ namespace EntityStates.Pyro
 
         public static GameObject impactEffectPrefab;
         public static GameObject flameEffectPrefab;
+        public static GameObject projectilePrefab;
 
         private Transform flamethrowerTransform;
 
@@ -50,8 +52,6 @@ namespace EntityStates.Pyro
             characterBody.isSprinting = false;
 
             pc = GetComponent<PyroController>();
-
-            Debug.Log("flamer on enter");
 
             stopwatch = 0f;
 
@@ -85,6 +85,7 @@ namespace EntityStates.Pyro
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
+                // silly visual flamethrower for sake of making it look fuller
                 flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Fire(muzzleString);
             }
@@ -119,56 +120,37 @@ namespace EntityStates.Pyro
 
         private void Fire(string muzzleString)
         {
-            DamageType damageType;
-
             characterBody.SetAimTimer(duration * 2f);
-
-            //Debug.Log("Firing");
-
-            if (pc.heat >= heatIgniteThreshold)
-                damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
-                //to-do: unique damage type that scales ignite chance based on range / staged heat levels?
-
-            else
-                damageType = DamageType.Generic;
 
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                BulletAttack bullet = new BulletAttack
-                {
-                    owner = gameObject,
-                    weapon = gameObject,
-                    origin = aimRay.origin,
-                    aimVector = aimRay.direction,
-                    minSpread = 0f,
-                    damage = tickDamageCoefficient * damageStat,
-                    force = force,
-                    muzzleName = muzzleString,
-                    hitEffectPrefab = impactEffectPrefab,
-                    isCrit = RollCrit(), //to-do: make crits come in short bursts like tf2
-                    radius = radius,
-                    falloffModel = BulletAttack.FalloffModel.None,
-                    stopperMask = LayerIndex.world.mask,
-                    procCoefficient = tickProcCoefficient,
-                    maxDistance = maxDistance,
-                    smartCollision = true,
-                    damageType = damageType,
-                };
-                DamageAPI.AddModdedDamageType(bullet, SS2.Survivors.Pyro.FlamethrowerDamageType);
-                bullet.Fire();
+                DamageTypeCombo dtc = new DamageTypeCombo();
+                dtc.AddModdedDamageType(SS2.Survivors.Pyro.FlamethrowerDamageType);
+
+                ProjectileManager.instance.FireProjectile(
+                    projectilePrefab,
+                    aimRay.origin,
+                    Util.QuaternionSafeLookRotation(aimRay.direction),
+                    gameObject,
+                    tickDamageCoefficient * damageStat,
+                    force,
+                    RollCrit(),
+                    DamageColorIndex.Default,
+                    null,
+                    -1,
+                    dtc
+                    );
 
                 if (flamethrowerTransform)
+                {
                     flamethrowerTransform.forward = aimRay.direction;
-
-
-                if (characterMotor)
-                    base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);
+                }
 
                 if (pc)
+                {
                     pc.AddHeat(heatPerTick);
-
-                //Debug.Log("Fired");
+                }
             }
         }
 

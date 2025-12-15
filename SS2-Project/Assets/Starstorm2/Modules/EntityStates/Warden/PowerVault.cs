@@ -133,7 +133,7 @@ namespace EntityStates.Warden
             }
             characterMotor.airControl = previousAirControl;
             characterBody.isSprinting = false;
-            characterBody.SetBuffCount(SS2Content.Buffs.bdPyroJet.buffIndex, 0);
+            // characterBody.SetBuffCount(SS2Content.Buffs.bdPyroJet.buffIndex, 0); naur
             base.OnExit();
         }
     }

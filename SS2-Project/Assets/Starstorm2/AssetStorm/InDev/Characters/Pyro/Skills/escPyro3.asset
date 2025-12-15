@@ -13,35 +13,39 @@ MonoBehaviour:
   m_Name: escPyro3
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Pyro.PyroJumppack, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Pyro.PyroLaunch, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: upwardVelocity
+    - fieldName: speedCoefficientCurve
       fieldValue:
-        stringValue: 28
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.1172022670507431,"weightedMode":0,"tangentMode":0},{"time":1.0,"value":0.4000000059604645,"inTangent":-1.9113061428070069,"outTangent":-1.9113061428070069,"inWeight":0.08317577838897705,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0}]}'
         objectValue: {fileID: 0}
-    - fieldName: forwardVelocity
+    - fieldName: baseDuration
       fieldValue:
-        stringValue: 21
+        stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: minimumY
+    - fieldName: baseMaxDuration
       fieldValue:
-        stringValue: 0.05
+        stringValue: 3
         objectValue: {fileID: 0}
-    - fieldName: aimVelocity
+    - fieldName: baseDurationBetweenTicks
       fieldValue:
-        stringValue: 4
+        stringValue: 0.16
         objectValue: {fileID: 0}
-    - fieldName: airControl
+    - fieldName: baseVerticalSpeed
       fieldValue:
-        stringValue: 0.3
+        stringValue: 40
         objectValue: {fileID: 0}
-    - fieldName: hoverVelocity
+    - fieldName: walkSpeedCoefficient
       fieldValue:
-        stringValue: 1.5
+        stringValue: 0.6
         objectValue: {fileID: 0}
-    - fieldName: hoverAcceleration
+    - fieldName: damageCoefficient
       fieldValue:
-        stringValue: 60
+        stringValue: 0.5
+        objectValue: {fileID: 0}
+    - fieldName: heatPerTick
+      fieldValue:
+        stringValue: 0.5
         objectValue: {fileID: 0}

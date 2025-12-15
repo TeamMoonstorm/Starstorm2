@@ -17,6 +17,7 @@ namespace EntityStates.Pyro
 
         private float tickRate;
         private float stopwatch;
+        private float heatStopwatch;
         private float flamethrowerStopwatch;
         private float duration;
         private float entryDuration;
@@ -64,16 +65,6 @@ namespace EntityStates.Pyro
 
             pc = GetComponent<PyroController>();
 
-            cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
-
-            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
-            {
-                cameraParamsData = chargeCameraParams,
-                priority = 0f
-            };
-
-            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
-
             stopwatch = 0f;
 
             hasBegunFlamethrower = false;
@@ -112,13 +103,20 @@ namespace EntityStates.Pyro
 
             if (hasBegunFlamethrower)
             {
+                heatStopwatch += Time.fixedDeltaTime;
                 flamethrowerStopwatch += Time.fixedDeltaTime;
-                float tickRate = baseTickFrequency / attackSpeedStat;
+                // we recalculate this each time to accomodate for attack speed changes during
+                tickRate = baseTickFrequency / attackSpeedStat;
                 if (flamethrowerStopwatch > tickRate)
                 {
                     //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
                     Fire(muzzleString);
+                }
+                // we count this separate for fuel burn rate consistency
+                if (heatStopwatch > baseTickFrequency && pc != null)
+                {
+                    pc.AddHeat(heatPerTick);
                 }
             }
 
@@ -134,12 +132,11 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
-            if (cameraTargetParams)
-            {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
-            }
+
             if (flamethrowerTransform)
+            {
                 Destroy(flamethrowerTransform.gameObject);
+            }
         }
 
         private void Fire(string muzzleString)
@@ -149,12 +146,14 @@ namespace EntityStates.Pyro
             characterBody.SetAimTimer(duration * 2f);
 
             float damage = tickDamageCoefficient * damageStat;
+            DamageColorIndex color = DamageColorIndex.Default;
 
             //Debug.Log("Firing");
 
             if (pc.heat >= heatIgniteThreshold)
             {
                 damage *= 1.5f;
+                color = DamageColorIndex.WeakPoint;
             }
 
             damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
@@ -169,7 +168,7 @@ namespace EntityStates.Pyro
                     origin = aimRay.origin,
                     aimVector = aimRay.direction,
                     minSpread = 0f,
-                    damage = tickDamageCoefficient * damageStat,
+                    damage = damage * damageStat,
                     force = force,
                     muzzleName = muzzleString,
                     hitEffectPrefab = impactEffectPrefab,
@@ -181,6 +180,7 @@ namespace EntityStates.Pyro
                     maxDistance = maxDistance,
                     smartCollision = true,
                     damageType = damageType,
+                    damageColorIndex = color
                 }.Fire();
 
                 if (flamethrowerTransform)
@@ -188,9 +188,6 @@ namespace EntityStates.Pyro
 
                 if (characterMotor)
                     base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);
-
-                if (pc)
-                    pc.AddHeat(heatPerTick);
 
                 //Debug.Log("Fired");
             }

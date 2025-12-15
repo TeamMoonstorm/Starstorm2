@@ -7,6 +7,7 @@ using R2API;
 using RoR2.ContentManagement;
 using static R2API.DamageAPI;
 using RoR2.Projectile;
+using UnityEngine.Networking;
 
 namespace SS2.Survivors
 {
@@ -19,6 +20,7 @@ namespace SS2.Survivors
 
         public static GameObject _hotFireVFX;
         public static GameObject _fireballExplosionVFX;
+        public static HeatSkillDef _jetpackOverrideDef;
         public static BuffDef _bdPyroManiac;
         public static BuffDef _bdPyroJet;
 
@@ -33,14 +35,25 @@ namespace SS2.Survivors
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
             _bdPyroManiac = AssetCollection.FindAsset<BuffDef>("bdPyroManiac");
             _bdPyroJet = AssetCollection.FindAsset<BuffDef>("bdPyroJet");
+            _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
             On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
 
             //GlobalEventManager.onServerDamageDealt += PyroDamageChecks;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
+            On.RoR2.DotController.AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 += DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1;
             //On.RoR2.DotController.OnDotStackAddedServer += DotController_OnDotStackAddedServer;
         }
 
+        private void DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1(On.RoR2.DotController.orig_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 orig, DotController self, GameObject attackerObject, float duration, DotController.DotIndex dotIndex, float damageMultiplier, uint? maxStacksFromAttacker, float? totalDamage, DotController.DotIndex? preUpgradeDotIndex)
+        {
+            if (self.victimBody.baseNameToken == "SS2_PYRO_NAME" && (preUpgradeDotIndex == DotController.DotIndex.Burn || preUpgradeDotIndex == DotController.DotIndex.PercentBurn || preUpgradeDotIndex == DotController.DotIndex.StrongerBurn))
+            {
+                return;
+            }
+
+            orig(self, attackerObject, duration, dotIndex, damageMultiplier, maxStacksFromAttacker, totalDamage, preUpgradeDotIndex);
+        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -55,20 +68,25 @@ namespace SS2.Survivors
                 if (attackerBody)
                 {
                     PyroController pc = attackerBody.GetComponent<PyroController>();
-                    if (pc == null)
-                        return;
-
-                    float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
-
-                    if (distance > 16f)
+                    if (pc != null)
                     {
-                        //Debug.Log("pre damage: " + damageInfo.damage);
-                        damageInfo.damage *= 1.5f;
-                        //Debug.Log("post damage: " + damageInfo.damage);
-                        damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
-                        EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
-                        if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
+                        float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
+
+                        if (distance < 6f)
+                        {
+                            //Debug.Log("pre damage: " + damageInfo.damage);
+                            damageInfo.damage *= 1.5f;
+                            damageInfo.force *= 3f;
+                            //Debug.Log("post damage: " + damageInfo.damage);
+                            damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
+                            EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
+                            if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
+                                damageInfo.damageType = DamageType.IgniteOnHit;
+                        }
+                        else if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 65f)
+                        {
                             damageInfo.damageType = DamageType.IgniteOnHit;
+                        }
                     }
                 }
             }
@@ -166,14 +184,45 @@ namespace SS2.Survivors
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => _bdPyroJet;
 
-            public void FixedUpdate()
+            private bool isOverridingSkill;
+            private HeatSkillDef overrideSkill = _jetpackOverrideDef;
+            private SkillLocator skillLocator;
+
+            public void OnStart()
             {
-                if (hasAnyStacks)
-                {
-                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * 0.2f;
-                }
+                skillLocator = characterBody.skillLocator;
             }
 
+            public void FixedUpdate()
+            {
+                if (skillLocator == null)
+                {
+                    skillLocator = characterBody.skillLocator;
+                }
+
+                if (hasAnyStacks && !isOverridingSkill)
+                {
+                    isOverridingSkill = true;
+
+                    skillLocator.utility.SetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+
+                if (!hasAnyStacks && isOverridingSkill)
+                {
+                    isOverridingSkill = false;
+
+                    skillLocator.utility.UnsetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+
+                if (characterBody.characterMotor.isGrounded && isOverridingSkill)
+                {
+                    characterBody.SetBuffCount(buffIndex, 0);
+
+                    isOverridingSkill = false;
+
+                    skillLocator.utility.UnsetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+            }
         }
     }
 }

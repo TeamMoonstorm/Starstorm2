@@ -21,7 +21,7 @@ namespace SS2.Components
         private static float enemyCheckStopwatch = 0f;
         private SphereSearch bodySearch;
         private List<HurtBox> hits;
-        public float enemyRadius = 25f;
+        public float enemyRadius = 35f;
 
         [Header("Heat UI")]
         [SerializeField]
@@ -102,10 +102,10 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
+            UpdateUI();
+
             if (NetworkServer.active)
             {
-                UpdateUI();
-
                 enemyCheckStopwatch += Time.fixedDeltaTime;
                 if (enemyCheckStopwatch >= enemyCheckInterval)
                 {
@@ -186,7 +186,6 @@ namespace SS2.Components
         {
             if (!NetworkServer.active)
             {
-                SS2Log.Error("pyro controller add heat on client");
                 return;
             }
 

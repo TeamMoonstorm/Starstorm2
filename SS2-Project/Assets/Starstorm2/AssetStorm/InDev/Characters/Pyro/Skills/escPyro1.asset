@@ -39,11 +39,11 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: tickProcCoefficient
       fieldValue:
-        stringValue: 0.3
+        stringValue: 0.2
         objectValue: {fileID: 0}
     - fieldName: tickDamageCoefficient
       fieldValue:
-        stringValue: 0.4
+        stringValue: 0.45
         objectValue: {fileID: 0}
     - fieldName: igniteChanceHighHeat
       fieldValue:
@@ -59,7 +59,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: force
       fieldValue:
-        stringValue: 100
+        stringValue: 200
         objectValue: {fileID: 0}
     - fieldName: radius
       fieldValue:
@@ -75,10 +75,15 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: pressureDuration
       fieldValue:
-        stringValue: 0.15
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: flameEffectPrefab
       fieldValue:
         stringValue: 
         objectValue: {fileID: 1582589881204374, guid: c6da464e754fd5a4eb12ede3e101080f,
+          type: 3}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6711194307538743785, guid: 2a5c753a074870144a3508c34a4b219e,
           type: 3}
