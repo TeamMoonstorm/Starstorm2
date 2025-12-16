@@ -8,6 +8,7 @@
     * Additional NRE checks on our CustomEliteDirector to fix a NRE with Simulacrum
 * Items
     * Additional NRE checks to X4Achievement that should resolve some bugs and crashes folks got.
+    * Disabled Galvanic Core due to boss healing bug. Will be re-enabled once fixed, but this bug was too run ending to leave enabled any longer.
 * Monsters
     * Additional nullchecks for Wayfarer death state and Follower beam, and their associated buffs for some rare race conditions folks were experiencing. 
 * Drones
