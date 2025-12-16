@@ -7,7 +7,7 @@
 		"SS2_ITEM_ARMEDBACKPACK_LORE": "运单：（退件）军用背包\r\n单号：823*****\r\n预计送达时间：2056年2月13日\r\n运送方式：标准\r\n送货地址：地球，利文洛克，于勒路17号\r\n运单详情：\n\n走路的时候竟然走火了。你们等着收法院传票吧。",
 
 		"SS2_ITEM_BLOODTESTER_NAME": "损坏的血液检测仪",
-		"SS2_ITEM_BLOODTESTER_DESC": "每{0}秒，根据你当前拥有的每<style=cIsUtility>25金钱</style>，快速<style=cIsHealing>回复</style><style=cIsHealing>{1}点<style=cStack>（每层+{1}）</style>生命值</style>。<style=cIsUtility>金钱需求随时间递增</style>。",
+		"SS2_ITEM_BLOODTESTER_DESC": "每{0}秒，根据你当前拥有的每<style=cIsUtility>25金钱</style>，快速<style=cIsHealing>回复</style><style=cIsHealing>{1}点<style=cStack>（每层+{1}）</style>生命值</style>。<style=cIsUtility>所需金钱会随时间变化</style>。",
 		"SS2_ITEM_BLOODTESTER_PICKUP": "定期根据金钱进行治疗。",
 		"SS2_ITEM_BLOODTESTER_LORE": "退件：损坏的血液检测仪\r\n单号：288*****\r\n预计送达时间：2056年6月17日\r\n运送方式：优先\r\n送货地址：冥王星，狄俄尼索斯制药公司总部\r\n运输详情：\n\n我们需要尽快修理这个设备，以免对公司造成更大的损失。每当我们的MED-E使用它时，它都会给出错误的结果。这不仅影响了我们的工作流程，还让我们不得不自掏腰包赔偿患者，因为错误的诊断让他们打了不必要的针。而且我们无法声称是患者的错，因为所有数据都会立即备份到服务器上。我们不能再花这么多钱了，否则下个季度我们就会破产。\n",
 
@@ -26,7 +26,7 @@
 		"SS2_ITEM_DIARY_PICKUP": "在每关开始时升级一次，使用即消耗",
 		"SS2_ITEM_DIARY_LORE": "<style=cMono>完整传输14-B走廊区的安全录像。\n\n输出中...\n\n</style>\"所以这个储物容器里就只有这本书吗？\"\n\"基本上是的。除了一些旧家具，就只有这个了。\"\n\"那这本书有什么特别之处吗？如果这就是我们得到的一切，它最好值得看看。\"\n\"我觉得这是一本日记。大约26年前由一位名叫Alan Howizer的人写下。看起来是个相当聪明的家伙，日记说他曾在地球上的一个化学测试工厂工作。\"\n\"就这？这只是一位老人的日记吗？\"\n\"等等，事情没有那么简单。我翻了一下，大约100页的时候，手写发生了变化，果然这本书被另一个人在一个公园的长椅上发现。大约再翻30页，同样的事情再次发生。而后，大约再翻70页，又一次。而且一直都在继续。有几十个不同的人在这本日记中写下他们的美好记忆、奇怪谜团、很多谜底，各种各样的事情。\"\n\"嗯。这东西肯定是知识的宝库，是吧？最后一位主人是谁有线索吗？\"\n\"嗯，实际上是有的。最后一位写在书中的人叫Chel，看起来他们在背后的封面上留了个地址。你打算怎么办？\"\n\n<style=cMono>值得关注的部分结束。</style>",
 
-		"SS2_ITEM_DIARY_CONSUMED_NAME": "写满的日记簿",
+		"SS2_ITEM_DIARY_CONSUMED_NAME": "已写满的日记簿",
 		"SS2_ITEM_DIARY_CONSUMED_DESC": "这经历绝对够拍部电影了。",
 		"SS2_ITEM_DIARY_CONSUMED_PICKUP": "这经历绝对够拍部电影了。",
 
@@ -48,11 +48,11 @@
 		"SS2_ITEM_MALICE_LORE": "你太弱了。\n\n肉体上吗？也许不是，你奋战求生，而且打得不错；精神上吗？我的朋友，你太弱了。你奋战你杀戮，你对你的杀戮的感到懊悔。为什么？你和你战斗的那些动物并不恨你。对它们来说你不过是正在逃跑的猎物，或是危险的捕食者；那些巨人？它们没有感情，它们只拿到了毁灭的命令，毁灭的目标是你。\n\n我也了解你，我的朋友。你不希望软弱，你渴望强大，无论是肉体上还是精神上。不要可怜那些没有头脑的野兽，他们仅此而已。请你为了杀戮而战，不仅仅为了生存。\n\n人类的恶意只能带你到这一步了。拿着这个。它会带你走的更远。为了杀戮而战，杀成恐惧本身。\n",
 
 		"SS2_ITEM_MOLTENCOIN_NAME": "融化的硬币",
-		"SS2_ITEM_MOLTENCOIN_DESC": "命中时有<style=cIsDamage>{0}%</style>概率<style=cIsDamage>点燃</style>敌人，造成<style=cIsDamage>200%</style>的基础伤害<style=cStack>（每层+50%）</style>并获得<style=cIsUtility>$1</style> <style=cStack>（每层+$1，总获得量随已通过的关卡数量增加而增加）</style>。",
+		"SS2_ITEM_MOLTENCOIN_DESC": "命中时有<style=cIsDamage>{0}%</style>的几率<style=cIsDamage>点燃</style>敌人，造成<style=cIsDamage>200%</style>的基础伤害<style=cStack>（每层+50%）</style>并获得<style=cIsUtility>$1</style> <style=cStack>（每层+$1，总获得量随通过的关卡数量增加）</style>。",
 		"SS2_ITEM_MOLTENCOIN_PICKUP": "命中时有一定几率点燃敌人并获得金钱。",
 		"SS2_ITEM_MOLTENCOIN_LORE": "运单：融化的硬币\r\n单号：446*****\r\n预计送达时间：2056年9月22日\r\n运送方式：标准\r\n送货地址：金星，布里岑，威尼斯警察局\r\n运单详情：\n\n嘿，我发现了帕拉坦广场爆炸案相关的另一个证据。\n\n你知道调查人员因为案发现场过热而一直无法进场调查吧？今早那终于凉快下来了。我在人行道上找到了这个融化的硬币。初步化验表明这个硬币主要由钨制成，表面是一层金色图层。\n\n我也不知道这意味着什么。 也许能当一个幸运符？不管怎样，我都会把它寄给你，说实在的，你需要所有能得到的帮助。我的意思是，7人死亡，18人受伤，近50万财产损失，而你所能得到的证据只是一枚熔化的硬币和一家被炸毁的咖啡馆？好吧，伙计。祝你好运。\n",
 
-		"SS2_ITEM_NEEDLES_NAME": "针",
+		"SS2_ITEM_NEEDLES_NAME": "针头",
 		"SS2_ITEM_NEEDLES_DESC": "命中时有<style=cIsDamage>{0}%</style>的几率<style=cIsDamage>刺痛</style>敌人，使接下来对他们的<style=cIsDamage>{1}</style>次攻击<style=cIsDamage>必定暴击</style><style=cStack>（每层+{1}次）</style>。",
 		"SS2_ITEM_NEEDLES_PICKUP": "概率标记敌人使其下次所受伤害必定暴击。",
 		"SS2_ITEM_NEEDLES_LORE": "<style=cMono>UES交付事件报告（ID219560163）已找到。\n\n播放中……</style>\n\n\"交付人员：威尔·斯特森；编号：604。大约22小时前交付人员由于异常包裹有关的外伤被获准进入UES[已编校]的医疗仓。\n\n执勤巡视时，威尔听到有一个箱子在他附近发出巨响。由于担心出现违反运输标准协议运送活体动物的情况，威尔决定检查那个箱子。实际上那个箱子里是一个装满大号缝衣针的小塑料包。包装太紧了，不安全。\n\n最终，有可能时由于判断失误，威尔决定触摸小塑料包。这导致包裹向他的方向爆裂开来，在他身上造成了许多很深的伤口。威尔很幸运地及时被人发现了。他的状态已经稳定，但还需要一段时间才能从失血休克中恢复过来。\"\n\n报告结束。",
