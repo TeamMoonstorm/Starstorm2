@@ -38,15 +38,17 @@ namespace SS2.Items
         {
             ILCursor c = new ILCursor(il);
             // teamComponent = damageDealtMessage.attacker.GetComponent<TeamComponent>();
+            int damageDealtMessageVarIndex = -1;
+            int teamComponentVarIndex = -1;
             bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdloc(0),
-                x => x.MatchLdfld<DamageDealtMessage>("attacker"),
+                x => x.MatchLdloc(out damageDealtMessageVarIndex),
+                x => x.MatchLdfld<DamageDealtMessage>(nameof(DamageDealtMessage.attacker)),
                 x => x.MatchCallvirt<GameObject>(nameof(GameObject.GetComponent)),
-                x => x.MatchStloc(2));
+                x => x.MatchStloc(out teamComponentVarIndex));
             if (b)
             {
-                c.Emit(OpCodes.Ldloc_2); //teamComponent
-                c.Emit(OpCodes.Ldloc_0); //damageDealtMessage
+                c.Emit(OpCodes.Ldloc, teamComponentVarIndex);
+                c.Emit(OpCodes.Ldloc, damageDealtMessageVarIndex);
                 c.EmitDelegate<Action<TeamComponent, DamageDealtMessage>>((t, d) =>
                 {
                     float damageFromForks = 0;
