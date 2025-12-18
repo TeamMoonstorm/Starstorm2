@@ -234,10 +234,14 @@ namespace SS2.Equipments
                 if (numItems == 1) direction = Vector3.zero;
                 Vector3 velocity = Vector3.up * 20f + direction * 10f;
 
-                PickupIndex pickupIndex = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GenerateDrop(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
-                if (pickupIndex != PickupIndex.none)
+                UniquePickup uniquePickup = RoR2.Artifacts.SacrificeArtifactManager.dropTable.GeneratePickup(RoR2.Artifacts.SacrificeArtifactManager.treasureRng);
+                if (uniquePickup.pickupIndex != PickupIndex.none)
                 {
-                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, velocity);
+                    PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                    {
+                        pickup = uniquePickup
+                    },
+                    damageReport.victimBody.corePosition, velocity);
                 }
             }
 
@@ -252,7 +256,11 @@ namespace SS2.Equipments
 
                 if (pickupIndex != PickupIndex.none)
                 {
-                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                    PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                    {
+                        pickup = new UniquePickup(pickupIndex)
+                    },
+                    damageReport.victimBody.corePosition, Vector3.up * 20f);
                 }
 
 
