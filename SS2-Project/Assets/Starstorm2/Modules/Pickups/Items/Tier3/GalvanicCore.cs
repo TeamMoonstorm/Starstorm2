@@ -1,20 +1,21 @@
-﻿using MonoMod.Cil;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using MSU;
 using MSU.Config;
 using R2API;
+using R2API.Utils;
+using RiskOfOptions.OptionConfigs;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
+using RoR2.Orbs;
+using SS2.Components;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using RoR2.Orbs;
-using SS2.Components;
-using R2API.Utils;
 
 namespace SS2.Items
 {
@@ -75,6 +76,13 @@ namespace SS2.Items
 
             healthPenaltyCalculated = ((-healthPenalty) / (healthPenalty - 1f)); //makes the value input into the config accurate (ex .2 actually removes 20% of health)
         }
+
+        public override bool IsAvailable(ContentPack conentPack)
+        {
+            return false; // Disabled due to self-healing bug
+        }
+
+
 
         private void RecalculateStatsPreventHealing(ILContext il)
         {
