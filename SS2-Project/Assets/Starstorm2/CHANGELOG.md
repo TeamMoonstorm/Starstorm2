@@ -1,6 +1,13 @@
   **Warning: content spoilers below!**
 ### 0.6.28
 * General
+    * Updated French translation thanks to DarSitam!
+    * Updated Chinese translation thanks to EternitySwarmCrowm!
+* Executioner
+    * Increased the range of Exe's Taser alt primary
+* Drones
+    * Fixed bug where Droid Head's Security drones would drop a purchasable duplicator drone when destroyed
+
 
 ### 0.6.27
 * General
