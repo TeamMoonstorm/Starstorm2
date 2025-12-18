@@ -3,10 +3,13 @@
 * General
     * Updated French translation thanks to DarSitam!
     * Updated Chinese translation thanks to EternitySwarmCrowm!
+* Items
+    * Re-enabled Galvanic Core thanks to a fix from Chinchi!
 * Executioner
-    * Increased the range of Exe's Taser alt primary
+    * Increased the range of Exe's Taser alt primary from 28m -> 36m so its easier for him to hit flying targets
 * Drones
     * Fixed bug where Droid Head's Security drones would drop a purchasable duplicator drone when destroyed
+    * Droid Head's Security drones now have a proper icon
 
 
 ### 0.6.27
