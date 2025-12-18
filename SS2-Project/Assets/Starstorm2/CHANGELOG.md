@@ -1,4 +1,7 @@
   **Warning: content spoilers below!**
+### 0.6.28
+* General
+
 ### 0.6.27
 * General
     * Lots of various fixes/cleanups to our IL Hooks that should improve stability and catch some uncommon errors. Thanks to Chinchi for this work!
