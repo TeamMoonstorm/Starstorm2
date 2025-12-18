@@ -178,11 +178,15 @@ namespace EntityStates.Lamp
         {
             PlayCrossfade("Body", "Idle", 0.3f);
             BeamController.onBeamStartGlobal -= ResolveBeam;
-            if (NetworkServer.active && healBeams.Count > 0)
+            if (NetworkServer.active && healBeams != null && healBeams.Count > 0)
             {
                 foreach (BeamController beam in healBeams)
                 {
-                    beam.BreakServer();
+                    // This isnt needed I dont think but just trying to address #882
+                    if (beam)
+                    {
+                        beam.BreakServer();
+                    }
                 }
             }
             characterBody.moveSpeed = originalMoveSpeed;
@@ -208,11 +212,15 @@ namespace EntityStates.Lamp
                         bool hasLoS = !Physics.Linecast(beam.target.transform.position, transform.position, out RaycastHit raycastHit, LayerIndex.world.mask, QueryTriggerInteraction.Ignore);
                         if (!hasLoS || between.sqrMagnitude > beamBreakDistance * beamBreakDistance)
                         {
-                            beam.BreakServer();
+                            if (beam) // For #882
+                            {
+                                beam.BreakServer();
+                            }
                         }
                         else
                         {
-                            if (ShouldDamage(beam.target))
+                            // Additional null check since it seems target might die right after this check. For #882
+                            if (beam && beam.target && ShouldDamage(beam.target))
                             {
                                 Lifto(beam.target);
                             }
@@ -252,6 +260,7 @@ namespace EntityStates.Lamp
             }
 
             HealthComponent healthComponent = hurtBox.healthComponent;
+
             if (healthComponent && healthComponent.body && hurtBox.transform)
             {
                 CharacterMotor characterMotor = healthComponent.body.characterMotor;
