@@ -3,6 +3,7 @@
 * General
     * Updated French translation thanks to DarSitam!
     * Updated Chinese translation thanks to EternitySwarmCrowm!
+    * Chirr's Empyrean unlock bug is now fixed
 * Items
     * Re-enabled Galvanic Core thanks to a fix from Chinchi!
 * Executioner
