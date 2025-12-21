@@ -17,17 +17,13 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: speedCoefficientCurve
-      fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":0.1172022670507431,"weightedMode":0,"tangentMode":0},{"time":1.0,"value":0.4000000059604645,"inTangent":-1.9113061428070069,"outTangent":-1.9113061428070069,"inWeight":0.08317577838897705,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0}]}'
-        objectValue: {fileID: 0}
     - fieldName: baseDuration
       fieldValue:
-        stringValue: 1
+        stringValue: 0.5
         objectValue: {fileID: 0}
     - fieldName: baseMaxDuration
       fieldValue:
-        stringValue: 3
+        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: baseDurationBetweenTicks
       fieldValue:
@@ -49,3 +45,65 @@ MonoBehaviour:
       fieldValue:
         stringValue: 0.5
         objectValue: {fileID: 0}
+    - fieldName: miniRadius
+      fieldValue:
+        stringValue: 8
+        objectValue: {fileID: 0}
+    - fieldName: miniDmgCoef
+      fieldValue:
+        stringValue: 0.4
+        objectValue: {fileID: 0}
+    - fieldName: miniProcCoef
+      fieldValue:
+        stringValue: 0.2
+        objectValue: {fileID: 0}
+    - fieldName: miniProcForce
+      fieldValue:
+        stringValue: 100
+        objectValue: {fileID: 0}
+    - fieldName: launchRadius
+      fieldValue:
+        stringValue: 16
+        objectValue: {fileID: 0}
+    - fieldName: launchDmgCoef
+      fieldValue:
+        stringValue: 3.5
+        objectValue: {fileID: 0}
+    - fieldName: launchProcCoef
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: launchProcForce
+      fieldValue:
+        stringValue: 350
+        objectValue: {fileID: 0}
+    - fieldName: aimVelocity
+      fieldValue:
+        stringValue: 5.5
+        objectValue: {fileID: 0}
+    - fieldName: upwardVelocity
+      fieldValue:
+        stringValue: 1.25
+        objectValue: {fileID: 0}
+    - fieldName: forwardVelocity
+      fieldValue:
+        stringValue: 2
+        objectValue: {fileID: 0}
+    - fieldName: minimumY
+      fieldValue:
+        stringValue: 0.6
+        objectValue: {fileID: 0}
+    - fieldName: fullChargePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1374955806896022290, guid: 038ce753ba3db204783b4adbd1889e8f,
+          type: 3}
+    - fieldName: launchHeat
+      fieldValue:
+        stringValue: 10
+        objectValue: {fileID: 0}
+    - fieldName: fullChargeFirePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 3710410905534351903, guid: f0940c36fd4bac649a3044825c2c8b48,
+          type: 3}

@@ -23,6 +23,7 @@ namespace SS2.Survivors
         public static HeatSkillDef _jetpackOverrideDef;
         public static BuffDef _bdPyroManiac;
         public static BuffDef _bdPyroJet;
+        public static BuffDef _bdPyroJetHiddenBoost;
 
         public override void Initialize()
         {
@@ -35,6 +36,7 @@ namespace SS2.Survivors
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
             _bdPyroManiac = AssetCollection.FindAsset<BuffDef>("bdPyroManiac");
             _bdPyroJet = AssetCollection.FindAsset<BuffDef>("bdPyroJet");
+            _bdPyroJetHiddenBoost = AssetCollection.FindAsset<BuffDef>("bdPyroJetHidden");
             _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
             On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
@@ -47,6 +49,7 @@ namespace SS2.Survivors
 
         private void DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1(On.RoR2.DotController.orig_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 orig, DotController self, GameObject attackerObject, float duration, DotController.DotIndex dotIndex, float damageMultiplier, uint? maxStacksFromAttacker, float? totalDamage, DotController.DotIndex? preUpgradeDotIndex)
         {
+            // save a reference to bodyindex hhhhhhhhhh
             if (self.victimBody.baseNameToken == "SS2_PYRO_NAME" && (preUpgradeDotIndex == DotController.DotIndex.Burn || preUpgradeDotIndex == DotController.DotIndex.PercentBurn || preUpgradeDotIndex == DotController.DotIndex.StrongerBurn))
             {
                 return;
@@ -173,8 +176,8 @@ namespace SS2.Survivors
             {
                 if (hasAnyStacks)
                 {
-                    args.armorAdd += Math.Max(3f * buffCount, 30f);
-                    args.regenMultAdd += Math.Max(0.2f * buffCount, 2f);
+                    args.armorAdd += 4f * characterBody.GetBuffCount(GetBuffDef());
+                    args.regenMultAdd += 0.2f * characterBody.GetBuffCount(GetBuffDef());
                 }
             }
         }
@@ -187,10 +190,30 @@ namespace SS2.Survivors
             private bool isOverridingSkill;
             private HeatSkillDef overrideSkill = _jetpackOverrideDef;
             private SkillLocator skillLocator;
+            private Rigidbody rb;
+            private float maxFallSpeed = 5f;
+
+            private ParticleSystem hoverL;
+            private ParticleSystem hoverR;
+            private bool hoverActive;
 
             public void OnStart()
             {
                 skillLocator = characterBody.skillLocator;
+                rb = characterBody.rigidbody;
+
+                GameObject charModel = characterBody.modelLocator.modelTransform.gameObject;
+                if (charModel != null && charModel.TryGetComponent(out ChildLocator cl))
+                {
+                    cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                    {
+                        hoverL = left;
+                    }
+                    cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
+                    {
+                        hoverR = right;
+                    }
+                }
             }
 
             public void FixedUpdate()
@@ -216,12 +239,41 @@ namespace SS2.Survivors
 
                 if (characterBody.characterMotor.isGrounded && isOverridingSkill)
                 {
-                    characterBody.SetBuffCount(buffIndex, 0);
+                    // clients dont have authority for this normally
+                    CmdRemoveBuff();
+
+                    ToggleHover(false);
 
                     isOverridingSkill = false;
 
                     skillLocator.utility.UnsetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
                 }
+            }
+
+            public void ToggleHover(bool active)
+            {
+                if (hoverL != null && hoverR != null)
+                {
+                    hoverActive = active;
+
+                    if (hoverActive)
+                    {
+                        hoverL.Play();
+                        hoverR.Play();
+                    }
+
+                    if (!hoverActive)
+                    {
+                        hoverL.Stop();
+                        hoverR.Stop();
+                    }
+                }
+            }
+
+            [Server]
+            public void CmdRemoveBuff()
+            {
+                characterBody.SetBuffCount(buffIndex, 0);
             }
         }
     }

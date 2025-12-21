@@ -16,10 +16,21 @@ namespace EntityStates.Pyro
         public static float maxFall = 4f;
         public static float snap = 0.15f;
         public static float gravModifier = 0.4f;
+        public static float heatPerTick;
+        public static float baseDurationBetweenTicks;
+
+        public static float forwardVelocity;
+        public static float upwardVelocity;
+
+        private float heatTimer = 0f;
 
         private PyroController heat;
         private bool setGravity;
         private float originalGravScale;
+
+        private ParticleSystem hoverL;
+        private ParticleSystem hoverR;
+        private Animator animator;
 
         public override void OnEnter()
         {
@@ -32,12 +43,43 @@ namespace EntityStates.Pyro
                 return;
             }
 
-            characterBody.AddTimedBuff(RoR2.RoR2Content.Buffs.WhipBoost, 0.5f, 1);
+            ChildLocator cl = GetModelChildLocator();
+            if (cl != null)
+            {
+                cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                {
+                    hoverL = left;
+                }
+                cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
+                {
+                    hoverR = right;
+                }
+            }
+
+            if (hoverL != null && hoverR != null)
+            {
+                hoverL.Play();
+                hoverR.Play();
+            }
+
+            animator = GetModelAnimator();
+            if (animator != null)
+            {
+                animator.SetBool("isHovering", true);
+                PlayCrossfade("Body", "HoverIdle", 0.1f);
+            }
 
             originalGravScale = characterMotor.gravityScale;
 
             characterBody.isSprinting = true;
             characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
+
+            Vector3 moveVector = inputBank.moveVector;
+
+            Vector3 moveVelocityVector = moveVector.normalized * 2.5f * (characterBody.moveSpeed + ((moveSpeedStat - characterBody.moveSpeed) * 0.5f));
+            Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
+            Vector3 forwardVelocityVector = new Vector3(moveVector.x, 0f, moveVector.z).normalized * forwardVelocity;
+            characterMotor.velocity = (moveVelocityVector + upwardVelocityVector + forwardVelocityVector);
         }
 
         public void SetGravityOverride(bool set)
@@ -62,6 +104,13 @@ namespace EntityStates.Pyro
             {
                 outer.SetNextStateToMain();
                 return;
+            }
+
+            heatTimer += GetDeltaTime();
+            if (heatTimer >= baseDurationBetweenTicks)
+            {
+                heatTimer -= heatTimer;
+                heat.AddHeat(-heatPerTick);
             }
 
             bool ground = Physics.Raycast(characterBody.corePosition, Vector3.down, out RaycastHit hit, hoverHeight * 3f, RoR2.LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore);
@@ -115,7 +164,16 @@ namespace EntityStates.Pyro
         public override void OnExit()
         {
             base.OnExit();
+            SetGravityOverride(false);
             characterBody.bodyFlags &= ~RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
+
+            if (animator != null) animator.SetBool("isHovering", false);
+
+            if (hoverL != null && hoverR != null)
+            {
+                hoverL.Stop();
+                hoverR.Stop();
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
