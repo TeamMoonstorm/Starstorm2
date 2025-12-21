@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4f59b83057a85408a1cb4718ca9004, type: 3}
+  m_Name: nidrsAcidBug
+  m_EditorClassIdentifier: 
+  targetItemDisplayRuleSet: {fileID: 11400000, guid: 395f6ab085f973d47821f6a6bc3a0500,
+    type: 2}
+  rules:
+  - keyAssetName: EliteVoidEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAffixVoid
+      childName: Head
+      localPos: {x: -0.08912, y: 0.03717, z: 0.08661}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: ElitePoisonEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      childName: Cap
+      localPos: {x: 0.00001, y: 0.40336, z: 0.27811}
+      localAngles: {x: 270, y: 0, z: 0}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: EliteEarthEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteMendingAntlers
+      childName: Cap
+      localPos: {x: 0.00002, y: 0.08575, z: 0.81572}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 3.6, y: 3.6, z: 3.6}
+      limbMask: 0
+  - keyAssetName: EliteIceEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      childName: Cap
+      localPos: {x: 0, y: 0.78454, z: 0}
+      localAngles: {x: 90, y: 180, z: 0}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: EliteHauntedEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      childName: Cap
+      localPos: {x: 0.00001, y: 0.6256, z: 0.10711}
+      localAngles: {x: 270, y: 0, z: 0}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: EliteLightningEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Cap
+      localPos: {x: 0.00002, y: 0.28743, z: 1.0289}
+      localAngles: {x: 289.4986, y: 0, z: 0}
+      localScale: {x: 1.15, y: 1.15, z: 1.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Cap
+      localPos: {x: 0.00002, y: 0.65764, z: 0.69455}
+      localAngles: {x: 283.3316, y: 0, z: 0}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: EliteFireEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Cap
+      localPos: {x: 0.34226, y: 0.45001, z: 0.55001}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Cap
+      localPos: {x: -0.5, y: 0.45, z: 0.55}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: -0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: EliteLunarEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      childName: Head
+      localPos: {x: -0.21832, y: 0.91401, z: 0}
+      localAngles: {x: 270, y: 0, z: 0}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: FlowerTurret
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFlowerTurret
+      childName: Cap
+      localPos: {x: 1.07624, y: 1.21695, z: 0.83608}
+      localAngles: {x: 303.5615, y: 242.96, z: 354.0084}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: EliteBeadEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteBeadSpike
+      childName: Cap
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: EliteAurelioniteEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteAurelioniteEquipment
+      childName: Cap
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
