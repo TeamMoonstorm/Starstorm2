@@ -227,7 +227,7 @@ namespace EntityStates.Pyro
                         ProjectileManager.instance.FireProjectile(
                             fullChargeFirePrefab,
                             characterBody.footPosition,
-                            Util.QuaternionSafeLookRotation(GetAimRay().direction),
+                            transform.rotation,
                             gameObject,
                             damageCoefficient * damageStat,
                             0f,
