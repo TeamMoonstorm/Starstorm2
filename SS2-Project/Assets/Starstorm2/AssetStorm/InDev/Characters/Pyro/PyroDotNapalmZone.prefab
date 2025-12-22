@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 2560829006886464098}
   - component: {fileID: 6286932431495532617}
   - component: {fileID: 5650472483982727580}
-  - component: {fileID: 7800157434451646354}
+  - component: {fileID: 52618744513908513}
   m_Layer: 0
-  m_Name: PyroDotZone
+  m_Name: PyroDotNapalmZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -146,10 +146,10 @@ MonoBehaviour:
   attackerFiltering: 2
   impactEffect: {fileID: 0}
   forceVector: {x: 0, y: 0, z: 0}
-  overlapProcCoefficient: 0.5
+  overlapProcCoefficient: 0.2
   fireFrequency: 1
   resetFrequency: 3
-  lifetime: 7
+  lifetime: 4
   onBegin:
     m_PersistentCalls:
       m_Calls:
@@ -216,7 +216,7 @@ MonoBehaviour:
     damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
---- !u!114 &7800157434451646354
+--- !u!114 &52618744513908513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -275,8 +275,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.67290825, b: 0, a: 1}
-  m_Intensity: 10
-  m_Range: 6.48
+  m_Intensity: 4
+  m_Range: 3.24
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -570,7 +570,7 @@ Transform:
   m_GameObject: {fileID: 7346921639535014820}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4587414295750039298}
@@ -688,7 +688,7 @@ MonoBehaviour:
   maxDistance: 7
   offsetDistance: 3
   changePositionOnly: 0
-  realignOnEnable: 0
+  realignOnEnable: 1
   protectForHorizontalPlacement: 0
   randomYRotationMax: 0
 --- !u!1 &7347695063939651777
@@ -1463,7 +1463,7 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 0, z: -0.1}
     m_Rotation: {x: 0, y: 0, z: 0}
     m_Scale: {x: 1, y: 1, z: 1}
     placementMode: 0
@@ -1663,7 +1663,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 10
       minScalar: 5
       maxCurve:
         serializedVersion: 2

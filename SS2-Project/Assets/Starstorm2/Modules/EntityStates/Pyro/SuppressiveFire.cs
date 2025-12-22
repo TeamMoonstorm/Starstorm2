@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Projectile;
 using SS2;
 using SS2.Components;
 using System.Collections;
@@ -14,6 +15,8 @@ namespace EntityStates.Pyro
         public static float baseTickFrequency;
         public static float baseEntryDuration;
         public static float pressureDuration;
+        [Tooltip("The ratio of how many per second should ignite. Hard to explain :(")]
+        public static float igniteFrequencyCoefficient;
 
         private float tickRate;
         private float stopwatch;
@@ -35,8 +38,13 @@ namespace EntityStates.Pyro
         public static float radius;
         public static string muzzleString;
 
+        public static GameObject projectilePrefab;
+        public static GameObject ignitePrefab;
         public static GameObject impactEffectPrefab;
         public static GameObject flameEffectPrefab;
+
+        private float igniteFrequency;
+        private float fired;
 
         private Transform flamethrowerTransform;
 
@@ -45,17 +53,6 @@ namespace EntityStates.Pyro
         private ParticleSystem flames;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
-        private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
-        {
-            maxPitch = 85f,
-            minPitch = -85f,
-            pivotVerticalOffset = 1f,
-            idealLocalCameraPos = cameraPos,
-            wallCushion = 0.1f,
-        };
-
-        [HideInInspector]
-        public static Vector3 cameraPos = new Vector3(0f, -0.1f, -7.2f);
 
         public override void OnEnter()
         {
@@ -73,6 +70,9 @@ namespace EntityStates.Pyro
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
 
+            // keeps it roughly ~3 fire pools a second, regardless of tick rate, i hope
+            igniteFrequency = .32f / tickRate;
+
             characterBody.SetAimTimer(duration * 2f);
 
             Transform modelTransform = GetModelTransform();
@@ -81,10 +81,6 @@ namespace EntityStates.Pyro
                 childLocator = modelTransform.GetComponent<ChildLocator>();
                 //flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
             }
-
-            //impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
-
-            //playanimation
         }
 
         public override void FixedUpdate()
@@ -93,7 +89,7 @@ namespace EntityStates.Pyro
 
             stopwatch += Time.fixedDeltaTime;
 
-            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
+            if ((stopwatch >= entryDuration && !hasBegunFlamethrower) || (HasBuff(SS2.SS2Content.Buffs.bdPyroPressure) && !hasBegunFlamethrower))
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
@@ -117,6 +113,7 @@ namespace EntityStates.Pyro
                 if (heatStopwatch > baseTickFrequency && pc != null)
                 {
                     pc.AddHeat(heatPerTick);
+                    heatStopwatch -= baseTickFrequency;
                 }
             }
 
@@ -133,7 +130,7 @@ namespace EntityStates.Pyro
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
 
-            if (flamethrowerTransform)
+            if (flamethrowerTransform != null)
             {
                 Destroy(flamethrowerTransform.gameObject);
             }
@@ -141,8 +138,6 @@ namespace EntityStates.Pyro
 
         private void Fire(string muzzleString)
         {
-            DamageType damageType;
-
             characterBody.SetAimTimer(duration * 2f);
 
             float damage = tickDamageCoefficient * damageStat;
@@ -150,47 +145,46 @@ namespace EntityStates.Pyro
 
             //Debug.Log("Firing");
 
+            GameObject prefab = projectilePrefab;
+
+            if (fired >= igniteFrequency)
+            {
+                prefab = ignitePrefab;
+                fired = 0;
+            }
+
+            DamageTypeCombo dtc = new DamageTypeCombo();
+            dtc.damageType = (Util.CheckRoll((igniteChanceHighHeat), characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
+
             if (pc.heat >= heatIgniteThreshold)
             {
                 damage *= 1.5f;
                 color = DamageColorIndex.WeakPoint;
+                dtc.damageType = DamageType.IgniteOnHit;
             }
-
-            damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
 
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                new BulletAttack
-                {
-                    owner = gameObject,
-                    weapon = gameObject,
-                    origin = aimRay.origin,
-                    aimVector = aimRay.direction,
-                    minSpread = 0f,
-                    damage = damage * damageStat,
-                    force = force,
-                    muzzleName = muzzleString,
-                    hitEffectPrefab = impactEffectPrefab,
-                    isCrit = RollCrit(), //to-do: make crits come in short bursts like tf2
-                    radius = radius,
-                    falloffModel = BulletAttack.FalloffModel.None,
-                    stopperMask = LayerIndex.world.mask,
-                    procCoefficient = tickProcCoefficient,
-                    maxDistance = maxDistance,
-                    smartCollision = true,
-                    damageType = damageType,
-                    damageColorIndex = color
-                }.Fire();
-
-                if (flamethrowerTransform)
-                    flamethrowerTransform.forward = aimRay.direction;
-
-                if (characterMotor)
-                    base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);
-
-                //Debug.Log("Fired");
+                ProjectileManager.instance.FireProjectile(
+                    prefab,
+                    aimRay.origin,
+                    Util.QuaternionSafeLookRotation(aimRay.direction),
+                    gameObject,
+                    damage,
+                    force,
+                    RollCrit(),
+                    color,
+                    null,
+                    -1,
+                    dtc
+                    );
             }
+
+            if (flamethrowerTransform)
+                flamethrowerTransform.forward = aimRay.direction;
+
+            fired++;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
