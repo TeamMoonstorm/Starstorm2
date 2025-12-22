@@ -30,7 +30,7 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* [Buns](https://github.com/Hevia), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade
+* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade, Chinchi
 
 With previous and one-off code contributions by...
 * Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
