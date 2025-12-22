@@ -94,7 +94,7 @@ namespace EntityStates.Pyro
             {
                 flamethrowerStopwatch += Time.fixedDeltaTime;
                 float tickRate = baseTickFrequency / attackSpeedStat;
-                if (flamethrowerStopwatch > tickRate)
+                while (flamethrowerStopwatch > tickRate)
                 {
                     //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
