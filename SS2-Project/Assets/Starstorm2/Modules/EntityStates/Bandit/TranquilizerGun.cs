@@ -15,6 +15,9 @@ namespace EntityStates.Bandit
         public override void ModifyBullet(BulletAttack bulletAttack)
         {
             base.ModifyBullet(bulletAttack);
+            bulletAttack.damage = SS2.Survivors.Bandit.tranqDamageAmount;
+            bulletAttack.radius = SS2.Survivors.Bandit.tranqBulletRadius;
+            bulletAttack.damageType = DamageTypeCombo.GenericPrimary; 
             bulletAttack.falloffModel = BulletAttack.FalloffModel.None;
             bulletAttack.tracerEffectPrefab = muzzleFlashPrefab;
             bulletAttack.hitEffectPrefab = muzzleFlashPrefab;
