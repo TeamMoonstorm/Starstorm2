@@ -120,7 +120,7 @@ namespace EntityStates.Pyro
 
         private void Fire(string muzzleString)
         {
-            characterBody.SetAimTimer(duration * 2f);
+            characterBody.SetAimTimer(2f);
 
             Ray aimRay = GetAimRay();
             if (isAuthority)
