@@ -94,7 +94,7 @@ namespace EntityStates.Pyro
             {
                 flamethrowerStopwatch += Time.fixedDeltaTime;
                 float tickRate = baseTickFrequency / attackSpeedStat;
-                if (flamethrowerStopwatch > tickRate)
+                while (flamethrowerStopwatch > tickRate)
                 {
                     //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
@@ -120,7 +120,7 @@ namespace EntityStates.Pyro
 
         private void Fire(string muzzleString)
         {
-            characterBody.SetAimTimer(duration * 2f);
+            characterBody.SetAimTimer(2f);
 
             Ray aimRay = GetAimRay();
             if (isAuthority)

@@ -67,6 +67,9 @@ GameObject:
   - component: {fileID: 8541385504273651911}
   - component: {fileID: -1706618430454559788}
   - component: {fileID: 6251413147857136097}
+  - component: {fileID: 7066684420382283886}
+  - component: {fileID: 5959718323879960151}
+  - component: {fileID: 600679860808542752}
   m_Layer: 14
   m_Name: PyroTickProjectile
   m_TagString: Untagged
@@ -83,8 +86,8 @@ Transform:
   m_GameObject: {fileID: 6711194307538743785}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.56, y: 2.56, z: 2.56}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1716408996914539070}
   m_Father: {fileID: 0}
@@ -153,7 +156,7 @@ MonoBehaviour:
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
-  authorityHandlesCollisionEvents: 0
+  authorityHandlesCollisionEvents: 1
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
   allowPrediction: 1
@@ -298,9 +301,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEffect: {fileID: 0}
-  lifetime: 0.7
+  lifetime: 0.45
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 50
+  desiredForwardSpeed: 80
   updateAfterFiring: 0
   enableVelocityOverLifetime: 1
   velocityOverLifetime:
@@ -430,3 +433,148 @@ MonoBehaviour:
   minimumPhysicsStepsToKeepAliveAfterImpact: 0
   transformSpace: 0
   explodeOnLifeTimeExpiration: 0
+--- !u!114 &7066684420382283886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711194307538743785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 488236779, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useOverallCurveOnly: 1
+  resetOnAwake: 1
+  resetOnDisable: 0
+  useUnscaledTime: 0
+  curveX:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveY:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  curveZ:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  overallCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0010986328
+      value: 0.40514904
+      inSlope: 1.0021735
+      outSlope: 1.0021735
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.066131145
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0.31242666
+      outSlope: 0.31242666
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.08122939
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  timeMax: 0.45
+  ignoreResetOnEnable: 0
+  loop: 0
+--- !u!114 &5959718323879960151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711194307538743785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bb5bf0506751f242ad27058948566d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageFalloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  forceFalloffCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0010986328
+      value: 1
+      inSlope: -4.7115345
+      outSlope: -4.7115345
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.2643277
+    - serializedVersion: 3
+      time: 0.39374518
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.06967929
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  getLifeTimeFromProjectileSimple: {fileID: 6486596261103046868}
+  lifetime: 0.45
+--- !u!114 &600679860808542752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6711194307538743785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095ac4ef716171b4f9f28bfd4926fe98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physForceFlags: 17

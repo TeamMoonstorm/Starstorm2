@@ -34,12 +34,23 @@ namespace SS2.Components
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
         private Text uiHeatText;
 
+        //jump air control stuff
+        private CharacterMotor characterMotor;
+        //able to be set by other parts of code, and this script will handle ramping it back to normal
+            //that's professional speak for I couldn't be fucked to make an entitystate and threw it in this component
+        public float? cachedAirControl;
+        private float originalAirControl;
+
+        [SerializeField, Tooltip("time multiplier for how long it should take to ramp air control back to normal when cachedAirControl is modified")]
+        private float aircontroldecay;
+
         [SyncVar(hook = "OnHeatModified")]
         private float _heat;
         public float heat
         {
             get
             {
+
                 return _heat;
             }
         }
@@ -71,6 +82,13 @@ namespace SS2.Components
             }
         }
 
+        public void Awake()
+        {
+            characterBody = GetComponent<CharacterBody>();
+            characterMotor = GetComponent<CharacterMotor>();
+            originalAirControl = characterMotor.airControl;
+        }
+
         public void OnEnable()
         {
             OverlayCreationParams heatOverlayCreationParams = new OverlayCreationParams
@@ -81,7 +99,6 @@ namespace SS2.Components
             heatOverlayController = HudOverlayManager.AddOverlay(gameObject, heatOverlayCreationParams);
             heatOverlayController.onInstanceAdded += OnHeatOverlayInstanceAdded;
             heatOverlayController.onInstanceRemove += OnHeatOverlayInstanceRemoved;
-            characterBody = GetComponent<CharacterBody>();
 
             hits = new List<HurtBox>();
             bodySearch = new SphereSearch();
@@ -153,6 +170,16 @@ namespace SS2.Components
                         characterBody.SetBuffCount(SS2Content.Buffs.bdPyroManiac.buffIndex, (int)burnCount);
 
                     AddHeat(burnCount * 0.25f);
+                }
+            }
+
+            if (cachedAirControl.HasValue)
+            {
+                cachedAirControl += Mathf.Clamp(Time.fixedDeltaTime / aircontroldecay, 0, originalAirControl);
+                characterMotor.airControl = cachedAirControl.Value;
+                if(cachedAirControl.Value >= originalAirControl)
+                {
+                    cachedAirControl = null;
                 }
             }
         }

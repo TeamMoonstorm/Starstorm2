@@ -16,7 +16,7 @@ namespace EntityStates.Pyro
         private float duration;
         private float maxDuration;
 
-        private PyroController pc;
+        private PyroController pyroController;
 
         public static float baseDurationBetweenTicks;
         private float tickRate;
@@ -61,8 +61,8 @@ namespace EntityStates.Pyro
         {
             base.OnEnter();
 
-            pc = GetComponent<PyroController>();
-            if (pc == null)
+            pyroController = GetComponent<PyroController>();
+            if (pyroController == null)
             {
                 outer.SetNextStateToMain();
                 SS2Log.Error("PyroLaunch.OnEnter : Failed to find PyroController on body! Is this a Pyro?");
@@ -114,7 +114,7 @@ namespace EntityStates.Pyro
             {
                 if (inputBank.skill3.down && !hasLaunched)
                 {
-                    if (characterMotor.isGrounded && pc.heat > 0)
+                    if (characterMotor.isGrounded && pyroController.heat > 0)
                     {
                         // recalc each time in case of attack speed changes
                         tickRate = baseDurationBetweenTicks / attackSpeedStat;
@@ -137,7 +137,7 @@ namespace EntityStates.Pyro
                         if (heatTimer >= baseDurationBetweenTicks)
                         {
                             heatTimer -= heatTimer;
-                            pc.AddHeat(-heatPerTick);
+                            pyroController.AddHeat(-heatPerTick);
                         }
                     }
                     else
@@ -182,7 +182,7 @@ namespace EntityStates.Pyro
         {
             if (!hasLaunched)
             {
-                pc.AddHeat(Mathf.Max(-launchHeat));
+                pyroController.AddHeat(Mathf.Max(-launchHeat));
 
                 if (NetworkServer.active)
                 {
@@ -214,12 +214,12 @@ namespace EntityStates.Pyro
                         falloffModel = BlastAttack.FalloffModel.None,
                         attackerFiltering = AttackerFiltering.NeverHitSelf,
                         teamIndex = teamComponent.teamIndex,
-                        position = transform.position,
                         attacker = gameObject,
                         baseForce = launchProcForce,
                         crit = RollCrit()
                     };
 
+                    launchBlast.position = transform.position;
                     launchBlast.Fire();
 
                     if (hasMax)
@@ -244,6 +244,8 @@ namespace EntityStates.Pyro
                     Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
                     characterMotor.Motor.ForceUnground();
                     characterMotor.velocity = (aimVelocityVector + upwardVelocityVector + forwardVelocityVector) * (charge);
+                    characterMotor.airControl = 0;
+                    pyroController.cachedAirControl = 1 - charge;
 
                     outer.SetNextStateToMain();
                 }
