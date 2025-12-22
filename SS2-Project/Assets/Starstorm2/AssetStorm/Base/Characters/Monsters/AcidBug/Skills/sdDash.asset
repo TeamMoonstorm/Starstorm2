@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdAcidBugPrimary
+  m_Name: sdDash
   m_EditorClassIdentifier: 
-  skillName: Acid
-  skillNameToken: SS2_ACIDBUG_PRIMARY_NAME
-  skillDescriptionToken: SS2_ACIDBUG_PRIMARY_DESC
+  skillName: Dash
+  skillNameToken: SS2_ACIDBUG_SECONDARY_NAME
+  skillDescriptionToken: SS2_ACIDBUG_SECONDARY_DESC
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 95a9d09a16366024e86121a2dac2c8e9, type: 3}
+  icon: {fileID: 21300000, guid: 7396109387b621949897c35a758d1a51, type: 3}
   activationStateMachineName: Body
   activationState:
-    _typeName: EntityStates.AcidBug.FireAcid, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.AcidBug.Dash, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 7
+  baseRechargeInterval: 4
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1

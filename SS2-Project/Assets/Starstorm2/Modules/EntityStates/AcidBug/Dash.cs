@@ -8,9 +8,9 @@ namespace EntityStates.AcidBug
 {
     public class Dash : BaseSkillState
     {
-        private static float minDistance = 5f;
-        private static float maxDistance = 12f;
-        private static float baseDuration = 0.3f;
+        private static float minDistance = 6f;
+        private static float maxDistance = 18f;
+        private static float baseDuration = .275f;
 
         private static int maxRepeats = 1;
         private static float repeatPercentChance = 40f;
@@ -97,12 +97,14 @@ namespace EntityStates.AcidBug
             if (isAuthority)
             {
                 rigidbodyMotor.AddDisplacement(dashVector * speed * Time.fixedDeltaTime);
+                rigidbody.angularVelocity = Vector3.zero;
+                rigidbody.MoveRotation(Util.QuaternionSafeLookRotation(inputBank.aimDirection));
 
                 if (fixedAge >= duration)
                 {
                     if (shouldRepeat)
                     {
-                        outer.SetNextState(new Dash { repeatCount = repeatCount++ });
+                        outer.SetNextState(new Dash { repeatCount = repeatCount + 1 });
                     }
                     else
                     {

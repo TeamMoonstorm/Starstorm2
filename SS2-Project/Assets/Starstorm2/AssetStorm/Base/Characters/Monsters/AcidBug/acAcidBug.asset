@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: acAcidBug
   m_EditorClassIdentifier: 
   assets:
+  - {fileID: 11400000, guid: 6ba34c0b09da033408b3dcab3d6c12bb, type: 2}
+  - {fileID: 1843891229009739, guid: fe7ec5caab8679b4c86a37155098fc85, type: 3}
+  - {fileID: 11400000, guid: de45b25c74f5a2d44a6b5c084047fec2, type: 2}
   - {fileID: 1350093703079404, guid: 33e49c07a8d8cb542a70ef0543f65fd2, type: 3}
   - {fileID: 11400000, guid: 7517cee915f39d244bd750d788970bb9, type: 2}
   - {fileID: 11400000, guid: 1b2ef4e494fdd8644b39c62eea397e69, type: 2}
@@ -30,11 +33,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3d7c2bde279f44047bc4d8b3424163e8, type: 2}
   - {fileID: 11400000, guid: a03c37aaa11a7b347be455f06cc62df3, type: 2}
   - {fileID: 1716089380869272, guid: 3af0afc2600162344a0c20433d998726, type: 3}
+  - {fileID: 1760327921723487, guid: dd37c65006a3fb84491c0ca1c9c383a3, type: 3}
+  - {fileID: 2890170479074595321, guid: 9a587d645d0a1cb42821cdf78eed83e9, type: 3}
   - {fileID: 7725599883288367558, guid: 8f6b9923fb15d5440b82347f9ddba82d, type: 3}
   - {fileID: 11400000, guid: 41a9aea09b52caa46939d2ccf7e2ea48, type: 2}
-  - {fileID: 2890170479074595321, guid: 9a587d645d0a1cb42821cdf78eed83e9, type: 3}
-  - {fileID: 1760327921723487, guid: dd37c65006a3fb84491c0ca1c9c383a3, type: 3}
-  bodyPrefab: {fileID: 1760327921723487, guid: dd37c65006a3fb84491c0ca1c9c383a3, type: 3}
+  bodyPrefab: {fileID: 7725599883288367558, guid: 8f6b9923fb15d5440b82347f9ddba82d,
+    type: 3}
   masterPrefab: {fileID: 2890170479074595321, guid: 9a587d645d0a1cb42821cdf78eed83e9,
     type: 3}
   monsterCardProvider: {fileID: 11400000, guid: 41a9aea09b52caa46939d2ccf7e2ea48,

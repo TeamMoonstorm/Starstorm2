@@ -21,7 +21,8 @@ namespace EntityStates.AcidBug
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-            
+            rigidbodyMotor.moveVector = Vector3.zero;
+
             PlayAnimation("FullBody, Override", "ChargeAcid", "ChargeAcid.playbackRate", duration);
             Util.PlaySound(enterSoundString, gameObject);
             Transform muzzle = FindModelChild("Muzzle");
@@ -62,10 +63,10 @@ namespace EntityStates.AcidBug
     {
         public static GameObject projectilePrefab;
         public static GameObject muzzleEffectPrefab;
-        private static float minSpeed = 80f;
-        private static float maxSpeed = 100f;
+        private static float minSpeed = 40f;
+        private static float maxSpeed = 70f;
         private static float minSpread = 2f;
-        private static float maxSpread = 15f;
+        private static float maxSpread = 10f;
         private static float spreadYaw = 2f;
         private static float spreadPitch = 1f;
         private static int projectileCount = 3;

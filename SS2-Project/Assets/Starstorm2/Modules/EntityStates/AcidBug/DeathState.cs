@@ -13,11 +13,11 @@ namespace EntityStates.AcidBug
         private static string initialSoundString;
         private static string deathSoundString;
 
-        private static float forceAmount = 20f;
+        private static float extraForce = 60f;
         private static float forceMultiplier = 2f;
 
-        private static float deathDuration = 2f;
-        private static float extraGravity = 1f;
+        private static float deathDuration = 8f;
+        private static float extraGravity = 0.33f;
 
         private RigidbodyCollisionListener rigidbodyCollisionListener;
 
@@ -30,19 +30,27 @@ namespace EntityStates.AcidBug
             }
 
             public DeathState deathState;
-
         }
+
+        public override bool shouldAutoDestroy => false;
+
         public override void OnEnter()
         {
             base.OnEnter();
             Util.PlaySound(initialSoundString, gameObject);
             if (rigidbodyMotor)
             {
-                rigidbodyMotor.forcePID.enabled = false;
-                rigidbodyMotor.rigid.useGravity = true;
-                rigidbodyMotor.rigid.AddForce(Vector3.up * forceAmount, ForceMode.Force);
-                rigidbody.velocity *= forceMultiplier;
-                rigidbodyMotor.rigid.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                rigidbodyMotor.enabled = false;
+                rigidbody.useGravity = true;
+                rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+                if (NetworkServer.active && TryGetComponent(out SS2.Components.AcidBugForceCollector forceCollector))
+                {
+                    var physForceFlags = PhysForceInfo.Create();
+                    physForceFlags.resetVelocity = true;
+                    physForceFlags.force = forceCollector.force * forceMultiplier + forceCollector.force.normalized * extraForce;
+                    healthComponent.TakeDamageForce(physForceFlags);
+                }
             }
             if (rigidbodyDirection)
             {
@@ -50,7 +58,7 @@ namespace EntityStates.AcidBug
             }
             if (initialExplosionEffect && characterBody)
             {
-                EffectManager.SpawnEffect(deathExplosionEffect, new EffectData
+                EffectManager.SpawnEffect(initialExplosionEffect, new EffectData
                 {
                     origin = characterBody.corePosition,
                 }, false);
@@ -70,7 +78,7 @@ namespace EntityStates.AcidBug
             base.FixedUpdate();
             if (rigidbody)
             {
-                rigidbody.AddForce(-Physics.gravity * extraGravity, ForceMode.Acceleration);
+                rigidbody.AddForce(Physics.gravity * extraGravity, ForceMode.Acceleration);
             }
             if (NetworkServer.active)
             {

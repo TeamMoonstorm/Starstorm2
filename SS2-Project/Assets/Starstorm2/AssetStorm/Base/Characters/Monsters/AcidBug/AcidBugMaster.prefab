@@ -163,8 +163,8 @@ MonoBehaviour:
     t: -Infinity
   prioritizePlayers: 0
   copyLeaderTarget: 0
-  aimVectorDampTime: 0.03
-  aimVectorMaxSpeed: 180
+  aimVectorDampTime: 0.02
+  aimVectorMaxSpeed: 720
   selectedSkilldriverName: 
   shouldMissFirstOffScreenShot: 1
   forceUpdateEveryFrame: 0
@@ -262,7 +262,7 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 2
+  driverUpdateTimerOverride: -1
   resetCurrentEnemyOnNextDriverSelection: 0
   noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
@@ -287,18 +287,18 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 16
+  minDistance: 0
   maxDistance: 32
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
-  moveTargetType: 2
+  moveTargetType: 0
   activationRequiresTargetLoS: 1
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 1
-  movementType: 2
+  movementType: 0
   moveInputScale: 1
   aimVectorDampTimeOverride: -1
   aimVectorMaxSpeedOverride: -1
@@ -354,9 +354,9 @@ MonoBehaviour:
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0
-  driverUpdateTimerOverride: 2
+  driverUpdateTimerOverride: 0.1
   resetCurrentEnemyOnNextDriverSelection: 0
-  noRepeat: 1
+  noRepeat: 0
   nextHighPriorityOverride: {fileID: 0}
 --- !u!114 &-8020545811303096818
 MonoBehaviour:
@@ -394,7 +394,7 @@ MonoBehaviour:
   moveInputScale: 1
   aimVectorDampTimeOverride: -1
   aimVectorMaxSpeedOverride: -1
-  aimType: 1
+  aimType: 0
   ignoreNodeGraph: 1
   shouldSprint: 0
   shouldFireEquipment: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
   aimVectorDampTimeOverride: -1
   aimVectorMaxSpeedOverride: -1
   aimType: 1
-  ignoreNodeGraph: 1
+  ignoreNodeGraph: 0
   shouldSprint: 0
   shouldFireEquipment: 0
   shouldTapButton: 0
@@ -471,7 +471,7 @@ MonoBehaviour:
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
-  minDistance: 0
+  minDistance: 16
   maxDistance: 40
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0

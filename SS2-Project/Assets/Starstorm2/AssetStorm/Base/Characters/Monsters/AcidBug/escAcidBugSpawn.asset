@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escDash
+  m_Name: escAcidBugSpawn
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.AcidBug.Dash, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.AcidBug.SpawnState, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: effectPrefab
+    - fieldName: duration
       fieldValue:
-        stringValue: 
-        objectValue: {fileID: 1843891229009739, guid: fe7ec5caab8679b4c86a37155098fc85,
-          type: 3}
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: spawnSoundString
+      fieldValue:
+        stringValue: ChirrDashStart
+        objectValue: {fileID: 0}

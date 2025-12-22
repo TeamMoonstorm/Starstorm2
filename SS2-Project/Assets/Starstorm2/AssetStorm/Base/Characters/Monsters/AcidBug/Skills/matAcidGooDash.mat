@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matAcidBugGooDecal
-  m_Shader: {fileID: 4800000, guid: a1aa4ac13f4489e44809dc42a99f56b3, type: 2}
+  m_Name: matAcidGooDash
+  m_Shader: {fileID: 4800000, guid: 6294c93e1c9048742a30db0ae205fdf9, type: 2}
   m_ValidKeywords:
-  - CLOUD
+  - EMISSIONFROMALBEDO
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 1
+  m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -22,19 +22,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 12, y: 12}
+        m_Texture: {fileID: 2800000, guid: 85316a7c7d1f2a64e870e82eb86ba836, type: 3}
+        m_Scale: {x: 3, y: 3}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 85316a7c7d1f2a64e870e82eb86ba836, type: 3}
-        m_Scale: {x: 3, y: 4}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 751833f11fee2be41a5bd7572df89a18, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: 751833f11fee2be41a5bd7572df89a18, type: 3}
+        m_Texture: {fileID: 2800000, guid: d47a1b36b21286e4faa1cdd9092ee28b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
@@ -47,43 +43,37 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBoost: 7.51
-    - _AngleLimit: 0.73
+    - _AlphaBoost: 1.9
     - _BumpScale: 1
-    - _CloudOn: 1
-    - _Cutoff: 0.5
-    - _DecalBlendMode: 1
-    - _DecalDstBlend: 1
-    - _DecalLayer: 1
-    - _DecalSrcBlend: 1
+    - _CloudNormalMap: 0
+    - _Cull: 2
+    - _Cutoff: 0.31
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EmissionFromAlbedo: 1
+    - _ExternalAlpha: 1
+    - _ExtrusionStrength: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _LimitTo: 0
-    - _MaskMultiplier: 1
-    - _MaskNormals: 0
+    - _InvFade: 1.4
     - _Metallic: 0
     - _Mode: 0
-    - _NormalBlendMode: 0
-    - _NormalMultiplier: 1
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RampInfo: 1.95
-    - _Smoothness: 0
+    - _RampInfo: 3
     - _SmoothnessTextureChannel: 0
-    - _SpecularExponent: 9.13
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
-    - _SpecularStrength: 0.25
+    - _SpecularStrength: 0
     - _SrcBlend: 1
     - _UVSec: 0
-    - _UseAtlas: 0
+    - _VertexAlphaOn: 0
     - _ZWrite: 1
     m_Colors:
-    - _AtlasCoord: {r: 0, g: 0, b: 0, a: 0}
-    - _AtlasSize: {r: 4, g: 4, b: 0, a: 0}
-    - _Color: {r: 0.41995782, g: 2.7596564, b: 0, a: 1}
-    - _CutoffScroll: {r: 1, g: -1.5, b: -1, a: 1}
-    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CutoffScroll: {r: 50, g: 8, b: 4, a: 6}
+    - _EmissionColor: {r: 0.046885528, g: 0.14117648, b: 0.007843133, a: 1}
+    - _TintColor: {r: 0.6181746, g: 2.270603, b: 0.21398352, a: 1}
   m_BuildTextureStacks: []

@@ -7,7 +7,7 @@ namespace EntityStates.AcidBug.Mine
 {
     public class Arming : EntityState
     {
-        private static float duration = 0.5f;
+        private static float duration = 0.4f;
         private ProjectileStickOnImpact stickOnImpact;
         public override void OnEnter()
         {
@@ -34,6 +34,7 @@ namespace EntityStates.AcidBug.Mine
         private ProjectileSphereTargetFinder targetFinder;
         private ProjectileTargetComponent targetComponent;
         private static float triggerRadius = 7f;
+        private static float maxDuration = 5f;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -52,7 +53,7 @@ namespace EntityStates.AcidBug.Mine
 
             if (NetworkServer.active)
             {
-                if (targetComponent.target != null)
+                if (targetComponent.target != null || fixedAge >= maxDuration)
                 {
                     outer.SetNextState(new PreDetonate());
                 }
@@ -72,7 +73,13 @@ namespace EntityStates.AcidBug.Mine
     {
         private static float warningRadius = 9f;
         private static float duration = 0.75f;
-        private static string enterSoundString = ""; 
+        private static string enterSoundString = "";
+
+        private static float minEmission = 0.1f;
+        private static float maxEmission = 1f;
+
+        private Renderer modelRenderer;
+        private MaterialPropertyBlock propertyBlock;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -90,11 +97,28 @@ namespace EntityStates.AcidBug.Mine
                 }
                 warningTransform.gameObject.SetActive(true);
             }
+
+            var model = FindModelChild("AcidBalls");
+            if (model && model.TryGetComponent(out Renderer renderer))
+            {
+                propertyBlock = new MaterialPropertyBlock();
+                modelRenderer = renderer;
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (modelRenderer)
+            {
+                float t = fixedAge / duration;
+                float emPower = Mathf.Lerp(minEmission, maxEmission, t);
+                modelRenderer.GetPropertyBlock(propertyBlock);
+                propertyBlock.SetFloat("_EmPower", emPower);
+                modelRenderer.SetPropertyBlock(propertyBlock);
+            }
+            
 
             if (NetworkServer.active && fixedAge >= duration)
             {
@@ -108,7 +132,7 @@ namespace EntityStates.AcidBug.Mine
         public static GameObject explosionEffectPrefab;
 
         private static float blastRadius = 9f;
-        private static float damageCoefficient = 1f;
+        private static float damageCoefficient = 3f;
         private static float force = 300f;
         public override void OnEnter()
         {
@@ -132,7 +156,7 @@ namespace EntityStates.AcidBug.Mine
             blastAttack.procCoefficient = projectileController.procCoefficient;
             blastAttack.baseDamage = projectileDamage.damage * damageCoefficient;
             blastAttack.baseForce = force;
-            blastAttack.falloffModel = BlastAttack.FalloffModel.None;
+            blastAttack.falloffModel = BlastAttack.FalloffModel.HalfLinear;
             blastAttack.crit = projectileDamage.crit;
             blastAttack.radius = blastRadius;
             blastAttack.position = transform.position;

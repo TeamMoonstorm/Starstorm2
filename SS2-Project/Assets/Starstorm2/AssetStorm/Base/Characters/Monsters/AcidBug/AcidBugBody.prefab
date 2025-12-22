@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2420965882870212041}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.16799927, z: 0}
+  m_LocalPosition: {x: 0, y: -1.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -243,7 +243,7 @@ MonoBehaviour:
   Importance: -1
   inLava: 0
   baseNameToken: SS2_ACIDBUG_BODY_NAME
-  subtitleNameToken: SS2_ACIDBUG_BODY_SUBTITLE
+  subtitleNameToken: 
   bodyFlags: 0
   lavaCooldown: 0.2
   shieldBrokeSinceDangerCheck: 0
@@ -252,8 +252,8 @@ MonoBehaviour:
   baseMaxHealth: 100
   baseRegen: 0
   baseMaxShield: 0
-  baseMoveSpeed: 30
-  baseAcceleration: 300
+  baseMoveSpeed: 21
+  baseAcceleration: 160
   baseJumpPower: 0
   baseDamage: 6
   baseAttackSpeed: 1
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725599883288367558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -1954827382, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -444,17 +444,17 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725599883288367558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -2053006600, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Angular Velocity PID
-  PID: {x: 5, y: 1, z: 0}
+  PID: {x: 2, y: 1, z: 0}
   inputQuat: {x: 0, y: 0, z: 0, w: 1}
   targetQuat: {x: 0, y: 0, z: 0, w: 1}
   outputVector: {x: 0, y: 0, z: 0}
-  gain: 3
+  gain: 6
 --- !u!114 &2250842330134752151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725599883288367558}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 52559370, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
@@ -492,7 +492,7 @@ MonoBehaviour:
   targetVector: {x: 0, y: 0, z: 0}
   outputVector: {x: 0, y: 0, z: 0}
   isAngle: 0
-  gain: 1
+  gain: 11
 --- !u!114 &6074483958441327476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,9 +572,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7725599883288367558}
   serializedVersion: 2
-  m_Mass: 40
-  m_Drag: 0.2
-  m_AngularDrag: 0.02
+  m_Mass: 150
+  m_Drag: 0
+  m_AngularDrag: 1
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -659,7 +659,7 @@ CapsuleCollider:
   m_Radius: 1.18
   m_Height: 3.88
   m_Direction: 1
-  m_Center: {x: 0, y: 1.67, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2486060269145948908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -751,10 +751,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   customName: Body
   initialStateType:
-    _typeName: EntityStates.GenericCharacterSpawnState, RoR2, Version=0.0.0.0, Culture=neutral,
+    _typeName: EntityStates.AcidBug.SpawnState, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   mainStateType:
-    _typeName: EntityStates.FlyState, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    _typeName: EntityStates.AcidBug.AcidBugMain, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   debug: 0
 --- !u!114 &7362246109502375863
 MonoBehaviour:
