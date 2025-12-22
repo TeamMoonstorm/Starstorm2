@@ -1,4 +1,10 @@
   **Warning: content spoilers below!**
+  ### 0.6.29
+* General
+    * 
+* Wayfarer
+    * Fixed the Tricorn not working on the Wayfarer due to 0 drop weight
+
 ### 0.6.28
 * General
     * Updated French translation thanks to DarSitam!
