@@ -88,6 +88,9 @@ namespace EntityStates.CloneDrone
 
         public bool IsWhitelistTier(PickupDef pickupDef)
         {
+            if (pickupDef == null)
+                return false;
+
             if (pickupTier == ItemTier.Tier1 || pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidTier1 || pickupTier == ItemTier.VoidTier2 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.VoidBoss)
                 return true;
             else
