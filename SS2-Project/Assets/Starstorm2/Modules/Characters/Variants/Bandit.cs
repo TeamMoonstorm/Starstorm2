@@ -60,6 +60,20 @@ namespace SS2.Survivors
             GlobalEventManager.onServerDamageDealt += ApplyTranq;
         }
 
+        private void ApplySleep(CharacterBody sender)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+
+            if (NetworkServer.active)
+            {
+                sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
+                sender.SetBuffCount(_bdBanditTranquilizer.buffIndex, 0);
+            }
+        }
+
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
 
@@ -73,21 +87,13 @@ namespace SS2.Survivors
                 // Normal enemies go zzz
                 if ((!sender.isBoss && !sender.isChampion) && buffCount >= _sleepCountThreshold)
                 {
-                    if (NetworkServer.active)
-                    {
-                        sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
-                        sender.RemoveBuff(_bdBanditTranquilizer);
-                    }
+                    ApplySleep(sender);
                 }
 
                 // Bosses and champions have a higher sleep threshold
                 if ((sender.isBoss || sender.isChampion) && buffCount >= _bossSleepCountThreshold)
                 {
-                    if (NetworkServer.active)
-                    {
-                        sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
-                        sender.RemoveBuff(_bdBanditTranquilizer);
-                    }
+                    ApplySleep(sender);
                 }
             }
 
