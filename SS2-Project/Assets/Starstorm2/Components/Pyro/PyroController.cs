@@ -121,6 +121,11 @@ namespace SS2.Components
         {
             UpdateUI();
 
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                AddHeat(heatMax);
+            }
+
             if (NetworkServer.active)
             {
                 enemyCheckStopwatch += Time.fixedDeltaTime;

@@ -154,13 +154,12 @@ namespace EntityStates.Pyro
             }
 
             DamageTypeCombo dtc = new DamageTypeCombo();
-            dtc.damageType = (Util.CheckRoll((igniteChanceHighHeat), characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
+            dtc.damageType = DamageType.IgniteOnHit;
 
             if (pc.heat >= heatIgniteThreshold)
             {
                 damage *= 1.5f;
                 color = DamageColorIndex.WeakPoint;
-                dtc.damageType = DamageType.IgniteOnHit;
             }
 
             Ray aimRay = GetAimRay();
