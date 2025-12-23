@@ -5,64 +5,12 @@ using RoR2.Projectile;
 
 namespace EntityStates.AcidBug
 {
-    public class ChargeAcid : BaseSkillState
-    {
-        public static GameObject effectPrefab;
-        private static float baseDuration = 0.5f;
-        private static string enterSoundString = "ChirrFireSpitBomb";
-
-        private float duration;
-        private GameObject chargeEffect;
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return InterruptPriority.Skill;
-        }
-        public override void OnEnter()
-        {
-            base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
-            rigidbodyMotor.moveVector = Vector3.zero;
-
-            PlayAnimation("FullBody, Override", "ChargeAcid", "ChargeAcid.playbackRate", duration);
-            Util.PlaySound(enterSoundString, gameObject);
-            Transform muzzle = FindModelChild("Muzzle");
-            if (muzzle)
-            {
-                chargeEffect = GameObject.Instantiate<GameObject>(effectPrefab, muzzle.position, muzzle.rotation);
-                chargeEffect.transform.parent = muzzle;
-                ScaleParticleSystemDuration scaleParticleSystemDuration = chargeEffect.GetComponent<ScaleParticleSystemDuration>();
-                if (scaleParticleSystemDuration)
-                {
-                    scaleParticleSystemDuration.newDuration = this.duration;
-                }
-            }
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-
-            if (isAuthority && fixedAge >= duration)
-            {
-                outer.SetNextState(new FireAcid());
-            }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-
-            if (chargeEffect)
-            {
-                Destroy(chargeEffect);
-            }
-        }
-    }
-
     public class FireAcid : BaseState
     {
+        public static GameObject chargeEffectPrefab;
         public static GameObject projectilePrefab;
         public static GameObject muzzleEffectPrefab;
+
         private static float minSpeed = 40f;
         private static float maxSpeed = 70f;
         private static float minSpread = 2f;
@@ -70,9 +18,11 @@ namespace EntityStates.AcidBug
         private static float spreadYaw = 2f;
         private static float spreadPitch = 1f;
         private static int projectileCount = 3;
+        private static string enterSoundString = "ChirrFireSpitBomb";
         private static string attackSoundString = "ChirrFireSpitBomb";
         private string muzzleName = "Muzzle";
-        private static float baseDuration = 0.5f;
+        private static float baseDuration = 1.25f;
+        private static float fireTime = 0.55f;
         private static float damageCoefficient = 1f;
         private static float force = 100f;
 
@@ -80,22 +30,40 @@ namespace EntityStates.AcidBug
         private static float selfUpForce = 11f;
 
         private float duration;
+        private float chargeDuration => duration * fireTime;
+        private GameObject chargeEffect;
+        private bool hasFired;
         public override void OnEnter()
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
+            rigidbodyMotor.moveVector = Vector3.zero;
+            Util.PlaySound(enterSoundString, gameObject);
+            Transform muzzle = FindModelChild("Muzzle");
+            if (muzzle)
+            {
+                chargeEffect = GameObject.Instantiate<GameObject>(chargeEffectPrefab, muzzle.position, muzzle.rotation);
+                chargeEffect.transform.parent = muzzle;
+                ScaleParticleSystemDuration scaleParticleSystemDuration = chargeEffectPrefab.GetComponent<ScaleParticleSystemDuration>();
+                if (scaleParticleSystemDuration)
+                {
+                    scaleParticleSystemDuration.newDuration = chargeDuration;
+                }
+
+            }
             StartAimMode();
             PlayAnimation("FullBody, Override", "FireAcid", "FireAcid.playbackRate", this.duration);
-            Util.PlaySound(attackSoundString, gameObject);
-            EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleName, false);
-
-            Fire();
+            
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
+            if (!hasFired && fixedAge >= chargeDuration)
+            {
+                Fire();
+            }
             if (fixedAge >= duration && isAuthority)
             {
                 outer.SetNextStateToMain();
@@ -104,6 +72,15 @@ namespace EntityStates.AcidBug
 
         private void Fire()
         {
+            hasFired = true;
+
+            Util.PlaySound(attackSoundString, gameObject);
+            EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleName, false);
+            if (chargeEffect)
+            {
+                Destroy(chargeEffect);
+            }
+
             Ray aimRay = GetAimRay();
             Vector3 direction = aimRay.direction;
             if (isAuthority)
@@ -111,7 +88,7 @@ namespace EntityStates.AcidBug
                 Vector3 awayForce = -1f * direction * selfAwayForce;
                 awayForce += Vector3.up * selfUpForce;
                 rigidbody.AddForce(awayForce, ForceMode.Force);
-
+                var muzzleTransform = FindModelChild("Muzzle");
                 bool crit = RollCrit();
                 for (int i = 0; i < projectileCount; i++)
                 {
@@ -120,7 +97,7 @@ namespace EntityStates.AcidBug
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {
                         projectilePrefab = projectilePrefab,
-                        position = aimRay.origin,
+                        position = muzzleTransform ? muzzleTransform.position : aimRay.origin,
                         rotation = Util.QuaternionSafeLookRotation(forward),
                         owner = gameObject,
                         damage = damageStat * damageCoefficient,
@@ -131,6 +108,14 @@ namespace EntityStates.AcidBug
                     ProjectileManager.instance.FireProjectile(fireProjectileInfo);
                 }
             }
+        }
+        public override void OnExit()
+        {
+            if (chargeEffect)
+            {
+                Destroy(chargeEffect);
+            }
+            base.OnExit();
         }
         public override InterruptPriority GetMinimumInterruptPriority()
         {

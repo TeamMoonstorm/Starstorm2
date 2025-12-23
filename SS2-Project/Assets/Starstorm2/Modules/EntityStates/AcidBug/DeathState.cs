@@ -25,7 +25,7 @@ namespace EntityStates.AcidBug
         {
             private void OnCollisionEnter(Collision collision)
             {
-                deathState.OnImpactServer(collision.GetContact(0).point, collision.GetContact(0).normal);
+                deathState.OnImpactAuthority(collision.GetContact(0).point, collision.GetContact(0).normal);
                 deathState.Explode();
             }
 
@@ -71,21 +71,37 @@ namespace EntityStates.AcidBug
                     rigidbodyCollisionListener.deathState = this;
                 }
             }
+
+            Transform wingFx = FindModelChild("WingFX");
+            if (wingFx)
+            {
+                wingFx.gameObject.SetActive(false);
+            }
+
+            Transform wingMesh = FindModelChild("WingMesh");
+            if (wingMesh)
+            {
+                wingMesh.gameObject.SetActive(true);
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (rigidbody)
+            
+            if (isAuthority)
             {
-                rigidbody.AddForce(Physics.gravity * extraGravity, ForceMode.Acceleration);
-            }
-            if (NetworkServer.active)
-            {
+                if (rigidbody)
+                {
+                    rigidbody.AddForce(Physics.gravity * extraGravity, ForceMode.Acceleration);
+                    Quaternion modelDirection = Util.QuaternionSafeLookRotation(-rigidbody.velocity);
+                    rigidbody.MoveRotation(modelDirection);
+                }
+
                 Vector3 direction = rigidbody.velocity.normalized;
                 if (Physics.Raycast(characterBody.corePosition, direction, out RaycastHit raycastHit, characterBody.radius + 1f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
                 {
-                    OnImpactServer(raycastHit.point, raycastHit.normal);
+                    OnImpactAuthority(raycastHit.point, raycastHit.normal);
                     Explode();
                 }
                 else if (fixedAge > deathDuration)
@@ -100,8 +116,11 @@ namespace EntityStates.AcidBug
             Destroy(gameObject);
         }
 
-        public virtual void OnImpactServer(Vector3 contactPoint, Vector3 contactNormal)
+        public virtual void OnImpactAuthority(Vector3 contactPoint, Vector3 contactNormal)
         {
+            transform.position = contactPoint;
+            transform.forward = contactNormal;
+
             if (deathExplosionEffect)
             {
                 EffectManager.SpawnEffect(deathExplosionEffect, new EffectData

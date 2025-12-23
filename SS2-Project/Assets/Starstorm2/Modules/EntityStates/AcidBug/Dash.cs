@@ -10,7 +10,7 @@ namespace EntityStates.AcidBug
     {
         private static float minDistance = 6f;
         private static float maxDistance = 18f;
-        private static float baseDuration = .275f;
+        private static float baseDuration = .25f;
 
         private static int maxRepeats = 1;
         private static float repeatPercentChance = 40f;
@@ -88,6 +88,13 @@ namespace EntityStates.AcidBug
                 };
                 EffectManager.SpawnEffect(effectPrefab, effectData, false);
             }
+
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        }
+        public override void OnExit()
+        {
+            rigidbody.collisionDetectionMode = CollisionDetectionMode.Discrete;
+            base.OnExit();
         }
 
         public override void FixedUpdate()

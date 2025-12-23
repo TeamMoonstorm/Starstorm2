@@ -14438,6 +14438,7 @@ GameObject:
   - component: {fileID: 6054881150492404344}
   - component: {fileID: 2405480947581443923}
   - component: {fileID: 3218982880206818055}
+  - component: {fileID: 2246575660227707569}
   m_Layer: 0
   m_Name: ModelBase
   m_TagString: Untagged
@@ -14543,6 +14544,21 @@ MonoBehaviour:
   timeMax: 0.35
   ignoreResetOnEnable: 0
   loop: 0
+--- !u!114 &2246575660227707569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5009870175350481811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setRandomXRotation: 0
+  setRandomYRotation: 1
+  setRandomZRotation: 0
 --- !u!1 &6460852331068228981
 GameObject:
   m_ObjectHideFlags: 0

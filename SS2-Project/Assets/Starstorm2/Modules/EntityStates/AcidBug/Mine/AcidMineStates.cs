@@ -7,7 +7,7 @@ namespace EntityStates.AcidBug.Mine
 {
     public class Arming : EntityState
     {
-        private static float duration = 0.4f;
+        private static float duration = 0.45f;
         private ProjectileStickOnImpact stickOnImpact;
         public override void OnEnter()
         {
@@ -71,7 +71,7 @@ namespace EntityStates.AcidBug.Mine
 
     public class PreDetonate : BaseState
     {
-        private static float warningRadius = 9f;
+        private static float warningRadius = 10f;
         private static float duration = 0.75f;
         private static string enterSoundString = "";
 
@@ -131,7 +131,7 @@ namespace EntityStates.AcidBug.Mine
     {
         public static GameObject explosionEffectPrefab;
 
-        private static float blastRadius = 9f;
+        private static float blastRadius = 10f;
         private static float damageCoefficient = 3f;
         private static float force = 300f;
         public override void OnEnter()
