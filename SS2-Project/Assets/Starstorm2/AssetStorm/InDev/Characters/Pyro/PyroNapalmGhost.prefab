@@ -74,7 +74,9 @@ MonoBehaviour:
   DoNotPool: 0
   DoNotCullPool: 0
   optionalLights: []
-  secondaryParticleSystem: []
+  secondaryParticleSystem:
+  - {fileID: 8207691486241586075}
+  - {fileID: 5117246758082308357}
 --- !u!114 &114514925122952071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 1080798252, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleSystem: {fileID: 0}
+  particleSystem: {fileID: 5117246758082308357}
 --- !u!114 &3718705194606264908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6794,7 +6796,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
       cycleCount: 0
-      repeatInterval: 0.12
+      repeatInterval: 0.2
       probability: 0.5
   SizeModule:
     enabled: 1
