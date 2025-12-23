@@ -20,6 +20,8 @@
     * A new utility to encourage a quick scoping playstyle
 * Wayfarer
     * Fixed the Tricorn not working on the Wayfarer due to 0 drop weight
+* Beta (Content from the 0.7 Beta, enabled via config)
+    * Nerfed Poison Elites across the board (dot duration, radius, damage coefficients)
 
 ### 0.6.28
 * General
