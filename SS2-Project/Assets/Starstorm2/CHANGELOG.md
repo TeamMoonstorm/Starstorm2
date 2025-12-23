@@ -6,6 +6,8 @@
     * 2 new skills for vanilla survivors!
     * You shouldnt be reading this in the github changelog. I see you bread....
     * Added a new compatability section to the changelog
+* Mimic
+    * Mimic will no longer steal items with the AIBlacklist, BrotherBlacklist, or CannotSteal flags
 * Executioner
     * Fixed Fear threshold not working. Sorry this took so long!
 * Engineer

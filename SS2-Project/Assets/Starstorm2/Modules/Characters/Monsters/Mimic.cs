@@ -207,6 +207,14 @@ namespace SS2.Monsters
 		}
 
 
+		// Helper method to prevent mimic from stealing items we dont want AI having
+		private bool CheckItemTags(ItemDef item)
+		{
+			return item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.BrotherBlacklist) || item.ContainsTag(ItemTag.CannotSteal);
+
+        }
+
+
 		//How the mimic steals items, using a custom damage type
 		private void ServerDamageStealItem(DamageReport obj)
 		{
@@ -221,21 +229,24 @@ namespace SS2.Monsters
 						Util.ShuffleList(itemList);
 						for(int i = 0; i < itemList.Count; ++i)
                         {
-							var def = ItemCatalog.GetItemDef(itemList[i]);
+							var itemToStealDef = ItemCatalog.GetItemDef(itemList[i]);
 							
-							if(def.tier == ItemTier.NoTier) { continue; }
+							if (itemToStealDef.tier == ItemTier.NoTier || CheckItemTags(itemToStealDef)) 
+							{ 
+								continue; 
+							}
 
 							var pdef = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(itemList[i]));
 
-							obj.attackerBody.inventory.GiveItem(def);
-							obj.victimBody.inventory.RemoveItem(def);
-							mim.AddItem(def.itemIndex);
+							obj.attackerBody.inventory.GiveItemPermanent(itemToStealDef);
+							obj.victimBody.inventory.RemoveItemPermanent(itemToStealDef);
+							mim.AddItem(itemToStealDef.itemIndex);
 
 							EffectData effectData = new EffectData
 							{
 								origin = obj.victimBody.corePosition,
 								genericFloat = 1.5f,
-								genericUInt = (uint)(def.itemIndex + 1)
+								genericUInt = (uint)(itemToStealDef.itemIndex + 1)
 							};
 							effectData.SetNetworkedObjectReference(obj.attacker);
 							EffectManager.SpawnEffect(itemOrb, effectData, true);
