@@ -164,7 +164,7 @@ namespace SS2.Survivors
         }
 
 
-        private static float fearExecutionThreshold = 0.15f;
+        private static float fearExecutionThreshold = 0.5f;
         private HealthComponent.HealthBarValues FearExecuteHealthbar(On.RoR2.HealthComponent.orig_GetHealthBarValues orig, HealthComponent self)
         {
             var hbv = orig(self);
@@ -177,7 +177,7 @@ namespace SS2.Survivors
 
         private void FearExecuteThreshold(CharacterBody victimBody, ref float executeFraction)
         {
-            if ((victimBody.HasBuff(SS2Content.Buffs.BuffFear) || victimBody.HasBuff(SS2Content.Buffs.BuffFearRed)) && executeFraction < 0f) 
+            if ((victimBody.HasBuff(SS2Content.Buffs.BuffFear) || victimBody.HasBuff(SS2Content.Buffs.BuffFearRed)) && executeFraction <= fearExecutionThreshold) 
             {
                 executeFraction = fearExecutionThreshold;
             }
@@ -200,14 +200,14 @@ namespace SS2.Survivors
             // Taken from: https://github.com/Moffein/Starstorm2Unofficial/blob/9e3bca7b23277dd942de1198f1bc0b8c55649db6/Starstorm%202/Survivors/Executioner/ExecutionerCore.cs#L632
             if (SS2Main.SS2UInstalled)
             {
+                SS2Log.Info("Video Game Mod 2 Detected. Adding Additive execute hook");
                 R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThresholdAdditive;
             }
             else
             {
-                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
+                R2API.ExecuteAPI.CalculateExecuteThreshold += FearExecuteThreshold;
             }
 
-            R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
 
             // TODO: This should be good to remove with new ExecuteAPI
             //IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>

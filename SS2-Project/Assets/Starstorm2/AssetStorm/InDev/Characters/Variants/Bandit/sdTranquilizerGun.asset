@@ -23,19 +23,27 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 0
-  baseMaxStock: 4
+  baseMaxStock: 5
   rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
   reloadState:
     _typeName: EntityStates.Bandit2.Weapon.EnterReload, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null

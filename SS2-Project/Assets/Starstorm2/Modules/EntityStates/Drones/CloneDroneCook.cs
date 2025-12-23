@@ -101,24 +101,8 @@ namespace EntityStates.CloneDrone
                 }
             }
 
-            //if (isAuthority)
-            //characterBody.SetBuffCount(SS2Content.Buffs.bdHiddenSlow20.buffIndex, 8); //lol
             float cooldown = 60f;
             duration = baseDuration;
-
-            //tier 2 items have a 50% longer cooldown / duration
-            //if (pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.VoidTier2)
-            //{
-            //    duration *= 1.5f;
-            //    cooldown *= 1.5f;
-            //}
-            //
-            ////tier 3 and boss items have a 100% longer cooldown / duration
-            //if (pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidBoss)
-            //{
-            //    duration *= 2f;
-            //    cooldown *= 2f;
-            //}
 
             switch (pickupTier)
             {
@@ -215,16 +199,7 @@ namespace EntityStates.CloneDrone
                 if(NetworkServer.active)
                     CreateClone();
             }
-            //if (charModel)
-            //{
-            //    if((int)Mathf.Round(fixedAge) != (int)Mathf.Floor(fixedAge)){
-            //        charModel.baseRendererInfos[2].defaultMaterial = lightOn;
-            //    }
-            //    else
-            //    {
-            //        charModel.baseRendererInfos[2].defaultMaterial = lightOff;
-            //    }
-            //}
+
         }
 
         public void CreateClone()
