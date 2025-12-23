@@ -5619,8 +5619,6 @@ MonoBehaviour:
   m_Script: {fileID: 871971028, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pickupIndex:
-    value: 0
   targetRenderer: {fileID: 8925649010595673211}
   strength: 1
   highlightColor: 0
@@ -5642,6 +5640,10 @@ MonoBehaviour:
     type: 3}
   callOnEquipmentSpentOnPurchase: 0
   destroyAfterSummoning: 1
+  restoreCachedInventory: 1
+  restoreOnlyHiddenItems: 1
+  droneUpgradeCount: 0
+  inspectDef: {fileID: 0}
 --- !u!114 &8221946353375034565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5668,8 +5670,11 @@ MonoBehaviour:
   setUnavailableOnTeleporterActivated: 0
   isShrine: 0
   isGoldShrine: 0
+  isDrone: 1
   shouldProximityHighlight: 1
   saleStarCompatible: 0
+  disableSpawnOnInteraction: 0
+  allowRemoteOpInteraction: 0
   requiredExpansion: {fileID: 0}
   lastActivator: {fileID: 0}
   lockGameObject: {fileID: 0}
@@ -5712,6 +5717,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  onDetailedPurchaseServer:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8319137409356770219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5769,6 +5777,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 5907743314479723041}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -5778,6 +5787,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &4125016848550391778
 MonoBehaviour:
   m_ObjectHideFlags: 0

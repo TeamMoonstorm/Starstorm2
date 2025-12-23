@@ -15,7 +15,10 @@ namespace EntityStates.Mimic
         GameObject lVFX;
         GameObject rVFX;
         bool hasDropped = false;
-        
+        bool shouldMakeVFX = true;
+
+        MimicInventoryManager mimicInventory;
+
         public override bool shouldAutoDestroy => false;
 
         public override void OnEnter()
@@ -24,15 +27,23 @@ namespace EntityStates.Mimic
 
             PlayAnimation("Gesture, Override", "BufferEmpty");
 
+            if(characterBody.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var cmodel))
+            {
+                if(cmodel.invisibilityCount >= 1)
+                {
+                    shouldMakeVFX = false;
+                }
+            }
+
             //Replicating the chest opening VFX
             var zipL = FindModelChild("ZipperL");
-            if (zipL)
+            if (zipL && shouldMakeVFX)
             {
                 lVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipL);
             }
 
             var zipR = FindModelChild("ZipperR");
-            if (zipR)
+            if (zipR && shouldMakeVFX)
             {
                 rVFX = UnityEngine.Object.Instantiate<GameObject>(SS2.Monsters.Mimic.zipperVFX, zipR);
             }
@@ -52,6 +63,12 @@ namespace EntityStates.Mimic
             var kinematic = GetComponent<KinematicCharacterMotor>();
             kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
 
+            mimicInventory = gameObject.GetComponent<MimicInventoryManager>();
+
+            if (TryGetComponent<SpecialObjectAttributes>(out var soa))
+            {
+                soa.grabbable = false;
+            }
         }
 
         public override void FixedUpdate()
@@ -60,12 +77,16 @@ namespace EntityStates.Mimic
             //Attempting to lock mimic in place when it dies
             characterMotor.velocity.x = 0;
             characterMotor.velocity.z = 0;
-            var mim = gameObject.GetComponent<MimicInventoryManager>();
 
-            if (fixedAge > 1.5f && !hasDropped && mim)
+            if (fixedAge > 1.5f && !hasDropped && mimicInventory)
             {
                 hasDropped = true;
-                mim.DropItems();
+                mimicInventory.DropItems();
+            }
+            if (!shouldMakeVFX && !hasDropped && mimicInventory)
+            {
+                hasDropped = true;
+                mimicInventory.DropItems();
             }
         }
 

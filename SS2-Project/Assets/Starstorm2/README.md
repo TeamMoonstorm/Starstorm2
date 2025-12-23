@@ -30,7 +30,7 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* [Buns](https://github.com/Hevia), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade
+* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade, Chinchi
 
 With previous and one-off code contributions by...
 * Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
@@ -40,7 +40,7 @@ With Art/Modelling/Animation/Sound/Music contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk (French)
+* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk & DarSitam (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
 * Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 

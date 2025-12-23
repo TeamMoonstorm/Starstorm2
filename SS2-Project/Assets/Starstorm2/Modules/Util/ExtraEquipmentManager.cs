@@ -20,7 +20,7 @@ namespace SS2
         [SystemInitializer]
         public static void Init()
         {
-            IL.RoR2.CharacterBody.OnInventoryChanged += CharacterBody_OnInventoryChanged;
+            CharacterBody.onBodyInventoryChangedGlobal += OnBodyInventoryChangedGlobal;
             On.RoR2.CharacterModel.Awake += CharacterModel_Awake;
             IL.RoR2.CharacterModel.UpdateOverlays += CharacterModel_UpdateOverlays;
         }
@@ -28,39 +28,22 @@ namespace SS2
         //vanilla only adds passivebuffdef from active equipment slot
         //if body has composite injector, we want them from all equipment slots
         //if body has multielite, use all elite equipments
-        // hook runs after OnEquipmentLost and OnEquipmentGained, and before adding itembehaviors from elite buffs
-        private static void CharacterBody_OnInventoryChanged(ILContext il)
+        private static void OnBodyInventoryChangedGlobal(CharacterBody body)
         {
-            ILCursor c = new ILCursor(il);
-            bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchLdarg(0),
-                x => x.MatchLdcI4(1),
-                x => x.MatchStfld<CharacterBody>(nameof(CharacterBody.statsDirty))); // statsDirty = true;
-            if (b)
-            {
-                c.Emit(OpCodes.Ldarg_0); //body
-                c.EmitDelegate<Action<CharacterBody>>((body) =>
-                {
-                    bool hasInjector = body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) > 0;
-                    bool hasMultiElite = body.inventory.GetItemCount(SS2Content.Items.MultiElite) > 0;
-                    if (!hasInjector && !hasMultiElite) return;
+            bool hasInjector = body.inventory.GetItemCountEffective(SS2Content.Items.CompositeInjector) > 0;
+            bool hasMultiElite = body.inventory.GetItemCountEffective(SS2Content.Items.MultiElite) > 0;
+            if (!hasInjector && !hasMultiElite) return;
 
-                    for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
-                    {
-                        BuffDef buffDef = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
-                        // injector means its always ok
-                        // no injector means we only want elite
-                        bool multiElite = hasInjector || (buffDef && buffDef.isElite);
-                        if (buffDef && !body.HasBuff(buffDef) && multiElite)
-                        {
-                            body.AddBuff(buffDef);
-                        }
-                    }
-                });
-            }
-            else
+            for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
             {
-                SS2Log.Warning("ExtraEquipmentManager.CharacterBody_OnEquipmentLost: ILHook failed.");
+                BuffDef buffDef = body.inventory.GetEquipment((uint)i).equipmentDef?.passiveBuffDef;
+                // injector means its always ok
+                // no injector means we only want elite
+                bool multiElite = hasInjector || (buffDef && buffDef.isElite);
+                if (buffDef && !body.HasBuff(buffDef) && multiElite)
+                {
+                    body.AddBuff(buffDef);
+                }
             }
         }
 
@@ -69,14 +52,13 @@ namespace SS2
         private static void CharacterModel_UpdateOverlays(ILContext il)
         {
             ILCursor c = new ILCursor(il);
+
+            // Go after the GetEquipmentDef call and override the result
+            // EquipmentDef equipmentDef = EquipmentCatalog.GetEquipmentDef(inventoryEquipmentIndex);
             bool b = c.TryGotoNext(MoveType.After,
-                x => x.MatchStfld<CharacterModel>(nameof(CharacterModel.activeOverlayCount)),
-                x => x.MatchLdarg(0),
-                x => x.MatchLdfld<CharacterModel>(nameof(CharacterModel.inventoryEquipmentIndex))); // bad
+                x => x.MatchCallOrCallvirt(typeof(EquipmentCatalog), nameof(EquipmentCatalog.GetEquipmentDef)));
             if (b)
             {
-                c.Index++; // so bad
-                           // EquipmentDef equipmentDef = EquipmentCatalog.GetEquipmentDef(inventoryEquipmentIndex);
                 c.Emit(OpCodes.Ldarg_0); // charactermodel
                 c.EmitDelegate<Func<EquipmentDef, CharacterModel, EquipmentDef>>((ed, model) =>
                 {
@@ -85,8 +67,8 @@ namespace SS2
                     // return FALSE if we want to skip removing the buff
                     if (body && body.inventory)
                     {
-                        bool hasInjector = body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) > 0;
-                        bool hasMultiElite = body.inventory.GetItemCount(SS2Content.Items.MultiElite) > 0;
+                        bool hasInjector = body.inventory.GetItemCountEffective(SS2Content.Items.CompositeInjector) > 0;
+                        bool hasMultiElite = body.inventory.GetItemCountEffective(SS2Content.Items.MultiElite) > 0;
                         if(hasInjector || hasMultiElite)
                         {
                             for (int i = 0; i < body.inventory.GetEquipmentSlotCount(); i++)
@@ -104,7 +86,7 @@ namespace SS2
             }
             else
             {
-                SS2Log.Error("ExtraEquipmentManager.CharacterModel_UpdateOverlays: ILHook failed.");
+                SS2Log.Fatal("ExtraEquipmentManager.CharacterModel_UpdateOverlays: ILHook failed.");
             }
         }
         //add a component to CharacterModel that handles extra equipment displays
@@ -146,9 +128,9 @@ namespace SS2
                 {
                     // only show multiple equipments with composite injector, to not interfere with toolbot
                     // also dont want to re enable CharacterModel's equipment display
-                    bool hasInjector = model.body.inventory.GetItemCount(SS2Content.Items.CompositeInjector) > 0;
+                    bool hasInjector = model.body.inventory.GetItemCountEffective(SS2Content.Items.CompositeInjector) > 0;
                     EquipmentDef equipmentDef = EquipmentCatalog.GetEquipmentDef(equipmentIndex);
-                    bool hasMultiElite = model.body.inventory.GetItemCount(SS2Content.Items.MultiElite) > 0 && equipmentDef && equipmentDef.passiveBuffDef && equipmentDef.passiveBuffDef.isElite;
+                    bool hasMultiElite = model.body.inventory.GetItemCountEffective(SS2Content.Items.MultiElite) > 0 && equipmentDef && equipmentDef.passiveBuffDef && equipmentDef.passiveBuffDef.isElite;
                     if (HasEquipment(equipmentIndex) && (hasInjector || hasMultiElite))
                     {
                         this.EnableEquipmentDisplay(equipmentIndex);
@@ -167,9 +149,13 @@ namespace SS2
                     return;
                 }
                 this.enabledEquipmentDisplays.Add(index);
-                if (model.itemDisplayRuleSet)
+                if (model && model.itemDisplayRuleSet)
                 {
                     DisplayRuleGroup itemDisplayRuleGroup = model.itemDisplayRuleSet.GetEquipmentDisplayRuleGroup(index);
+                    if (itemDisplayRuleGroup.isEmpty)
+                    {
+                        return;
+                    }
                     this.InstantiateDisplayRuleGroup(itemDisplayRuleGroup, index);
                 }
             }
@@ -212,7 +198,7 @@ namespace SS2
 
             private void InstantiateDisplayRuleGroup(DisplayRuleGroup displayRuleGroup, EquipmentIndex equipmentIndex)
             {
-                if (displayRuleGroup.rules != null)
+                if (model && displayRuleGroup.rules != null)
                 {
                     for (int i = 0; i < displayRuleGroup.rules.Length; i++)
                     {
@@ -239,6 +225,10 @@ namespace SS2
                                 {
                                     equipmentIndex = equipmentIndex
                                 };
+                                if (item2.itemDisplay == null)
+                                {
+                                    return;
+                                }
                                 item2.Apply(model, itemDisplayRule.followerPrefab, transform, itemDisplayRule.localPos, Quaternion.Euler(itemDisplayRule.localAngles), itemDisplayRule.localScale);
                                 this.parentedPrefabDisplays.Add(item2);
                             }

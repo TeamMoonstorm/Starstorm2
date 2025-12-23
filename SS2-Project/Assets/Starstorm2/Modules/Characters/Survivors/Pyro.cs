@@ -73,6 +73,7 @@ namespace SS2.Survivors
                 }
             }
 
+            // ofmg kill urp ast self
             if (self.body.baseNameToken == "SS2_PYRO_NAME")
             {
                 //needs redone

@@ -334,10 +334,14 @@ namespace EntityStates.Events
         {
             public void OnKilledServer(DamageReport damageReport)
             {
-                PickupIndex pickupIndex = StormController.dropTable.GenerateDrop(StormController.instance.treasureRng);
-                if (pickupIndex != PickupIndex.none)
+                UniquePickup pickup = StormController.dropTable.GeneratePickup(StormController.instance.treasureRng);
+                if (pickup.pickupIndex != PickupIndex.none)
                 {
-                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                    PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                    {
+                        pickup = pickup,
+                    },
+                    damageReport.victimBody.corePosition, Vector3.up * 20f);
                 }
             }
         }

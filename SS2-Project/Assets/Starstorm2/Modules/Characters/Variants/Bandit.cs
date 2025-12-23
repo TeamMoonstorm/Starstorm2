@@ -95,6 +95,7 @@ namespace SS2.Survivors
         }
         public override void ModifyContentPack(ContentPack contentPack)
         {
+            contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
         public override bool IsAvailable(ContentPack contentPack)

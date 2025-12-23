@@ -1,10 +1,45 @@
   **Warning: content spoilers below!**
+### 0.6.28
+* General
+    * Updated French translation thanks to DarSitam!
+    * Updated Chinese translation thanks to EternitySwarmCrowm!
+    * Chirr's Empyrean unlock bug is now fixed
+* Items
+    * Re-enabled Galvanic Core thanks to a fix from Chinchi!
+* Executioner
+    * Increased the range of Exe's Taser alt primary from 28m -> 36m so its easier for him to hit flying targets
+* Drones
+    * Fixed bug where Droid Head's Security drones would drop a purchasable duplicator drone when destroyed
+    * Droid Head's Security drones now have a proper icon
+
+
+### 0.6.27
+* General
+    * Lots of various fixes/cleanups to our IL Hooks that should improve stability and catch some uncommon errors. Thanks to Chinchi for this work!
+    * Deleted plead.mp4
+    * Updated French translation thanks to DarSitam!
+    * Updated Chinese translation thanks to EternitySwarmCrowm!
+    * Additional NRE checks on our CustomEliteDirector to fix a NRE with Simulacrum
+* Items
+    * Additional NRE checks to X4Achievement that should resolve some bugs and crashes folks got.
+    * Disabled Galvanic Core due to boss healing bug. Will be re-enabled once fixed, but this bug was too run ending to leave enabled any longer.
+* Monsters
+    * Additional nullchecks for Wayfarer death state and Follower beam, and their associated buffs for some rare race conditions folks were experiencing. 
+* Drones
+    * Made Shock drone use the electric damage type so its buffed by faulty conductor
+    * SS2 Drones now should now function with drone combiner
+* Operator
+    * Add Shock, Security, and Duplicator drone compat for Operator. Currently they only have basic ram skills. We will give both our drones unique skills in a future update. Thanks to Chicken for this addition!
+
 ### 0.6.26
 * General
     * Updated mod for Alloyed Collective
     * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
+    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns. Thanks to LordVGames for the fix!
 	* Various fixes for certain projectiles and effects not appearing on clients
+    * Added an updated French translation thanks to DarSitam
+    * Damglador requested to remove the Ukrainian translation as they wanted it to be in their own mod
 * Items
     * Double the cost of the chest Lunar Birthright grants.
 	* Galvanic Core's stun chance now scales with proc coefficient.
@@ -13,6 +48,7 @@
 	* Lowered max stock of Consecration from 10 to 5.
 	* Added Ancient Scepter upgrade for Execution
 	* Luminous Shot charges are now only granted when firing Ion Bullets.
+    * Fixes and skin specific VFX to Mastery skin. Contribution by Bread!
 * Interactables
 	* Security Chest no longer appears with the Starstorm 2 expansion disabled.
 	

@@ -9,6 +9,7 @@ namespace EntityStates.CrystalPickup
     {
         protected SkinCrystal controller;
         protected PurchaseInteraction purchaseInter;
+        protected ChildLocator childLoc;
 
         protected virtual bool enableInteraction
         {
@@ -23,10 +24,10 @@ namespace EntityStates.CrystalPickup
             base.OnEnter();
             controller = GetComponent<SkinCrystal>();
             purchaseInter = GetComponent<PurchaseInteraction>();
-            if (NetworkServer.active)
-            {
-                purchaseInter.SetAvailable(enableInteraction);
-            }
+            childLoc = GetComponent<ChildLocator>();
+
+            if (purchaseInter != null) purchaseInter.SetAvailable(enableInteraction);
+            if (childLoc != null && childLoc.FindChild("CrystalMesh") != null) childLoc.FindChild("CrystalMesh").gameObject.SetActive(enableInteraction);
         }
     }
 }

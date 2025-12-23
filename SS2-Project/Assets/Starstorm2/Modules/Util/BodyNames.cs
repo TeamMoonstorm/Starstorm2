@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using RoR2;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
@@ -125,15 +122,31 @@ namespace SS2
         {
             ILCursor c = new ILCursor(il);
 
-            bool b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(0),
-                x => x.MatchCallvirt<CharacterBody>("get_isElite"));
+            int characterBodyVarIndex = -1;
+            int textVarIndex = -1;
+
+            // We first deduce the text variable from the code
+            // text = Language.GetStringFormatted(...)
+            bool b = c.TryGotoNext(x => x.MatchCallOrCallvirt<Language>(nameof(Language.GetStringFormatted)))
+                && c.TryGotoNext(x => x.MatchStloc(out textVarIndex));
+            if (!b)
+            {
+                SS2Log.Fatal("BodyNames.BodyNameIL (locating text variable): ILHook failed.");
+                return;
+            }
+
+            // Then we go to `if (characterBody.isElite)` to deduce the body variable and
+            // proceed with the rest of the hook.
+            c.Index = 0;
+            b = c.TryGotoNext(MoveType.Before,
+                x => x.MatchLdloc(out characterBodyVarIndex),
+                x => x.MatchCallOrCallvirt<CharacterBody>("get_isElite"));
             if (b)
             {
-                c.Emit(OpCodes.Ldloc_2); // load text2
-                c.Emit(OpCodes.Ldloc_0); // load characterBody
+                c.Emit(OpCodes.Ldloc, textVarIndex);
+                c.Emit(OpCodes.Ldloc, characterBodyVarIndex);
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterElite(text, cb));
-                c.Emit(OpCodes.Stloc_2);
+                c.Emit(OpCodes.Stloc, textVarIndex);
             }
             else
             {
@@ -141,15 +154,15 @@ namespace SS2
             }
 
             b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(0),
+                x => x.MatchLdloc(characterBodyVarIndex),
                 x => x.MatchCallOrCallvirt<CharacterBody>("get_inventory"),
                 x => x.MatchLdsfld(typeof(RoR2Content.Items), nameof(RoR2Content.Items.InvadingDoppelganger)));
             if (b)
             {
-                c.Emit(OpCodes.Ldloc_2); // load text2
-                c.Emit(OpCodes.Ldloc_0); // load characterBody
+                c.Emit(OpCodes.Ldloc, textVarIndex);
+                c.Emit(OpCodes.Ldloc, characterBodyVarIndex);
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterUmbraOf(text, cb));
-                c.Emit(OpCodes.Stloc_2);
+                c.Emit(OpCodes.Stloc, textVarIndex);
             }
             else
             {
@@ -157,28 +170,31 @@ namespace SS2
             }
 
             b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(0),
+                x => x.MatchLdloc(characterBodyVarIndex),
                 x => x.MatchCallvirt<CharacterBody>("get_inventory"),
                 x => x.MatchLdsfld(typeof(DLC1Content.Items), nameof(DLC1Content.Items.GummyCloneIdentifier)));
             if (b)
             {
-                c.Emit(OpCodes.Ldloc_2); // load text2
-                c.Emit(OpCodes.Ldloc_0); // load characterBody
+                c.Emit(OpCodes.Ldloc, textVarIndex);
+                c.Emit(OpCodes.Ldloc, characterBodyVarIndex);
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => AfterGummy(text, cb));
-                c.Emit(OpCodes.Stloc_2);
+                c.Emit(OpCodes.Stloc, textVarIndex);
             }
             else
             {
                 SS2Log.Fatal("BodyNames.BodyNameIL (AfterGummy): ILHook failed.");
             }
 
-            b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdloc(2),
-                x => x.MatchRet());
+            // For the final bit we want to modify the text before the method returns.
+            // Searching for `ldloc.<textVarIndex>` and `ret` is unsafe because Harmony
+            // patches modify `ret` instructions and another mod could be Harmony patching.
+            // We simply go to the end and search backwards for ldloc.
+            c.Index = il.Instrs.Count - 1;
+            b = c.TryGotoPrev(MoveType.After,
+                x => x.MatchLdloc(textVarIndex));
             if (b)
             {
-                c.Index++;
-                c.Emit(OpCodes.Ldloc_0); // load characterBody
+                c.Emit(OpCodes.Ldloc, characterBodyVarIndex);
                 c.EmitDelegate<Func<string, CharacterBody, string>>((text, cb) => BeforeEverything(text, cb));
             }
             else
