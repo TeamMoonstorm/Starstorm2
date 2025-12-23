@@ -24,9 +24,9 @@ namespace SS2.Survivors
         public static float tranqDuration = 5f;
 
         [FormatToken("SS2_BANDIT_TRANQ_GUN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float tranqDamageAmount = 2.7f;
+        public static float tranqDamageAmount = 3.0f;
 
-        public static float tranqBulletRadius = 2.0f;
+        public static float tranqBulletRadius = 1.2f;
 
 
         public static float _confuseSlowAmount = 0.1f;

@@ -1,7 +1,11 @@
   **Warning: content spoilers below!**
   ### 0.6.29
 * General
-    * 
+    * New survivor: Pyro!
+    * New enemy: Archer Wasp!
+    * 2 new skills for vanilla survivors!
+    * You shouldnt be reading this in the github changelog. I see you bread....
+    * Added a new compatability section to the changelog
 * Engineer
     * Fixed VFX issues with Laser Focus primary
 * Bandit
