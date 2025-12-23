@@ -48,6 +48,8 @@ namespace SS2.Survivors
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Use Ion Manipulators' alternate camera position by default.")]
         public static bool DefaultAltCameraConfig = false;
 
+        private static float fearExecuteThresholdAdditive = (1f / 0.85f) - 1f;   //0.15f with ExecuteAPI
+
         public static void AddBodyToSuperChargeCollection(string body)
         {
             bodiesThatGiveSuperCharge.Add(body);
@@ -181,12 +183,31 @@ namespace SS2.Survivors
             }
         }
 
+        private void FearExecuteThresholdAdditive(CharacterBody victimBody, ref float executeFractionAdd)
+        {
+            if (victimBody.HasBuff(SS2Content.Buffs.BuffFear))
+            {
+                executeFractionAdd += fearExecuteThresholdAdditive;
+            }
+        }
+
         private void SetupFearExecute() //thanks moffein, hope you're doing well ★
         {
         
             On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
-            //R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
+            // Thanks Moffein for the code!
+            // Taken from: https://github.com/Moffein/Starstorm2Unofficial/blob/9e3bca7b23277dd942de1198f1bc0b8c55649db6/Starstorm%202/Survivors/Executioner/ExecutionerCore.cs#L632
+            if (SS2Main.SS2UInstalled)
+            {
+                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThresholdAdditive;
+            }
+            else
+            {
+                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
+            }
+
+            R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
 
             // TODO: This should be good to remove with new ExecuteAPI
             //IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>

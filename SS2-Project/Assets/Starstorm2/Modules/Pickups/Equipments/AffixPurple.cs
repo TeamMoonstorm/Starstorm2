@@ -21,6 +21,8 @@ namespace SS2.Equipments
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
+
+        // TODO: Make configurable
         private static float projectileDamageCoefficient = .3f;
         private static float onHitRadius = 1.2f;
         private static float onHitDamageCoefficient = 0.1f;
