@@ -126,6 +126,8 @@ namespace EntityStates.Pyro
             if (isAuthority)
             {
                 DamageTypeCombo dtc = new DamageTypeCombo();
+                dtc.damageSource = DamageSource.Primary;
+                dtc.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
                 dtc.AddModdedDamageType(SS2.Survivors.Pyro.FlamethrowerDamageType);
 
                 ProjectileManager.instance.FireProjectile(

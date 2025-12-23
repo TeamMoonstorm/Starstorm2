@@ -57,6 +57,11 @@ namespace EntityStates.Pyro
         public static GameObject fullChargePrefab;
         public static GameObject fullChargeFirePrefab;
 
+        private bool setGravity;
+        private float originalGravScale;
+        public static float gravModifier = 0.4f;
+        public static float shorthopVelocity;
+
         public override void OnEnter()
         {
             base.OnEnter();
@@ -101,7 +106,26 @@ namespace EntityStates.Pyro
                 baseForce = miniProcForce,
             };
 
+            if (isAuthority && !characterMotor.isGrounded)
+            {
+                SmallHop(characterMotor, shorthopVelocity);
+            }
+
             PlayCrossfade("Gesture, Override", "StartLaunch", 0.1f);
+        }
+
+        public void SetGravityOverride(bool set)
+        {
+            setGravity = set;
+
+            if (setGravity)
+            {
+                characterMotor.gravityScale *= gravModifier;
+            }
+            else
+            {
+                characterMotor.gravityScale = originalGravScale;
+            }
         }
 
         public override void FixedUpdate()
@@ -114,22 +138,27 @@ namespace EntityStates.Pyro
             {
                 if (inputBank.skill3.down && !hasLaunched)
                 {
-                    if (characterMotor.isGrounded && pyroController.heat > 0)
+                    if (pyroController.heat > 0)
                     {
                         // recalc each time in case of attack speed changes
                         tickRate = baseDurationBetweenTicks / attackSpeedStat;
-                        tickTimer += GetDeltaTime();
-                        if (tickTimer >= tickRate)
-                        {
-                            tickTimer -= tickRate;
-                            FireBlast();
-                        }
 
                         charge += GetDeltaTime() / maxDuration;
                         charge = Mathf.Min(charge, 1f);
                         if (charge == 1f && !hasMax)
                         {
                             MaxCharge();
+                            FireBlast();
+                        }
+
+                        if (hasMax)
+                        {
+                            tickTimer += GetDeltaTime();
+                            if (tickTimer >= tickRate)
+                            {
+                                tickTimer -= tickRate;
+                                FireBlast();
+                            }
                         }
 
                         // counted separate so attack speed isnt a nerf
@@ -169,6 +198,7 @@ namespace EntityStates.Pyro
         public void FireBlast()
         {
             blast.crit = RollCrit();
+            blast.position = transform.position;
             blast.Fire();
 
             if (leftExhaust != null && rightExhaust != null)
@@ -184,11 +214,6 @@ namespace EntityStates.Pyro
             {
                 pyroController.AddHeat(Mathf.Max(-launchHeat));
 
-                if (NetworkServer.active)
-                {
-                    characterBody.AddBuff(SS2.Survivors.Pyro._bdPyroJet);
-                }
-
                 if (leftExhaust != null && rightExhaust != null)
                 {
                     // >
@@ -202,6 +227,7 @@ namespace EntityStates.Pyro
                 }
 
                 Vector3 aimVector = GetAimRay().direction;
+                Vector3 moveVector = inputBank.moveVector;
 
                 if (isAuthority)
                 {
@@ -216,10 +242,10 @@ namespace EntityStates.Pyro
                         teamIndex = teamComponent.teamIndex,
                         attacker = gameObject,
                         baseForce = launchProcForce,
+                        position = transform.position,
                         crit = RollCrit()
                     };
 
-                    launchBlast.position = transform.position;
                     launchBlast.Fire();
 
                     if (hasMax)
@@ -235,19 +261,29 @@ namespace EntityStates.Pyro
                             DamageColorIndex.Default,
                             null,
                             -1);
+
+                        EntityStateMachine bodyEsm = EntityStateMachine.FindByCustomName(gameObject, "Body");
+                        if (bodyEsm != null)
+                        {
+                            PyroLiftoff nextState = new PyroLiftoff();
+                            bodyEsm.SetNextState(nextState);
+                            outer.SetNextStateToMain();
+                        }
                     }
+                    else
+                    {
+                        characterBody.isSprinting = true;
+                        // aimVector.y = Mathf.Max(aimVector.y, minimumY);
+                        // Vector3 aimVelocityVector = aimVector.normalized * aimVelocity * (characterBody.moveSpeed + ((moveSpeedStat - characterBody.moveSpeed) * 0.5f)); // dampened movespeed scaling
+                        Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
+                        Vector3 forwardVelocityVector = new Vector3(moveVector.x, 0f, moveVector.z).normalized * forwardVelocity * characterBody.moveSpeed;
+                        characterMotor.Motor.ForceUnground();
+                        characterMotor.velocity = (upwardVelocityVector + forwardVelocityVector);
+                        characterMotor.airControl = 0;
+                        pyroController.cachedAirControl = 0.25f; // low just for sake of always emulating high-charge launch
 
-                    characterBody.isSprinting = true;
-                    aimVector.y = Mathf.Max(aimVector.y, minimumY);
-                    Vector3 aimVelocityVector = aimVector.normalized * aimVelocity * (characterBody.moveSpeed + ((moveSpeedStat - characterBody.moveSpeed) * 0.5f)); // dampened movespeed scaling
-                    Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
-                    Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
-                    characterMotor.Motor.ForceUnground();
-                    characterMotor.velocity = (aimVelocityVector + upwardVelocityVector + forwardVelocityVector) * (charge);
-                    characterMotor.airControl = 0;
-                    pyroController.cachedAirControl = 1 - charge;
-
-                    outer.SetNextStateToMain();
+                        outer.SetNextStateToMain();
+                    }
                 }
 
                 characterDirection.moveVector = aimVector;
