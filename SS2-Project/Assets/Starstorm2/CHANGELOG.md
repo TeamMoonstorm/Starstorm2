@@ -2,6 +2,14 @@
   ### 0.6.29
 * General
     * 
+* Engineer
+    * Fixed VFX issues with Laser Focus primary
+* Bandit
+    * New primary skill: Night Time
+    * Adapted from Bandit's SS1 Variant: Poacher
+* Railgunner
+    * New utility skill: Tactical Roll
+    * A new utility to encourage a quick scoping playstyle
 * Wayfarer
     * Fixed the Tricorn not working on the Wayfarer due to 0 drop weight
 
