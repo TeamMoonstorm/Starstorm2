@@ -232,43 +232,43 @@ namespace SS2.Components
             Network_charge = newHeat;
         }
 
-        //let him cook
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write(_heat);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write(_heat);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
+        // might make weaver cry? need to check mp
+        //public override bool OnSerialize(NetworkWriter writer, bool forceAll)
+        //{
+        //    if (forceAll)
+        //    {
+        //        writer.Write(_heat);
+        //        return true;
+        //    }
+        //    bool flag = false;
+        //    if ((syncVarDirtyBits & 1U) != 0U)
+        //    {
+        //        if (!flag)
+        //        {
+        //            writer.WritePackedUInt32(syncVarDirtyBits);
+        //            flag = true;
+        //        }
+        //        writer.Write(_heat);
+        //    }
+        //    if (!flag)
+        //    {
+        //        writer.WritePackedUInt32(syncVarDirtyBits);
+        //    }
+        //    return flag;
+        //}
 
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _heat = reader.ReadSingle();
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                OnHeatModified(reader.ReadSingle());
-            }
-        }
+        //public override void OnDeserialize(NetworkReader reader, bool initialState)
+        //{
+        //    if (initialState)
+        //    {
+        //        _heat = reader.ReadSingle();
+        //        return;
+        //    }
+        //    int num = (int)reader.ReadPackedUInt32();
+        //    if ((num & 1) != 0)
+        //    {
+        //        OnHeatModified(reader.ReadSingle());
+        //    }
+        //}
     }
 }

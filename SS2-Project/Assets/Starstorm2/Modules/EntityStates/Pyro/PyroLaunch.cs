@@ -76,17 +76,17 @@ namespace EntityStates.Pyro
             duration = baseDuration / attackSpeedStat;
             maxDuration = baseMaxDuration / attackSpeedStat;
             characterBody.hideCrosshair = true;
-
+            
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
 
-            ChildLocator maralago = GetModelChildLocator();
-            if (maralago != null)
+            ChildLocator bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement = GetModelChildLocator();
+            if (bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement != null)
             {
-                maralago.FindChild("ExhaustLParticles").TryGetComponent(out ParticleSystem left);
+                bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement.FindChild("ExhaustLParticles").TryGetComponent(out ParticleSystem left);
                 {
                     leftExhaust = left;
                 }
-                maralago.FindChild("ExhaustRParticles").TryGetComponent(out ParticleSystem right);
+                bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement.FindChild("ExhaustRParticles").TryGetComponent(out ParticleSystem right);
                 {
                     rightExhaust = right;
                 }
