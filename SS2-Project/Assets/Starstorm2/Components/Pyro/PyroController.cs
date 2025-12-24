@@ -23,17 +23,6 @@ namespace SS2.Components
         private List<HurtBox> hits;
         public float enemyRadius = 35f;
 
-        [Header("Heat UI")]
-        [SerializeField]
-        public GameObject heatOverlayPrefab;
-
-        [SerializeField]
-        public string heatOverlayChildLocatorEntry;
-        private ChildLocator heatOverlayInstanceChildlocator;
-        private OverlayController heatOverlayController;
-        private List<ImageFillController> fillUiList = new List<ImageFillController>();
-        private Text uiHeatText;
-
         //jump air control stuff
         private CharacterMotor characterMotor;
         //able to be set by other parts of code, and this script will handle ramping it back to normal
@@ -91,36 +80,14 @@ namespace SS2.Components
 
         public void OnEnable()
         {
-            OverlayCreationParams heatOverlayCreationParams = new OverlayCreationParams
-            {
-                prefab = heatOverlayPrefab,
-                childLocatorEntry = heatOverlayChildLocatorEntry
-            };
-            heatOverlayController = HudOverlayManager.AddOverlay(gameObject, heatOverlayCreationParams);
-            heatOverlayController.onInstanceAdded += OnHeatOverlayInstanceAdded;
-            heatOverlayController.onInstanceRemove += OnHeatOverlayInstanceRemoved;
-
             hits = new List<HurtBox>();
             bodySearch = new SphereSearch();
             bodySearch.mask = LayerIndex.entityPrecise.mask;
             bodySearch.radius = enemyRadius;
         }
 
-        private void OnDisable()
-        {
-            if (heatOverlayController != null)
-            {
-                heatOverlayController.onInstanceAdded -= OnHeatOverlayInstanceAdded;
-                heatOverlayController.onInstanceRemove -= OnHeatOverlayInstanceRemoved;
-                fillUiList.Clear();
-                HudOverlayManager.RemoveOverlay(heatOverlayController);
-            }
-        }
-
         private void FixedUpdate()
         {
-            UpdateUI();
-
             if (Input.GetKeyDown(KeyCode.J))
             {
                 AddHeat(heatMax);
@@ -187,31 +154,6 @@ namespace SS2.Components
                     cachedAirControl = null;
                 }
             }
-        }
-
-        private void UpdateUI()
-        {
-            foreach (ImageFillController imageFillController in fillUiList)
-            {
-                imageFillController.SetTValue(heat / heatMax);
-            }
-            if (heatOverlayInstanceChildlocator)
-            {
-                //heatOverlayInstanceChildlocator.FindChild("HeatThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, heatMax, heat) * -360f);
-            }
-        }
-
-        private void OnHeatOverlayInstanceAdded(OverlayController controller, GameObject instance)
-        {
-            fillUiList.Add(instance.GetComponent<ImageFillController>());
-            uiHeatText = instance.GetComponent<Text>();
-
-            heatOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
-        }
-
-        private void OnHeatOverlayInstanceRemoved(OverlayController controller, GameObject instance)
-        {
-            fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
         }
 
         public void AddHeat(float amount)

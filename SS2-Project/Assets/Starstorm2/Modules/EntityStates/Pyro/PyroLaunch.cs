@@ -74,9 +74,7 @@ namespace EntityStates.Pyro
             }
 
             duration = baseDuration / attackSpeedStat;
-            maxDuration = baseMaxDuration / attackSpeedStat;
-            characterBody.hideCrosshair = true;
-            
+            maxDuration = baseMaxDuration / attackSpeedStat;            
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
 
             ChildLocator bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement = GetModelChildLocator();
@@ -297,8 +295,6 @@ namespace EntityStates.Pyro
             base.OnExit();
 
             characterMotor.walkSpeedPenaltyCoefficient = 1f;
-            characterBody.hideCrosshair = false;
-
             PlayCrossfade("Gesture, Override", "Launch", 0.1f);
         }
 

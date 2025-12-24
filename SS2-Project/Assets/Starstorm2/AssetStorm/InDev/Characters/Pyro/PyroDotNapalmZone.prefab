@@ -149,7 +149,7 @@ MonoBehaviour:
   overlapProcCoefficient: 0.2
   fireFrequency: 1
   resetFrequency: 3
-  lifetime: 4
+  lifetime: 7
   onBegin:
     m_PersistentCalls:
       m_Calls:
@@ -595,8 +595,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0.013233185
-      value: 0.93868256
+      time: 0
+      value: 0.5
       inSlope: -0.1474184
       outSlope: -0.1474184
       tangentMode: 0
@@ -644,15 +644,15 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 2
-      outSlope: 2
+      inSlope: 1.341164
+      outSlope: 1.341164
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0
+      outWeight: 0.08128545
     - serializedVersion: 3
       time: 1
-      value: 1
+      value: 0.5
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -837,7 +837,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7770888838359267624}
   serializedVersion: 8
-  lengthInSec: 6
+  lengthInSec: 7
   simulationSpeed: 1
   stopAction: 2
   cullingMode: 3

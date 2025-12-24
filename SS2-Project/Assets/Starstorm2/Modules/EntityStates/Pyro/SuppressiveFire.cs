@@ -70,6 +70,8 @@ namespace EntityStates.Pyro
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
 
+            PlayCrossfade("Gesture, Override", "FireSecondary", 0.1f);
+
             // keeps it roughly ~3 fire pools a second, regardless of tick rate, i hope
             igniteFrequency = .32f / tickRate;
 
@@ -128,6 +130,7 @@ namespace EntityStates.Pyro
         public override void OnExit()
         {
             base.OnExit();
+            PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
 
             if (flamethrowerTransform != null)

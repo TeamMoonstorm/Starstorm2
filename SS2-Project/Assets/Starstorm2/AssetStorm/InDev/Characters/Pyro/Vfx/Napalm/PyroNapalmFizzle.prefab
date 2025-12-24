@@ -19517,6 +19517,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4530248149724125703}
   - component: {fileID: 937304155834942287}
+  - component: {fileID: -2870583891994452616}
   m_Layer: 0
   m_Name: PyroNapalmFizzle
   m_TagString: Untagged
@@ -19561,3 +19562,23 @@ MonoBehaviour:
   DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []
+--- !u!114 &-2870583891994452616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8110569774902988921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 511512695, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  effectIndex: -1
+  positionAtReferencedTransform: 0
+  parentToReferencedTransform: 0
+  noEffectData: 0
+  applyScale: 0
+  soundName: 
+  disregardZScale: 0
+  applyScaleFirst: 0

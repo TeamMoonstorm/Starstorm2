@@ -72,7 +72,9 @@ namespace EntityStates.Pyro
 
             impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
 
-            //playanimation
+            Util.PlaySound("Play_pyro_primary_start", gameObject);
+
+            PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);
         }
 
         public override void FixedUpdate()
@@ -87,6 +89,7 @@ namespace EntityStates.Pyro
                 hasBegunFlamethrower = true;
                 // silly visual flamethrower for sake of making it look fuller
                 flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                Util.PlaySound("Play_pyro_primary_loop", gameObject);
                 Fire(muzzleString);
             }
 
@@ -114,6 +117,9 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+            Util.PlaySound("Stop_pryo_primary_loop", gameObject); //
+            Util.PlaySound("Play_pyro_primary_end", gameObject);
+            PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
             if (flamethrowerTransform)
                 Destroy(flamethrowerTransform.gameObject);
         }

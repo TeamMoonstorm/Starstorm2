@@ -12869,10 +12869,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  _defaultCrosshairPrefab: {fileID: 0}
+  _defaultCrosshairPrefab: {fileID: 1894802512682313, guid: 3b4d968acfd20af40afd2a08353c0331,
+    type: 3}
   hideCrosshair: 0
   sprintCrosshairPrefabOverride: {fileID: 0}
-  useSprintCrosshair: 1
+  useSprintCrosshair: 0
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -13496,9 +13497,7 @@ MonoBehaviour:
   heatMax: 100
   numberAround: 0
   enemyRadius: 25
-  heatOverlayPrefab: {fileID: 1894802512682313, guid: 3b4d968acfd20af40afd2a08353c0331,
-    type: 3}
-  heatOverlayChildLocatorEntry: CrosshairExtras
+  aircontroldecay: 0
 --- !u!1 &8210966585638984841
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,12 +18,15 @@ namespace SS2.Survivors
         public static ModdedDamageType FireballDamageType { get; private set; }
         public static ModdedDamageType FireballImpactDamageType { get; private set; }
 
+        public static GameObject _pyroBody;
         public static GameObject _hotFireVFX;
         public static GameObject _fireballExplosionVFX;
         public static HeatSkillDef _jetpackOverrideDef;
         public static BuffDef _bdPyroManiac;
         public static BuffDef _bdPyroJet;
         public static BuffDef _bdPyroJetHiddenBoost;
+
+        private BodyIndex pyroIndex;
 
         public override void Initialize()
         {
@@ -32,6 +35,9 @@ namespace SS2.Survivors
             FlamethrowerDamageType = ReserveDamageType();
             FireballDamageType = ReserveDamageType();
 
+            _pyroBody = AssetCollection.FindAsset<GameObject>("PyroBody");
+            pyroIndex = BodyCatalog.FindBodyIndex(_pyroBody);
+
             _hotFireVFX = AssetCollection.FindAsset<GameObject>("PyroHotFireVFX");
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
             _bdPyroManiac = AssetCollection.FindAsset<BuffDef>("bdPyroManiac");
@@ -39,18 +45,13 @@ namespace SS2.Survivors
             _bdPyroJetHiddenBoost = AssetCollection.FindAsset<BuffDef>("bdPyroJetHidden");
             _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
-            On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
-
-            //GlobalEventManager.onServerDamageDealt += PyroDamageChecks;
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
             On.RoR2.DotController.AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 += DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1;
-            //On.RoR2.DotController.OnDotStackAddedServer += DotController_OnDotStackAddedServer;
         }
 
         private void DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1(On.RoR2.DotController.orig_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 orig, DotController self, GameObject attackerObject, float duration, DotController.DotIndex dotIndex, float damageMultiplier, uint? maxStacksFromAttacker, float? totalDamage, DotController.DotIndex? preUpgradeDotIndex)
         {
-            // save a reference to bodyindex hhhhhhhhhh
-            if (self.victimBody.baseNameToken == "SS2_PYRO_NAME" && (preUpgradeDotIndex == DotController.DotIndex.Burn || preUpgradeDotIndex == DotController.DotIndex.PercentBurn || preUpgradeDotIndex == DotController.DotIndex.StrongerBurn))
+            if (self.victimBody.bodyIndex == pyroIndex && (dotIndex == DotController.DotIndex.Burn || dotIndex == DotController.DotIndex.PercentBurn || dotIndex == DotController.DotIndex.StrongerBurn))
             {
                 return;
             }
@@ -77,10 +78,8 @@ namespace SS2.Survivors
 
                         if (distance < 6f)
                         {
-                            //Debug.Log("pre damage: " + damageInfo.damage);
                             damageInfo.damage *= 1.5f;
                             damageInfo.force *= 3f;
-                            //Debug.Log("post damage: " + damageInfo.damage);
                             damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
                             EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
                             if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
@@ -94,10 +93,11 @@ namespace SS2.Survivors
                 }
             }
 
-            // ofmg kill urp ast self
-            if (self.body.baseNameToken == "SS2_PYRO_NAME")
-            {
-                //needs redone
+            
+
+            if (self.body.bodyIndex == pyroIndex)
+            {   
+                // only clears visual buff, not dot..
                 if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
                 {
                     self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
@@ -108,63 +108,10 @@ namespace SS2.Survivors
             orig(self, damageInfo);
         }
 
-        private void PSTI_OPI(On.RoR2.Projectile.ProjectileSingleTargetImpact.orig_OnProjectileImpact orig, ProjectileSingleTargetImpact self, ProjectileImpactInfo impactInfo)
-        {
-            //FUCK
-            if (self.projectileController.gameObject.name.Contains("PyroFireball"))
-            {
-                ProjectileExplosion pe = self.projectileController.gameObject.GetComponent<ProjectileExplosion>();
-                if (pe)
-                {
-                    float burnCount = 0;
-                    Collider collider = impactInfo.collider;
-                    if (collider)
-                    {
-                        HurtBox component = collider.GetComponent<HurtBox>();
-                        {
-                            if (component && component.hurtBoxGroup)
-                            {
-                                HealthComponent healthComponent = component.healthComponent;
-                                if (healthComponent)
-                                {
-                                    CharacterBody body = healthComponent.body;
-
-                                    if (body)
-                                    {
-                                        burnCount += body.GetBuffCount(RoR2Content.Buffs.OnFire);
-                                        burnCount += body.GetBuffCount(DLC1Content.Buffs.StrongerBurn);
-                                        burnCount += 1.5f; //we do a little trolling
-                                    }
-
-                                    pe.blastRadius += burnCount;
-                                    pe.blastDamageCoefficient += burnCount;
-                                }
-                            }
-                            else
-                                pe.blastRadius /= 2f;
-                        }
-                    }
-
-                    pe.Detonate();
-
-                    EffectData effectData = new EffectData()
-                    {
-                        scale = pe.blastRadius,
-                        origin = impactInfo.estimatedPointOfImpact,
-                        rotation = Quaternion.identity
-                    };
-                    EffectManager.SpawnEffect(_fireballExplosionVFX, effectData, true);
-                }
-            }
-
-            orig(self, impactInfo);
-        }
-
         public void ModifyPrefab()
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
             cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
         }
 
         public sealed class PyromaniacBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
