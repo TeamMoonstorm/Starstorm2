@@ -229,6 +229,10 @@ namespace EntityStates.Pyro
 
                 if (isAuthority)
                 {
+                    DamageTypeCombo dtc = new DamageTypeCombo();
+                    dtc.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
+                    dtc.damageSource = DamageSource.Utility;
+
                     BlastAttack launchBlast = new BlastAttack()
                     {
                         radius = launchRadius,
@@ -241,6 +245,7 @@ namespace EntityStates.Pyro
                         attacker = gameObject,
                         baseForce = launchProcForce,
                         position = transform.position,
+                        damageType = dtc,
                         crit = RollCrit()
                     };
 
