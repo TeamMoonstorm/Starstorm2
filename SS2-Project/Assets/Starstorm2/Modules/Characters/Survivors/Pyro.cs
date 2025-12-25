@@ -36,7 +36,6 @@ namespace SS2.Survivors
             FireballDamageType = ReserveDamageType();
 
             _pyroBody = AssetCollection.FindAsset<GameObject>("PyroBody");
-            pyroIndex = BodyCatalog.FindBodyIndex(_pyroBody);
 
             _hotFireVFX = AssetCollection.FindAsset<GameObject>("PyroHotFireVFX");
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
@@ -46,17 +45,36 @@ namespace SS2.Survivors
             _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
             On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
-            On.RoR2.DotController.AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 += DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1;
+            On.RoR2.DotController.InflictDot_refInflictDotInfo += DotController_InflictDot_refInflictDotInfo;
+            On.RoR2.BodyCatalog.SetBodyPrefabs += BodyCatalog_SetBodyPrefabs;
         }
 
-        private void DotController_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1(On.RoR2.DotController.orig_AddDot_GameObject_float_DotIndex_float_Nullable1_Nullable1_Nullable1 orig, DotController self, GameObject attackerObject, float duration, DotController.DotIndex dotIndex, float damageMultiplier, uint? maxStacksFromAttacker, float? totalDamage, DotController.DotIndex? preUpgradeDotIndex)
+        private void BodyCatalog_SetBodyPrefabs(On.RoR2.BodyCatalog.orig_SetBodyPrefabs orig, GameObject[] newBodyPrefabs)
         {
-            if (self.victimBody.bodyIndex == pyroIndex && (dotIndex == DotController.DotIndex.Burn || dotIndex == DotController.DotIndex.PercentBurn || dotIndex == DotController.DotIndex.StrongerBurn))
+            orig(newBodyPrefabs);
+
+            pyroIndex = BodyCatalog.FindBodyIndex(_pyroBody);
+        }
+
+        private void DotController_InflictDot_refInflictDotInfo(On.RoR2.DotController.orig_InflictDot_refInflictDotInfo orig, ref InflictDotInfo inflictDotInfo)
+        {
+            if (inflictDotInfo.attackerObject.TryGetComponent(out CharacterBody body) && body.bodyIndex == pyroIndex && body.TryGetComponent(out PyroController pc) && pc.heat >= 70f)
             {
-                return;
+                if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
+                {
+                    inflictDotInfo.duration *= 2f;
+                }
             }
 
-            orig(self, attackerObject, duration, dotIndex, damageMultiplier, maxStacksFromAttacker, totalDamage, preUpgradeDotIndex);
+            if (inflictDotInfo.victimObject.TryGetComponent(out CharacterBody vbody) && vbody.bodyIndex == pyroIndex)
+            {
+                if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
+                {
+                    return;
+                }
+            }
+
+            orig(ref inflictDotInfo);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -83,29 +101,50 @@ namespace SS2.Survivors
                             damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
                             EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
                             if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
-                                damageInfo.damageType = DamageType.IgniteOnHit;
+                                damageInfo.damageType.damageType = DamageType.IgniteOnHit;
                         }
-                        else if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 65f)
+                        else if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 70f)
                         {
-                            damageInfo.damageType = DamageType.IgniteOnHit;
+                            damageInfo.damageType.damageType = DamageType.IgniteOnHit;
                         }
                     }
                 }
             }
 
-            
-
             if (self.body.bodyIndex == pyroIndex)
             {   
-                // only clears visual buff, not dot..
-                if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                // give 5 heat and reduce damage from incoming fire
+                if (damageInfo.damageType.damageType == DamageType.IgniteOnHit || damageInfo.damageType.damageType == DamageType.PercentIgniteOnHit || damageInfo.damageType.damageTypeExtended == DamageTypeExtended.FireNoIgnite)
                 {
-                    self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
-                    self.body.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
+                    // SS2Log.Info("Pyro.HealthComponent_TakeDamage : Adding Heat & reducing damage to Pyro");
+                    damageInfo.damage *= 0.75f;
+                    if (self.body.TryGetComponent(out PyroController pyro))
+                    {
+                        pyro.AddHeat(5f);
+                    }
                 }
             }
 
             orig(self, damageInfo);
+
+            if (self.body.bodyIndex == pyroIndex)
+            {
+                // put out fire when ignited
+                // we dont put out overheat though
+                if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                {
+                    self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
+                    self.body.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
+
+                    //DotController dot = DotController.FindDotController(self.body.gameObject);
+                    //if (dot != null)
+                    //{
+                    //    dot.RemoveDamage(DotController.DotIndex.Burn, float.PositiveInfinity);
+                    //    dot.RemoveDamage(DotController.DotIndex.PercentBurn, float.PositiveInfinity);
+                    //    dot.RemoveDamage(DotController.DotIndex.StrongerBurn, float.PositiveInfinity);
+                    //}
+                }
+            }
         }
 
         public void ModifyPrefab()

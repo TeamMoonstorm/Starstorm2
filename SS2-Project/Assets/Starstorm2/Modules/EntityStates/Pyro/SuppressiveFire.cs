@@ -36,6 +36,8 @@ namespace EntityStates.Pyro
         public static float recoilForce;
         public static float force;
         public static float radius;
+        public static float recoil;
+        public static float spreadBloom;
         public static string muzzleString;
 
         public static GameObject projectilePrefab;
@@ -146,8 +148,6 @@ namespace EntityStates.Pyro
             float damage = tickDamageCoefficient * damageStat;
             DamageColorIndex color = DamageColorIndex.Default;
 
-            //Debug.Log("Firing");
-
             GameObject prefab = projectilePrefab;
 
             if (fired >= igniteFrequency)
@@ -158,6 +158,7 @@ namespace EntityStates.Pyro
 
             DamageTypeCombo dtc = new DamageTypeCombo();
             dtc.damageType = DamageType.IgniteOnHit;
+            dtc.damageSource = DamageSource.Secondary;
 
             if (pc.heat >= heatIgniteThreshold)
             {
@@ -166,6 +167,24 @@ namespace EntityStates.Pyro
             }
 
             Ray aimRay = GetAimRay();
+
+            // spread calc
+            {
+                Vector3 up = Vector3.up;
+                Vector3 right = Vector3.Cross(up, aimRay.direction);
+
+                float deviation = Random.Range(0f, characterBody.spreadBloomAngle);
+                float roll = Random.Range(0.0f, 360.0f);
+
+                Vector3 spreadXZ = Quaternion.Euler(0.0f, 0.0f, roll) * (Quaternion.Euler(deviation, 0.0f, 0.0f) * Vector3.forward);
+                float spreadY = spreadXZ.y;
+                spreadXZ.y = 0f;
+                float yaw = (Mathf.Atan2(spreadXZ.z, spreadXZ.x) * Mathf.Rad2Deg - 90.0f);
+                float pitch = (Mathf.Atan2(spreadY, spreadXZ.magnitude) * Mathf.Rad2Deg);
+
+                aimRay = new Ray(origin: aimRay.origin, direction: Quaternion.AngleAxis(yaw, up) * (Quaternion.AngleAxis(pitch, right) * aimRay.direction));
+            }
+
             if (isAuthority)
             {
                 ProjectileManager.instance.FireProjectile(
@@ -182,6 +201,8 @@ namespace EntityStates.Pyro
                     dtc
                     );
             }
+
+            AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
 
             if (flamethrowerTransform)
                 flamethrowerTransform.forward = aimRay.direction;

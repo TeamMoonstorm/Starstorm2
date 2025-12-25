@@ -78,12 +78,7 @@ namespace EntityStates.Pyro
             if (smokeMuzzleEffect)
             {
                 smokeMuzzleEffect.newDuration = entryDuration;
-
-                // fire all the held particlesystems
-                foreach (ParticleSystem ps in smokeMuzzleEffect.particleSystems)
-                {
-                    ps.Emit(1);
-                }
+                smokeMuzzleEffect.UpdateDuration();
             }
 
             PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);

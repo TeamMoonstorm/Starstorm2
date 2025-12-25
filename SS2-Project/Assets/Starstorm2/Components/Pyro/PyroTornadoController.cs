@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using RoR2.Projectile;
+using SS2;
 
 public class PyroTornadoController : NetworkBehaviour
 {
@@ -20,7 +21,7 @@ public class PyroTornadoController : NetworkBehaviour
     {
         baseScale = transform.localScale;
 
-        if (TryGetComponent(out ProjectileController pc) && pc.TryGetComponent(out CharacterBody body))
+        if (TryGetComponent(out ProjectileController pc) && pc.owner != null && pc.owner.TryGetComponent(out CharacterBody body))
         {
             ownerBody = body;
         }
@@ -29,6 +30,8 @@ public class PyroTornadoController : NetworkBehaviour
         {
             projDmg = dmg;
         }
+
+        SS2Log.Info("PyroTornadoController.Awake : owner is " + ownerBody);
     }
 
     //public void FixedUpdate()
