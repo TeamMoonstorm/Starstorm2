@@ -205,7 +205,7 @@ namespace SS2.Survivors
             }
             else
             {
-                R2API.ExecuteAPI.CalculateExecuteThreshold += FearExecuteThreshold;
+                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
             }
 
 
