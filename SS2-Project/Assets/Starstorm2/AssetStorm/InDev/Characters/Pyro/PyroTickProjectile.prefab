@@ -202,8 +202,8 @@ MonoBehaviour:
   damageColorIndex: 0
   damageType:
     damageType: 0
-    damageTypeExtended: 0
-    damageSource: 0
+    damageTypeExtended: 32768
+    damageSource: 1
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &3952371091310849317
@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEffect: {fileID: 0}
-  lifetime: 0.45
+  lifetime: 0.5
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 80
   updateAfterFiring: 0
@@ -422,7 +422,7 @@ MonoBehaviour:
   offsetForLifetimeExpiredSound: 0
   destroyOnEnemy: 0
   detonateOnEnemy: 0
-  destroyOnWorld: 0
+  destroyOnWorld: 1
   destroyOnDistance: 0
   maxDistance: 0
   impactOnWorld: 1
@@ -564,7 +564,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   getLifeTimeFromProjectileSimple: {fileID: 6486596261103046868}
-  lifetime: 0.45
+  lifetime: 0.5
 --- !u!114 &600679860808542752
 MonoBehaviour:
   m_ObjectHideFlags: 0
