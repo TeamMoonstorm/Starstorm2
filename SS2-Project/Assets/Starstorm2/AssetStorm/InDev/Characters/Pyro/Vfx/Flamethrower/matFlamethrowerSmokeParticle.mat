@@ -7,10 +7,11 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matNapalmDust
+  m_Name: matFlamethrowerSmokeParticle
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
   - CLOUDOFFSET
+  - FRESNEL
   - USE_CLOUDS
   - VERTEXCOLOR
   m_InvalidKeywords:
@@ -25,48 +26,48 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _Cloud2Tex:
         m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
+        m_Texture: {fileID: 2800000, guid: f381aa5a63b7b75419aa7ec320b4bb1c, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: e189023e54cd00d40bc3d33ab601e195, type: 3}
+        m_Texture: {fileID: 2800000, guid: 46e7f326fb0a2a44dab366e4a3aaba9f, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 3a1e2b12bb8741e4ea862d657ae15bf8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4ec49b996e2fa41489240e1b72a4294b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.134
-    - _AlphaBoost: 0.42
+    - _AlphaBias: 0.021
+    - _AlphaBoost: 1.62
     - _AlphaThreshold: 0.03
     - _Boost: 1.81
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 1
     - _CloudsOn: 1
-    - _Cull: 1
+    - _Cull: 0
     - _Cutoff: 0.855
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: -0.45
-    - _DstBlend: 10
+    - _DistortionStrength: -0.25
+    - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
-    - _FresnelOn: 0
+    - _FresnelOn: 1
     - _FresnelPower: -3.3
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InternalSimpleBlendMode: 1
+    - _InternalSimpleBlendMode: 0
     - _InvFade: 1.16
     - _Metallic: 0
     - _Mode: 0
@@ -77,7 +78,7 @@ Material:
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
     - _UVSwapOn: 0
     - _UseColor: 0
@@ -85,11 +86,11 @@ Material:
     - _VertexAlphaOn: 0
     - _VertexColorOn: 1
     - _VertexOffsetOn: 0
-    - _ZTest: 4
+    - _ZTest: 2
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 6, g: 20, b: 0, a: 0}
+    - _CutoffScroll: {r: 5, g: 5, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

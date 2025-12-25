@@ -34,6 +34,7 @@ namespace EntityStates.Pyro
         public static float force;
         public static float radius;
         public static string muzzleString;
+        public static string smokeMuzzleEffectString;
 
         public static GameObject impactEffectPrefab;
         public static GameObject flameEffectPrefab;
@@ -44,6 +45,8 @@ namespace EntityStates.Pyro
         private PyroController pc;
         private ChildLocator childLocator;
         private ParticleSystem flames;
+
+        private ScaleParticleSystemDuration smokeMuzzleEffect;
 
         public override void OnEnter()
         {
@@ -68,11 +71,17 @@ namespace EntityStates.Pyro
             {
                 childLocator = modelTransform.GetComponent<ChildLocator>();
                 //flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
+                smokeMuzzleEffect = childLocator.FindChild(smokeMuzzleEffectString).GetComponent<ScaleParticleSystemDuration>();
             }
 
             impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
 
             Util.PlaySound("Play_pyro_primary_start", gameObject);
+
+            if (smokeMuzzleEffect)
+            {
+                smokeMuzzleEffect.newDuration = entryDuration;
+            }
 
             PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);
         }
