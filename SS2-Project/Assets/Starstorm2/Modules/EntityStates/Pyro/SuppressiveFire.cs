@@ -73,7 +73,7 @@ namespace EntityStates.Pyro
             PlayCrossfade("Gesture, Override", "FireSecondary", 0.1f);
 
             // keeps it roughly ~3 fire pools a second, regardless of tick rate, i hope
-            igniteFrequency = .32f / tickRate;
+            igniteFrequency = igniteFrequencyCoefficient / tickRate;
 
             characterBody.SetAimTimer(duration * 2f);
 
@@ -95,7 +95,7 @@ namespace EntityStates.Pyro
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
-                flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                // flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Fire(muzzleString);
             }
 

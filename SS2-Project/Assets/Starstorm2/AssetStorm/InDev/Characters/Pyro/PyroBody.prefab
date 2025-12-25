@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 8669910517736805364}
-  itemDisplayRuleSet: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 11400000, guid: e40e2a9b8e5f93e4aa45eaf595d5a124, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
   customGameObjectActivationTransforms: []
@@ -188,6 +188,44 @@ MonoBehaviour:
     transform: {fileID: 5776902698465554374}
   - name: Bag
     transform: {fileID: 5301542345916302259}
+  - name: Chest
+    transform: {fileID: 7197334420162653135}
+  - name: Canister
+    transform: {fileID: 2604487050662526061}
+  - name: ShoulderL
+    transform: {fileID: 6368472613734132263}
+  - name: ArmL
+    transform: {fileID: 493886927830768173}
+  - name: HandL
+    transform: {fileID: 8216071068897839657}
+  - name: ShoulderR
+    transform: {fileID: 243100425334032347}
+  - name: ArmR
+    transform: {fileID: 7852370325903777515}
+  - name: HandR
+    transform: {fileID: 2725878745732019916}
+  - name: Flamethrower
+    transform: {fileID: 8810781917089427895}
+  - name: HoseA
+    transform: {fileID: 3461991034499216781}
+  - name: HoseB
+    transform: {fileID: 1223447555267340990}
+  - name: HoseC
+    transform: {fileID: 3461991034499216781}
+  - name: HoseD
+    transform: {fileID: 2178836164406843920}
+  - name: HoseE
+    transform: {fileID: 2027287869428881103}
+  - name: HoseF
+    transform: {fileID: 1524241261243339124}
+  - name: HoseG
+    transform: {fileID: 1623088190973800739}
+  - name: HoseH
+    transform: {fileID: 4760866649096773030}
+  - name: Head
+    transform: {fileID: 8632183923275309332}
+  - name: Base
+    transform: {fileID: 6978239560458991157}
 --- !u!114 &2750547033799731505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,7 +348,8 @@ MonoBehaviour:
     m_SubObjectName: 
     m_SubObjectType: 
   _avatar: {fileID: 0}
-  skins: []
+  skins:
+  - {fileID: 11400000, guid: cb0dcae64180f044792736f157e2484b, type: 2}
   prefabInstantiationDatas: []
 --- !u!114 &6664427987593673502
 MonoBehaviour:
