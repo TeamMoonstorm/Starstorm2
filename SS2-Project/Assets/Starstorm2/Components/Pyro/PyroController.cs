@@ -21,18 +21,17 @@ namespace SS2.Components
         private static float enemyCheckStopwatch = 0f;
         private SphereSearch bodySearch;
         private List<HurtBox> hits;
-        public float enemyRadius = 25f;
+        public float enemyRadius = 35f;
 
-        [Header("Heat UI")]
-        [SerializeField]
-        public GameObject heatOverlayPrefab;
+        //jump air control stuff
+        private CharacterMotor characterMotor;
+        //able to be set by other parts of code, and this script will handle ramping it back to normal
+            //that's professional speak for I couldn't be fucked to make an entitystate and threw it in this component
+        public float? cachedAirControl;
+        private float originalAirControl;
 
-        [SerializeField]
-        public string heatOverlayChildLocatorEntry;
-        private ChildLocator heatOverlayInstanceChildlocator;
-        private OverlayController heatOverlayController;
-        private List<ImageFillController> fillUiList = new List<ImageFillController>();
-        private Text uiHeatText;
+        [SerializeField, Tooltip("time multiplier for how long it should take to ramp air control back to normal when cachedAirControl is modified")]
+        private float aircontroldecay;
 
         [SyncVar(hook = "OnHeatModified")]
         private float _heat;
@@ -40,6 +39,7 @@ namespace SS2.Components
         {
             get
             {
+
                 return _heat;
             }
         }
@@ -71,41 +71,30 @@ namespace SS2.Components
             }
         }
 
+        public void Awake()
+        {
+            characterBody = GetComponent<CharacterBody>();
+            characterMotor = GetComponent<CharacterMotor>();
+            originalAirControl = characterMotor.airControl;
+        }
+
         public void OnEnable()
         {
-            OverlayCreationParams heatOverlayCreationParams = new OverlayCreationParams
-            {
-                prefab = heatOverlayPrefab,
-                childLocatorEntry = heatOverlayChildLocatorEntry
-            };
-            heatOverlayController = HudOverlayManager.AddOverlay(gameObject, heatOverlayCreationParams);
-            heatOverlayController.onInstanceAdded += OnHeatOverlayInstanceAdded;
-            heatOverlayController.onInstanceRemove += OnHeatOverlayInstanceRemoved;
-            characterBody = GetComponent<CharacterBody>();
-
             hits = new List<HurtBox>();
             bodySearch = new SphereSearch();
             bodySearch.mask = LayerIndex.entityPrecise.mask;
             bodySearch.radius = enemyRadius;
         }
 
-        private void OnDisable()
-        {
-            if (heatOverlayController != null)
-            {
-                heatOverlayController.onInstanceAdded -= OnHeatOverlayInstanceAdded;
-                heatOverlayController.onInstanceRemove -= OnHeatOverlayInstanceRemoved;
-                fillUiList.Clear();
-                HudOverlayManager.RemoveOverlay(heatOverlayController);
-            }
-        }
-
         private void FixedUpdate()
         {
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+                AddHeat(heatMax);
+            }
+
             if (NetworkServer.active)
             {
-                UpdateUI();
-
                 enemyCheckStopwatch += Time.fixedDeltaTime;
                 if (enemyCheckStopwatch >= enemyCheckInterval)
                 {
@@ -155,38 +144,22 @@ namespace SS2.Components
                     AddHeat(burnCount * 0.25f);
                 }
             }
-        }
 
-        private void UpdateUI()
-        {
-            foreach (ImageFillController imageFillController in fillUiList)
+            if (cachedAirControl.HasValue)
             {
-                imageFillController.SetTValue(heat / heatMax);
+                cachedAirControl += Mathf.Clamp(Time.fixedDeltaTime / aircontroldecay, 0, originalAirControl);
+                characterMotor.airControl = cachedAirControl.Value;
+                if(cachedAirControl.Value >= originalAirControl)
+                {
+                    cachedAirControl = null;
+                }
             }
-            if (heatOverlayInstanceChildlocator)
-            {
-                //heatOverlayInstanceChildlocator.FindChild("HeatThreshold").rotation = Quaternion.Euler(0f, 0f, Mathf.InverseLerp(0f, heatMax, heat) * -360f);
-            }
-        }
-
-        private void OnHeatOverlayInstanceAdded(OverlayController controller, GameObject instance)
-        {
-            fillUiList.Add(instance.GetComponent<ImageFillController>());
-            uiHeatText = instance.GetComponent<Text>();
-
-            heatOverlayInstanceChildlocator = instance.GetComponent<ChildLocator>();
-        }
-
-        private void OnHeatOverlayInstanceRemoved(OverlayController controller, GameObject instance)
-        {
-            fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
         }
 
         public void AddHeat(float amount)
         {
             if (!NetworkServer.active)
             {
-                SS2Log.Error("pyro controller add heat on client");
                 return;
             }
 
@@ -201,43 +174,43 @@ namespace SS2.Components
             Network_charge = newHeat;
         }
 
-        //let him cook
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write(_heat);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write(_heat);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
+        // might make weaver cry? need to check mp
+        //public override bool OnSerialize(NetworkWriter writer, bool forceAll)
+        //{
+        //    if (forceAll)
+        //    {
+        //        writer.Write(_heat);
+        //        return true;
+        //    }
+        //    bool flag = false;
+        //    if ((syncVarDirtyBits & 1U) != 0U)
+        //    {
+        //        if (!flag)
+        //        {
+        //            writer.WritePackedUInt32(syncVarDirtyBits);
+        //            flag = true;
+        //        }
+        //        writer.Write(_heat);
+        //    }
+        //    if (!flag)
+        //    {
+        //        writer.WritePackedUInt32(syncVarDirtyBits);
+        //    }
+        //    return flag;
+        //}
 
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _heat = reader.ReadSingle();
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                OnHeatModified(reader.ReadSingle());
-            }
-        }
+        //public override void OnDeserialize(NetworkReader reader, bool initialState)
+        //{
+        //    if (initialState)
+        //    {
+        //        _heat = reader.ReadSingle();
+        //        return;
+        //    }
+        //    int num = (int)reader.ReadPackedUInt32();
+        //    if ((num & 1) != 0)
+        //    {
+        //        OnHeatModified(reader.ReadSingle());
+        //    }
+        //}
     }
 }

@@ -17,7 +17,7 @@ MonoBehaviour:
   skillDescriptionToken: SS2_PYRO_SPECIAL_DESC
   keywordTokens:
   - KEYWORD_IGNITE
-  icon: {fileID: 21300000, guid: 8bf8062dcf7ed9242848e392b5a59456, type: 3}
+  icon: {fileID: 21300000, guid: cb5b2f53db6bf12469dd2ce8ff03fa50, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Pyro.PyroFireball, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -28,15 +28,23 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 1
-  heatValue: 65
-  heatConsumed: 65
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
+  heatValue: 35
+  heatConsumed: 35
   canCastIfLowHeat: 0

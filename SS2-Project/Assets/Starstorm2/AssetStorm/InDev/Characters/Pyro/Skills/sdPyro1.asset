@@ -18,7 +18,7 @@ MonoBehaviour:
   keywordTokens:
   - SS2_KEYWORD_TORCHING
   - KEYWORD_IGNITE
-  icon: {fileID: 21300000, guid: 5707445ccd40f8b49b2535d46c9ff8fa, type: 3}
+  icon: {fileID: 21300000, guid: e979b001afbdb8149b03bec9885f1ebb, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Pyro.FireFlamethrower, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -29,12 +29,20 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0

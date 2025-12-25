@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Projectile;
 using SS2;
 using SS2.Components;
 using System.Collections;
@@ -14,9 +15,12 @@ namespace EntityStates.Pyro
         public static float baseTickFrequency;
         public static float baseEntryDuration;
         public static float pressureDuration;
+        [Tooltip("The ratio of how many per second should ignite. Hard to explain :(")]
+        public static float igniteFrequencyCoefficient;
 
         private float tickRate;
         private float stopwatch;
+        private float heatStopwatch;
         private float flamethrowerStopwatch;
         private float duration;
         private float entryDuration;
@@ -34,8 +38,13 @@ namespace EntityStates.Pyro
         public static float radius;
         public static string muzzleString;
 
+        public static GameObject projectilePrefab;
+        public static GameObject ignitePrefab;
         public static GameObject impactEffectPrefab;
         public static GameObject flameEffectPrefab;
+
+        private float igniteFrequency;
+        private float fired;
 
         private Transform flamethrowerTransform;
 
@@ -44,17 +53,6 @@ namespace EntityStates.Pyro
         private ParticleSystem flames;
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
-        private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
-        {
-            maxPitch = 85f,
-            minPitch = -85f,
-            pivotVerticalOffset = 1f,
-            idealLocalCameraPos = cameraPos,
-            wallCushion = 0.1f,
-        };
-
-        [HideInInspector]
-        public static Vector3 cameraPos = new Vector3(0f, -0.1f, -7.2f);
 
         public override void OnEnter()
         {
@@ -64,16 +62,6 @@ namespace EntityStates.Pyro
 
             pc = GetComponent<PyroController>();
 
-            cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
-
-            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
-            {
-                cameraParamsData = chargeCameraParams,
-                priority = 0f
-            };
-
-            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
-
             stopwatch = 0f;
 
             hasBegunFlamethrower = false;
@@ -81,6 +69,11 @@ namespace EntityStates.Pyro
             duration = baseDuration / attackSpeedStat;
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
+
+            PlayCrossfade("Gesture, Override", "FireSecondary", 0.1f);
+
+            // keeps it roughly ~3 fire pools a second, regardless of tick rate, i hope
+            igniteFrequency = igniteFrequencyCoefficient / tickRate;
 
             characterBody.SetAimTimer(duration * 2f);
 
@@ -90,10 +83,6 @@ namespace EntityStates.Pyro
                 childLocator = modelTransform.GetComponent<ChildLocator>();
                 //flames = childLocator.FindChild("Flames").GetComponent<ParticleSystem>();
             }
-
-            //impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
-
-            //playanimation
         }
 
         public override void FixedUpdate()
@@ -102,23 +91,31 @@ namespace EntityStates.Pyro
 
             stopwatch += Time.fixedDeltaTime;
 
-            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
+            if ((stopwatch >= entryDuration && !hasBegunFlamethrower) || (HasBuff(SS2.SS2Content.Buffs.bdPyroPressure) && !hasBegunFlamethrower))
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
-                flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                // flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Fire(muzzleString);
             }
 
             if (hasBegunFlamethrower)
             {
+                heatStopwatch += Time.fixedDeltaTime;
                 flamethrowerStopwatch += Time.fixedDeltaTime;
-                float tickRate = baseTickFrequency / attackSpeedStat;
+                // we recalculate this each time to accomodate for attack speed changes during
+                tickRate = baseTickFrequency / attackSpeedStat;
                 if (flamethrowerStopwatch > tickRate)
                 {
                     //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
                     Fire(muzzleString);
+                }
+                // we count this separate for fuel burn rate consistency
+                if (heatStopwatch > baseTickFrequency && pc != null)
+                {
+                    pc.AddHeat(heatPerTick);
+                    heatStopwatch -= baseTickFrequency;
                 }
             }
 
@@ -133,67 +130,63 @@ namespace EntityStates.Pyro
         public override void OnExit()
         {
             base.OnExit();
+            PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
             characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
-            if (cameraTargetParams)
+
+            if (flamethrowerTransform != null)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
-            }
-            if (flamethrowerTransform)
                 Destroy(flamethrowerTransform.gameObject);
+            }
         }
 
         private void Fire(string muzzleString)
         {
-            DamageType damageType;
-
             characterBody.SetAimTimer(duration * 2f);
 
             float damage = tickDamageCoefficient * damageStat;
+            DamageColorIndex color = DamageColorIndex.Default;
 
             //Debug.Log("Firing");
+
+            GameObject prefab = projectilePrefab;
+
+            if (fired >= igniteFrequency)
+            {
+                prefab = ignitePrefab;
+                fired = 0;
+            }
+
+            DamageTypeCombo dtc = new DamageTypeCombo();
+            dtc.damageType = DamageType.IgniteOnHit;
 
             if (pc.heat >= heatIgniteThreshold)
             {
                 damage *= 1.5f;
+                color = DamageColorIndex.WeakPoint;
             }
-
-            damageType = (Util.CheckRoll(igniteChanceHighHeat, characterBody.master) ? DamageType.IgniteOnHit : DamageType.Generic);
 
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                new BulletAttack
-                {
-                    owner = gameObject,
-                    weapon = gameObject,
-                    origin = aimRay.origin,
-                    aimVector = aimRay.direction,
-                    minSpread = 0f,
-                    damage = tickDamageCoefficient * damageStat,
-                    force = force,
-                    muzzleName = muzzleString,
-                    hitEffectPrefab = impactEffectPrefab,
-                    isCrit = RollCrit(), //to-do: make crits come in short bursts like tf2
-                    radius = radius,
-                    falloffModel = BulletAttack.FalloffModel.None,
-                    stopperMask = LayerIndex.world.mask,
-                    procCoefficient = tickProcCoefficient,
-                    maxDistance = maxDistance,
-                    smartCollision = true,
-                    damageType = damageType,
-                }.Fire();
-
-                if (flamethrowerTransform)
-                    flamethrowerTransform.forward = aimRay.direction;
-
-                if (characterMotor)
-                    base.characterMotor.ApplyForce(aimRay.direction * -recoilForce, false, false);
-
-                if (pc)
-                    pc.AddHeat(heatPerTick);
-
-                //Debug.Log("Fired");
+                ProjectileManager.instance.FireProjectile(
+                    prefab,
+                    aimRay.origin,
+                    Util.QuaternionSafeLookRotation(aimRay.direction),
+                    gameObject,
+                    damage,
+                    force,
+                    RollCrit(),
+                    color,
+                    null,
+                    -1,
+                    dtc
+                    );
             }
+
+            if (flamethrowerTransform)
+                flamethrowerTransform.forward = aimRay.direction;
+
+            fired++;
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

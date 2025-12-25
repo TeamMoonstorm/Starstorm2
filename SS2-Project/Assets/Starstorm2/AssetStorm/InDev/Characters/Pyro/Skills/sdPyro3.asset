@@ -15,27 +15,36 @@ MonoBehaviour:
   skillName: PyroUtility
   skillNameToken: SS2_PYRO_UTILITY_NAME
   skillDescriptionToken: SS2_PYRO_UTILITY_DESC
-  keywordTokens: []
-  icon: {fileID: 21300000, guid: 29c78a69126125d4c97ea4985025274a, type: 3}
-  activationStateMachineName: Jetpack
+  keywordTokens:
+  - SS2_KEYWORD_LIFTOFF
+  icon: {fileID: 21300000, guid: 02cefc26eaed01e4886cb8bb5a6052b5, type: 3}
+  activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.Pyro.PyroJumppack, Starstorm2, Version=1.0.0.0, Culture=neutral,
+    _typeName: EntityStates.Pyro.PyroLaunch, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  interruptPriority: 1
+  interruptPriority: 2
   baseRechargeInterval: 3
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 1
-  heatValue: 35
-  heatConsumed: 35
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
+  heatValue: 10
+  heatConsumed: 0
   canCastIfLowHeat: 0

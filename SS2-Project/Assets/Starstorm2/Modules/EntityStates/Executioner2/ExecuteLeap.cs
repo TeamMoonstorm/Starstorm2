@@ -2,6 +2,9 @@
 using RoR2;
 using SS2.Components;
 using UnityEngine.AddressableAssets;
+using RiskOfOptions;
+using RiskOfOptions.OptionConfigs;
+using RiskOfOptions.Options;
 
 namespace EntityStates.Executioner2
 {
@@ -176,7 +179,6 @@ namespace EntityStates.Executioner2
             {
                 HandleMovement();
             }
-               
         }
 
         public virtual EntityState InstantiateNextState(Vector3 dashVector)

@@ -23,7 +23,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: baseTickFrequency
       fieldValue:
-        stringValue: 0.16
+        stringValue: 0.08
         objectValue: {fileID: 0}
     - fieldName: baseEntryDuration
       fieldValue:
@@ -35,31 +35,31 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: heatPerTick
       fieldValue:
-        stringValue: -1.5
+        stringValue: -0.8
         objectValue: {fileID: 0}
     - fieldName: tickProcCoefficient
       fieldValue:
-        stringValue: 0.6
+        stringValue: 0.3
         objectValue: {fileID: 0}
     - fieldName: tickDamageCoefficient
       fieldValue:
-        stringValue: 0.8
+        stringValue: 0.4
         objectValue: {fileID: 0}
     - fieldName: igniteChanceHighHeat
       fieldValue:
-        stringValue: 75
+        stringValue: 35
         objectValue: {fileID: 0}
     - fieldName: heatIgniteThreshold
       fieldValue:
-        stringValue: 65
+        stringValue: 70
         objectValue: {fileID: 0}
     - fieldName: recoilForce
       fieldValue:
-        stringValue: 100
+        stringValue: 0
         objectValue: {fileID: 0}
     - fieldName: force
       fieldValue:
-        stringValue: 600
+        stringValue: 10
         objectValue: {fileID: 0}
     - fieldName: radius
       fieldValue:
@@ -72,14 +72,28 @@ MonoBehaviour:
     - fieldName: impactEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1150073319739627, guid: fc2e141c501e64e4bb8b604f5b10a122,
+        objectValue: {fileID: 1996462520601724, guid: 2b12e18193da9fb46a4ace88e01b7e74,
           type: 3}
     - fieldName: pressureDuration
       fieldValue:
-        stringValue: 0.15
+        stringValue: 3
         objectValue: {fileID: 0}
     - fieldName: flameEffectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 1582589881204374, guid: a670e1d158a093240807adb6f6021629,
+        objectValue: {fileID: 1582589881204374, guid: 983e4880922ac3f4ca7b1343d9c9311c,
           type: 3}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2546073800391783946, guid: 0a9e3a582d32436489c9620f36bce42a,
+          type: 3}
+    - fieldName: ignitePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2546073800391783946, guid: 0a9e3a582d32436489c9620f36bce42a,
+          type: 3}
+    - fieldName: igniteFrequencyCoefficient
+      fieldValue:
+        stringValue: 0.08
+        objectValue: {fileID: 0}

@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4025203822863843}
   m_RootOrder: 0
@@ -43,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &1764851091496046
 GameObject:
   m_ObjectHideFlags: 0
@@ -64,8 +66,6 @@ GameObject:
   - component: {fileID: 114913654118877948}
   - component: {fileID: 5180272762976549183}
   - component: {fileID: 5965891983955650093}
-  - component: {fileID: -8161890816036080374}
-  - component: {fileID: 356375999574385153}
   - component: {fileID: 4889928351574749406}
   - component: {fileID: 2027095919970549868}
   - component: {fileID: 7825339727827538888}
@@ -86,6 +86,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 3.7802582, y: -7.11, z: 7.29126}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4186633504148609}
   m_Father: {fileID: 0}
@@ -114,14 +115,22 @@ MonoBehaviour:
   catalogIndex: 101
   ghostPrefab: {fileID: 1209228865669084, guid: 156081b3571ee8648a36e1c3a79602ae,
     type: 3}
+  ghostPrefabReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
+  localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
+  CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!54 &54449759084335744
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -153,6 +162,10 @@ MonoBehaviour:
   positionTransmitInterval: 0.033333335
   interpolationFactor: 1
   allowClientsideCollision: 0
+  checkForLocalPlayerAuthority: 0
+  singletonArrayIndex: -1
+  serverPosition: {x: 0, y: 0, z: 0}
+  serverRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114708471018475990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +178,7 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnEffect: {fileID: 0}
   lifetime: 10
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 90
@@ -226,7 +240,10 @@ MonoBehaviour:
   crit: 0
   force: 0
   damageColorIndex: 0
-  damageType: 128
+  damageType:
+    damageType: 0
+    damageTypeExtended: 32768
+    damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &114036614515238730
@@ -249,32 +266,39 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1764851091496046}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -317677761, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   falloffModel: 0
   blastRadius: 8
-  blastDamageCoefficient: 1
-  blastProcCoefficient: 1
+  blastDamageCoefficient: 0
+  blastProcCoefficient: 0
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 400, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
   explosionEffect: {fileID: 0}
+  blastImpactEffect: {fileID: 0}
+  preserveExplosionOrientation: 0
   explosionSoundString: 
-  fireChildren: 0
-  childrenProjectilePrefab: {fileID: 0}
-  childrenCount: 0
-  childrenDamageCoefficient: 0
+  fireChildren: 1
+  childrenProjectilePrefab: {fileID: 4703613120051476657, guid: e28430b1ac94f0c4481d576f810014b4,
+    type: 3}
+  childrenCount: 1
+  childrenDamageCoefficient: 1
+  childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0
   rangeRollDegrees: 0
   minPitchDegrees: 0
   rangePitchDegrees: 0
+  minYawDegrees: 0
+  rangeYawDegrees: 0
   useLocalSpaceForChildren: 0
+  useChildRotation: 0
   applyDot: 0
   dotIndex: -1
   dotDuration: 0
@@ -283,19 +307,25 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
+  timedDebuffs: []
   impactEffect: {fileID: 1254018083698855, guid: c3f1d60980ec5824cba7d218c8278cf5,
     type: 2}
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 0
   destroyOnEnemy: 1
+  detonateOnEnemy: 0
   destroyOnWorld: 1
+  destroyOnDistance: 0
+  maxDistance: 0
   impactOnWorld: 1
   timerAfterImpact: 0
   lifetime: 10
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
+  minimumPhysicsStepsToKeepAliveAfterImpact: 0
   transformSpace: 0
+  explodeOnLifeTimeExpiration: 0
 --- !u!114 &114913654118877948
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -358,66 +388,6 @@ MonoBehaviour:
   groupName: 
   hitBoxes:
   - {fileID: 509224292770832500}
---- !u!114 &-8161890816036080374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1764851091496046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -974958137, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  falloffModel: 2
-  blastRadius: 8
-  blastDamageCoefficient: 4
-  blastProcCoefficient: 1
-  blastAttackerFiltering: 0
-  bonusBlastForce: {x: 0, y: 0, z: 0}
-  canRejectForce: 1
-  projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 1039620303202951, guid: 9fa7cdc8ad39af74997806638b25f2b1,
-    type: 3}
-  explosionSoundString: 
-  fireChildren: 0
-  childrenProjectilePrefab: {fileID: 0}
-  childrenCount: 0
-  childrenDamageCoefficient: 0
-  minAngleOffset: {x: 0, y: 0, z: 0}
-  maxAngleOffset: {x: 0, y: 0, z: 0}
-  minRollDegrees: 0
-  rangeRollDegrees: 0
-  minPitchDegrees: 0
-  rangePitchDegrees: 0
-  useLocalSpaceForChildren: 0
-  applyDot: 0
-  dotIndex: -1
-  dotDuration: 0
-  dotDamageMultiplier: 1
-  applyMaxStacksFromAttacker: 0
-  maxStacksFromAttacker: 4294967295
-  calculateTotalDamage: 0
-  totalDamageMultiplier: 0
---- !u!114 &356375999574385153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1764851091496046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1952984350, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  destroyWhenNotAlive: 0
-  destroyOnWorld: 1
-  impactEffect: {fileID: 1150073319739627, guid: fc2e141c501e64e4bb8b604f5b10a122,
-    type: 3}
-  hitSoundString: 
-  enemyHitSoundString: 
 --- !u!114 &4889928351574749406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,6 +420,7 @@ MonoBehaviour:
   testLoS: 0
   ignoreAir: 0
   flierAltitudeTolerance: 30
+  sortMode: 3
   onNewTargetFound:
     m_PersistentCalls:
       m_Calls: []
@@ -470,3 +441,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   yAxisOnly: 0
   rotationSpeed: 45
+  increaseSpeedOverTime: 0
+  maxRotationSpeed: 0
+  rotationAddPerSecond: 0
