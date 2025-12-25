@@ -28,12 +28,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: fa789e97e91b07a40956a983ea7f78ff, type: 3}
-        m_Scale: {x: 0.17, y: 1}
+        m_Texture: {fileID: 2800000, guid: fc418579c4ac2854e9887642a2c0b9ff, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: ed30efad3c2f4dd43b2b0b7cecf94bc8, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Texture: {fileID: 2800000, guid: 853c959f6189bd14d988e684b64915f5, type: 3}
+        m_Scale: {x: 0.1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -68,13 +68,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 5465944c6a70f8c40ab86918373cf839, type: 3}
+        m_Texture: {fileID: 2800000, guid: 12f0f02e427f1c94282fc0d5e71184e0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.162
-    - _AlphaBoost: 0.4
+    - _AlphaBias: 0
+    - _AlphaBoost: 7.67
     - _Boost: 1
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
@@ -86,7 +86,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: 0.1
-    - _DstBlend: 6
+    - _DstBlend: 10
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
@@ -118,5 +118,5 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _CutoffScroll: {r: -50, g: 0, b: -77.8, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 0.3962264, g: 0.08410467, b: 0.1253592, a: 1}
+    - _TintColor: {r: 0.4245283, g: 0, b: 0.0076114004, a: 1}
   m_BuildTextureStacks: []
