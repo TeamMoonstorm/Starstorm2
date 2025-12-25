@@ -36,7 +36,6 @@ namespace EntityStates.Pyro
         public static string muzzleString;
         public static string smokeMuzzleEffectString;
 
-        public static GameObject impactEffectPrefab;
         public static GameObject flameEffectPrefab;
         public static GameObject projectilePrefab;
 
@@ -74,13 +73,17 @@ namespace EntityStates.Pyro
                 smokeMuzzleEffect = childLocator.FindChild(smokeMuzzleEffectString).GetComponent<ScaleParticleSystemDuration>();
             }
 
-            impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/MissileExplosionVFX.prefab").WaitForCompletion();
-
             Util.PlaySound("Play_pyro_primary_start", gameObject);
 
             if (smokeMuzzleEffect)
             {
                 smokeMuzzleEffect.newDuration = entryDuration;
+
+                // fire all the held particlesystems
+                foreach (ParticleSystem ps in smokeMuzzleEffect.particleSystems)
+                {
+                    ps.Emit(1);
+                }
             }
 
             PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);
