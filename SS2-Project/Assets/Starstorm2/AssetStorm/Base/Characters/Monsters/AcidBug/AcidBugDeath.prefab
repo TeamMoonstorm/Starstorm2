@@ -2490,9 +2490,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4067816798601224}
-  - component: {fileID: 3116178927326987992}
   - component: {fileID: 114083932035856416}
-  - component: {fileID: 1503314856047170546}
   - component: {fileID: 4310109731531448370}
   m_Layer: 14
   m_Name: AcidBugDeath
@@ -2518,26 +2516,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &3116178927326987992
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760327921723487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 511512695, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effectIndex: -1
-  positionAtReferencedTransform: 0
-  parentToReferencedTransform: 0
-  noEffectData: 0
-  applyScale: 0
-  soundName: Play_jellyfish_death
-  disregardZScale: 0
-  applyScaleFirst: 0
 --- !u!114 &114083932035856416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2556,21 +2534,6 @@ MonoBehaviour:
   DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []
---- !u!114 &1503314856047170546
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1760327921723487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -151313423, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dissolve: 0
-  forceCulled: 0
-  lifeTime: 0
 --- !u!114 &4310109731531448370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2621,7 +2584,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794642383037476}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16849,7 +16812,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7039894333375876906}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -2}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9, y: 0.9, z: 0.9}
   m_ConstrainProportionsScale: 0
   m_Children:

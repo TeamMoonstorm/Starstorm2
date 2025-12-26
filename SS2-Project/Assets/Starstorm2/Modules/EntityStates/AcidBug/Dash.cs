@@ -11,6 +11,8 @@ namespace EntityStates.AcidBug
         private static float minDistance = 6f;
         private static float maxDistance = 18f;
         private static float baseDuration = .25f;
+        private static float minPauseDuration = 0.05f;
+        private static float maxPauseDuration = 0.25f;
 
         private static int maxRepeats = 1;
         private static float repeatPercentChance = 40f;
@@ -22,6 +24,7 @@ namespace EntityStates.AcidBug
         public static GameObject effectPrefab;
 
         private float duration;
+        private float pauseDuration;
         private float speed;
         private bool shouldRepeat;
         private Vector3 dashVector;
@@ -63,6 +66,8 @@ namespace EntityStates.AcidBug
                 dashVector = Util.ApplySpread(direction, 0f, spreadAngle, 1f, 1f); // todo: not true random direction
 
                 shouldRepeat = repeatCount < maxRepeats && Util.CheckRoll(repeatPercentChance);
+
+                pauseDuration = UnityEngine.Random.Range(minPauseDuration, maxPauseDuration);
             }
 
             var animator = GetModelAnimator();
@@ -103,11 +108,14 @@ namespace EntityStates.AcidBug
 
             if (isAuthority)
             {
-                rigidbodyMotor.AddDisplacement(dashVector * speed * Time.fixedDeltaTime);
-                rigidbody.angularVelocity = Vector3.zero;
-                rigidbody.MoveRotation(Util.QuaternionSafeLookRotation(inputBank.aimDirection));
+                if (fixedAge < duration)
+                {
+                    rigidbodyMotor.AddDisplacement(dashVector * speed * Time.fixedDeltaTime);
+                    rigidbody.angularVelocity = Vector3.zero;
+                    rigidbody.MoveRotation(Util.QuaternionSafeLookRotation(inputBank.aimDirection));
+                }
 
-                if (fixedAge >= duration)
+                if (fixedAge >= duration + pauseDuration)
                 {
                     if (shouldRepeat)
                     {

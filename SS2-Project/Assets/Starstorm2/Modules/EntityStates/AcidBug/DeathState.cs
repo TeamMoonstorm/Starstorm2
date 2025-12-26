@@ -4,36 +4,46 @@ using UnityEngine;
 using UnityEngine.Networking;
 
 namespace EntityStates.AcidBug
-
 {
     public class DeathState : GenericCharacterDeath
     {
         public static GameObject initialExplosionEffect;
         public static GameObject deathExplosionEffect;
         private static string initialSoundString;
-        private static string deathSoundString;
+        private static string deathSoundString = "Play_jellyfish_death";
 
-        private static float extraForce = 60f;
-        private static float forceMultiplier = 2f;
+        private static float extraForce = 140f;
+        private static float forceMultiplier = 3f;
+        private static float wallSplatAngle = 30f;
+        private static float groundNormalOffset = .074f;
 
         private static float deathDuration = 8f;
         private static float extraGravity = 0.33f;
 
-        private RigidbodyCollisionListener rigidbodyCollisionListener;
+        public override bool shouldAutoDestroy => false;
 
+        private RigidbodyCollisionListener rigidbodyCollisionListener;
         public class RigidbodyCollisionListener : MonoBehaviour
         {
             private void OnCollisionEnter(Collision collision)
             {
-                deathState.OnImpactAuthority(collision.GetContact(0).point, collision.GetContact(0).normal);
-                deathState.Explode();
+                deathState.OnImpact(collision.GetContact(0).point, collision.GetContact(0).normal);
             }
-
             public DeathState deathState;
         }
 
-        public override bool shouldAutoDestroy => false;
+        private EffectData _effectData;
+        private EffectManagerHelper _emh_deathEffect;
+        public override void Reset()
+        {
+            base.Reset();
+            if (_effectData != null)
+            {
+                _effectData.Reset();
+            }
+            _emh_deathEffect = null;
 
+        }
         public override void OnEnter()
         {
             base.OnEnter();
@@ -43,6 +53,11 @@ namespace EntityStates.AcidBug
                 rigidbodyMotor.enabled = false;
                 rigidbody.useGravity = true;
                 rigidbody.collisionDetectionMode = CollisionDetectionMode.Continuous;
+                rigidbodyCollisionListener = gameObject.AddComponent<DeathState.RigidbodyCollisionListener>();
+                if (rigidbodyCollisionListener)
+                {
+                    rigidbodyCollisionListener.deathState = this;
+                }
 
                 if (NetworkServer.active && TryGetComponent(out SS2.Components.AcidBugForceCollector forceCollector))
                 {
@@ -52,6 +67,7 @@ namespace EntityStates.AcidBug
                     healthComponent.TakeDamageForce(physForceFlags);
                 }
             }
+            
             if (rigidbodyDirection)
             {
                 rigidbodyDirection.enabled = false;
@@ -62,14 +78,6 @@ namespace EntityStates.AcidBug
                 {
                     origin = characterBody.corePosition,
                 }, false);
-            }
-            if (isAuthority)
-            {
-                rigidbodyCollisionListener = gameObject.AddComponent<DeathState.RigidbodyCollisionListener>();
-                if (rigidbodyCollisionListener)
-                {
-                    rigidbodyCollisionListener.deathState = this;
-                }
             }
 
             Transform wingFx = FindModelChild("WingFX");
@@ -83,6 +91,38 @@ namespace EntityStates.AcidBug
             {
                 wingMesh.gameObject.SetActive(true);
             }
+
+            if (healthComponent.killingDamageType == DamageType.OutOfBounds)
+            {
+                DestroyModel();
+                DestroyBodyAsapServer();
+            }
+        }
+
+        private void OnImpact(Vector3 hitPoint, Vector3 hitNormal)
+        {
+            modelLocator.enabled = false; // stop body from updating model position so we can stick it to the ground
+            var position = hitPoint + (hitNormal * groundNormalOffset);
+            var rotation = Quaternion.FromToRotation(Vector3.up, hitNormal) * cachedModelTransform.rotation;
+            cachedModelTransform.SetPositionAndRotation(position, rotation);
+
+            bool wallSplat = Vector3.Angle(transform.forward, Vector3.up) > wallSplatAngle;
+            if (wallSplat)
+            {
+                PlayAnimation("Body", "SplatWall");
+            }
+            else
+            {
+                PlayAnimation("Body", "SplatGround");
+            }
+
+            if (deathExplosionEffect)
+            {
+                GameObject deathEffect = GameObject.Instantiate<GameObject>(deathExplosionEffect, characterBody.corePosition, Util.QuaternionSafeLookRotation(hitNormal));
+                deathEffect.transform.parent = cachedModelTransform;
+            }
+
+            Explode();
         }
 
         public override void FixedUpdate()
@@ -98,13 +138,7 @@ namespace EntityStates.AcidBug
                     rigidbody.MoveRotation(modelDirection);
                 }
 
-                Vector3 direction = rigidbody.velocity.normalized;
-                if (Physics.Raycast(characterBody.corePosition, direction, out RaycastHit raycastHit, characterBody.radius + 1f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
-                {
-                    OnImpactAuthority(raycastHit.point, raycastHit.normal);
-                    Explode();
-                }
-                else if (fixedAge > deathDuration)
+                if (fixedAge > deathDuration)
                 {
                     Explode();
                 }
@@ -113,21 +147,15 @@ namespace EntityStates.AcidBug
 
         public void Explode()
         {
+            CleanupInitialEffect();
             Destroy(gameObject);
         }
-
-        public virtual void OnImpactAuthority(Vector3 contactPoint, Vector3 contactNormal)
+        public void CleanupInitialEffect()
         {
-            transform.position = contactPoint;
-            transform.forward = contactNormal;
-
-            if (deathExplosionEffect)
+            if (_emh_deathEffect != null && _emh_deathEffect.OwningPool != null)
             {
-                EffectManager.SpawnEffect(deathExplosionEffect, new EffectData
-                {
-                    origin = characterBody.corePosition,
-                    rotation = Util.QuaternionSafeLookRotation(contactNormal),
-                }, true);
+                _emh_deathEffect.OwningPool.ReturnObject(_emh_deathEffect);
+                _emh_deathEffect = null;
             }
         }
 
