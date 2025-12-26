@@ -19,12 +19,21 @@ namespace SS2.Survivors
         public static BuffDef _bdBanditTranquilizer;
         public static BuffDef _bdBanditSleep;
 
+
+        // TODO Make these statics configurable
         public static float tranqDuration = 5f;
-        public static float _confuseSlowAmount = 0.2f;
-        public static float _confuseAttackSpeedSlowAmount = 0.2f;
-        public static float _maxDebuffAmount = 0.5f;
-        public static float _sleepCountThreshold = 3;
-        public static float _sleepDuration = 6;
+
+        [FormatToken("SS2_BANDIT_TRANQ_GUN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
+        public static float tranqDamageAmount = 3.0f;
+
+        public static float tranqBulletRadius = 1.2f;
+
+
+        public static float _confuseSlowAmount = 0.1f;
+        public static float _confuseAttackSpeedSlowAmount = 0.1f;
+        public static float _sleepCountThreshold = 5;
+        public static float _bossSleepCountThreshold = 12;
+        public static float _sleepDuration = 2;
         public static float _armorLoseAmount = 25;
 
         public override void Initialize()
@@ -51,23 +60,40 @@ namespace SS2.Survivors
             GlobalEventManager.onServerDamageDealt += ApplyTranq;
         }
 
+        private void ApplySleep(CharacterBody sender)
+        {
+            if (sender == null)
+            {
+                return;
+            }
+
+            if (NetworkServer.active)
+            {
+                sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
+                sender.SetBuffCount(_bdBanditTranquilizer.buffIndex, 0);
+            }
+        }
+
         private void ModifyStats(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
+
             if (sender.HasBuff(_bdBanditTranquilizer))
             {
-                // TODO: Might need to do some sort of scaling, but this works for now.
+                // Simple linear scaling for now. Used to be capped but I uncapped it so it remains usable late game
                 var buffCount = sender.GetBuffCount(_bdBanditTranquilizer);
-                args.moveSpeedMultAdd -= Math.Min(_confuseSlowAmount * buffCount, _maxDebuffAmount);
-                args.attackSpeedMultAdd -= Math.Min(_confuseAttackSpeedSlowAmount * buffCount, _maxDebuffAmount);
+                args.moveSpeedReductionMultAdd += _confuseSlowAmount * buffCount;
+                args.attackSpeedReductionMultAdd += _confuseAttackSpeedSlowAmount * buffCount;
 
-                if (buffCount >= _sleepCountThreshold)
+                // Normal enemies go zzz
+                if ((!sender.isBoss && !sender.isChampion) && buffCount >= _sleepCountThreshold)
                 {
-                    if (NetworkServer.active)
-                    {
-                        // TODO: half sleep on bosses
-                        sender.AddTimedBuff(_bdBanditSleep, _sleepDuration);
-                        sender.RemoveBuff(_bdBanditTranquilizer);
-                    }
+                    ApplySleep(sender);
+                }
+
+                // Bosses and champions have a higher sleep threshold
+                if ((sender.isBoss || sender.isChampion) && buffCount >= _bossSleepCountThreshold)
+                {
+                    ApplySleep(sender);
                 }
             }
 
@@ -100,7 +126,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
     }
 }

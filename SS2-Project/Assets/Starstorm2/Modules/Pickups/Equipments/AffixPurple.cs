@@ -21,11 +21,13 @@ namespace SS2.Equipments
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
-        private static float projectileDamageCoefficient = .6f;
-        private static float onHitRadius = 2f;
+
+        // TODO: Make configurable
+        private static float projectileDamageCoefficient = .3f;
+        private static float onHitRadius = 1.2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.3f;
-        private static float poisonDuration = 4f;
+        private static float poisonDamageCoefficient = 0.15f;
+        private static float poisonDuration = 3f;
 
         public override void Initialize()
         {

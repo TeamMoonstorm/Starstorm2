@@ -44,6 +44,12 @@ Additional thanks to...
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
 * Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
+## Compatibility 
+* [Driver](https://thunderstore.io/package/public_ParticleSystem/Driver/) Adds support for Relic of Termination and has NemMerc's shotgun as a new primary for Driver.
+* [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/) Adds support for SS2's elites as part of its aspects rework.
+* [Videogame Mod 2 Unofficial](https://thunderstore.io/package/Risky_Lives/Videogame_Mod_2_Unofficial/) VGM2U (aka SS2U) is an older pre-SOTV build of SS2. When playing with VGM2 and SS2 installed. VGM2 will auto-disable all duplicate content (except duplicate survivors).
+* [EnemiesReturns](https://thunderstore.io/package/Risky_Sleeps/EnemiesReturns/) No official compat, but adds a new boss fight ported from Starstorm 1.
+
 ## Feedback, Bug Reporting & Known Issues
 
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
