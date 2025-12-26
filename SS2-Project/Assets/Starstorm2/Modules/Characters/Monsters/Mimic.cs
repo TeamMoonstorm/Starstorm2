@@ -160,7 +160,13 @@ namespace SS2.Monsters
 				return;
 			}
 
-			ILLabel afterDisplayNameProviderNullCheck = null;
+            // Locate the code section that does
+            // if (displayNameProvider != null)
+            // {
+            //     DoStuff();
+            // }
+
+            ILLabel afterDisplayNameProviderNullCheck = null;
 			if (!c.TryGotoNext(
 					MoveType.After,
 					x => x.MatchLdloc(displayProviderVarIndex),
@@ -170,8 +176,18 @@ namespace SS2.Monsters
 				return;
 			}
 
+            // And turn it into
+            // if (displayNameProvider != null)
+            // {
+            //     if (pingTarget.TryGetComponent<MimicController>(out var controller))
+            //     {
+            //         DoOurStuff();
+            //     }
+            //     else DoStuff();
+            // }
 
-			c.Emit(OpCodes.Ldarg_0);
+
+            c.Emit(OpCodes.Ldarg_0);
 			c.EmitDelegate<Func<PingIndicator, bool>>(self =>
 			{
 				if (self.pingTarget.TryGetComponent<MimicPingCorrecter>(out var controller))
