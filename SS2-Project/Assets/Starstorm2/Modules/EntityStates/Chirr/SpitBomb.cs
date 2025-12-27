@@ -57,7 +57,7 @@ namespace EntityStates.Chirr
 		private void Fire()
 		{
 			Util.PlaySound("ChirrFireSpitBomb", base.gameObject);
-			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, true);
+			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, this.muzzleName, false);
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
 
