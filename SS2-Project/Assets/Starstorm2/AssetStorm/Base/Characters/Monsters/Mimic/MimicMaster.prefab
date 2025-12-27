@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _masterIndex: 0
+  hideAllyCard: 0
   bodyPrefab: {fileID: 7096113393629376220, guid: 1075a75301c54b84585e5a581eef4b0f,
     type: 3}
   spawnOnStart: 1
@@ -127,6 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemAcquisitionOrder: 
+  wasRecentlyExtraEquipmentSwapped: 0
+  wasRecentlyCreated: 0
   beadAppliedHealth: 0
   beadAppliedShield: 0
   beadAppliedRegen: 0
@@ -157,8 +160,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showDebugStateChanges: 0
   fullVision: 1
+  xrayVision: 0
+  retaliateUntargetable: 0
   neverRetaliateFriendlies: 0
+  ignoreFliers: 0
   enemyAttentionDuration: 3
+  leaderTargetCooldown: 3
   desiredSpawnNodeGraphType: 0
   stateMachine: {fileID: 1409552720004907874}
   scanState:
@@ -166,13 +173,22 @@ MonoBehaviour:
       PublicKeyToken=null
   isHealer: 0
   enemyAttention: 0
+  leaderTargetCopied:
+    t: -Infinity
   prioritizePlayers: 1
+  copyLeaderTarget: 0
   aimVectorDampTime: 0.05
   aimVectorMaxSpeed: 100
   selectedSkilldriverName: 
   shouldMissFirstOffScreenShot: 0
   forceUpdateEveryFrame: 0
   debugEnemyHurtBox: {fileID: 0}
+  followPattern:
+    targetOffset: {x: 0, y: 0, z: 0}
+    minHorizontalDistance: 0
+    maxHorizontalDistance: 0
+    minVerticalDistance: 0
+    maxVerticalDistance: 0
 --- !u!114 &1409552720004907874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +234,7 @@ MonoBehaviour:
   maxDistance: 5
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -226,6 +243,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 1
   movementType: 1
   moveInputScale: 1
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 2
   ignoreNodeGraph: 1
   shouldSprint: 0
@@ -261,6 +280,7 @@ MonoBehaviour:
   maxDistance: 25
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -269,6 +289,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 1
   moveInputScale: 0.25
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 1
@@ -304,6 +326,7 @@ MonoBehaviour:
   maxDistance: 40
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -312,6 +335,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 2
   moveInputScale: 0.6
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 2
   ignoreNodeGraph: 1
   shouldSprint: 0
@@ -347,6 +372,7 @@ MonoBehaviour:
   maxDistance: 60
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -355,6 +381,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 2
   moveInputScale: 0.75
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 1
@@ -390,6 +418,7 @@ MonoBehaviour:
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -398,6 +427,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 0
   moveInputScale: 0
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 2
   ignoreNodeGraph: 0
   shouldSprint: 1
@@ -433,6 +464,7 @@ MonoBehaviour:
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -441,6 +473,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 3
   moveInputScale: 1
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 4
   ignoreNodeGraph: 0
   shouldSprint: 1
@@ -476,6 +510,7 @@ MonoBehaviour:
   maxDistance: Infinity
   selectionRequiresTargetLoS: 0
   selectionRequiresOnGround: 0
+  selectionRequiresTargetNonFlier: 0
   selectionRequiresAimTarget: 0
   maxTimesSelected: -1
   moveTargetType: 0
@@ -484,6 +519,8 @@ MonoBehaviour:
   activationRequiresAimConfirmation: 0
   movementType: 1
   moveInputScale: 1
+  aimVectorDampTimeOverride: -1
+  aimVectorMaxSpeedOverride: -1
   aimType: 1
   ignoreNodeGraph: 0
   shouldSprint: 1
@@ -519,4 +556,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1

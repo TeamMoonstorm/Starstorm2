@@ -4458,6 +4458,8 @@ MonoBehaviour:
   logUnlockableName: 
   logUnlockableDef: {fileID: 11400000, guid: f288acf60e7e8cd4f86f6b53fa75ec02, type: 2}
   bossDropTable: {fileID: 0}
+  useLogbookDropChanceOverride: 0
+  logbookDropChanceOverride: 1
   overrideBossDropRewards: 0
   bossPickup:
     pickupName: 
@@ -4474,7 +4476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
-  requireEntitlementIfPlayerControlled: 0
+  requireEntitlementIfPlayerControlled: 1
 --- !u!114 &4450646946248128791
 MonoBehaviour:
   m_ObjectHideFlags: 0
