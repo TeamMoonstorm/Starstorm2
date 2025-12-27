@@ -62,9 +62,9 @@ namespace SS2.Items
 
             public void FixedUpdate()
             {
-                if (body.isSprinting)
+                if (body && body.isSprinting)
                 {
-                    if (footstepHandler && sprintTimer > 1f)
+                    if (footstepHandler && footstepHandler.enableFootstepDust && sprintTimer > 1f)
                         footstepHandler.enableFootstepDust = true;
                     timer += Time.fixedDeltaTime;
                     sprintTimer += Time.fixedDeltaTime;
@@ -73,7 +73,7 @@ namespace SS2.Items
                         if (NetworkServer.active)
                             body.healthComponent.HealFraction(baseHealPercentage + (stackHealPercentage * (stack - 1)), default);
                         timer = 0;
-                        if (hasFootsteps)
+                        if (hasFootsteps && footstepHandler && footstepHandler.footstepEffect)
                         {
                             if (Run.instance.runRNG.nextBool)
                                 footstepHandler.footstepEffect = _dungusTrailEffect;
@@ -84,7 +84,7 @@ namespace SS2.Items
                 }
                 else
                 {
-                    if (hasFootsteps)
+                    if (hasFootsteps && footstepHandler.enableFootstepDust)
                         footstepHandler.enableFootstepDust = false;
                     timer = 0;
                     sprintTimer = 0;

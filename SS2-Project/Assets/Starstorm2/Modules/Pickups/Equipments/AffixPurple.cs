@@ -14,7 +14,7 @@ namespace SS2.Equipments
 {
     public class AffixPurple : SS2EliteEquipment
     {
-        
+   
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
         public static DotController.DotIndex poisonDotIndex;
         public static DamageAPI.ModdedDamageType poison;
@@ -92,6 +92,10 @@ namespace SS2.Equipments
         {
             var victimBody = report.victimBody;
             var damageInfo = report.damageInfo;
+
+            // Paranoid sanity checks
+            if (victimBody == null || victimBody.gameObject == null || damageInfo == null || damageInfo.attacker == null) return;
+
             if (damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
             {
                 InflictDotInfo inflictDotInfo = new InflictDotInfo
@@ -100,7 +104,7 @@ namespace SS2.Equipments
                     victimObject = victimBody.gameObject,
                     damageMultiplier = poisonDamageCoefficient,
                     duration = poisonDuration,
-                    dotIndex = poisonDotIndex,
+                    dotIndex = poisonDotIndex, // This line was reported as a problem child in Issue: # 921, but unsure why
                 };
                 DotController.InflictDot(ref inflictDotInfo);
                 DotController dotController = DotController.FindDotController(victimBody.gameObject);

@@ -56,7 +56,7 @@ namespace SS2.Items
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
-            if(!self.target) // i dont like this... but im also lazy
+            if(&& !self.target) // i dont like this... but im also lazy
             {
                 orig(self);
                 return;
@@ -75,7 +75,7 @@ namespace SS2.Items
 
             bool isLastBounce = self.bouncedObjects != null && (self.bouncesRemaining == 0 || !orbFoundNewTarget);
             CharacterBody body = self.attacker ? self.attacker.GetComponent<CharacterBody>() : null;
-            if (isLastBounce && body && body.inventory.GetItemCount(SS2Content.Items.ErraticGadget) > 0)
+            if (isLastBounce && body && body.inventory.GetItemCountEffective(SS2Content.Items.ErraticGadget) > 0)
             {
                 bool canProcGadget = false;
                 bool wasFirstBounceFake = false;
@@ -216,16 +216,26 @@ namespace SS2.Items
             {
                 if (muzzleTransform != null) return muzzleTransform;
 
+                // TODO: In the case the body is null I need a valid return here
+                // This only gets the muzzle position for visual flair
+                if (body == null) return null; 
+
                 if (body.modelLocator && body.modelLocator.modelTransform)
                 {
                     List<GameObject> displays = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ErraticGadget.itemIndex);
-                    foreach (GameObject display in displays)
+
+                    if (displays != null && displays.Count > 0)
                     {
-                        this.childLocator = display.GetComponent<ChildLocator>();
-                        Transform muzzle = childLocator.FindChild("Muzzle");
-                        if (muzzle)
+                        foreach (GameObject display in displays)
                         {
-                            return muzzle;
+                            this.childLocator = display.GetComponent<ChildLocator>();
+                            Transform muzzle = childLocator.FindChild("Muzzle");
+                            if (muzzle)
+                            {
+                                // TODO: I commented it out, waiting for code review to confirm if this is needed
+                                //muzzleTransform = muzzle; // muzzleTransform wasnt being assigned before. I assume this was the intention originally?
+                                return muzzle;
+                            }
                         }
                     }
                 }
@@ -236,7 +246,7 @@ namespace SS2.Items
             {
                 if (!report.damageInfo.procChainMask.HasModdedProc(gadget) && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, body.master))
                 {
-                    if(report.victimBody)
+                    if(report.victimBody && report.victimBody.mainHurtBox)
                     {
                         // 1, 3, 5...
                         report.damageInfo.procChainMask.AddModdedProc(gadget);
@@ -279,8 +289,12 @@ namespace SS2.Items
                     origin = this.origin,
                     genericFloat = base.duration
                 };
-                effectData.SetHurtBoxReference(this.target);
-                EffectManager.SpawnEffect(_orbEffectPrefab, effectData, true);
+
+                if (this.target)
+                {
+                    effectData.SetHurtBoxReference(this.target);
+                    EffectManager.SpawnEffect(_orbEffectPrefab, effectData, true);
+                }
             }
 
             public override void OnArrival()

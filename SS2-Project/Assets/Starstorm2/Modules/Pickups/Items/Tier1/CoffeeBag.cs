@@ -54,7 +54,7 @@ namespace SS2.Items
 
         private void OnServerDamageDealt(DamageReport report)
         {
-            int stack = report.attackerBody && report.attackerBody.inventory ? report.attackerBody.inventory.GetItemCount(ItemDef) : 0;
+            int stack = report.attackerBody && report.attackerBody.inventory ? report.attackerBody.inventory.GetItemCountEffective(ItemDef) : 0;
 
             if (stack > 0 && Util.CheckRoll(procChance * report.damageInfo.procCoefficient * 100f, report.attackerMaster))
             {
