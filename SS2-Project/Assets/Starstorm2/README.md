@@ -55,6 +55,5 @@ Additional thanks to...
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
 
 * Known Issues
-    * Elite events are currently disabled.
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
     * Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update
