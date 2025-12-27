@@ -63,8 +63,11 @@ namespace SS2.Components
             }
             if(this.lifeStopwatch >= this.lifetime)
             {
-                Destroy(base.gameObject);
-                return;
+                if (base.gameObject)
+                {
+                    Destroy(base.gameObject);
+                    return;
+                }
             }
             this.fireStopwatch -= Time.fixedDeltaTime;
             if(this.fireStopwatch <= 0)
@@ -76,9 +79,9 @@ namespace SS2.Components
 
         private void Fire()
         {
-            if (!NetworkServer.active) return;
+            if (!NetworkServer.active || base.gameObject == null) return;
 
-            if (this.projectileDamage)
+            if (this.projectileDamage && this.projectileController)
             {
                 BlastAttack blastAttack = new BlastAttack();
                 blastAttack.position = base.transform.position;
@@ -96,7 +99,12 @@ namespace SS2.Components
                 blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
                 blastAttack.losType = BlastAttack.LoSType.None;
-                blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+
+                if (impactEffect)
+                {
+                    blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+                }
+                
                 if (moddedDamageType != (DamageAPI.ModdedDamageType)(-1)) blastAttack.AddModdedDamageType(moddedDamageType);
                 BlastAttack.Result result = blastAttack.Fire();
             }
