@@ -1,30 +1,26 @@
   **Warning: content spoilers below!**
   ### 0.6.29
 * General
-    * New survivor: Pyro!
-    * New enemy: Archer Wasp!
-    * 2 new skills for vanilla survivors!
-    * You shouldnt be reading this in the github changelog. I see you bread....
-    * Added a new compatability section to the changelog
+    * Added a new compatability section to the README
     * Fix NRE from Santa Hat event
     * Updated French translation thanks to DarSitam!
 * Mimic
     * Mimic will no longer steal items with the AIBlacklist, BrotherBlacklist, or CannotSteal tags
 * Executioner
     * Fixed Fear threshold not working. Sorry this took so long!
-    * Added some nice game feel to the camera fov changes with the special. Thanks Timesweeper for the contribution!
 * Engineer
     * Fixed VFX issues with Laser Focus primary
-* Bandit
-    * New primary skill: Night Time
-    * Adapted from Bandit's SS1 Variant: Poacher
-* Railgunner
-    * New utility skill: Tactical Roll
-    * A new utility to encourage a quick scoping playstyle
 * Wayfarer
     * Fixed the Tricorn not working on the Wayfarer due to 0 drop weight
 * Beta (Content from the 0.7 Beta, enabled via config)
     * Nerfed Poison Elites across the board (dot duration, radius, damage coefficients)
+    * 2 new skills added to beta config. Details below
+* Bandit (Beta config only)
+    * New primary skill: Night Time
+    * Adapted from Bandit's SS1 Variant: Poacher
+* Railgunner (Beta config only)
+    * New utility skill: Tactical Roll
+    * A new utility to encourage a quick scoping playstyle
 
 ### 0.6.28
 * General
