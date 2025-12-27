@@ -104,7 +104,7 @@ namespace SS2.Equipments
                     victimObject = victimBody.gameObject,
                     damageMultiplier = poisonDamageCoefficient,
                     duration = poisonDuration,
-                    dotIndex = poisonDotIndex, // This line was reported as a problem child in Issue: # 921, but no way this is registering as null right?
+                    dotIndex = poisonDotIndex, // This line was reported as a problem child in Issue: # 921, but unsure why
                 };
                 DotController.InflictDot(ref inflictDotInfo);
                 DotController dotController = DotController.FindDotController(victimBody.gameObject);
