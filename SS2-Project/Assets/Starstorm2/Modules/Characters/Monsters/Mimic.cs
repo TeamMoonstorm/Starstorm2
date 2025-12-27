@@ -213,7 +213,7 @@ namespace SS2.Monsters
 		// Helper method to prevent mimic from stealing items we dont want AI having
 		private bool CheckItemTags(ItemDef item)
 		{
-			return item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.BrotherBlacklist) || item.ContainsTag(ItemTag.CannotSteal);
+			return item.ContainsTag(ItemTag.ExtractorUnitBlacklist) || item.ContainsTag(ItemTag.BrotherBlacklist) || item.ContainsTag(ItemTag.CannotSteal);
 
         }
 
