@@ -6,6 +6,7 @@ using R2API;
 using System;
 namespace SS2.Components
 {
+    // Lots of extra null checks in this file in an attempt to fix Issue: #921
     [RequireComponent(typeof(ProjectileController))]
     public class ProjectileExpandingDotZone : MonoBehaviour
     {
