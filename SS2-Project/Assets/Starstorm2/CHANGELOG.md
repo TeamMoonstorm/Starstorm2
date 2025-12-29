@@ -1,5 +1,12 @@
-  **Warning: content spoilers below!**
-  ### 0.6.29
+**Warning: content spoilers below!**
+### 0.6.30
+* Items
+    * Added additional null checks to Galvanic Core to catch a bug where attacker inventories was null
+    * Mimic should no longer spawn if playing with SS2 expansion disabled
+* Beta
+    * Additional null checks on Poision Elites (AffixPurple), Night Time (Bandit alt primary), Dormant Fungus (item), and Poisonous Gland (item) to catch reported issues
+
+### 0.6.29
 * General
     * Added a new compatability section to the README
     * Fix NRE from Santa Hat event
