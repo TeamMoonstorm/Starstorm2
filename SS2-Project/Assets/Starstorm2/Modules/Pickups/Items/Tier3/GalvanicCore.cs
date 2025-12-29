@@ -162,13 +162,13 @@ namespace SS2.Items
             orig(self, duration);
             if(self.targetStateMachine)
             {
-                var cb = self.targetStateMachine.GetComponent<CharacterBody>();
-                if (cb && cb.healthComponent.lastHitAttacker) 
-                { 
-                    var attacker = cb.healthComponent.lastHitAttacker.GetComponent<CharacterBody>();
-                    if (attacker.inventory.GetItemCount(SS2Content.Items.GalvanicCore) > 0)
+                self.targetStateMachine.TryGetComponent<CharacterBody>(out var cbody);
+                if (cbody && cbody.healthComponent.lastHitAttacker) 
+                {
+                    cbody.healthComponent.lastHitAttacker.TryGetComponent<CharacterBody>(out var attacker);
+                    if (attacker.inventory && attacker.inventory.GetItemCountEffective(SS2Content.Items.GalvanicCore) > 0)
                     {
-                        cb.AddTimedBuff(SS2Content.Buffs.bdGalvanizedSource, duration);
+                        cbody.AddTimedBuff(SS2Content.Buffs.bdGalvanizedSource, duration);
                     }
                 }
             }

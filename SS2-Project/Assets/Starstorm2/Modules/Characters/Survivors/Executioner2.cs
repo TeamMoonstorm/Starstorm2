@@ -194,7 +194,8 @@ namespace SS2.Survivors
         private void SetupFearExecute() //thanks moffein, hope you're doing well ★
         {
         
-            On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
+            // TODO: Confirm if we still need this now that we use executeAPI?
+            //On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
             // Thanks Moffein for the code!
             // Taken from: https://github.com/Moffein/Starstorm2Unofficial/blob/9e3bca7b23277dd942de1198f1bc0b8c55649db6/Starstorm%202/Survivors/Executioner/ExecutionerCore.cs#L632
@@ -207,51 +208,6 @@ namespace SS2.Survivors
             {
                 R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
             }
-
-
-            // TODO: This should be good to remove with new ExecuteAPI
-            //IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
-            //{
-            //    bool error = true;
-            //    ILCursor c = new ILCursor(il);
-
-            //    if (c.TryGotoNext(x => x.MatchLdloc(74), x => x.MatchLdcR4(0)))
-            //    {
-            //        c.Index++;
-            //        c.Emit(OpCodes.Ldarg_0);//self
-            //        c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-            //        {
-            //            if (self.body.HasFearBuff())
-            //            {
-            //                if (executeFraction < 0f) executeFraction = 0f;
-            //                executeFraction += fearExecutionThreshold;
-            //            }
-            //            return executeFraction;
-            //        });
-
-            //        if (c.TryGotoNext(x => x.MatchLdloc(74)))
-            //        {
-            //            c.Index++;
-            //            c.Emit(OpCodes.Ldarg_0);//self
-            //            c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-            //            {
-            //                if (self.body.HasFearBuff())
-            //                {
-            //                    if (executeFraction < 0f) executeFraction = 0f;
-            //                    executeFraction += fearExecutionThreshold;
-            //                }
-            //                return executeFraction;
-            //            });
-            //            error = false;
-            //        }
-            //    }
-
-            //    if (error)
-            //    {
-            //        SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
-            //    }
-
-            //};
 
             IL.RoR2.CharacterBody.UpdateAllTemporaryVisualEffects += (il) =>
             {
