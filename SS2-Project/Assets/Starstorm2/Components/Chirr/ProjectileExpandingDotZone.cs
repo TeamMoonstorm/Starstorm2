@@ -77,7 +77,7 @@ namespace SS2.Components
 
         private void Fire()
         {
-            if (!NetworkServer.active || base.gameObject == null) return;
+            if (!NetworkServer.active || this == null) return;
 
             if (this.projectileDamage && this.projectileController)
             {

@@ -156,7 +156,7 @@ namespace SS2.Items
             }
             private void UpdateDebuffs()
             {
-                if (base.gameObject == null || buffCount == 0) return;
+                if (this == null || buffCount == 0) return;
                 int debuff = 0;
                 foreach (BuffIndex buffType in BuffCatalog.debuffBuffIndices)
                 {
