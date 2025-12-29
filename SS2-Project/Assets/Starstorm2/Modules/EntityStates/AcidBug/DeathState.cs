@@ -15,7 +15,7 @@ namespace EntityStates.AcidBug
         private static float extraForce = 140f;
         private static float forceMultiplier = 3f;
         private static float wallSplatAngle = 30f;
-        private static float groundNormalOffset = .074f;
+        private static float groundNormalOffset = 0f;
 
         private static float deathDuration = 8f;
         private static float extraGravity = 0.33f;
@@ -32,18 +32,6 @@ namespace EntityStates.AcidBug
             public DeathState deathState;
         }
 
-        private EffectData _effectData;
-        private EffectManagerHelper _emh_deathEffect;
-        public override void Reset()
-        {
-            base.Reset();
-            if (_effectData != null)
-            {
-                _effectData.Reset();
-            }
-            _emh_deathEffect = null;
-
-        }
         public override void OnEnter()
         {
             base.OnEnter();
@@ -101,10 +89,14 @@ namespace EntityStates.AcidBug
 
         private void OnImpact(Vector3 hitPoint, Vector3 hitNormal)
         {
-            modelLocator.enabled = false; // stop body from updating model position so we can stick it to the ground
-            var position = hitPoint + (hitNormal * groundNormalOffset);
-            var rotation = Quaternion.FromToRotation(Vector3.up, hitNormal) * cachedModelTransform.rotation;
-            cachedModelTransform.SetPositionAndRotation(position, rotation);
+            if (modelLocator && cachedModelTransform)
+            {
+                modelLocator.enabled = false; // stop body from updating model position so we can stick it to the ground
+                var position = hitPoint + (hitNormal * groundNormalOffset);
+                var rotation = Quaternion.FromToRotation(Vector3.up, hitNormal) * cachedModelTransform.rotation;
+                cachedModelTransform.SetPositionAndRotation(position, rotation);
+
+            }
 
             bool wallSplat = Vector3.Angle(transform.forward, Vector3.up) > wallSplatAngle;
             if (wallSplat)
@@ -147,16 +139,7 @@ namespace EntityStates.AcidBug
 
         public void Explode()
         {
-            CleanupInitialEffect();
             Destroy(gameObject);
-        }
-        public void CleanupInitialEffect()
-        {
-            if (_emh_deathEffect != null && _emh_deathEffect.OwningPool != null)
-            {
-                _emh_deathEffect.OwningPool.ReturnObject(_emh_deathEffect);
-                _emh_deathEffect = null;
-            }
         }
 
         public override void OnExit()
