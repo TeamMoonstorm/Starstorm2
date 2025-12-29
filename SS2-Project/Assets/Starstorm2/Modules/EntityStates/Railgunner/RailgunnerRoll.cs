@@ -11,7 +11,7 @@ namespace EntityStates.Railgunner
         public static float initialSpeedCoefficient = 5.5f;
         public static float finalSpeedCoefficient = 3f;
 
-        public static string dodgeSoundString = "HenryRoll";
+        public static string dodgeSoundString = "Play_commando_shift";
         public static float dodgeFOV = Commando.DodgeState.dodgeFOV;
 
         private float rollSpeed;
@@ -49,13 +49,7 @@ namespace EntityStates.Railgunner
             previousPosition = transform.position - b;
 
             //PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
-           // Util.PlaySound(dodgeSoundString, gameObject);
-
-            if (NetworkServer.active)
-            {
-                //characterBody.AddTimedBuff(HenryBuffs.armorBuff, 3f * duration);
-                //characterBody.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 0.5f * duration);
-            }
+           Util.PlaySound(dodgeSoundString, gameObject);
 
             if (isAuthority)
             {

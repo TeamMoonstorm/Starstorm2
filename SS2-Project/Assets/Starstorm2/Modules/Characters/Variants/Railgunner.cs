@@ -32,9 +32,6 @@ namespace SS2.Survivors
             contentPack.AddContentFromAssetCollection(assetCollection);
         }
 
-        public override bool IsAvailable(ContentPack contentPack)
-        {
-            return false;
-        }
+        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
     }
 }
