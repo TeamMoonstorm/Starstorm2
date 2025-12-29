@@ -56,7 +56,7 @@ namespace SS2.Items
         // figure out if a lightningorb "ends", then figure out how many objects it bounced to, then spawn a gadgetlightningorb with the same stats that bounces to that many targets
         private void LightningOrb_OnArrival(On.RoR2.Orbs.LightningOrb.orig_OnArrival orig, LightningOrb self)
         {
-            if(&& !self.target) // i dont like this... but im also lazy
+            if(!self.target) // i dont like this... but im also lazy
             {
                 orig(self);
                 return;
@@ -232,8 +232,7 @@ namespace SS2.Items
                             Transform muzzle = childLocator.FindChild("Muzzle");
                             if (muzzle)
                             {
-                                // TODO: I commented it out, waiting for code review to confirm if this is needed
-                                //muzzleTransform = muzzle; // muzzleTransform wasnt being assigned before. I assume this was the intention originally?
+                                muzzleTransform = muzzle; // muzzleTransform wasnt being assigned before. I assume this was the intention originally?
                                 return muzzle;
                             }
                         }

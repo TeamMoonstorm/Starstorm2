@@ -64,11 +64,8 @@ namespace SS2.Components
             }
             if(this.lifeStopwatch >= this.lifetime)
             {
-                if (base.gameObject)
-                {
                     Destroy(base.gameObject);
                     return;
-                }
             }
             this.fireStopwatch -= Time.fixedDeltaTime;
             if(this.fireStopwatch <= 0)

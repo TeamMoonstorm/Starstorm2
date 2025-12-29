@@ -48,7 +48,7 @@ namespace SS2.Items
             if (report.damageInfo.procCoefficient <= 0) return;
             CharacterBody body = report.attackerBody;
             if (!body || !body.inventory) return;
-            int stack = body.inventory.GetItemCount(SS2Content.Items.PoisonousGland);
+            int stack = body.inventory.GetItemCountEffective(SS2Content.Items.PoisonousGland);
             if (stack <= 0) return;        
             report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffPoisonousGland, 2f * stack);      
         }
@@ -92,7 +92,7 @@ namespace SS2.Items
                 if(effectInstance)
                 {
                     Vector3 a = base.transform.position;
-                    if (this.bodyCollider && this.bodyCollider.bounds != null)
+                    if (this.bodyCollider)
                     {
                         a = this.bodyCollider.bounds.center + new Vector3(0f, this.bodyCollider.bounds.extents.y, 0f);
                     }
@@ -104,12 +104,12 @@ namespace SS2.Items
             {
                 if (scaler) scaler.time = 0;
                 float rotation = 360f / stack;
+
+                // And god said "let there be balls" and he created the balls
                 for(int i = balls.Count; i < stack; i++) // if stack > balls
                 {
-                    if (balls[i] != null)
-                    {
+
                         balls.Add(GameObject.Instantiate(ball, effectInstance.transform).transform);
-                    }
                 }
 
                 for(int i = balls.Count - 1; i > stack; i--) // if balls > stack
@@ -144,11 +144,8 @@ namespace SS2.Items
                             rotation = Util.QuaternionSafeLookRotation(damageInfo.position - base.characterBody.corePosition),
                         };
 
-                        if (victimHealthComponent.gameObject)
-                        {
-                            effectData.SetNetworkedObjectReference(victimHealthComponent.gameObject);
-                            EffectManager.SpawnEffect(proc, effectData, true);
-                        }
+                        effectData.SetNetworkedObjectReference(victimHealthComponent.gameObject);
+                        EffectManager.SpawnEffect(proc, effectData, true);
                     }
                 }
             }
