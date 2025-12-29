@@ -222,7 +222,8 @@ namespace SS2.Items
 
                 if (body.modelLocator && body.modelLocator.modelTransform)
                 {
-                    List<GameObject> displays = body.modelLocator.modelTransform.GetComponent<CharacterModel>().GetItemDisplayObjects(SS2Content.Items.ErraticGadget.itemIndex);
+                    if (!body.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var model)) return null;
+                    List<GameObject> displays =model.GetItemDisplayObjects(SS2Content.Items.ErraticGadget.itemIndex);
 
                     if (displays != null && displays.Count > 0)
                     {

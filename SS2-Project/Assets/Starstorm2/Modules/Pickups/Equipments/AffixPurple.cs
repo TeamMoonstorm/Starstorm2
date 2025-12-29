@@ -94,7 +94,7 @@ namespace SS2.Equipments
             var damageInfo = report.damageInfo;
 
             // Paranoid sanity checks
-            if (victimBody == null || victimBody.gameObject == null || damageInfo == null || damageInfo.attacker == null) return;
+            if (victimBody == null) return;
 
             if (damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
             {
