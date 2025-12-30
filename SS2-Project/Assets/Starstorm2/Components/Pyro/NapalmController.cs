@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace SS2.Components
 {
-    public class NapalmController : NetworkBehaviour
+    public class NapalmController : MonoBehaviour
     {
         public Transform FX;
         public AlignToNormal atn;

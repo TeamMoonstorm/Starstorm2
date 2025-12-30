@@ -23,7 +23,7 @@ namespace SS2.Components
 
         private void Start()
         {
-            if (hudElement.targetCharacterBody.TryGetComponent(out PyroController pc))
+            if (hudElement.targetCharacterBody != null && hudElement.targetCharacterBody.TryGetComponent(out PyroController pc))
             {
                 pyro = pc;
             }

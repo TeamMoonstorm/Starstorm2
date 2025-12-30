@@ -102,7 +102,6 @@ namespace SS2.Components
 
                     float burnCount = 0f;
 
-                    hits.Clear();
                     bodySearch.ClearCandidates();
                     bodySearch.origin = characterBody.corePosition;
                     bodySearch.RefreshCandidates();
@@ -137,6 +136,8 @@ namespace SS2.Components
                             }
                         }
                     }
+
+
 
                     if (characterBody)
                         characterBody.SetBuffCount(SS2Content.Buffs.bdPyroManiac.buffIndex, (int)burnCount);

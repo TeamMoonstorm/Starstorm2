@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 
 namespace SS2.Survivors
 {
-    public sealed class Pyro : SS2Survivor
+    public sealed class Pyro : SS2Survivor, IOnIncomingDamageOtherServerReciever, IOnIncomingDamageServerReceiver
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acPyro", SS2Bundle.Indev);
         public static ModdedDamageType FlamethrowerDamageType { get; private set; }
@@ -44,21 +44,18 @@ namespace SS2.Survivors
             _bdPyroJetHiddenBoost = AssetCollection.FindAsset<BuffDef>("bdPyroJetHidden");
             _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
-            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
             On.RoR2.DotController.InflictDot_refInflictDotInfo += DotController_InflictDot_refInflictDotInfo;
-            On.RoR2.BodyCatalog.SetBodyPrefabs += BodyCatalog_SetBodyPrefabs;
+            BodyCatalog.availability.onAvailable += OnBodyCatalogAvailable;
         }
 
-        private void BodyCatalog_SetBodyPrefabs(On.RoR2.BodyCatalog.orig_SetBodyPrefabs orig, GameObject[] newBodyPrefabs)
+        private void OnBodyCatalogAvailable()
         {
-            orig(newBodyPrefabs);
-
             pyroIndex = BodyCatalog.FindBodyIndex(_pyroBody);
         }
 
         private void DotController_InflictDot_refInflictDotInfo(On.RoR2.DotController.orig_InflictDot_refInflictDotInfo orig, ref InflictDotInfo inflictDotInfo)
         {
-            if (inflictDotInfo.attackerObject.TryGetComponent(out CharacterBody body) && body.bodyIndex == pyroIndex && body.TryGetComponent(out PyroController pc) && pc.heat >= 70f)
+            if (inflictDotInfo.attackerObject != null && inflictDotInfo.attackerObject.TryGetComponent(out CharacterBody body) && body.bodyIndex == pyroIndex && body.TryGetComponent(out PyroController pc) && pc.heat >= 70f)
             {
                 if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
                 {
@@ -66,10 +63,15 @@ namespace SS2.Survivors
                 }
             }
 
-            if (inflictDotInfo.victimObject.TryGetComponent(out CharacterBody vbody) && vbody.bodyIndex == pyroIndex)
+            if (inflictDotInfo.victimObject != null && inflictDotInfo.victimObject.TryGetComponent(out CharacterBody vbody) && vbody.bodyIndex == pyroIndex)
             {
                 if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
                 {
+                    if (vbody.HasBuff(RoR2Content.Buffs.OnFire) || vbody.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                    {
+                        vbody.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
+                        vbody.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
+                    }
                     return;
                 }
             }
@@ -82,7 +84,30 @@ namespace SS2.Survivors
             return true;
         }
 
-        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        public void ModifyPrefab()
+        {
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
+            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+        }
+
+        public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
+        {
+            if (victimHealthComponent.body.bodyIndex == pyroIndex)
+            {
+                // give 5 heat and reduce damage from incoming fire
+                if (damageInfo.damageType.damageType == DamageType.IgniteOnHit || damageInfo.damageType.damageType == DamageType.PercentIgniteOnHit || damageInfo.damageType.damageTypeExtended == DamageTypeExtended.FireNoIgnite)
+                {
+                    // SS2Log.Info("Pyro.HealthComponent_TakeDamage : Adding Heat & reducing damage to Pyro");
+                    damageInfo.damage *= 0.75f;
+                    if (victimHealthComponent.body.TryGetComponent(out PyroController pyro))
+                    {
+                        pyro.AddHeat(5f);
+                    }
+                }
+            }
+        }
+
+        public void OnIncomingDamageServer(DamageInfo damageInfo)
         {
             if (damageInfo.HasModdedDamageType(FlamethrowerDamageType))
             {
@@ -110,47 +135,6 @@ namespace SS2.Survivors
                     }
                 }
             }
-
-            if (self.body.bodyIndex == pyroIndex)
-            {   
-                // give 5 heat and reduce damage from incoming fire
-                if (damageInfo.damageType.damageType == DamageType.IgniteOnHit || damageInfo.damageType.damageType == DamageType.PercentIgniteOnHit || damageInfo.damageType.damageTypeExtended == DamageTypeExtended.FireNoIgnite)
-                {
-                    // SS2Log.Info("Pyro.HealthComponent_TakeDamage : Adding Heat & reducing damage to Pyro");
-                    damageInfo.damage *= 0.75f;
-                    if (self.body.TryGetComponent(out PyroController pyro))
-                    {
-                        pyro.AddHeat(5f);
-                    }
-                }
-            }
-
-            orig(self, damageInfo);
-
-            if (self.body.bodyIndex == pyroIndex)
-            {
-                // put out fire when ignited
-                // we dont put out overheat though
-                if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
-                {
-                    self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
-                    self.body.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
-
-                    //DotController dot = DotController.FindDotController(self.body.gameObject);
-                    //if (dot != null)
-                    //{
-                    //    dot.RemoveDamage(DotController.DotIndex.Burn, float.PositiveInfinity);
-                    //    dot.RemoveDamage(DotController.DotIndex.PercentBurn, float.PositiveInfinity);
-                    //    dot.RemoveDamage(DotController.DotIndex.StrongerBurn, float.PositiveInfinity);
-                    //}
-                }
-            }
-        }
-
-        public void ModifyPrefab()
-        {
-            var cb = CharacterPrefab.GetComponent<CharacterBody>();
-            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
         }
 
         public sealed class PyromaniacBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
@@ -188,16 +172,19 @@ namespace SS2.Survivors
                 skillLocator = characterBody.skillLocator;
                 rb = characterBody.rigidbody;
 
-                GameObject charModel = characterBody.modelLocator.modelTransform.gameObject;
-                if (charModel != null && charModel.TryGetComponent(out ChildLocator cl))
+                if (characterBody != null && characterBody.modelLocator.modelTransform != null)
                 {
-                    cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                    GameObject charModel = characterBody.modelLocator.modelTransform.gameObject;
+                    if (charModel != null && charModel.TryGetComponent(out ChildLocator cl))
                     {
-                        hoverL = left;
-                    }
-                    cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
-                    {
-                        hoverR = right;
+                        cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                        {
+                            hoverL = left;
+                        }
+                        cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
+                        {
+                            hoverR = right;
+                        }
                     }
                 }
             }
@@ -256,7 +243,7 @@ namespace SS2.Survivors
                 }
             }
 
-            [Server]
+            [Command]
             public void CmdRemoveBuff()
             {
                 characterBody.SetBuffCount(buffIndex, 0);

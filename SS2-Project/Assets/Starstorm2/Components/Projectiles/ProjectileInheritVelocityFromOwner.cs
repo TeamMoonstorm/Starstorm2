@@ -39,9 +39,9 @@ namespace SS2.Components
                 }
 
                 // rigidbody if that failed
-                else if (proj.owner.TryGetComponent(out Rigidbody rb))
+                else if (proj.owner.TryGetComponent(out Rigidbody ownerRb))
                 {
-                    inheritance = rb.velocity;
+                    inheritance = ownerRb.velocity;
                     return;
                 }
             }
