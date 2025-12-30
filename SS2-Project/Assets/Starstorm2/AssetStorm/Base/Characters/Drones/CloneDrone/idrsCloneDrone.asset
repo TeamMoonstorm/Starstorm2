@@ -14,4 +14,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   namedItemRuleGroups: []
   namedEquipmentRuleGroups: []
-  keyAssetRuleGroups: []
+  keyAssetRuleGroups:
+  - keyAsset: {fileID: 0}
+    keyAssetAddress:
+      m_AssetGUID: 648a1d9c63c34b044b60ce3b2e99a6b8
+      m_SubObjectName: 
+      m_SubObjectType: 
+    displayRuleGroup:
+      rules:
+      - ruleType: 0
+        followerPrefab: {fileID: 0}
+        followerPrefabAddress:
+          m_AssetGUID: 7083017a4d0e96a4dac36e9a88450989
+          m_SubObjectName: 
+          m_SubObjectType: 
+        childName: Muzzle
+        localPos: {x: 0, y: -1.87687, z: -1.93937}
+        localAngles: {x: 0, y: 270, z: 330}
+        localScale: {x: 1.5, y: 1.5, z: 1.5}
+        limbMask: 0
+  - keyAsset: {fileID: 0}
+    keyAssetAddress:
+      m_AssetGUID: 1aaf36d4754a593458e921a3de3bd00b
+      m_SubObjectName: 
+      m_SubObjectType: 
+    displayRuleGroup:
+      rules:
+      - ruleType: 0
+        followerPrefab: {fileID: 0}
+        followerPrefabAddress:
+          m_AssetGUID: e5676510d0016b24186780db4336fb75
+          m_SubObjectName: 
+          m_SubObjectType: 
+        childName: Muzzle
+        localPos: {x: 0, y: 1.33749, z: -0.72315}
+        localAngles: {x: 300, y: 0, z: 180}
+        localScale: {x: 1, y: 1, z: 1}
+        limbMask: 0
