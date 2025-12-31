@@ -7,10 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matFlamethrowerParticles
+  m_Name: matFlamethrowerLine
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
-  - CLOUDOFFSET
   - USE_CLOUDS
   - VERTEXCOLOR
   m_InvalidKeywords:
@@ -25,15 +24,15 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
+        m_Texture: {fileID: 2800000, guid: 4012b41252f8ec0498395f04b65d0289, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: f381aa5a63b7b75419aa7ec320b4bb1c, type: 3}
+        m_Texture: {fileID: 2800000, guid: c884400f138b3874dabb1e02ac16d49f, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 46e7f326fb0a2a44dab366e4a3aaba9f, type: 2}
+        m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
@@ -48,14 +47,14 @@ Material:
     - _Boost: 4
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 1
+    - _CloudOffsetOn: 0
     - _CloudsOn: 1
     - _Cull: 0
     - _Cutoff: 0.855
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: 0.43
+    - _DistortionStrength: 0.62
     - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
@@ -89,7 +88,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: 6, g: 20, b: 1, a: 10}
+    - _CutoffScroll: {r: -40, g: 0, b: -30, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
