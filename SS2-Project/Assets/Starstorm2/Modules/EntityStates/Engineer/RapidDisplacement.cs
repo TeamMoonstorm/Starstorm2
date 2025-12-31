@@ -32,26 +32,7 @@ namespace EntityStates.Engi
 
 
         private float duration;
-        //public float baseDuration = 1f;
-        //private float duration;
-        //private float fireTimer;
         private Transform modelTransform;
-        //private float counter = 0;
-        //MuzzleLeft
-        //MuzzleRight
-
-        //public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
-        //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
-
-        //public GameObject hitsparkPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/Hitspark1.prefab").WaitForCompletion();
-        //public GameObject hitsparkPrefab2 = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/HitsparkRailgunnerPistol.prefab").WaitForCompletion();
-        //public GameObject laserPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Engi/LaserEngiTurret.prefab").WaitForCompletion();
-        //
-        //private GameObject leftLaserInstance;
-        //private Transform leftLaserInstanceEnd;
-        //
-        //private GameObject rightLaserInstance;
-        //private Transform rightLaserInstanceEnd;
 
         private Transform muzzleLeft;
         private Transform muzzleRight;
@@ -62,7 +43,6 @@ namespace EntityStates.Engi
         public override void OnEnter()
         {
             base.OnEnter();
-            //this.duration = this.baseDuration / base.attackSpeedStat;
             Ray aimRay = base.GetAimRay();
             duration = baseDuration;
             characterBody.isSprinting = true;
