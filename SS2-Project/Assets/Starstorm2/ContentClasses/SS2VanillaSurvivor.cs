@@ -66,7 +66,7 @@ namespace SS2
 
             assetCollection = assetRequest.Asset;
 
-            var request = Addressables.LoadAssetAsync<SurvivorDef>(assetCollection.survivorDefAddress);
+            var request = Addressables.LoadAssetAsync<SurvivorDef>(assetCollection.associatedSurvivorDef.RuntimeKey);
             while (!request.IsDone)
                 yield return null;
 
