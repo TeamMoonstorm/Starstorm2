@@ -2,6 +2,8 @@
 ### 0.6.31
 * General
     * Mul-T GM skins are fixed too! All Vanilla skins are back!
+* Executioner
+    * Fear's execution threshold on the healthbar should now reflect the correct value (fixed in 0.6.30 but not mentioned)
 * Beta
     * Fixed a missing tag in Pyro's passive description
     * Nerfed Pyro's armor add as a stopgap measure for an infinite armor add bug
