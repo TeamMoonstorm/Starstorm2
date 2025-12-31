@@ -223,13 +223,17 @@ namespace SS2.Items
             orig(self); //things after orig occur after PlaceTeleporter
 
             if (self.teleporterInstance){
-                primalToken = self.teleporterInstance.GetComponent<PrimalPrevention>();
-                primalToken.filter = self.teleporterInstance.AddComponent<InteractionProcFilter>();
-                primalToken.filter.shouldAllowOnInteractionBeginProc = false;
+                self.teleporterInstance.TryGetComponent<PrimalPrevention>(out primalToken);
+
+                if (primalToken != null)
+                {
+                    primalToken.filter = self.teleporterInstance.AddComponent<InteractionProcFilter>();
+                    primalToken.filter.shouldAllowOnInteractionBeginProc = false;
+                }
             }
 
             var sceneDef = SceneCatalog.GetSceneDefForCurrentScene();
-            if (sceneDef.sceneType == SceneType.Stage && primalToken)
+            if (primalToken && sceneDef && sceneDef.sceneType == SceneType.Stage)
             {
                 if (birthrightRng == null){ birthrightRng = new Xoroshiro128Plus(Run.instance.seed); }
                 foreach (var player in PlayerCharacterMasterController.instances)
