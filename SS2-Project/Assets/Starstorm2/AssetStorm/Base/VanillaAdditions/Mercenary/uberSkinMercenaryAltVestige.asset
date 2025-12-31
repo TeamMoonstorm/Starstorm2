@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c26ef4e3114a64892825359a123b70, type: 3}
+  m_Name: uberSkinMercenaryAltVestige
+  m_EditorClassIdentifier: 
+  targetSkinDef: {fileID: 11400000, guid: dfec7b43fbc2ae34bbcc73447c7558c2, type: 2}
+  baseSkins:
+  - _asset: {fileID: 0}
+    _address: 11c849da0aff7114eb6dff4568f036ee
+    _useDirectReference: 0
+    _canLoadFromCatalog: 0
+  targetObject:
+    _asset: {fileID: 0}
+    _address: c9898f15e54a0194dbd2ab62ad507bd4
+    _useDirectReference: 0
+  rendererInfos:
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: MercMesh
+    defaultMaterial: {fileID: 2100000, guid: 949fa1c9d53f55643b28ebdf82920d92, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: MercSwordMesh
+    defaultMaterial: {fileID: 2100000, guid: f1c2c37b8e1dc9f4d8cbe1bf72b31896, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  gameObjectActivations: []
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  lightReplacements: []
+  vfxOverrides: []

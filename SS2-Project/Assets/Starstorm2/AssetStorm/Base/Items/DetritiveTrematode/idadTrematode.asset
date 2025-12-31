@@ -1,0 +1,272 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f727041e2de4c654eb149643cbe8e537, type: 3}
+  m_Name: idadTrematode
+  m_EditorClassIdentifier: 
+  keyAsset: {fileID: 11400000, guid: f6a42434ca22ce04fb870d602b6ec92f, type: 2}
+  displayEntries:
+  - targetIDRS:
+      m_AssetGUID: 073f1d77c0d808240b5404fc6d0a4c88
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: ThighL
+      localPos: {x: 0.08199, y: 0.0785, z: -0.0486}
+      localAngles: {x: 353.11, y: 135.056, z: 160.264}
+      localScale: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 7d6fc2aa6fd5d5b47b3b39a7abf9c951
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmL
+      localPos: {x: 0.08855, y: -0.0555, z: -0.1298}
+      localAngles: {x: 27.531, y: 75.1301, z: 106.5411}
+      localScale: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: ffea13199016c4e4092b864bc59963ad
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: ThighR
+      localPos: {x: -0.01986, y: 0.2232, z: 0.11924}
+      localAngles: {x: 334.9509, y: 322.2038, z: 170.7575}
+      localScale: {x: 0.06, y: 0.06, z: 0.06}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: f9fa5389670c16b41a3f036f547c928d
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: Chest
+      localPos: {x: 1.591046, y: 1.228866, z: -2.264892}
+      localAngles: {x: 349.1855, y: 96.72256, z: 161.5415}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 439b59d9c7033d444b14ca8400232532
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmL
+      localPos: {x: 0.07311615, y: -0.06003799, z: -0.075304}
+      localAngles: {x: 342.1192, y: 172.7448, z: 1.413787}
+      localScale: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: c3a3fa07aaccea24abc93cf90166fa0d
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmR
+      localPos: {x: -0.13023, y: -0.08738, z: -0.05806}
+      localAngles: {x: 358.5447, y: 303.0695, z: 350.3996}
+      localScale: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 1b577943ff3308142a3def6a58446ecf
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmR
+      localPos: {x: -0.169574, y: 0.081655, z: -0.0718196}
+      localAngles: {x: 0.25369, y: 319.077, z: 312.0225}
+      localScale: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 3aec5746b27f9b744bc2ac3efc5847d9
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: LegBar3
+      localPos: {x: 0.4408068, y: 1.394561, z: 0.2406}
+      localAngles: {x: 57.11248, y: 344.0905, z: 151.19997}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 7033b005e9ef98c4b96fadc5d816fa62
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: LegBar3
+      localPos: {x: 0.4408068, y: 1.394561, z: 0.2406}
+      localAngles: {x: 57.11248, y: 344.0905, z: 151.2}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 38951619ee759b1489143b3fd4f0771f
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: FlowerBase
+      localPos: {x: 0.75, y: 0.97, z: 0.28}
+      localAngles: {x: 8.46, y: 50.38, z: 206.03}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 20a7e7f739f6ac84cb8b9d641a179713
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmR
+      localPos: {x: -0.1222, y: 0.1515, z: -0.1035}
+      localAngles: {x: 337.116, y: 165.8255, z: 89.49488}
+      localScale: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 70356ba47794caf48a34625ce3b8442f
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: Stomach
+      localPos: {x: -1.538, y: -0.86, z: 2.27}
+      localAngles: {x: 283.6104, y: 323.4552, z: 35.4}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 5fa2b0eaf6b131a44b5fbe48bac602fc
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmR
+      localPos: {x: -0.0303, y: -0.10322, z: -0.204}
+      localAngles: {x: 337.715, y: 239.5477, z: 333.9377}
+      localScale: {x: 0.03, y: 0.03, z: 0.03}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: 8fb06b526e229f34e802f5754f4f918f
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: Backpack
+      localPos: {x: -0.1993287, y: 0.2808217, z: -0.1682339}
+      localAngles: {x: 357.2045, y: 178.0667, z: 49.22265}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: dc2058c94a60d83498d3f9c9d0770ed7
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: ThighL
+      localPos: {x: -0.1348144, y: 0.3119116, z: -0.005569711}
+      localAngles: {x: 357.0638, y: 244.9671, z: 105.0739}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - targetIDRS:
+      m_AssetGUID: f5bda7d11b594d74e9e8cffcc5ee521b
+      m_SubObjectName: 
+      m_SubObjectType: 
+    rules:
+    - ruleType: 0
+      displayPrefab:
+        _asset: {fileID: 5717885179499639221, guid: b61b9c5487cb16b42a29b16b8fbe6b02,
+          type: 3}
+        _address: 
+        _useDirectReference: 1
+      childName: UpperArmL
+      localPos: {x: -1.122967, y: 2.41391, z: 1.916357}
+      localAngles: {x: 343.4933, y: 329.599, z: 197.0684}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0

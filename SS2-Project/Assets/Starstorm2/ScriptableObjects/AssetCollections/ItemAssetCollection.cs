@@ -1,6 +1,7 @@
 ﻿using RoR2;
 using UnityEngine;
 using System.Collections.Generic;
+using MSU;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "ItemAssetCollection", menuName = "Starstorm2/AssetCollections/ItemAssetCollection")]
@@ -8,5 +9,6 @@ namespace SS2
     {
         public List<GameObject> itemDisplayPrefabs;
         public ItemDef itemDef;
+        public NullableRef<ItemDisplayAddressedDictionary> itemDisplayAddressedDictionary;
     }
 }
