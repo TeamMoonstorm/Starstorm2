@@ -146,7 +146,9 @@ namespace SS2.Survivors
             {
                 if (hasAnyStacks)
                 {
-                    args.armorAdd += 4f * characterBody.GetBuffCount(GetBuffDef());
+                    // TODO from Buns: I nerfed this down from 4f to 0.3f to address the armor adding infiniute bug
+                    // This will make Pyro weaker but at least he wont be a god until swuff fixes it
+                    args.armorAdd += 0.3f * characterBody.GetBuffCount(GetBuffDef());
                     args.regenMultAdd += 0.2f * characterBody.GetBuffCount(GetBuffDef());
                 }
             }
