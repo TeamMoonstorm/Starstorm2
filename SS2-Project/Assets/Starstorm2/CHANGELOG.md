@@ -8,7 +8,7 @@
     * Fixed a missing tag in Pyro's passive description
     * Nerfed Pyro's armor add as a stopgap measure for an infinite armor add bug
     * Pyro does have infinite flight though! Its a bug and will be fixed! Enjoy!
-    * To combat infinite flight while a more comprehensive fix is found, Pyro's utility has increased heat consumption from 5->8 and inceased heat cost  5->6
+    * To combat infinite flight while a more comprehensive fix is found, Pyro's utility has increased heat consumption from 5->8 and inceased heat cost  5->8
 
 ### 0.6.30
 * General
