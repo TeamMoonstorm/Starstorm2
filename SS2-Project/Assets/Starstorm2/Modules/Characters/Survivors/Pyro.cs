@@ -213,7 +213,8 @@ namespace SS2.Survivors
                 if (characterBody.characterMotor.isGrounded && isOverridingSkill)
                 {
                     // clients dont have authority for this normally
-                    CmdRemoveBuff();
+                    // to-do: network. this entire thing should be a state, probably
+                    characterBody.SetBuffCount(buffIndex, 0);
 
                     ToggleHover(false);
 
@@ -241,12 +242,6 @@ namespace SS2.Survivors
                         hoverR.Stop();
                     }
                 }
-            }
-
-            [Command]
-            public void CmdRemoveBuff()
-            {
-                characterBody.SetBuffCount(buffIndex, 0);
             }
         }
     }

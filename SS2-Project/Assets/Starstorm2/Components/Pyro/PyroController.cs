@@ -88,10 +88,12 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
+#if DEBUG
             if (Input.GetKeyDown(KeyCode.J))
             {
                 AddHeat(heatMax);
             }
+#endif
 
             if (NetworkServer.active)
             {
