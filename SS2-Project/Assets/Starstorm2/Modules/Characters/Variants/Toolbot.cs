@@ -17,19 +17,19 @@ namespace SS2.Survivors
 
         public override void Initialize()
         {
-            GameObject toolbotBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotBody.prefab").WaitForCompletion();
+            //GameObject toolbotBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotBody.prefab").WaitForCompletion();
 
-            SkillLocator skillLocator = toolbotBodyPrefab.GetComponent<SkillLocator>();
-            SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
-            SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
-            SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
+            //SkillLocator skillLocator = toolbotBodyPrefab.GetComponent<SkillLocator>();
+            //SkillFamily primarySkillFamily = skillLocator.primary.skillFamily;
+            //SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
+            //SkillFamily specialSkillFamily = skillLocator.special.skillFamily;
 
-            RepairOverlayPrefab = assetCollection.FindAsset<GameObject>("ToolbotRepairUI");
+            //RepairOverlayPrefab = assetCollection.FindAsset<GameObject>("ToolbotRepairUI");
 
-            SelfRepairSkillDef sdSelfRepair = assetCollection.FindAsset<SelfRepairSkillDef>("sdSelfRepair");
+            //SelfRepairSkillDef sdSelfRepair = assetCollection.FindAsset<SelfRepairSkillDef>("sdSelfRepair");
 
-            AddSkill(secondarySkillFamily, sdSelfRepair);
-            AddEntityStateMachine(toolbotBodyPrefab, "Toolbox"); // Used by skills like self-repair that dont want to interrupt weapon
+            //AddSkill(secondarySkillFamily, sdSelfRepair);
+            //AddEntityStateMachine(toolbotBodyPrefab, "Toolbox"); // Used by skills like self-repair that dont want to interrupt weapon
 
         }
 
@@ -40,7 +40,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return true;
         }
     }
 }
