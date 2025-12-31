@@ -1,11 +1,17 @@
 **Warning: content spoilers below!**
 ### 0.6.30
+* General
+    * SS2 0.6.30 requires MSU 2.5.1 or higher. Update both mods!
+    * Vanilla GM skins are now fixed! Woohoo thanks Nebby!
 * Items
     * Added additional null checks to Galvanic Core to catch a bug where attacker inventories was null
     * Added additional null checks to Primal Birthright to catch a bug where we didnt add required components to the stages teleporter variant
+    * Primal Birthright should now work on Conduit Canyon
     * Mimic should no longer spawn if playing with SS2 expansion disabled
 * Beta
     * Additional null checks on Poision Elites (AffixPurple), Night Time (Bandit alt primary), Dormant Fungus (item), and Poisonous Gland (item) to catch reported issues
+    * New survivor: Pyro!
+    * New enemy: Archer Bug! (different enough from Enemies Returns version dont worry)
 
 ### 0.6.29
 * General
