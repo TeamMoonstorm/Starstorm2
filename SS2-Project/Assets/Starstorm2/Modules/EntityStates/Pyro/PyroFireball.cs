@@ -37,6 +37,7 @@ namespace EntityStates.Pyro
             duration = baseDuration / attackSpeedStat;
             recoil = Util.Remap(charge, 0f, 1f, minRecoil, maxRecoil);
             fireDuration = 0.1f * duration;
+            PlayCrossfade("Gesture, Override", "FireSpecial", 0.1f);
         }
 
         public override void OnExit()

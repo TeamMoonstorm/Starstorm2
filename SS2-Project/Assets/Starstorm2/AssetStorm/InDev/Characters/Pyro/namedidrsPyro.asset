@@ -1,0 +1,1706 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f4f59b83057a85408a1cb4718ca9004, type: 3}
+  m_Name: namedidrsPyro
+  m_EditorClassIdentifier: 
+  targetItemDisplayRuleSet: {fileID: 11400000, guid: e40e2a9b8e5f93e4aa45eaf595d5a124,
+    type: 2}
+  rules:
+  - keyAssetName: AlienHead
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAlienHead
+      childName: Canister
+      localPos: {x: -0.37854, y: -0.57766, z: -0.51506}
+      localAngles: {x: 294.2643, y: 125.9472, z: 80.9903}
+      localScale: {x: 2.5, y: 2.5, z: 2.5}
+      limbMask: 0
+  - keyAssetName: ArmorPlate
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRepulsionArmorPlate
+      childName: ThighR
+      localPos: {x: -0.14278, y: 0.32, z: 0.15116}
+      localAngles: {x: 3.56787, y: 104.6851, z: 212.9737}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: ArmorReductionOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarhammer
+      childName: Canister
+      localPos: {x: -0.71015, y: 0.51718, z: -0.45787}
+      localAngles: {x: 281.6768, y: 267.8217, z: 133.0259}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: AttackSpeedAndMoveSpeed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCoffee
+      childName: Canister
+      localPos: {x: -0.553, y: 0.48448, z: -0.27125}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: AttackSpeedOnCrit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWolfPelt
+      childName: Flamethrower
+      localPos: {x: -0.01553, y: 2.28149, z: 0.40604}
+      localAngles: {x: 277.7415, y: 21.01113, z: 161.5817}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: AutoCastEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFossil
+      childName: Bag
+      localPos: {x: 0.31656, y: -0.07652, z: 0.33515}
+      localAngles: {x: 359.7716, y: 272.2499, z: 342.003}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Bandolier
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBandolier
+      childName: Pelvis
+      localPos: {x: -0.11479, y: 0.00866, z: -0.00372}
+      localAngles: {x: 8.10069, y: 85.86134, z: 51.74462}
+      localScale: {x: 1, y: 1.5244, z: 1}
+      limbMask: 0
+  - keyAssetName: BarrierOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrooch
+      childName: Flamethrower
+      localPos: {x: -0.10338, y: 2.17062, z: 0.25991}
+      localAngles: {x: 87.98753, y: 299.0322, z: 28.26104}
+      localScale: {x: 1.25, y: 1.25, z: 1.25}
+      limbMask: 0
+  - keyAssetName: BarrierOnOverHeal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAegis
+      childName: ArmL
+      localPos: {x: 0.54086, y: 0.03041, z: -0.19682}
+      localAngles: {x: 71.16284, y: 196.8272, z: 200.9597}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Bear
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBear
+      childName: ShoulderL
+      localPos: {x: 0.24473, y: 0.07531, z: -0.31102}
+      localAngles: {x: 336.9124, y: 195.2743, z: 264.4648}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: BearVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBearVoid
+      childName: ShoulderL
+      localPos: {x: 0.24473, y: 0.07531, z: -0.31102}
+      localAngles: {x: 336.9124, y: 195.2743, z: 264.4648}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: BeetleGland
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeetleGland
+      childName: HoseG
+      localPos: {x: 0.22186, y: 0.04428, z: -0.33692}
+      localAngles: {x: 315.7042, y: 250.9974, z: 50.3199}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Behemoth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBehemoth
+      childName: Muzzle
+      localPos: {x: -0.04145, y: -0.14891, z: -0.36234}
+      localAngles: {x: 0, y: 180, z: 0}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: BFG
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBFG
+      childName: Muzzle
+      localPos: {x: -0.00762, y: -0.37919, z: 0.05265}
+      localAngles: {x: 271.1906, y: 332.14, z: 207.7023}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Blackhole
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravCube
+      childName: Base
+      localPos: {x: -1.24371, y: -0.0042, z: -1.33758}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: BleedOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTip
+      childName: Muzzle
+      localPos: {x: -0.00547, y: 0.18616, z: -0.16812}
+      localAngles: {x: 270, y: 0, z: 0}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: BleedOnHitAndExplode
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBleedOnHitAndExplode
+      childName: ThighR
+      localPos: {x: 0.17052, y: 0.10334, z: 0.41242}
+      localAngles: {x: 343.0962, y: 358.4373, z: 359.6031}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: BleedOnHitVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTriTipVoid
+      childName: Muzzle
+      localPos: {x: 0.00307, y: -0.10758, z: 0.16921}
+      localAngles: {x: 26.06219, y: 2.98188, z: 181.6647}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: BonusGoldPackOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTome
+      childName: Pelvis
+      localPos: {x: -0.19929, y: -0.16207, z: -0.5096}
+      localAngles: {x: 25.36833, y: 175.0293, z: 309.3056}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: BossDamageBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAPRound
+      childName: ShoulderR
+      localPos: {x: -0.25061, y: 0.12157, z: 0.25736}
+      localAngles: {x: 14.18006, y: 273.9794, z: 102.8851}
+      localScale: {x: 1.25, y: 1.25, z: 1.25}
+      limbMask: 0
+  - keyAssetName: BossHunter
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTricornGhost
+      childName: Head
+      localPos: {x: 0.17595, y: -0.74325, z: 0.00385}
+      localAngles: {x: 353.4442, y: 275.1852, z: 180.673}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayBlunderbuss
+      childName: Base
+      localPos: {x: -0.88449, y: -0.00298, z: -1.73864}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: BossHunterConsumed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTricornUsed
+      childName: Head
+      localPos: {x: 0.17595, y: -0.74325, z: 0.00385}
+      localAngles: {x: 353.4442, y: 275.1852, z: 180.673}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: BounceNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHook
+      childName: Canister
+      localPos: {x: -0.57572, y: 0.44369, z: -0.48294}
+      localAngles: {x: 323.1799, y: 1.91278, z: 1.26536}
+      localScale: {x: 0.65, y: 0.65, z: 0.65}
+      limbMask: 0
+  - keyAssetName: BurnNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPotion
+      childName: Pelvis
+      localPos: {x: -0.05869, y: 0.35895, z: -0.30429}
+      localAngles: {x: 27.32404, y: 25.58167, z: 241.7158}
+      localScale: {x: 0.07, y: 0.07, z: 0.07}
+      limbMask: 0
+  - keyAssetName: ChainLightning
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkulele
+      childName: Canister
+      localPos: {x: 0.59294, y: -0.21473, z: -0.46766}
+      localAngles: {x: 359.0886, y: 165.6196, z: 346.1278}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: ChainLightningVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayUkuleleVoid
+      childName: Canister
+      localPos: {x: 0.39187, y: 0.05973, z: -0.61208}
+      localAngles: {x: 355.8192, y: 137.6677, z: 351.4885}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Cleanse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaterPack
+      childName: Pelvis
+      localPos: {x: -0.2623, y: 0.03978, z: -0.46209}
+      localAngles: {x: 357.3544, y: 125.7216, z: 276.1174}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: Clover
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayClover
+      childName: Flamethrower
+      localPos: {x: 0.15448, y: 2.10457, z: 0.35869}
+      localAngles: {x: 85.64419, y: 260.787, z: 223.002}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: CloverVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCloverVoid
+      childName: Chest
+      localPos: {x: 0.26862, y: 0.40791, z: 0.20096}
+      localAngles: {x: 15.56012, y: 353.9989, z: 300.6064}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: CommandMissile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileRack
+      childName: Canister
+      localPos: {x: 0.02408, y: 0.49446, z: -0.6349}
+      localAngles: {x: 64.80707, y: 176.2494, z: 1.9616}
+      localScale: {x: 1.2, y: 1.2, z: 1.2}
+      limbMask: 0
+  - keyAssetName: CooldownOnCrit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkull
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: CrippleWard
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      childName: Pelvis
+      localPos: {x: -0.28416, y: 0.28372, z: -0.37113}
+      localAngles: {x: 39.02433, y: 9.47031, z: 277.0046}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: CrippleWardOnLevel
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEffigy
+      childName: Pelvis
+      localPos: {x: -0.28416, y: 0.28372, z: -0.37113}
+      localAngles: {x: 39.02433, y: 9.47031, z: 277.0046}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: CritDamage
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserSight
+      childName: Flamethrower
+      localPos: {x: 0.00105, y: 0.43167, z: 0.36374}
+      localAngles: {x: 359.496, y: 268.9839, z: 269.6614}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: CritGlasses
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlasses
+      childName: Head
+      localPos: {x: -0.24622, y: -0.5031, z: -0.00155}
+      localAngles: {x: 39.02212, y: 270.9127, z: 178.7172}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: CritGlassesVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlassesVoid
+      childName: Head
+      localPos: {x: -0.24622, y: -0.5031, z: -0.00155}
+      localAngles: {x: 39.02212, y: 270.9127, z: 178.7172}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: CritOnUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayNeuralImplant
+      childName: Head
+      localPos: {x: -0.61824, y: -0.37885, z: 0.01265}
+      localAngles: {x: 9.73118, y: 286.0251, z: 5.57535}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Crowbar
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCrowbar
+      childName: Canister
+      localPos: {x: -0.3764, y: 0.41144, z: -0.56414}
+      localAngles: {x: 6.70465, y: 156.0921, z: 13.0798}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: Dagger
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDagger
+      childName: ShoulderR
+      localPos: {x: -0.1392, y: -0.2946, z: 0.19052}
+      localAngles: {x: 9.08292, y: 39.56395, z: 125.6269}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: DeathMark
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathMark
+      childName: ShoulderR
+      localPos: {x: -0.4892135, y: 0.681178, z: 0.006267839}
+      localAngles: {x: 61.85309, y: 260.103, z: 174.7023}
+      localScale: {x: 0.125, y: 0.125, z: 0.125}
+      limbMask: 0
+  - keyAssetName: DroneBackup
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRadio
+      childName: ThighR
+      localPos: {x: -0.0699, y: -0.12786, z: 0.28443}
+      localAngles: {x: 15.46749, y: 356.2058, z: 283.5508}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay1
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponMinigun
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: DroneWeaponsDisplay2
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDroneWeaponLauncher
+      childName: 
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: ElementalRingVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVoidRing
+      childName: HandR
+      localPos: {x: -0.00288, y: 0.01579, z: 0.0137}
+      localAngles: {x: 5.31769, y: 265.516, z: 279.4393}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayVoidRing
+      childName: HandL
+      localPos: {x: -0.15355, y: 0.01814, z: -0.00062}
+      localAngles: {x: 17.55784, y: 89.05804, z: 70.68357}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: EliteEarthEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteMendingAntlers
+      childName: Head
+      localPos: {x: 0.09266, y: -0.51512, z: -0.01663}
+      localAngles: {x: 358.0918, y: 269.1753, z: 178.7011}
+      localScale: {x: 2, y: 2, z: 1}
+      limbMask: 0
+  - keyAssetName: EliteFireEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Head
+      localPos: {x: -0.02682, y: -0.53272, z: -0.23647}
+      localAngles: {x: 347.0036, y: 82.92181, z: 190.7001}
+      localScale: {x: -0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteHorn
+      childName: Head
+      localPos: {x: -0.01955, y: -0.51942, z: 0.22312}
+      localAngles: {x: 355.8073, y: 109.4512, z: 162.7649}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: EliteHauntedEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteStealthCrown
+      childName: Head
+      localPos: {x: 0.20786, y: -0.84024, z: -0.03647}
+      localAngles: {x: 276.9739, y: 294.7535, z: 337.5043}
+      localScale: {x: 0.16, y: 0.16, z: 0.16}
+      limbMask: 0
+  - keyAssetName: EliteIceEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteIceCrown
+      childName: Head
+      localPos: {x: 0.15879, y: -0.71882, z: 0.06028}
+      localAngles: {x: 71.2111, y: 93.77338, z: 18.01037}
+      localScale: {x: 0.08, y: 0.08, z: 0.08}
+      limbMask: 0
+  - keyAssetName: EliteLightningEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Head
+      localPos: {x: -0.21325, y: -0.59896, z: 0.00026}
+      localAngles: {x: 61.37687, y: 284.5866, z: 193.1324}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Head
+      localPos: {x: -0.01345, y: -0.67983, z: 0.00467}
+      localAngles: {x: 50.66089, y: 84.10429, z: 1.52492}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayEliteRhinoHorn
+      childName: Head
+      localPos: {x: 0.24452, y: -0.57612, z: -0.00782}
+      localAngles: {x: 26.29708, y: 91.99049, z: 352.4424}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: EliteLunarEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteLunar,Eye
+      childName: Head
+      localPos: {x: -0.89241, y: -0.63701, z: 0.1365}
+      localAngles: {x: 16.18246, y: 273.4793, z: 284.2881}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: ElitePoisonEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEliteUrchinCrown
+      childName: Head
+      localPos: {x: 0.00902, y: -0.5822, z: -0.022}
+      localAngles: {x: 80.05824, y: 70.03041, z: 38.04538}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: EliteVoidEquipment
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAffixVoid
+      childName: Head
+      localPos: {x: -0.25073, y: -0.29742, z: 0.00168}
+      localAngles: {x: 66.17992, y: 93.33719, z: 184.9323}
+      localScale: {x: 0.4, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: EmpowerAlways
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySunHead
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: EnergizedOnEquipmentUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarHorn
+      childName: Pelvis
+      localPos: {x: -0.0528, y: 0.09237, z: 0.50249}
+      localAngles: {x: 340.0356, y: 190.551, z: 85.33108}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: EquipmentMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBattery
+      childName: Canister
+      localPos: {x: 0.75369, y: -0.33068, z: -0.38842}
+      localAngles: {x: 274.439, y: 348.5992, z: 313.5183}
+      localScale: {x: 0.325, y: 0.325, z: 0.325}
+      limbMask: 0
+  - keyAssetName: EquipmentMagazineVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFuelCellVoid
+      childName: Flamethrower
+      localPos: {x: -0.18965, y: -0.23459, z: 0.48295}
+      localAngles: {x: 0.2947, y: 359.9376, z: 359.6346}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: ExecuteLowHealthElite
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGuillotine
+      childName: Canister
+      localPos: {x: -0.40057, y: 0.19996, z: -0.72508}
+      localAngles: {x: 288.2347, y: 70.96893, z: 125.2846}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeath
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWilloWisp
+      childName: Canister
+      localPos: {x: 0.76796, y: -0.30937, z: -0.33973}
+      localAngles: {x: 1.79748, y: 243.7483, z: 3.52732}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: ExplodeOnDeathVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWillowWispVoid
+      childName: Canister
+      localPos: {x: 0.76796, y: -0.30937, z: -0.33973}
+      localAngles: {x: 1.79748, y: 243.7483, z: 3.52732}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: ExtraLife
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippo
+      childName: Chest
+      localPos: {x: 0.27967, y: 0.3791, z: 0.29812}
+      localAngles: {x: 316.9851, y: 64.17243, z: 4.61331}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: ExtraLifeVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHippoVoid
+      childName: Chest
+      localPos: {x: 0.36286, y: 0.34202, z: 0.29688}
+      localAngles: {x: 293.3597, y: 107.7121, z: 134.9132}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: FallBoots
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      childName: CalfL
+      localPos: {x: -0.20705, y: -0.00007, z: 0.00002}
+      localAngles: {x: 61.24459, y: 178.7069, z: 84.38866}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayGravBoots
+      childName: CalfR
+      localPos: {x: 0.18725, y: 0.01543, z: -0.03378}
+      localAngles: {x: 277.1782, y: 99.08983, z: 355.321}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: Feather
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFeather
+      childName: ShoulderL
+      localPos: {x: -0.37453, y: 0.15028, z: 0.12775}
+      localAngles: {x: 15.98564, y: 135.6259, z: 274.873}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayFeather
+      childName: ShoulderR
+      localPos: {x: 0.39168, y: 0.09828, z: 0.02695}
+      localAngles: {x: 314.4575, y: 347.8984, z: 208.8546}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: FireBallDash
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayEgg
+      childName: ThighR
+      localPos: {x: 0.30024, y: -0.25059, z: 0.18887}
+      localAngles: {x: 3.96426, y: 81.73941, z: 126.5963}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: FireballsOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireballsOnHit
+      childName: Flamethrower
+      localPos: {x: -0.3532, y: 0.31107, z: 0.47575}
+      localAngles: {x: 21.30469, y: 309.4097, z: 348.5178}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: FireRing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFireRing
+      childName: HandL
+      localPos: {x: -0.07175, y: -0.01843, z: -0.01501}
+      localAngles: {x: 0.17175, y: 102.3729, z: 74.23425}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Firework
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFirework
+      childName: Canister
+      localPos: {x: -0.37828, y: 0.37578, z: -0.68485}
+      localAngles: {x: 285.8566, y: 142.0583, z: 52.53392}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: FlatHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySteakCurved
+      childName: Flamethrower
+      localPos: {x: -0.18851, y: 1.9696, z: 0.33982}
+      localAngles: {x: 6.63301, y: 304.8573, z: 87.80936}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: FocusConvergence
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFocusedConvergence
+      childName: Base
+      localPos: {x: -2.646272, y: 0.09154701, z: -2.813964}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.05, y: 0.05, z: 0.05}
+      limbMask: 0
+  - keyAssetName: FragileDamageBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDelicateWatch
+      childName: ArmR
+      localPos: {x: -0.60307, y: -0.02011, z: 0.05391}
+      localAngles: {x: 6.40556, y: 78.93232, z: 89.07325}
+      localScale: {x: 1.1927, y: 2.18704, z: 1.39133}
+      limbMask: 0
+  - keyAssetName: FreeChest
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShippingRequestForm
+      childName: ThighL
+      localPos: {x: -0.01493, y: 0.32701, z: -0.15859}
+      localAngles: {x: 343.2177, y: 75.81695, z: 317.5548}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Fruit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFruit
+      childName: Pelvis
+      localPos: {x: -0.85643, y: 0.3779, z: -0.3208}
+      localAngles: {x: 47.69854, y: 334.0666, z: 254.6072}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: GainArmor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayElephantFigure
+      childName: Head
+      localPos: {x: 0.17598, y: -0.75082, z: -0.01424}
+      localAngles: {x: 19.78134, y: 273.4978, z: 182.8807}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: Gateway
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVase
+      childName: ThighR
+      localPos: {x: 0.21931, y: -0.13074, z: 0.38286}
+      localAngles: {x: 36.16837, y: 164.6172, z: 92.7674}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: GhostOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMask
+      childName: Head
+      localPos: {x: -0.21611, y: -0.36958, z: 0.00071}
+      localAngles: {x: 10.03875, y: 270.8841, z: 177.5502}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: GoldGat
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldGat
+      childName: ShoulderL
+      localPos: {x: -0.50772, y: 0.21095, z: -0.17466}
+      localAngles: {x: 57.58449, y: 264.8051, z: 33.25582}
+      localScale: {x: 0.15, y: 0.15, z: -0.15}
+      limbMask: 0
+  - keyAssetName: GoldOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBoneCrown
+      childName: Head
+      localPos: {x: 0.01142, y: -0.45326, z: -0.00087}
+      localAngles: {x: 17.10132, y: 268.3148, z: 177.3174}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: GoldOnHurt
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRollOfPennies
+      childName: ArmL
+      localPos: {x: -0.01693, y: -0.16692, z: -0.27079}
+      localAngles: {x: 343.0402, y: 195.2978, z: 172.9851}
+      localScale: {x: 1.35, y: 1.35, z: 1.35}
+      limbMask: 0
+  - keyAssetName: GummyClone
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGummyClone
+      childName: Bag
+      localPos: {x: 0.17964, y: -0.31967, z: -0.0384}
+      localAngles: {x: 35.90607, y: 91.5352, z: 187.2827}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: HalfAttackSpeedHalfCooldowns
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarShoulderNature
+      childName: ShoulderR
+      localPos: {x: -0.1747, y: 0.19248, z: 0.20531}
+      localAngles: {x: 65.71056, y: 45.8453, z: 13.20519}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: HalfSpeedDoubleHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarShoulderStone
+      childName: ShoulderL
+      localPos: {x: 0.10824, y: -0.04893, z: -0.20322}
+      localAngles: {x: 77.50159, y: 297.871, z: 42.52766}
+      localScale: {x: 1.64692, y: 1.7974, z: 2.16228}
+      limbMask: 0
+  - keyAssetName: HeadHunter
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySkullcrown
+      childName: Head
+      localPos: {x: -0.01021, y: -0.43343, z: -0.00226}
+      localAngles: {x: 358.4597, y: 272.6193, z: 184.2978}
+      localScale: {x: 0.91834, y: 0.32145, z: 0.07483}
+      limbMask: 0
+  - keyAssetName: HealingPotion
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHealingPotion
+      childName: Pelvis
+      localPos: {x: -0.14413, y: 0.23755, z: -0.39414}
+      localAngles: {x: 291.173, y: 6.85427, z: 236.8681}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: HealOnCrit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScythe
+      childName: Canister
+      localPos: {x: 0.30761, y: 0.29649, z: -0.73309}
+      localAngles: {x: 278.2981, y: 175.0445, z: 57.99382}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: HealWhileSafe
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySnail
+      childName: Chest
+      localPos: {x: 0.5610762, y: 0.4033176, z: 0.02890518}
+      localAngles: {x: 301.3628, y: 4.769089, z: 260.7697}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Hoof
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayHoof
+      childName: CalfR
+      localPos: {x: 0.05648, y: 0.2593, z: -0.16089}
+      localAngles: {x: 15.82313, y: 107.1943, z: 154.7667}
+      localScale: {x: 0.34073, y: 0.31822, z: 0.15476}
+      limbMask: 8
+  - keyAssetName: IceRing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIceRing
+      childName: HandR
+      localPos: {x: -0.01501, y: 0.0205, z: 0.00707}
+      localAngles: {x: 10.31813, y: 281.8717, z: 271.1021}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: Icicle
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayFrostRelic
+      childName: Base
+      localPos: {x: -1.49678, y: -1.35368, z: 1.15306}
+      localAngles: {x: 20.45821, y: 341.1668, z: 342.538}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: IgniteOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasoline
+      childName: ThighL
+      localPos: {x: -0.00487, y: -0.37098, z: -0.0073}
+      localAngles: {x: 356.1306, y: 254.9956, z: 96.22453}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: ImmuneToDebuff
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRainCoatBelt
+      childName: Chest
+      localPos: {x: -0.009898673, y: 0.3032004, z: 0.02595368}
+      localAngles: {x: 6.555139, y: 4.62376, z: 359.5331}
+      localScale: {x: 3.4, y: 2.75, z: 3.05}
+      limbMask: 0
+  - keyAssetName: IncreaseHealing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      childName: Head
+      localPos: {x: -0.04047, y: -0.54911, z: 0.19274}
+      localAngles: {x: 2.14962, y: 31.95042, z: 164.0394}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAntler
+      childName: Head
+      localPos: {x: 0.00389, y: -0.53695, z: -0.20822}
+      localAngles: {x: 348.2906, y: 7.72262, z: 177.7974}
+      localScale: {x: 0.7, y: 0.7, z: -0.7}
+      limbMask: 0
+  - keyAssetName: Incubator
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAncestralIncubator
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Infusion
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInfusion
+      childName: Bag
+      localPos: {x: 0.35008, y: -0.29012, z: -0.01052}
+      localAngles: {x: 307.6982, y: 268.8025, z: 177.3686}
+      localScale: {x: 1.15, y: 1.15, z: 1.15}
+      limbMask: 0
+  - keyAssetName: IrradiatingLaser
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayIrradiatingLaser
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Jetpack
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBugWings
+      childName: Chest
+      localPos: {x: 0, y: 0.2670375, z: -1.202581}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+  - keyAssetName: JumpBoost
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      childName: Canister
+      localPos: {x: -0.1441, y: -0.0093, z: -0.11302}
+      localAngles: {x: 17.76447, y: 157.2631, z: 13.2702}
+      localScale: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - keyAssetName: KillEliteFrenzy
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrainstalk
+      childName: Head
+      localPos: {x: 0.01017, y: -0.40558, z: -0.01406}
+      localAngles: {x: 351.7966, y: 1.32109, z: 184.54}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Knurl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKnurl
+      childName: ShoulderL
+      localPos: {x: -0.30126, y: -0.05444, z: -0.14235}
+      localAngles: {x: 356.5251, y: 309.9702, z: 4.54099}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: LaserTurbine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLaserTurbine
+      childName: Flamethrower
+      localPos: {x: 0.0139, y: 1.08615, z: 0.45046}
+      localAngles: {x: 358.2417, y: 179.4792, z: 3.36004}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: LifestealOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLifestealOnHit
+      childName: ShoulderR
+      localPos: {x: -0.2654015, y: 0.243504, z: 0.8140824}
+      localAngles: {x: 14.24492, y: 165.5874, z: 93.74469}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Lightning
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLightningArmRight
+      childName: ShoulderR
+      localPos: {x: -0.1408, y: 0.62696, z: 0.22792}
+      localAngles: {x: 288.2358, y: 260.5072, z: 339.2194}
+      localScale: {x: 1.2, y: 1.2, z: 1.2}
+      limbMask: 0
+  - keyAssetName: LightningStrikeOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayChargedPerforator
+      childName: Flamethrower
+      localPos: {x: -0.20845, y: 0.84462, z: 0.37675}
+      localAngles: {x: 2.58634, y: 27.34038, z: 276.0359}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: LunarDagger
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarDagger
+      childName: Canister
+      localPos: {x: -0.32015, y: -0.41436, z: -0.71045}
+      localAngles: {x: 69.99468, y: 171.2562, z: 118.482}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: LunarPortalOnUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayLunarPortalOnUse
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: LunarPrimaryReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdEye
+      childName: Head
+      localPos: {x: -0.24627, y: -0.51878, z: 0.00472}
+      localAngles: {x: 295.8081, y: 276.8138, z: 357.2599}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: LunarSecondaryReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdClaw
+      childName: ArmL
+      localPos: {x: 0.05476, y: 0.09686, z: -0.13485}
+      localAngles: {x: 70.44896, y: 187.1222, z: 268.1298}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: LunarSpecialReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdHeart
+      childName: Base
+      localPos: {x: -1.56151, y: -1.05784, z: -1.39009}
+      localAngles: {x: 289.3361, y: 114.8803, z: 118.3708}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: LunarSun
+    rules:
+    - ruleType: 1
+      displayPrefabName: DisplaySunHead
+      childName: Head
+      localPos: {x: 0, y: 0.5304722, z: -0.01954703}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 4, y: 4, z: 4}
+      limbMask: 1
+  - keyAssetName: LunarTrinket
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBeads
+      childName: HoseD
+      localPos: {x: 0.02064, y: 0.02912, z: 0.06972}
+      localAngles: {x: 326.7259, y: 339.4454, z: 264.0176}
+      localScale: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - keyAssetName: LunarUtilityReplacement
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBirdFoot
+      childName: ThighL
+      localPos: {x: 0.12936, y: 0.25344, z: -0.35398}
+      localAngles: {x: 37.17625, y: 128.7193, z: 293.0611}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: Medkit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMedkit
+      childName: Pelvis
+      localPos: {x: -0.31681, y: 0.32888, z: 0.26612}
+      localAngles: {x: 14.08649, y: 103.2162, z: 215.5879}
+      localScale: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 8
+  - keyAssetName: Meteor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMeteor
+      childName: Base
+      localPos: {x: -2.33861, y: -0.21017, z: 1.38391}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: MinorConstructOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDefenseNucleus
+      childName: Base
+      localPos: {x: -0.89322, y: -1.37771, z: -1.69375}
+      localAngles: {x: 71.28384, y: 162.4125, z: 47.9767}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Missile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncher
+      childName: ShoulderR
+      localPos: {x: 0.32202, y: -0.25429, z: 0.66732}
+      localAngles: {x: 294.3487, y: 75.76222, z: 126.0903}
+      localScale: {x: 0.175, y: 0.175, z: 0.175}
+      limbMask: 0
+  - keyAssetName: MissileVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMissileLauncherVoid
+      childName: ShoulderR
+      localPos: {x: 0.32202, y: -0.25429, z: 0.66732}
+      localAngles: {x: 294.3487, y: 75.76222, z: 126.0903}
+      localScale: {x: 0.175, y: 0.175, z: 0.175}
+      limbMask: 0
+  - keyAssetName: Molotov
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMolotov
+      childName: ThighR
+      localPos: {x: -0.10343, y: 0.21722, z: 0.16335}
+      localAngles: {x: 354.6812, y: 353.3464, z: 273.9728}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: MonstersOnShrineUse
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMonstersOnShrineUse
+      childName: ThighL
+      localPos: {x: -0.24378, y: -0.32628, z: -0.00098}
+      localAngles: {x: 354.3893, y: 250.7821, z: 82.94138}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: MoreMissile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayICBM
+      childName: Canister
+      localPos: {x: 0.02004, y: 1.00628, z: -0.42102}
+      localAngles: {x: 0.5945, y: 87.06705, z: 358.5481}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: MoveSpeedOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGrappleHook
+      childName: Canister
+      localPos: {x: -0.2862, y: -0.2536, z: -0.66892}
+      localAngles: {x: 10.72801, y: 140.0021, z: 13.3231}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: MultiShopCard
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayExecutiveCard
+      childName: Chest
+      localPos: {x: 0, y: 0.2536061, z: 0.7501847}
+      localAngles: {x: 58.08029, y: 180, z: 180}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: Mushroom
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroom
+      childName: ThighL
+      localPos: {x: 0.13519, y: -0.3451, z: 0.01491}
+      localAngles: {x: 348.0168, y: 126.9467, z: 195.1154}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: MushroomVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMushroomVoid
+      childName: ThighL
+      localPos: {x: 0.13519, y: -0.3451, z: 0.01491}
+      localAngles: {x: 348.0168, y: 126.9467, z: 195.1154}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: NearbyDamageBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDiamond
+      childName: Flamethrower
+      localPos: {x: 0.00237, y: 1.77382, z: 0.25278}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: NovaOnHeal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      childName: Head
+      localPos: {x: -0.01794, y: -0.46658, z: 0.12384}
+      localAngles: {x: 66.87532, y: 322.2575, z: 42.76103}
+      localScale: {x: 1.15, y: 1.15, z: 1.15}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayDevilHorns
+      childName: Head
+      localPos: {x: -0.0335, y: -0.46134, z: -0.19821}
+      localAngles: {x: 75.37312, y: 284.4467, z: 358.6506}
+      localScale: {x: -1.15, y: 1.15, z: 1.15}
+      limbMask: 0
+  - keyAssetName: NovaOnLowHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayJellyGuts
+      childName: ThighR
+      localPos: {x: -0.00391, y: 0.14944, z: -0.04695}
+      localAngles: {x: 39.12392, y: 240.2017, z: 308.9646}
+      localScale: {x: 0.35253, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: OutOfCombatArmor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayOddlyShapedOpal
+      childName: Chest
+      localPos: {x: 0.43827, y: -0.14616, z: 0.24996}
+      localAngles: {x: 327.3824, y: 31.73962, z: 8.39356}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: ParentEgg
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayParentEgg
+      childName: Bag
+      localPos: {x: 0.10749, y: -0.18551, z: 0.01438}
+      localAngles: {x: 62.57471, y: 102.5347, z: 195.9785}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: Pearl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPearl
+      childName: Suppressor
+      localPos: {x: 0.02903, y: -0.15429, z: 0.38218}
+      localAngles: {x: 13.75084, y: 8.57353, z: 2.93736}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: PermanentDebuffOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScorpion
+      childName: Canister
+      localPos: {x: -0.26964, y: 0.80982, z: -0.35273}
+      localAngles: {x: 71.78437, y: 288.9563, z: 356.4105}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: PersonalShield
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldGenerator
+      childName: ThighL
+      localPos: {x: 0.30603, y: -0.30876, z: 0.01338}
+      localAngles: {x: 356.9494, y: 72.90486, z: 2.77209}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
+  - keyAssetName: Phasing
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStealthkit
+      childName: ThighR
+      localPos: {x: -0.6107058, y: 1.081361, z: 0.06525583}
+      localAngles: {x: 57.86838, y: 204.8645, z: 98.60268}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: Plant
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayInterstellarDeskPlant
+      childName: Canister
+      localPos: {x: 0.41104, y: 0.31459, z: -0.50871}
+      localAngles: {x: 319.6504, y: 152.9326, z: 227.6188}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: PrimarySkillShuriken
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShuriken
+      childName: ThighR
+      localPos: {x: 0.15053, y: 0.18998, z: 0.22761}
+      localAngles: {x: 31.0768, y: 188.6857, z: 357.7656}
+      localScale: {x: 0.85, y: 0.85, z: 0.85}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShuriken
+      childName: ThighR
+      localPos: {x: 0.10456, y: 0.06416, z: 0.36757}
+      localAngles: {x: 14.37326, y: 180.8532, z: 343.3904}
+      localScale: {x: 0.85, y: 0.85, z: 0.85}
+      limbMask: 0
+  - keyAssetName: QuestVolatileBattery
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBatteryArray
+      childName: Canister
+      localPos: {x: 0.00358, y: -0.03543, z: -0.93356}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: RandomDamageZone
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRandomDamageZone
+      childName: Canister
+      localPos: {x: -0.00002, y: 0.23058, z: -0.96775}
+      localAngles: {x: 355.0174, y: 355.6241, z: 357.7577}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: RandomEquipmentTrigger
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBottledChaos
+      childName: Pelvis
+      localPos: {x: -0.25584, y: 0.13316, z: -0.44215}
+      localAngles: {x: 11.88925, y: 2.10093, z: 279.0277}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: RandomlyLunar
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDomino
+      childName: Base
+      localPos: {x: -0.01502, y: -0.87431, z: 1.79899}
+      localAngles: {x: 0.13317, y: 316.3243, z: 359.9467}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: Recycle
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRecycler
+      childName: ThighR
+      localPos: {x: 0.17243, y: 0.04004, z: 0.30078}
+      localAngles: {x: 290.9008, y: 43.32265, z: 224.1715}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: RegeneratingScrap
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRegeneratingScrap
+      childName: Pelvis
+      localPos: {x: -0.05271, y: 0.25776, z: -0.22545}
+      localAngles: {x: 5.38426, y: 40.781, z: 222.9457}
+      localScale: {x: 0.45, y: 0.45, z: 0.45}
+      limbMask: 0
+  - keyAssetName: RepeatHeal
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayCorpseflower
+      childName: ThighL
+      localPos: {x: -0.14182, y: -0.34459, z: -0.02791}
+      localAngles: {x: 1.97142, y: 183.4939, z: 173.6476}
+      localScale: {x: 0.45, y: 0.45, z: 0.45}
+      limbMask: 0
+  - keyAssetName: Saw
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySawmerangFollower
+      childName: Base
+      localPos: {x: -0.55031, y: -0.9236, z: -1.68455}
+      localAngles: {x: 11.04673, y: 271.8961, z: 0.17052}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Scanner
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayScanner
+      childName: ShoulderR
+      localPos: {x: 0.33987, y: 0.16151, z: 0.03074}
+      localAngles: {x: 335.0977, y: 26.08591, z: 145.1926}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: SecondarySkillMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDoubleMag
+      childName: Muzzle
+      localPos: {x: -0.06054, y: -1.47178, z: -0.56605}
+      localAngles: {x: 284.6991, y: 7.83355, z: 174.3622}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Seed
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySeed
+      childName: Chest
+      localPos: {x: 0.31256, y: 0.50642, z: -0.09028}
+      localAngles: {x: 319.1334, y: 11.55399, z: 61.55967}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: ShieldOnly
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      childName: Head
+      localPos: {x: -0.17447, y: -0.67456, z: 0.14764}
+      localAngles: {x: 328.8308, y: 56.85319, z: 164.7409}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayShieldBug
+      childName: Head
+      localPos: {x: -0.17447, y: -0.67456, z: -0.14764}
+      localAngles: {x: 354.3675, y: 340.1168, z: 175.6178}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: ShinyPearl
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayShinyPearl
+      childName: Muzzle
+      localPos: {x: 0.00399, y: -0.25648, z: -0.02421}
+      localAngles: {x: 280.695, y: 250.9808, z: 114.3131}
+      localScale: {x: 0.12, y: 0.12, z: 0.12}
+      limbMask: 0
+  - keyAssetName: ShockNearby
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeslaCoil
+      childName: ThighL
+      localPos: {x: 0.39004, y: -0.28266, z: 0.01973}
+      localAngles: {x: 336.0531, y: 149.9622, z: 173.3989}
+      localScale: {x: 0.8, y: 0.8, z: 0.8}
+      limbMask: 0
+  - keyAssetName: SiphonOnLowHealth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySiphonOnLowHealth
+      childName: ThighR
+      localPos: {x: 0.12833, y: 0.3649, z: 0.21187}
+      localAngles: {x: 311.7672, y: 356.305, z: 265.0931}
+      localScale: {x: 0.15, y: 0.15, z: 0.15}
+      limbMask: 0
+  - keyAssetName: SlowOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBauble
+      childName: Bag
+      localPos: {x: -0.03575, y: 0.42649, z: 0.06941}
+      localAngles: {x: 33.05484, y: 324.5981, z: 145.3116}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: SlowOnHitVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBaubleVoid
+      childName: Bag
+      localPos: {x: -0.03575, y: 0.42649, z: 0.06941}
+      localAngles: {x: 33.05484, y: 324.5981, z: 145.3116}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: SprintArmor
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBuckler
+      childName: ArmL
+      localPos: {x: 0.55519, y: 0.07751, z: -0.14556}
+      localAngles: {x: 353.5447, y: 172.0147, z: 27.5159}
+      localScale: {x: 0.35, y: 0.35, z: 0.35}
+      limbMask: 0
+  - keyAssetName: SprintBonus
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySoda
+      childName: ThighR
+      localPos: {x: -0.23781, y: 0.32336, z: 0.16784}
+      localAngles: {x: 5.51575, y: 82.32098, z: 182.2546}
+      localScale: {x: 0.7, y: 0.7, z: 0.7}
+      limbMask: 0
+  - keyAssetName: SprintOutOfCombat
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWhip
+      childName: ThighL
+      localPos: {x: 0.01585, y: 0.32703, z: -0.19807}
+      localAngles: {x: 346.5783, y: 284.8719, z: 158.5099}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: SprintWisp
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayBrokenMask
+      childName: Flamethrower
+      localPos: {x: -0.11323, y: 0.5954, z: -0.18958}
+      localAngles: {x: 314.1237, y: 262.0169, z: 292.4745}
+      localScale: {x: 0.2, y: 0.2, z: 0.2}
+      limbMask: 0
+  - keyAssetName: Squid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySquidTurret
+      childName: CalfL
+      localPos: {x: 0.09838, y: -0.29853, z: 0.01327}
+      localAngles: {x: 81.32067, y: 209.3869, z: 302.6815}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: StickyBomb
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStickyBomb
+      childName: Bag
+      localPos: {x: 0.04389, y: -0.13612, z: 0.21682}
+      localAngles: {x: 15.63732, y: 42.19995, z: 105.7122}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: StrengthenBurn
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGasTank
+      childName: Canister
+      localPos: {x: 0.00837, y: 0.04285, z: -0.93653}
+      localAngles: {x: 0, y: 230, z: 0}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: StunChanceOnHit
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayStunGrenade
+      childName: Pelvis
+      localPos: {x: -0.09368, y: -0.02243, z: 0.46117}
+      localAngles: {x: 51.05947, y: 57.46842, z: 71.95593}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: Syringe
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplaySyringeCluster
+      childName: ArmR
+      localPos: {x: -0.46923, y: -0.10651, z: 0.09518}
+      localAngles: {x: 354.8217, y: 77.76898, z: 101.374}
+      localScale: {x: 0.3, y: 0.3, z: 0.3}
+      limbMask: 0
+  - keyAssetName: Talisman
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTalisman
+      childName: Base
+      localPos: {x: -0.78585, y: -0.87451, z: -1.31075}
+      localAngles: {x: 276.7568, y: 358.3719, z: 91.44665}
+      localScale: {x: 1, y: 1, z: 1}
+      limbMask: 0
+  - keyAssetName: TeamWarCry
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTeamWarCry
+      childName: ThighR
+      localPos: {x: 0.39941, y: -0.07877, z: 0.37251}
+      localAngles: {x: 6.13574, y: 344.3132, z: 279.0616}
+      localScale: {x: 0.1, y: 0.1, z: 0.1}
+      limbMask: 0
+  - keyAssetName: TempestOnKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWaxBird
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: Thorns
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayRazorwireLeft
+      childName: ArmL
+      localPos: {x: 0.40972, y: -0.04265, z: -0.02493}
+      localAngles: {x: 3.28712, y: 76.23245, z: 49.06746}
+      localScale: {x: 0.85641, y: 1.35825, z: 0.5}
+      limbMask: 0
+  - keyAssetName: TitanGoldDuringTP
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGoldHeart
+      childName: Chest
+      localPos: {x: 0.30428, y: 0.33932, z: 0.35537}
+      localAngles: {x: 347.6362, y: 79.43456, z: 313.1241}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Tonic
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayTonic
+      childName: ThighR
+      localPos: {x: 0.13406, y: 0.02462, z: 0.29014}
+      localAngles: {x: 14.51987, y: 184.1504, z: 61.72732}
+      localScale: {x: 0.5, y: 0.5, z: 0.5}
+      limbMask: 0
+  - keyAssetName: Tooth
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayToothNecklaceDecal
+      childName: Chest
+      localPos: {x: 0.00018, y: 0.00378, z: 0.00059}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshLarge
+      childName: Muzzle
+      localPos: {x: 0.00029, y: -0.08162, z: -0.16521}
+      localAngles: {x: 66.65607, y: 194.7943, z: 186.5455}
+      localScale: {x: 3, y: 3, z: 3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      childName: Muzzle
+      localPos: {x: -0.07765, y: -0.07227, z: -0.15942}
+      localAngles: {x: 79.46294, y: 57.9721, z: 39.32109}
+      localScale: {x: 3, y: 3, z: 3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayToothMeshSmall1
+      childName: Muzzle
+      localPos: {x: 0.07191, y: -0.0641, z: -0.16366}
+      localAngles: {x: 279.8041, y: 322.6226, z: 197.146}
+      localScale: {x: 3, y: 3, z: 3}
+      limbMask: 0
+  - keyAssetName: TPHealingNova
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayGlowFlower
+      childName: Head
+      localPos: {x: -0.03591, y: -0.485, z: -0.26454}
+      localAngles: {x: 27.28675, y: 217.1707, z: 328.7591}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: TreasureCache
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKey
+      childName: Pelvis
+      localPos: {x: -0.03682, y: -0.34515, z: 0.30097}
+      localAngles: {x: 36.38429, y: 186.4182, z: 174.5114}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: TreasureCacheVoid
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayKeyVoid
+      childName: Pelvis
+      localPos: {x: -0.03682, y: -0.34515, z: 0.30097}
+      localAngles: {x: 36.38429, y: 186.4182, z: 174.5114}
+      localScale: {x: 1.5, y: 1.5, z: 1.5}
+      limbMask: 0
+  - keyAssetName: UtilitySkillMagazine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      childName: Canister
+      localPos: {x: -0.55535, y: -0.47916, z: -0.23864}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+    - ruleType: 0
+      displayPrefabName: DisplayAfterburnerShoulderRing
+      childName: Chest
+      localPos: {x: -0.70428, y: -0.48224, z: -0.55582}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 1.3, y: 1.3, z: 1.3}
+      limbMask: 0
+  - keyAssetName: VendingMachine
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayVendingMachine
+      childName: Canister
+      localPos: {x: 0.37889, y: 0.48437, z: -0.22845}
+      localAngles: {x: 342.0477, y: 141.9704, z: 16.22883}
+      localScale: {x: 0.75, y: 0.75, z: 0.75}
+      limbMask: 0
+  - keyAssetName: VoidMegaCrabItem
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayMegaCrabItem
+      childName: Head
+      localPos: {x: 0.19039, y: -0.45707, z: 0.02138}
+      localAngles: {x: 37.22741, y: 83.7513, z: 168.1834}
+      localScale: {x: 0.4, y: 0.4, z: 0.4}
+      limbMask: 0
+  - keyAssetName: WarCryOnCombat
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      childName: Chest
+      localPos: {x: 0, y: 0, z: 0}
+      localAngles: {x: 0, y: 0, z: 0}
+      localScale: {x: 0, y: 0, z: 0}
+      limbMask: 0
+  - keyAssetName: WarCryOnMultiKill
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayPauldron
+      childName: ShoulderR
+      localPos: {x: -0.1473, y: -0.0511, z: 0.22189}
+      localAngles: {x: 357.4699, y: 66.26562, z: 111.1385}
+      localScale: {x: 2, y: 2, z: 2}
+      limbMask: 0
+  - keyAssetName: WardOnLevel
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayWarbanner
+      childName: Pelvis
+      localPos: {x: -0.00193, y: 0.24446, z: -0.30437}
+      localAngles: {x: 336.0245, y: 250.7392, z: 132.661}
+      localScale: {x: 0.6, y: 0.6, z: 0.6}
+      limbMask: 0
+  - keyAssetName: DeathProjectile
+    rules:
+    - ruleType: 0
+      displayPrefabName: DisplayDeathProjectile
+      childName: ThighL
+      localPos: {x: -0.08008408, y: 0.513454, z: 0.7428759}
+      localAngles: {x: 359.9454, y: 352.8523, z: 190.9242}
+      localScale: {x: 0.25, y: 0.25, z: 0.25}
+      limbMask: 0
