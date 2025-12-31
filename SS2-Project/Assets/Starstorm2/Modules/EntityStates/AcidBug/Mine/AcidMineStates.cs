@@ -18,13 +18,16 @@ namespace EntityStates.AcidBug.Mine
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (stickOnImpact && stickOnImpact.stuckBody != null)
+            if (NetworkServer.active)
             {
-                outer.SetNextState(new PreDetonate());
-            }
-            else if (fixedAge >= duration)
-            {
-                outer.SetNextState(new WaitForTarget());
+                if (stickOnImpact && stickOnImpact.stuckBody != null)
+                {
+                    outer.SetNextState(new PreDetonate());
+                }
+                else if (fixedAge >= duration)
+                {
+                    outer.SetNextState(new WaitForTarget());
+                }
             }
         }
     }
