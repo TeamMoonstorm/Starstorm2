@@ -32,7 +32,7 @@ namespace EntityStates.Executioner2
         private BullseyeSearch search;
         private float minAngleFilter = 0;
         private float maxAngleFilter = 45;
-        private float attackRange = 28;
+        private float attackRange = 36f;
         private List<HealthComponent> previousTargets;
         private int attackFireCount = 1;
 

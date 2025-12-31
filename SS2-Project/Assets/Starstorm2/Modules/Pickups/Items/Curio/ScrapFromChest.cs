@@ -15,20 +15,20 @@ namespace SS2.Items
 
         public override void Initialize()
         {
-            On.RoR2.PurchaseInteraction.OnInteractionBegin += OnInteractionBegin;
+            PurchaseInteraction.onPurchaseGlobalServer += OnPurchaseGlobalServer;
         }
-        private void OnInteractionBegin(On.RoR2.PurchaseInteraction.orig_OnInteractionBegin orig, PurchaseInteraction self, Interactor activator)
+
+        private void OnPurchaseGlobalServer(CostTypeDef.PayCostContext payCostContext, CostTypeDef.PayCostResults _)
         {
-            orig(self, activator);
             int scrap = SS2Util.GetItemCountForPlayers(SS2Content.Items.ScrapFromChest);
-            if (self.TryGetComponent(out ChestBehavior chest))
+            if (payCostContext.purchasedObject.TryGetComponent<ChestBehavior>(out var chest))
             {
                 if (scrap > 0 && Util.CheckRoll(33f + 11 * (scrap - 1)))
                 {
-                    PickupIndex pickup = chest.dropTable.GenerateDrop(chest.rng);
-                    if (pickup != PickupIndex.none)
+                    UniquePickup pickup = chest.dropTable.GeneratePickup(chest.rng);
+                    if (pickup.pickupIndex != PickupIndex.none)
                     {
-                        PickupIndex scrapIndex = PickupCatalog.FindScrapIndexForItemTier(PickupCatalog.GetPickupDef(pickup).itemTier);
+                        PickupIndex scrapIndex = PickupCatalog.FindScrapIndexForItemTier(PickupCatalog.GetPickupDef(pickup.pickupIndex).itemTier);
                         if (scrapIndex != PickupIndex.none)
                         {
                             //
@@ -39,9 +39,7 @@ namespace SS2.Items
                         }
                     }
                 }
-
             }
         }
-
     }
 }

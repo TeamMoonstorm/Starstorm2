@@ -117,6 +117,9 @@ GameObject:
   - component: {fileID: 7011443451966036845}
   - component: {fileID: 3226873318736457288}
   - component: {fileID: 5330192725601398605}
+  - component: {fileID: -5295680876359458736}
+  - component: {fileID: -2121479208317820031}
+  - component: {fileID: 54833478021676783}
   m_Layer: 0
   m_Name: CloneDroneBody
   m_TagString: Untagged
@@ -186,6 +189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -194,8 +198,9 @@ MonoBehaviour:
   inLava: 0
   baseNameToken: SS2_DRONE_CLONE_NAME
   subtitleNameToken: 
-  bodyFlags: 2
+  bodyFlags: 4194306
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 180
@@ -221,8 +226,6 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
@@ -231,6 +234,7 @@ MonoBehaviour:
   boostAllStatsDisplay: {fileID: 0}
   currentGrowthNectarBuffCount: 0
   maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.45
   spreadBloomCurve:
@@ -241,6 +245,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -249,12 +255,18 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 0}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: eacd5e13b02bac44f8674c3cb9b56c4b, type: 3}
   bodyColor: {r: 0.27450982, g: 0.5372549, b: 0.67058825, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
+  vehicleIdleStateMachine: []
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -285,6 +297,7 @@ MonoBehaviour:
   isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 2213452646676285854}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &138512101043549343
 MonoBehaviour:
@@ -525,9 +538,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 3ad4a49c27376d8458e6c87de63973d9, type: 2}
   skillName: CloneDroneSearch
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &5936025042182263305
 MonoBehaviour:
@@ -542,6 +559,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
 --- !u!114 &2193215588656466112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +609,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 1858726523299253098}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -600,6 +619,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &2677025717790303379
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,6 +667,10 @@ MonoBehaviour:
     _typeName: EntityStates.Drone.DeathState, RoR2, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   idleStateMachine: []
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!114 &3226873318736457288
 MonoBehaviour:
@@ -675,6 +700,90 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
   requireEntitlementIfPlayerControlled: 1
+--- !u!114 &-5295680876359458736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3342532623090860830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 02c9f8ab1b3d1724c9167dc1774ac024, type: 2}
+  skillName: CommandActivate
+  loadoutTitleToken: 
+  hideInCharacterSelect: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  hasExecutedSuccessfully: 0
+--- !u!114 &-2121479208317820031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3342532623090860830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 500096195, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  followPosition: {x: -2, y: 2, z: 0}
+  followFadeFactor: 1
+  commandSkill: {fileID: -5295680876359458736}
+  targetType: 5
+  targetDistance: 80
+  droneState: 0
+--- !u!114 &54833478021676783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3342532623090860830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1231560309, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabbable: 1
+  breakoutState:
+    _typeName: 
+  dodgeState:
+    _typeName: 
+  breakoutStateMachineName: 
+  massOverride: 0
+  damageOverride: -1
+  damageTypeOverride:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
+  collisionToDisable: []
+  renderersToDisable: []
+  behavioursToDisable: []
+  childObjectsToDisable: []
+  pickupDisplaysToDisable: []
+  lightsToDisable: []
+  objectsToDetach: []
+  soundEventsToStop: []
+  soundEventsToPlay: []
+  childSpecialObjectAttributes: []
+  indicatorOffset: {fileID: 0}
+  hullClassification: 0
+  maxDurability: 0
+  orientToFloor: 0
+  durability: 0
+  useSkillHighlightRenderers: 0
+  skillHighlightRenderers: []
+  isVoid: 0
+  bestName: 
+  portraitIcon: {fileID: 0}
 --- !u!1 &3579905535324828154
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: {x: 0, y: 0, z: 900}
+  randomRotation: 0
+  rotationSpeedMin: {x: 0, y: 0, z: 0}
 --- !u!1 &4731133786629225119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1063,9 +1174,10 @@ MonoBehaviour:
   healthComponent: {fileID: 7898208978308485934}
   isBullseye: 1
   isSniperTarget: 1
+  bypassInvulnerable: 0
   damageModifier: 0
-  hurtBoxGroup: {fileID: 0}
-  indexInGroup: -1
+  hurtBoxGroup: {fileID: 7842773353600469425}
+  indexInGroup: 0
 --- !u!1 &8489604195228985561
 GameObject:
   m_ObjectHideFlags: 0
@@ -1170,9 +1282,10 @@ MonoBehaviour:
   m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxes: []
+  hurtBoxes:
+  - {fileID: 6201669927873199209}
   mainHurtBox: {fileID: 6201669927873199209}
-  bullseyeCount: 0
+  bullseyeCount: 1
 --- !u!114 &8288351099140285962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,35 +1321,57 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: 94681843db06b754fbfa9e791963dfd7, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 5048156362134690329}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: d989dc54c824d6040a6885d669f3e164, type: 2}
     defaultShadowCastingMode: 0
     ignoreOverlays: 1
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 6674801514480755418}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 7fc95306e3cf83742b7280f42b048753, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 4881648509222127615}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 9d0d1198351a60d4c97193af565293ef, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 6333524017941096609}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 7fc95306e3cf83742b7280f42b048753, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos: []
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0

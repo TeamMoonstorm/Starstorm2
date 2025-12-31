@@ -30,7 +30,7 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* [Buns](https://github.com/Hevia), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade
+* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), orbeezeater22, swuff★, [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade, Chinchi
 
 With previous and one-off code contributions by...
 * Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
@@ -40,15 +40,20 @@ With Art/Modelling/Animation/Sound/Music contributions by...
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
-* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk (French)
+* Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk & DarSitam (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
 * Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
+
+## Compatibility 
+* [Driver](https://thunderstore.io/package/public_ParticleSystem/Driver/) Adds support for Relic of Termination and has NemMerc's shotgun as a new primary for Driver.
+* [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/) Adds support for SS2's elites as part of its aspects rework.
+* [Videogame Mod 2 Unofficial](https://thunderstore.io/package/Risky_Lives/Videogame_Mod_2_Unofficial/) VGM2U (aka SS2U) is an older pre-SOTV build of SS2. When playing with VGM2 and SS2 installed. VGM2 will auto-disable all duplicate content (except duplicate survivors).
+* [EnemiesReturns](https://thunderstore.io/package/Risky_Sleeps/EnemiesReturns/) No official compat, but adds a new boss fight ported from Starstorm 1.
 
 ## Feedback, Bug Reporting & Known Issues
 
 Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Starstorm2/issues). A list of known & previously reported issues can also be found here. Please include an [Output Log](https://h3vr-modding.github.io/wiki/installing/troubleshooting/log_file.html) and detailed steps to help recreate your error! Feedback about the modded characters pertaining to balance and gameplay can be discussed in our [Discord server](https://discord.com/invite/SgFxwKT7nY).
 
 * Known Issues
-    * Elite events are currently disabled.
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
     * Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update

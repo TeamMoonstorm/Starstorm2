@@ -19,7 +19,7 @@ namespace SS2
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
 
-        public static bool HasFearBuff(this CharacterBody body) // :/
+        public static bool HasFearBuff(this CharacterBody body)
         {
             return body.HasBuff(SS2Content.Buffs.BuffFear) || body.HasBuff(SS2Content.Buffs.BuffFearRed);
         }
@@ -52,7 +52,7 @@ namespace SS2
             {
                 if (playerCharacterMasterController.master)
                 {
-                    int itemCount = playerCharacterMasterController.master.inventory.GetItemCount(itemDef);
+                    int itemCount = playerCharacterMasterController.master.inventory.GetItemCountEffective(itemDef); // TODO: Do we want this to include temp too?
                     count += itemCount;
                 }
             }
@@ -69,7 +69,7 @@ namespace SS2
             {
                 if(member && member.body && member.body.inventory)
                 {
-                    count += member.body.inventory.GetItemCount(itemIndex);
+                    count += member.body.inventory.GetItemCountEffective(itemIndex);  // TODO: Do we want this to include temp too?
                 }
             }
             return count;
@@ -365,7 +365,7 @@ namespace SS2
                 if (!shouldGive) continue;
                 try
                 {
-                        master.inventory.GiveItem(itemDef, itemCount);
+                        master.inventory.GiveItemPermanent(itemDef, itemCount);
                 }
                 catch (Exception e)
                 {

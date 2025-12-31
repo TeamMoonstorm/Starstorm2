@@ -6,6 +6,7 @@ using RoR2.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 namespace SS2.Items
 {
     public sealed class LowQualitySpeakers : SS2Item
@@ -15,17 +16,19 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Radius in which enemies are stunned, in meters.")]
         [FormatToken(token, 0)]
-        public static float baseRadius = 13f;
+        public static float baseRadius = 12f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Additional stun radius per stack.")]
         [FormatToken(token, 1)]
-        public static float radiusPerStack = 7f;
+        public static float radiusPerStack = 6f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for this item to proc on taking damage")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float baseProcChance = 0.1f;
 
-        public static float cooldown = 0.5f;
+        public static float maxProcChance = 1f;
+
+        public static float cooldown = 1f;
         private static GameObject _burstEffect;
 
         public override void Initialize()
@@ -39,10 +42,21 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.LowQualitySpeakers;
 
             private float cooldownStopwatch;
+            private bool destroyProjectilesNextFrame; // projectiles can damage the player, proc LQS, THEN spawn children, which wont get deleted. destroy projectiles next frame instead.
 
             private void FixedUpdate()
             {
-                cooldownStopwatch -= Time.fixedDeltaTime;
+                if (NetworkServer.active)
+                {
+                    if (destroyProjectilesNextFrame)
+                    {
+                        destroyProjectilesNextFrame = false;
+                        CleanseSystem.RemoveNearbyProjectilesServer(body.teamComponent.teamIndex, body.corePosition, baseRadius + stack * (radiusPerStack - 1));
+                    }
+
+                    cooldownStopwatch -= Time.fixedDeltaTime;
+                }
+                
             }
 
             public void OnIncomingDamageServer(DamageInfo damageInfo)
@@ -52,9 +66,9 @@ namespace SS2.Items
                 if (stack <= 0 || cooldownStopwatch > 0) return;
                 cooldownStopwatch = cooldown;
 
-                // 100% chance at 0% health, baseProcChance at 100% health
+                // maxProcChance chance at 0% health, baseProcChance at 100% health
                 // uses health fraction after damage, not before
-                float procChance = Mathf.Lerp(1f, baseProcChance, body.healthComponent.combinedHealthFraction);
+                float procChance = Mathf.Lerp(maxProcChance, baseProcChance, body.healthComponent.combinedHealthFraction);
                 if (Util.CheckRoll(procChance * 100f, body.master))
                 {
                     float radius = baseRadius + stack * (radiusPerStack - 1);
@@ -76,6 +90,9 @@ namespace SS2.Items
                     blastAttack.damageType = DamageType.Stun1s;
                     blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
                     blastAttack.Fire();
+
+                    destroyProjectilesNextFrame = true;
+                    
 
                     EffectManager.SpawnEffect(_burstEffect, new EffectData
                     {

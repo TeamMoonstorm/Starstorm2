@@ -218,7 +218,11 @@ namespace SS2.Items
                         var deathRewards = ((obj.victimBody != null) ? obj.victimBody.GetComponent<DeathRewards>() : null);
                         if (deathRewards)
                         {
-                            PickupDropletController.CreatePickupDroplet(deathRewards.bossDropTable.GenerateDrop(terminationRNG), obj.victim.transform.position, vector);
+                            PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                            {
+                                pickup = deathRewards.bossDropTable.GeneratePickup(terminationRNG),
+                            },
+                            obj.victim.transform.position, vector);
                         }
                         else
                         {
@@ -231,7 +235,11 @@ namespace SS2.Items
                                 }
                             }
                             Util.ShuffleList<PickupIndex>(bossOptions);
-                            PickupDropletController.CreatePickupDroplet(bossOptions[0], obj.victim.transform.position, vector);
+                            PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                            {
+                                pickup = new UniquePickup(bossOptions[0]),
+                            },
+                            obj.victim.transform.position, vector);
                         }
 
                     }

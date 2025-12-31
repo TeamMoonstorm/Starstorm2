@@ -6,6 +6,8 @@ using RoR2.Items;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RoR2.Skills;
+using UnityEngine.AddressableAssets;
 namespace SS2.Items
 {
     public sealed class DroidHead : SS2Item
@@ -30,6 +32,31 @@ namespace SS2.Items
         public override void Initialize()
         {
             _droidDroneMaster = AssetCollection.FindAsset<GameObject>("DroidDroneMaster");
+
+            //Assignment of the FireTurret/Drone1 Command
+            var/*stinky var*/ skillFamily = SS2Assets.LoadAsset<SkillFamily>("sfDroidDroneCommand", SS2Bundle.Items);
+            skillFamily.variants = new SkillFamily.Variant[1];
+            var/*stinky var*/ skillDef = Addressables.LoadAssetAsync<SkillDef>("RoR2/DLC3/Drone Tech/CommandFireTurretSkillDef.asset").WaitForCompletion();
+            skillFamily.variants[0] = new SkillFamily.Variant
+            {
+                skillDef = skillDef,
+                unlockableDef = null,
+                viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null)
+            };
+        }
+
+        public override void ModifyContentPack(ContentPack contentPack)
+        {
+            //Future proof in case this code is forgotten and not removed when the DroneDef is added to the AssetCollection after MSU supports it
+            if (AssetCollection.FindAsset<DroneDef>("ddDroidDrone") == null)
+            {
+                DroneDef droneDef = SS2Assets.LoadAsset<DroneDef>("ddDroidDrone", SS2Bundle.Items);
+                if (droneDef)
+                {
+                    contentPack.droneDefs.AddSingle(droneDef);
+                }
+            }
+            base.ModifyContentPack(contentPack);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnKilledOtherServerReceiver

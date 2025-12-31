@@ -26,10 +26,14 @@ namespace SS2.Items
             int eliteItems = SS2Util.GetItemCountForPlayers(SS2Content.Items.ItemOnEliteKill);
             if (eliteItems > 0 && damageReport.victimIsElite && Util.CheckRoll(6f + 2f * (eliteItems - 1))) // realizing i have no idea how to use run seeds/rng correctly
             {
-                PickupIndex pickupIndex = dropTable.GenerateDrop(dropRng);
-                if (pickupIndex != PickupIndex.none)
+                UniquePickup pickup = dropTable.GeneratePickup(dropRng);
+                if (pickup.pickupIndex != PickupIndex.none)
                 {
-                    PickupDropletController.CreatePickupDroplet(pickupIndex, damageReport.victimBody.corePosition, Vector3.up * 20f);
+                    PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                    {
+                        pickup = pickup,
+                    },
+                    damageReport.victimBody.corePosition, Vector3.up * 20f);
                 }
             }
         }

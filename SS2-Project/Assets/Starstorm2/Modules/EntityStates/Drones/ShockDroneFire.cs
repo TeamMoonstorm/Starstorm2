@@ -28,8 +28,7 @@ namespace EntityStates.ShockDrone
         {
             Vector3 firepos = childLocator.FindChild(muzzleString).position;
             bool crit = RollCrit();
-            DamageTypeCombo damageType = DamageType.Shock5s;
-            damageType.damageSource = DamageSource.Primary;
+            DamageTypeCombo damageType = DamageType.Shock5s | DamageTypeCombo.GenericPrimary | DamageTypeExtended.Electrical;
             BlastAttack blast = new BlastAttack()
             {
                 radius = radius,

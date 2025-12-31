@@ -21,11 +21,13 @@ namespace SS2.Equipments
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
-        private static float projectileDamageCoefficient = .6f;
-        private static float onHitRadius = 2f;
+
+        // TODO: Make configurable
+        private static float projectileDamageCoefficient = .3f;
+        private static float onHitRadius = 1.2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.3f;
-        private static float poisonDuration = 4f;
+        private static float poisonDamageCoefficient = 0.15f;
+        private static float poisonDuration = 3f;
 
         public override void Initialize()
         {
@@ -119,12 +121,18 @@ namespace SS2.Equipments
         private void EvaluateDotStacksForType(MonoMod.Cil.ILContext il)
         {
             ILCursor c = new ILCursor(il);
-            bool b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchLdfld<DotController.PendingDamage>(nameof(DotController.PendingDamage.totalDamage)),
-                x => x.MatchStfld<DamageInfo>(nameof(DamageInfo.damage)));
+
+            // Locate the following line and modify the damage
+            // damageInfo.damage = list[i].totalDamage
+            // We allow for gaps between the ldfld (totalDamage) and stfld (damageInfo)
+            // in case someone has injected their own instructions. Exactly like we're doing!
+            bool b = c.TryGotoNext(
+                x => x.MatchLdfld<DotController.PendingDamage>(nameof(DotController.PendingDamage.totalDamage))
+            ) && c.TryGotoNext(
+                x => x.MatchStfld<DamageInfo>(nameof(DamageInfo.damage))
+            );
             if (b)
             {
-                c.Index++;
                 c.Emit(OpCodes.Ldarg_0); // dotcontroller
                 c.Emit(OpCodes.Ldarg_1); // dotindex
                 c.EmitDelegate<Func<float, DotController, DotController.DotIndex, float>>((dmg, dc, dot) =>

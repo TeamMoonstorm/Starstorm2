@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using System.Collections.Generic;
@@ -51,11 +52,32 @@ namespace SS2.Interactables
                     field.SetValue(newComponent, value);
                 }
             }
+
+            //Temporary assignment of the Generic Command (Equipment Drone's Ram) until a proper Command is made
+            var/*stinky var*/ skillFamily = SS2Assets.LoadAsset<SkillFamily>("sfCloneDroneCommand", SS2Bundle.Interactables);
+            skillFamily.variants = new SkillFamily.Variant[1];
+            var/*stinky var*/ skillDef = Addressables.LoadAssetAsync<SkillDef>("RoR2/DLC3/Drone Tech/CommandGeneric.asset").WaitForCompletion();
+            skillFamily.variants[0] = new SkillFamily.Variant
+            {
+                skillDef = skillDef,
+                unlockableDef = null,
+                viewableNode = new ViewablesCatalog.Node(skillDef.skillNameToken, false, null)
+            };
         }
 
         public override void ModifyContentPack(ContentPack contentPack)
         {
             contentPack.networkedObjectPrefabs.AddSingle(clonedPickupPrefab);
+
+            //Future proof in case this code is forgotten and not removed when the DroneDef is added to the AssetCollection after MSU supports it
+            if (AssetCollection.FindAsset<DroneDef>("ddCloneDrone") == null)
+            {
+                DroneDef droneDef = SS2Assets.LoadAsset<DroneDef>("ddCloneDrone", SS2Bundle.Interactables);
+                if (droneDef)
+                {
+                    contentPack.droneDefs.AddSingle(droneDef);
+                }
+            }
             base.ModifyContentPack(contentPack);
         }
 

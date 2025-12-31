@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MSU;
 using R2API;
+using R2API.Utils;
 using RoR2;
 using RoR2.ContentManagement;
 using RoR2.UI;
@@ -146,43 +147,47 @@ namespace SS2.Monsters
 		{
 			ILCursor c = new(il);
 
-			//int displayProviderVarIndex = -1;
-			//if (!c.TryGotoNext(
-			//		x => x.MatchCallOrCallvirt(AccessTools.PropertyGetter(typeof(PingIndicator), nameof(PingIndicator.pingTarget))),
-			//		x => x.MatchCallOrCallvirt<GameObject>(nameof(GameObject.GetComponentInParent)))
-			//	|| !c.TryGotoNext(
-			//		x => x.MatchStloc(out displayProviderVarIndex)))
-			//{
-			//	SS2Log.Fatal($"Failed IL Hook {il.Method.Name} #1");
-			//	return;
-			//}
-
-			// Locate the code section that does
-			// if (displayNameProvider != null)
-			// {
-			//     DoStuff();
-			// }
-			ILLabel afterDisplayNameProviderNullCheck = null;
+			// Locate the variable index for displayNameProvider when it's stored for the first time
+			// displayNameProvider = pingTarget.GetComponentInParent<IDisplayNameProvider>()
+			int displayProviderVarIndex = -1;
 			if (!c.TryGotoNext(
-					MoveType.After,
-					x => x.MatchStloc(2),
-					x => x.MatchLdloc(0),
-					x => x.MatchBrfalse(out afterDisplayNameProviderNullCheck)))
+					x => x.MatchCallOrCallvirt(typeof(PingIndicator).GetPropertyGetter(nameof(PingIndicator.pingTarget))),
+					x => x.MatchCallOrCallvirt<GameObject>(nameof(GameObject.GetComponentInParent)))
+				|| !c.TryGotoNext(
+					x => x.MatchStloc(out displayProviderVarIndex)))
 			{
-				SS2Log.Fatal($"Failed IL Hook {il.Method.Name}");
+				SS2Log.Fatal($"Failed IL Hook {il.Method.Name} #1");
 				return;
 			}
 
-			// And turn it into
-			// if (displayNameProvider != null)
-			// {
-			//     if (pingTarget.TryGetComponent<MimicController>(out var controller))
-			//     {
-			//         DoOurStuff();
-			//     }
-			//     else DoStuff();
-			// }
-			c.Emit(OpCodes.Ldarg_0);
+            // Locate the code section that does
+            // if (displayNameProvider != null)
+            // {
+            //     DoStuff();
+            // }
+
+            ILLabel afterDisplayNameProviderNullCheck = null;
+			if (!c.TryGotoNext(
+					MoveType.After,
+					x => x.MatchLdloc(displayProviderVarIndex),
+					x => x.MatchBrfalse(out afterDisplayNameProviderNullCheck)))
+			{
+				SS2Log.Fatal($"Failed IL Hook {il.Method.Name} #2");
+				return;
+			}
+
+            // And turn it into
+            // if (displayNameProvider != null)
+            // {
+            //     if (pingTarget.TryGetComponent<MimicController>(out var controller))
+            //     {
+            //         DoOurStuff();
+            //     }
+            //     else DoStuff();
+            // }
+
+
+            c.Emit(OpCodes.Ldarg_0);
 			c.EmitDelegate<Func<PingIndicator, bool>>(self =>
 			{
 				if (self.pingTarget.TryGetComponent<MimicPingCorrecter>(out var controller))
@@ -205,6 +210,14 @@ namespace SS2.Monsters
 		}
 
 
+		// Helper method to prevent mimic from stealing items we dont want AI having
+		private bool CheckItemTags(ItemDef item)
+		{
+			return item.ContainsTag(ItemTag.AIBlacklist) || item.ContainsTag(ItemTag.BrotherBlacklist) || item.ContainsTag(ItemTag.CannotSteal);
+
+        }
+
+
 		//How the mimic steals items, using a custom damage type
 		private void ServerDamageStealItem(DamageReport obj)
 		{
@@ -219,21 +232,24 @@ namespace SS2.Monsters
 						Util.ShuffleList(itemList);
 						for(int i = 0; i < itemList.Count; ++i)
                         {
-							var def = ItemCatalog.GetItemDef(itemList[i]);
+							var itemToStealDef = ItemCatalog.GetItemDef(itemList[i]);
 							
-							if(def.tier == ItemTier.NoTier) { continue; }
+							if (itemToStealDef.tier == ItemTier.NoTier || CheckItemTags(itemToStealDef)) 
+							{ 
+								continue; 
+							}
 
 							var pdef = PickupCatalog.GetPickupDef(PickupCatalog.FindPickupIndex(itemList[i]));
 
-							obj.attackerBody.inventory.GiveItem(def);
-							obj.victimBody.inventory.RemoveItem(def);
-							mim.AddItem(def.itemIndex);
+							obj.attackerBody.inventory.GiveItemPermanent(itemToStealDef);
+							obj.victimBody.inventory.RemoveItemPermanent(itemToStealDef);
+							mim.AddItem(itemToStealDef.itemIndex);
 
 							EffectData effectData = new EffectData
 							{
 								origin = obj.victimBody.corePosition,
 								genericFloat = 1.5f,
-								genericUInt = (uint)(def.itemIndex + 1)
+								genericUInt = (uint)(itemToStealDef.itemIndex + 1)
 							};
 							effectData.SetNetworkedObjectReference(obj.attacker);
 							EffectManager.SpawnEffect(itemOrb, effectData, true);
