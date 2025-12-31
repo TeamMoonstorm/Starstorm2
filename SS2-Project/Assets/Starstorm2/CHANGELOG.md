@@ -2,6 +2,7 @@
 ### 0.6.30
 * Items
     * Added additional null checks to Galvanic Core to catch a bug where attacker inventories was null
+    * Added additional null checks to Primal Birthright to catch a bug where we didnt add required components to the stages teleporter variant
     * Mimic should no longer spawn if playing with SS2 expansion disabled
 * Beta
     * Additional null checks on Poision Elites (AffixPurple), Night Time (Bandit alt primary), Dormant Fungus (item), and Poisonous Gland (item) to catch reported issues
