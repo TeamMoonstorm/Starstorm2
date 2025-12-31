@@ -35,6 +35,7 @@ namespace EntityStates.Pyro
         public static float radius;
         public static string muzzleString;
         public static string smokeMuzzleEffectString;
+        public static string fireMuzzleEffectString;
 
         public static GameObject flameEffectPrefab;
         public static GameObject projectilePrefab;
@@ -46,6 +47,19 @@ namespace EntityStates.Pyro
         private ParticleSystem flames;
 
         private ScaleParticleSystemDuration smokeMuzzleEffect;
+
+        private void SetFireEffectActive(bool active)
+        {
+            if (childLocator)
+            {
+                Transform transform = this.childLocator.FindChild(fireMuzzleEffectString);
+                if (!transform)
+                {
+                    return;
+                }
+                transform.gameObject.SetActive(active);
+            }
+        }
 
         public override void OnEnter()
         {
@@ -97,6 +111,7 @@ namespace EntityStates.Pyro
                 // silly visual flamethrower for sake of making it look fuller
                 flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
                 Util.PlaySound("Play_pyro_primary_loop", gameObject);
+                SetFireEffectActive(true);
                 Fire(muzzleString);
             }
 
@@ -127,6 +142,7 @@ namespace EntityStates.Pyro
             Util.PlaySound("Stop_pryo_primary_loop", gameObject); //
             Util.PlaySound("Play_pyro_primary_end", gameObject);
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
+            SetFireEffectActive(false);
             if (flamethrowerTransform)
                 Destroy(flamethrowerTransform.gameObject);
         }
