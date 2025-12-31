@@ -1,6 +1,9 @@
 **Warning: content spoilers below!**
 ### 0.6.31
-
+* General
+    * Mul-T GM skins are fixed too! All Vanilla skins are back!
+* Beta
+    * Fixed a missing tag in Pyro's passive description
 
 ### 0.6.30
 * General

@@ -56,4 +56,3 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 * Known Issues
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
-    * Grandmastery Skins for Vanilla survivors are currently broken due to changes to the vanilla game from Memop that broke how we load content for vanilla survivors. Will be fixed in a later update
