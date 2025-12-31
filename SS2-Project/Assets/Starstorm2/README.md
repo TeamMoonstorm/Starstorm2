@@ -56,3 +56,4 @@ Bugs can be reported at our [GitHub page](https://github.com/TeamMoonstorm/Stars
 
 * Known Issues
     * Artifact codes are not placed in world, and can instead be found on the wiki. (For now)
+    * Pyro (beta config survivor) has a known bug that causes infinite flight with utility
