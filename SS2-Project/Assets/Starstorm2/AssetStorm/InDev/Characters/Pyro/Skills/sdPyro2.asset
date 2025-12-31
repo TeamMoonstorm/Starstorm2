@@ -17,26 +17,34 @@ MonoBehaviour:
   skillDescriptionToken: SS2_PYRO_SECONDARY_DESC
   keywordTokens:
   - KEYWORD_IGNITE
-  icon: {fileID: 21300000, guid: 062b88e123bc060418bd339f2b83e7d0, type: 3}
+  icon: {fileID: 21300000, guid: 58ad6bd601bb4d24e9ddf5405345baf2, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Pyro.SuppressiveFire, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   interruptPriority: 1
-  baseRechargeInterval: 0
+  baseRechargeInterval: 1
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
-  stockToConsume: 0
+  stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 1
   isCombatSkill: 1
-  mustKeyPress: 0
+  mustKeyPress: 1
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
   heatValue: 1.5
   heatConsumed: 0
   canCastIfLowHeat: 0

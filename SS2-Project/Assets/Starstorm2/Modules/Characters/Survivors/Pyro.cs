@@ -7,20 +7,26 @@ using R2API;
 using RoR2.ContentManagement;
 using static R2API.DamageAPI;
 using RoR2.Projectile;
+using UnityEngine.Networking;
 
 namespace SS2.Survivors
 {
-    public sealed class Pyro : SS2Survivor
+    public sealed class Pyro : SS2Survivor, IOnIncomingDamageOtherServerReciever, IOnIncomingDamageServerReceiver
     {
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acPyro", SS2Bundle.Indev);
         public static ModdedDamageType FlamethrowerDamageType { get; private set; }
         public static ModdedDamageType FireballDamageType { get; private set; }
         public static ModdedDamageType FireballImpactDamageType { get; private set; }
 
+        public static GameObject _pyroBody;
         public static GameObject _hotFireVFX;
         public static GameObject _fireballExplosionVFX;
+        public static HeatSkillDef _jetpackOverrideDef;
         public static BuffDef _bdPyroManiac;
         public static BuffDef _bdPyroJet;
+        public static BuffDef _bdPyroJetHiddenBoost;
+
+        private BodyIndex pyroIndex;
 
         public override void Initialize()
         {
@@ -29,25 +35,79 @@ namespace SS2.Survivors
             FlamethrowerDamageType = ReserveDamageType();
             FireballDamageType = ReserveDamageType();
 
+            _pyroBody = AssetCollection.FindAsset<GameObject>("PyroBody");
+
             _hotFireVFX = AssetCollection.FindAsset<GameObject>("PyroHotFireVFX");
             _fireballExplosionVFX = AssetCollection.FindAsset<GameObject>("PyroFireballExplosionVFX");
             _bdPyroManiac = AssetCollection.FindAsset<BuffDef>("bdPyroManiac");
             _bdPyroJet = AssetCollection.FindAsset<BuffDef>("bdPyroJet");
+            _bdPyroJetHiddenBoost = AssetCollection.FindAsset<BuffDef>("bdPyroJetHidden");
+            _jetpackOverrideDef = AssetCollection.FindAsset<HeatSkillDef>("sdPyro3a");
 
-            On.RoR2.Projectile.ProjectileSingleTargetImpact.OnProjectileImpact += PSTI_OPI;
-
-            //GlobalEventManager.onServerDamageDealt += PyroDamageChecks;
-            On.RoR2.HealthComponent.TakeDamage += HealthComponent_TakeDamage;
-            //On.RoR2.DotController.OnDotStackAddedServer += DotController_OnDotStackAddedServer;
+            On.RoR2.DotController.InflictDot_refInflictDotInfo += DotController_InflictDot_refInflictDotInfo;
+            BodyCatalog.availability.onAvailable += OnBodyCatalogAvailable;
         }
 
+        private void OnBodyCatalogAvailable()
+        {
+            pyroIndex = BodyCatalog.FindBodyIndex(_pyroBody);
+        }
+
+        private void DotController_InflictDot_refInflictDotInfo(On.RoR2.DotController.orig_InflictDot_refInflictDotInfo orig, ref InflictDotInfo inflictDotInfo)
+        {
+            if (inflictDotInfo.attackerObject != null && inflictDotInfo.attackerObject.TryGetComponent(out CharacterBody body) && body.bodyIndex == pyroIndex && body.TryGetComponent(out PyroController pc) && pc.heat >= 70f)
+            {
+                if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
+                {
+                    inflictDotInfo.duration *= 2f;
+                }
+            }
+
+            if (inflictDotInfo.victimObject != null && inflictDotInfo.victimObject.TryGetComponent(out CharacterBody vbody) && vbody.bodyIndex == pyroIndex)
+            {
+                if (inflictDotInfo.dotIndex == DotController.DotIndex.Burn || inflictDotInfo.dotIndex == DotController.DotIndex.PercentBurn || inflictDotInfo.dotIndex == DotController.DotIndex.StrongerBurn)
+                {
+                    if (vbody.HasBuff(RoR2Content.Buffs.OnFire) || vbody.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                    {
+                        vbody.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
+                        vbody.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
+                    }
+                    return;
+                }
+            }
+
+            orig(ref inflictDotInfo);
+        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
             return false;
         }
 
-        private void HealthComponent_TakeDamage(On.RoR2.HealthComponent.orig_TakeDamage orig, HealthComponent self, DamageInfo damageInfo)
+        public void ModifyPrefab()
+        {
+            var cb = CharacterPrefab.GetComponent<CharacterBody>();
+            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
+        }
+
+        public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
+        {
+            if (victimHealthComponent.body.bodyIndex == pyroIndex)
+            {
+                // give 5 heat and reduce damage from incoming fire
+                if (damageInfo.damageType.damageType == DamageType.IgniteOnHit || damageInfo.damageType.damageType == DamageType.PercentIgniteOnHit || damageInfo.damageType.damageTypeExtended == DamageTypeExtended.FireNoIgnite)
+                {
+                    // SS2Log.Info("Pyro.HealthComponent_TakeDamage : Adding Heat & reducing damage to Pyro");
+                    damageInfo.damage *= 0.75f;
+                    if (victimHealthComponent.body.TryGetComponent(out PyroController pyro))
+                    {
+                        pyro.AddHeat(5f);
+                    }
+                }
+            }
+        }
+
+        public void OnIncomingDamageServer(DamageInfo damageInfo)
         {
             if (damageInfo.HasModdedDamageType(FlamethrowerDamageType))
             {
@@ -55,95 +115,26 @@ namespace SS2.Survivors
                 if (attackerBody)
                 {
                     PyroController pc = attackerBody.GetComponent<PyroController>();
-                    if (pc == null)
-                        return;
-
-                    float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
-
-                    if (distance > 16f)
+                    if (pc != null)
                     {
-                        //Debug.Log("pre damage: " + damageInfo.damage);
-                        damageInfo.damage *= 1.5f;
-                        //Debug.Log("post damage: " + damageInfo.damage);
-                        damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
-                        EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
-                        if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
-                            damageInfo.damageType = DamageType.IgniteOnHit;
-                    }
-                }
-            }
+                        float distance = Vector3.Distance(damageInfo.position, attackerBody.corePosition);
 
-            // ofmg kill urp ast self
-            if (self.body.baseNameToken == "SS2_PYRO_NAME")
-            {
-                //needs redone
-                if (self.body.HasBuff(RoR2Content.Buffs.OnFire) || self.body.HasBuff(DLC1Content.Buffs.StrongerBurn))
-                {
-                    self.body.SetBuffCount(RoR2Content.Buffs.OnFire.buffIndex, 0);
-                    self.body.SetBuffCount(DLC1Content.Buffs.StrongerBurn.buffIndex, 0);
-                }
-            }
-
-            orig(self, damageInfo);
-        }
-
-        private void PSTI_OPI(On.RoR2.Projectile.ProjectileSingleTargetImpact.orig_OnProjectileImpact orig, ProjectileSingleTargetImpact self, ProjectileImpactInfo impactInfo)
-        {
-            //FUCK
-            if (self.projectileController.gameObject.name.Contains("PyroFireball"))
-            {
-                ProjectileExplosion pe = self.projectileController.gameObject.GetComponent<ProjectileExplosion>();
-                if (pe)
-                {
-                    float burnCount = 0;
-                    Collider collider = impactInfo.collider;
-                    if (collider)
-                    {
-                        HurtBox component = collider.GetComponent<HurtBox>();
+                        if (distance < 6f)
                         {
-                            if (component && component.hurtBoxGroup)
-                            {
-                                HealthComponent healthComponent = component.healthComponent;
-                                if (healthComponent)
-                                {
-                                    CharacterBody body = healthComponent.body;
-
-                                    if (body)
-                                    {
-                                        burnCount += body.GetBuffCount(RoR2Content.Buffs.OnFire);
-                                        burnCount += body.GetBuffCount(DLC1Content.Buffs.StrongerBurn);
-                                        burnCount += 1.5f; //we do a little trolling
-                                    }
-
-                                    pe.blastRadius += burnCount;
-                                    pe.blastDamageCoefficient += burnCount;
-                                }
-                            }
-                            else
-                                pe.blastRadius /= 2f;
+                            damageInfo.damage *= 1.5f;
+                            damageInfo.force *= 3f;
+                            damageInfo.damageColorIndex = DamageColorIndex.WeakPoint;
+                            EffectManager.SimpleEffect(_hotFireVFX, damageInfo.position, Quaternion.identity, true);
+                            if (Util.CheckRoll(75f, attackerBody.master) && pc.heat >= 35f)
+                                damageInfo.damageType.damageType = DamageType.IgniteOnHit;
+                        }
+                        else if (Util.CheckRoll(50f, attackerBody.master) && pc.heat >= 70f)
+                        {
+                            damageInfo.damageType.damageType = DamageType.IgniteOnHit;
                         }
                     }
-
-                    pe.Detonate();
-
-                    EffectData effectData = new EffectData()
-                    {
-                        scale = pe.blastRadius,
-                        origin = impactInfo.estimatedPointOfImpact,
-                        rotation = Quaternion.identity
-                    };
-                    EffectManager.SpawnEffect(_fireballExplosionVFX, effectData, true);
                 }
             }
-
-            orig(self, impactInfo);
-        }
-
-        public void ModifyPrefab()
-        {
-            var cb = CharacterPrefab.GetComponent<CharacterBody>();
-            cb.preferredPodPrefab = Resources.Load<GameObject>("Prefabs/NetworkedObjects/SurvivorPod");
-            cb._defaultCrosshairPrefab = Resources.Load<GameObject>("Prefabs/Crosshair/StandardCrosshair");
         }
 
         public sealed class PyromaniacBuffBehavior : BaseBuffBehaviour, IBodyStatArgModifier
@@ -155,8 +146,8 @@ namespace SS2.Survivors
             {
                 if (hasAnyStacks)
                 {
-                    args.armorAdd += Math.Max(3f * buffCount, 30f);
-                    args.regenMultAdd += Math.Max(0.2f * buffCount, 2f);
+                    args.armorAdd += 4f * characterBody.GetBuffCount(GetBuffDef());
+                    args.regenMultAdd += 0.2f * characterBody.GetBuffCount(GetBuffDef());
                 }
             }
         }
@@ -166,14 +157,92 @@ namespace SS2.Survivors
             [BuffDefAssociation]
             private static BuffDef GetBuffDef() => _bdPyroJet;
 
-            public void FixedUpdate()
+            private bool isOverridingSkill;
+            private HeatSkillDef overrideSkill = _jetpackOverrideDef;
+            private SkillLocator skillLocator;
+            private Rigidbody rb;
+            private float maxFallSpeed = 5f;
+
+            private ParticleSystem hoverL;
+            private ParticleSystem hoverR;
+            private bool hoverActive;
+
+            public void OnStart()
             {
-                if (hasAnyStacks)
+                skillLocator = characterBody.skillLocator;
+                rb = characterBody.rigidbody;
+
+                if (characterBody != null && characterBody.modelLocator.modelTransform != null)
                 {
-                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * 0.2f;
+                    GameObject charModel = characterBody.modelLocator.modelTransform.gameObject;
+                    if (charModel != null && charModel.TryGetComponent(out ChildLocator cl))
+                    {
+                        cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                        {
+                            hoverL = left;
+                        }
+                        cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
+                        {
+                            hoverR = right;
+                        }
+                    }
                 }
             }
 
+            public void FixedUpdate()
+            {
+                if (skillLocator == null)
+                {
+                    skillLocator = characterBody.skillLocator;
+                }
+
+                if (hasAnyStacks && !isOverridingSkill)
+                {
+                    isOverridingSkill = true;
+
+                    skillLocator.utility.SetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+
+                if (!hasAnyStacks && isOverridingSkill)
+                {
+                    isOverridingSkill = false;
+
+                    skillLocator.utility.UnsetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+
+                if (characterBody.characterMotor.isGrounded && isOverridingSkill)
+                {
+                    // clients dont have authority for this normally
+                    // to-do: network. this entire thing should be a state, probably
+                    characterBody.SetBuffCount(buffIndex, 0);
+
+                    ToggleHover(false);
+
+                    isOverridingSkill = false;
+
+                    skillLocator.utility.UnsetSkillOverride(this, overrideSkill, GenericSkill.SkillOverridePriority.Contextual);
+                }
+            }
+
+            public void ToggleHover(bool active)
+            {
+                if (hoverL != null && hoverR != null)
+                {
+                    hoverActive = active;
+
+                    if (hoverActive)
+                    {
+                        hoverL.Play();
+                        hoverR.Play();
+                    }
+
+                    if (!hoverActive)
+                    {
+                        hoverL.Stop();
+                        hoverR.Stop();
+                    }
+                }
+            }
         }
     }
 }
