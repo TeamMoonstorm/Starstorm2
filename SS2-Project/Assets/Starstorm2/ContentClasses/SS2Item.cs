@@ -16,7 +16,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IItemContentPiece"/>
     /// </summary>
-    public abstract class SS2Item : IItemContentPiece, IContentPackModifier
+    public abstract class SS2Item : IItemContentPiece, IContentPackModifier, IAsyncContentInitializer
     {
         public ItemAssetCollection AssetCollection { get; private set; }
         public NullableRef<List<GameObject>> ItemDisplayPrefabs { get; protected set; } = new List<GameObject>();
@@ -28,6 +28,18 @@ namespace SS2
         public abstract SS2AssetRequest AssetRequest { get; }
 
         public abstract void Initialize();
+
+        public virtual IEnumerator InitializeAsync()
+        {
+            if(AssetCollection && AssetCollection.itemDisplayAddressedDictionary.TryGetValue(out var idad))
+            {
+                var subroutine = idad.AddEntries();
+                while(subroutine.MoveNext())
+                {
+                    yield return null;
+                }
+            }
+        }
 
         public virtual bool IsAvailable(ContentPack conentPack)
         {
