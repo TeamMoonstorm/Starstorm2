@@ -14,9 +14,10 @@ namespace SS2
         [SystemInitializer]
         private static void Init()
         {
-            On.RoR2.UI.ChatBox.Start += ChatBox_Start;
-            On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
-            On.RoR2.Chat.UserChatMessage.ConstructChatString += UserChatMessage_ConstructChatString;
+            // TODO: shix this fit
+            //On.RoR2.UI.ChatBox.Start += ChatBox_Start;
+            //On.RoR2.UI.HGTextMeshProUGUI.Awake += HGTextMeshProUGUI_Awake;
+            //On.RoR2.Chat.UserChatMessage.ConstructChatString += UserChatMessage_ConstructChatString;
         }
 
         // stops vanilla from stopping chat messages from using tmpro rich text
