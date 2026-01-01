@@ -298,7 +298,9 @@ namespace SS2.Components
             {
 				Inventory inventory = master.inventory;
 				inventory.itemAcquisitionOrder.Clear();
-				inventory.effectiveItemStacks.Clear();
+				inventory.permanentItemStacks.Clear();
+				inventory.channeledItemStacks.Clear();
+				inventory.tempItemsStorage.tempItemStacks.Clear(); // ?????????????????????????????????
 				master.inventory.AddItemsFrom(this.currentFriend.permanentItemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
 				for (int i = 0; i < currentFriend.tempItemTimers.Length; i++)
 				{
