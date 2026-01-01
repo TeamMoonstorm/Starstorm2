@@ -39,6 +39,7 @@ namespace SS2.Components
                     attackerObject = attacker,
                     dotIndex = Survivors.Chirr.ConvertDotIndex,
                     duration = buffDuration,
+                    damageMultiplier = 1.0f,
                 };
                 DotController.InflictDot(ref inflictDotInfo);
             }

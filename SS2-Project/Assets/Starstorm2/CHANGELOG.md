@@ -7,7 +7,7 @@
     * Fear's execution threshold on the healthbar should now reflect the correct value (fixed in 0.6.30 but not mentioned)
 	* Ion Manipulators now counts as a skill activation when firing each charge, rather than skill press.
 * Chirr
-	* Friend no longer keeps Chirr's items when unfriended.
+	* Fixed Symbiotic Link not dealing damage
 * Beta
     * Fixed a missing tag in Pyro's passive description
     * Nerfed Pyro's armor add as a stopgap measure for an infinite armor add bug
