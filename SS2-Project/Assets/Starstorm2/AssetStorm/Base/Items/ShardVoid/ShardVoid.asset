@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: ShardVoid
   m_EditorClassIdentifier: 
-  deprecatedTier: 10
+  deprecatedTier: 1000
   _itemTierDef: {fileID: 11400000, guid: a81d594a34038564ca4d5696d6942b5e, type: 2}
   nameToken: SS2_ITEM_SHARDVOID_NAME
   pickupToken: SS2_ITEM_SHARDVOID_PICKUP
@@ -21,6 +21,10 @@ MonoBehaviour:
   unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 7413493175617481359, guid: e1f871158597e3541ad413270a7d519d,
     type: 3}
+  pickupModelReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   pickupIconSprite: {fileID: 21300000, guid: d2fa555cc5259dc469543663e8ef0bb0, type: 3}
   isConsumed: 0
   hidden: 0
