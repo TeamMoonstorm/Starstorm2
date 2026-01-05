@@ -26,6 +26,7 @@ namespace SS2.UI
             var pickupIndex = pedestalBehavior.GetPickup().pickupIndex;
             if (pickupIndex != PickupIndex.none && pickupIndex != currentPickup)
             {
+                currentPickup = pickupIndex;
                 UpdateCurrentItem();
             }
         }
