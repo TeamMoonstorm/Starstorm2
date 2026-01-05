@@ -115,7 +115,7 @@ namespace SS2
                 if (pickupIndex != PickupIndex.none && inventory.GetItemCountPermanent(itemIndex) > 0 && itemDef != null && itemDef.tier == currentTier)
                 {
                     var scrapIndex = PickupCatalog.FindScrapIndexForItemTier(itemDef.tier);
-                    if (scrapIndex != PickupIndex.none)
+                    if (scrapIndex == pickupIndex)
                     {
                         continue;
                     }
