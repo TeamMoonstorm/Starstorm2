@@ -2,13 +2,19 @@
 ### 0.6.31
 * General
     * Mul-T GM skins are fixed too! All Vanilla skins are back!
+	* Temporarily disabled wavy/shaky text on certain logbooks and item descriptions due to memory leaks
 * Executioner
     * Fear's execution threshold on the healthbar should now reflect the correct value (fixed in 0.6.30 but not mentioned)
+	* Ion Manipulators now counts as a skill activation when firing each charge, rather than skill press.
+* Chirr
+	* Friends no longer keep Chirr's items when unfriended.
+	* Fixed Symbiotic Link not dealing damage
 * Beta
     * Fixed a missing tag in Pyro's passive description
     * Nerfed Pyro's armor add as a stopgap measure for an infinite armor add bug
     * Pyro does have infinite flight though! Its a bug and will be fixed! Enjoy!
     * To combat infinite flight while a more comprehensive fix is found, Pyro's utility has increased heat consumption from 5->8 and inceased heat cost  5->8
+	* Fixed missing VFX for Archer Bug
 
 ### 0.6.30
 * General
@@ -18,6 +24,8 @@
     * Added additional null checks to Galvanic Core to catch a bug where attacker inventories was null
     * Added additional null checks to Primal Birthright to catch a bug where we didnt add required components to the stages teleporter variant
     * Primal Birthright should now work on Conduit Canyon
+	* Low Quality Speakers now also destroys projectiles
+* Enemies
     * Mimic should no longer spawn if playing with SS2 expansion disabled
 * Beta (enabled via config)
     * Additional null checks on Poision Elites (AffixPurple), Night Time (Bandit alt primary), Dormant Fungus (item), and Poisonous Gland (item) to catch reported issues
