@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c26ef4e3114a64892825359a123b70, type: 3}
+  m_Name: uberSkinHuntressGM
+  m_EditorClassIdentifier: 
+  targetSkinDef: {fileID: 11400000, guid: d24a44003d045f9468da0520ed6562a7, type: 2}
+  baseSkins:
+  - _asset: {fileID: 0}
+    _address: facf17c5a8016854bbd4e6f5940f3fab
+    _useDirectReference: 0
+    _canLoadFromCatalog: 0
+  targetObject:
+    _asset: {fileID: 0}
+    _address: 4dc3cfa1134f23b4f93523b77090ec9f
+    _useDirectReference: 0
+  rendererInfos:
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: BowMesh
+    defaultMaterial: {fileID: 2100000, guid: 083adc33f1451844b917be92fb96ab92, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressMesh
+    defaultMaterial: {fileID: 2100000, guid: 7debd057df711564eb4d001fccc2302c, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressScarfMesh
+    defaultMaterial: {fileID: 2100000, guid: 7debd057df711564eb4d001fccc2302c, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  gameObjectActivations: []
+  meshReplacements:
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: BowMesh
+    mesh: {fileID: 4300000, guid: fa76cf3b3b2217144ab844fb5635279e, type: 2}
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressMesh
+    mesh: {fileID: 4300000, guid: 5dd6275fb3febc84498ac50314bd2270, type: 2}
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressScarfMesh
+    mesh: {fileID: 4300000, guid: f75606f632e64464d8ce599c06c9ce22, type: 2}
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  lightReplacements: []
+  vfxOverrides: []

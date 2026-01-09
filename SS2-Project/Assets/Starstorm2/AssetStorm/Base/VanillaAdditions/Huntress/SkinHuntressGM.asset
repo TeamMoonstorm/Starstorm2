@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74a4b8a0e9a17f6419d0bf9a23a7c118, type: 3}
-  m_Name: SkinHuntressGM
+  m_Script: {fileID: -1255927399, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: skinHuntressGM
   m_EditorClassIdentifier: 
   baseSkins: []
   icon: {fileID: 21300000, guid: ab4d1a99c618790479da25109d318980, type: 3}
@@ -18,40 +18,18 @@ MonoBehaviour:
   unlockableName: 
   unlockableDef: {fileID: 11400000, guid: 7b3e38d2edc9b1447892cd9dc8ad4142, type: 2}
   rootObject: {fileID: 0}
+  skinDefParamsAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  skinDefParams: {fileID: 0}
+  optimizedSkinDefParamsAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  optimizedSkinDefParams: {fileID: 0}
   rendererInfos: []
   gameObjectActivations: []
   meshReplacements: []
   projectileGhostReplacements: []
   minionSkinReplacements: []
-  _bodyAddress: RoR2/Base/Huntress/HuntressBody.prefab
-  _displayAddress: RoR2/Base/Huntress/HuntressDisplay.prefab
-  _baseSkins:
-  - _skinAddress: RoR2/Base/Huntress/skinHuntressDefault.asset
-    _skinDef: {fileID: 0}
-  _rendererInfos:
-  - defaultMaterial: {fileID: 2100000, guid: 083adc33f1451844b917be92fb96ab92, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 1
-    hideOnDeath: 0
-    rendererIndex: 1
-  - defaultMaterial: {fileID: 2100000, guid: 7debd057df711564eb4d001fccc2302c, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
-    rendererIndex: 10
-  - defaultMaterial: {fileID: 2100000, guid: 7debd057df711564eb4d001fccc2302c, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
-    rendererIndex: 11
-  _gameObjectActivations: []
-  _meshReplacements:
-  - mesh: {fileID: 4300000, guid: fa76cf3b3b2217144ab844fb5635279e, type: 2}
-    rendererIndex: 1
-  - mesh: {fileID: 4300000, guid: 5dd6275fb3febc84498ac50314bd2270, type: 2}
-    rendererIndex: 10
-  - mesh: {fileID: 4300000, guid: f75606f632e64464d8ce599c06c9ce22, type: 2}
-    rendererIndex: 11
-  _projectileGhostReplacements: []
-  _minionSkinReplacements: []
-  cachedRendererAmount: 0

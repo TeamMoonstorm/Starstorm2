@@ -15,9 +15,9 @@ namespace EntityStates.Executioner2
         private static float maxDuration = 10f;
         private static float acceleration = 1f;
         private static float walkSpeedCoefficient = 1.5f;
-        private static float verticlalSpeed = 100f;
-        private static float maxVerticalSpeed = 300f;
-        private static float durationForMaxSpeed = 3f;
+        public static float verticlalSpeed = 100f;
+        public static AnimationCurve verticlalCurve;
+        private static float durationForMaxSpeed = 0.5f;
         public static GameObject slamEffect;
         public static GameObject slamEffectMastery;
         public static GameObject impactEffectPrefab;
@@ -148,7 +148,7 @@ namespace EntityStates.Executioner2
         public void HandleMovement()
         {
             float t = Mathf.Clamp01(fixedAge / durationForMaxSpeed);
-            float speed = Mathf.Lerp(verticlalSpeed, maxVerticalSpeed, t);
+            float speed = verticlalCurve.Evaluate(t) * verticlalSpeed;
             characterMotor.rootMotion += dashVector * speed * Time.fixedDeltaTime;
             characterMotor.moveDirection = FUCK ? Vector3.zero : inputBank.moveVector;
             characterMotor.velocity = Vector3.zero;

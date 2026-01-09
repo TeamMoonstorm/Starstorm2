@@ -48,6 +48,8 @@ namespace SS2.Survivors
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR, configDescOverride = "Use Ion Manipulators' alternate camera position by default.")]
         public static bool DefaultAltCameraConfig = false;
 
+        private static float fearExecuteThresholdAdditive = (1f / 0.85f) - 1f;   //0.15f with ExecuteAPI
+
         public static void AddBodyToSuperChargeCollection(string body)
         {
             bodiesThatGiveSuperCharge.Add(body);
@@ -175,62 +177,37 @@ namespace SS2.Survivors
 
         private void FearExecuteThreshold(CharacterBody victimBody, ref float executeFraction)
         {
-            if ((victimBody.HasBuff(SS2Content.Buffs.BuffFear) || victimBody.HasBuff(SS2Content.Buffs.BuffFearRed)) && executeFraction < 0f) 
+            if ((victimBody.HasBuff(SS2Content.Buffs.BuffFear) || victimBody.HasBuff(SS2Content.Buffs.BuffFearRed)) && executeFraction <= fearExecutionThreshold) 
             {
                 executeFraction = fearExecutionThreshold;
+            }
+        }
+
+        private void FearExecuteThresholdAdditive(CharacterBody victimBody, ref float executeFractionAdd)
+        {
+            if (victimBody.HasBuff(SS2Content.Buffs.BuffFear))
+            {
+                executeFractionAdd += fearExecuteThresholdAdditive;
             }
         }
 
         private void SetupFearExecute() //thanks moffein, hope you're doing well ★
         {
         
-            On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
+            // TODO: Confirm if we still need this now that we use executeAPI?
+            //On.RoR2.HealthComponent.GetHealthBarValues += FearExecuteHealthbar;
 
-            //R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
-
-            // TODO: This should be good to remove with new ExecuteAPI
-            //IL.RoR2.HealthComponent.TakeDamageProcess += (il) =>
-            //{
-            //    bool error = true;
-            //    ILCursor c = new ILCursor(il);
-
-            //    if (c.TryGotoNext(x => x.MatchLdloc(74), x => x.MatchLdcR4(0)))
-            //    {
-            //        c.Index++;
-            //        c.Emit(OpCodes.Ldarg_0);//self
-            //        c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-            //        {
-            //            if (self.body.HasFearBuff())
-            //            {
-            //                if (executeFraction < 0f) executeFraction = 0f;
-            //                executeFraction += fearExecutionThreshold;
-            //            }
-            //            return executeFraction;
-            //        });
-
-            //        if (c.TryGotoNext(x => x.MatchLdloc(74)))
-            //        {
-            //            c.Index++;
-            //            c.Emit(OpCodes.Ldarg_0);//self
-            //            c.EmitDelegate<Func<float, HealthComponent, float>>((executeFraction, self) =>
-            //            {
-            //                if (self.body.HasFearBuff())
-            //                {
-            //                    if (executeFraction < 0f) executeFraction = 0f;
-            //                    executeFraction += fearExecutionThreshold;
-            //                }
-            //                return executeFraction;
-            //            });
-            //            error = false;
-            //        }
-            //    }
-
-            //    if (error)
-            //    {
-            //        SS2Log.Fatal("Starstorm 2: Fear Execute IL Hook failed.");
-            //    }
-
-            //};
+            // Thanks Moffein for the code!
+            // Taken from: https://github.com/Moffein/Starstorm2Unofficial/blob/9e3bca7b23277dd942de1198f1bc0b8c55649db6/Starstorm%202/Survivors/Executioner/ExecutionerCore.cs#L632
+            if (SS2Main.SS2UInstalled)
+            {
+                SS2Log.Info("Video Game Mod 2 Detected. Adding Additive execute hook");
+                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThresholdAdditive;
+            }
+            else
+            {
+                R2API.ExecuteAPI.CalculateAdditiveExecuteThreshold += FearExecuteThreshold;
+            }
 
             IL.RoR2.CharacterBody.UpdateAllTemporaryVisualEffects += (il) =>
             {

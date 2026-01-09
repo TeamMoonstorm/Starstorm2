@@ -266,32 +266,30 @@ namespace SS2.Components
             }
             var inventory = body.inventory;
 
-            inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
-            inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
+            inventory.RemoveItemPermanent(RoR2Content.Items.BoostHp, inventory.GetItemCountPermanent(RoR2Content.Items.BoostHp));
+            inventory.RemoveItemPermanent(RoR2Content.Items.BoostDamage, inventory.GetItemCountPermanent(RoR2Content.Items.BoostDamage));
 
             body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 4000);
-            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
-            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
-            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, 4000);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCooldowns, 50);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, 100);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.CeilToInt(extraStages / 5); // Run.stagesPerLoop); was removed in AC update but its 5 anyways, TODO: Make this a static int somewhere instead of magic number
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + extraStages * extraLoops * extraLoops * extraLoops * 2); ///
-            inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops);
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 + 20 * extraLoops); // teehee
-            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
+            inventory.GiveItemPermanent(SS2Content.Items.MaxHealthPerMinute, 3 + extraStages * extraLoops * extraLoops * extraLoops * 2); ///
+            inventory.GiveItemPermanent(SS2Content.Items.DoubleAllStats, extraLoops);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCharacterSize, 15 + 20 * extraLoops); // teehee
+            inventory.GiveItemPermanent(SS2Content.Items.NoSelfDamage); // >:)
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
             // remove level cap
             if (Run.instance.ambientLevel >= Run.ambientLevelCap)
             {
                 int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
-                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+                inventory.GiveItemPermanent(RoR2Content.Items.LevelBonus, extraLevels);
             }
             DeathRewards rewards = body.GetComponent<DeathRewards>();
             if (rewards)
@@ -314,32 +312,30 @@ namespace SS2.Components
             bodyMachine.SetNextState(new EntityStates.AffixEmpyrean.SpawnState());
         }
 
+        // TODO: Do we still need this?
         public void MakeEmpyreanOLDstupidFUCK(CharacterBody body)
         {
             var inventory = body.inventory;
 
-            inventory.RemoveItem(RoR2Content.Items.BoostHp, inventory.GetItemCount(RoR2Content.Items.BoostHp));
-            inventory.RemoveItem(RoR2Content.Items.BoostDamage, inventory.GetItemCount(RoR2Content.Items.BoostDamage));
+            inventory.RemoveItemPermanent(RoR2Content.Items.BoostHp, inventory.GetItemCountPermanent(RoR2Content.Items.BoostHp));
+            inventory.RemoveItemPermanent(RoR2Content.Items.BoostDamage, inventory.GetItemCountPermanent(RoR2Content.Items.BoostDamage));
 
-            inventory.GiveItem(RoR2Content.Items.BoostHp, 750);
-            inventory.GiveItem(SS2Content.Items.BoostMovespeed, 35);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 50);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 60);
-            //inventory.GiveItem(RoR2Content.Items.TeleportWhenOob); //REALLY DON'T LIKE THIS ONE. knocking enemies off the stage is a RIGHT. going to make a specific elite to replace this functionality.
-            //inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, 750);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostMovespeed, 35);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCooldowns, 50);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, 60);
             inventory.SetEquipmentIndex(SS2Content.Equipments.AffixEmpyrean.equipmentIndex);
 
             int extraStages = Mathf.Max(Run.instance.stageClearCount - 7, 0);
             int extraLoops = Mathf.FloorToInt(extraStages / 5); // Run.stagesPerLoop); was removed in AC update but its 5 anyways, TODO: Make this a static int somewhere instead of magic number
-            //inventory.GiveItem(SS2Content.Items.DoubleAllStats, extraLoops); // it is not yet your time
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCharacterSize, 15 * extraLoops); // teehee
             if (body.characterMotor) body.characterMotor.mass = 2000f; // NO KNOCKBACK !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (body.rigidbody) body.rigidbody.mass = 2000f;
             // remove level cap
             if (Run.instance.ambientLevel >= Run.ambientLevelCap)
             {
                 int extraLevels = Mathf.FloorToInt(SS2Util.AmbientLevelUncapped()) - Run.instance.ambientLevelFloor;
-                inventory.GiveItem(RoR2Content.Items.LevelBonus, extraLevels);
+                inventory.GiveItemPermanent(RoR2Content.Items.LevelBonus, extraLevels);
             }
 
             EntityStateMachine bodyMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
@@ -381,12 +377,12 @@ namespace SS2.Components
             int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
             body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 300); /////////////////////////////////////////////////////////
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(150 + (150 * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + Mathf.RoundToInt(loopCount * loopCount * loopCount * 0.5f));
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 15);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, (int)(150 + (150 * ethInstance.etherealsCompleted)));
+            inventory.GiveItemPermanent(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * 2 + Mathf.RoundToInt(loopCount * loopCount * loopCount * 0.5f));
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCooldowns, 15);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, (int)(20 + (20 * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted)));
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCharacterSize, 20); // MORE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            inventory.GiveItemPermanent(SS2Content.Items.EtherealItemAffix);
             if (body.characterMotor && body.characterMotor.mass < 400) body.characterMotor.mass = 400f;
             if (body.rigidbody && body.rigidbody.mass < 400) body.rigidbody.mass = 400f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();
@@ -419,12 +415,12 @@ namespace SS2.Components
             int stageCount = EtherealBehavior.instance.etherealStagesCompleted;
             body.baseMaxHealth = Mathf.Max(body.baseMaxHealth, 500); /////////////////////////////////////////////////////////
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients); ////////////////// make a fucking thing for this idiot
-            inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(1600f + (800f * ethInstance.etherealsCompleted)));
-            inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
-            inventory.GiveItem(SS2Content.Items.BoostCooldowns, 70);
-            inventory.GiveItem(RoR2Content.Items.BoostDamage, 100);
-            inventory.GiveItem(SS2Content.Items.NoSelfDamage); // >:)
-            inventory.GiveItem(SS2Content.Items.AffixUltra);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, (int)(1600f + (800f * ethInstance.etherealsCompleted)));
+            inventory.GiveItemPermanent(SS2Content.Items.MaxHealthPerMinute, 3 + stageCount * stageCount * (1 + loopCount * loopCount) * ethInstance.etherealsCompleted * ethInstance.etherealsCompleted);
+            inventory.GiveItemPermanent(SS2Content.Items.BoostCooldowns, 70);
+            inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, 100);
+            inventory.GiveItemPermanent(SS2Content.Items.NoSelfDamage); // >:)
+            inventory.GiveItemPermanent(SS2Content.Items.AffixUltra);
             if (body.characterMotor && body.characterMotor.mass < 2000) body.characterMotor.mass = 2000f; 
             if (body.rigidbody && body.rigidbody.mass < 2000) body.rigidbody.mass = 2000f;
             DeathRewards rewards = body.GetComponent<DeathRewards>();

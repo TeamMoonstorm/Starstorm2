@@ -6,6 +6,7 @@ using R2API;
 using System;
 namespace SS2.Components
 {
+    // Lots of extra null checks in this file in an attempt to fix Issue: #921
     [RequireComponent(typeof(ProjectileController))]
     public class ProjectileExpandingDotZone : MonoBehaviour
     {
@@ -63,8 +64,8 @@ namespace SS2.Components
             }
             if(this.lifeStopwatch >= this.lifetime)
             {
-                Destroy(base.gameObject);
-                return;
+                    Destroy(base.gameObject);
+                    return;
             }
             this.fireStopwatch -= Time.fixedDeltaTime;
             if(this.fireStopwatch <= 0)
@@ -76,9 +77,9 @@ namespace SS2.Components
 
         private void Fire()
         {
-            if (!NetworkServer.active) return;
+            if (!NetworkServer.active || this == null) return;
 
-            if (this.projectileDamage)
+            if (this.projectileDamage && this.projectileController)
             {
                 BlastAttack blastAttack = new BlastAttack();
                 blastAttack.position = base.transform.position;
@@ -96,7 +97,12 @@ namespace SS2.Components
                 blastAttack.damageType = this.projectileDamage.damageType;
                 blastAttack.attackerFiltering = AttackerFiltering.Default;
                 blastAttack.losType = BlastAttack.LoSType.None;
-                blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+
+                if (impactEffect)
+                {
+                    blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(impactEffect);
+                }
+                
                 if (moddedDamageType != (DamageAPI.ModdedDamageType)(-1)) blastAttack.AddModdedDamageType(moddedDamageType);
                 BlastAttack.Result result = blastAttack.Fire();
             }

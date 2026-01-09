@@ -1,4 +1,60 @@
-  **Warning: content spoilers below!**
+**Warning: content spoilers below!**
+### 0.6.31
+* General
+    * Mul-T GM skins are fixed too! All Vanilla skins are back!
+	* Temporarily disabled wavy/shaky text on certain logbooks and item descriptions due to memory leaks
+* Executioner
+    * Fear's execution threshold on the healthbar should now reflect the correct value (fixed in 0.6.30 but not mentioned)
+	* Ion Manipulators now counts as a skill activation when firing each charge, rather than skill press.
+* Chirr
+	* Friends no longer keep Chirr's items when unfriended.
+	* Fixed Symbiotic Link not dealing damage
+* Beta
+    * Fixed a missing tag in Pyro's passive description
+    * Nerfed Pyro's armor add as a stopgap measure for an infinite armor add bug
+    * Pyro does have infinite flight though! Its a bug and will be fixed! Enjoy!
+    * To combat infinite flight while a more comprehensive fix is found, Pyro's utility has increased heat consumption from 5->8 and inceased heat cost  5->8
+	* Fixed missing VFX for Archer Bug
+
+### 0.6.30
+* General
+    * SS2 0.6.30 requires MSU 2.5.1 or higher. Update both mods!
+    * Vanilla GM skins are now fixed! Woohoo thanks Nebby! (Except Mul-T)
+* Items
+    * Added additional null checks to Galvanic Core to catch a bug where attacker inventories was null
+    * Added additional null checks to Primal Birthright to catch a bug where we didnt add required components to the stages teleporter variant
+    * Primal Birthright should now work on Conduit Canyon
+	* Low Quality Speakers now also destroys projectiles
+* Enemies
+    * Mimic should no longer spawn if playing with SS2 expansion disabled
+* Beta (enabled via config)
+    * Additional null checks on Poision Elites (AffixPurple), Night Time (Bandit alt primary), Dormant Fungus (item), and Poisonous Gland (item) to catch reported issues
+    * New survivor: Pyro!
+    * New enemy: Archer Bug! (different enough from Enemies Returns Archer Bug version dont worry)
+
+### 0.6.29
+* General
+    * Added a new compatability section to the README
+    * Fix NRE from Santa Hat event
+    * Updated French translation thanks to DarSitam!
+* Mimic
+    * Mimic will no longer steal items with the AIBlacklist, BrotherBlacklist, or CannotSteal tags
+* Executioner
+    * Fixed Fear threshold not working. Sorry this took so long!
+* Engineer
+    * Fixed VFX issues with Laser Focus primary
+* Wayfarer
+    * Fixed the Tricorn not working on the Wayfarer due to 0 drop weight
+* Beta (Content from the 0.7 Beta, enabled via config)
+    * Nerfed Poison Elites across the board (dot duration, radius, damage coefficients)
+    * 2 new skills added to beta config. Details below
+* Bandit (Beta config only)
+    * New primary skill: Night Time
+    * Adapted from Bandit's SS1 Variant: Poacher
+* Railgunner (Beta config only)
+    * New utility skill: Tactical Roll
+    * A new utility to encourage a quick scoping playstyle
+
 ### 0.6.28
 * General
     * Updated French translation thanks to DarSitam!

@@ -36,6 +36,7 @@ namespace SS2.Items
             // TODO Switch to a more generic solution
             // Per Chinchi's advice "the more generic solution would be to hook TeleporterInteraction.Awake and add the component dynamically"
 
+            // TODO: A util method for adding components to all the teleporters in the game so it remains future proof + mod compat
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed+= (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/DLC3/conduitcanyon/Teleporter_ConduitCanyon_Variant.prefab").Completed += (r) => r.Result.AddComponent<FieldAcceleratorTeleporterBehavior>();

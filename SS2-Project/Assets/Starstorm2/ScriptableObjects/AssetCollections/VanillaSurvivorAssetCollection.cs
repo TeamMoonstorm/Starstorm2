@@ -9,18 +9,5 @@ namespace SS2
     public class VanillaSurvivorAssetCollection : ExtendedAssetCollection
     {
         public string survivorDefAddress;
-
-        public IEnumerator InitializeSkinDefs()
-        {
-            var vanillaSkinDefs = this.FindAssets<VanillaSkinDef>();
-            foreach(var skinDef in vanillaSkinDefs)
-            {
-                var routine = skinDef.Initialize();
-                while(!routine.IsDone())
-                {
-                    yield return null;
-                }
-            }
-        }
     }
 }

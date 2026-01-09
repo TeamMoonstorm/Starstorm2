@@ -37,6 +37,8 @@ namespace SS2
         public static bool RiskyModInstalled { get; private set; }
         public static bool GOTCEInstalled { get; private set; }
         public static bool StageAestheticInstalled { get; private set; }
+
+        public static bool SS2UInstalled { get; private set; }
         public static bool ProperSaveInstalled { get; private set; }
         internal static bool ChristmasTime { get; private set; }
         internal static bool ChileanIndependenceWeek { get; private set; }
@@ -79,6 +81,7 @@ namespace SS2
         private void SetupModCompat()
         {
             ScepterInstalled = MSUtil.IsModInstalled(AncientScepter.AncientScepterMain.ModGuid);
+            SS2UInstalled = MSUtil.IsModInstalled("com.ChirrLover.Starstorm2Unofficial"); // Risky_Lives-Videogame_Mod_2_Unofficial-0.22.9
             RiskyModInstalled = MSUtil.IsModInstalled("com.RiskyLives.RiskyMod");
             GOTCEInstalled = MSUtil.IsModInstalled("com.TheBestAssociatedLargelyLudicrousSillyheadGroup.GOTCE");
             StageAestheticInstalled = MSUtil.IsModInstalled("com.HIFU.StageAesthetic");

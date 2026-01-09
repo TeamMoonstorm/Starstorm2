@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 1063210218, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: iscStrangerPortal
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3438009384688029590, guid: d1719baa12624ba48bfd2d4d2f46749b, type: 3}
+  prefab: {fileID: 3438009384688029590, guid: c30d9105924a3d44b87a941cbb21b019, type: 3}
   sendOverNetwork: 1
   hullSize: 0
   nodeGraphType: 0
@@ -25,4 +25,6 @@ MonoBehaviour:
   slightlyRandomizeOrientation: 0
   skipSpawnWhenSacrificeArtifactEnabled: 0
   weightScalarWhenSacrificeArtifactEnabled: 1
+  skipSpawnWhenDevotionArtifactEnabled: 0
   maxSpawnsPerStage: -1
+  prismaticTrialSpawnChance: 1

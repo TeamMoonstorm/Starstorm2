@@ -35,11 +35,6 @@ namespace EntityStates.Engi
         private float fireTimer;
         private Transform modelTransform;
         private float counter = 0;
-        //MuzzleLeft
-        //MuzzleRight
-
-        //public GameObject hitEffectPrefab = FireBarrage.hitEffectPrefab;
-        //public GameObject tracerEffectPrefab = FireBarrage.tracerEffectPrefab;
 
         private GameObject leftLaserInstance;
         private Transform leftLaserInstanceEnd;
@@ -132,12 +127,7 @@ namespace EntityStates.Engi
             {
                 counter = 0;
             }
-            
-            //if (base.fixedAge >= this.duration && base.isAuthority)
-            //{
-            //    this.outer.SetNextStateToMain();
-            //    return;
-            //}
+         
         }
 
         protected Vector3 GetBeamEndPoint(Ray aimRay)
@@ -163,6 +153,7 @@ namespace EntityStates.Engi
                     weapon = base.gameObject,
                     origin = muzzleLeft.position,
                     aimVector = aimRay.direction,
+                    damageType = DamageTypeCombo.GenericPrimary,
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
                     bulletCount = 1U,
@@ -184,6 +175,7 @@ namespace EntityStates.Engi
                     weapon = base.gameObject,
                     origin = muzzleRight.position,
                     aimVector = aimRay.direction,
+                    damageType = DamageTypeCombo.GenericPrimary,
                     minSpread = 0f,
                     maxSpread = base.characterBody.spreadBloomAngle,
                     bulletCount = 1U,

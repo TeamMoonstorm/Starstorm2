@@ -55,6 +55,9 @@ namespace EntityStates.Executioner2
             if (skillLocator.secondary.stock == 0 || shotsToFire == shotsFired)
                 return;
 
+            skillLocator.secondary.DeductStock(1);
+            characterBody.OnSkillActivated(skillLocator.secondary);
+
             duration = baseDuration / attackSpeedStat;
             extraDuration = extraDurationOnLastShot / attackSpeedStat;
 
@@ -82,12 +85,6 @@ namespace EntityStates.Executioner2
             }
 
             Shoot();
-
-            skillLocator.secondary.DeductStock(1);
-            if (characterBody.inventory?.GetItemCount(DLC2Content.Items.IncreasePrimaryDamage) > 0 && characterBody.canAddIncrasePrimaryDamage) // / /////// / / /// // //// //
-            {
-                characterBody.AddIncreasePrimaryDamageStack();
-            }
             shotsFired++;
         }
 

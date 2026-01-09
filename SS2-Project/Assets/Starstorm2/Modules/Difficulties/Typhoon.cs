@@ -58,7 +58,8 @@ namespace SS2
 
             foreach (CharacterMaster cm in run.userMasters.Values)
                 if (NetworkServer.active)
-                    cm.inventory.GiveItem(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+                    cm.inventory.GiveItemPermanent(RoR2Content.Items.MonsoonPlayerHelper.itemIndex);
+
             if (IncreaseSpawnCap)
             {
                 TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= spawnCapMultiplier;

@@ -1,18 +1,18 @@
-﻿using R2API;
-using RoR2;
-using RoR2.Items;
-
+﻿using EntityStates;
 using MSU;
+using MSU.Config;
+using R2API;
+using RoR2;
+using RoR2.ContentManagement;
+using RoR2.Items;
+using RoR2.UI;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RoR2.ContentManagement;
-using System.Collections;
-using MSU.Config;
-using EntityStates;
 using UnityEngine.AddressableAssets;
-using System;
-using RoR2.UI;
 using UnityEngine.Networking;
+using static SS2.Items.FieldAccelerator;
 
 namespace SS2.Items
 {
@@ -48,9 +48,14 @@ namespace SS2.Items
             var tempChest = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldChest/GoldChest.prefab").WaitForCompletion();
             indevChest = PrefabAPI.InstantiateClone(tempChest, "PrimalChest");
 
-            var pinter = indevChest.GetComponent<PurchaseInteraction>();
-            pinter.displayNameToken = "SS2_BIRTHRIGHT_CHEST_NAME_FORMAT";
-            pinter.contextToken = "SS2_BIRTHRIGHT_CHEST_CONTEXT";
+            indevChest.TryGetComponent<PurchaseInteraction>(out var pinter);
+
+            if (pinter != null)
+            {
+                pinter.displayNameToken = "SS2_BIRTHRIGHT_CHEST_NAME_FORMAT";
+                pinter.contextToken = "SS2_BIRTHRIGHT_CHEST_CONTEXT";
+            }
+            
 
             var token = indevChest.AddComponent<PrimalBirthrightObjectiveToken>();
             //token.enabled = false;
@@ -103,9 +108,10 @@ namespace SS2.Items
             indevCard.skipSpawnWhenSacrificeArtifactEnabled = false;
             indevCard.maxSpawnsPerStage = -1;
 
-
+            // TODO: A util method for adding components to all the teleporters in the game so it remains future proof + mod compat
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
+            Addressables.LoadAssetAsync<GameObject>("RoR2/DLC3/conduitcanyon/Teleporter_ConduitCanyon_Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
 
         }
 
@@ -150,7 +156,7 @@ namespace SS2.Items
 
         private void TeleporterInteractionPrimalOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)
         {
-            var tc = self.outer.gameObject.GetComponent<PrimalPrevention>();
+            self.outer.gameObject.TryGetComponent<PrimalPrevention>(out var tc);
             if (tc)
             {
                 //var listcopy = tc.purchaseInteractions;
@@ -223,13 +229,19 @@ namespace SS2.Items
             orig(self); //things after orig occur after PlaceTeleporter
 
             if (self.teleporterInstance){
-                primalToken = self.teleporterInstance.GetComponent<PrimalPrevention>();
-                primalToken.filter = self.teleporterInstance.AddComponent<InteractionProcFilter>();
-                primalToken.filter.shouldAllowOnInteractionBeginProc = false;
+                // Score reported an issue where this was null, but how?
+                // Ah it was null because it happened on a stage where this component was not added most likely
+                self.teleporterInstance.TryGetComponent<PrimalPrevention>(out primalToken);
+
+                if (primalToken != null)
+                {
+                    primalToken.filter = self.teleporterInstance.AddComponent<InteractionProcFilter>();
+                    primalToken.filter.shouldAllowOnInteractionBeginProc = false;
+                }
             }
 
             var sceneDef = SceneCatalog.GetSceneDefForCurrentScene();
-            if (sceneDef.sceneType == SceneType.Stage && primalToken)
+            if (primalToken && sceneDef && sceneDef.sceneType == SceneType.Stage)
             {
                 if (birthrightRng == null){ birthrightRng = new Xoroshiro128Plus(Run.instance.seed); }
                 foreach (var player in PlayerCharacterMasterController.instances)

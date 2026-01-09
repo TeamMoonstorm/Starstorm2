@@ -16,7 +16,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="IEquipmentContentPiece"/>
     /// </summary>
-    public abstract class SS2Equipment : IEquipmentContentPiece, IContentPackModifier
+    public abstract class SS2Equipment : IEquipmentContentPiece, IContentPackModifier, IAsyncContentInitializer
     {
         public EquipmentAssetCollection AssetCollection { get; private set; }
 
@@ -28,6 +28,17 @@ namespace SS2
 
         public abstract SS2AssetRequest AssetRequest { get; }
         public abstract void Initialize();
+        public virtual IEnumerator InitializeAsync()
+        {
+            if(AssetCollection && AssetCollection.itemDisplayAddressedDictionary.TryGetValue(out var idad))
+            {
+                var subroutine = idad.AddEntries();
+                while(subroutine.MoveNext())
+                {
+                    yield return null;
+                }
+            }
+        }
         public virtual bool IsAvailable(ContentPack conentPack)
         {
             ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>

@@ -17,8 +17,22 @@ namespace SS2.Items
         public override void Initialize()
         {
             SS2Log.Info("Merry Chirristmas to about " + percentHatChance + "% of you!");
-            CharacterMaster.onCharacterMasterDiscovered += GiveHat;
+            On.RoR2.CharacterMaster.OnBodyStart += GiveHat;
             On.RoR2.CharacterModel.Start += CharacterModel_Start;
+        }
+
+        private void GiveHat(On.RoR2.CharacterMaster.orig_OnBodyStart orig, CharacterMaster self, CharacterBody body)
+        {
+            orig(self, body);
+
+            if (!UnityEngine.Networking.NetworkServer.active) return;
+
+            if (Util.CheckRoll(percentHatChance) && self.inventory)
+            {
+                self.inventory.GiveItemPermanent(SS2Content.Items.SantaHat.itemIndex);
+                string name = self.name.Replace("Master(Clone)", "");
+                SS2Log.Info("Merry Chirristmas to " + name + "!");
+            }
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -34,18 +48,6 @@ namespace SS2.Items
             if (!Run.instance)
             {
                 self.EnableItemDisplay(SS2Content.Items.SantaHat.itemIndex);
-            }
-        }
-
-        private static void GiveHat(CharacterMaster master)
-        {
-            if (!UnityEngine.Networking.NetworkServer.active) return;
-
-            if (Util.CheckRoll(percentHatChance) && master.inventory)
-            {
-                master.inventory.GiveItem(SS2Content.Items.SantaHat.itemIndex);
-                string name = master.name.Replace("Master(Clone)", "");
-                SS2Log.Info("Merry Chirristmas to " + name + "!");
             }
         }
     }

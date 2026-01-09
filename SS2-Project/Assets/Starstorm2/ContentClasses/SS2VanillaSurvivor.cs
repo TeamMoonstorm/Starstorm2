@@ -23,13 +23,35 @@ namespace SS2
 
         public virtual IEnumerator InitializeAsync()
         {
-            /*
-            var coroutine = assetCollection.InitializeSkinDefs();
+            ParallelCoroutine helper = new ParallelCoroutine();
+            foreach(var uberSkinDef in assetCollection.FindAssets<UberSkinDef>())
+            {
+                helper.Add(uberSkinDef.PreBake());
+                AddToModelSkinControllers(uberSkinDef.targetSkinDef);
+            }
 
-            while (!coroutine.IsDone())
-                yield return null;*/
+            while(!helper.IsDone())
+            {
+                yield return null;
+            }
+        }
 
-            yield break;
+        private void AddToModelSkinControllers(SkinDef skinDef)
+        {
+            var bodyPrefab = survivorDef.bodyPrefab;
+            var displayPrefab = survivorDef.displayPrefab;
+
+            var bodySkinController = bodyPrefab.GetComponentInChildren<ModelSkinController>();
+            var displaySkinController = displayPrefab.GetComponentInChildren<ModelSkinController>();
+
+            if(bodySkinController)
+            {
+                HG.ArrayUtils.ArrayAppend(ref bodySkinController.skins, skinDef);
+            }
+            if(displaySkinController)
+            {
+                HG.ArrayUtils.ArrayAppend(ref displaySkinController.skins, skinDef);
+            }
         }
 
         public abstract bool IsAvailable(ContentPack contentPack);

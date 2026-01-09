@@ -5,11 +5,12 @@ using RoR2;
 using RoR2.ContentManagement;
 using RoR2.Items;
 using RoR2.Orbs;
+using SS2.Components;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using SS2.Components;
 namespace SS2.Items
 {
     //check StickyOverloaderController for rest of behavior
@@ -47,7 +48,7 @@ namespace SS2.Items
             if (report.damageInfo.procCoefficient <= 0) return;
             CharacterBody body = report.attackerBody;
             if (!body || !body.inventory) return;
-            int stack = body.inventory.GetItemCount(SS2Content.Items.PoisonousGland);
+            int stack = body.inventory.GetItemCountEffective(SS2Content.Items.PoisonousGland);
             if (stack <= 0) return;        
             report.victimBody.AddTimedBuff(SS2Content.Buffs.BuffPoisonousGland, 2f * stack);      
         }
@@ -103,27 +104,38 @@ namespace SS2.Items
             {
                 if (scaler) scaler.time = 0;
                 float rotation = 360f / stack;
+
+                // And god said "let there be balls" and he created the balls
                 for(int i = balls.Count; i < stack; i++) // if stack > balls
                 {
-                    balls.Add(GameObject.Instantiate(ball, effectInstance.transform).transform);
+
+                        balls.Add(GameObject.Instantiate(ball, effectInstance.transform).transform);
                 }
+
                 for(int i = balls.Count - 1; i > stack; i--) // if balls > stack
                 {
-                    GameObject.Destroy(balls[i].gameObject);
-                    balls.RemoveAt(i);
+                    if (balls[i] != null)
+                    {
+                        GameObject.Destroy(balls[i].gameObject);
+                        balls.RemoveAt(i);
+                    }
                 }
+
                 for(int i = 0; i < balls.Count; i++)
                 {
-                    balls[i].rotation = Quaternion.Euler(0, rotation * i, 0);
+                    if (balls[i] != null)
+                    {
+                        balls[i].rotation = Quaternion.Euler(0, rotation * i, 0);
+                    }
                 }
             }
 
             public void OnIncomingDamageOther(HealthComponent victimHealthComponent, DamageInfo damageInfo)
-            {              
-                if (base.buffCount > 0)
+            {   
+                if (victimHealthComponent != null && damageInfo != null && base.buffCount > 0)
                 {
                     float miss = Util.ConvertAmplificationPercentageIntoReductionPercentage(missChance * buffCount);
-                    if(Util.CheckRoll(miss, victimHealthComponent.body.master))
+                    if (victimHealthComponent.body && victimHealthComponent.body.master && Util.CheckRoll(miss, victimHealthComponent.body.master))
                     {
                         damageInfo.rejected = true;
                         EffectData effectData = new EffectData
@@ -131,6 +143,7 @@ namespace SS2.Items
                             origin = damageInfo.position,
                             rotation = Util.QuaternionSafeLookRotation(damageInfo.position - base.characterBody.corePosition),
                         };
+
                         effectData.SetNetworkedObjectReference(victimHealthComponent.gameObject);
                         EffectManager.SpawnEffect(proc, effectData, true);
                     }
@@ -143,11 +156,11 @@ namespace SS2.Items
             }
             private void UpdateDebuffs()
             {
-                if (buffCount == 0) return;
+                if (this == null || buffCount == 0) return;
                 int debuff = 0;
                 foreach (BuffIndex buffType in BuffCatalog.debuffBuffIndices)
                 {
-                    if (base.characterBody.HasBuff(buffType))
+                    if (base.characterBody && base.characterBody.HasBuff(buffType))
                     {
                         debuff++;
                     }

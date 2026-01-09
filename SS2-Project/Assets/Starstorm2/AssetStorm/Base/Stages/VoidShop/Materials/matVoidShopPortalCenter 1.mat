@@ -10,9 +10,8 @@ Material:
   m_Name: matVoidShopPortalCenter 1
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
-  - FRESNEL
   - USE_CLOUDS
-  - VERTEXALPHA
+  - VERTEXCOLOR
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -28,12 +27,12 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: 25ec9b11a89d7284ab02ab574f86344e, type: 3}
-        m_Scale: {x: 0.1, y: 0.2}
+        m_Texture: {fileID: 2800000, guid: 1faf5fc63af584d4d9667c3ac6f41faf, type: 3}
+        m_Scale: {x: 2, y: 2}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 6f26a1b564e83614ba842884ab6301de, type: 3}
-        m_Scale: {x: 0.2, y: 0.2}
+        m_Texture: {fileID: 2800000, guid: 25ec9b11a89d7284ab02ab574f86344e, type: 3}
+        m_Scale: {x: 0.5, y: 0.5}
         m_Offset: {x: 0, y: 0}
     - _DetailAlbedoMap:
         m_Texture: {fileID: 0}
@@ -52,7 +51,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cde96f0d9a874274d9531f54e8557ed5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -68,36 +67,36 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 7ecedf9a470d8484a900ef7bec4c8ba3, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3088c23047d772a4bb3fbcf46fb3ad74, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.071
-    - _AlphaBoost: 0.6295395
-    - _Boost: 3.01
+    - _AlphaBias: 0
+    - _AlphaBoost: 2.2
+    - _Boost: 1.5
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
     - _CloudOffsetOn: 0
     - _CloudsOn: 1
-    - _Cull: 2
+    - _Cull: 0
     - _Cutoff: 0.5
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
     - _DistortionStrength: -0.2389832
-    - _DstBlend: 1
+    - _DstBlend: 6
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
     - _FadeCloseOn: 0
-    - _FresnelOn: 1
-    - _FresnelPower: 20
+    - _FresnelOn: 0
+    - _FresnelPower: -20
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _InternalSimpleBlendMode: 0
-    - _InvFade: 0
+    - _InvFade: 0.036
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -106,17 +105,17 @@ Material:
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 3
     - _UVSec: 0
     - _UseUV1On: 0
-    - _VertexAlphaOn: 1
-    - _VertexColorOn: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 1
     - _VertexOffsetOn: 0
     - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: -2, g: 4, b: -1, a: 2}
+    - _CutoffScroll: {r: 0, g: 4, b: 0, a: 2}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

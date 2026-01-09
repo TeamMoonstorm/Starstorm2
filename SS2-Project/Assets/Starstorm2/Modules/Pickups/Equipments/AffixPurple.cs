@@ -14,18 +14,20 @@ namespace SS2.Equipments
 {
     public class AffixPurple : SS2EliteEquipment
     {
-        
+   
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acAffixPurple", SS2Bundle.Equipments);
         public static DotController.DotIndex poisonDotIndex;
         public static DamageAPI.ModdedDamageType poison;
         private static GameObject poisonEffect;
         private static GameObject projectilePrefab;
         private static GameObject explosionEffect;
-        private static float projectileDamageCoefficient = .6f;
-        private static float onHitRadius = 2f;
+
+        // TODO: Make configurable
+        private static float projectileDamageCoefficient = .3f;
+        private static float onHitRadius = 1.2f;
         private static float onHitDamageCoefficient = 0.1f;
-        private static float poisonDamageCoefficient = 0.3f;
-        private static float poisonDuration = 4f;
+        private static float poisonDamageCoefficient = 0.15f;
+        private static float poisonDuration = 3f;
 
         public override void Initialize()
         {
@@ -90,6 +92,10 @@ namespace SS2.Equipments
         {
             var victimBody = report.victimBody;
             var damageInfo = report.damageInfo;
+
+            // Paranoid sanity checks
+            if (victimBody == null) return;
+
             if (damageInfo.HasModdedDamageType(poison))// && damageInfo.attacker && damageInfo.attacker.TryGetComponent<CharacterBody>(out var body)) && body.HasBuff(SS2Content.Buffs.bdElitePurple))
             {
                 InflictDotInfo inflictDotInfo = new InflictDotInfo
@@ -98,7 +104,7 @@ namespace SS2.Equipments
                     victimObject = victimBody.gameObject,
                     damageMultiplier = poisonDamageCoefficient,
                     duration = poisonDuration,
-                    dotIndex = poisonDotIndex,
+                    dotIndex = poisonDotIndex, // This line was reported as a problem child in Issue: # 921, but unsure why
                 };
                 DotController.InflictDot(ref inflictDotInfo);
                 DotController dotController = DotController.FindDotController(victimBody.gameObject);
