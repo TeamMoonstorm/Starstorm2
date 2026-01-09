@@ -12,7 +12,7 @@ namespace SS2.Scenes
 {
     public sealed class VoidShop : SS2Scene
     {
-        public override SS2AssetRequest<SceneAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("ac2VoidShop", SS2Bundle.SharedStages);
+        public override SS2AssetRequest<SceneAssetCollection> assetRequest => SS2Assets.LoadAssetAsync<SceneAssetCollection>("acVoidShop2", SS2Bundle.SharedStages);
 
         public override void Initialize()
         {
