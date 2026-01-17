@@ -6,15 +6,19 @@ namespace SS2.Components
 {
     public class PickupMagnet : MonoBehaviour
     {
-        // this thing fucking sucks. im so stupid
+        // this thing fucking AWESOME. im so GENIUS
         [SystemInitializer]
         static void Init()
         {
-            // TODO: AC removed the .Start method, need to find suitable replacement or rewrite
-            //On.RoR2.GravitatePickup.Start += AddToList;
+            On.RoR2.GravitatePickup.ctor += GravitatePickup_ctor;
             RoR2Application.onFixedUpdate += CleanList;
         }
 
+        private static void GravitatePickup_ctor(On.RoR2.GravitatePickup.orig_ctor orig, GravitatePickup self)
+        {
+            orig(self);
+            trackedPickups.Add(self);
+        }
 
         public static List<GravitatePickup> trackedPickups = new List<GravitatePickup>();
 
@@ -30,12 +34,6 @@ namespace SS2.Components
             }
         }
 
-        //private static void AddToList(On.RoR2.GravitatePickup.orig_Start orig, GravitatePickup self)
-        //{
-        //    orig(self);
-        //    trackedPickups.Add(self);
-        //}
-
         private float stopwatch;
         private struct Pickup
         {
@@ -48,11 +46,16 @@ namespace SS2.Components
 
         private void Start()
         {
+            StartPull();
+        }
+
+        private void StartPull()
+        {
             List<GenericPickupController> pickups = InstanceTracker.GetInstancesList<GenericPickupController>();
             float spreadAngle = 360f / pickups.Count;
-            for(int i = 0; i < pickups.Count; i++)
+            for (int i = 0; i < pickups.Count; i++)
             {
-                float angle =  i * spreadAngle;
+                float angle = i * spreadAngle;
                 Vector3 direction = Quaternion.Euler(0, angle, 0) * base.transform.forward;
                 bool hit = Physics.SphereCast(base.transform.position, 1f, direction, out RaycastHit raycastHit, Magnet.destinationRadius - 1, LayerIndex.world.mask, QueryTriggerInteraction.UseGlobal);
                 Vector3 target = base.transform.position + (direction * Magnet.destinationRadius);
@@ -64,7 +67,7 @@ namespace SS2.Components
                 pickupsToPull.Add(new Pickup { rigidbody = pickup.GetComponent<Rigidbody>(), target = target, layer = LayerIndex.fakeActor.intVal });
                 pickup.gameObject.layer = LayerIndex.noCollision.intVal;
             }
-            foreach (GravitatePickup pickup in PickupMagnet.trackedPickups)
+            foreach (GravitatePickup pickup in trackedPickups)
             {
                 pickup.gravitateTarget = null;
                 pickupsToPull.Add(new Pickup { gravComponent = pickup, rigidbody = pickup.rigidbody, target = base.transform.position, layer = pickup.gameObject.layer });
@@ -76,7 +79,7 @@ namespace SS2.Components
             stopwatch += Time.fixedDeltaTime;
             if (stopwatch >= Magnet.pullDuration)
             {
-                OnPullEnd();
+                Destroy(base.gameObject);
                 return;
             }
             for(int i = 0; i < pickupsToPull.Count; i++)
@@ -91,21 +94,18 @@ namespace SS2.Components
                 }
                 
             }
-
         }
 
-        private void OnPullEnd()
+        private void OnDestroy()
         {
-            foreach(Pickup pickup in pickupsToPull)
+            foreach (Pickup pickup in pickupsToPull)
             {
-                if(pickup.rigidbody)
+                if (pickup.rigidbody)
                 {
                     pickup.rigidbody.gameObject.layer = pickup.layer;
                 }
             }
-            Destroy(base.gameObject);
         }
-
     }
 }
 
