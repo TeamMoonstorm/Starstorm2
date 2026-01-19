@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 1374404478}
   - component: {fileID: 1374404477}
   - component: {fileID: 1374404476}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: StartPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -507,7 +507,9 @@ GameObject:
   - component: {fileID: 1509527560}
   - component: {fileID: 1509527559}
   - component: {fileID: 1509527558}
-  m_Layer: 0
+  - component: {fileID: 1509527562}
+  - component: {fileID: 1509527563}
+  m_Layer: 15
   m_Name: Trigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -592,6 +594,64 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509527562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509527557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3c9ace0649d9d24a9a1cf6cbefdbeb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playOnStart: 0
+  initialDelay: 1
+--- !u!114 &1509527563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1509527557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -944570126, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerControlledOnly: 1
+  onFirstQualifyingBodyEnter:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1509527562}
+        m_TargetAssemblyTypeName: SS2.Components.AdvancedMapNameClusterController,
+          Starstorm2
+        m_MethodName: PlayMapClusterAnimation
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onLastQualifyingBodyExit:
+    m_PersistentCalls:
+      m_Calls: []
+  onAnyQualifyingBodyEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onAnyQualifyingBodyExit:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllQualifyingBodiesEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onAllQualifyingBodiesExit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1986740994
 GameObject:
   m_ObjectHideFlags: 0

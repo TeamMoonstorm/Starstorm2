@@ -13,6 +13,7 @@ using System.Reflection;
 using Unity.Burst;
 using UnityEngine.AddressableAssets;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace SS2
 {
@@ -52,11 +53,11 @@ namespace SS2
 #if DEBUG
             base.gameObject.AddComponent<SS2DebugUtil>();
 #endif
+            AddChildTransformEntriesToSimpleHUD();
+
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
-
-
 
             LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
@@ -119,17 +120,21 @@ namespace SS2
 
             var hud = HUDSimplePrefab.GetComponent<HUD>();
             var childLocator = HUDSimplePrefab.GetComponent<ChildLocator>();
-            var mainContainer = hud.mainContainer.transform;
-            var mapCluster = mainContainer.Find("MapNameCluster");
+            var mainContainer = hud.mainContainer;
+            var mapCluster = mainContainer.transform.Find("MapNameCluster");
 
             var newChildLocator = childLocator.transformPairs.ToList();
-            newChildLocator.Add(
-                new ChildLocator.NameTransformPair
-                {
-                    name = "MapNameCluster",
-                    transform = mapCluster
-                }
-            );
+
+            List<ChildLocator.NameTransformPair> data = new List<ChildLocator.NameTransformPair>();
+
+            data.Add(
+            new ChildLocator.NameTransformPair
+            {
+                name = "MapNameCluster",
+                transform = mapCluster
+            });
+
+            newChildLocator.AddRange(data);
         }
     }
 }
