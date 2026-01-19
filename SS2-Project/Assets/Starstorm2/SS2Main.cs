@@ -1,5 +1,6 @@
 using BepInEx;
 using SS2.API;
+using RoR2.UI;
 using R2API;
 using R2API.Utils;
 using R2API.Networking;
@@ -10,6 +11,8 @@ using System.Globalization;
 using System.IO;
 using System.Reflection;
 using Unity.Burst;
+using UnityEngine.AddressableAssets;
+using System.Linq;
 
 namespace SS2
 {
@@ -52,6 +55,8 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
+
+
 
             LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
@@ -103,6 +108,28 @@ namespace SS2
 
             BurstRuntime.LoadAdditionalLibrary(assemblyPath);
             SS2Log.Message("Starstorm2_Burst.dll loadded succesfully!");
+        }
+
+        private static string HUDSimplePrefabString = "d79990e6848003d438cabcf79e7e5bf7";
+
+        //Will port this to MiscFixes after i test it thoroughly -Jace
+        private static void AddChildTransformEntriesToSimpleHUD()
+        {
+            GameObject HUDSimplePrefab = Addressables.LoadAssetAsync<GameObject>(HUDSimplePrefabString).WaitForCompletion();
+
+            var hud = HUDSimplePrefab.GetComponent<HUD>();
+            var childLocator = HUDSimplePrefab.GetComponent<ChildLocator>();
+            var mainContainer = hud.mainContainer.transform;
+            var mapCluster = mainContainer.Find("MapNameCluster");
+
+            var newChildLocator = childLocator.transformPairs.ToList();
+            newChildLocator.Add(
+                new ChildLocator.NameTransformPair
+                {
+                    name = "MapNameCluster",
+                    transform = mapCluster
+                }
+            );
         }
     }
 }
