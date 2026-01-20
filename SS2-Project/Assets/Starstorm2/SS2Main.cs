@@ -15,6 +15,7 @@ using UnityEngine.AddressableAssets;
 using System.Linq;
 using System.Collections.Generic;
 
+
 namespace SS2
 {
     #region R2API
@@ -53,7 +54,6 @@ namespace SS2
 #if DEBUG
             base.gameObject.AddComponent<SS2DebugUtil>();
 #endif
-            AddChildTransformEntriesToSimpleHUD();
 
             new SS2Log(Logger);
             new SS2Config(this);
@@ -111,30 +111,5 @@ namespace SS2
             SS2Log.Message("Starstorm2_Burst.dll loadded succesfully!");
         }
 
-        private static string HUDSimplePrefabString = "d79990e6848003d438cabcf79e7e5bf7";
-
-        //Will port this to MiscFixes after i test it thoroughly -Jace
-        private static void AddChildTransformEntriesToSimpleHUD()
-        {
-            GameObject HUDSimplePrefab = Addressables.LoadAssetAsync<GameObject>(HUDSimplePrefabString).WaitForCompletion();
-
-            var hud = HUDSimplePrefab.GetComponent<HUD>();
-            var childLocator = HUDSimplePrefab.GetComponent<ChildLocator>();
-            var mainContainer = hud.mainContainer;
-            var mapCluster = mainContainer.transform.Find("MapNameCluster");
-
-            var newChildLocator = childLocator.transformPairs.ToList();
-
-            List<ChildLocator.NameTransformPair> data = new List<ChildLocator.NameTransformPair>();
-
-            data.Add(
-            new ChildLocator.NameTransformPair
-            {
-                name = "MapNameCluster",
-                transform = mapCluster
-            });
-
-            newChildLocator.AddRange(data);
-        }
     }
 }
