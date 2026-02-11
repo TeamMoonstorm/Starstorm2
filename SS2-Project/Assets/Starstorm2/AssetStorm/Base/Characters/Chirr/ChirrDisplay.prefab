@@ -71,8 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6744089953737112012}
-  - component: {fileID: 8524363558816343223}
-  - component: {fileID: 8217240504886549656}
+  - component: {fileID: 1127408477705585155}
   m_Layer: 0
   m_Name: ChirrDisplay
   m_TagString: Untagged
@@ -96,7 +95,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8524363558816343223
+--- !u!114 &1127408477705585155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,25 +104,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3011780272227380705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -287833090, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: -1295980167, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggeringEvent: 2
-  soundEvent: Play_ChirrCSS
---- !u!114 &8217240504886549656
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3011780272227380705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -287833090, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  triggeringEvent: -2147483648
-  soundEvent: Stop_ChirrCSS
+  loopDef: {fileID: 11400000, guid: 21466a6247f224e4288c16231051b720, type: 2}
 --- !u!1 &3142240756971543726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1346,8 +1330,12 @@ MonoBehaviour:
   focusPointTransform: {fileID: 0}
   cameraPositionTransform: {fileID: 0}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  modelPositionOffset: {x: 0, y: 0, z: 0}
   minDistance: 1.4
   maxDistance: 5.2
+  triggerOnLogbook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &6032873422077727585
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1364,6 +1352,7 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 8468940812284493107}
     defaultMaterialAddress:
@@ -1375,10 +1364,15 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos: []
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0

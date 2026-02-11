@@ -1,4 +1,9 @@
 **Warning: content spoilers below!**
+### 0.6.32
+* General
+	* Fixed normal maps on several materials
+* Items
+	* Fixed item teirs or somethoiawurbhgkamng
 ### 0.6.31
 * General
     * Mul-T GM skins are fixed too! All Vanilla skins are back!

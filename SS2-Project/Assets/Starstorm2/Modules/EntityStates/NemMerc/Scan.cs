@@ -147,20 +147,23 @@ namespace EntityStates.NemMerc
                 float numAir = airIndices.Count;
                 bool useAir = UnityEngine.Random.Range(0, numGround + numAir) > numGround;
 
+                // TODO: fallback placement for when theres no nodes in range
                 Vector3 position;
-                if (useAir)
+                if (useAir && airIndices.Count > 0)
                 {
                     int index = UnityEngine.Random.Range(0, airIndices.Count - 1);
                     airNodes.GetNodePosition(airIndices[index], out position);
+
+                    SpawnHologramSingle(position, null);
                 }
-                else
+                else if (groundIndices.Count > 0)
                 {
                     int index = UnityEngine.Random.Range(0, groundIndices.Count - 1);
                     groundNodes.GetNodePosition(groundIndices[index], out position);
                     position.y += 4f;
-                }
 
-                this.SpawnHologramSingle(position, null);
+                    SpawnHologramSingle(position, null);
+                }
             }
 
         }

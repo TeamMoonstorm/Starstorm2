@@ -165,8 +165,7 @@ namespace SS2.Items
                 self.targetStateMachine.TryGetComponent<CharacterBody>(out var cbody);
                 if (cbody && cbody.healthComponent.lastHitAttacker) 
                 {
-                    cbody.healthComponent.lastHitAttacker.TryGetComponent<CharacterBody>(out var attacker);
-                    if (attacker.inventory && attacker.inventory.GetItemCountEffective(SS2Content.Items.GalvanicCore) > 0)
+                    if (cbody.healthComponent.lastHitAttacker.TryGetComponent<CharacterBody>(out var attacker) && attacker.inventory && attacker.inventory.GetItemCountEffective(SS2Content.Items.GalvanicCore) > 0)
                     {
                         cbody.AddTimedBuff(SS2Content.Buffs.bdGalvanizedSource, duration);
                     }
