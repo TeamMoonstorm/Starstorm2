@@ -1,0 +1,65 @@
+{
+	"strings": {
+		"SS2_ITEM_BLEEDOUT_NAME": "출혈 전환",
+		"SS2_ITEM_BLEEDOUT_PICKUP": "사망하는 대신 출혈 상태에 들어갑니다. 시간이 지나면 재충전됩니다.",
+		"SS2_ITEM_BLEEDOUT_DESC": "<style=cIsHealth>치명적인 피해</style>를 받을 경우 사망하지 않고, 대신 <style=cIsHealth>최대 체력</style>의 <style=cIsHealth>100%</style>에 해당하는 출혈을 부여받습니다. <style=cIsUtility>4</style>분마다 재충전되며 <style=cStack>(중첩당 -20%)</style> 감소합니다.",
+		"SS2_ITEM_BLEEDOUT_LORE": "???",
+
+		"SS2_ITEM_DEBUFFMISSILES_NAME": "디버프 미사일",
+		"SS2_ITEM_DEBUFFMISSILES_PICKUP": "적중 시 공허 파편을 발사할 확률을 얻습니다. 디버프 수에 따라 확률이 증가합니다.",
+		"SS2_ITEM_DEBUFFMISSILES_DESC": "적에게 걸린 <style=cIsDamage>디버프</style> 하나당 <style=cIsDamage>3%<style=cStack> (+중첩당 1%)</style></style> 확률로 <style=cIsDamage>400%의 피해</style>를 주는 공허 파편을 발사합니다.",
+		"SS2_ITEM_DEBUFFMISSILES_LORE": "???",
+
+		"SS2_ITEM_ELITEDAMAGEBONUS_NAME": "엘리트추가피해",
+		"SS2_ITEM_ELITEDAMAGEBONUS_PICKUP": "엘리트 몬스터를 공격하면 스킬의 재사용 대기시간이 감소합니다.",
+		"SS2_ITEM_ELITEDAMAGEBONUS_DESC": "엘리트 몬스터를 <style=cIsUtility>스킬</style>로 적중시키면 <style=cIsUtility>30%</style> <style=cStack>(+중첩당 10%)</style> 확률로 <style=cIsUtility>재사용 대기시간을</style> <style=cIsUtility>0.5</style>초 감소시킵니다.",
+		"SS2_ITEM_ELITEDAMAGEBONUS_LORE": "???",
+
+		"SS2_ITEM_HITLIST_NAME": "살생부",
+		"SS2_ITEM_HITLIST_PICKUP": "표식이 찍힌 적을 공격하면 골드를 획득하고, 처치 시 영구적인 피해 증가를 얻습니다.",
+		"SS2_ITEM_HITLIST_DESC": "<style=cIsUtility>30</style>초마다 <style=cStack>(중첩당 -20%)</style> 적 하나를 <style=cIsDamage>표식</style>합니다. <style=cIsDamage>표식된</style> 적을 처치하면 <style=cIsDamage>피해량이 영구적으로 2%</style> 증가합니다.",
+		"SS2_ITEM_HITLIST_LORE": "???",
+
+		"SS2_ITEM_ITEMONBOSSKILL_NAME": "보스처치아이템",
+		"SS2_ITEM_ITEMONBOSSKILL_PICKUP": "보스를 처치하면 아이템을 획득합니다.",
+		"SS2_ITEM_ITEMONBOSSKILL_DESC": "보스를 처치하면 <style=cIsUtility>아이템</style>을 드롭합니다. <style=cStack>(중첩할수록 아이템 등급이 상승합니다)</style>",
+		"SS2_ITEM_ITEMONBOSSKILL_LORE": "???",
+
+		"SS2_ITEM_ITEMONELITEKILL_NAME": "엘리트처치아이템",
+		"SS2_ITEM_ITEMONELITEKILL_PICKUP": "엘리트를 처치하면 아이템을 획득할 수 있습니다.",
+		"SS2_ITEM_ITEMONELITEKILL_DESC": "엘리트를 처치하면 <style=cIsUtility>6%</style><style=cStack>(중첩당 +2%)</style> 확률로 <style=cIsUtility>아이템</style>을 드롭합니다.",
+		"SS2_ITEM_ITEMONELITEKILL_LORE": "???",
+
+		"SS2_ITEM_MAXHPONKILL_NAME": "처치시최대체력증가",
+		"SS2_ITEM_MAXHPONKILL_PICKUP": "적을 처치하면 최대 체력이 영구적으로 증가합니다.",
+		"SS2_ITEM_MAXHPONKILL_DESC": "적을 처치하면 <style=cIsHealing>최대 체력</style>이 영구적으로 <style=cIsHealing>2</style><style=cStack>(중첩당 +1)</style> 증가합니다.",
+		"SS2_ITEM_MAXHPONKILL_LORE": "???",
+
+		"SS2_ITEM_OPTIONFROMCHEST_NAME": "상자선택권",
+		"SS2_ITEM_OPTIONFROMCHEST_PICKUP": "상자를 열면 3개 아이템 중 하나를 선택할 수 있습니다.",
+		"SS2_ITEM_OPTIONFROMCHEST_DESC": "상자를 열면 <style=cIsUtility>50%</style> 확률로 <style=cIsUtility>3</style>개 아이템 중 하나를 선택할 수 있습니다. <style=cStack>(중첩할수록 아이템 등급이 상승합니다)</style>",
+		"SS2_ITEM_OPTIONFROMCHEST_LORE": "???",
+
+		"SS2_ITEM_SCRAPFROMCHEST_NAME": "상자재활용아이템",
+		"SS2_ITEM_SCRAPFROMCHEST_PICKUP": "상자에서 추가 재활용 아이템이 드롭됩니다.",
+		"SS2_ITEM_SCRAPFROMCHEST_DESC": "상자를 열면 <style=cIsUtility>33%</style><style=cStack>(중첩당 +11%)</style> 확률로 추가 <style=cIsUtility>재활용 아이템</style>이 드롭됩니다.",
+		"SS2_ITEM_SCRAPFROMCHEST_LORE": "???",
+
+		"SS2_ITEM_SHELLPIECE_NAME": "껍데기 파편",
+		"SS2_ITEM_SHELLPIECE_PICKUP": "치명적인 피해를 한 번 막습니다. 스테이지마다 재충전됩니다.",
+		"SS2_ITEM_SHELLPIECE_DESC": "<style=cIsHealth>치명적인 피해</style>를 받으면 대신 <style=cIsUtility>3</style>초 동안 <style=cIsUtility>무적</style> 상태가 됩니다. 스테이지마다 재충전됩니다.",
+		"SS2_ITEM_SHELLPIECE_LORE": "???",
+
+		"SS2_ITEM_SHIELDGATE_NAME": "실드게이트",
+		"SS2_ITEM_SHIELDGATE_PICKUP": "적을 처치하면 방어막이 영구적으로 증가합니다.",
+		"SS2_ITEM_SHIELDGATE_DESC": "적을 처치하면 <style=cIsUtility>방어막</style>이 영구적으로 <style=cIsUtility>2</style><style=cStack>(중첩당 +1)</style> 증가합니다 .",
+		"SS2_ITEM_SHIELDGATE_LORE": "???",
+
+		"SS2_ITEM_SNAKEEYES_NAME": "스네이크 아이즈",
+		"SS2_ITEM_SNAKEEYES_PICKUP": "제단이 영구적인 치명타 확률을 부여합니다. 치명타 확률이 100%를 초과하면 재사용 대기시간을 감소시킬 확률이 생깁니다.",
+		"SS2_ITEM_SNAKEEYES_DESC": "제단을 사용할 때마다 <style=cIsDamage>치명타 확률이 영구적으로</style> <style=cIsDamage>2%<style=cStack> (+중첩당 1%)</style></style> 증가합니다. <style=cIsDamage>치명타 확률</style>이 <style=cIsDamage>100%</style>를 초과하면 <style=cIsUtility>재사용 대기시간을</style> <style=cIsUtility>1</style>초 <style=cIsUtility>감소시킬 확률</style>을 얻습니다.",
+		"SS2_ITEM_SNAKEEYES_LORE": "???"
+
+
+	}
+}
