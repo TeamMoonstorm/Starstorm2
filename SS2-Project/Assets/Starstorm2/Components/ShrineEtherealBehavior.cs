@@ -1,9 +1,10 @@
-using RoR2; 
+using RoR2;
+using RoR2.Hologram;
 using UnityEngine; 
 using UnityEngine.Networking; 
 namespace SS2 
 { 
-    public class ShrineEtherealBehavior : NetworkBehaviour 
+    public class ShrineEtherealBehavior : NetworkBehaviour, IHologramContentProvider
     { 
         public int maxPurchaseCount = 2; 
         public int purchaseCount = 0; 
@@ -12,12 +13,16 @@ namespace SS2
         private bool waitingForRefresh; 
         private bool chargeUp; 
         private CharacterBody activatorBody; 
+        private MeshRenderer difficultyDisplay;
  
         [SerializeField] 
         public ChildLocator childLocator; 
         [SerializeField] 
         public PurchaseInteraction purchaseInteraction; 
- 
+        
+        public HologramProjector valueProjector;
+        
+
         public void Start() 
         { 
             purchaseInteraction = GetComponent<PurchaseInteraction>(); 
@@ -30,6 +35,11 @@ namespace SS2
  
         public void FixedUpdate() 
         { 
+            if (valueProjector)
+            {
+                valueProjector.contentProvider = this;
+            }
+            
             if (waitingForRefresh) 
             { 
                 refreshTimer -= Time.fixedDeltaTime; 
@@ -132,5 +142,40 @@ namespace SS2
                 DisableShrine(null);
             } 
         } 
+        
+        // difficulty hologram stuff ,.,.
+        public bool ShouldDisplayHologram(GameObject viewer)
+        {
+            return purchaseCount < 1;
+        }
+
+        public GameObject GetHologramContentPrefab()
+        {
+            return SS2Assets.LoadAsset<GameObject>("SymbolDifficulty", SS2Bundle.Indev);
+        }
+
+        public void UpdateHologramContent(GameObject hologramContentObject, Transform viewerBody)
+        {
+            if (difficultyDisplay != null || EtherealBehavior.instance.runIsEthereal) return; // maybe an upgrade arrow or something if its already etherea l>?.,,. idk .,,. 
+            SS2Log.Debug("updating hologram content prefab for the first time !!");
+            difficultyDisplay = hologramContentObject.GetComponent<MeshRenderer>();
+            if (difficultyDisplay)
+            {
+                DifficultyDef difficultyDef = DifficultyCatalog.GetDifficultyDef(EtherealBehavior.instance.GetUpdatedDifficulty());
+                difficultyDisplay.material.mainTexture = difficultyDef.GetIconSprite().texture;
+                difficultyDisplay.material.SetColor("_TintColor", difficultyDef.color);
+                
+                //make this less messy later <//3 ,.,.
+                ChildLocator difficultyChildLocator = hologramContentObject.GetComponent<ChildLocator>();
+                ParticleSystem fire = difficultyChildLocator.FindChild("Fire").gameObject.GetComponent<ParticleSystem>();
+                fire.colorOverLifetime.color.gradient.colorKeys[1].color = difficultyDef.color;
+                ParticleSystem.MinMaxGradient startColorFire = fire.main.startColor;
+                startColorFire.color = difficultyDef.color;
+                
+                ParticleSystem rings = difficultyChildLocator.FindChild("Rings").gameObject.GetComponent<ParticleSystem>();
+                ParticleSystem.MinMaxGradient startColorRings = rings.main.startColor;
+                startColorRings.color = difficultyDef.color;
+            }
+        }
     } 
 } 

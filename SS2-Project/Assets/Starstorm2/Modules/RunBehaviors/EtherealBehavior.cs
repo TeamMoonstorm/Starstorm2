@@ -1,4 +1,4 @@
-﻿using R2API;
+using R2API;
 using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
@@ -262,7 +262,8 @@ namespace SS2
             if (!runIsEthereal)
             {
                 runIsEthereal = true;
-                UpdateDifficulty();
+                run.selectedDifficulty = GetUpdatedDifficulty();
+                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
             }
             else
             {
@@ -275,12 +276,13 @@ namespace SS2
             pendingDifficultyUp = false;          
         }
 
-        //one-time difficulty adjustments
-        public void UpdateDifficulty()
+        //one-time difficulty adjustments - stealing this for shrines too :3 ,,.
+        public DifficultyIndex GetUpdatedDifficulty()
         {
             //switch to ethereal difficulty
             DifficultyIndex newDiffIndex;
             DifficultyIndex currentDiffIndex = run.selectedDifficulty;
+            
             var diff = DifficultyCatalog.GetDifficultyDef(currentDiffIndex);
             if (!diffDicts.TryGetValue(currentDiffIndex, out newDiffIndex))
             {            
@@ -303,8 +305,8 @@ namespace SS2
                     newDiffIndex = Typhoon.sdd.DifficultyIndex;
                 }
             }
-            run.selectedDifficulty = newDiffIndex;
-            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(newDiffIndex).nameToken));
+
+            return newDiffIndex;
         }
 
         
