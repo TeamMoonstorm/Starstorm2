@@ -53,7 +53,7 @@ public class AkDeviceDescription : global::System.IDisposable {
   public uint idDevice { set { AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_idDevice_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_idDevice_get(swigCPtr); } 
   }
 
-  public string deviceName { set { AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_deviceName_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrOSString(AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_deviceName_get(swigCPtr)); } 
+  public string deviceName { set { AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_deviceName_set(swigCPtr, value); }  get { return ""; } 
   }
 
   public AkAudioDeviceState deviceStateMask { set { AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_deviceStateMask_set(swigCPtr, (int)value); }  get { return (AkAudioDeviceState)AkSoundEnginePINVOKE.CSharp_AkDeviceDescription_deviceStateMask_get(swigCPtr); } 

@@ -88,7 +88,7 @@ public class AkInitSettings : global::System.IDisposable {
   public bool bUseLEngineThread { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_bUseLEngineThread_set(swigCPtr, value); }  get { return AkSoundEnginePINVOKE.CSharp_AkInitSettings_bUseLEngineThread_get(swigCPtr); } 
   }
 
-  public string szPluginDLLPath { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_szPluginDLLPath_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrOSString(AkSoundEnginePINVOKE.CSharp_AkInitSettings_szPluginDLLPath_get(swigCPtr)); } 
+  public string szPluginDLLPath { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_szPluginDLLPath_set(swigCPtr, value); }  get { return ""; } 
   }
 
   public AkFloorPlane eFloorPlane { set { AkSoundEnginePINVOKE.CSharp_AkInitSettings_eFloorPlane_set(swigCPtr, (int)value); }  get { return (AkFloorPlane)AkSoundEnginePINVOKE.CSharp_AkInitSettings_eFloorPlane_get(swigCPtr); } 

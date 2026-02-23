@@ -59,10 +59,10 @@ public class MonitorErrorInfo : global::System.IDisposable {
   public MonitorErrorInfo() : this(AkSoundEnginePINVOKE.CSharp_new_MonitorErrorInfo__SWIG_2(), true) {
   }
 
-  public string m_name { set { AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_name_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrOSString(AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_name_get(swigCPtr)); } 
+  public string m_name { set { AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_name_set(swigCPtr, value); }  get { return ""; } 
   }
 
-  public string m_message { set { AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_message_set(swigCPtr, value); }  get { return AkSoundEngine.StringFromIntPtrOSString(AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_message_get(swigCPtr)); } 
+  public string m_message { set { AkSoundEnginePINVOKE.CSharp_MonitorErrorInfo_m_message_set(swigCPtr, value); }  get { return ""; } 
   }
 
 }

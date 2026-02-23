@@ -44,7 +44,7 @@ public partial class AkBasePathGetter
 		if (!string.IsNullOrEmpty(platformSubDir))
 			return platformSubDir;
 
-		return DefaultPlatformName;
+		return "Windows";
 	}
 }
 

@@ -62,7 +62,7 @@ public class AkMonitoringCallbackInfo : global::System.IDisposable {
   public ulong gameObjID { get { return AkSoundEnginePINVOKE.CSharp_AkMonitoringCallbackInfo_gameObjID_get(swigCPtr); } 
   }
 
-  public string message { get { return AkSoundEngine.StringFromIntPtrOSString(AkSoundEnginePINVOKE.CSharp_AkMonitoringCallbackInfo_message_get(swigCPtr)); } 
+  public string message { get { return ""; } 
   }
 
   public AkMonitoringCallbackInfo() : this(AkSoundEnginePINVOKE.CSharp_new_AkMonitoringCallbackInfo(), true) {
