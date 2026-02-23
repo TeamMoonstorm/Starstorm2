@@ -12,7 +12,6 @@ namespace SS2
         private float chargeTimer; 
         private bool waitingForRefresh; 
         private bool chargeUp; 
-        private CharacterBody activatorBody; 
         private MeshRenderer difficultyDisplay;
  
         [SerializeField] 
@@ -60,10 +59,8 @@ namespace SS2
                     if (TeleporterUpgradeController.instance) 
                         TeleporterUpgradeController.instance.UpgradeEthereal(); 
  
-                    // activatorbody could be null if its destroyed between activating the shrine and it actually going off., ., try to find a better solution later !
-                    Chat.SendBroadcastChat(new Chat.SubjectFormatChatMessage 
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage() 
                     { 
-                        subjectAsCharacterBody = activatorBody, 
                         baseToken = "SS2_SHRINE_ETHEREAL_USE_MESSAGE",
                     }); 
                     
@@ -113,7 +110,6 @@ namespace SS2
                 waitingForRefresh = true; 
                 purchaseInteraction.SetAvailable(false);
                 chargeUp = true; 
-                activatorBody = interactor.GetComponent<CharacterBody>();
                 
                 Util.PlaySound("Play_UI_shrineActivate", gameObject); 
  
@@ -146,7 +142,7 @@ namespace SS2
         // difficulty hologram stuff ,.,.
         public bool ShouldDisplayHologram(GameObject viewer)
         {
-            return purchaseCount < 1;
+            return (purchaseCount < 1 && !EtherealBehavior.instance.runIsEthereal);
         }
 
         public GameObject GetHologramContentPrefab()
@@ -168,11 +164,15 @@ namespace SS2
                 //make this less messy later <//3 ,.,.
                 ChildLocator difficultyChildLocator = hologramContentObject.GetComponent<ChildLocator>();
                 ParticleSystem fire = difficultyChildLocator.FindChild("Fire").gameObject.GetComponent<ParticleSystem>();
+                Renderer fireRenderer = fire.GetComponent<Renderer>();
+                fireRenderer.material.SetColor("_TintColor", difficultyDef.color);
                 fire.colorOverLifetime.color.gradient.colorKeys[1].color = difficultyDef.color;
                 ParticleSystem.MinMaxGradient startColorFire = fire.main.startColor;
                 startColorFire.color = difficultyDef.color;
                 
                 ParticleSystem rings = difficultyChildLocator.FindChild("Rings").gameObject.GetComponent<ParticleSystem>();
+                Renderer ringsRenderer = rings.GetComponent<Renderer>();
+                ringsRenderer.material.SetColor("_TintColor", difficultyDef.color);
                 ParticleSystem.MinMaxGradient startColorRings = rings.main.startColor;
                 startColorRings.color = difficultyDef.color;
             }
