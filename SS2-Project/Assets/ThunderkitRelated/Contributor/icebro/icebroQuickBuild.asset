@@ -89,8 +89,11 @@ MonoBehaviour:
   PerManifest: 0
   ListType: 1
   Manifests: []
-  workingDirectory: C:\Program Files (x86)\Steam\steamapps\common\Risk of Rain 2
-  executable: Risk of Rain 2.exe
+  workingDirectory: /home/icebrah/
+  executable: STEAM_RUNTIME=1 protontricks-launch
   arguments:
+  - --appid 632360 "/run/media/icebrah/buh/SteamLibrary/steamapps/common/Risk of
+    Rain 2/Risk of Rain 2.exe"
+  - -applaunch 632360
   - --doorstop-enabled true
-  - --doorstop-target-assembly "C:\Users\icebrah\AppData\Roaming\com.kesomannen.gale\riskofrain2\profiles\Default\BepInEx\core\BepInEx.Preloader.dll"
+  - --doorstop-target-assembly "/run/media/icebrah/buh/gale/riskofrain2/profiles/ss2debug/BepInEx/core/BepInEx.Preloader.dll"

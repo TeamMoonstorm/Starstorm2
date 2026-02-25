@@ -114,7 +114,7 @@ namespace SS2
             {
                 if (portalIndicator) Destroy(portalIndicator);
                 EtherealBehavior.instance.OnEtherealTeleporterCharged();
-                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.SharedStages), 20f, 30f, "SS2_PORTAL_VOIDSHOP_APPEAR");
+                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.SharedStages), 20f, 30f, "hehe oortal");
             }               
         }
 

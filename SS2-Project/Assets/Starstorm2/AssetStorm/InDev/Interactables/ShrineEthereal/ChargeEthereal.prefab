@@ -5254,17 +5254,17 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.9980769
-          value: 0.09933776
-          inSlope: -1.8478435
-          outSlope: -1.8478435
+          time: 1
+          value: 0
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 0
@@ -9345,9 +9345,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4254324984313230}
-  - component: {fileID: 114506983356354260}
   - component: {fileID: 54653556716212032}
   - component: {fileID: 5415556575121365185}
+  - component: {fileID: 8386713129668558137}
   m_Layer: 0
   m_Name: ChargeEthereal
   m_TagString: Untagged
@@ -9372,19 +9372,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
---- !u!114 &114506983356354260
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1833737943356694}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -335047464, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackedParticleSystem: {fileID: 0}
 --- !u!54 &54653556716212032
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9425,6 +9412,31 @@ MonoBehaviour:
   radius: 100
   scaleShakeRadiusWithLocalScale: 0
   amplitudeTimeDecay: 1
+--- !u!114 &8386713129668558137
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833737943356694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: Sparks
+    transform: {fileID: 4301346854625138}
+  - name: ChargeRing
+    transform: {fileID: 4467838295633561}
+  - name: Distortion
+    transform: {fileID: 4175228687202867}
+  - name: DistortionRim
+    transform: {fileID: 4135205316270923}
+  - name: Lightning
+    transform: {fileID: 4487132132364574}
+  - name: PointLight
+    transform: {fileID: 4161051554188309}
 --- !u!1 &1908011369908981
 GameObject:
   m_ObjectHideFlags: 0
@@ -9896,17 +9908,17 @@ ParticleSystem:
           outSlope: 0
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
-          time: 0.9980769
-          value: 0.09933776
-          inSlope: -1.8478435
-          outSlope: -1.8478435
+          time: 1
+          value: 0
+          inSlope: -2
+          outSlope: -2
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 0
