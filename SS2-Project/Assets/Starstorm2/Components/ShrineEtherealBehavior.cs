@@ -16,7 +16,7 @@ namespace SS2
         private bool chargeUp; 
         private bool chargeDown; 
         private MeshRenderer difficultyDisplay;
-        private ParticleSystem[] chargeParticles;
+        private ParticleSystem[] reverseParticles;
  
         [SerializeField] 
         public ChildLocator childLocator; 
@@ -33,15 +33,15 @@ namespace SS2
             childLocator = GetComponent<ChildLocator>(); 
  
             purchaseCount = 0; 
-        } 
- 
-        public void FixedUpdate() 
-        { 
+            
             if (valueProjector)
             {
                 valueProjector.contentProvider = this;
             }
-            
+        } 
+ 
+        public void FixedUpdate() 
+        { 
             if (waitingForRefresh) 
             { 
                 refreshTimer -= Time.fixedDeltaTime; 
@@ -83,13 +83,13 @@ namespace SS2
                 if (childLocator != null)
                 {
                     chargeDown = false;
-                    chargeParticles = null;
+                    reverseParticles = null;
                     childLocator.FindChild("ChargeVFX").gameObject.SetActive(false);
                 }
             }
             
-            if (chargeParticles == null) return;
-            foreach (ParticleSystem chargeSystem in chargeParticles)
+            if (reverseParticles == null) return;
+            foreach (ParticleSystem chargeSystem in reverseParticles)
             {
                 chargeSystem.Simulate(chargeTimer);
             }
@@ -111,7 +111,7 @@ namespace SS2
                     ChildLocator chargeVFXChildLocator = ChargeVFX.GetComponent<ChildLocator>();
                     if (chargeVFXChildLocator)
                     {
-                        chargeParticles = new []
+                        reverseParticles = new []
                         {
                             chargeVFXChildLocator.FindChild("ChargeRing").GetComponent<ParticleSystem>(),
                             chargeVFXChildLocator.FindChild("Distortion").GetComponent<ParticleSystem>(),
@@ -138,12 +138,11 @@ namespace SS2
             waitingForRefresh = false; 
             chargeUp = false; 
             purchaseInteraction.SetAvailable(false); 
-        } 
- 
-        public void ActivateEtherealTerminal(Interactor interactor) 
+        }
+
+        private void ActivateEtherealTerminal(Interactor interactor) 
         { 
             //Add shrine use effect EffectManager.SpawnEffect() https://github.com/Flanowski/Moonstorm/blob/0.4/Starstorm%202/Cores/EtherealCore.cs 
- 
             if (purchaseCount == 0) 
             { 
                 purchaseInteraction.contextToken = "SS2_SHRINE_ETHEREAL_CONTEXT_CANCEL"; 
@@ -184,7 +183,7 @@ namespace SS2
         // difficulty hologram stuff ,.,.
         public bool ShouldDisplayHologram(GameObject viewer)
         {
-            return (purchaseCount < 1 && !EtherealBehavior.instance.runIsEthereal);
+            return (purchaseCount < 1 && !EtherealBehavior.instance.runIsEthereal && purchaseInteraction.available && GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) != "EclipseRun");
         }
 
         public GameObject GetHologramContentPrefab()
@@ -203,18 +202,15 @@ namespace SS2
             difficultyDisplay.material.mainTexture = difficultyDef.GetIconSprite().texture;
             difficultyDisplay.material.SetColor(TintColor, difficultyDef.color);
                 
-            //make this less messy later <//3 ,.,.
             ChildLocator difficultyChildLocator = hologramContentObject.GetComponent<ChildLocator>();
             if (!difficultyChildLocator) return;
             
             ParticleSystem fire = difficultyChildLocator.FindChild("Fire").gameObject.GetComponent<ParticleSystem>();
-            Renderer fireRenderer = fire.GetComponent<Renderer>();
-            fireRenderer.material.SetColor(TintColor, difficultyDef.color);
+            fire.GetComponent<Renderer>().material.SetColor(TintColor, difficultyDef.color);
             fire.colorOverLifetime.color.gradient.colorKeys[1].color = difficultyDef.color;
                 
             ParticleSystem rings = difficultyChildLocator.FindChild("Rings").gameObject.GetComponent<ParticleSystem>();
-            Renderer ringsRenderer = rings.GetComponent<Renderer>();
-            ringsRenderer.material.SetColor(TintColor, difficultyDef.color);
+            rings.GetComponent<Renderer>().material.SetColor(TintColor, difficultyDef.color);
         }
         
         private static readonly int TintColor = Shader.PropertyToID("_TintColor"); // rider is telling me to do this <//3 ,.., 

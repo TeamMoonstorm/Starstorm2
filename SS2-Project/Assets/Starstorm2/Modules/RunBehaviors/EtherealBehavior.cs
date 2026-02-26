@@ -259,7 +259,7 @@ namespace SS2
             var run = Run.instance;
             DifficultyDef curDiff = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty);
             
-            if (!runIsEthereal)
+            if (!runIsEthereal && GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) != "EclipseRun")
             {
                 runIsEthereal = true;
                 run.selectedDifficulty = GetUpdatedDifficulty();
@@ -285,7 +285,9 @@ namespace SS2
             
             var diff = DifficultyCatalog.GetDifficultyDef(currentDiffIndex);
             if (!diffDicts.TryGetValue(currentDiffIndex, out newDiffIndex))
-            {            
+            {   
+                if(GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "EclipseRun") return currentDiffIndex;
+                
                 SS2Log.Warning($"EtherealBehavior.UpdateDifficulty(): Could not find ethereal difficulty for DifficultyDef {Language.GetString(diff.nameToken)}, using it's scaling value instead.");
                 if (diff.scalingValue >= 1 && diff.scalingValue < 2 && diffDicts.TryGetValue(DifficultyIndex.Easy, out newDiffIndex)) // if drizzle scaling
                 {
@@ -308,8 +310,6 @@ namespace SS2
 
             return newDiffIndex;
         }
-
-        
 
         [ConCommand(commandName = "run_set_ethereals_cleared", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the number of ethereal teleporters completed. Zero to disable. Format: {etherealsCompleted}")]
         public static void CCSetEtherealsCleared(ConCommandArgs args)
