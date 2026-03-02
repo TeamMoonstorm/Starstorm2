@@ -66,7 +66,7 @@ namespace EntityStates.CloneDrone
             {
                 //bypass non-items
                 var tempGPC = obj.GetComponent<GenericPickupController>();
-                if (tempGPC && (!obj.TryGetComponent<SS2.Interactables.CloneDroneDamaged.ClonedPickup>(out var c) || c.CanBeCloned(base.gameObject)) && IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
+                if (tempGPC && !tempGPC.Duplicated && (!obj.TryGetComponent<SS2.Interactables.CloneDroneDamaged.ClonedPickup>(out var c) || c.CanBeCloned(base.gameObject)) && IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
                 {
                     float distance = Vector3.Distance(transform.position, obj.transform.position);
                     //if no closest object or obj is closer than old closest object

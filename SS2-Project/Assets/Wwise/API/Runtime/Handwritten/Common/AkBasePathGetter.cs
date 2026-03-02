@@ -44,7 +44,11 @@ public partial class AkBasePathGetter
 		if (!string.IsNullOrEmpty(platformSubDir))
 			return platformSubDir;
 
+#if (UNITY_EDITOR_LINUX)
 		return "Windows";
+#else
+  		return DefaultPlatformName;
+#endif
 	}
 }
 

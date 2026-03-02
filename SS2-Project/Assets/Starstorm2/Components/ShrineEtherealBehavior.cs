@@ -183,7 +183,7 @@ namespace SS2
         // difficulty hologram stuff ,.,.
         public bool ShouldDisplayHologram(GameObject viewer)
         {
-            return (purchaseCount < 1 && !EtherealBehavior.instance.runIsEthereal && purchaseInteraction.available && GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) != "EclipseRun");
+            return (purchaseCount < 1 && !EtherealBehavior.instance.runIsEthereal && purchaseInteraction.available && !EtherealBehavior.instance.runIsEclipse);
         }
 
         public GameObject GetHologramContentPrefab()

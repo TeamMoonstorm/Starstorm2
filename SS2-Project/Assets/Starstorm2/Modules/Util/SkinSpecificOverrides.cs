@@ -4,6 +4,8 @@ using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 using RoR2.Projectile;
 using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
 namespace SS2.Modules
 {
     public static class SkinSpecificOverrides
@@ -11,12 +13,24 @@ namespace SS2.Modules
         public static SkillDef phaseRoundDef;
         public static EntityStateConfiguration phaseRoundESC;
 
-        private static GameObject toolbotLunarSpear = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
+        private static GameObject toolbotLunarSpear;
 
-        internal static Material matLunarGolem = Addressables.LoadAssetAsync<Material>("RoR2/Base/LunarGolem/matLunarGolem.mat").WaitForCompletion();
+        internal static Material matLunarGolem;
         [SystemInitializer]
         public static void Initialize()
         {
+            AsyncOperationHandle<Material> matLunarGolemAddresable = Addressables.LoadAssetAsync<Material>("RoR2/Base/LunarGolem/matLunarGolem.mat");
+            matLunarGolemAddresable.Completed += _ =>
+            {
+                matLunarGolem = matLunarGolemAddresable.Result;
+            };
+
+            AsyncOperationHandle<GameObject> toolbotLunarSpearAddressable = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab");
+            toolbotLunarSpearAddressable.Completed += _ =>
+            {
+                toolbotLunarSpear = toolbotLunarSpearAddressable.Result;
+            };
+            
             //Generic Hooks (Currently all Commando - subject to change)
             On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
             On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;

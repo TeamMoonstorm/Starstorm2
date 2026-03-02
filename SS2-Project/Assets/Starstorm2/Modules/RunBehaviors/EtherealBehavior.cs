@@ -31,6 +31,7 @@ namespace SS2
         public int etherealStagesCompleted;
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
+        public bool runIsEclipse;
 
         [SystemInitializer]
         internal static void Init()
@@ -68,6 +69,7 @@ namespace SS2
             }
             run = GetComponentInParent<Run>();
             instance = this;
+            runIsEclipse = GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "EclipseRun";
             Run.ambientLevelCap = defaultLevelCap;
             Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
@@ -224,11 +226,11 @@ namespace SS2
         {
             PortalStatueBehavior[] statues = GameObject.FindObjectsOfType<PortalStatueBehavior>(true).Where(p => p.portalType == PortalStatueBehavior.PortalType.Shop).ToArray();
             PortalStatueBehavior[] disabledStatues = statues.Where(p => !p.gameObject.activeInHierarchy).ToArray();
-            if(false)//disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
+            if(disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
             {
                 Transform newt = disabledStatues[UnityEngine.Random.Range(0, disabledStatues.Length)].transform;
                 GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
-                NetworkServer.Spawn(term);               
+                NetworkServer.Spawn(term);  
             }
             else if (statues.Length > 0)
             {
@@ -259,7 +261,7 @@ namespace SS2
             var run = Run.instance;
             DifficultyDef curDiff = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty);
             
-            if (!runIsEthereal && GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) != "EclipseRun")
+            if (!runIsEthereal && !runIsEclipse)
             {
                 runIsEthereal = true;
                 run.selectedDifficulty = GetUpdatedDifficulty();
@@ -286,7 +288,7 @@ namespace SS2
             var diff = DifficultyCatalog.GetDifficultyDef(currentDiffIndex);
             if (!diffDicts.TryGetValue(currentDiffIndex, out newDiffIndex))
             {   
-                if(GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "EclipseRun") return currentDiffIndex;
+                if(runIsEclipse) return currentDiffIndex;
                 
                 SS2Log.Warning($"EtherealBehavior.UpdateDifficulty(): Could not find ethereal difficulty for DifficultyDef {Language.GetString(diff.nameToken)}, using it's scaling value instead.");
                 if (diff.scalingValue >= 1 && diff.scalingValue < 2 && diffDicts.TryGetValue(DifficultyIndex.Easy, out newDiffIndex)) // if drizzle scaling
