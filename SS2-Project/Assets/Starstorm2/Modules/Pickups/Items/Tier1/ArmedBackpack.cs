@@ -23,11 +23,12 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float procMinimum = 0;
 
-        public static ProcChainMask ignoredProcs;
-
+        public static GameObject projectilePrefab;
+        public static GameObject effectPrefab;
 
         public override void Initialize()
         {
+            projectilePrefab = SS2Assets.LoadAsset<GameObject>("BackpackMissile", SS2Bundle.Items);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior, IOnTakeDamageServerReceiver
@@ -40,29 +41,27 @@ namespace SS2.Items
                 if (stack > 0 && damageReport.damageDealt > 0)
                 {
                     float percentHPLoss = (damageReport.damageDealt / damageReport.victim.fullCombinedHealth) * 100f * procMult;
-                    var playerBody = damageReport.victimBody;
                     var rollChance = percentHPLoss > procMinimum ? percentHPLoss : procMinimum;
 
-                    if (Util.CheckRoll(rollChance, playerBody.master))
+                    if (Util.CheckRoll(rollChance, body.master))
                     {
                         float damageCoefficient = backpackDamageCoeff * stack;
-                        float missileDamage = playerBody.damage * damageCoefficient;
+                        float missileDamage = body.damage * damageCoefficient;
 
-                        var teamIndex = damageReport.attackerTeamIndex;
                         var attacker = damageReport.attacker;
-
-                        if (teamIndex == TeamIndex.None || teamIndex == TeamIndex.Player)
+                        if (damageReport.attackerBody == null)
                         {
-                            attacker = null; //this prevents it from firing into blood shrines and i guess yourself/teammates if that lunar active is involved
+                            attacker = null;
                         }
+
                         MissileUtils.FireMissile(
-                            playerBody.corePosition,
-                            playerBody,
-                            ignoredProcs,
+                            body.corePosition,
+                            body,
+                            default(ProcChainMask),
                             attacker,
                             missileDamage,
-                            Util.CheckRoll(playerBody.crit, playerBody.master),
-                            GlobalEventManager.CommonAssets.missilePrefab,
+                            Util.CheckRoll(body.crit, body.master),
+                            projectilePrefab,
                             DamageColorIndex.Item,
                             false);
                     }

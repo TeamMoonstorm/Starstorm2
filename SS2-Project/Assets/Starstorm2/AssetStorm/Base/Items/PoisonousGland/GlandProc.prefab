@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -200,6 +201,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   timeMax: 1.5
+  ignoreResetOnEnable: 0
+  loop: 0
 --- !u!1 &1146943421227262
 GameObject:
   m_ObjectHideFlags: 0
@@ -2836,6 +2839,7 @@ MonoBehaviour:
   applyScale: 0
   soundName: Play_item_proc_bear
   disregardZScale: 0
+  applyScaleFirst: 0
 --- !u!114 &114849515271133637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2875,7 +2879,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878944934884970}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c0de5980f96a52a4a9bf887ae06a1168, type: 3}
   m_Name: 
