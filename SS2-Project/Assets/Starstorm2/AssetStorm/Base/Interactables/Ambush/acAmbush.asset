@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60493b2c7e2a9e04280b9f65fb9cc981, type: 3}
+  m_Name: acAmbush
+  m_EditorClassIdentifier: 
+  assets:
+  - {fileID: 11400000, guid: 68302225a50f8f8449bb6607d451a019, type: 2}
+  - {fileID: 1333464370403560, guid: 7a3e7a51d6df241499d23a7a1f5586e0, type: 3}
+  - {fileID: 1333464370403560, guid: 8be28f39e409b1046a763588c8ffc227, type: 3}
+  - {fileID: 1333464370403560, guid: ccca829a259b99c46aa3893127f34912, type: 3}
+  - {fileID: 2458143419988473396, guid: ab3a1504421d6584b803c52b9310381a, type: 3}
+  interactablePrefab: {fileID: 2458143419988473396, guid: ab3a1504421d6584b803c52b9310381a,
+    type: 3}
+  interactableCardProvider: {fileID: 11400000, guid: 68302225a50f8f8449bb6607d451a019,
+    type: 2}

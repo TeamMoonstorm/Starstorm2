@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d10af29dc523c7243a6e6e3d787aa1d6, type: 3}
-  m_Name: icpPedestal
+  m_Name: icpAmbush
   m_EditorClassIdentifier: 
   serializedCardPairs:
   - stage:
-      Value: 2198217871870
+      Value: 2168086479358
     customStageNames: []
-    interactableCategory: 3
-    customCategoryWeight: 0
-    customCategoryName: 
+    interactableCategory: 1
+    customCategoryWeight: 10
+    customCategoryName: Ambush
     requiredExpansions:
     - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
       _address: 
@@ -26,13 +26,13 @@ MonoBehaviour:
       _canLoadFromCatalog: 0
     card:
       spawnCard:
-        _asset: {fileID: 11400000, guid: 5377e0501a2c7f649a1141360acfc8f1, type: 2}
+        _asset: {fileID: 11400000, guid: 67e4e066ebc08b64fb8cce94ad89ae67, type: 2}
         _address: 
         _useDirectReference: 1
-      selectionWeight: 2
+      selectionWeight: 25
       spawnDistance: 0
       preventOverhead: 0
-      minimumStageCompletions: 0
+      minimumStageCompletions: 1
       requiredUnlockableDef:
         _asset: {fileID: 0}
         _address: 
