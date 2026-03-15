@@ -946,6 +946,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="ProcArmedBackpack" ID="{584F203D-6A40-46D2-B3CF-21E4C3868379}">
+							<ChildrenList>
+								<Action Name="" ID="{1A95C5D6-9E83-49A2-A8CE-1010CE48D7DA}" ShortID="397494896">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_armedBackpack" ID="{AD028BC8-89FF-4574-BCE2-015EF1D37D74}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_item_proc_armedBackpack" ID="{374BECE4-C81A-481C-AF18-6CC0526FA6C5}">
+							<ChildrenList>
+								<Action Name="" ID="{F4ACF67E-02E2-403E-B6AA-44ACDE6598D9}" ShortID="432445894">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_proc_armedBackpack" ID="{AD028BC8-89FF-4574-BCE2-015EF1D37D74}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">
