@@ -66,7 +66,7 @@ namespace SS2.Components
             public void OnTakeDamageServer(DamageReport damageReport)
             {
                 // MIND CONTROLLING PLAYER WOULD BE FUNNY.... but alas...
-                if(damageReport.victimBody && !damageReport.victimBody.isPlayerControlled && damageReport.victimBody.healthComponent.combinedHealthFraction < convertHealthFraction)
+                if(damageReport.victimBody != null && damageReport.victimBody.HasBuff(SS2Content.Buffs.BuffChirrConvert) && !damageReport.victimBody.isPlayerControlled && damageReport.victimBody.healthComponent.combinedHealthFraction < convertHealthFraction)
                 {
                     
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)

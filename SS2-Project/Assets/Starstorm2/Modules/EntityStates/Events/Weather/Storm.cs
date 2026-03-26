@@ -97,6 +97,10 @@ namespace EntityStates.Events
                     bossDirector.onSpawnedServer.AddListener(modifyBoss = new UnityAction<GameObject>(ModifySpawnedBoss));
                 }
 
+                if (stormLevel < 1 && TeleporterUpgradeController.instance)
+                {
+                    TeleporterUpgradeController.instance.UpgradeStorm(false);
+                }
 
                 foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                 {
@@ -144,7 +148,7 @@ namespace EntityStates.Events
         {
             CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
             if (master.inventory.currentEquipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
-            master.inventory.GiveItem(SS2Content.Items.AffixStorm);
+            master.inventory.GiveItemPermanent(SS2Content.Items.AffixStorm);
 
             GameObject bodyObject = master.GetBodyObject();
             if (bodyObject)
@@ -223,6 +227,10 @@ namespace EntityStates.Events
                     if (stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
                     {
                         outer.SetNextState(new Calm());
+                        if (TeleporterUpgradeController.instance != null)
+                        {
+                            TeleporterUpgradeController.instance.UpgradeStorm(false);
+                        }
                         var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
                         foreach (var teamMember in enemies)
                         {

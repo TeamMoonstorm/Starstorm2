@@ -114,7 +114,7 @@ namespace SS2
             {
                 if (portalIndicator) Destroy(portalIndicator);
                 EtherealBehavior.instance.OnEtherealTeleporterCharged();
-                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.SharedStages), 20f, 30f, "hehe oortal");
+                teleporter.AttemptSpawnPortal(SS2Assets.LoadAsset<InteractableSpawnCard>("iscStrangerPortal", SS2Bundle.SharedStages), 20f, 30f, "SS2_PORTAL_VOIDSHOP_APPEAR");
             }               
         }
 
@@ -124,9 +124,9 @@ namespace SS2
             {
                 CharacterMaster bodyMaster = masterObject.GetComponent<CharacterMaster>();
                 // TODO: move all this item granting to one class. its getting tricky to keep track of
-                bodyMaster.inventory.GiveItem(SS2Content.Items.EtherealItemAffix);
-                bodyMaster.inventory.GiveItem(RoR2Content.Items.BoostHp, (int)(14 + (7 * EtherealBehavior.instance.etherealsCompleted)));
-                bodyMaster.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 1 + EtherealBehavior.instance.etherealsCompleted);
+                bodyMaster.inventory.GiveItemPermanent(SS2Content.Items.EtherealItemAffix);
+                bodyMaster.inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, (int)(14 + (7 * EtherealBehavior.instance.etherealsCompleted)));
+                bodyMaster.inventory.GiveItemPermanent(SS2Content.Items.MaxHealthPerMinute, 1 + EtherealBehavior.instance.etherealsCompleted);
             }
         }
 
