@@ -1,4 +1,4 @@
-﻿using R2API;
+using R2API;
 using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
@@ -31,6 +31,7 @@ namespace SS2
         public int etherealStagesCompleted;
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
+        public bool runIsEclipse;
 
         [SystemInitializer]
         internal static void Init()
@@ -68,6 +69,7 @@ namespace SS2
             }
             run = GetComponentInParent<Run>();
             instance = this;
+            runIsEclipse = GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "EclipseRun";
             Run.ambientLevelCap = defaultLevelCap;
             Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
@@ -224,11 +226,11 @@ namespace SS2
         {
             PortalStatueBehavior[] statues = GameObject.FindObjectsOfType<PortalStatueBehavior>(true).Where(p => p.portalType == PortalStatueBehavior.PortalType.Shop).ToArray();
             PortalStatueBehavior[] disabledStatues = statues.Where(p => !p.gameObject.activeInHierarchy).ToArray();
-            if(false)//disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
+            if(disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
             {
                 Transform newt = disabledStatues[UnityEngine.Random.Range(0, disabledStatues.Length)].transform;
                 GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
-                NetworkServer.Spawn(term);               
+                NetworkServer.Spawn(term);  
             }
             else if (statues.Length > 0)
             {
@@ -259,10 +261,11 @@ namespace SS2
             var run = Run.instance;
             DifficultyDef curDiff = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty);
             
-            if (!runIsEthereal)
+            if (!runIsEthereal && !runIsEclipse)
             {
                 runIsEthereal = true;
-                UpdateDifficulty();
+                run.selectedDifficulty = GetUpdatedDifficulty();
+                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
             }
             else
             {
@@ -275,15 +278,18 @@ namespace SS2
             pendingDifficultyUp = false;          
         }
 
-        //one-time difficulty adjustments
-        public void UpdateDifficulty()
+        //one-time difficulty adjustments - stealing this for shrines too :3 ,,.
+        public DifficultyIndex GetUpdatedDifficulty()
         {
             //switch to ethereal difficulty
             DifficultyIndex newDiffIndex;
             DifficultyIndex currentDiffIndex = run.selectedDifficulty;
+            
             var diff = DifficultyCatalog.GetDifficultyDef(currentDiffIndex);
             if (!diffDicts.TryGetValue(currentDiffIndex, out newDiffIndex))
-            {            
+            {   
+                if(runIsEclipse) return currentDiffIndex;
+                
                 SS2Log.Warning($"EtherealBehavior.UpdateDifficulty(): Could not find ethereal difficulty for DifficultyDef {Language.GetString(diff.nameToken)}, using it's scaling value instead.");
                 if (diff.scalingValue >= 1 && diff.scalingValue < 2 && diffDicts.TryGetValue(DifficultyIndex.Easy, out newDiffIndex)) // if drizzle scaling
                 {
@@ -303,11 +309,9 @@ namespace SS2
                     newDiffIndex = Typhoon.sdd.DifficultyIndex;
                 }
             }
-            run.selectedDifficulty = newDiffIndex;
-            run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(newDiffIndex).nameToken));
-        }
 
-        
+            return newDiffIndex;
+        }
 
         [ConCommand(commandName = "run_set_ethereals_cleared", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the number of ethereal teleporters completed. Zero to disable. Format: {etherealsCompleted}")]
         public static void CCSetEtherealsCleared(ConCommandArgs args)
