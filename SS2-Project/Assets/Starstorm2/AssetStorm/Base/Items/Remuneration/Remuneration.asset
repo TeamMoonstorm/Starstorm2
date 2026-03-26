@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: Remuneration
   m_EditorClassIdentifier: 
-  deprecatedTier: 10
+  deprecatedTier: 1000
   _itemTierDef: {fileID: 11400000, guid: 7724d13694ccd3246af8213dd3a27977, type: 2}
   nameToken: SS2_ITEM_REMUNERATION_NAME
   pickupToken: SS2_ITEM_REMUNERATION_PICKUP
@@ -21,7 +21,12 @@ MonoBehaviour:
   unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 2128144437572155757, guid: 184f01d7a44c4394ba0206a637e64b2a,
     type: 3}
+  pickupModelReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   pickupIconSprite: {fileID: 21300000, guid: a9b463257b1d3cd40be76b66c22245b3, type: 3}
+  isConsumed: 0
   hidden: 0
   canRemove: 0
   tags: 09000000040000000b00000014000000

@@ -42,7 +42,7 @@ Additional thanks to...
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, swuff★, T_Dimensional, Zenithrium
 * Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk & DarSitam (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
-* Special thanks - Altzeus, Breadm DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
+* Special thanks - Altzeus, bread, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
 ## Compatibility 
 * [Driver](https://thunderstore.io/package/public_ParticleSystem/Driver/) Adds support for Relic of Termination and has NemMerc's shotgun as a new primary for Driver.

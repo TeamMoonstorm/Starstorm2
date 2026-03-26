@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: ShardScav
   m_EditorClassIdentifier: 
-  deprecatedTier: 10
+  deprecatedTier: 1000
   _itemTierDef: {fileID: 11400000, guid: a81d594a34038564ca4d5696d6942b5e, type: 2}
   nameToken: SS2_ITEM_SHARDSCAV_NAME
   pickupToken: SS2_ITEM_SHARDSCAV_PICKUP
@@ -21,9 +21,13 @@ MonoBehaviour:
   unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 7413493175617481359, guid: 9ae4bb18477d89a4a9ab462d82db0682,
     type: 3}
+  pickupModelReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   pickupIconSprite: {fileID: 21300000, guid: 749b43b05f39a9047873aa07003356a7, type: 3}
   isConsumed: 0
   hidden: 0
   canRemove: 0
-  tags: 
-  requiredExpansion: {fileID: 0}
+  tags: 09000000
+  requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}

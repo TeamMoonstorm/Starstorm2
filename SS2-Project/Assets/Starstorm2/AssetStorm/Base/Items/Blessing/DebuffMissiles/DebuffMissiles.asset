@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: -1284244208, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: DebuffMissiles
   m_EditorClassIdentifier: 
-  deprecatedTier: 10
+  deprecatedTier: 1000
   _itemTierDef: {fileID: 11400000, guid: a81d594a34038564ca4d5696d6942b5e, type: 2}
   nameToken: SS2_ITEM_DEBUFFMISSILES_NAME
   pickupToken: SS2_ITEM_DEBUFFMISSILES_PICKUP
@@ -20,6 +20,10 @@ MonoBehaviour:
   loreToken: SS2_ITEM_DEBUFFMISSILES_LORE
   unlockableDef: {fileID: 0}
   pickupModelPrefab: {fileID: 0}
+  pickupModelReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   pickupIconSprite: {fileID: 21300000, guid: 4691d8412f9a4614d944f89c5b3362af, type: 3}
   isConsumed: 0
   hidden: 0

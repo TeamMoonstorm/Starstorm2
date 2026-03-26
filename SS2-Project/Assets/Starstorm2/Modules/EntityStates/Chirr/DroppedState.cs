@@ -152,7 +152,7 @@ namespace EntityStates.Chirr
 
         public override void OnExit()
 		{
-			if (base.isAuthority)
+			if (base.isAuthority && inflictor)
 			{
 				GrabController gc = this.inflictor.GetComponent<GrabController>();
 				gc.onVictimReleased -= ReleaseLatencyFixTEMP;

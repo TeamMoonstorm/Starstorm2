@@ -7,9 +7,20 @@ namespace SS2.Components
     {
         private Transform stuckTransform;
         private Vector3 localPosition;
-        private void Start()
+
+        private EffectComponent effectComponent;
+        private void Awake()
         {
-            EffectComponent effectComponent = base.GetComponent<EffectComponent>();
+            effectComponent = base.GetComponent<EffectComponent>();
+            effectComponent.OnEffectComponentReset += ResetEffect;
+        }
+        private void ResetEffect(bool hasEffectData)
+        {
+            if (!hasEffectData)
+            {
+                return;
+            }
+
             GameObject bodyObject = effectComponent.effectData.ResolveNetworkedObjectReference();
             if (!bodyObject)
             {

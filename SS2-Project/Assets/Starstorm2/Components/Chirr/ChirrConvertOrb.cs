@@ -5,18 +5,13 @@ namespace SS2.Components
 {
     public class ChirrFriendOrb : GenericDamageOrb
     {
-        private static GameObject penis = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseOrbEffect.prefab").WaitForCompletion();
         public ChirrFriendTracker tracker;
         public float buffDuration = 8f;
         public float convertHealthFraction = 0.5f;
-        public override void Begin()
-        {
-            base.Begin();
-        }
 
         public override GameObject GetOrbEffect()
         {
-            return penis; // >:33333333
+            return UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseOrbEffect.prefab").WaitForCompletion();
         }
 
         public override void OnArrival()
@@ -39,6 +34,7 @@ namespace SS2.Components
                     attackerObject = attacker,
                     dotIndex = Survivors.Chirr.ConvertDotIndex,
                     duration = buffDuration,
+                    damageMultiplier = 1.0f,
                 };
                 DotController.InflictDot(ref inflictDotInfo);
             }
@@ -52,11 +48,15 @@ namespace SS2.Components
             public float convertHealthFraction = 0.5f;
             public float lifetime;
             private float stopwatch;
-            private void Awake()
+            private void OnEnable()
             {
                 HealthComponent h = base.GetComponent<HealthComponent>();
                 this.body = h.body;
-                HG.ArrayUtils.ArrayAppend<IOnTakeDamageServerReceiver>(ref h.onTakeDamageReceivers, this);
+                h.AddOnTakeDamageServerReceiver(this);
+            }
+            private void OnDisable()
+            {
+                body.healthComponent.RemoveOnTakeDamageServerReceiver(this);
             }
             private void FixedUpdate()
             {
@@ -66,7 +66,7 @@ namespace SS2.Components
             public void OnTakeDamageServer(DamageReport damageReport)
             {
                 // MIND CONTROLLING PLAYER WOULD BE FUNNY.... but alas...
-                if(damageReport.victimBody && !damageReport.victimBody.isPlayerControlled && damageReport.victimBody.healthComponent.combinedHealthFraction < convertHealthFraction)
+                if(damageReport.victimBody != null && damageReport.victimBody.HasBuff(SS2Content.Buffs.BuffChirrConvert) && !damageReport.victimBody.isPlayerControlled && damageReport.victimBody.healthComponent.combinedHealthFraction < convertHealthFraction)
                 {
                     
                     if (chirrFriendTracker && chirrFriendTracker.friendOwnership)

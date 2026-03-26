@@ -14,7 +14,6 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acUltra", SS2Bundle.Equipments);
         private static GameObject _wardPrefab;
-
         public override void Initialize()
         {
             RecalculateStatsAPI.GetStatCoefficients += RecalculateStatsAPI_GetStatCoefficients;
@@ -54,9 +53,9 @@ namespace SS2.Items
                 {
                     body.AddBuff(SS2Content.Buffs.bdUltra);
 
-                    body.inventory.GiveItem(SS2Content.Items.BoostMovespeed, 50);
-                    body.inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 100);
-                    //body.inventory.GiveItem(RoR2Content.Items.BoostHp, 100);
+                    body.inventory.GiveItemPermanent(SS2Content.Items.BoostMovespeed, 50);
+                    body.inventory.GiveItemPermanent(SS2Content.Items.BoostCharacterSize, 100);
+                    //body.inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, 100);
 
                     wardInstance = Instantiate(_wardPrefab);
                     wardInstance.GetComponent<TeamFilter>().teamIndex = body.teamComponent.teamIndex;
@@ -70,9 +69,9 @@ namespace SS2.Items
                 {
                     body.RemoveBuff(SS2Content.Buffs.bdUltra);
 
-                    body.inventory.RemoveItem(SS2Content.Items.BoostMovespeed, 50);
-                    body.inventory.RemoveItem(SS2Content.Items.BoostCharacterSize, 100);
-                    //body.inventory.RemoveItem(RoR2Content.Items.BoostHp, 100);
+                    body.inventory.RemoveItemPermanent(SS2Content.Items.BoostMovespeed, 50);
+                    body.inventory.RemoveItemPermanent(SS2Content.Items.BoostCharacterSize, 100);
+                    //body.inventory.RemoveItemPermanent(RoR2Content.Items.BoostHp, 100);
 
                     if (wardInstance != null)
                         Destroy(wardInstance);

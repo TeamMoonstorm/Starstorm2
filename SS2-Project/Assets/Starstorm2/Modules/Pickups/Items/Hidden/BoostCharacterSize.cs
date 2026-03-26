@@ -78,6 +78,10 @@ namespace SS2.Items
 
             private void ModifySkillDrivers(float deltaScale)
             {
+                if (body == null || body.master.aiComponents.Length < 1)
+                {
+                    return;
+                }
 
                 if(skillDriverCache == null)
                 {
