@@ -4,30 +4,31 @@
     * Bug where item icons were too large when scrapped is now fixed.
     * Updated Korean translation thanks to Dice-001!
     * Adds linux deployment to the wwise project for the gorillion Linux users (Thanks Bread!)
-    * stops storms (2) from happening on planetarium, commencement and simulacrum (Thanks Bread!)
-    * fixes breadm on the readme (Thanks Bread!)
+    * Stops storms from happening on planetarium, commencement and simulacrum (Thanks Bread!)
+    * Fixes breadm on the readme (Thanks Bread!)
     * Orbeez fixed a few bugs but he never documented them so idfk what he fixed, but they had to do with Chirr, and Executioner! 
 * Skins
-    * fixes old skin particles on commandos vestige skin and mult gm skin (Thanks Bread!)
+    * Fixes old skin particles on commandos vestige skin and mult gm skin (Thanks Bread!)
 * Items
     * Fixes stirring soul icon being null (Thanks Bread!)
-    * removed temp tags from relic of mass and force (fixes substandard duplicator giving them when getting any lunar 
+    * Removed temp tags from relic of mass and force (fThanks Bread!)
     * Galvanic Core NRE checks 
     * Removed broken achievements from X4 stimulant, insecticide, and field accelerator (Thanks LordV!)
 * Beta
-    * Ethereal saplings now auto charge after hitting once !!! and show the next difficulty above them !!!! hit them again to cancel (Thanks Bread!)
-    * some new lang tokens for the ethereal saplings (Thanks Bread!)
-    * fixes lunar gambler bugs (Thanks Bread!)
-    Portal in void shop is replaced with current portal (Thanks LordV!)
-* Replaced the "hehe oortal" message with existing lang token for the appearance message (Thanks LordV!)
-* Fixed an error related to ultra enemies' AI being modified (Thanks LordV!)
-* Fixed knight CSS idle, knight normal idle, and executioner normal idle animations all not looping (Thanks LordV!)
-* Fixed pink textures in slate mines (Thanks LordV!)
-* Gave all shard pickups the "world unique" tag so they can be picked up with substandard duplicator (and it makes sense for them to be considered world unique too) (Thanks LordV!)
-* Re-enabled the storm shard and made it only appear when the beta is enabled (Thanks LordV!)
-    * The original method that dropped storm shards from the teleporter is commented out so I haven't re-implemented them dropping, but the item itself is back + is restricted to beta config (Thanks LordV!)
-* Made all shards require the SS2 expansion (Thanks LordV!)
-* Replaced Knight's skill descriptions with proper ones that have damage numbers (Thanks LordV!)
+    * DU-T has been added to the beta config, but be warned he is in a very early state. Play with caution!
+    * Ethereal saplings now auto charge after hitting once,  and show the next difficulty above them.  Hit them again to cancel (Thanks Bread!)
+    * Some new lang tokens for the ethereal saplings (Thanks Bread!)
+    * Fixes various lunar gambler bugs (Thanks Bread!)
+    * Portal in void shop is replaced with current portal (Thanks LordV!)
+    * Replaced the "hehe oortal" message with existing lang token for the appearance message (Thanks LordV!)
+    * Fixed an error related to ultra enemies' AI being modified (Thanks LordV!)
+    * Fixed knight CSS idle, knight normal idle, and executioner normal idle animations all not looping (Thanks LordV!)
+    * Fixed pink textures in slate mines (Thanks LordV!)
+    * Gave all shard pickups the "world unique" tag so they can be picked up with substandard duplicator (and it makes sense for them to be considered world unique too) (Thanks LordV!)
+    * Re-enabled the storm shard and made it only appear when the beta is enabled (Thanks LordV!)
+        * The original method that dropped storm shards from the teleporter is commented out so I haven't re-implemented them dropping, but the item itself is back + is restricted to beta config (Thanks LordV!)
+    * Made all shards require the SS2 expansion (Thanks LordV!)
+    * Replaced Knight's skill descriptions with proper ones that have damage numbers (Thanks LordV!)
 
 
 
