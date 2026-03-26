@@ -16,7 +16,8 @@ This update is largely thanks to long time SS2 community members bread and Lordr
     * Galvanic Core NRE checks 
     * Removed broken achievements from X4 stimulant, insecticide, and field accelerator (Thanks Lordryn!)
 * Beta
-    * DU-T has been added to the beta config, but be warned he is in a very early state. Play with caution!
+    * MULE and DU-T has been added to the beta config, but be warned he is in a very early state. Play with caution!
+        * NOTE: Seriously, they are very very early. They're being added as a treat for players to enjoy, but could be removed from the config at any point. MULE specifically has a full kit rework planned. DU-T will see less kit changes.
     * Ethereal saplings now auto charge after hitting once,  and show the next difficulty above them.  Hit them again to cancel (Thanks bread!)
     * Some new lang tokens for the ethereal saplings (Thanks bread!)
     * Fixes various lunar gambler bugs (Thanks bread!)
