@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+using UnityEngine;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 using RoR2.Projectile;
 using UnityEngine.Networking;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
 namespace SS2.Modules
 {
     public static class SkinSpecificOverrides
@@ -11,27 +13,37 @@ namespace SS2.Modules
         public static SkillDef phaseRoundDef;
         public static EntityStateConfiguration phaseRoundESC;
 
-        private static GameObject toolbotLunarSpear = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").WaitForCompletion();
+        private static GameObject toolbotLunarSpear;
 
         internal static Material matLunarGolem;
         [SystemInitializer]
         public static void Initialize()
         {
-            // TODO: Commenting this out for the memop skin bug
+            AsyncOperationHandle<Material> matLunarGolemAddresable = Addressables.LoadAssetAsync<Material>("RoR2/Base/LunarGolem/matLunarGolem.mat");
+            matLunarGolemAddresable.Completed += _ =>
+            {
+                matLunarGolem = matLunarGolemAddresable.Result;
+            };
+
+            AsyncOperationHandle<GameObject> toolbotLunarSpearAddressable = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab");
+            toolbotLunarSpearAddressable.Completed += _ =>
+            {
+                toolbotLunarSpear = toolbotLunarSpearAddressable.Result;
+            };
+            
             //Generic Hooks (Currently all Commando - subject to change)
-            //On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
-            //On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
-            //CharacterBody.onBodyStartGlobal += BodyStartGlobal;
+            On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
+            On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
+            CharacterBody.onBodyStartGlobal += BodyStartGlobal;
 
             //MUL-T specific
-            //matLunarGolem = Object.Instantiate(Resources.Load<GameObject>("Prefabs/CharacterBodies/LunarGolemBody").GetComponentInChildren<CharacterModel>().baseRendererInfos[0].defaultMaterial); // to-do: update this into an addressable
-            //On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
-            //On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
-            //On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
-            //On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
+            On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
+            On.EntityStates.Toolbot.FireSpear.FireBullet += FireSpear_FireBullet;
+            On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
+            On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
 
-            //merc specific
+            //merc specific - to my knowledge this one doesnt work .,., wolfoqol already adds support for it so oh wells !! 
             //On.RoR2.SkinDef.Apply += ModifiyLighting;
         }
 
@@ -112,6 +124,7 @@ namespace SS2.Modules
             orig(self, aimRay);  
         }
 
+        //unsure what this one does and the code looks a little scary and overcomplicated to 
         /*public static void ToolbotDash_OnExit(On.EntityStates.Toolbot.ToolbotDash.orig_OnExit orig, EntityStates.Toolbot.ToolbotDash self)
         {
             string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;

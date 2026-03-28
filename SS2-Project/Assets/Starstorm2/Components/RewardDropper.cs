@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using RoR2;
 using UnityEngine;
@@ -121,13 +121,14 @@ namespace SS2
 
             for(int i = 0; i < reward.white; i++)
             {
-                PickupIndex pickupIndex = this.rng.NextElementUniform<PickupIndex>(Run.instance.availableTier1DropList);
+                PickupIndex pickupIndex = rng.NextElementUniform<PickupIndex>(Run.instance.availableTier1DropList);
                 pickupQueue.Enqueue(new RewardInfo { pickupIndex = pickupIndex });
             }
             for (int i = 0; i < reward.whiteOption; i++)
             {
-                PickupIndex[] options = dtTier1.GenerateUniqueDrops(3, this.rng);
-                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromArray(options), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier1) });
+                List<UniquePickup> pickups = new List<UniquePickup>();
+                dtTier1.GenerateDistinctPickups(pickups, 3, rng);
+                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromList(pickups), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier1) });
             }
             for(int i = 0; i < reward.whiteCommand; i++)
             {
@@ -136,13 +137,14 @@ namespace SS2
 
             for (int i = 0; i < reward.green; i++)
             {
-                PickupIndex pickupIndex = this.rng.NextElementUniform<PickupIndex>(Run.instance.availableTier2DropList);
+                PickupIndex pickupIndex = rng.NextElementUniform<PickupIndex>(Run.instance.availableTier2DropList);
                 pickupQueue.Enqueue(new RewardInfo { pickupIndex = pickupIndex });
             }
             for (int i = 0; i < reward.greenOption; i++)
             {
-                PickupIndex[] options = dtTier2.GenerateUniqueDrops(3, this.rng);
-                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromArray(options), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier2) });
+                List<UniquePickup> pickups = new List<UniquePickup>();
+                dtTier2.GenerateDistinctPickups(pickups, 3, rng);
+                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromList(pickups), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier2) });
             }
             for (int i = 0; i < reward.greenCommand; i++)
             {
@@ -151,13 +153,14 @@ namespace SS2
 
             for (int i = 0; i < reward.red; i++)
             {
-                PickupIndex pickupIndex = this.rng.NextElementUniform<PickupIndex>(Run.instance.availableTier3DropList);
+                PickupIndex pickupIndex = rng.NextElementUniform<PickupIndex>(Run.instance.availableTier3DropList);
                 pickupQueue.Enqueue(new RewardInfo { pickupIndex = pickupIndex });
             }
             for (int i = 0; i < reward.redOption; i++)
             {
-                PickupIndex[] options = dtTier3.GenerateUniqueDrops(3, this.rng);
-                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromArray(options), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier3) });
+                List<UniquePickup> pickups = new List<UniquePickup>();
+                dtTier3.GenerateDistinctPickups(pickups, 3, rng);
+                pickupQueue.Enqueue(new RewardInfo { prefabOverride = optionPrefab, options = PickupPickerController.GenerateOptionsFromList(pickups), pickupIndex = PickupCatalog.FindPickupIndex(ItemTier.Tier3) });
             }
             for (int i = 0; i < reward.redCommand; i++)
             {

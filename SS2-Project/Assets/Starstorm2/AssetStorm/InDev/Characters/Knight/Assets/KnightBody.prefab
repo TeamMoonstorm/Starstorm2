@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 5278585593546160489}
   - component: {fileID: 4608135033383063149}
   - component: {fileID: 1394626647}
+  - component: {fileID: -300711697890018286}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -471,11 +472,11 @@ MonoBehaviour:
   utility: {fileID: 7883713811634818016}
   special: {fileID: 1901267314317663771}
   passiveSkill:
-    enabled: 0
-    skillNameToken: 
-    skillDescriptionToken: 
+    enabled: 1
+    skillNameToken: SS2_KNIGHT_PASSIVE_NAME
+    skillDescriptionToken: SS2_KNIGHT_PASSIVE_DESC
     keywordToken: 
-    icon: {fileID: 0}
+    icon: {fileID: 21300000, guid: 18077e98e5dda7d48996461b94ba7436, type: 3}
   primaryBonusStockOverrideSkill: {fileID: 0}
   secondaryBonusStockOverrideSkill: {fileID: 0}
   utilityBonusStockOverrideSkill: {fileID: 0}
@@ -939,6 +940,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}
   - {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
   - {fileID: 11400000, guid: 49835b9801d843a4cb542f0aeafcf7d3, type: 2}
+--- !u!114 &-300711697890018286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74f63d82c99ddcb4d846243a56569c03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterBody: {fileID: 8530518001122098039}
+  PassiveWardPrefab: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
+    type: 3}
 --- !u!1001 &3409225305625246073
 PrefabInstance:
   m_ObjectHideFlags: 0
