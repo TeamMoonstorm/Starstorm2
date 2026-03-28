@@ -12,7 +12,7 @@ namespace EntityStates.Executioner2
     {
         private Vector3 flyVector = Vector3.zero;
         private static float walkSpeedCoefficient = 2f;
-        private static float baseVerticalSpeed = 48f;
+        private static float baseVerticalSpeed = 58f;
         public static AnimationCurve speedCoefficientCurve;
         private static float baseDuration = 0.8f;
         private static float maxAttackSpeed = 1.4f;

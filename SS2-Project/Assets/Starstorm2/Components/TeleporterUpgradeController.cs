@@ -179,9 +179,9 @@ namespace SS2
         [ClientRpc]
         public void RpcUpgradeStorm(bool upgrade)
         {
-            if(upgrade)
+            Material stormOverlay = SS2Assets.LoadAsset<Material>("matStormTeleporterOverlay", SS2Bundle.Events);
+            if (upgrade)
             {
-                Material stormOverlay = SS2Assets.LoadAsset<Material>("matStormTeleporterOverlay", SS2Bundle.Events);
                 AppendMaterial(teleBase.gameObject.GetComponent<Renderer>(), stormOverlay);
                 AppendMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), stormOverlay);
                 AppendMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), stormOverlay);
@@ -194,11 +194,12 @@ namespace SS2
             }
             else
             {
-                RemoveMaterial(teleBase.gameObject.GetComponent<Renderer>(), 2); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-                RemoveMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), 2);
-                RemoveMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), 2);
-                void RemoveMaterial(Renderer renderer, int index)
+                RemoveMaterial(teleBase.gameObject.GetComponent<Renderer>(), stormOverlay);
+                RemoveMaterial(teleBase.Find("TeleporterProngMesh").gameObject.GetComponent<Renderer>(), stormOverlay);
+                RemoveMaterial(teleBase.Find("SurfaceHeight/TeleporterBeacon").gameObject.GetComponent<Renderer>(), stormOverlay);
+                void RemoveMaterial(Renderer renderer, Material material)
                 {
+                    int index = System.Array.IndexOf(renderer.sharedMaterials, material);
                     Material[] materials = renderer.sharedMaterials;
                     HG.ArrayUtils.ArrayRemoveAtAndResize(ref materials, index);
                     renderer.sharedMaterials = materials;

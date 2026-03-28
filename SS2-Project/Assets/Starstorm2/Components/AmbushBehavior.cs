@@ -9,7 +9,7 @@ namespace SS2
     [RequireComponent(typeof(CombatDirector))]
     public class AmbushBehavior : NetworkBehaviour
     {
-        [RuntimeInitializeOnLoadMethod]
+        [InitDuringStartupPhase(GameInitPhase.PostProgressBar)]
         private static void Init()
         {
             SS2Log.Info("Initializing AmbushBehavior");
@@ -20,7 +20,7 @@ namespace SS2
         private static void CCToggleDebug(ConCommandArgs args)
         {
             debug = !debug;
-            SS2Log.Debug("Ambush debugging is now " + (debug ? "ON" : "OFF"));
+            Debug.Log("Ambush debugging is now " + (debug ? "ON" : "OFF"));
         }
         private static void OnPrePopulateMonstersSceneServer(SceneDirector sceneDirector)
         {

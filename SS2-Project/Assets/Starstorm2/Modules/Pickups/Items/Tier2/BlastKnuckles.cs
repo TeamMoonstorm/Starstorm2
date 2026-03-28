@@ -19,9 +19,9 @@ namespace SS2.Items
 		public static float cooldownPerCharge = 5f;
 
 		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-		public static float damageCoefficient = 5f;
+		public static float damageCoefficient = 4f;
 		[FormatToken(TOKEN, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-		public static float damageCoefficientPerStack = 5f;
+		public static float damageCoefficientPerStack = 4f;
 		public static float procCoefficient = 0.5f;
 
 		[FormatToken(TOKEN, 0)]

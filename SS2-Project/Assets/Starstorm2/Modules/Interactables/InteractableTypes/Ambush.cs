@@ -11,8 +11,22 @@ namespace SS2.Interactables
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acAmbush", SS2Bundle.Interactables);
         public override void Initialize()
         {
-
+            SceneDirector.onGenerateInteractableCardSelection += OnGenerateInteractableCardSelection;
         }
+
+        private static void OnGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
+        {
+            if (Run.instance.selectedDifficulty != Typhoon.sdd.DifficultyIndex)
+            {
+                dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsAmbush));
+            }
+        }
+        private static bool IsAmbush(DirectorCard card)
+        {
+            return card.GetSpawnCard().prefab.GetComponent<AmbushBehavior>();
+        }
+
+
         public override bool IsAvailable(ContentPack contentPack)
         {
             return SS2Config.enableBeta;
