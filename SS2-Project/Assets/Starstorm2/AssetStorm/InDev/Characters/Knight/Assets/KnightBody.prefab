@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2951671877612150465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4699647567701210326}
+  - component: {fileID: 4159496996881490587}
+  m_Layer: 14
+  m_Name: BannerSlamHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4699647567701210326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951671877612150465}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.645, z: 0}
+  m_LocalScale: {x: 1.06, y: 1.36, z: 1.06}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2553515950558735303}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4159496996881490587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951671877612150465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &5259187260714204021
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +250,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -215,6 +261,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_KNIGHT_BODY_SUBTITLE
   bodyFlags: 0
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 110
@@ -240,8 +287,6 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
@@ -250,6 +295,7 @@ MonoBehaviour:
   boostAllStatsDisplay: {fileID: 0}
   currentGrowthNectarBuffCount: 0
   maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
   spreadBloomCurve:
@@ -278,6 +324,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -286,17 +334,24 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 6565160841374440874}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 36240f91ca5a1224fb95cb48f0768bc1, type: 3}
   bodyColor: {r: 0.9150943, g: 0.5655347, b: 0.25467247, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  altDeathBodyName: 
+  vehicleIdleStateMachine: []
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: 
   skinIndex: 0
+  requestEquipmentFire: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &6359193300256925937
@@ -315,6 +370,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 7287274351398289365}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -324,6 +380,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &5961420081284677721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,9 +494,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 08737776e531dcb45acf7dd2a104616a, type: 2}
   skillName: Primary
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &2356481471171317501
 MonoBehaviour:
@@ -454,9 +516,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 5fb4edd7ae499c44993c471180dd55cc, type: 2}
   skillName: Secondary
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &7883713811634818016
 MonoBehaviour:
@@ -472,9 +538,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 473206d75e84c4940a8963e6cd6221e2, type: 2}
   skillName: Utility
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &1901267314317663771
 MonoBehaviour:
@@ -490,9 +560,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 4071100462a1d7b43b99a95701dd9a27, type: 2}
   skillName: Special
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &2713950319236769457
 MonoBehaviour:
@@ -509,6 +583,7 @@ MonoBehaviour:
   deathSound: Play_ui_player_death
   barkSound: 
   openSound: 
+  jumpSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage
   aliveLoopStart: 
@@ -542,6 +617,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 1301156465497949038}
   muteWalkMotion: 0
   mass: 100
@@ -549,11 +625,15 @@ MonoBehaviour:
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &4458537316507204039
@@ -605,6 +685,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 720
   turnSoundName: 
 --- !u!114 &8032541010487473223
@@ -625,8 +706,10 @@ MonoBehaviour:
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 8530518001122098039}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &4765393344668698342
 MonoBehaviour:
@@ -641,6 +724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
 --- !u!114 &1597189476404624147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -677,6 +761,10 @@ MonoBehaviour:
   idleStateMachine:
   - {fileID: 2818190628323442051}
   - {fileID: 4254329117781760613}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!114 &1827339712691547538
 MonoBehaviour:
@@ -810,6 +898,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 5
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 5072596841796980718}
   idleStateMachine:
   - {fileID: 2818190628323442051}
@@ -819,6 +908,8 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+  isFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &4608135033383063149
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,6 +1006,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.size
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[35].name
+      value: BannerSlamHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[36].name
+      value: ShieldBashHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[35].transform
+      value: 
+      objectReference: {fileID: 4699647567701210326}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[36].transform
+      value: 
+      objectReference: {fileID: 5293235763215528417}
     - target: {fileID: 3404809963666717092, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: healthComponent
@@ -935,16 +1051,42 @@ PrefabInstance:
       propertyPath: directionComponent
       value: 
       objectReference: {fileID: 1301156465497949038}
+    - target: {fileID: 6106624358333084712, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106624358333084712, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.34
+      objectReference: {fileID: 0}
     - target: {fileID: 6989382658905640743, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: body
       value: 
       objectReference: {fileID: 8530518001122098039}
+    - target: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.43
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 411af68e233e4714c93ff5aa1ad9cefb, type: 3}
 --- !u!4 &2553515950558735303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 882680650988540606, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3409225305625246073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5293235763215528417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
     type: 3}
   m_PrefabInstance: {fileID: 3409225305625246073}
   m_PrefabAsset: {fileID: 0}

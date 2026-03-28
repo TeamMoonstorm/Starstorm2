@@ -43,13 +43,15 @@ namespace EntityStates.Knight
 
         public override void OnEnter()
         {
-            if (base.isAuthority)
+            if (isAuthority)
             {
-                DisableCharacterMotorCollision();
                 CalculateInitialDirection();
-
-                base.OnEnter();
             }
+
+            DisableCharacterMotorCollision();
+
+            base.OnEnter();
+
         }
 
         private void DisableCharacterMotorCollision()
@@ -59,8 +61,7 @@ namespace EntityStates.Knight
 
             if (characterMotor)
             {
-                _origLayer = characterMotor.capsuleCollider.gameObject.layer;
-                characterMotor.capsuleCollider.gameObject.layer = LayerIndex.fakeActor.intVal;
+                characterBody.fakeActorCounter++;
                 characterMotor.Motor.RebuildCollidableLayers();
             }
         }
@@ -69,7 +70,7 @@ namespace EntityStates.Knight
         {
             if (characterMotor)
             {
-                characterMotor.capsuleCollider.gameObject.layer = _origLayer;
+                characterBody.fakeActorCounter--;
                 characterMotor.Motor.RebuildCollidableLayers();
             }
 
@@ -135,7 +136,7 @@ namespace EntityStates.Knight
             rollSpeed = moveSpeedStat * sprintSpeedMultiplier * Mathf.Lerp(minSpeedCoefficient, maxSpeedCoefficient, dashAnimationCurve.Evaluate(Mathf.Clamp01(fixedAge / duration))) * (interrupted ? interruptSpeedCoefficient : 1);
         }
 
-        private void MoveKnight()
+        public virtual void MoveKnight()
         {
             RecalculateRollSpeed();
 
@@ -179,11 +180,8 @@ namespace EntityStates.Knight
         {
             base.OnExit();
 
-            if (base.isAuthority)
-            {
-                if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
-                EnableCharacterMotorCollision();
-            }
+            if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
+            EnableCharacterMotorCollision();
 
             if (stopwatch < duration * 0.9f)
             {

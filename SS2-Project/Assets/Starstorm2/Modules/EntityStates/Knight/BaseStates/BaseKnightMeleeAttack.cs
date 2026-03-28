@@ -82,7 +82,7 @@ namespace EntityStates.Knight
         private float hitPauseTimer;
         private bool hasHopped;
         private HitStopCachedState hitStopCachedState;
-        private Vector3 storedVelocity;
+        protected Vector3 storedVelocity;
 
         private GameObject swingEffectInstance;
         private EffectManagerHelper swingEffectInstanceHelper;
@@ -192,10 +192,13 @@ namespace EntityStates.Knight
             }
         }
 
+        protected virtual void AuthorityModifyOverlapAttack(OverlapAttack attack) { }
         protected virtual void FireAttack()
         {
             if (isAuthority && attack != null)
             {
+                AuthorityModifyOverlapAttack(attack);
+
                 if (attack.Fire())
                 {
                     OnHitEnemyAuthority();

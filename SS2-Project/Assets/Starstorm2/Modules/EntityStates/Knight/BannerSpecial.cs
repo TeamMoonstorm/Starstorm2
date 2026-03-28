@@ -6,34 +6,77 @@ using System;
 
 namespace EntityStates.Knight
 {
-    public class BannerSpecial : BaseState
+    public class EnterBannerSpecial : BaseState
     {
-        public static GameObject knightBannerWard;
-        public static GameObject slowBuffWard;
-
-        private GameObject bannerObject;
-        private GameObject slowBuffWardInstance;
-
-        [SerializeField]
-        public float impactRadius = 5f;
-        [SerializeField]
-        public float impactDamage = 3f;
-
-        public float minimumY = 0.05f;
-        public float airControl = 0.15f;
-        public float aimVelocity = 4f;
-        public float upwardVelocity = 7f;
-        public float forwardVelocity = 3f;
-
-        private bool detonateNextFrame;
-        private float previousAirControl;
-
+        private static float duration = 0.125f;
+        private static float velocityDamping = 0.33f;
+        private static InterruptPriority minimumInterruptPriority = InterruptPriority.PrioritySkill;
+        private static string enterSoundString = "Play_item_proc_warbanner";
         public override void OnEnter()
         {
             base.OnEnter();
 
+            if (isAuthority)
+            {
+                characterMotor.velocity = Vector3.zero;
+            }
+
             PlayAnimation("FullBody, Override", "SpecialLeapStart");
-            Util.PlaySound("Play_item_proc_warbanner", gameObject);
+
+            Util.PlaySound(enterSoundString, gameObject);
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (isAuthority)
+            {
+                characterMotor.velocity *= velocityDamping;
+            }
+            if (fixedAge >= duration && isAuthority)
+            {
+                SetNextState();
+                return;
+            }
+        }
+        public virtual void SetNextState()
+        {
+            outer.SetNextState(new BannerSpecial());
+        }
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return minimumInterruptPriority;
+        }
+    }
+    public class BannerSpecial : BaseState
+    {
+        public static GameObject knightBannerWard;
+        public static GameObject slowBuffWard;
+        
+        internal static float impactRadius = 4f;
+        private static float impactDamage = 7.5f;
+
+        private static float minimumY = 0.05f;
+        private static float airControl = 0.15f;
+        private static float aimVelocity = 3f;
+        private static float upwardVelocity = 21f;
+        private static float moveVelocity = 3f;
+        private static float forwardVelocity = 3f;
+        private static float gravityCoefficient = 1.8f;
+        private static Vector3 bannerOffset = new Vector3(0.15f, 0f, 1.4f);
+        private static float gracePeriod = 0.2f;
+
+        private static string collisionTransformString = "BannerSlamHitbox";
+
+        private bool detonateNextFrame;
+        private float previousAirControl;
+        private Vector3 initialDirection;
+        private Transform collisionTransform;
+        public override void OnEnter()
+        {
+            base.OnEnter();
+
 
             base.OnEnter();
             previousAirControl = base.characterMotor.airControl;
@@ -46,15 +89,17 @@ namespace EntityStates.Knight
                 Vector3 vector = direction.normalized * aimVelocity * moveSpeedStat;
                 Vector3 vector2 = Vector3.up * upwardVelocity;
                 Vector3 vector3 = new Vector3(direction.x, 0f, direction.z).normalized * forwardVelocity;
-                base.characterMotor.Motor.ForceUnground();
-                base.characterMotor.velocity = vector + vector2 + vector3;
+                Vector3 vector4 = inputBank.moveVector * moveVelocity;
+                base.characterMotor.Motor.ForceUnground(0.2f);
+                base.characterMotor.velocity = vector + vector2 + vector3 + vector4;
+                initialDirection = direction;
             }
             base.characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
-            GetModelTransform().GetComponent<AimAnimator>().enabled = true;
             base.characterDirection.moveVector = direction;
 
             if (base.isAuthority)
             {
+                collisionTransform = FindModelChild(collisionTransformString);
                 base.characterMotor.onMovementHit += OnMovementHit;
             }
         }
@@ -64,6 +109,36 @@ namespace EntityStates.Knight
             detonateNextFrame = true;
         }
 
+        private void CheckCollisions()
+        {
+            if (collisionTransform)
+            {
+                Collider[] hits = Physics.OverlapBox(collisionTransform.position, collisionTransform.lossyScale * 0.5f, collisionTransform.rotation, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.UseGlobal);
+                for (int i = 0; i < hits.Length; i++)
+                {
+                    if (hits[i])
+                    {
+                        HurtBox hurtBox = hits[i].GetComponent<HurtBox>();
+
+                        if (hurtBox)
+                        {
+                            if (hurtBox.healthComponent.gameObject != gameObject)
+                            {
+                                detonateNextFrame = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            // we hit da world
+                            detonateNextFrame = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         public override void FixedUpdate()
         {
             base.FixedUpdate();
@@ -71,9 +146,18 @@ namespace EntityStates.Knight
             if (base.isAuthority && base.characterMotor)
             {
                 base.characterMotor.moveDirection = base.inputBank.moveVector;
+                characterDirection.moveVector = initialDirection;
+
+                characterMotor.velocity += Physics.gravity * gravityCoefficient * Time.fixedDeltaTime;
+
+                if (fixedAge > gracePeriod)
+                {
+                    CheckCollisions();
+                }
+
                 if (detonateNextFrame || (base.characterMotor.Motor.GroundingStatus.IsStableOnGround && !base.characterMotor.Motor.LastGroundingStatus.IsStableOnGround))
                 {
-                    outer.SetNextStateToMain();
+                    outer.SetNextState(new BannerSpecialWindDown());
                 }
             }
         }
@@ -100,6 +184,8 @@ namespace EntityStates.Knight
         {
             PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", detonateNextFrame ? 1f : 0.2f);
 
+            Util.PlaySound("Play_huntress_R_snipe_shoot", gameObject);
+
             if (base.isAuthority)
             {
                 var blastAttack = new BlastAttack
@@ -121,22 +207,21 @@ namespace EntityStates.Knight
 
                 ModifyBlastAttack(blastAttack);
 
-                Util.PlaySound("Play_huntress_R_snipe_shoot", gameObject);
 
                 blastAttack.Fire();
             }
 
             if (NetworkServer.active)
             {
-                Vector3 position = inputBank.aimOrigin - (inputBank.aimDirection);
-                bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Quaternion.identity);
+                Vector3 position = inputBank.aimOrigin + Util.QuaternionSafeLookRotation(characterDirection.forward) * bannerOffset;
+                var bannerObject = UnityEngine.Object.Instantiate(knightBannerWard, position, Util.QuaternionSafeLookRotation(-characterDirection.forward));
 
                 bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
                 NetworkServer.Spawn(bannerObject);
 
-                slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-                slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
+                //slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
+                //slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
+                //slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
             }
         }
 
@@ -144,7 +229,43 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Any;
+            return InterruptPriority.PrioritySkill;
+        }
+    }
+
+    public class BannerSpecialWindDown : BaseState
+    {
+        private static float baseDuration = 0.4f;
+        private static InterruptPriority minimumInterruptPriority = InterruptPriority.Skill;
+        protected float duration;
+        private Vector3 initialDirection;
+        public override void OnEnter()
+        {
+            base.OnEnter();
+            duration = baseDuration / attackSpeedStat;
+            initialDirection = characterDirection.forward;
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (isAuthority)
+            {
+                characterMotor.moveDirection = Vector3.zero;
+                characterDirection.moveVector = initialDirection;
+            }
+
+            if (fixedAge >= duration && isAuthority)
+            {
+                outer.SetNextStateToMain();
+                return;
+
+            }
+        }
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return minimumInterruptPriority;
         }
     }
 

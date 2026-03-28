@@ -59,7 +59,7 @@ MonoBehaviour:
         objectValue: {fileID: 0}
     - fieldName: dashAnimationCurve
       fieldValue:
-        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.1523919403553009,"weightedMode":0,"tangentMode":0},{"time":0.8857033848762512,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":1.0,"weightedMode":0,"tangentMode":0},{"time":0.9560107588768005,"value":0.0,"inTangent":-25.646848678588868,"outTangent":-25.646848678588868,"inWeight":0.07069096714258194,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
+        stringValue: '{"preWrapMode":8,"postWrapMode":8,"keys":[{"time":0.0,"value":0.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.0,"outWeight":0.26607540249824526,"weightedMode":0,"tangentMode":0},{"time":0.11097656190395355,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.059348754584789279,"outWeight":0.3333333432674408,"weightedMode":0,"tangentMode":0},{"time":0.8857033848762512,"value":1.0,"inTangent":0.0,"outTangent":0.0,"inWeight":0.3333333432674408,"outWeight":1.0,"weightedMode":0,"tangentMode":0},{"time":0.9560107588768005,"value":0.0,"inTangent":-25.646848678588868,"outTangent":-25.646848678588868,"inWeight":0.07069096714258194,"outWeight":0.0,"weightedMode":0,"tangentMode":0}]}'
         objectValue: {fileID: 0}
     - fieldName: dodgeSoundString
       fieldValue:
@@ -69,11 +69,6 @@ MonoBehaviour:
       fieldValue:
         stringValue: ShieldBashHitbox
         objectValue: {fileID: 0}
-    - fieldName: damageType
-      fieldValue:
-        stringValue: '{"assemblyQualifiedName":"RoR2.DamageType, RoR2, Version=0.0.0.0,
-          Culture=neutral, PublicKeyToken=null","values":"Stun1s"}'
-        objectValue: {fileID: 0}
     - fieldName: pushForce
       fieldValue:
         stringValue: 0
@@ -81,10 +76,6 @@ MonoBehaviour:
     - fieldName: bonusForce
       fieldValue:
         stringValue: 0, 0, 0
-        objectValue: {fileID: 0}
-    - fieldName: earlyExitPercentTime
-      fieldValue:
-        stringValue: 1
         objectValue: {fileID: 0}
     - fieldName: hitStopDuration
       fieldValue:
@@ -132,35 +123,11 @@ MonoBehaviour:
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}
-    - fieldName: testbaseDuration
-      fieldValue:
-        stringValue: 0.28
-        objectValue: {fileID: 0}
-    - fieldName: testminSpeedCoefficient
-      fieldValue:
-        stringValue: 0.4
-        objectValue: {fileID: 0}
-    - fieldName: testmaxSpeedCoefficient
-      fieldValue:
-        stringValue: 5.5
-        objectValue: {fileID: 0}
-    - fieldName: testinterruptSpeedCoefficient
-      fieldValue:
-        stringValue: 0.1
-        objectValue: {fileID: 0}
-    - fieldName: testearlyexit
-      fieldValue:
-        stringValue: 1
-        objectValue: {fileID: 0}
     - fieldName: attackStartTimeFraction
       fieldValue:
-        stringValue: 0
+        stringValue: 0.11
         objectValue: {fileID: 0}
     - fieldName: attackEndTimeFraction
-      fieldValue:
-        stringValue: 1
-        objectValue: {fileID: 0}
-    - fieldName: testfuckingattackendwhyisitnotgettingitfromtheESC
       fieldValue:
         stringValue: 1
         objectValue: {fileID: 0}

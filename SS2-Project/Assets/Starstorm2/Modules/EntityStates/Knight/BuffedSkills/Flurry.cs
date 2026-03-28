@@ -9,6 +9,8 @@ namespace EntityStates.Knight
     {
         public float totalDuration { get; set; }
         private bool swipeDown;
+        private static Vector3 swipeUpForce = new Vector3 (-8f, 5f, 3f);
+        private static Vector3 swipeDownForce = new Vector3(8f, -3f, 3f);
 
         public override void OnEnter()
         {
@@ -33,6 +35,13 @@ namespace EntityStates.Knight
         public override void PlayAttackAnimation()
         {
             PlayAnimation("FullBody, Override", "FlurrySwipe" + (swipeDown ? "Down" : "Up"));
+        }
+        protected override void AuthorityModifyOverlapAttack(OverlapAttack attack)
+        {
+            base.AuthorityModifyOverlapAttack(attack);
+
+            attack.forceVector = Util.QuaternionSafeLookRotation(characterDirection.forward) * (swipeDown ? swipeDownForce : swipeUpForce);
+            attack.physForceFlags = PhysForceFlags.resetVelocity | PhysForceFlags.massIsOne | PhysForceFlags.ignoreGroundStick | PhysForceFlags.disableAirControlUntilCollision;
         }
 
         public override void FixedUpdate()
