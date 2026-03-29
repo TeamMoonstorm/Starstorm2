@@ -6,9 +6,18 @@ namespace SS2.Components
     public class ParentEffectFromEffectData : MonoBehaviour
     {
         private Transform parentTransform;
-        private void Start()
+        private EffectComponent effectComponent;
+        private void Awake()
         {
-            EffectComponent effectComponent = base.GetComponent<EffectComponent>();
+            effectComponent = base.GetComponent<EffectComponent>();
+            effectComponent.OnEffectComponentReset += ResetEffect;
+        }
+        private void ResetEffect(bool hasEffectData)
+        {
+            if (!hasEffectData)
+            {
+                return;
+            }
             GameObject parent = effectComponent.effectData.ResolveNetworkedObjectReference();
             if (!parent)
             {
@@ -17,9 +26,7 @@ namespace SS2.Components
             }
             CharacterBody body = parent.GetComponent<CharacterBody>();
             if (body && body.coreTransform) this.parentTransform = body.coreTransform;
-
         }
-
         private void LateUpdate()
         {
             if(this.parentTransform)

@@ -14,14 +14,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPool: {fileID: 11400000, guid: 26ba39ac5bdffdb4cb3a6c29f167ba69, type: 2}
   poolCategories:
-  - name: Standard
+  - name: 
     categoryWeight: 1
-    alwaysIncluded: []
-    includedIfConditionsMet: []
-    includedIfNoConditionsMet:
+    alwaysIncluded:
     - dccs: {fileID: 11400000, guid: 0b9cda056b3554e43aa91f21e1c56f60, type: 2}
       familyDccs:
         _asset: {fileID: 0}
         _address: 
         _useDirectReference: 0
       weight: 1
+    includedIfConditionsMet:
+    - dccs: {fileID: 11400000, guid: d6dbf07777c2a7345b810b540491f885, type: 2}
+      familyDccs:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      weight: 1
+      requiredExpansions:
+      - _asset: {fileID: 0}
+        _address: d4f30c23b971a9b428e2796dc04ae099
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+    - dccs: {fileID: 11400000, guid: 0db6bdf08a1cbfa49995632de93872ed, type: 2}
+      familyDccs:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      weight: 1
+      requiredExpansions:
+      - _asset: {fileID: 0}
+        _address: 851f234056d389b42822523d1be6a167
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+    - dccs: {fileID: 11400000, guid: 555f5fc2af3dcfa4abdb3887fb78b19d, type: 2}
+      familyDccs:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+      weight: 1
+      requiredExpansions:
+      - _asset: {fileID: 0}
+        _address: 234e83997deed274291470be69e7662e
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+    includedIfNoConditionsMet: []

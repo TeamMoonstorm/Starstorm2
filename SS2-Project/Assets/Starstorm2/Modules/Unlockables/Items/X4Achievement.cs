@@ -22,7 +22,7 @@ namespace SS2.Unlocks.Pickups
 
 		public class X4ServerAchievement : BaseServerAchievement
 		{
-			private List<BodyIndex> uniqueBossKills;
+			private List<BodyIndex> uniqueBossKills = new List<BodyIndex>();
 			public override void OnInstall()
 			{
 				base.OnInstall();

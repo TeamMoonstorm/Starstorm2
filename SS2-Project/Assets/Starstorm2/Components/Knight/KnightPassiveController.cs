@@ -11,11 +11,11 @@ namespace SS2.Components
 
         public void Start()
         {
-            if (NetworkServer.active)
+            if (NetworkServer.active && characterBody != null && PassiveWardPrefab != null)
             {
                 GameObject passiveWardInstance = UnityEngine.Object.Instantiate(PassiveWardPrefab, characterBody.footPosition, Quaternion.identity);
                 passiveWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                characterBody.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(passiveWardInstance);
+                passiveWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(characterBody.gameObject);
             }
         }
     }

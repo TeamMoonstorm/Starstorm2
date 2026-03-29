@@ -114,6 +114,7 @@ namespace SS2.Items
             private GameObject ownerBodyObject;
             private EntityStateMachine stateMachine;
             private BaseAI ai;
+            private GameObject originalLeader;
             bool wasFullVision;
 
             private void OnEnable()
@@ -127,6 +128,8 @@ namespace SS2.Items
                     ai.scanState = new EntityStates.SerializableEntityStateType(typeof(FollowLeader));
                     wasFullVision = ai.fullVision;
                     ai.fullVision = true;
+                    originalLeader = ai.leader.gameObject;
+                    ai.leader.gameObject = ownerBodyObject;
                     ai.currentEnemy.Reset();
                     ai.customTarget.Reset();
                     ai.buddy.Reset();
@@ -180,6 +183,7 @@ namespace SS2.Items
                     ai.stateMachine.nextStateModifier -= ModifyNextState;
                     ai.scanState = new EntityStates.SerializableEntityStateType(typeof(Wander)); // this should be fine. all ai uses wander.
                     ai.fullVision = wasFullVision;
+                    ai.leader.gameObject = originalLeader;
                     ai.currentEnemy.Reset();
                     ai.customTarget.Reset();
                     ai.buddy.Reset();

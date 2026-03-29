@@ -297,13 +297,21 @@ namespace SS2.Components
 			if(this.currentFriend.permanentItemStacks != null && this.currentFriend.permanentItemStacks.Length > 0) // ........
             {
 				Inventory inventory = master.inventory;
-				inventory.itemAcquisitionOrder.Clear();
-				inventory.effectiveItemStacks.Clear();
-				master.inventory.AddItemsFrom(this.currentFriend.permanentItemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
-				for (int i = 0; i < currentFriend.tempItemTimers.Length; i++)
-				{
-					inventory.GiveItemTemp((ItemIndex)i, currentFriend.tempItemTimers[i]);
+				using (new Inventory.InventoryChangeScope(inventory))
+                {
+					inventory.itemAcquisitionOrder.Clear();
+					inventory.permanentItemStacks.Clear();
+					inventory.channeledItemStacks.Clear();
+					inventory.tempItemsStorage.tempItemStacks.Clear(); // ?????????????????????????????????
+					master.inventory.AddItemsFrom(this.currentFriend.permanentItemStacks, new Func<ItemIndex, bool>(target => true)); // NRE HERE???? how
+					for (int i = 0; i < currentFriend.tempItemTimers.Length; i++)
+					{
+						inventory.GiveItemTemp((ItemIndex)i, currentFriend.tempItemTimers[i]);
+					}
+					master.inventory.UpdateAllEffectiveItemStacks();
 				}
+				
+				
 			}
 			if (master.TryGetComponent(out BaseAI ai))
 			{
