@@ -1,6 +1,6 @@
 **Warning: content spoilers below!**
 ### 0.6.32
-This update is largely thanks to long time SS2 community members bread and Lordryn, both of whom had some SS2 fixes mods on Thunderstore. While the SS2 team is still shackled away by GBX working on cool stuff, they both agreed to port some of their fixes to SS2 codebase. Thanks you two!
+This update is largely thanks to long time SS2 community members bread and Lordryn, both of whom had some SS2 fixes mods on Thunderstore. While the SS2 team is still shackled away in prison, they both agreed to port some of their fixes to SS2 codebase. Thanks you two!
 * General
     * Bug where item icons were too large when scrapped is now fixed.
     * Updated Korean translation thanks to Dice-001!
