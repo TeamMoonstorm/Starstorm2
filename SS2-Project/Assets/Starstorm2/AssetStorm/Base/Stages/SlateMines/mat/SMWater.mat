@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SMWater
-  m_Shader: {fileID: 4800000, guid: 414f975faade42d408c7ba2f5766f402, type: 3}
+  m_Shader: {fileID: 0}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _DISPLACEMENTMODE_OFF
@@ -21,7 +21,7 @@ Material:
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -67,6 +67,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Normal1Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Normal2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -103,20 +111,25 @@ Material:
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
+    - _NormalStrength: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _RampInfo: 0
     - _Reflection: 0.761
     - _ReflectionType: 3
     - _RimPower: 4.95
     - _Smoothing: 0
     - _Smoothness: 5
     - _SmoothnessTextureChannel: 0
+    - _SpecularExponent: 1
     - _SpecularHighlights: 1
+    - _SpecularStrength: 0
     - _Speed: 1
     - _SrcBlend: 1
     - _Steepness: 0.54
     - _Tess: 1
     - _UVSec: 0
+    - _VertexOffsetStrength: 0
     - _WorldSpace: 0
     - _ZWrite: 1
     m_Colors:
@@ -125,6 +138,7 @@ Material:
     - _DepthColor: {r: 0.056046546, g: 0.043137252, b: 0.29411766, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    - _Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.4392157, g: 0.59458846, b: 0.59607846, a: 1}
     - _Speeds: {r: 0.1, g: 0.1, b: 0.25, a: 0.25}
     - _SpeedsLarge: {r: -0.1, g: 0.25, b: 0, a: 0}

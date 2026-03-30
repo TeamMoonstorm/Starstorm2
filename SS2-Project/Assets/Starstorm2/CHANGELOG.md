@@ -1,9 +1,37 @@
 **Warning: content spoilers below!**
 ### 0.6.32
+This update is largely thanks to long time SS2 community members bread and Lordryn, both of whom had some SS2 fixes mods on Thunderstore. While the SS2 team is still shackled away in prison, they both agreed to port some of their fixes to SS2 codebase. Thanks you two!
 * General
-	* Fixed normal maps on several materials
+    * Bug where item icons were too large when scrapped is now fixed.
+    * Updated Korean translation thanks to Dice-001!
+    * Adds linux deployment to the wwise project for the gorillion Linux users (Thanks bread!)
+    * Stops storms from happening on planetarium, commencement and simulacrum (Thanks bread!)
+    * Fixes bread on the readme (Thanks bread!)
+    * Orbeez fixed a few bugs but he never documented them so idfk what he fixed, but they had to do with Chirr, and Executioner! 
+* Skins
+    * Fixes old skin particles on commandos vestige skin and mult gm skin (Thanks bread!)
 * Items
-	* Fixed item teirs or somethoiawurbhgkamng
+    * Fixes stirring soul icon being null (Thanks bread!)
+    * Removed temp tags from relic of mass and force (fThanks bread!)
+    * Galvanic Core NRE checks 
+    * Removed broken achievements from X4 stimulant, insecticide, and field accelerator (Thanks Lordryn!)
+* Beta
+    * MULE and DU-T has been added to the beta config, but be warned he is in a very early state. Play with caution!
+        * NOTE: Seriously, they are very very early. They're being added as a treat for players to enjoy, but could be removed from the config at any point. MULE specifically has a full kit rework planned. DU-T will see less kit changes.
+    * Ethereal saplings now auto charge after hitting once,  and show the next difficulty above them.  Hit them again to cancel (Thanks bread!)
+    * Some new lang tokens for the ethereal saplings (Thanks bread!)
+    * Fixes various lunar gambler bugs (Thanks bread!)
+    * Portal in void shop is replaced with current portal (Thanks Lordryn!)
+    * Replaced the "hehe oortal" message with existing lang token for the appearance message (Thanks Lordryn!)
+    * Fixed an error related to ultra enemies' AI being modified (Thanks Lordryn!)
+    * Fixed knight CSS idle, knight normal idle, and executioner normal idle animations all not looping (Thanks Lordryn!)
+    * Fixed pink textures in slate mines (Thanks Lordryn!)
+    * Gave all shard pickups the "world unique" tag so they can be picked up with substandard duplicator (and it makes sense for them to be considered world unique too) (Thanks Lordryn!)
+    * Re-enabled the storm shard and made it only appear when the beta is enabled (Thanks Lordryn!)
+        * The original method that dropped storm shards from the teleporter is commented out so I haven't re-implemented them dropping, but the item itself is back + is restricted to beta config (Thanks Lordryn!)
+    * Made all shards require the SS2 expansion (Thanks Lordryn!)
+    * Replaced Knight's skill descriptions with proper ones that have damage numbers (Thanks Lordryn!)
+
 ### 0.6.31
 * General
     * Mul-T GM skins are fixed too! All Vanilla skins are back!
@@ -97,7 +125,7 @@
     * Updated mod for Alloyed Collective
     * Disabled Composite Injector and Drone Table due to similar content being added as part of AC. Will be reworked in a future update.
 	* Fixed X4 and Insecticide not appearing in game
-    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns. Thanks to LordVGames for the fix!
+    * Fixed an incompat with SS2 Beta Super Elites and Enemies Returns. Thanks to Lordryn for the fix!
 	* Various fixes for certain projectiles and effects not appearing on clients
     * Added an updated French translation thanks to DarSitam
     * Damglador requested to remove the Ukrainian translation as they wanted it to be in their own mod
@@ -109,7 +137,7 @@
 	* Lowered max stock of Consecration from 10 to 5.
 	* Added Ancient Scepter upgrade for Execution
 	* Luminous Shot charges are now only granted when firing Ion Bullets.
-    * Fixes and skin specific VFX to Mastery skin. Contribution by Bread!
+    * Fixes and skin specific VFX to Mastery skin. Contribution by bread!
 * Interactables
 	* Security Chest no longer appears with the Starstorm 2 expansion disabled.
 	
