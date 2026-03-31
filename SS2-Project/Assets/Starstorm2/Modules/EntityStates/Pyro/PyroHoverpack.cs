@@ -3,30 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using SS2.Components;
 using SS2;
+using System;
 
 namespace EntityStates.Pyro
 {
     public class PyroHoverpack : BaseState
     {
-        public static float hoverHeight = 7f;
-        public static float raiseAccel = 40f;
-        public static float fallAccel = 15f;
-        public static float baseRaiseRate = 6f;
-        public static float maxRaise = 8f;
-        public static float maxFall = 4f;
         public static float snap = 0.15f;
-        public static float gravModifier = 0.4f;
         public static float heatPerTick;
         public static float baseDurationBetweenTicks;
 
-        public static float forwardVelocity;
+        private static float hoverHeight = 10f;
+        private static float hoverDescendVelocity = -2f; // target y velocity when we are above the hover height
+        private static float hoverDescendAcceleration = 40f;
+
+        private static float hoverAscendTargetVelocity = 0f; // target y velocity when we are at the hover height
+        private static float hoverAscendMaxVelocity = 12f; // target y velocity when we are below the hover height
+        private static float hoverAscendAcceleration = 70f;
+
+        private static float startForwardVelocity = 5.5f;
+        private static float endForwardVelocity = 1f;
+        private static float forwardAcceleration = 51f;
+        private static float forwardVelocityDuration = 1.5f;
+
         public static float upwardVelocity;
 
         private float heatTimer = 0f;
 
         private PyroController heat;
-        private bool setGravity;
-        private float originalGravScale;
 
         private ParticleSystem hoverL;
         private ParticleSystem hoverR;
@@ -37,11 +41,6 @@ namespace EntityStates.Pyro
             base.OnEnter();
 
             heat = GetComponent<PyroController>();
-            if (heat == null)
-            {
-                SS2Log.Error("PyroHoverpack.OnEnter : Body with no PyroController attempted to enter heat-driven state!");
-                return;
-            }
 
             ChildLocator cl = GetModelChildLocator();
             if (cl != null)
@@ -69,38 +68,15 @@ namespace EntityStates.Pyro
                 PlayCrossfade("Body", "HoverIdle", 0.1f);
             }
 
-            originalGravScale = characterMotor.gravityScale;
-
             characterBody.isSprinting = true;
             characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
-
-            Vector3 moveVector = inputBank.moveVector;
-
-            Vector3 moveVelocityVector = moveVector.normalized * 2.5f * (characterBody.moveSpeed + ((moveSpeedStat - characterBody.moveSpeed) * 0.5f));
-            Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
-            Vector3 forwardVelocityVector = new Vector3(moveVector.x, 0f, moveVector.z).normalized * forwardVelocity;
-            characterMotor.velocity = (moveVelocityVector + upwardVelocityVector + forwardVelocityVector);
-        }
-
-        public void SetGravityOverride(bool set)
-        {
-            setGravity = set;
-
-            if (setGravity)
-            {
-                characterMotor.gravityScale *= gravModifier;
-            }
-            else
-            {
-                characterMotor.gravityScale = originalGravScale;
-            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if (inputBank.skill3.down == false || heat.heat < 1)
+            if (inputBank.skill3.down == false || heat.heat <= 0f)
             {
                 outer.SetNextStateToMain();
                 return;
@@ -110,61 +86,54 @@ namespace EntityStates.Pyro
             if (heatTimer >= baseDurationBetweenTicks)
             {
                 heatTimer -= heatTimer;
-                heat.AddHeat(-heatPerTick);
+                heat.AddHeat(-heatPerTick);  //TODO: AddHeat is server only bruh!!
             }
 
-            bool ground = Physics.Raycast(characterBody.corePosition, Vector3.down, out RaycastHit hit, hoverHeight * 3f, RoR2.LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore);
+            bool ground = Physics.Raycast(characterBody.footPosition, Vector3.down, out RaycastHit hit, hoverHeight * 3f, RoR2.LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore);
 
-            float err = 0f;
-
+            float error = -1f;
             if (ground)
             {
-                 err = hoverHeight - hit.distance; // get how far we are from intended hover
-            }
-            else
-            {
-                err = hoverHeight * -3f; // aaiiieeeee theres no floor
+                 error = hoverHeight - hit.distance; // get how far we are from intended hover
             }
 
             // if we're pretty close to where we want to be, just don't bother - smooths it out
-            if (Mathf.Abs(err) < snap)
+            if (Mathf.Abs(error) < snap)
             {
-                err = 0f;
+                error = 0f;
             }
 
-            if (err < 0)
+            if (error < 0)
             {
-                // if we're above the height we want, just lower gravity
-                if (setGravity == false)
+                // if we are above the target height, descend slowly
+                if (characterMotor.velocity.y < 0)
                 {
-                    SetGravityOverride(true);
+                    characterMotor.velocity.y = Mathf.MoveTowards(characterMotor.velocity.y, hoverDescendVelocity, hoverDescendAcceleration * Time.fixedDeltaTime);
                 }
             }
             else
             {
-                // otherwise set our velocity to raise up to the hover
-                if (setGravity == true)
-                {
-                    SetGravityOverride(false);
-                }
+                // if we are below the target height, try to reach zero Y velocity at the target height, by ascending quicker the further off we are.
+                // (if we are close to the floor, fly up quickly, while slowing down as we approach hover height)
+                float ascendVelocity = Mathf.Lerp(hoverAscendTargetVelocity, hoverAscendMaxVelocity, error / hoverHeight);
+                characterMotor.velocity.y = Mathf.MoveTowards(characterMotor.velocity.y, ascendVelocity, hoverAscendAcceleration * Time.fixedDeltaTime);
+            }
 
-                float yVel = Mathf.Clamp(err * baseRaiseRate, -maxFall, maxRaise);
-                float currentY = rigidbody.velocity.y;
-
-                float accel = (yVel > currentY) ? raiseAccel : fallAccel;
-
-                float newY = Mathf.MoveTowards(currentY, yVel, accel);
-
-                Vector3 v = characterMotor.velocity;
-                v.y = newY;
-                characterMotor.velocity = v;
+            // apply forward velocity that decreases over time
+            // low acceleration, lots of momentum
+            if (fixedAge < forwardVelocityDuration)
+            {
+                float t = fixedAge / forwardVelocityDuration;
+                float targetForwardSpeed = Mathf.Lerp(startForwardVelocity, endForwardVelocity, t) * moveSpeedStat;
+                Vector3 targetForwardVelocity = inputBank.moveVector * targetForwardSpeed;
+                characterMotor.velocity.x = Mathf.MoveTowards(characterMotor.velocity.x, targetForwardVelocity.x, forwardAcceleration * Time.fixedDeltaTime);
+                characterMotor.velocity.z = Mathf.MoveTowards(characterMotor.velocity.z, targetForwardVelocity.z, forwardAcceleration * Time.fixedDeltaTime);
             }
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            SetGravityOverride(false);
             characterBody.bodyFlags &= ~RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
 
             if (animator != null) animator.SetBool("isHovering", false);

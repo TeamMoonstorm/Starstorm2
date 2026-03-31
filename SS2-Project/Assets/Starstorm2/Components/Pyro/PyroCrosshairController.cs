@@ -14,11 +14,21 @@ namespace SS2.Components
         private PyroController pyro;
         private HudElement hudElement;
         private ImageFillController ifc;
+        private Animator animator;
+        private static int HighHeatHash = Animator.StringToHash("highHeat");
+        private static int LowHeatHash = Animator.StringToHash("lowHeat");
+        private bool wasHighHeat;
 
         private void Awake()
         {
             hudElement = GetComponent<HudElement>();
             ifc = GetComponent<ImageFillController>();
+            animator = GetComponent<Animator>();
+            if (hudElement.targetCharacterBody != null && hudElement.targetCharacterBody.TryGetComponent(out PyroController pc))
+            {
+                pyro = pc;
+            }
+            UpdateHeat();
         }
 
         private void Start()
@@ -32,11 +42,37 @@ namespace SS2.Components
                 SS2Log.Error("PyroCrosshairController.Start : Failed to find PyroController from HudElement's TargetCharacterBody!!");
                 return;
             }
+            UpdateHeat();
         }
 
         private void FixedUpdate()
         {
-            ifc.SetTValue(pyro.heat / pyro.heatMax);
+            UpdateHeat();
+        }
+
+        private void UpdateHeat()
+        {
+            if (pyro)
+            {
+                if (ifc)
+                {
+                    ifc.SetTValue(pyro.heat / pyro.heatMax);
+                }
+
+                if (animator)
+                {
+                    if (pyro.isHighHeat && !wasHighHeat)
+                    {
+                        animator.SetTrigger(HighHeatHash);
+                    }
+                    if (!pyro.isHighHeat && wasHighHeat)
+                    {
+                        animator.SetTrigger(LowHeatHash);
+                    }
+                    wasHighHeat = pyro.isHighHeat;
+                }
+                
+            }
         }
     }
 }

@@ -5,13 +5,12 @@ using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace EntityStates.Pyro
 {
     public class FireFlamethrower : BaseState
     {
-        public static float baseDuration;
         public static float baseTickFrequency;
         public static float baseEntryDuration;
         public static float pressureDuration;
@@ -19,7 +18,6 @@ namespace EntityStates.Pyro
         private float tickRate;
         private float stopwatch;
         private float flamethrowerStopwatch;
-        private float duration;
         private float entryDuration;
 
         private bool hasBegunFlamethrower;
@@ -35,6 +33,8 @@ namespace EntityStates.Pyro
         public static float radius;
         public static string muzzleString;
         public static string smokeMuzzleEffectString;
+        private static float spreadBloonPerSecond = 1f;
+        private static float igniteChance = 50f;
 
         public static GameObject flameEffectPrefab;
         public static GameObject projectilePrefab;
@@ -46,6 +46,8 @@ namespace EntityStates.Pyro
         private ParticleSystem flames;
 
         private ScaleParticleSystemDuration smokeMuzzleEffect;
+
+        private EntityStateMachine jetpackStateMachine;
 
         public override void OnEnter()
         {
@@ -59,11 +61,10 @@ namespace EntityStates.Pyro
 
             hasBegunFlamethrower = false;
 
-            duration = baseDuration / attackSpeedStat;
             entryDuration = baseEntryDuration / attackSpeedStat;
             tickRate = baseTickFrequency / attackSpeedStat;
 
-            characterBody.SetAimTimer(duration * 2f);
+            characterBody.SetAimTimer(2f);
 
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
@@ -81,11 +82,26 @@ namespace EntityStates.Pyro
             }
 
             PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);
+
+            // fake "agile", only while hovering.
+            jetpackStateMachine = FindSiblingStateMachine("Jetpack");
+            if (jetpackStateMachine && jetpackStateMachine.state is not PyroHoverpack)
+            {
+                characterBody.isSprinting = false;
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (jetpackStateMachine)
+            {
+                if (characterBody.isSprinting && jetpackStateMachine.state is not PyroHoverpack)
+                {
+                    outer.SetNextStateToMain();
+                }
+            }
 
             stopwatch += Time.fixedDeltaTime;
 
@@ -101,20 +117,20 @@ namespace EntityStates.Pyro
 
             if (hasBegunFlamethrower)
             {
+                characterBody.AddSpreadBloom(spreadBloonPerSecond * Time.fixedDeltaTime);
+
                 flamethrowerStopwatch += Time.fixedDeltaTime;
                 float tickRate = baseTickFrequency / attackSpeedStat;
                 while (flamethrowerStopwatch > tickRate)
                 {
-                    //Debug.Log("ticking flamethrower");
                     flamethrowerStopwatch -= tickRate;
                     Fire(muzzleString);
                 }
             }
 
-            if (stopwatch >= baseDuration && !inputBank.skill1.down && isAuthority)
+            if (!inputBank.skill1.down && isAuthority)
             {
                 outer.SetNextStateToMain();
-                //Debug.Log("exiting flamethrower");
                 return;
             }
         }
@@ -122,7 +138,12 @@ namespace EntityStates.Pyro
         public override void OnExit()
         {
             base.OnExit();
-            characterBody.AddTimedBuffAuthority(SS2.SS2Content.Buffs.bdPyroPressure.buffIndex, pressureDuration);
+
+            if (NetworkServer.active)
+            {
+                characterBody.AddTimedBuff(SS2.SS2Content.Buffs.bdPyroPressure, pressureDuration);
+            }
+            
             Util.PlaySound("Stop_pryo_primary_loop", gameObject); //
             Util.PlaySound("Play_pyro_primary_end", gameObject);
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
@@ -137,10 +158,14 @@ namespace EntityStates.Pyro
             Ray aimRay = GetAimRay();
             if (isAuthority)
             {
-                DamageTypeCombo dtc = new DamageTypeCombo();
-                dtc.damageSource = DamageSource.Primary;
-                dtc.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
-                dtc.AddModdedDamageType(SS2.Survivors.Pyro.FlamethrowerDamageType);
+                DamageTypeCombo damageType = new DamageTypeCombo();
+                damageType.damageSource = DamageSource.Primary;
+                damageType.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
+                
+                if (pc && pc.isHighHeat && Util.CheckRoll(igniteChance, characterBody.master))
+                {
+                    damageType.AddModdedDamageType(SS2.Survivors.Pyro.PyroIgniteOnHit);
+                }
 
                 ProjectileManager.instance.FireProjectile(
                     projectilePrefab,
@@ -153,7 +178,7 @@ namespace EntityStates.Pyro
                     DamageColorIndex.Default,
                     null,
                     -1,
-                    dtc
+                    damageType
                     );
 
                 if (flamethrowerTransform)
@@ -163,7 +188,7 @@ namespace EntityStates.Pyro
 
                 if (pc)
                 {
-                    pc.AddHeat(heatPerTick);
+                    pc.AddHeat(heatPerTick); //TODO: AddHeat is server only bruh!!
                 }
             }
         }

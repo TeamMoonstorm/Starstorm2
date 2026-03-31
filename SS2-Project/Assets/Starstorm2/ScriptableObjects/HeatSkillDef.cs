@@ -39,7 +39,7 @@ namespace SS2
         {
             base.OnExecute(skillSlot);
             PyroController pc = ((InstanceData)skillSlot.skillInstanceData).pc;
-            pc.AddHeat(heatConsumed * -1);
+            pc.AddHeat(heatConsumed * -1);  //TODO: AddHeat is server only bruh!!
         }
 
         protected class InstanceData : SkillDef.BaseSkillInstanceData

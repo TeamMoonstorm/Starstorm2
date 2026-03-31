@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2560829006886464098}
   - component: {fileID: 6286932431495532617}
   - component: {fileID: 5650472483982727580}
-  - component: {fileID: 7800157434451646354}
   m_Layer: 0
   m_Name: PyroDotZone
   m_TagString: Untagged
@@ -216,20 +215,6 @@ MonoBehaviour:
     damageSource: 4
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
---- !u!114 &7800157434451646354
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3710410905534351903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee0cad2e76e92ba43a0eecbaba2de19a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FX: {fileID: 8647263105508978729}
-  atn: {fileID: 8729866098431752186}
 --- !u!1 &4254950870144185801
 GameObject:
   m_ObjectHideFlags: 0
