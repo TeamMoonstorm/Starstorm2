@@ -1,6 +1,7 @@
 ﻿using R2API;
 using RoR2;
 using RoR2.Projectile;
+using SS2;
 using SS2.Components;
 using System.Collections;
 using System.Collections.Generic;
@@ -47,8 +48,6 @@ namespace EntityStates.Pyro
 
         private ScaleParticleSystemDuration smokeMuzzleEffect;
 
-        private EntityStateMachine jetpackStateMachine;
-
         public override void OnEnter()
         {
             base.OnEnter();
@@ -84,10 +83,10 @@ namespace EntityStates.Pyro
             PlayCrossfade("Gesture, Override", "FirePrimary", 0.1f);
 
             // fake "agile", only while hovering.
-            jetpackStateMachine = FindSiblingStateMachine("Jetpack");
-            if (jetpackStateMachine && jetpackStateMachine.state is not PyroHoverpack)
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdPyroJet))
             {
-                characterBody.isSprinting = false;
+                if (!characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome)) // watchmetronome also adds fake agile. TODO i guess: make a util for fake agility
+                    characterBody.isSprinting = false;
             }
         }
 
@@ -95,17 +94,25 @@ namespace EntityStates.Pyro
         {
             base.FixedUpdate();
 
-            if (jetpackStateMachine)
+            if (isAuthority)
             {
-                if (characterBody.isSprinting && jetpackStateMachine.state is not PyroHoverpack)
+                if (characterBody.isSprinting)
                 {
-                    outer.SetNextStateToMain();
+                    if (!characterBody.HasBuff(SS2Content.Buffs.bdPyroJet) && !characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome))
+                    {
+                        outer.SetNextStateToMain();
+                    }
+                    else
+                    {
+                        characterDirection.moveVector = inputBank.aimDirection; // if we are sprinting while firing, stay facing forward
+                    }
                 }
             }
 
+
             stopwatch += Time.fixedDeltaTime;
 
-            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2.SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
+            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
             {
                 //Debug.Log("entering flamethrower");
                 hasBegunFlamethrower = true;
@@ -141,7 +148,7 @@ namespace EntityStates.Pyro
 
             if (NetworkServer.active)
             {
-                characterBody.AddTimedBuff(SS2.SS2Content.Buffs.bdPyroPressure, pressureDuration);
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdPyroPressure, pressureDuration);
             }
             
             Util.PlaySound("Stop_pryo_primary_loop", gameObject); //
@@ -188,7 +195,7 @@ namespace EntityStates.Pyro
 
                 if (pc)
                 {
-                    pc.AddHeat(heatPerTick); //TODO: AddHeat is server only bruh!!
+                    pc.AddHeat(heatPerTick);
                 }
             }
         }

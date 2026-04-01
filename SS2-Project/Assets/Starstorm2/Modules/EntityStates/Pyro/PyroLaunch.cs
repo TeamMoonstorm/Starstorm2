@@ -11,9 +11,7 @@ namespace EntityStates.Pyro
 {
     public class PyroLaunch : BaseSkillState
     {
-        public static float baseDuration;
         public static float baseMaxDuration;
-        private float duration;
         private float maxDuration;
 
         private PyroController pyroController;
@@ -21,32 +19,21 @@ namespace EntityStates.Pyro
         private static float minDuration = 0.3f;
         private static float heatInterval = 0.2f;
 
-        public static float baseVerticalSpeed;
         public static float walkSpeedCoefficient;
         private bool hasLaunched = false;
         private bool hasMax = false;
 
-        public static float damageCoefficient;
         public static float heatPerTick;
 
         public static float launchHeat;
-        private static float launchRadius = 10f;
-        public static float launchDmgCoef;
-        public static float launchProcCoef;
-        public static float launchProcForce;
 
         private ParticleSystem leftExhaust;
         private ParticleSystem rightExhaust;
 
         public static GameObject fullChargePrefab;
-        public static GameObject launchEffectPrefab;
 
-        private bool setGravity;
-        private float originalGravScale;
         public static float shorthopVelocity;
 
-        private float timer = 0f;
-        private float tickTimer = 0f;
         private float heatTimer = 0f;
         private float charge = 0f;
         public override void OnEnter()
@@ -60,7 +47,6 @@ namespace EntityStates.Pyro
                 SS2Log.Error("PyroLaunch.OnEnter : Failed to find PyroController on body! Is this a Pyro?");
             }
 
-            duration = baseDuration / attackSpeedStat;
             maxDuration = baseMaxDuration / attackSpeedStat;            
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
 
@@ -111,7 +97,7 @@ namespace EntityStates.Pyro
                             if (heatTimer >= heatInterval)
                             {
                                 heatTimer -= heatInterval;
-                                pyroController.AddHeat(-heatPerTick); //TODO: AddHeat is server only bruh!!
+                                pyroController.AddHeat(-heatPerTick);
                             }
                         }
                     }
@@ -140,46 +126,15 @@ namespace EntityStates.Pyro
         {
             if (!hasLaunched)
             {
-
                 hasLaunched = true;
-                pyroController.AddHeat(Mathf.Max(-launchHeat)); //TODO: AddHeat is server only bruh!!
+                
 
                 Vector3 aimVector = GetAimRay().direction;
                 Vector3 moveVector = inputBank.moveVector;
 
                 if (isAuthority)
                 {
-                    DamageTypeCombo dtc = new DamageTypeCombo();
-                    dtc.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
-                    dtc.damageSource = DamageSource.Utility;
-
-                    BlastAttack launchBlast = new BlastAttack()
-                    {
-                        radius = launchRadius,
-                        procCoefficient = launchProcCoef,
-                        baseDamage = characterBody.damage * launchDmgCoef,
-                        damageColorIndex = DamageColorIndex.Default,
-                        falloffModel = BlastAttack.FalloffModel.None,
-                        attackerFiltering = AttackerFiltering.NeverHitSelf,
-                        teamIndex = teamComponent.teamIndex,
-                        attacker = gameObject,
-                        baseForce = launchProcForce,
-                        position = characterBody.footPosition,
-                        damageType = dtc,
-                        crit = RollCrit()
-                    };
-                    launchBlast.Fire();
-
-                    if (launchEffectPrefab)
-                    {
-                        EffectData effectData = new EffectData
-                        {
-                            origin = characterBody.footPosition,
-                            scale = launchRadius,
-                            rotation = Quaternion.identity,
-                        };
-                        EffectManager.SpawnEffect(launchEffectPrefab, effectData, true);
-                    }
+                    pyroController.AddHeat(Mathf.Max(-launchHeat));
 
                     EntityStateMachine jetpack = EntityStateMachine.FindByCustomName(gameObject, "Jetpack");
                     if (jetpack != null)

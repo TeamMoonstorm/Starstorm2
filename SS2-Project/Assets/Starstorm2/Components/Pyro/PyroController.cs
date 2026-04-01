@@ -24,13 +24,11 @@ namespace SS2.Components
         private List<HurtBox> hits;
         public float enemyRadius = 35f;
 
-        [SyncVar(hook = nameof(OnHeatModified))]
         private float _heat;
         public float heat
         {
             get
             {
-
                 return _heat;
             }
         }
@@ -39,11 +37,16 @@ namespace SS2.Components
         {
             get
             {
-                return heat >= highHeat;
+                return _isHighHeat;
             }
         }
+        private bool _isHighHeat;
+        public void SetHighHeat(bool newHighHeat)
+        {
+            _isHighHeat = newHighHeat;
+        }
 
-        public bool isMaxHeat
+        public bool isMaxHeatAuthority
         {
             get
             {
@@ -51,11 +54,19 @@ namespace SS2.Components
             }
         }
 
+        
+        // just for telling the crosshair what to do
+        public bool inNapalm { get; set; }
+        private bool hasEffectiveAuthority;
+
         public void Awake()
         {
             characterBody = GetComponent<CharacterBody>();
         }
-
+        private void Start()
+        {
+            UpdateAuthority();
+        }
         public void OnEnable()
         {
             hits = new List<HurtBox>();
@@ -74,7 +85,7 @@ namespace SS2.Components
         }
         private void FixedUpdate()
         {
-            if (NetworkServer.active)
+            if (hasEffectiveAuthority)
             {
                 enemyCheckStopwatch += Time.fixedDeltaTime;
                 if (enemyCheckStopwatch >= enemyCheckInterval)
@@ -121,20 +132,51 @@ namespace SS2.Components
             }
         }
 
-        // This will have to be revisited
+
+        public override void OnStartAuthority()
+        {
+            UpdateAuthority();
+        }
+        public override void OnStopAuthority()
+        {
+            UpdateAuthority();
+        }
+
+        private void UpdateAuthority()
+        {
+            hasEffectiveAuthority = Util.HasEffectiveAuthority(gameObject);
+        }
+
+        // Pyro heat is now client authoritative. better for everyone except people spectating pyro.
         public void AddHeat(float amount)
         {
-            if (!NetworkServer.active)
+            if (hasEffectiveAuthority)
             {
+                AddHeatInternal(amount);
                 return;
             }
 
-            _heat = Mathf.Clamp(heat + amount, 0f, heatMax);
+            if (NetworkServer.active)
+            {
+                RpcAddHeat(amount);
+            }
+            else
+            {
+                SS2Log.Error("PyroController.AddHeat called by non-authoritative client.");
+            }
         }
 
-        private void OnHeatModified(float newHeat)
+        [ClientRpc]
+        public void RpcAddHeat(float amount)
         {
-            _heat = newHeat;
+            if (hasEffectiveAuthority)
+            {
+                AddHeatInternal(amount);
+            }
+        }
+        public void AddHeatInternal(float amount)
+        {
+            _heat = Mathf.Clamp(heat + amount, 0f, heatMax);
         }
     }
 }

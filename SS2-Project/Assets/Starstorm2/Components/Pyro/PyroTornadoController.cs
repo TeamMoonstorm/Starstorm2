@@ -45,7 +45,7 @@ public class PyroTornadoController : NetworkBehaviour
     private float targetRadius;
     private float currentRadius;
 
-    private AnimateShaderAlpha animateShaderAlpha;
+    private AnimateShaderAlpha[] animateShaderAlphas;
     private SphereSearch sphereSearch;
     private HurtBox[] hits;
     private float stopwatch;
@@ -66,10 +66,13 @@ public class PyroTornadoController : NetworkBehaviour
 
         if (rangeIndicator)
         {
-            animateShaderAlpha = rangeIndicator.GetComponent<AnimateShaderAlpha>();
-            if (animateShaderAlpha)
+            animateShaderAlphas = rangeIndicator.GetComponentsInChildren<AnimateShaderAlpha>();
+            if (animateShaderAlphas != null)
             {
-                animateShaderAlpha.timeMax = decayDuration;
+                for (int i = 0; i < animateShaderAlphas.Length; i++)
+                {
+                    animateShaderAlphas[i].timeMax = decayDuration;
+                }
             }
 
             rangeIndicator.localScale = Vector3.zero;
@@ -176,7 +179,7 @@ public class PyroTornadoController : NetworkBehaviour
             int burnCount = victimBody.GetBurnCountPyro();
             if (burnCount > 0)
             {
-                RpcOnIgnitedEnemyHit();
+                RpcOnIgnitedEnemyHit(hurtBox.transform.position);
 
                 Vector3 corePosition = victimBody.corePosition;
                 GameObject delayBlastObject = GameObject.Instantiate<GameObject>(delayBlastPrefab, corePosition, Quaternion.identity);
@@ -200,21 +203,26 @@ public class PyroTornadoController : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcOnIgnitedEnemyHit()
+    public void RpcOnIgnitedEnemyHit(Vector3 hitPosition)
     {
         targetRadius += radiusPerIgnite;
         lifetimeStopwatch -= decayDurationPerIgnite;
 
-        if (animateShaderAlpha)
+        if (animateShaderAlphas != null)
         {
-            animateShaderAlpha.time -= decayDurationPerIgnite;
+            for (int i = 0; i < animateShaderAlphas.Length; i++)
+            {
+                animateShaderAlphas[i].time -= decayDurationPerIgnite;
+            }
         }
 
         if (rangeIndicator)
         {
             if (indicatorExplosionEffectPrefab)
             {
-                GameObject.Instantiate(indicatorExplosionEffectPrefab, rangeIndicator);
+                Vector3 between = hitPosition - transform.position;
+                GameObject effectInstance = GameObject.Instantiate(indicatorExplosionEffectPrefab, rangeIndicator);
+                effectInstance.transform.forward = between.normalized;
             }
         }
     }

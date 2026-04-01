@@ -106,6 +106,7 @@ namespace SS2.Components
         private float damageStopwatch;
         private float lifetimeStopwatch;
         private bool hasEnded = false;
+        private bool wasStuck;
         private void Awake()
         {
             projectileController = GetComponent<ProjectileController>();
@@ -158,6 +159,7 @@ namespace SS2.Components
         {
             if (projectileStickOnImpact.stuck && projectileStickOnImpact.NetworkhitHurtboxIndex >= 0)
             {
+                wasStuck = true;
                 if (stuckEnemyEffectTransform) stuckEnemyEffectTransform.gameObject.SetActive(true);
                 if (stuckWorldEffectTransform) stuckWorldEffectTransform.gameObject.SetActive(false);
             }
@@ -165,6 +167,12 @@ namespace SS2.Components
             {
                 if (stuckEnemyEffectTransform) stuckEnemyEffectTransform.gameObject.SetActive(false);
                 if (stuckWorldEffectTransform) stuckWorldEffectTransform.gameObject.SetActive(true);
+
+                // too lazy to make napalm fall to the ground
+                if (wasStuck)
+                {
+                    Destroy(gameObject);
+                }
             }
         }
 

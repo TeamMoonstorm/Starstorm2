@@ -4,6 +4,7 @@ using UnityEngine;
 using SS2.Components;
 using SS2;
 using System;
+using UnityEngine.Networking;
 
 namespace EntityStates.Pyro
 {
@@ -25,6 +26,8 @@ namespace EntityStates.Pyro
         private static float endForwardVelocity = 1f;
         private static float forwardAcceleration = 51f;
         private static float forwardVelocityDuration = 1.5f;
+
+        private static float jetBuffDuration = 1f;
 
         public static float upwardVelocity;
 
@@ -70,23 +73,27 @@ namespace EntityStates.Pyro
 
             characterBody.isSprinting = true;
             characterBody.bodyFlags |= RoR2.CharacterBody.BodyFlags.SprintAnyDirection;
+
+            if (NetworkServer.active)
+            {
+                characterBody.AddBuff(SS2Content.Buffs.bdPyroJet);
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if (inputBank.skill3.down == false || heat.heat <= 0f)
-            {
-                outer.SetNextStateToMain();
-                return;
-            }
+           
 
-            heatTimer += GetDeltaTime();
-            if (heatTimer >= baseDurationBetweenTicks)
+            if (isAuthority)
             {
-                heatTimer -= heatTimer;
-                heat.AddHeat(-heatPerTick);  //TODO: AddHeat is server only bruh!!
+                heatTimer += GetDeltaTime();
+                if (heatTimer >= baseDurationBetweenTicks)
+                {
+                    heatTimer -= heatTimer;
+                    heat.AddHeat(-heatPerTick);
+                }
             }
 
             bool ground = Physics.Raycast(characterBody.footPosition, Vector3.down, out RaycastHit hit, hoverHeight * 3f, RoR2.LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore);
@@ -129,6 +136,15 @@ namespace EntityStates.Pyro
                 characterMotor.velocity.x = Mathf.MoveTowards(characterMotor.velocity.x, targetForwardVelocity.x, forwardAcceleration * Time.fixedDeltaTime);
                 characterMotor.velocity.z = Mathf.MoveTowards(characterMotor.velocity.z, targetForwardVelocity.z, forwardAcceleration * Time.fixedDeltaTime);
             }
+
+            if (isAuthority)
+            {
+                if (inputBank.skill3.down == false || heat.heat <= 0f)
+                {
+                    outer.SetNextStateToMain();
+                }
+            }
+
         }
 
         public override void OnExit()
@@ -142,6 +158,12 @@ namespace EntityStates.Pyro
             {
                 hoverL.Stop();
                 hoverR.Stop();
+            }
+
+            if (NetworkServer.active)
+            {
+                characterBody.RemoveBuff(SS2Content.Buffs.bdPyroJet);
+                characterBody.AddTimedBuff(SS2Content.Buffs.bdPyroJet, jetBuffDuration);
             }
         }
 

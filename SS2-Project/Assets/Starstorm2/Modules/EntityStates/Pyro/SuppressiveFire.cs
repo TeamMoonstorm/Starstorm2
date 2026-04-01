@@ -56,8 +56,6 @@ namespace EntityStates.Pyro
 
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
 
-        private EntityStateMachine jetpackStateMachine;
-
         private static float turnSpeed = 180f;
         private AimAnimator aimAnimator;
         private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
@@ -77,6 +75,7 @@ namespace EntityStates.Pyro
             characterBody.isSprinting = false;
 
             pc = GetComponent<PyroController>();
+            pc.inNapalm = true;
 
             hasBegunFlamethrower = false;
 
@@ -93,10 +92,10 @@ namespace EntityStates.Pyro
             }
 
             // fake "agile", only while hovering.
-            jetpackStateMachine = FindSiblingStateMachine("Jetpack");
-            if (jetpackStateMachine && jetpackStateMachine.state is not PyroHoverpack)
+            if (!characterBody.HasBuff(SS2Content.Buffs.bdPyroJet))
             {
-                characterBody.isSprinting = false;
+                if (!characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome)) // watchmetronome also adds fake agile. TODO i guess: make a util for fake agility
+                    characterBody.isSprinting = false;
             }
 
             aimAnimator = GetAimAnimator();
@@ -130,11 +129,18 @@ namespace EntityStates.Pyro
         {
             base.FixedUpdate();
 
-            if (jetpackStateMachine)
+            if (isAuthority)
             {
-                if (characterBody.isSprinting && jetpackStateMachine.state is not PyroHoverpack)
+                if (characterBody.isSprinting)
                 {
-                    outer.SetNextStateToMain();
+                    if (!characterBody.HasBuff(SS2Content.Buffs.bdPyroJet) && !characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome))
+                    {
+                        outer.SetNextStateToMain();
+                    }
+                    else
+                    {
+                        characterDirection.moveVector = inputBank.aimDirection; // if we are sprinting while firing, stay facing forward
+                    }
                 }
             }
 
@@ -166,7 +172,10 @@ namespace EntityStates.Pyro
                 // we count this separate for fuel burn rate consistency
                 if (heatStopwatch > baseFireInterval && pc != null)
                 {
-                    pc.AddHeat(-heatCostPerSecond * baseFireInterval);  //TODO: AddHeat is server only bruh!!
+                    if (isAuthority)
+                    {
+                        pc.AddHeat(-heatCostPerSecond * baseFireInterval);
+                    }
                     heatStopwatch -= baseFireInterval;
                 }
             }
@@ -186,6 +195,7 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
+            pc.inNapalm = false;
 
             Util.PlaySound(stopFireSoundLoopString, gameObject);
             Util.PlaySound(exitSoundString, gameObject);
@@ -217,25 +227,25 @@ namespace EntityStates.Pyro
         }
         private void Fire(string muzzleString)
         {
-            float damage = damagePerSecond * fireInterval * damageStat;
-            DamageColorIndex color = DamageColorIndex.Default;
-
-            GameObject prefab = projectilePrefab;
-            if (pc.isHighHeat)
-            {
-                prefab = igniteProjectilePrefab;
-            }
-
-            DamageTypeCombo damageType = new DamageTypeCombo();
-            damageType.damageType = DamageType.Generic;
-            R2API.DamageAPI.AddModdedDamageType(ref damageType, SS2.Survivors.Pyro.PyroIgniteOnHit);
-            damageType.damageSource = DamageSource.Secondary;
-            
-            Ray aimRay = GetAimRay();
-            aimRay.direction = currentAimVector;
-
             if (isAuthority)
             {
+                Ray aimRay = GetAimRay();
+                aimRay.direction = currentAimVector;
+
+                GameObject prefab = projectilePrefab;
+                if (pc.isHighHeat)
+                {
+                    prefab = igniteProjectilePrefab;
+                }
+
+                float damage = damagePerSecond * fireInterval * damageStat;
+                DamageColorIndex color = DamageColorIndex.Default;
+
+                DamageTypeCombo damageType = new DamageTypeCombo();
+                damageType.damageType = DamageType.Generic;
+                R2API.DamageAPI.AddModdedDamageType(ref damageType, SS2.Survivors.Pyro.PyroIgniteOnHit);
+                damageType.damageSource = DamageSource.Secondary;
+
                 ProjectileManager.instance.FireProjectile(
                     prefab,
                     aimRay.origin,

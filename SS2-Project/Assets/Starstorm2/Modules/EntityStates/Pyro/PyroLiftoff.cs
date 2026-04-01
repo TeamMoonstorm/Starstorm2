@@ -9,6 +9,11 @@ namespace EntityStates.Pyro
 {
     public class PyroLiftoff : BaseState
     {
+        private static float blastRadius = 10f;
+        private static float damageCoefficient = 3.5f;
+        private static float procCoefficient = 1f;
+        private static float force = 400f;
+
         private static float minChargeUpwardVelocity = 20f;
         private static float maxChargeUpwardVelocity = 44f;
         private static float minChargeForwardVelocity = 3f;
@@ -16,7 +21,7 @@ namespace EntityStates.Pyro
         private static float duration = 0.3f;
 
         private static string enterSoundString = "";
-        public static GameObject effectPrefab;
+        public static GameObject launchEffectPrefab;
 
         private static float airControl = 0.15f;
 
@@ -35,16 +40,49 @@ namespace EntityStates.Pyro
             {
                 characterBody.isSprinting = true;
 
+                // do jump
                 Vector3 moveVector = inputBank.moveVector;
-                // Vector3 aimVelocityVector = aimVector.normalized * aimVelocity * (characterBody.moveSpeed + ((moveSpeedStat - characterBody.moveSpeed) * 0.5f)); // dampened movespeed scaling
                 Vector3 upwardVelocityVector = Vector3.up * Mathf.Lerp(minChargeUpwardVelocity, maxChargeUpwardVelocity, charge);
                 Vector3 forwardVelocityVector = new Vector3(moveVector.x, 0f, moveVector.z).normalized * characterBody.moveSpeed * Mathf.Lerp(minChargeForwardVelocity, maxChargeForwardVelocity, charge);
                 characterMotor.Motor.ForceUnground(0.2f);
                 characterMotor.velocity = (upwardVelocityVector + forwardVelocityVector);
                 characterMotor.airControl = airControl;
 
-                
+                // do blastattack
+                DamageTypeCombo dtc = new DamageTypeCombo();
+                dtc.damageTypeExtended = DamageTypeExtended.FireNoIgnite;
+                dtc.damageSource = DamageSource.Utility;
 
+                BlastAttack launchBlast = new BlastAttack()
+                {
+                    radius = blastRadius,
+                    procCoefficient = procCoefficient,
+                    baseDamage = characterBody.damage * damageCoefficient,
+                    damageColorIndex = DamageColorIndex.Default,
+                    falloffModel = BlastAttack.FalloffModel.None,
+                    attackerFiltering = AttackerFiltering.NeverHitSelf,
+                    teamIndex = teamComponent.teamIndex,
+                    attacker = gameObject,
+                    baseForce = force,
+                    position = characterBody.footPosition,
+                    damageType = dtc,
+                    crit = RollCrit()
+                };
+                launchBlast.Fire();
+
+                // spawn effect
+                if (launchEffectPrefab)
+                {
+                    EffectData effectData = new EffectData
+                    {
+                        origin = characterBody.footPosition,
+                        scale = blastRadius,
+                        rotation = Util.QuaternionSafeLookRotation(characterMotor.velocity),
+                    };
+                    EffectManager.SpawnEffect(launchEffectPrefab, effectData, true);
+                }
+
+                // enable jetpack
                 var bodyStateMachine = FindSiblingStateMachine("Body");
                 if (bodyStateMachine)
                 {

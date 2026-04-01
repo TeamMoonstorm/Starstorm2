@@ -136,7 +136,7 @@ namespace SS2
         }
         public static bool IsFireDamageType(DamageTypeCombo damageType)
         {
-            return damageType.HasDamageType(DamageType.IgniteOnHit) || damageType.HasDamageType(DamageType.PercentIgniteOnHit) || damageType.HasDamageType(DamageTypeExtended.FireNoIgnite);
+            return damageType.HasDamageType(DamageType.IgniteOnHit) || damageType.HasDamageType(DamageType.PercentIgniteOnHit) || damageType.HasDamageType(DamageTypeExtended.FireNoIgnite) || damageType.HasModdedDamageType(Survivors.Pyro.PyroIgniteOnHit);
         }
         private static bool HasDamageType(this DamageTypeCombo damageType, DamageType damageTypeToCheck)
         {

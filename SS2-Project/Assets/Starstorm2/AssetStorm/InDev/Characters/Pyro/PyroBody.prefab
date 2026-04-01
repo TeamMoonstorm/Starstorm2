@@ -125,7 +125,47 @@ MonoBehaviour:
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
   customGameObjectActivationTransforms: []
-  baseRendererInfos: []
+  baseRendererInfos:
+  - renderer: {fileID: 6305388513832588549}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+    defaultMaterial: {fileID: 2100000, guid: ab8baac4fda08954f9d74ca8dbbdd92b, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer: {fileID: 5160685261400061148}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+    defaultMaterial: {fileID: 2100000, guid: bbb4af221aa4c374ca29358c38e6ea51, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer: {fileID: 7960165531881007146}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+    defaultMaterial: {fileID: 2100000, guid: bbb4af221aa4c374ca29358c38e6ea51, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer: {fileID: 6830000310342736531}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+    defaultMaterial: {fileID: 2100000, guid: bbb4af221aa4c374ca29358c38e6ea51, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 1
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   fullBodyPing: 0
   baseLightInfos: []
   constraintItemDisplaysScale: 0
@@ -526,7 +566,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 1082071104510670817, guid: 543a8a5a110c1e243b21bc7b9485680f, type: 3}
   m_Bones:
@@ -35103,7 +35143,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 3129888530732058840, guid: 543a8a5a110c1e243b21bc7b9485680f, type: 3}
   m_Bones:
@@ -42942,7 +42982,7 @@ SkinnedMeshRenderer:
   m_SortingOrder: 0
   serializedVersion: 2
   m_Quality: 0
-  m_UpdateWhenOffscreen: 0
+  m_UpdateWhenOffscreen: 1
   m_SkinnedMotionVectors: 1
   m_Mesh: {fileID: 80716738044756263, guid: 543a8a5a110c1e243b21bc7b9485680f, type: 3}
   m_Bones:
@@ -51557,6 +51597,7 @@ GameObject:
   - component: {fileID: 4366736563517659102}
   - component: {fileID: 665013047973763413}
   - component: {fileID: 7752370252062360469}
+  - component: {fileID: 659011984946918018}
   - component: {fileID: 6998341366074217288}
   - component: {fileID: 3676565266872111755}
   - component: {fileID: 8393837791909759074}
@@ -51812,6 +51853,7 @@ MonoBehaviour:
   - {fileID: 4366736563517659102}
   - {fileID: 665013047973763413}
   - {fileID: 7752370252062360469}
+  - {fileID: 659011984946918018}
 --- !u!114 &4366736563517659102
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51867,6 +51909,26 @@ MonoBehaviour:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  debug: 0
+--- !u!114 &659011984946918018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8195611311427035188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: Heat
+  initialStateType:
+    _typeName: EntityStates.Pyro.LowHeat, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Pyro.LowHeat, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   debug: 0
 --- !u!114 &6998341366074217288
 MonoBehaviour:
