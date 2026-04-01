@@ -87,14 +87,13 @@ namespace EntityStates.Knight
             if (!hasBounced)
             {
                 hasBounced = true;
-                if (!isGrounded)
-                {
-                    Vector3 hAim = new Vector3(inputBank.aimDirection.x, 0, inputBank.aimDirection.z);
-                    hAim = hAim.normalized;
-                    Vector3 velocity = hAim * bounceAwayVelocity + Vector3.up * bounceUpVelocity;
-                    characterMotor.velocity = velocity; // ?
-                    storedVelocity = velocity;
-                }
+
+                Vector3 hAim = new Vector3(inputBank.aimDirection.x, 0, inputBank.aimDirection.z);
+                hAim = hAim.normalized;
+                Vector3 velocity = hAim * bounceAwayVelocity + Vector3.up * bounceUpVelocity;
+                characterMotor.velocity = velocity; // ?
+                storedVelocity = velocity;
+                
             }
 
             outer.SetNextState(new ShieldPunchWindDown());

@@ -20,7 +20,8 @@ namespace EntityStates.Knight
         public static SkillDef shieldBashSkillDef;
         private bool hasParried = false;
         private float stopwatch = 0f;
-        public static float minDuration = 0.2f;
+        private static float minDuration = 0.4f;
+        private static float minInterruptDuration = 0.2f;
         private static float cameraEnterDuration = 0.2f;
         private static float cameraExitDuration = 0.3f;
 
@@ -236,7 +237,7 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return fixedAge >= minDuration ? InterruptPriority.Skill : InterruptPriority.PrioritySkill;
+            return fixedAge >= minInterruptDuration ? InterruptPriority.Skill : InterruptPriority.PrioritySkill;
         }
     }
 }

@@ -18,12 +18,12 @@ namespace SS2.Interactables
         {
             if (Run.instance.selectedDifficulty != Typhoon.sdd.DifficultyIndex)
             {
-                dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsAmbush));
+                dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsNotAmbush));
             }
         }
-        private static bool IsAmbush(DirectorCard card)
+        private static bool IsNotAmbush(DirectorCard card)
         {
-            return card.GetSpawnCard().prefab.GetComponent<AmbushBehavior>();
+            return !card.GetSpawnCard().prefab.GetComponent<AmbushBehavior>();
         }
 
 

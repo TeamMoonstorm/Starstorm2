@@ -55,6 +55,7 @@ namespace SS2.Survivors
 
         public static float reducedGravity = 0.07f;
         public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
+        private static ModdedProcType Smite;
 
         private static float extendedStunDuration = 2f;
         public override void Initialize()
@@ -73,6 +74,7 @@ namespace SS2.Survivors
             KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
 
             ExtendedStunDamageType = R2API.DamageAPI.ReserveDamageType();
+            Smite = R2API.ProcTypeAPI.ReserveProcType();
             ModifyPrefab();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
@@ -93,8 +95,9 @@ namespace SS2.Survivors
                 }
             }
 
-            if (damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
+            if (damageReport.damageInfo.procCoefficient > 0 && damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff) && !damageReport.damageInfo.procChainMask.HasModdedProc(Smite))
             {
+                damageReport.damageInfo.procChainMask.AddModdedProc(Smite);
                 damageReport.attackerBody.healthComponent.HealFraction(smiteHealthFractionRestoration * damageReport.damageInfo.procCoefficient, default(ProcChainMask));
                 damageReport.victimBody.AddBuff(SS2Content.Buffs.bdKnightSpecialDebuff);
 
