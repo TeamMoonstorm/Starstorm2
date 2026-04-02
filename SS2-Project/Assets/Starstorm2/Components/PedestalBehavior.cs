@@ -16,7 +16,9 @@ namespace SS2
         public Vector3 dropVelocity;
 
         [SyncVar(hook = nameof(OnSyncPickupIndex))]
-        private UniquePickup pickup = UniquePickup.none;
+        private int pickupIndex;
+
+        public UniquePickup pickup { get; set; }
 
         private PickupPickerController pickupPickerController;
         private Interactor interactor;
@@ -47,10 +49,11 @@ namespace SS2
             {
                 newPickup = dropTable.GeneratePickup(rng);
             }
-            SetPickup(newPickup);
+            SetPickup(newPickup.pickupIndex.value);
         }
-        private void SetPickup(UniquePickup newPickup)
+        private void SetPickup(int newPickupIndex)
         {
+            UniquePickup newPickup = new UniquePickup(new PickupIndex(newPickupIndex));
             if (!pickup.Equals(newPickup))
             {
                 pickup = newPickup;
@@ -68,9 +71,9 @@ namespace SS2
                 UpdatePickupDisplay();
             }
         }
-        private void OnSyncPickupIndex(UniquePickup newPickup)
+        private void OnSyncPickupIndex(int newPickupIndex)
         {
-            SetPickup(newPickup);
+            SetPickup(newPickupIndex);
             if (NetworkClient.active)
             {
                 UpdatePickupDisplay();
@@ -158,7 +161,7 @@ namespace SS2
                 }
 
                 // set our new pickup to player-picked item
-                SetPickup(new UniquePickup(newPickupIndex));
+                SetPickup(intPickupIndex);
             }
         }
 

@@ -10,15 +10,14 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escPyro3b_PyroLiftoff
+  m_Name: escPyroLowHeat
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Pyro.PyroLiftoff, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Pyro.LowHeat, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: launchEffectPrefab
+    - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2375021254577694854, guid: c72a7fa27d93faf429f065a2c77166c1,
-          type: 3}
+        objectValue: {fileID: 0}

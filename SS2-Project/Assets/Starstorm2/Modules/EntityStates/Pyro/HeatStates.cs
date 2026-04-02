@@ -60,7 +60,7 @@ namespace EntityStates.Pyro
                 var flashOverlayInstance = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 flashOverlayInstance.duration = 0.4f;
                 flashOverlayInstance.animateShaderAlpha = true;
-                flashOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+                flashOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 flashOverlayInstance.destroyComponentOnEnd = true;
                 flashOverlayInstance.originalMaterial = flashMaterial;
                 flashOverlayInstance.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
@@ -68,7 +68,7 @@ namespace EntityStates.Pyro
                 overlayInstance = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 overlayInstance.duration = 0.4f;
                 overlayInstance.animateShaderAlpha = true;
-                overlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+                overlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 overlayInstance.destroyComponentOnEnd = true;
                 overlayInstance.originalMaterial = overlayMaterial;
                 overlayInstance.stopwatch = 0f;

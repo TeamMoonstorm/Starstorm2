@@ -91,7 +91,7 @@ namespace SS2.Components
 
         public static float lifetime = 7f;
         public static float endTime = 0.5f;
-        public static float damageCoefficientPerSecond = 2.12f; 
+        public static float damageCoefficientPerSecond = 2f; 
         public static float procCoefficientPerSecond = 3.6f;
         public static float minDamageInterval = 0.2f;
         public static float maxDamageInterval = 0.4f;

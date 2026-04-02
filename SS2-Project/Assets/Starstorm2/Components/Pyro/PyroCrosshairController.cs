@@ -56,6 +56,7 @@ namespace SS2.Components
             UpdateHeat();
         }
 
+        // this should REALLY be separate from the crosshair
         private void UpdateHeat()
         {
             if (pyro)

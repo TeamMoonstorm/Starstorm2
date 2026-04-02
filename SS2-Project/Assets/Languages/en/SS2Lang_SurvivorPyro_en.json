@@ -14,7 +14,7 @@
 		"SS2_KEYWORD_BLAZEBORNE": "<style=cKeywordName>Blazeborne</style><style=cSub>Being near burning enemies gives bonuses. Larger enemies burn hotter. Blazing elite monsters always burn.\nDamage from fire-based attacks is reduced by 25% and grants <color=#D78326>5% heat</color>.\nCompletely immune to <style=cIsDamage>Ignite.</style>",
 		"SS2_KEYWORD_COMBUSTING": "<style=cKeywordName>Combusting</style><style=cSub>Resets the duration of ignite stacks each second.",
 		"SS2_KEYWORD_TORCHING": "<style=cKeywordName>Torching</style><style=cSub>At close range, deals 1.5x damage and has a 75% chance to ignite enemies starting at <color=#D78326>35% heat</color>. With <color=#D78326>70% heat</color> or more, has an additional 50% chance to ignite enemies at any range.",
-		"SS2_KEYWORD_LIFTOFF": "<style=cKeywordName>Liftoff</style><style=cSub>While in the air, replaces your utility with Liftoff:\nWhile in the air, hold to hover for <color=#D78326>10% heat per second</color>. Reverts to Plan B on the ground.", 
+		"SS2_KEYWORD_LIFTOFF": "<style=cKeywordName>Liftoff</style><style=cSub>While in the air, replaces your utility with Liftoff:\nConsume <color=#D78326>heat</color> to <style=cIsUtility>hover</style> in the air.", 
 
 		"SS2_PYRO_PASSIVE_NAME": "Blazeborne",
 		"SS2_PYRO_PASSIVE_DESC": "The Pyro is <style=cIsUtility>immune</style> to burn, and gains <color=#D78326>heat</color> from nearby burning enemies.",
@@ -23,7 +23,7 @@
 		"SS2_PYRO_PRIMARY_DESC": "<color=#D78326>Heat up</color> by burning enemies for <style=cIsDamage>270% damage per second</style>. At <color=#D78326>70% heat</color>, gains a chance to <style=cIsDamage>Ignite</style>.",
 
 		"SS2_PYRO_SECONDARY_NAME": "Hazard Reduction",
-		"SS2_PYRO_SECONDARY_DESC": "<style=cIsDamage>Ignite</style>. Consume <color=#D78326>heat</color> to burn enemies for <style=cIsDamage>451% damage per second</style>. At <color=#D78326>70% heat</color>, leave a trail of fire for <style=cIsDamage>212% damage per second</style>.",
+		"SS2_PYRO_SECONDARY_DESC": "<style=cIsDamage>Ignite</style>. Consume <color=#D78326>heat</color> to burn enemies for <style=cIsDamage>451% damage per second</style>. At <color=#D78326>70% heat</color>, leave a trail of fire for <style=cIsDamage>200% damage per second</style>.",
 
 		"SS2_PYRO_SECONDARY_ALT_NAME": "Heat Wave",
 		"SS2_PYRO_SECONDARY_ALT_DESC": "<color=#D78326>30% heat</color>. Fire a burst of flames, <color=#D78326>igniting</color> enemies for <style=cIsDamage>400% damage</style> and <style=cIsUtility>reflecting projectiles</style>. Extra stocks <color=#D78326>reduce heat consumption by 15%</color>.",
@@ -32,10 +32,10 @@
 		"SS2_PYRO_UTILITY_DESC": "Consume <color=#D78326>heat</color> to charge up an explosive jump for <style=cIsDamage>350% damage</style>. Can be <style=cIsUtility>reactivated</style> to hover in the air.",
 
 		"SS2_PYRO_UTILITY2_NAME": "Liftoff",
-		"SS2_PYRO_UTILITY2_DESC": "Hold to hover for <color=#D78326>10% heat per second</color>. Reverts to Plan B on the ground.",
+		"SS2_PYRO_UTILITY2_DESC": "Consume <color=#D78326>heat</color> to <style=cIsUtility>hover</style> in the air.",
 
 		"SS2_PYRO_SPECIAL_NAME": "Incinerate",
-		"SS2_PYRO_SPECIAL_DESC": "<color=#D78326>35% Heat</color>. Launch a fireball for <style=cIsDamage>700% damage</style>. Ignited enemies increase the blast radius, then explode for <style=cIsDamage>500% damage</style>.",
+		"SS2_PYRO_SPECIAL_DESC": "<color=#D78326>70% Heat</color>. Launch a fireball for <style=cIsDamage>800% damage</style>. Ignited enemies increase the blast radius, then explode for <style=cIsDamage>400% damage</style>.",
 
 		"SS2_PYRO_SPECIAL_ALT_NAME": "DM34 \"Exterminator\"",
 		"SS2_PYRO_SPECIAL_ALT_DESC": "<style=cIsDamage>Combusting</style>. Fire a shotgun burst for <style=cIsDamage>8x50% damage</style>."

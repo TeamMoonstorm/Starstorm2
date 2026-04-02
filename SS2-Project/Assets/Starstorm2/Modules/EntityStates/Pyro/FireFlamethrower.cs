@@ -12,10 +12,11 @@ namespace EntityStates.Pyro
 {
     public class FireFlamethrower : BaseState
     {
-        public static float baseTickFrequency;
-        public static float baseEntryDuration;
-        public static float pressureDuration;
+        private static float ticksPerSecond = 6f;
+        private static float baseEntryDuration = 0.3f;
+        private static float pressureDuration = 0.1f;
 
+        private float baseTickRate;
         private float tickRate;
         private float stopwatch;
         private float flamethrowerStopwatch;
@@ -23,19 +24,16 @@ namespace EntityStates.Pyro
 
         private bool hasBegunFlamethrower;
 
-        public static float maxDistance;
-        public static float heatPerTick;
-        public static float tickProcCoefficient;
-        public static float tickDamageCoefficient;
-        public static float igniteChanceHighHeat;
-        public static float heatIgniteThreshold;
-        public static float recoilForce;
-        public static float force;
-        public static float radius;
-        public static string muzzleString;
-        public static string smokeMuzzleEffectString;
+        private static float heatPerSecond = 6.25f;
+        private static float procCoefficientPerSecond = 5f;
+        private static float damageCoefficientPerSecond = 2.7f;
         private static float spreadBloonPerSecond = 1f;
         private static float igniteChance = 50f;
+        private static float force = 250f;
+
+        private static string muzzleString = "Muzzle";
+        private static string smokeMuzzleEffectString = "SmokeEffect";
+        
 
         public static GameObject flameEffectPrefab;
         public static GameObject projectilePrefab;
@@ -61,7 +59,8 @@ namespace EntityStates.Pyro
             hasBegunFlamethrower = false;
 
             entryDuration = baseEntryDuration / attackSpeedStat;
-            tickRate = baseTickFrequency / attackSpeedStat;
+            baseTickRate = 1f / ticksPerSecond;
+            tickRate = baseTickRate / attackSpeedStat;
 
             characterBody.SetAimTimer(2f);
 
@@ -112,14 +111,17 @@ namespace EntityStates.Pyro
 
             stopwatch += Time.fixedDeltaTime;
 
-            if ((stopwatch >= entryDuration && !hasBegunFlamethrower || HasBuff(SS2Content.Buffs.bdPyroPressure)) && !hasBegunFlamethrower)
+            if (stopwatch >= entryDuration || HasBuff(SS2Content.Buffs.bdPyroPressure))
             {
-                //Debug.Log("entering flamethrower");
-                hasBegunFlamethrower = true;
-                // silly visual flamethrower for sake of making it look fuller
-                flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
-                Util.PlaySound("Play_pyro_primary_loop", gameObject);
-                Fire(muzzleString);
+                if (!hasBegunFlamethrower)
+                {
+                    //Debug.Log("entering flamethrower");
+                    hasBegunFlamethrower = true;
+                    // silly visual flamethrower for sake of making it look fuller
+                    flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                    Util.PlaySound("Play_pyro_primary_loop", gameObject);
+                    Fire();
+                }
             }
 
             if (hasBegunFlamethrower)
@@ -127,11 +129,12 @@ namespace EntityStates.Pyro
                 characterBody.AddSpreadBloom(spreadBloonPerSecond * Time.fixedDeltaTime);
 
                 flamethrowerStopwatch += Time.fixedDeltaTime;
-                float tickRate = baseTickFrequency / attackSpeedStat;
-                while (flamethrowerStopwatch > tickRate)
+                int fuckee = 0;
+                while (flamethrowerStopwatch > tickRate && fuckee <= 3) //if youre firing 3 projectiles per frame, youve got bigger problems than a dps loss
                 {
+                    fuckee++;
                     flamethrowerStopwatch -= tickRate;
-                    Fire(muzzleString);
+                    Fire();
                 }
             }
 
@@ -158,7 +161,7 @@ namespace EntityStates.Pyro
                 Destroy(flamethrowerTransform.gameObject);
         }
 
-        private void Fire(string muzzleString)
+        private void Fire()
         {
             characterBody.SetAimTimer(2f);
 
@@ -173,13 +176,15 @@ namespace EntityStates.Pyro
                 {
                     damageType.AddModdedDamageType(SS2.Survivors.Pyro.PyroIgniteOnHit);
                 }
+                float damage = damageCoefficientPerSecond * baseTickRate * damageStat;
+                float procCoefficient = procCoefficientPerSecond * baseTickRate; // wait what the fuck do you mean FireProjectileInfo doesnt have proc coefficient ????
 
                 ProjectileManager.instance.FireProjectile(
                     projectilePrefab,
                     aimRay.origin,
                     Util.QuaternionSafeLookRotation(aimRay.direction),
                     gameObject,
-                    tickDamageCoefficient * damageStat,
+                    damage,
                     force,
                     RollCrit(),
                     DamageColorIndex.Default,
@@ -188,14 +193,9 @@ namespace EntityStates.Pyro
                     damageType
                     );
 
-                if (flamethrowerTransform)
-                {
-                    flamethrowerTransform.forward = aimRay.direction;
-                }
-
                 if (pc)
                 {
-                    pc.AddHeat(heatPerTick);
+                    pc.AddHeat(heatPerSecond * baseTickRate);
                 }
             }
         }

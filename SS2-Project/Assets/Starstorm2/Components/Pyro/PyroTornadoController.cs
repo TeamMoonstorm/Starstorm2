@@ -21,11 +21,11 @@ public class PyroTornadoController : NetworkBehaviour
     public GameObject impactEffectPrefab;
     public GameObject indicatorExplosionEffectPrefab;
 
-    public static float damageCoefficient = 7f;
+    public static float damageCoefficient = 8f;
     public static float force = 300f;
 
     public static float baseRadius = 10f;
-    public static float radiusPerIgnite = 3.33f; // TODO: volume increase instead of radius
+    public static float radiusPerIgnite = 3.33f; // TODO: volume increase instead of radius?
 
     public static float diffForMaxGrowthSpeed = 9f;
     public static float maxGrowthSpeed = 64f; // radius increase in meters per second
@@ -35,9 +35,9 @@ public class PyroTornadoController : NetworkBehaviour
 
     public static float searchInterval = 0.125f;
 
-    public static float delayBlastDamageCoefficient = 5f;
+    public static float delayBlastDamageCoefficient = 4f;
     public static float delayBlastForce = 1000f;
-    public static float delayBlastRadius = 12f;
+    public static float delayBlastRadius = 11f;
     public static float delayBlastVictimRadiusCoefficient = 1f;
     public static float delayBlastProcCoefficient = 1f;
     public static float delayBlastTimer = 1f;

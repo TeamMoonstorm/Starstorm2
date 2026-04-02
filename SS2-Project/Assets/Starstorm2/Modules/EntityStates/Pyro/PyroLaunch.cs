@@ -23,7 +23,7 @@ namespace EntityStates.Pyro
         private bool hasLaunched = false;
         private bool hasMax = false;
 
-        public static float heatPerTick;
+        private static float heatPerSecond = 10f;
 
         public static float launchHeat;
 
@@ -97,7 +97,7 @@ namespace EntityStates.Pyro
                             if (heatTimer >= heatInterval)
                             {
                                 heatTimer -= heatInterval;
-                                pyroController.AddHeat(-heatPerTick);
+                                pyroController.AddHeat(-heatPerSecond * heatInterval);
                             }
                         }
                     }

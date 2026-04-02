@@ -31,7 +31,7 @@ namespace EntityStates.Pyro
 
         private static float heatCostPerSecond = 20f;
         public static float tickProcCoefficient;
-        private static float damagePerSecond = 4.51f;
+        private static float damageCoefficientPerSecond = 4.51f;
         public static float recoilForce;
         public static float force;
         public static float radius;
@@ -238,7 +238,7 @@ namespace EntityStates.Pyro
                     prefab = igniteProjectilePrefab;
                 }
 
-                float damage = damagePerSecond * fireInterval * damageStat;
+                float damage = damageCoefficientPerSecond * baseFireInterval * damageStat;
                 DamageColorIndex color = DamageColorIndex.Default;
 
                 DamageTypeCombo damageType = new DamageTypeCombo();
@@ -261,7 +261,7 @@ namespace EntityStates.Pyro
                     );
             }
 
-            characterBody.AddSpreadBloom(spreadBloomPerSecond * fireInterval);
+            characterBody.AddSpreadBloom(spreadBloomPerSecond * baseFireInterval);
             AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
         }
 

@@ -10,15 +10,22 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escPyro3b_PyroLiftoff
+  m_Name: escPyroHighHeat
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.Pyro.PyroLiftoff, Starstorm2, Version=1.0.0.0,
+    assemblyQualifiedName: EntityStates.Pyro.HighHeat, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: launchEffectPrefab
+    - fieldName: effectPrefab
       fieldValue:
         stringValue: 
-        objectValue: {fileID: 2375021254577694854, guid: c72a7fa27d93faf429f065a2c77166c1,
-          type: 3}
+        objectValue: {fileID: 0}
+    - fieldName: flashMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: 0f79c7db5bce5f548abd9b233c27a6d0, type: 2}
+    - fieldName: overlayMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: eac88b4cd5f66ff4f9ab23157c64e7de, type: 2}
