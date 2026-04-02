@@ -2,6 +2,17 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
+
+# In the scenario someone is using Agent tools lets prevent the metadata files for those tools from being commited to the repo
+# Unlikely well get any AI PRs but you never know!
+.vscode/
+.github/
+.agents/
+AGENTS.md
+CLAUDE.md
+skills-lock.json
+
+
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
