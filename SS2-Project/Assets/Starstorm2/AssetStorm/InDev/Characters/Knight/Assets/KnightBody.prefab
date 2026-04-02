@@ -1,5 +1,50 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2951671877612150465
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4699647567701210326}
+  - component: {fileID: 4159496996881490587}
+  m_Layer: 14
+  m_Name: BannerSlamHitbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4699647567701210326
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951671877612150465}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.645, z: 0}
+  m_LocalScale: {x: 1.06, y: 1.36, z: 1.06}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2553515950558735303}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4159496996881490587
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951671877612150465}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &5259187260714204021
 GameObject:
   m_ObjectHideFlags: 0
@@ -134,7 +179,6 @@ GameObject:
   - component: {fileID: 5278585593546160489}
   - component: {fileID: 4608135033383063149}
   - component: {fileID: 1394626647}
-  - component: {fileID: -300711697890018286}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -427,9 +471,9 @@ MonoBehaviour:
   utility: {fileID: 7883713811634818016}
   special: {fileID: 1901267314317663771}
   passiveSkill:
-    enabled: 1
-    skillNameToken: SS2_KNIGHT_PASSIVE_NAME
-    skillDescriptionToken: SS2_KNIGHT_PASSIVE_DESC
+    enabled: 0
+    skillNameToken: 
+    skillDescriptionToken: 
     keywordToken: 
     icon: {fileID: 21300000, guid: 18077e98e5dda7d48996461b94ba7436, type: 3}
   primaryBonusStockOverrideSkill: {fileID: 0}
@@ -895,21 +939,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}
   - {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
   - {fileID: 11400000, guid: 49835b9801d843a4cb542f0aeafcf7d3, type: 2}
---- !u!114 &-300711697890018286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7725647466612521720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74f63d82c99ddcb4d846243a56569c03, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterBody: {fileID: 8530518001122098039}
-  PassiveWardPrefab: {fileID: 1703809909102045, guid: bf8e2245939c26e458c06fb893df9129,
-    type: 3}
 --- !u!1001 &3409225305625246073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -977,6 +1006,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.size
+      value: 37
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[35].name
+      value: BannerSlamHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[36].name
+      value: ShieldBashHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[35].transform
+      value: 
+      objectReference: {fileID: 4699647567701210326}
+    - target: {fileID: 1179566403499758597, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: transformPairs.Array.data[36].transform
+      value: 
+      objectReference: {fileID: 5293235763215528417}
     - target: {fileID: 3404809963666717092, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: healthComponent
@@ -997,16 +1051,42 @@ PrefabInstance:
       propertyPath: directionComponent
       value: 
       objectReference: {fileID: 1301156465497949038}
+    - target: {fileID: 6106624358333084712, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 8.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6106624358333084712, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.34
+      objectReference: {fileID: 0}
     - target: {fileID: 6989382658905640743, guid: 411af68e233e4714c93ff5aa1ad9cefb,
         type: 3}
       propertyPath: body
       value: 
       objectReference: {fileID: 8530518001122098039}
+    - target: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.43
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 411af68e233e4714c93ff5aa1ad9cefb, type: 3}
 --- !u!4 &2553515950558735303 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 882680650988540606, guid: 411af68e233e4714c93ff5aa1ad9cefb,
+    type: 3}
+  m_PrefabInstance: {fileID: 3409225305625246073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5293235763215528417 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7360387827978881176, guid: 411af68e233e4714c93ff5aa1ad9cefb,
     type: 3}
   m_PrefabInstance: {fileID: 3409225305625246073}
   m_PrefabAsset: {fileID: 0}

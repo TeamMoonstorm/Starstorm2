@@ -10547,6 +10547,11 @@
 										<Sound Name="item_proc_trematode_init1" ID="{F299E3F9-1ABF-4E5B-ACAA-FF6ED3F7761E}" ShortID="161675639">
 											<PropertyList>
 												<Property Name="3DSpatialization" Type="int16" Value="1"/>
+												<Property Name="MakeUpGain" Type="Real64">
+													<ValueList>
+														<Value>-4</Value>
+													</ValueList>
+												</Property>
 												<Property Name="OverridePositioning" Type="bool" Value="True"/>
 												<Property Name="Pitch" Type="int32">
 													<ModifierList>
@@ -11507,6 +11512,53 @@
 										<ActiveSource Name="ProcLightningOnKill" ID="{821C0D0C-8AD9-4049-83E4-90118A08152F}" Platform="Linked"/>
 									</ActiveSourceList>
 								</Sound>
+								<Folder Name="ArmedBackpack" ID="{185DE6CC-96CB-41C8-B6F2-FB9D64A4AB78}" ShortID="208269394">
+									<ChildrenList>
+										<Sound Name="item_proc_armedBackpack" ID="{AD028BC8-89FF-4574-BCE2-015EF1D37D74}" ShortID="616551853">
+											<PropertyList>
+												<Property Name="Pitch" Type="int32">
+													<ModifierList>
+														<ModifierInfo>
+															<Modifier Name="" ID="{15048294-7E0F-4265-AEFA-2D6E3596B858}">
+																<PropertyList>
+																	<Property Name="Enabled" Type="bool" Value="True"/>
+																	<Property Name="Max" Type="Real64" Value="100"/>
+																	<Property Name="Min" Type="Real64" Value="-100"/>
+																</PropertyList>
+															</Modifier>
+														</ModifierInfo>
+													</ModifierList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Conversion">
+													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
+												</Reference>
+												<Reference Name="OutputBus">
+													<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8B449195-16F5-41A2-9626-CB3E0D2C3C12}"/>
+												</Reference>
+											</ReferenceList>
+											<ChildrenList>
+												<AudioFileSource Name="wMissileLaunch" ID="{2406F34D-D7D1-4315-8D50-8027B4007F27}">
+													<PropertyList>
+														<Property Name="LoopBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="LoopEnd" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimBegin" Type="Real64" Value="-0.001"/>
+														<Property Name="TrimEnd" Type="Real64" Value="-0.001"/>
+													</PropertyList>
+													<Language>SFX</Language>
+													<AudioFile>wMissileLaunch.wav</AudioFile>
+													<MediaIDList>
+														<MediaID ID="295176748"/>
+													</MediaIDList>
+												</AudioFileSource>
+											</ChildrenList>
+											<ActiveSourceList>
+												<ActiveSource Name="wMissileLaunch" ID="{2406F34D-D7D1-4315-8D50-8027B4007F27}" Platform="Linked"/>
+											</ActiveSourceList>
+										</Sound>
+									</ChildrenList>
+								</Folder>
 							</ChildrenList>
 							<PositioningInfo>
 								<Panner Name="" ID="{92BA53F2-1E13-4DFF-801B-53C8F78575E4}"/>

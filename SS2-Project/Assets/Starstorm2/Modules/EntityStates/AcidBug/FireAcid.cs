@@ -11,19 +11,20 @@ namespace EntityStates.AcidBug
         public static GameObject projectilePrefab;
         public static GameObject muzzleEffectPrefab;
 
-        private static float minSpeed = 40f;
-        private static float maxSpeed = 70f;
-        private static float minSpread = 2f;
-        private static float maxSpread = 10f;
-        private static float spreadYaw = 2f;
+        private static float minSpeed = 70f;
+        private static float maxSpeed = 120f;
+        private static float minSpreadCoefficient = 0.5f;
+        private static float minSpread = 0.5f;
+        private static float maxSpread = 8f;
+        private static float spreadYaw = 3f;
         private static float spreadPitch = 1f;
         private static int projectileCount = 3;
         private static string enterSoundString = "ChirrFireSpitBomb";
         private static string attackSoundString = "ChirrFireSpitBomb";
         private string muzzleName = "Muzzle";
-        private static float baseDuration = 1.25f;
+        private static float baseDuration = 1.1f;
         private static float fireTime = 0.55f;
-        private static float damageCoefficient = 1f;
+        private static float damageCoefficient = 2f;
         private static float force = 100f;
 
         private static float selfAwayForce = 11f;
@@ -92,7 +93,11 @@ namespace EntityStates.AcidBug
                 bool crit = RollCrit();
                 for (int i = 0; i < projectileCount; i++)
                 {
-                    Vector3 forward = Util.ApplySpread(direction, minSpread, maxSpread, spreadYaw, spreadPitch);
+                    float t = (float)i / (float)projectileCount;
+                    float minSpreadLerped = Mathf.Lerp(minSpread, maxSpread * minSpreadCoefficient, t);
+                    float maxSpreadLerped = Mathf.Lerp(minSpread, maxSpread, t);
+
+                    Vector3 forward = Util.ApplySpread(direction, minSpreadLerped, maxSpreadLerped, spreadYaw, spreadPitch);
                     float speed = UnityEngine.Random.Range(minSpeed, maxSpeed);
                     FireProjectileInfo fireProjectileInfo = new FireProjectileInfo
                     {

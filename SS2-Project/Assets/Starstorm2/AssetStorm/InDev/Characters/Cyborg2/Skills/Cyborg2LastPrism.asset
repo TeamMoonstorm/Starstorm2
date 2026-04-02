@@ -16,7 +16,7 @@ MonoBehaviour:
   skillNameToken: SS2_CYBORG2_PRIMARY_LASTPRISM_NAME
   skillDescriptionToken: SS2_CYBORG2_PRIMARY_LASTPRISM_DESCRIPTION
   keywordTokens: []
-  icon: {fileID: 21300000, guid: f509a7a568e34594d968974c569e7a09, type: 3}
+  icon: {fileID: 21300000, guid: d76dbf33fd88e43459d65f8f2e71619b, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.Cyborg2.EnterLastPrism, Starstorm2, Version=1.0.0.0,
@@ -33,10 +33,14 @@ MonoBehaviour:
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 1
+  triggeredByPressRelease: 0
   autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
   hideStockCount: 0
+  hideCooldown: 0

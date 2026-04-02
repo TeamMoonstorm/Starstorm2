@@ -20,14 +20,15 @@ namespace EntityStates.Pyro
         public static float baseDuration;
         public static GameObject projectilePrefab;
 
+        public static GameObject muzzleFlashPrefab;
+        private static string muzzleString = "Muzzle";
+
         private float recoil;
         private float duration;
         private float fireDuration;
         private bool hasFired;
-        private string muzzleString;
 
         private string skinNameToken;
-        private GameObject muzzleFlash;
 
         public override void OnEnter()
         {
@@ -52,7 +53,7 @@ namespace EntityStates.Pyro
             {
                 hasFired = true;
 
-                EffectManager.SimpleMuzzleFlash(muzzleFlash, gameObject, muzzleString, false);
+                EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleString, false);
 
                 if (isAuthority)
                 {

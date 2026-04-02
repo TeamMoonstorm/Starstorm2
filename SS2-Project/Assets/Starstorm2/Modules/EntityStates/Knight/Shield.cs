@@ -20,7 +20,10 @@ namespace EntityStates.Knight
         public static SkillDef shieldBashSkillDef;
         private bool hasParried = false;
         private float stopwatch = 0f;
-        public static float minDuration = 0.2f;
+        private static float minDuration = 0.4f;
+        private static float minInterruptDuration = 0.2f;
+        private static float cameraEnterDuration = 0.2f;
+        private static float cameraExitDuration = 0.3f;
 
         public bool overridden;
 
@@ -69,7 +72,7 @@ namespace EntityStates.Knight
         {
             if (useAltCamera)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, cameraEnterDuration);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -77,11 +80,11 @@ namespace EntityStates.Knight
                     priority = 0f
                 };
 
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraEnterDuration);
             }
             else
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.2f);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, cameraEnterDuration);
 
                 CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
                 {
@@ -89,7 +92,7 @@ namespace EntityStates.Knight
                     priority = 0f
                 };
 
-                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, 0.2f);
+                camOverrideHandle = cameraTargetParams.AddParamsOverride(request, cameraEnterDuration);
             }
         }
 
@@ -101,11 +104,11 @@ namespace EntityStates.Knight
 
             if (shouldSet)
             {
-                skillLocator.primary.SetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                skillLocator.primary.SetSkillOverride(this, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
             else
             {
-                skillLocator.primary.UnsetSkillOverride(skillLocator.primary, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                skillLocator.primary.UnsetSkillOverride(this, shieldBashSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
         }
 
@@ -140,8 +143,7 @@ namespace EntityStates.Knight
 
         private void ParryAttacker(GameObject attacker)
         {
-            SetStateOnHurt setStateOnHurt = attacker?.GetComponent<SetStateOnHurt>();
-            if (setStateOnHurt)
+            if (attacker && attacker.TryGetComponent(out SetStateOnHurt setStateOnHurt) && setStateOnHurt.canBeStunned)
             {
                 // Stun the enemy
                 Type state = setStateOnHurt.targetStateMachine.state.GetType();
@@ -187,7 +189,10 @@ namespace EntityStates.Knight
         {
             base.FixedUpdate();
 
-            SetPrimaryOverride(inputBank.skill2.down);
+            if (!hasParried)
+            {
+                SetPrimaryOverride(inputBank.skill2.down);
+            }
 
 
 
@@ -217,7 +222,7 @@ namespace EntityStates.Knight
 
             if (cameraTargetParams)
             {
-                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, 0.7f);
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, cameraExitDuration);
             }
 
             characterBody.SetAimTimer(0.5f);
@@ -232,7 +237,7 @@ namespace EntityStates.Knight
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return InterruptPriority.Skill;
+            return fixedAge >= minInterruptDuration ? InterruptPriority.Skill : InterruptPriority.PrioritySkill;
         }
     }
 }

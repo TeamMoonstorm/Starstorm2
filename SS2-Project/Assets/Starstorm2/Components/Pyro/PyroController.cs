@@ -12,9 +12,10 @@ namespace SS2.Components
     public class PyroController : NetworkBehaviour
     {
         public CharacterBody characterBody;
-        public float heatMax;
+        public float heatMax = 100f;
+        public float highHeat = 70f;
+        public float heatPerIgnitedEnemyPerSecond = 5f;
 
-        public float numberAround;
         [HideInInspector]
         public static float enemyCheckInterval = 0.16f;
         [HideInInspector]
@@ -23,28 +24,29 @@ namespace SS2.Components
         private List<HurtBox> hits;
         public float enemyRadius = 35f;
 
-        //jump air control stuff
-        private CharacterMotor characterMotor;
-        //able to be set by other parts of code, and this script will handle ramping it back to normal
-            //that's professional speak for I couldn't be fucked to make an entitystate and threw it in this component
-        public float? cachedAirControl;
-        private float originalAirControl;
-
-        [SerializeField, Tooltip("time multiplier for how long it should take to ramp air control back to normal when cachedAirControl is modified")]
-        private float aircontroldecay;
-
-        [SyncVar(hook = "OnHeatModified")]
         private float _heat;
         public float heat
         {
             get
             {
-
                 return _heat;
             }
         }
 
-        public bool isMaxHeat
+        public bool isHighHeat
+        {
+            get
+            {
+                return _isHighHeat;
+            }
+        }
+        private bool _isHighHeat;
+        public void SetHighHeat(bool newHighHeat)
+        {
+            _isHighHeat = newHighHeat;
+        }
+
+        public bool isMaxHeatAuthority
         {
             get
             {
@@ -52,32 +54,19 @@ namespace SS2.Components
             }
         }
 
-        public float Network_charge
-        {
-            get
-            {
-                return _heat;
-            }
-            [param: In]
-            set
-            {
-                if (NetworkServer.localClientActive && syncVarHookGuard)
-                {
-                    syncVarHookGuard = true;
-                    OnHeatModified(value);
-                    syncVarHookGuard = false;
-                }
-                SetSyncVar<float>(value, ref _heat, 1U);
-            }
-        }
+        
+        // just for telling the crosshair what to do
+        public bool inNapalm { get; set; }
+        private bool hasEffectiveAuthority;
 
         public void Awake()
         {
             characterBody = GetComponent<CharacterBody>();
-            characterMotor = GetComponent<CharacterMotor>();
-            originalAirControl = characterMotor.airControl;
         }
-
+        private void Start()
+        {
+            UpdateAuthority();
+        }
         public void OnEnable()
         {
             hits = new List<HurtBox>();
@@ -85,8 +74,7 @@ namespace SS2.Components
             bodySearch.mask = LayerIndex.entityPrecise.mask;
             bodySearch.radius = enemyRadius;
         }
-
-        private void FixedUpdate()
+        private void Update()
         {
 #if DEBUG
             if (Input.GetKeyDown(KeyCode.J))
@@ -94,8 +82,10 @@ namespace SS2.Components
                 AddHeat(heatMax);
             }
 #endif
-
-            if (NetworkServer.active)
+        }
+        private void FixedUpdate()
+        {
+            if (hasEffectiveAuthority)
             {
                 enemyCheckStopwatch += Time.fixedDeltaTime;
                 if (enemyCheckStopwatch >= enemyCheckInterval)
@@ -103,6 +93,8 @@ namespace SS2.Components
                     enemyCheckStopwatch -= enemyCheckInterval;
 
                     float burnCount = 0f;
+
+                    hits.Clear();
 
                     bodySearch.ClearCandidates();
                     bodySearch.origin = characterBody.corePosition;
@@ -125,95 +117,66 @@ namespace SS2.Components
                                         burnCount++; //blazing elite are already hot
                                     }
 
-                                    if (body.HasBuff(RoR2Content.Buffs.OnFire) || body.HasBuff(DLC1Content.Buffs.StrongerBurn))
+                                    if (body.IsOnFirePyro())
                                     {
                                         burnCount++; //add burn for burning body
-
-                                        if (body.hullClassification == HullClassification.Golem || body.hullClassification == HullClassification.BeetleQueen)
-                                        {
-                                            burnCount++; //bigger enemies burn hotter
-                                        }
                                     }
                                 }
                             }
                         }
                     }
 
-
-
-                    if (characterBody)
-                        characterBody.SetBuffCount(SS2Content.Buffs.bdPyroManiac.buffIndex, (int)burnCount);
-
-                    AddHeat(burnCount * 0.25f);
-                }
-            }
-
-            if (cachedAirControl.HasValue)
-            {
-                cachedAirControl += Mathf.Clamp(Time.fixedDeltaTime / aircontroldecay, 0, originalAirControl);
-                characterMotor.airControl = cachedAirControl.Value;
-                if(cachedAirControl.Value >= originalAirControl)
-                {
-                    cachedAirControl = null;
+                    float heatGain = burnCount * heatPerIgnitedEnemyPerSecond * enemyCheckInterval;
+                    AddHeat(heatGain);
                 }
             }
         }
 
+
+        public override void OnStartAuthority()
+        {
+            UpdateAuthority();
+        }
+        public override void OnStopAuthority()
+        {
+            UpdateAuthority();
+        }
+
+        private void UpdateAuthority()
+        {
+            hasEffectiveAuthority = Util.HasEffectiveAuthority(gameObject);
+        }
+
+        // Pyro heat is now client authoritative. better for everyone except people spectating pyro.
         public void AddHeat(float amount)
         {
-            if (!NetworkServer.active)
+            if (hasEffectiveAuthority)
             {
+                AddHeatInternal(amount);
                 return;
             }
 
-            if (isMaxHeat && amount > 0)
-                amount = 0f;
-
-            Network_charge = Mathf.Clamp(heat + amount, 0f, heatMax);
+            if (NetworkServer.active)
+            {
+                RpcAddHeat(amount);
+            }
+            else
+            {
+                SS2Log.Error("PyroController.AddHeat called by non-authoritative client.");
+            }
         }
 
-        private void OnHeatModified(float newHeat)
+        [ClientRpc]
+        public void RpcAddHeat(float amount)
         {
-            Network_charge = newHeat;
+            if (hasEffectiveAuthority)
+            {
+                AddHeatInternal(amount);
+            }
         }
-
-        // might make weaver cry? need to check mp
-        //public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        //{
-        //    if (forceAll)
-        //    {
-        //        writer.Write(_heat);
-        //        return true;
-        //    }
-        //    bool flag = false;
-        //    if ((syncVarDirtyBits & 1U) != 0U)
-        //    {
-        //        if (!flag)
-        //        {
-        //            writer.WritePackedUInt32(syncVarDirtyBits);
-        //            flag = true;
-        //        }
-        //        writer.Write(_heat);
-        //    }
-        //    if (!flag)
-        //    {
-        //        writer.WritePackedUInt32(syncVarDirtyBits);
-        //    }
-        //    return flag;
-        //}
-
-        //public override void OnDeserialize(NetworkReader reader, bool initialState)
-        //{
-        //    if (initialState)
-        //    {
-        //        _heat = reader.ReadSingle();
-        //        return;
-        //    }
-        //    int num = (int)reader.ReadPackedUInt32();
-        //    if ((num & 1) != 0)
-        //    {
-        //        OnHeatModified(reader.ReadSingle());
-        //    }
-        //}
+        public void AddHeatInternal(float amount)
+        {
+            _heat = Mathf.Clamp(heat + amount, 0f, heatMax);
+        }
     }
 }

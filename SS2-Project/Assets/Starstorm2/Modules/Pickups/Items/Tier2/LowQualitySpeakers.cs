@@ -29,6 +29,8 @@ namespace SS2.Items
         public static float maxProcChance = 1f;
 
         public static float cooldown = 1f;
+        public static float knockbackForce = 14f;
+        public static float knockUpForce = 14f;
         private static GameObject _burstEffect;
 
         public override void Initialize()
@@ -61,7 +63,7 @@ namespace SS2.Items
 
             public void OnIncomingDamageServer(DamageInfo damageInfo)
             {
-                int stack = body.inventory.GetItemCount(SS2Content.Items.LowQualitySpeakers);
+                int stack = body.inventory.GetItemCountEffective(SS2Content.Items.LowQualitySpeakers);
 
                 if (stack <= 0 || cooldownStopwatch > 0) return;
                 cooldownStopwatch = cooldown;
@@ -76,8 +78,9 @@ namespace SS2.Items
                     BlastAttack blastAttack = new BlastAttack();
                     blastAttack.position = body.corePosition;
                     blastAttack.baseDamage = 0f;
-                    blastAttack.baseForce = 2000f;
-                    blastAttack.bonusForce = Vector3.zero;
+                    blastAttack.baseForce = knockbackForce;
+                    blastAttack.bonusForce = Vector3.up * knockUpForce;
+                    blastAttack.physForceFlags = PhysForceFlags.ignoreGroundStick | PhysForceFlags.massIsOne | PhysForceFlags.resetVelocity;
                     blastAttack.radius = radius;
                     blastAttack.attacker = body.gameObject;
                     blastAttack.inflictor = body.gameObject;

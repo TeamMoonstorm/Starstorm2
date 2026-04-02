@@ -20,6 +20,7 @@ namespace SS2.Survivors
         public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
+        public static GameObject smiteEffectPrefab;
 
         public static SerializableEntityStateType ShieldStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.Shield));
 
@@ -28,8 +29,8 @@ namespace SS2.Survivors
         public static Vector3 chargeCameraPos = new Vector3(1.2f, -0.25f, -6.1f);
         public static Vector3 altCameraPos = new Vector3(-1.2f, -0.25f, -6.1f);
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float BannerBuffRegen = 0.2f;
+        public static float smiteHealthFractionRestoration = 0.02f;
+        public static float smiteArmorReduction = 3f;
 
         
         public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
@@ -53,18 +54,16 @@ namespace SS2.Survivors
         public AssetCollection ExtraAssetCollection { get; set; }
 
         public static float reducedGravity = 0.07f;
-
         public static DamageAPI.ModdedDamageType ExtendedStunDamageType { get; set; }
+        private static ModdedProcType Smite;
 
-        private static float stunDebuffDuration = 3f;
-
+        private static float extendedStunDuration = 2f;
         public override void Initialize()
         {
-            BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
-            Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
             KnightHitEffect = AssetCollection.FindAsset<GameObject>("KnightImpactSlashEffect");
             KnightSpinEffect = AssetCollection.FindAsset<GameObject>("KnightSpin");
             KnightPassiveWard = AssetCollection.FindAsset<GameObject>("KnightPassiveBuffWard");
+            smiteEffectPrefab = AssetCollection.FindAsset<GameObject>("KnightSmiteEffect");
 
             AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedPrimaryLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarPrimaryReplacementSkill>("RoR2/Base/LunarSkillReplacements/LunarPrimaryReplacement.asset").WaitForCompletion();
             //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedUtilityLunar").upgradedFrom = Addressables.LoadAssetAsync<SkillDef>("RoR2/Base/LunarSkillReplacements/LunarUtilityReplacement.asset").WaitForCompletion();
@@ -74,30 +73,37 @@ namespace SS2.Survivors
             KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
             KnightDroppod = Addressables.LoadAssetAsync<GameObject>("Prefabs/NetworkedObjects/SurvivorPod").WaitForCompletion();
 
-            RegisterKnightDamageTypes();
+            ExtendedStunDamageType = R2API.DamageAPI.ReserveDamageType();
+            Smite = R2API.ProcTypeAPI.ReserveProcType();
             ModifyPrefab();
             R2API.RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+            GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 
             // Add the buff material overlays to buffoverlay dict
+            BuffDef buffKnightSpecialPower = AssetCollection.FindAsset<BuffDef>("bdKnightSpecialPowerBuff");
+            Material matSpecialPowerOverlay = AssetCollection.FindAsset<Material>("matKnightBuffOverlay");
             BuffOverlays.AddBuffOverlay(buffKnightSpecialPower, matSpecialPowerOverlay);
         }
 
-        private void RegisterKnightDamageTypes()
+        private void OnServerDamageDealt(DamageReport damageReport)
         {
-            ExtendedStunDamageType = R2API.DamageAPI.ReserveDamageType();
-            GlobalEventManager.onServerDamageDealt += ApplyExtendedStun;
-        }
-        private void ApplyExtendedStun(DamageReport obj)
-        {
-            var victimBody = obj.victimBody;
-            var damageInfo = obj.damageInfo;
-
-            if (DamageAPI.HasModdedDamageType(damageInfo, ExtendedStunDamageType))
+            if (DamageAPI.HasModdedDamageType(damageReport.damageInfo, ExtendedStunDamageType))
             {
-                victimBody.AddTimedBuffAuthority(SS2Content.Buffs.bdKnightStunAttack.buffIndex, stunDebuffDuration);
+                if (damageReport.victimBody.TryGetComponent(out SetStateOnHurt setStateOnHurt) && setStateOnHurt.canBeStunned)
+                {
+                    setStateOnHurt.SetStun(extendedStunDuration);
+                }
+            }
+
+            if (damageReport.damageInfo.procCoefficient > 0 && damageReport.attackerBody && damageReport.attackerBody.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff) && !damageReport.damageInfo.procChainMask.HasModdedProc(Smite))
+            {
+                damageReport.damageInfo.procChainMask.AddModdedProc(Smite);
+                damageReport.attackerBody.healthComponent.HealFraction(smiteHealthFractionRestoration * damageReport.damageInfo.procCoefficient, default(ProcChainMask));
+                damageReport.victimBody.AddBuff(SS2Content.Buffs.bdKnightSpecialDebuff);
+
+                EffectManager.SimpleImpactEffect(smiteEffectPrefab, damageReport.damageInfo.position, Vector3.zero, true);
             }
         }
-
 
         public void ModifyPrefab()
         {
@@ -126,50 +132,13 @@ namespace SS2.Survivors
             if (sender.HasBuff(SS2Content.Buffs.bdKnightShield))
             {
                 args.armorAdd += 200f;
-                //args.moveSpeedReductionMultAdd += 0.6f;
             }
 
-            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialPowerBuff))
+            int debuffCount = sender.GetBuffCount(SS2Content.Buffs.bdKnightSpecialDebuff);
+            if (debuffCount > 0)
             {
-                args.baseMoveSpeedAdd += 0.1f;
-                args.damageMultAdd += 0.2f;
-                args.regenMultAdd += BannerBuffRegen;
-            }
-
-            if (sender.HasBuff(SS2Content.Buffs.bdKnightSpecialSlowBuff))
-            {
-                args.moveSpeedReductionMultAdd += 1;
-            }
-
-            if (sender.HasBuff(SS2Content.Buffs.bdKnightStunAttack))
-            {
-                SetStateOnHurt setStateOnHurt = sender.GetComponent<SetStateOnHurt>();
-                
-                if (setStateOnHurt)
-                {
-                    setStateOnHurt.SetStun(4f);
-                    sender.RemoveOldestTimedBuff(SS2Content.Buffs.bdKnightStunAttack);
-                }
+                args.armorAdd -= debuffCount * smiteArmorReduction;
             }
         }
-
-            public class KnightSpecialPowerBuff : BaseBuffBehaviour
-            {
-                [BuffDefAssociation]
-                private static BuffDef GetBuffDef() => SS2Content.Buffs.bdKnightSpecialPowerBuff;
-
-                private void FixedUpdate()
-                {
-                    if (!hasAnyStacks || !characterBody.characterMotor || !characterBody)
-                        return;
-
-                    if (characterBody.characterMotor.isGrounded)
-                    {
-                        return;
-                    }
-
-                    characterBody.characterMotor.velocity.y -= Time.fixedDeltaTime * Physics.gravity.y * reducedGravity;
-                }
-            }
     }
 }

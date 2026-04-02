@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: Cyborg2Special
   m_EditorClassIdentifier: 
-  skillName: Special
+  skillName: MagnetBall
   skillNameToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_NAME
   skillDescriptionToken: SS2_CYBORG2_SPECIAL_MAGNETBALL_DESCRIPTION
   keywordTokens:
@@ -34,10 +34,14 @@ MonoBehaviour:
   fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1
+  triggeredByPressRelease: 0
   autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
   hideStockCount: 0
+  hideCooldown: 0

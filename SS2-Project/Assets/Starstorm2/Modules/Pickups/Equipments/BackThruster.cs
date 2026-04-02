@@ -1,5 +1,4 @@
-﻿
-using MSU;
+﻿using MSU;
 using MSU.Config;
 using R2API;
 using RoR2;
@@ -30,6 +29,9 @@ namespace SS2.Equipments
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum turning angle before losing built up speed")]
         public static float maxAngle = 15f;
 
+        private static Dictionary<CameraRigController, ParticleSystem> camerasToParticles = new Dictionary<CameraRigController, ParticleSystem>();
+        private static GameObject cameraParticlesPrefab;
+
         public override bool Execute(EquipmentSlot slot)
         {
             var characterMotor = slot.characterBody.characterMotor;
@@ -43,6 +45,67 @@ namespace SS2.Equipments
 
         public override void Initialize()
         {
+            cameraParticlesPrefab = SS2Assets.LoadAsset<GameObject>("BackThrusterCameraParticles", SS2Bundle.Equipments);
+
+            CameraRigController.onCameraEnableGlobal += CameraRigController_onCameraEnableGlobal;
+            CameraRigController.onCameraDisableGlobal += CameraRigController_onCameraDisableGlobal;
+
+            On.RoR2.CameraRigController.LateUpdate += CameraRigController_LateUpdate;
+
+            // idk what this really means, but vanilla sprint particles do this and ours dont work without it
+            SceneCamera.onSceneCameraPreCull += (sceneCam) =>
+            {
+                if (camerasToParticles.TryGetValue(sceneCam.cameraRigController, out ParticleSystem particleSystem))
+                {
+                    particleSystem.gameObject.layer = LayerIndex.defaultLayer.intVal;
+                }
+            };
+            SceneCamera.onSceneCameraPostRender += (sceneCam) =>
+            {
+                if (camerasToParticles.TryGetValue(sceneCam.cameraRigController, out ParticleSystem particleSystem))
+                {
+                    particleSystem.gameObject.layer = LayerIndex.noDraw.intVal;
+                }
+            };
+
+        }
+
+        private void CameraRigController_onCameraDisableGlobal(CameraRigController cameraRigController)
+        {
+            if (!cameraParticlesPrefab)
+            {
+                return;
+            }
+            if (camerasToParticles.ContainsKey(cameraRigController))
+            {
+                camerasToParticles.Remove(cameraRigController);
+            }
+        }
+
+        private void CameraRigController_onCameraEnableGlobal(CameraRigController cameraRigController)
+        {
+            if (!cameraParticlesPrefab)
+            {
+                return;
+            }
+            if (camerasToParticles.ContainsKey(cameraRigController) == false)
+            {
+                var particleSystem = GameObject.Instantiate(cameraParticlesPrefab, cameraRigController.sceneCam.transform).GetComponent<ParticleSystem>();
+                particleSystem.transform.localPosition = cameraParticlesPrefab.transform.position;
+                particleSystem.transform.localRotation = cameraParticlesPrefab.transform.rotation;
+                camerasToParticles.Add(cameraRigController, particleSystem);
+            }
+        }
+
+        private void CameraRigController_LateUpdate(On.RoR2.CameraRigController.orig_LateUpdate orig, CameraRigController self)
+        {
+            orig(self);
+
+            bool showParticles = self.targetBody && self.targetBody.HasBuff(SS2Content.Buffs.BuffBackThruster);
+            if (camerasToParticles.TryGetValue(self, out ParticleSystem particleSystem))
+            {
+                self.SetParticleSystemActive(showParticles, particleSystem);
+            }
         }
 
         public override void OnEquipmentLost(CharacterBody body)
@@ -65,6 +128,7 @@ namespace SS2.Equipments
             private float lastAngle;
             private float accelCoeff = Equipments.BackThruster.speedCap / (Equipments.BackThruster.accel + 0.00001f);   //Fuck people who put 0 in configs
             private float cutoff = maxAngle * Mathf.Deg2Rad;
+
             private void FixedUpdate()
             {
                 if (!hasAnyStacks) return;

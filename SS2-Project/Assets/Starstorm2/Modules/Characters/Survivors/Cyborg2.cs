@@ -47,6 +47,9 @@ namespace SS2.Survivors
         }
         private static readonly Queue<ExplosionRequest> explosionRequests = new Queue<ExplosionRequest>();
         private static float explosionTimer;
+        private static float explosionRadius = 6f;
+        private static float explosionEffectRadius = 5f;
+        private static float explosionDamageCoefficient = 3f;
         private static float minExplosionInterval = 0.1f;
         public override void Initialize()
         {
@@ -102,7 +105,7 @@ namespace SS2.Survivors
                 blastAttack.baseDamage = bombRequest.damageTotal;
                 blastAttack.baseForce = 600f;
                 blastAttack.bonusForce = Vector3.zero;
-                blastAttack.radius = 6f;
+                blastAttack.radius = explosionRadius;
                 blastAttack.attacker = bombRequest.attacker;
                 blastAttack.inflictor = bombRequest.attacker;
                 blastAttack.teamIndex = bombRequest.teamIndex;
@@ -114,10 +117,11 @@ namespace SS2.Survivors
                 blastAttack.damageType = DamageType.Generic;
                 blastAttack.attackerFiltering = AttackerFiltering.NeverHitSelf;
                 blastAttack.Fire();
+
                 EffectManager.SpawnEffect(primedExplosionPrefab, new EffectData
                 {
                     origin = position,
-                    scale = 5f,
+                    scale = explosionEffectRadius,
                     rotation = Quaternion.identity
                 }, true);
             }
@@ -182,7 +186,7 @@ namespace SS2.Survivors
                     target = body.mainHurtBox,
                     initialPosition = body.corePosition,
                     attacker = attackerBody.gameObject,
-                    damageTotal = 3f * attackerBody.damage,
+                    damageTotal = explosionDamageCoefficient * attackerBody.damage,
                     crit = damageInfo.crit,
                     teamIndex = attackerBody.teamComponent.teamIndex,
                 });

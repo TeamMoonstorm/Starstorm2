@@ -108,8 +108,10 @@ namespace SS2.Items
                 // And god said "let there be balls" and he created the balls
                 for(int i = balls.Count; i < stack; i++) // if stack > balls
                 {
-
+                    if (effectInstance)
+                    {
                         balls.Add(GameObject.Instantiate(ball, effectInstance.transform).transform);
+                    }
                 }
 
                 for(int i = balls.Count - 1; i > stack; i--) // if balls > stack

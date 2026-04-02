@@ -33,11 +33,9 @@ namespace EntityStates.Knight
 
         private UpgradedSkillCache upgradedSkillCache;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testbaseDuration = 0.69f;
+        private static float testbaseDuration = 1.2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
-        public static float testInputLockDuration = 0.69f;
+        private static float testInputLockDuration = 0.3f;
 
         public override void OnEnter()
         {
@@ -87,11 +85,11 @@ namespace EntityStates.Knight
         {
             if (shouldSet)
             {
-                genericSkill.SetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                genericSkill.SetSkillOverride(this, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             } 
             else
             {
-                genericSkill.UnsetSkillOverride(gameObject, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                genericSkill.UnsetSkillOverride(this, buffedSkillDef, GenericSkill.SkillOverridePriority.Contextual);
             }
         }
 

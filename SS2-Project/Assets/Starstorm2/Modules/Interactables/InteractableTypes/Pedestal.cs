@@ -18,12 +18,12 @@ namespace SS2.Interactables
         {
             if (RoR2.Artifacts.CommandArtifactManager.IsCommandArtifactEnabled)
             {
-                dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsPedestal));
+                dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsNotPedestal));
             }
         }
-        private static bool IsPedestal(DirectorCard card)
+        private static bool IsNotPedestal(DirectorCard card)
         {
-            return card.GetSpawnCard().prefab.GetComponent<PedestalBehavior>();
+            return !card.GetSpawnCard().prefab.GetComponent<PedestalBehavior>();
         }
 
     private void PingIndicator_RebuildPing(MonoMod.Cil.ILContext il)

@@ -12,44 +12,51 @@ namespace EntityStates.Knight
         //[FormatToken("SS2_KNIGHT_PRIMARY_SWORD_DESC",  FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
         public static float TokenModifier_dmgCoefficient => new SwingSword().damageCoefficient;
 
-        public static float swingTimeCoefficient;
-        public static float finisherSwingTimeCoefficient;
+        private static float swingTimeCoefficient = 0.8f;
+        private static float finisherSwingTimeCoefficient = 0.64f;
 
-        public static float finisherAttackStart;
-        public static float finisherAttackEnd;
-        public static float finisherEarlyExit;
-        public static float finisherHitPause;
-        public static float finisherDamage;
-        public static float finisherBaseDuration;
+        private static float finisherAttackStart = 0.33f;
+        private static float finisherAttackEnd = 0.5f;
+        private static float finisherEarlyExit = 1f;
+        private static float finisherHitPause = .12f;
+        private static float finisherDamage = 4f;
+        private static float finisherBaseDuration = 1.5f;
 
         private string animationStateName = "SwingSword0";
+        private Vector3 attackForceVector;
         private Transform swordPivot;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testDuration = 1;
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testDamage = 3f;
+        private static float testDuration = 1.1f;
+        private static float testDamage = 2f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testFinisherDuration = 1;
-        [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR)]
-        public static float testFinisherDamage = 5f;
+        private static float testFinisherDuration = 1.5f;
+        private static float testFinisherDamage = 4f;
 
+        private static float spikeMaxY = -0.8f;
+        private static Vector3 swing1ForceVector = new Vector3(-4.5f, 1f, 3f);
+        private static Vector3 swing2ForceVector = new Vector3(4.5f, 1f, 3f);
+        private static Vector3 swing3ForceVector = new Vector3(0, 6f, 6f);
+        private static float spikeForce = -10f;
+
+        private bool isSpike;
         private void SetupMelee()
         {
             damageCoefficient = testDamage;
             baseDuration = testDuration;
             finisherDamage = testFinisherDamage;
             finisherBaseDuration= testFinisherDuration;
+            float swingTime = swingTimeCoefficient;
             switch (swingIndex)
             {
                 case 0:
                     animationStateName = "SwingSword0";
                     muzzleString = "Swing1Muzzle";
+                    attackForceVector = swing1ForceVector;
                     break;
                 case 1:
                     animationStateName = "SwingSword1";
                     muzzleString = "Swing2Muzzle";
+                    attackForceVector = swing2ForceVector;
                     break;
                 default:
                 case 2:
@@ -62,17 +69,22 @@ namespace EntityStates.Knight
                     hitStopDuration = finisherHitPause;
                     damageCoefficient = finisherDamage;
                     baseDuration = finisherBaseDuration;
+                    attackForceVector = swing3ForceVector;
 
-                    swingTimeCoefficient = finisherSwingTimeCoefficient;
+                    swingTime = finisherSwingTimeCoefficient;
                     attackStartTimeFraction = finisherAttackStart;
                     attackEndTimeFraction = finisherAttackEnd;
                     earlyExitTimeFraction = finisherEarlyExit;
+
                     break;
             }
-
-            attackStartTimeFraction *= swingTimeCoefficient;
-            attackEndTimeFraction *= swingTimeCoefficient;
-            earlyExitTimeFraction *= swingTimeCoefficient;
+            if (inputBank.aimDirection.y < spikeMaxY)
+            {
+                isSpike = true;
+            }
+            attackStartTimeFraction *= swingTime;
+            attackEndTimeFraction *= swingTime;
+            earlyExitTimeFraction *= swingTime;
             hitEffectPrefab = SS2.Survivors.Knight.KnightHitEffect;
         }
 
@@ -96,6 +108,17 @@ namespace EntityStates.Knight
             }
             PlayCrossfade("Gesture, Override", animationStateName, "Primary.playbackRate", duration * swingTimeCoefficient, 0.08f);
 
+        }
+        protected override void AuthorityModifyOverlapAttack(OverlapAttack attack)
+        {
+            base.AuthorityModifyOverlapAttack(attack);
+
+            attack.forceVector = Util.QuaternionSafeLookRotation(characterDirection.forward) * attackForceVector;
+            if (isSpike)
+            {
+                attack.forceVector = Vector3.up * spikeForce;
+            }
+            attack.physForceFlags = PhysForceFlags.massIsOne | PhysForceFlags.resetVelocity;
         }
 
         public override void FixedUpdate()

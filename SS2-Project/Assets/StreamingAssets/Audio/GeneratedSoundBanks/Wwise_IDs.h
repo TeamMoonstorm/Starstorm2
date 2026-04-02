@@ -102,6 +102,7 @@ namespace AK
         static const AkUniqueID PLAY_CHIRRCSS = 2871870429U;
         static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
         static const AkUniqueID PLAY_ETHEREAL_FIREPILLAR_LOOP = 1371804952U;
+        static const AkUniqueID PLAY_ITEM_PROC_ARMEDBACKPACK = 1624772560U;
         static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
         static const AkUniqueID PLAY_NEMMERC_DASH = 280596056U;
         static const AkUniqueID PLAY_NEMMERC_DASH_START = 1211800949U;
@@ -115,10 +116,6 @@ namespace AK
         static const AkUniqueID PLAY_NEMMERC_SPECIAL = 428808189U;
         static const AkUniqueID PLAY_NEMMERC_UTILITY_ENTER = 1611310971U;
         static const AkUniqueID PLAY_NEMMERC_UTILITY_EXIT = 3128507003U;
-        static const AkUniqueID PLAY_PYRO_PRIMARY_END = 3039872735U;
-        static const AkUniqueID PLAY_PYRO_PRIMARY_HIT = 2383427039U;
-        static const AkUniqueID PLAY_PYRO_PRIMARY_LOOP = 1009731282U;
-        static const AkUniqueID PLAY_PYRO_PRIMARY_START = 1024430588U;
         static const AkUniqueID PLAY_RUNSHROOM_CHARGE = 610217428U;
         static const AkUniqueID PLAY_RUNSHROOM_EXPLODE = 3490687111U;
         static const AkUniqueID PLAY_RUNSHROOM_IDLE_VO = 1331158188U;
@@ -128,6 +125,7 @@ namespace AK
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
         static const AkUniqueID PLAY_WAYFARERBIGLAMPLOOP = 1229124563U;
         static const AkUniqueID PROCAMULET = 3464571447U;
+        static const AkUniqueID PROCARMEDBACKPACK = 3890594904U;
         static const AkUniqueID PROCERRATICGADGETCHAIN = 3050313720U;
         static const AkUniqueID PROCERRATICGADGETLIGHTNING = 3125516253U;
         static const AkUniqueID PROCLIGHTNINGONKILL = 3105193662U;
@@ -143,7 +141,6 @@ namespace AK
         static const AkUniqueID STOP_CHIRRCSS = 3156814475U;
         static const AkUniqueID STOP_CHIRRSPITBOMBLOOP = 1032313774U;
         static const AkUniqueID STOP_ETHEREAL_FIREPILLAR_LOOP = 2875515542U;
-        static const AkUniqueID STOP_PRYO_PRIMARY_LOOP = 3852936046U;
         static const AkUniqueID STOP_SOFT_RAIN = 4234730185U;
         static const AkUniqueID STOP_WAYFARERBIGLAMPLOOP = 1422521957U;
         static const AkUniqueID STRANGECAN = 3750145159U;
