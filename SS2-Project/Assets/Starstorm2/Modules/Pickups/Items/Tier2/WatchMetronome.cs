@@ -24,11 +24,11 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff.")]
         [FormatToken(token, 1)]
-        public static float maxDuration = 2.5f;
+        public static float maxDuration = 3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum duration of the buff, per stack.")]
         [FormatToken(token, 2)]
-        public static float maxDurationPerStack = 1.5f;
+        public static float maxDurationPerStack = 2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Duration of the buff gained per second, while not sprinting.")]
         public static float gainPerSecond = 1;

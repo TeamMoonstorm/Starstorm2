@@ -1,4 +1,24 @@
 **Warning: content spoilers below!**
+### 0.6.33
+* Items
+	* Added new sounds and visual effects for Armed Backpack, and increased its proc chance.
+	* New effect for Watch Metronome
+		* OLD: "While not sprinting, charge up to a 100% increase to sprint speed. Decays over 5s (+3s per stack) seconds while sprinting."
+		* NEW: "While not sprinting, charge up to a 150% increase to sprint speed that decays over 3s (+2 per stack). While active, your skills can be used while sprinting."
+	* Re-enabled Simple Magnet.
+	* Low Quality Speakers now knocks enemies back slightly.
+* Beta
+	* Pyro reworked
+	* Knight adjusted
+		- Removed passive
+		- Adjusted knockback and timing of various skills.
+		- Rally reworked. Allies within the radius of Rally now "smite" enemies with their attacks, healing themselves and reducing the enemy's armor.
+	* Added Ambushes. Ambushes are invisible areas in the stage that spawn a wave of monsters when approached. Typhoon exclusive (for now?).
+	* Added Pedestals. Pedestals are uncommon interactables that allow you to swap an item from your inventory with the item on the Pedestal.
+	* Archer Bug buffed. Increased projectile speed and damage, reduced spread.
+	* Blast Knuckles nerfed (500% damage -> 400% damage).
+	* Fixed Pedestal network errors, and fixed an issue where only Pedestals would spawn with Artifact of Command enabled.
+
 ### 0.6.32
 * General
 	* Fixed normal maps on several materials

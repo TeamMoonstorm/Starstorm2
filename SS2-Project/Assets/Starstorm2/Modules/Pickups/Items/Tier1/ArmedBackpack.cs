@@ -21,7 +21,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Minimum chance for fired missile. (1 = 1% chance)")]
         [FormatToken("SS2_ITEM_ARMEDBACKPACK_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float procMinimum = 0;
+        public static float procMinimum = 10;
 
         public static GameObject projectilePrefab;
         public static GameObject effectPrefab;
@@ -40,7 +40,8 @@ namespace SS2.Items
             {
                 if (stack > 0 && damageReport.damageDealt > 0)
                 {
-                    float percentHPLoss = (damageReport.damageDealt / damageReport.victim.fullCombinedHealth) * 100f * procMult;
+                    float victimBaseMaxHealth = damageReport.victimBody.baseMaxHealth + damageReport.victimBody.levelMaxHealth * (damageReport.victimBody.level - 1);
+                    float percentHPLoss = (damageReport.damageDealt / victimBaseMaxHealth) * 100f * procMult;
                     var rollChance = percentHPLoss > procMinimum ? percentHPLoss : procMinimum;
 
                     if (Util.CheckRoll(rollChance, body.master))
