@@ -112,7 +112,7 @@ namespace SS2
 
 
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
+            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm && GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) != "InfiniteTowerRun")
             {
                 float startTime = UnityEngine.Random.Range(120f, 360f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
