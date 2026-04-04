@@ -1,4 +1,6 @@
 ﻿using RoR2;
+using SS2.Equipments;
+using UnityEngine;
 
 namespace SS2.Hooks
 {
@@ -72,6 +74,11 @@ namespace SS2.Hooks
                 if (!body.HasBuff(SS2Content.Buffs.bdHakai))
                 {
                     body.AddBuff(SS2Content.Buffs.bdHakai);
+                    if(body.TryGetComponent(out AffixEthereal.HakaiBuffBehavior hakai))
+                    {
+                        hakai.deathReport = damageReport;
+                    }
+                    
                     body.AddBuff(RoR2Content.Buffs.Intangible);
                 }
             }
