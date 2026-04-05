@@ -133,11 +133,10 @@ namespace SS2
                 childLocator.FindChild("Particles").gameObject.SetActive(false); 
                 childLocator.FindChild("Symbol").gameObject.SetActive(false); 
                 purchaseInteraction.SetAvailable(false); 
+                
+                waitingForRefresh = false; 
+                chargeUp = false; 
             } 
-            
-            waitingForRefresh = false; 
-            chargeUp = false; 
-            purchaseInteraction.SetAvailable(false); 
         }
 
         private void ActivateEtherealTerminal(Interactor interactor) 

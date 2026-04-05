@@ -7,7 +7,6 @@ using UnityEngine.AddressableAssets;
 using static R2API.DamageAPI;
 using RoR2.ContentManagement;
 
-#if DEBUG
 namespace SS2.Survivors
 {
 
@@ -52,4 +51,3 @@ namespace SS2.Survivors
         }
     }
 }
-#endif

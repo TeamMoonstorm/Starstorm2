@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using SS2.Components;
+
 namespace SS2
 {
     public class EventDirector : NetworkBehaviour
@@ -26,6 +23,8 @@ namespace SS2
         }
 
         public EventSelection currentEventSelection;
+        public bool finalStage;
+        public bool simulacrumRun;
         public EventTimeline currentTimeline;
         public float eliteEventChance;
         public int stagesUntilInvasion = 5;
@@ -40,6 +39,8 @@ namespace SS2
             {
                 stagesUntilInvasion--;
                 currentEventSelection = EventSelection.GetEventSelectionForStage(stage);
+                finalStage = (stage.sceneDef.stageOrder == 6);
+                simulacrumRun = (GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "InfiniteTowerRun");
                 this.rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
                 currentTimeline = CreateEventTimeline();
             }
@@ -68,7 +69,10 @@ namespace SS2
             {
                 stormTime += 45f;
             }
-            if (                                                                    SS2Config.enableBeta) // FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            
+            bool useFinalStageEliteEvents = (!finalStage || finalStage && Events.EnableMoon2EliteEvents);
+            //bool useSimulacrumEliteEvents = (!simulacrumRun || simulacrumRun && Events.EnableSimulacrumEliteEvents);
+            if (SS2Config.enableBeta && useFinalStageEliteEvents) // FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             {
                 // pick elite event. should be mostly normalized across the run as the rewards are important
                 WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
@@ -110,9 +114,10 @@ namespace SS2
             }
             
 
-
+            bool useFinalStageStorms = (!finalStage || finalStage && Events.EnableMoon2Storms);
+            bool useSimulacrumStorms = (!simulacrumRun || simulacrumRun && Events.EnableSimulacrumStorms);
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
+            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm && useFinalStageStorms && useSimulacrumStorms)
             {
                 float startTime = UnityEngine.Random.Range(120f, 360f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));

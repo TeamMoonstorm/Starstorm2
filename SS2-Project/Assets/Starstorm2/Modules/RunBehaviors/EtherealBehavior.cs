@@ -340,8 +340,11 @@ namespace SS2
         public static float GetDefaultScaling(DifficultyIndex index)
         {
             foreach (EtherealDifficulty diff in instances)
+            {
                 if (diff.index == index) return diff.defaultScalingValue;
-            return 0f;
+            }
+
+            return DifficultyCatalog.GetDifficultyDef(index).scalingValue;
         }
         private static void ResetAll(Run obj)
         {
