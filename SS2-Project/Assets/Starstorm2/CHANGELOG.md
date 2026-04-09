@@ -1,4 +1,16 @@
 **Warning: content spoilers below!**
+### 0.6.34 - the bread & caves & cliffs part 1 update
+* General 
+    * Added configs for storms/elite events in moon2/any final stage, and simulacrum. (Thanks bread!)
+* Items
+    * Red Cross hired assassins to come after us and successfully eliminated all SS2 programmers. bread had to stop their rampage by listening to their demands. Blood tester no longer has a red cross (It's green now). Starstorm 2 no longer follows breaks the Geneva convetion. Except for our large stockpile of chemical weapons hidden in New Jersey. (Thanks bread!)
+* Beta
+    * Remove #if DEBUG check from mule so he should be in beta config now! (Thanks bread!)
+    * You can now leave voidshop, sorry! (Thanks bread!)
+    * Ethereal elites should now properly receive death reports (Thanks bread!)
+    * Fixed ethereal sapling ephemeral coins incompat (Thanks bread!)
+    * Ethereal saplings no longer set difficulty scaling to 0.5 after using them on modded gamemodes/eclipse (Thanks bread!)
+
 ### 0.6.33
 * Items
 	* Added new sounds and visual effects for Armed Backpack, and increased its proc chance.
