@@ -26,6 +26,40 @@ namespace SS2
                 restartRequired = true
             };
         }).DoConfigure();
+        
+        public static ConfiguredBool EnableMoon2Storms = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.section = "Storms";
+            b.key = "Enable storms on Commencement";
+            b.description = "Enables storms on Commencement.";
+            b.configFile = SS2Config.ConfigEvent;
+        }).DoConfigure();
+        
+        public static ConfiguredBool EnableMoon2EliteEvents = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.section = "Storms";
+            b.key = "Enable elite events on Commencement";
+            b.description = "Enables elite events on Commencement.";
+            b.configFile = SS2Config.ConfigEvent;
+        }).DoConfigure();
+
+        
+        public static ConfiguredBool EnableSimulacrumStorms = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        {
+            b.section = "Storms";
+            b.key = "Enable storms in Simulacrum";
+            b.description = "Enables storms during Simulacrum runs.";
+            b.configFile = SS2Config.ConfigEvent;
+        }).DoConfigure();
+        
+        // due to simulacrum not having a run timer you cant really have the event time that events use pass ,.,..
+        // public static ConfiguredBool EnableSimulacrumEliteEvents = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+        // {
+        //     b.section = "Storms";
+        //     b.key = "Enable elite events in Simulacrum";
+        //     b.description = "Enables elite events during Simulacrum runs.";
+        //     b.configFile = SS2Config.ConfigEvent;
+        // }).DoConfigure();
 
         public ContentPack contentPack => _contentPack;
         private ContentPack _contentPack;

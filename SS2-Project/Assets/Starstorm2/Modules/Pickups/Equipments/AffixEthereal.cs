@@ -90,6 +90,7 @@ namespace SS2.Equipments
             private float timer;
             private float timerDur;
             private bool expired = false;
+            public DamageReport deathReport;
 
             private List<GameObject> effectInstances;
 
@@ -202,7 +203,16 @@ namespace SS2.Equipments
                     {
                         mdl.invisibilityCount++;
                     }
-                    characterBody.healthComponent.Suicide();
+
+                    if (deathReport != null)
+                    {
+                        characterBody.healthComponent.Suicide(deathReport.attacker, deathReport.damageInfo.inflictor, deathReport.damageInfo.damageType); 
+                    }
+                    else
+                    {
+                        characterBody.healthComponent.Suicide();
+                    }
+                    
                     EffectManager.SimpleEffect(SS2Assets.LoadAsset<GameObject>("InitialBurst, Effect", SS2Bundle.Equipments), characterBody.corePosition, new Quaternion(0f, 0f, 0f, 0f), true);
                     expired = true;
                 }
