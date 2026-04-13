@@ -36,9 +36,11 @@ namespace EntityStates.Pyro
         
 
         public static GameObject flameEffectPrefab;
+        public static GameObject beamEffectPrefab;
         public static GameObject projectilePrefab;
 
         private Transform flamethrowerTransform;
+        private Transform beamTransform;
 
         private PyroController pc;
         private ChildLocator childLocator;
@@ -115,10 +117,8 @@ namespace EntityStates.Pyro
             {
                 if (!hasBegunFlamethrower)
                 {
-                    //Debug.Log("entering flamethrower");
-                    hasBegunFlamethrower = true;
-                    // silly visual flamethrower for sake of making it look fuller
-                    flamethrowerTransform = Object.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                    BeginFlamethrower();
+
                     Util.PlaySound("Play_pyro_primary_loop", gameObject);
                     Fire();
                 }
@@ -144,6 +144,30 @@ namespace EntityStates.Pyro
                 return;
             }
         }
+        private void BeginFlamethrower()
+        {
+            //Debug.Log("entering flamethrower");
+            hasBegunFlamethrower = true;
+            // silly visual flamethrower for sake of making it look fuller
+            if (flameEffectPrefab)
+                flamethrowerTransform = GameObject.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+            if (beamEffectPrefab)
+                beamTransform = GameObject.Instantiate(beamEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+
+        }
+        public override void Update()
+        {
+            base.Update();
+
+            if (flamethrowerTransform)
+            {
+
+            }
+            if (beamTransform)
+            {
+                beamTransform.transform.forward = inputBank.aimDirection;
+            }
+        }
 
         public override void OnExit()
         {
@@ -158,7 +182,13 @@ namespace EntityStates.Pyro
             Util.PlaySound("Play_pyro_primary_end", gameObject);
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
             if (flamethrowerTransform)
+            {
                 Destroy(flamethrowerTransform.gameObject);
+            }
+            if (beamTransform)
+            {
+                Destroy(beamTransform.gameObject);
+            }
         }
 
         private void Fire()

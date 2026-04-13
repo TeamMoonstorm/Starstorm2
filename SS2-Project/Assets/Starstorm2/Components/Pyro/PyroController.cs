@@ -3,6 +3,7 @@ using RoR2.HudOverlay;
 using RoR2.UI;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ namespace SS2.Components
         public float heatMax = 100f;
         public float highHeat = 70f;
         public float heatPerIgnitedEnemyPerSecond = 5f;
+        public float enemyRadius = 35f;
 
         [HideInInspector]
         public static float enemyCheckInterval = 0.16f;
@@ -22,7 +24,7 @@ namespace SS2.Components
         private static float enemyCheckStopwatch = 0f;
         private SphereSearch bodySearch;
         private List<HurtBox> hits;
-        public float enemyRadius = 35f;
+        
 
         private float _heat;
         public float heat

@@ -53,16 +53,22 @@ namespace EntityStates.Pyro
         private PyroController pc;
         private ChildLocator childLocator;
 
-
-        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
-
         private static float turnSpeed = 180f;
         private AimAnimator aimAnimator;
         private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
         private Vector3 currentAimVector;
 
+        private static float camEntryDuration = 0.2f;
+        private static float camExitDuration = 0.4f;
+        private static float cameraPivotVerticalOffset = 1.37f;
+        private static Vector3 cameraPos = new Vector3(1f, -0.5f, -6.9f);
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
-
+        public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
+        private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
+        {
+            pivotVerticalOffset = cameraPivotVerticalOffset,
+            idealLocalCameraPos = cameraPos,
+        };
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;
@@ -109,6 +115,14 @@ namespace EntityStates.Pyro
             {
                 crosshairOverrideRequest = CrosshairUtils.RequestOverrideForBody(characterBody, crosshairPrefab, CrosshairUtils.OverridePriority.Skill);
             }
+
+            CameraTargetParams.CameraParamsOverrideRequest request = new CameraTargetParams.CameraParamsOverrideRequest
+            {
+                cameraParamsData = chargeCameraParams,
+                priority = 0f
+            };
+
+            camOverrideHandle = cameraTargetParams.AddParamsOverride(request, camEntryDuration);
         }
         private Vector3 GetAimDirection()
         {
@@ -217,6 +231,11 @@ namespace EntityStates.Pyro
             if (crosshairOverrideRequest != null)
             {
                 crosshairOverrideRequest.Dispose();
+            }
+
+            if (cameraTargetParams)
+            {
+                cameraTargetParams.RemoveParamsOverride(camOverrideHandle, camExitDuration);
             }
         }
 

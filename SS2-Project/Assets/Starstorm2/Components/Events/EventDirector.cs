@@ -23,8 +23,8 @@ namespace SS2
         }
 
         public EventSelection currentEventSelection;
-        public bool finalStage;
-        public bool simulacrumRun;
+        private bool finalStage;
+        private bool simulacrumRun;
         public EventTimeline currentTimeline;
         public float eliteEventChance;
         public int stagesUntilInvasion = 5;

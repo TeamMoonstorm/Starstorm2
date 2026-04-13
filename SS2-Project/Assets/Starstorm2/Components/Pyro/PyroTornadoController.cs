@@ -25,13 +25,15 @@ public class PyroTornadoController : NetworkBehaviour
     public static float force = 300f;
 
     public static float baseRadius = 10f;
-    public static float radiusPerIgnite = 3.33f; // TODO: volume increase instead of radius?
+    public static float maxRadiusPerIgnite = 4f; // TODO: volume increase instead of radius?
+    public static float minRadiusPerIgnite = 1f;
+    public static int maxIgniteHits = 4;
 
     public static float diffForMaxGrowthSpeed = 9f;
     public static float maxGrowthSpeed = 64f; // radius increase in meters per second
     public static float minGrowthSpeed = 1f;
     public static float decayDuration = 1.2f;
-    public static float decayDurationPerIgnite = 0.3f;
+    public static float decayDurationPerIgnite = 0.25f;
 
     public static float searchInterval = 0.125f;
 
@@ -44,6 +46,7 @@ public class PyroTornadoController : NetworkBehaviour
 
     private float targetRadius;
     private float currentRadius;
+    private int igniteHits;
 
     private AnimateShaderAlpha[] animateShaderAlphas;
     private SphereSearch sphereSearch;
@@ -205,7 +208,11 @@ public class PyroTornadoController : NetworkBehaviour
     [ClientRpc]
     public void RpcOnIgnitedEnemyHit(Vector3 hitPosition)
     {
-        targetRadius += radiusPerIgnite;
+        float t = (float)igniteHits / (float)maxIgniteHits;
+        float radiusIncrease = Mathf.Lerp(maxRadiusPerIgnite, minRadiusPerIgnite, t);
+        targetRadius += radiusIncrease;
+        igniteHits++;
+
         lifetimeStopwatch -= decayDurationPerIgnite;
 
         if (animateShaderAlphas != null)
