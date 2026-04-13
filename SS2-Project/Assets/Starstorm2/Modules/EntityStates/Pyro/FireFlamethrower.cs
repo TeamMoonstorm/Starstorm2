@@ -99,7 +99,8 @@ namespace EntityStates.Pyro
             {
                 if (characterBody.isSprinting)
                 {
-                    if (!characterBody.HasBuff(SS2Content.Buffs.bdPyroJet) && !characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome))
+                    bool inJet = characterBody.HasBuff(SS2Content.Buffs.bdPyroJet) && !isGrounded;
+                    if (!inJet && !characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome))
                     {
                         outer.SetNextStateToMain();
                     }
