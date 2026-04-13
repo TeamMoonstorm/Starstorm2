@@ -1,4 +1,11 @@
 **Warning: content spoilers below!**
+### 0.6.36 buns wheres the changelogs
+* General
+	* Fixed an issue with the camera getting yanked when looking too far up or down with many "aiming" skills, such as Executioner's secondary.
+* Beta
+	* Adjusted Pyro's VFX.
+	* Lowered the damage of Archer Bug's projectiles.
+
 ### 0.6.33
 * Items
 	* Added new sounds and visual effects for Armed Backpack, and increased its proc chance.
