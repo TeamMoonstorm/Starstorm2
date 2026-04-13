@@ -21,6 +21,7 @@ namespace SS2.Components
 
         public static GameObject crystalPrefab;
 
+        public static GameObject blackBeach2Prefab;
         public static GameObject frozenWallPrefab;
         public static GameObject golemPlains2Prefab;
         public static GameObject moon2Prefab;
@@ -34,6 +35,7 @@ namespace SS2.Components
 
             crystalPrefab = SS2Assets.LoadAsset<GameObject>("SkinCrystalPickup", SS2Bundle.Interactables);
 
+            blackBeach2Prefab = SS2Assets.LoadAsset<GameObject>("BlackBeach2Objects", SS2Bundle.Base);
             frozenWallPrefab = SS2Assets.LoadAsset<GameObject>("FrozenWallObjects", SS2Bundle.Base);
             golemPlains2Prefab = SS2Assets.LoadAsset<GameObject>("GolemPlains2Objects", SS2Bundle.Base);
             moon2Prefab = SS2Assets.LoadAsset<GameObject>("Moon2Objects", SS2Bundle.Base);
@@ -75,7 +77,7 @@ namespace SS2.Components
             {
                 directorInstance = Instantiate(directorPrefab);
                 NetworkServer.Spawn(directorInstance);
-                // SpawnObjects(); <- currently only for skin crystals. WIP.
+                SpawnObjects(); // <- currently only for skin crystals. WIP.
             }
         }
 
@@ -85,6 +87,12 @@ namespace SS2.Components
             GameObject stagePrefab = null;
             switch (currStage)
             {
+                case "blackbeach":
+                    stagePrefab = null;
+                    break;
+                case "blackbeach2":
+                    stagePrefab = blackBeach2Prefab;
+                    break;
                 case "frozenwall":
                     stagePrefab = frozenWallPrefab;
                     break;
@@ -112,6 +120,8 @@ namespace SS2.Components
             {
                 GameObject stageObjects = GameObject.Instantiate(stagePrefab, Vector3.zero, Quaternion.identity);
                 NetworkServer.Spawn(stageObjects);
+
+                SS2Log.Info("StarstormBehavior.SpawnObjects : spawned a thing for this scene =)");
             }
         }
     }

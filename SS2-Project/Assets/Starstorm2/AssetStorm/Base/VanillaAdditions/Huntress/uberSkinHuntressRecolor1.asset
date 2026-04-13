@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c26ef4e3114a64892825359a123b70, type: 3}
+  m_Name: uberSkinHuntressRecolor1
+  m_EditorClassIdentifier: 
+  targetSkinDef: {fileID: 11400000, guid: a570006b1cec0b3469e824d117d07b42, type: 2}
+  baseSkins:
+  - _asset: {fileID: 0}
+    _address: facf17c5a8016854bbd4e6f5940f3fab
+    _useDirectReference: 0
+    _canLoadFromCatalog: 0
+  targetObject:
+    _asset: {fileID: 0}
+    _address: 4dc3cfa1134f23b4f93523b77090ec9f
+    _useDirectReference: 0
+  rendererInfos:
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: BowMesh
+    defaultMaterial: {fileID: 2100000, guid: 96ef4d0f98bb1034084cd8c8d5265dd3, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressMesh
+    defaultMaterial: {fileID: 2100000, guid: 96ef4d0f98bb1034084cd8c8d5265dd3, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  - renderer:
+      reference: {fileID: 0}
+      transformPath: HuntressScarfMesh
+    defaultMaterial: {fileID: 2100000, guid: e8e6f79fb2050804394ee1f7de4787b2, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  gameObjectActivations: []
+  meshReplacements: []
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  lightReplacements: []
+  vfxOverrides: []

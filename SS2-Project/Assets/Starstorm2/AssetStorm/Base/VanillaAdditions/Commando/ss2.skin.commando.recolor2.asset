@@ -10,22 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 02a17d3a7bea384489c0fc6e66051d29, type: 3}
-  m_Name: ss2.skin.huntress.grandmastery
+  m_Name: ss2.skin.commando.recolor2
   m_EditorClassIdentifier: 
   nameToken: ???
   displayModelPath: Prefabs/NullModel
   displayModelPrefab: {fileID: 0}
   hidden: 0
-  achievementIcon: {fileID: 21300000, guid: ab4d1a99c618790479da25109d318980, type: 3}
+  achievementIcon: {fileID: 21300000, guid: b618f581b58c8674e8f7687b2020eed2, type: 3}
   requiredExpansion: {fileID: 0}
   achievementCondition:
-    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.HuntressGrandMasteryAchievement,
+    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin2Achievement,
       Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serverAchievementCondition:
-    assemblyQualifiedName: 
-  achievementNameToken: SS2_ACHIEVEMENT_HUNTRESS_GRANDMASTERY_NAME
-  achievementDescriptionToken: SS2_ACHIEVEMENT_HUNTRESS_GRANDMASTERY_DESC
-  coinReward: 15
+    assemblyQualifiedName: SS2.Unlocks.VanillaSurvivors.CommandoAltSkin2Achievement+CommandoAltSkin2ServerAchievement,
+      Starstorm2, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  achievementNameToken: SS2_ACHIEVEMENT_COMMANDO_RECOLOR2_NAME
+  achievementDescriptionToken: SS2_ACHIEVEMENT_COMMANDO_RECOLOR2_DESC
+  coinReward: 5
   _preRequisiteAchievement:
     unlockableDef: {fileID: 0}
     achievementIdentifier: 
