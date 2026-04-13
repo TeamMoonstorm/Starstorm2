@@ -1,10 +1,28 @@
 **Warning: content spoilers below!**
+
 ### 0.6.36 buns wheres the changelogs
 * General
+  * Now includes all changes from the 0.6.34 version that 0.6.35 left out
+  * Its very nice people read these. You are a lovely person. Have you been drinking enough water?
 	* Fixed an issue with the camera getting yanked when looking too far up or down with many "aiming" skills, such as Executioner's secondary.
 * Beta
 	* Adjusted Pyro's VFX.
 	* Lowered the damage of Archer Bug's projectiles.
+
+### 0.6.35
+* Due to a difficult to reproduce bug in 0.6.34 (on dev machines) that prevents SS2 from loading when Beta is enabled. 0.6.35 reverts back to version 0.6.33. Once we figure out the issue 0.6.36 will contain the fixes of 0.6.34
+
+### 0.6.34 - the bread & caves & cliffs part 1 update
+* General 
+    * Added configs for storms/elite events in moon2/any final stage, and simulacrum. (Thanks bread!)
+* Items
+    * Red Cross hired assassins to come after us and successfully eliminated all SS2 programmers. bread had to stop their rampage by listening to their demands. Blood tester no longer has a red cross (It's green now). Starstorm 2 no longer follows breaks the Geneva convetion. Except for our large stockpile of chemical weapons hidden in New Jersey. (Thanks bread!)
+* Beta
+    * Remove #if DEBUG check from MULE so he should be in beta config now! (Thanks bread!)
+    * You can now leave voidshop, sorry! (Thanks bread!)
+    * Ethereal elites should now properly receive death reports (Thanks bread!)
+    * Fixed ethereal sapling ephemeral coins incompat (Thanks bread!)
+    * Ethereal saplings no longer set difficulty scaling to 0.5 after using them on modded gamemodes/eclipse (Thanks bread!)
 
 ### 0.6.33
 * Items
