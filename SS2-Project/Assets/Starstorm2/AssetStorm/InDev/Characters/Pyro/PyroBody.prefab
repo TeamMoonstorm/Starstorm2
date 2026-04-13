@@ -282,9 +282,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hurtBoxes:
   - {fileID: 5337686264243903068}
-  - {fileID: 5337686264243903068}
+  - {fileID: 5079951576053850307}
   mainHurtBox: {fileID: 5337686264243903068}
-  bullseyeCount: 2
+  bullseyeCount: 1
 --- !u!114 &7088394050902782866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32236,7 +32236,7 @@ MonoBehaviour:
   bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 2750547033799731505}
-  indexInGroup: 1
+  indexInGroup: 0
 --- !u!1 &4813338781752157058
 GameObject:
   m_ObjectHideFlags: 0
@@ -43421,8 +43421,8 @@ MonoBehaviour:
   isSniperTarget: 1
   bypassInvulnerable: 0
   damageModifier: 0
-  hurtBoxGroup: {fileID: 0}
-  indexInGroup: -1
+  hurtBoxGroup: {fileID: 2750547033799731505}
+  indexInGroup: 1
 --- !u!1 &6799267390434267519
 GameObject:
   m_ObjectHideFlags: 0

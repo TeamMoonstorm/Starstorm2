@@ -1,5 +1,13 @@
 **Warning: content spoilers below!**
-### 0.6.36
+
+### 0.6.36 buns wheres the changelogs
+* General
+  * Now includes all changes from the 0.6.34 version that 0.6.35 left out
+  * Its very nice people read these. You are a lovely person. Have you been drinking enough water?
+	* Fixed an issue with the camera getting yanked when looking too far up or down with many "aiming" skills, such as Executioner's secondary.
+* Beta
+	* Adjusted Pyro's VFX.
+	* Lowered the damage of Archer Bug's projectiles.
 
 ### 0.6.35
 * Due to a difficult to reproduce bug in 0.6.34 (on dev machines) that prevents SS2 from loading when Beta is enabled. 0.6.35 reverts back to version 0.6.33. Once we figure out the issue 0.6.36 will contain the fixes of 0.6.34
