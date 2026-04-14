@@ -58,7 +58,7 @@ namespace EntityStates.NemToolbot
         public override void OnDeserialize(NetworkReader reader)
         {
             base.OnDeserialize(reader);
-            reader.ReadByte();
+            cachedWeapon = (NemToolbotController.WeaponType)reader.ReadByte();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

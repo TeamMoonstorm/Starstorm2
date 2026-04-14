@@ -1,3 +1,4 @@
+using RoR2;
 using SS2.Components;
 using UnityEngine;
 using UnityEngine.Networking;

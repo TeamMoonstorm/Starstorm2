@@ -65,6 +65,8 @@ namespace EntityStates.NemToolbot
                 else
                 {
                     Debug.LogError("NemToolbot FireGrapplingHook: projectilePrefab is null.");
+                    outer.SetNextStateToMain();
+                    return;
                 }
             }
 
