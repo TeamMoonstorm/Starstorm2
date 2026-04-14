@@ -1,5 +1,7 @@
 using RoR2;
+using SS2.Components;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -21,6 +23,7 @@ namespace EntityStates.NemToolbot
         public static GameObject tracerEffectPrefab;
         public static GameObject hitEffectPrefab;
 
+        private NemToolbotController controller;
         private float fireTimer;
         private float duration;
 
@@ -29,12 +32,25 @@ namespace EntityStates.NemToolbot
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(2f);
+
+            if (!gameObject.TryGetComponent(out controller))
+            {
+                Debug.LogError("FireRapidLaser: NemToolbotController not found.");
+            }
+
+            PlayCrossfade("Gesture, Override", "FireRapidLaser", "FireRapidLaser.playbackRate", duration, 0.05f);
             FireBullet();
         }
 
         private void FireBullet()
         {
             fireTimer = baseFireInterval / attackSpeedStat;
+
+            if (isAuthority && controller != null && NetworkServer.active && !controller.TryConsumeAmmo(NemToolbotController.WeaponType.RapidLaser))
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
 
             Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
@@ -73,7 +89,7 @@ namespace EntityStates.NemToolbot
                     radius = bulletRadius,
                     sniper = false,
                     stopperMask = LayerIndex.CommonMasks.bullet,
-                    weapon = null,
+                    weapon = gameObject,
                     tracerEffectPrefab = tracerEffectPrefab,
                     spreadPitchScale = 1f,
                     spreadYawScale = 1f,

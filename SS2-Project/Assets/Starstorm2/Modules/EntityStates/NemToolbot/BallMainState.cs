@@ -92,6 +92,12 @@ namespace EntityStates.NemToolbot
                 velocity.z *= momentumDamping;
                 characterMotor.velocity = velocity;
             }
+
+            // Regenerate ammo for all weapons while in ball form
+            if (NetworkServer.active && controller != null)
+            {
+                controller.RegenAllAmmo(GetDeltaTime());
+            }
         }
 
         public override void OnExit()
@@ -115,6 +121,11 @@ namespace EntityStates.NemToolbot
             if (NetworkServer.active && characterBody != null)
             {
                 characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
+            }
+
+            if (NetworkServer.active && controller != null)
+            {
+                controller.ResetRegenAccumulators();
             }
 
             if (modelAnimator != null)

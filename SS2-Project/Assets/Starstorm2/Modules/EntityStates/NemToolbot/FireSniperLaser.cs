@@ -1,5 +1,7 @@
 using RoR2;
+using SS2.Components;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -27,6 +29,19 @@ namespace EntityStates.NemToolbot
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
             characterBody.SetAimTimer(duration + 2f);
+
+            if (isAuthority)
+            {
+                if (!gameObject.TryGetComponent(out NemToolbotController controller))
+                {
+                    Debug.LogError("FireSniperLaser: NemToolbotController not found.");
+                }
+                else if (NetworkServer.active && !controller.TryConsumeAmmo(NemToolbotController.WeaponType.SniperLaser))
+                {
+                    outer.SetNextStateToMain();
+                    return;
+                }
+            }
 
             Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
@@ -66,7 +81,7 @@ namespace EntityStates.NemToolbot
                     radius = bulletRadius,
                     sniper = true,
                     stopperMask = LayerIndex.world.mask,
-                    weapon = null,
+                    weapon = gameObject,
                     tracerEffectPrefab = tracerEffectPrefab,
                     spreadPitchScale = 0f,
                     spreadYawScale = 0f,

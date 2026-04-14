@@ -1,6 +1,7 @@
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -21,6 +22,7 @@ namespace EntityStates.NemToolbot
         public static string disconnectSoundString = "";
         public static GameObject muzzleflashEffectPrefab;
         public static string muzzleString = "Muzzle";
+        public static float maxDuration = 8f;
 
         /// <summary>
         /// Reference to the live hook projectile. Set by the projectile via SetHookReference().
@@ -128,6 +130,13 @@ namespace EntityStates.NemToolbot
                 hookInstance = null;
             }
 
+            // Failsafe: exit if hook was never linked (e.g. missing ModelLocator/ChildLocator)
+            if (fixedAge >= maxDuration)
+            {
+                outer.SetNextStateToMain();
+                return;
+            }
+
             // Exit when hook projectile existed and is now destroyed
             if (!hookInstance && hadHookInstance)
             {
@@ -146,7 +155,10 @@ namespace EntityStates.NemToolbot
             // Clean up hook if still alive when state is forcibly exited
             if (hookInstance != null)
             {
-                EntityState.Destroy(hookInstance);
+                if (NetworkServer.active)
+                {
+                    EntityState.Destroy(hookInstance);
+                }
             }
 
             base.OnExit();

@@ -28,6 +28,13 @@ namespace EntityStates.NemToolbot
                 }
 
                 cachedWeapon = controller.currentWeapon;
+
+                if (!controller.HasAmmo(cachedWeapon))
+                {
+                    outer.SetNextStateToMain();
+                    return;
+                }
+
                 EntityState nextState = cachedWeapon switch
                 {
                     NemToolbotController.WeaponType.Shotgun => new FireShotgun(),

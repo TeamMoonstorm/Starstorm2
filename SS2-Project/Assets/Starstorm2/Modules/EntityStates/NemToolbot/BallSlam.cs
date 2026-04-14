@@ -20,6 +20,7 @@ namespace EntityStates.NemToolbot
         public static float blastDamageCoefficient = 5f;
         public static float blastProcCoefficient = 1f;
         public static float blastForce = 2000f;
+        public static float maxDuration = 10f;
         public static Vector3 blastBonusForce = Vector3.zero;
 
         public static string enterSoundString = "";
@@ -81,6 +82,14 @@ namespace EntityStates.NemToolbot
 
                 // Accelerate downward faster than normal gravity
                 characterMotor.velocity.y += verticalAcceleration * GetDeltaTime();
+
+                // Safety timeout if we never hit the ground
+                if (fixedAge >= maxDuration)
+                {
+                    DetonateAuthority();
+                    outer.SetNextStateToMain();
+                    return;
+                }
 
                 // Detonate when hitting the ground after minimum duration
                 if (fixedAge >= minimumDuration && (detonateNextFrame || characterMotor.Motor.GroundingStatus.IsStableOnGround))
@@ -154,7 +163,7 @@ namespace EntityStates.NemToolbot
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab);
             }
             blastAttack.teamIndex = teamComponent.teamIndex;
-            blastAttack.damageType.damageSource = DamageSource.Primary;
+            blastAttack.damageType.damageSource = DamageSource.Special;
 
             return blastAttack.Fire();
         }

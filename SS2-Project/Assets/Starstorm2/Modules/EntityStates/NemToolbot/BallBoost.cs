@@ -103,7 +103,7 @@ namespace EntityStates.NemToolbot
             attack.forceVector = Vector3.up * upwardForceMagnitude;
             attack.pushAwayForce = awayForceMagnitude;
             attack.hitBoxGroup = hitBoxGroup;
-            attack.damageType.damageSource = DamageSource.Primary;
+            attack.damageType.damageSource = DamageSource.Utility;
             attack.isCrit = RollCrit();
         }
 
