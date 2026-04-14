@@ -27,11 +27,8 @@ namespace EntityStates.Nemmando
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData decisiveCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 70f,
-            minPitch = -70f,
             pivotVerticalOffset = 1f, //how far up should the camera go?
             idealLocalCameraPos = zoomCameraPosition,
-            wallCushion = 0.1f
         };
         public static Vector3 zoomCameraPosition = new Vector3(0f, 0f, -5.3f); // how far back should the camera go?
         Material matInstance;

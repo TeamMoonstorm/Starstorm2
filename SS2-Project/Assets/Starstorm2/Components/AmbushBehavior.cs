@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -7,7 +8,7 @@ using UnityEngine.Networking;
 namespace SS2
 {
     [RequireComponent(typeof(CombatDirector))]
-    public class AmbushBehavior : NetworkBehaviour
+    public class AmbushBehavior : NetworkBehaviour, IInteractable
     {
         [InitDuringStartupPhase(GameInitPhase.PostProgressBar)]
         private static void Init()
@@ -332,5 +333,36 @@ namespace SS2
             director.monsterSpawnTimer = 0;
         }
 
+
+        // thank you moonstorm shared utilities
+        public string GetContextString([NotNull] Interactor activator)
+        {
+            return "";
+        }
+
+        public Interactability GetInteractability([NotNull] Interactor activator)
+        {
+            return Interactability.Disabled;
+        }
+
+        public void OnInteractionBegin([NotNull] Interactor activator)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ShouldIgnoreSpherecastForInteractibility([NotNull] Interactor activator)
+        {
+            return false;
+        }
+
+        public bool ShouldShowOnScanner()
+        {
+            return false;
+        }
+
+        public bool ShouldProximityHighlight()
+        {
+            return false;
+        }
     }
 }

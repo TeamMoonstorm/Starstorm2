@@ -34,20 +34,14 @@ namespace EntityStates.Executioner2
         public CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 70f,
-            minPitch = -70f,
             pivotVerticalOffset = cameraPivotVerticalOffset,
             idealLocalCameraPos = chargeCameraPos,
-            wallCushion = 0.1f,
         };
 
         private CharacterCameraParamsData altCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 70f,
-            minPitch = -70f,
             pivotVerticalOffset = cameraPivotVerticalOffset,
             idealLocalCameraPos = altCameraPos,
-            wallCushion = 0.1f,
         };
 
         private static float cameraPivotVerticalOffset = 1.37f;

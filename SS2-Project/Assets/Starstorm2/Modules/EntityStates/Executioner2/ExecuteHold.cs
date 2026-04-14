@@ -31,11 +31,8 @@ namespace EntityStates.Executioner2
         private CameraTargetParams.CameraParamsOverrideHandle camOverrideHandle;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 88f,
-            minPitch = 25f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = slamCameraPosition,
-            wallCushion = 0.1f,
         };
 
         [HideInInspector]

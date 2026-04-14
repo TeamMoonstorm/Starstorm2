@@ -34,11 +34,8 @@ namespace EntityStates.Executioner2
         private static float cameraLerpDuration = 0.3f;
         private CharacterCameraParamsData slamCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 88f,
-            minPitch = -88f,
             pivotVerticalOffset = 1.37f,
             idealLocalCameraPos = slamCameraPosition,
-            wallCushion = 0.1f,
         };
         private static Vector3 slamCameraPosition = new Vector3(0, 0, -9f);
 

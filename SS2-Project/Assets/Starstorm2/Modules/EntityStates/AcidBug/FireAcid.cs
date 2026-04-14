@@ -24,7 +24,7 @@ namespace EntityStates.AcidBug
         private string muzzleName = "Muzzle";
         private static float baseDuration = 1.1f;
         private static float fireTime = 0.55f;
-        private static float damageCoefficient = 2f;
+        private static float damageCoefficient = 1.33f;
         private static float force = 100f;
 
         private static float selfAwayForce = 11f;
