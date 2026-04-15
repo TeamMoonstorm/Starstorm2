@@ -7,9 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: matNapalmTrail
+  m_Name: matFlamethrowerRing
   m_Shader: {fileID: 4800000, guid: 81e2940ed81972c4aa729667a0a32648, type: 2}
   m_ValidKeywords:
+  - CLOUDOFFSET
   - USE_CLOUDS
   - VERTEXCOLOR
   m_InvalidKeywords:
@@ -24,38 +25,38 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Cloud1Tex:
-        m_Texture: {fileID: 2800000, guid: fc418579c4ac2854e9887642a2c0b9ff, type: 3}
-        m_Scale: {x: 0.2, y: 5}
+        m_Texture: {fileID: 2800000, guid: b72b6d09036cc6f43b27dfaaa37840ed, type: 3}
+        m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Cloud2Tex:
-        m_Texture: {fileID: 2800000, guid: 4012b41252f8ec0498395f04b65d0289, type: 3}
+        m_Texture: {fileID: 2800000, guid: f381aa5a63b7b75419aa7ec320b4bb1c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 4286f28825e8bc543bb0f7a3f3a4fd7e, type: 3}
+        m_Texture: {fileID: 2800000, guid: a9e21041f7871ac45b9fca5d4bd6f297, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _RemapTex:
-        m_Texture: {fileID: 2800000, guid: 5465944c6a70f8c40ab86918373cf839, type: 3}
+        m_Texture: {fileID: 2800000, guid: e6c99572b76fc6142ac29d40f5d5ce8c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaBias: 0.093
-    - _AlphaBoost: 0.54
+    - _AlphaBias: 0
+    - _AlphaBoost: 1.57
     - _AlphaThreshold: 0.03
-    - _Boost: 4
+    - _Boost: 1.67
     - _BumpScale: 1
     - _CalcTextureAlphaOn: 0
-    - _CloudOffsetOn: 0
+    - _CloudOffsetOn: 1
     - _CloudsOn: 1
     - _Cull: 0
     - _Cutoff: 0.855
     - _DepthOffset: 0
     - _DetailNormalMapScale: 1
     - _DisableRemapOn: 0
-    - _DistortionStrength: 0.01
-    - _DstBlend: 10
+    - _DistortionStrength: 0.43
+    - _DstBlend: 1
     - _ExternalAlpha: 1
     - _Fade: 1
     - _FadeCloseDistance: 0.5
@@ -65,8 +66,8 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _InternalSimpleBlendMode: 1
-    - _InvFade: 1.16
+    - _InternalSimpleBlendMode: 0
+    - _InvFade: 2
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -76,7 +77,7 @@ Material:
     - _SkyboxOnly: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _SrcBlend: 5
+    - _SrcBlend: 1
     - _UVSec: 0
     - _UVSwapOn: 0
     - _UseColor: 0
@@ -88,7 +89,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _CutoffScroll: {r: -30, g: 12, b: -30, a: 0}
+    - _CutoffScroll: {r: 6, g: 20, b: 1, a: 10}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _TintColor: {r: 1, g: 0.35156062, b: 0.2971698, a: 1}
+    - _TintColor: {r: 0.8490566, g: 0.6928622, b: 0.6928622, a: 1}
   m_BuildTextureStacks: []

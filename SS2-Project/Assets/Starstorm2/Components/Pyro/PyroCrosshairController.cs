@@ -30,25 +30,32 @@ namespace SS2.Components
             hudElement = GetComponent<HudElement>();
             ifc = GetComponent<ImageFillController>();
             animator = GetComponent<Animator>();
-            if (hudElement.targetCharacterBody != null && hudElement.targetCharacterBody.TryGetComponent(out PyroController pc))
-            {
-                pyro = pc;
-            }
+
+            UpdateTargetBody();
             UpdateHeat();
         }
 
         private void Start()
         {
+            UpdateTargetBody();
+            UpdateHeat();
+        }
+
+        private void UpdateTargetBody()
+        {
             if (hudElement.targetCharacterBody != null && hudElement.targetCharacterBody.TryGetComponent(out PyroController pc))
             {
                 pyro = pc;
+                wasHighHeat = pyro.isHighHeat;
+                wasDown = pyro.inNapalm;
+                animator.SetBool(IsHighHeatHash, pyro.isHighHeat);
+                animator.SetBool(IsDownHash, pyro.inNapalm);
             }
             else
             {
-                SS2Log.Error("PyroCrosshairController.Start : Failed to find PyroController from HudElement's TargetCharacterBody!!");
+                SS2Log.Error("PyroCrosshairController : Failed to find PyroController from HudElement's TargetCharacterBody!!");
                 return;
             }
-            UpdateHeat();
         }
 
         private void FixedUpdate()

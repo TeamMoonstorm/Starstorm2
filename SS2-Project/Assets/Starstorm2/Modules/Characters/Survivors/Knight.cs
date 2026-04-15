@@ -35,8 +35,6 @@ namespace SS2.Survivors
         
         public static CharacterCameraParamsData chargeCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 85f,
-            minPitch = -85f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = chargeCameraPos,
             wallCushion = 0.1f,
@@ -44,8 +42,6 @@ namespace SS2.Survivors
 
         public static CharacterCameraParamsData altCameraParams = new CharacterCameraParamsData
         {
-            maxPitch = 85f,
-            minPitch = -85f,
             pivotVerticalOffset = 1f,
             idealLocalCameraPos = altCameraPos,
             wallCushion = 0.1f,
