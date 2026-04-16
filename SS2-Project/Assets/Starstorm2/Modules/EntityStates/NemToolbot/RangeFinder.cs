@@ -1,6 +1,7 @@
 using RoR2;
 using SS2.Components;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
@@ -17,13 +18,17 @@ namespace EntityStates.NemToolbot
         public static string muzzleString = "Muzzle";
         public static string enterSoundString = "";
         public static string exitSoundString = "";
-        public static GameObject laserPrefab;
+
+        private static Material laserMaterial;
 
         private NemToolbotController controller;
-        private GameObject laserInstance;
+        private GameObject laserObject;
+        private LineRenderer lineRenderer;
         private Transform muzzleTransform;
         private float hitDistance;
         private NemToolbotController.WeaponType pendingWeapon;
+        private Vector3 lastLaserOrigin;
+        private Vector3 lastLaserEndPoint;
 
         public override void OnEnter()
         {
@@ -38,10 +43,23 @@ namespace EntityStates.NemToolbot
             characterBody.SetAimTimer(3f);
 
             muzzleTransform = FindModelChild(muzzleString);
-            if (laserPrefab != null && muzzleTransform != null)
+
+            if (laserMaterial == null)
             {
-                laserInstance = Object.Instantiate(laserPrefab, muzzleTransform.position, muzzleTransform.rotation);
+                laserMaterial = Addressables.LoadAssetAsync<Material>("RoR2/Base/Common/VFX/matTracerBright.mat").WaitForCompletion();
             }
+
+            laserObject = new GameObject("NemToolbotRangeFinderLaser");
+            lineRenderer = laserObject.AddComponent<LineRenderer>();
+            lineRenderer.positionCount = 2;
+            lineRenderer.startWidth = 0.05f;
+            lineRenderer.endWidth = 0.05f;
+            lineRenderer.material = laserMaterial;
+            lineRenderer.startColor = Color.red;
+            lineRenderer.endColor = Color.red;
+            lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            lineRenderer.receiveShadows = false;
+            lineRenderer.textureMode = LineTextureMode.Tile;
         }
 
         public override void FixedUpdate()
@@ -64,10 +82,12 @@ namespace EntityStates.NemToolbot
 
             pendingWeapon = NemToolbotController.GetWeaponFromRange(hitDistance);
 
-            UpdateLaserVisuals(aimRay.origin, endPoint);
+            lastLaserOrigin = aimRay.origin;
+            lastLaserEndPoint = endPoint;
 
             if (isAuthority && !IsKeyDownAuthority())
             {
+                Debug.Log($"[NemToolbot] RangeFinder: Released at {hitDistance:F1}m -> selecting {pendingWeapon}");
                 if (NetworkServer.active && controller != null)
                 {
                     controller.SetWeapon(pendingWeapon);
@@ -76,22 +96,28 @@ namespace EntityStates.NemToolbot
             }
         }
 
+        public override void Update()
+        {
+            base.Update();
+            UpdateLaserVisuals(lastLaserOrigin, lastLaserEndPoint);
+        }
+
         private void UpdateLaserVisuals(Vector3 origin, Vector3 endPoint)
         {
-            if (laserInstance != null)
+            if (lineRenderer != null)
             {
-                laserInstance.transform.position = origin;
-                laserInstance.transform.rotation = Quaternion.LookRotation(endPoint - origin);
-                laserInstance.transform.localScale = new Vector3(1f, 1f, Vector3.Distance(origin, endPoint));
+                Vector3 start = muzzleTransform != null ? muzzleTransform.position : origin;
+                lineRenderer.SetPosition(0, start);
+                lineRenderer.SetPosition(1, endPoint);
             }
         }
 
         public override void OnExit()
         {
             Util.PlaySound(exitSoundString, gameObject);
-            if (laserInstance != null)
+            if (laserObject != null)
             {
-                EntityState.Destroy(laserInstance);
+                EntityState.Destroy(laserObject);
             }
             base.OnExit();
         }

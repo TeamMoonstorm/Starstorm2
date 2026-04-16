@@ -96,6 +96,7 @@ namespace SS2.Components
         [Server]
         public void SetWeapon(WeaponType weapon)
         {
+            Debug.Log($"[NemToolbot] SetWeapon: {_currentWeapon} -> {weapon}");
             OnWeaponChanged(weapon);
             _currentWeapon = weapon;
         }
@@ -106,6 +107,7 @@ namespace SS2.Components
         [Server]
         public void SetBallForm(bool ballForm)
         {
+            Debug.Log($"[NemToolbot] SetBallForm: {_isBallForm} -> {ballForm}");
             OnFormChanged(ballForm);
             _isBallForm = ballForm;
         }

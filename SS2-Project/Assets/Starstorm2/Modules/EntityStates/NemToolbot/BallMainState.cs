@@ -60,6 +60,8 @@ namespace EntityStates.NemToolbot
                 characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
             }
 
+            Debug.Log($"[NemToolbot] BallMainState: OnEnter (moveSpeed={characterBody?.baseMoveSpeed:F1}, accel={characterBody?.baseAcceleration:F1}, airControl={characterMotor?.airControl:F2})");
+
             Util.PlaySound(enterSoundString, gameObject);
             loopSoundID = Util.PlaySound(loopSoundString, gameObject);
 
@@ -137,6 +139,8 @@ namespace EntityStates.NemToolbot
             {
                 modelLocator.normalizeToFloor = false;
             }
+
+            Debug.Log($"[NemToolbot] BallMainState: OnExit (restoring moveSpeed={originalMoveSpeed:F1}, accel={originalAcceleration:F1}, airControl={originalAirControl:F2})");
 
             PlayAnimation("Body", "BallModeExit");
 

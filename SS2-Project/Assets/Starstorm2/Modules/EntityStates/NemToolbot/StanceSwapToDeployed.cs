@@ -30,6 +30,7 @@ namespace EntityStates.NemToolbot
                 Debug.LogError("NemToolbot StanceSwapToDeployed: Failed to get NemToolbotController on " + gameObject.name);
             }
 
+            Debug.Log($"[NemToolbot] StanceSwapToDeployed: Exiting ball form (duration={duration:F2}s)");
             if (NetworkServer.active && controller != null)
             {
                 controller.SetBallForm(false);
