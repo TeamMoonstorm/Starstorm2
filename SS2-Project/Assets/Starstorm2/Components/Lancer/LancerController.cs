@@ -1,6 +1,5 @@
 using RoR2;
 using RoR2.Skills;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -30,25 +29,6 @@ namespace SS2.Components
 
         public SpearState spearState => _spearState;
 
-        public SpearState Network_spearState
-        {
-            get
-            {
-                return _spearState;
-            }
-            [param: In]
-            set
-            {
-                if (NetworkServer.localClientActive && !syncVarHookGuard)
-                {
-                    syncVarHookGuard = true;
-                    OnSpearStateChanged(value);
-                    syncVarHookGuard = false;
-                }
-                SetSyncVar<SpearState>(value, ref _spearState, 1U);
-            }
-        }
-
         private void Awake()
         {
             if (TryGetComponent(out SkillLocator skillLocator))
@@ -62,12 +42,11 @@ namespace SS2.Components
             }
         }
 
+        [Server]
         public void SetSpearState(SpearState newState)
         {
-            if (!NetworkServer.active)
-                return;
-
-            Network_spearState = newState;
+            OnSpearStateChanged(newState);
+            _spearState = newState;
         }
 
         private void OnSpearStateChanged(SpearState newState)
@@ -124,44 +103,6 @@ namespace SS2.Components
         private void OnDestroy()
         {
             RemoveUnarmedOverrides();
-        }
-
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write((byte)_spearState);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write((byte)_spearState);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                OnSpearStateChanged((SpearState)reader.ReadByte());
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                OnSpearStateChanged((SpearState)reader.ReadByte());
-            }
         }
     }
 }

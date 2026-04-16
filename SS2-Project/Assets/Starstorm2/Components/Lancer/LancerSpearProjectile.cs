@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using RoR2;
 using RoR2.Projectile;
 using UnityEngine;
@@ -42,21 +41,14 @@ namespace SS2.Components
         [SyncVar]
         private SpearProjectileState _state;
 
-        public SpearProjectileState Network_state
-        {
-            get => _state;
-            [param: In]
-            set
-            {
-                SetSyncVar(value, ref _state, 1U);
-            }
-        }
-
         private void Awake()
         {
-            projectileController = GetComponent<ProjectileController>();
-            rigidbody = GetComponent<Rigidbody>();
-            projectileDamage = GetComponent<ProjectileDamage>();
+            if (!TryGetComponent(out projectileController))
+                Debug.LogError("LancerSpearProjectile: Failed to get ProjectileController.");
+            if (!TryGetComponent(out rigidbody))
+                Debug.LogError("LancerSpearProjectile: Failed to get Rigidbody.");
+            if (!TryGetComponent(out projectileDamage))
+                Debug.LogError("LancerSpearProjectile: Failed to get ProjectileDamage.");
         }
 
         private void Start()
@@ -125,7 +117,7 @@ namespace SS2.Components
             rigidbody.isKinematic = true;
             rigidbody.detectCollisions = false;
 
-            Network_state = SpearProjectileState.Stuck;
+            _state = SpearProjectileState.Stuck;
 
             if (!string.IsNullOrEmpty(stickSoundString))
                 Util.PlaySound(stickSoundString, gameObject);
@@ -142,7 +134,7 @@ namespace SS2.Components
             stuckBody = null;
             returnHitTargets.Clear();
 
-            Network_state = SpearProjectileState.Returning;
+            _state = SpearProjectileState.Returning;
         }
 
         private void FixedUpdate()
@@ -261,42 +253,5 @@ namespace SS2.Components
             }
         }
 
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write((byte)_state);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write((byte)_state);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _state = (SpearProjectileState)reader.ReadByte();
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                _state = (SpearProjectileState)reader.ReadByte();
-            }
-        }
     }
 }
