@@ -83,18 +83,38 @@ namespace SS2.Components
                     return;
             }
 
-            // Apply ion field to enemy hit
             if (NetworkServer.active)
             {
                 HurtBox hurtBox = impactInfo.collider?.GetComponent<HurtBox>();
-                if (hurtBox && hurtBox.healthComponent && hurtBox.healthComponent.body)
-                {
-                    hurtBox.healthComponent.body.AddTimedBuff(Survivors.Lancer.bdIonField, Survivors.Lancer.ionFieldDuration);
-                }
-            }
 
-            if (NetworkServer.active)
-            {
+                // Deal damage on hit (replaces removed ProjectileSingleTargetImpact)
+                if (hurtBox && hurtBox.healthComponent)
+                {
+                    DamageInfo damageInfo = new DamageInfo();
+                    if (projectileDamage)
+                    {
+                        damageInfo.damage = projectileDamage.damage;
+                        damageInfo.crit = projectileDamage.crit;
+                        damageInfo.attacker = projectileController.owner;
+                        damageInfo.inflictor = gameObject;
+                        damageInfo.position = impactInfo.estimatedPointOfImpact;
+                        damageInfo.force = projectileDamage.force * transform.forward;
+                        damageInfo.procChainMask = projectileController.procChainMask;
+                        damageInfo.procCoefficient = projectileController.procCoefficient;
+                        damageInfo.damageColorIndex = projectileDamage.damageColorIndex;
+                        damageInfo.damageType = projectileDamage.damageType;
+                    }
+                    hurtBox.healthComponent.TakeDamage(damageInfo);
+                    GlobalEventManager.instance.OnHitEnemy(damageInfo, hurtBox.healthComponent.gameObject);
+                    GlobalEventManager.instance.OnHitAll(damageInfo, hurtBox.healthComponent.gameObject);
+
+                    // Apply ion field to enemy hit
+                    if (hurtBox.healthComponent.body)
+                    {
+                        hurtBox.healthComponent.body.AddTimedBuff(Survivors.Lancer.bdIonField, Survivors.Lancer.ionFieldDuration);
+                    }
+                }
+
                 Stick(impactInfo.collider, impactInfo.estimatedImpactNormal);
             }
         }

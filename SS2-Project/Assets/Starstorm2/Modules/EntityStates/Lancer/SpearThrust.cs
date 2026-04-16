@@ -10,12 +10,20 @@ namespace EntityStates.Lancer
         public static float tipperDamageCoefficient = 2f;
         public static string thrustAnimationState = "SpearThrust";
 
+        // Static VFX fields assigned from Lancer.cs Initialize()
+        // BaseKnightMeleeAttack's swingEffectPrefab/hitEffectPrefab are [SerializeField] instance fields,
+        // so we bridge them via static fields set in OnEnter before base.OnEnter().
+        public static GameObject spearSwingEffectPrefab;
+        public static GameObject spearHitEffectPrefab;
+
         private OverlapAttack tipperAttack;
 
         public override void OnEnter()
         {
             hitboxGroupName = "SpearHitbox";
             muzzleString = "SpearMuzzle";
+            swingEffectPrefab = spearSwingEffectPrefab;
+            hitEffectPrefab = spearHitEffectPrefab;
 
             base.OnEnter();
 
