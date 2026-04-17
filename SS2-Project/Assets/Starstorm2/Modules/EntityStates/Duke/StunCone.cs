@@ -64,7 +64,8 @@ namespace EntityStates.Duke
                 if (!victimBody) continue;
 
                 // Apply Duke stun buff (marker for ricochet)
-                victimBody.AddTimedBuff(SS2.SS2Content.Buffs.bdDukeStun, stunDuration);
+                if (SS2.Survivors.Duke.bdDukeStun)
+                    victimBody.AddTimedBuff(SS2.Survivors.Duke.bdDukeStun, stunDuration);
 
                 // Apply actual stun state via SetStateOnHurt
                 if (victimBody.TryGetComponent(out SetStateOnHurt setStateOnHurt))

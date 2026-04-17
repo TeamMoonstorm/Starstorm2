@@ -17,6 +17,8 @@ namespace SS2.Survivors
 
         public static ModdedProcType RicochetProc { get; private set; }
 
+        public static BuffDef bdDukeStun;
+
         // Ricochet tuning
         private static float ricochetDamageCoefficient = 1f;
         private static float ricochetRange = 30f;
@@ -34,14 +36,29 @@ namespace SS2.Survivors
         public override void Initialize()
         {
             RicochetProc = ProcTypeAPI.ReserveProcType();
+
+            bdDukeStun = AssetCollection.FindAsset<BuffDef>("bdDukeStun");
+            if (!bdDukeStun)
+                Debug.LogError("[Duke] Failed to find bdDukeStun BuffDef in asset collection. Stun and ricochet-on-stun will not work.");
+
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 
             AssignEffects();
+            ModifyPrefab();
         }
 
-        public void ModifyContentPack(ContentPack contentPack)
+
+        private void ModifyPrefab()
         {
-            // No code-created projectiles yet — prefabs handled via asset collection
+            if (CharacterPrefab.TryGetComponent(out CharacterBody cb))
+            {
+                cb.preferredPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion();
+                cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2Crosshair.prefab").WaitForCompletion();
+            }
+            else
+            {
+                Debug.LogError("[Duke] ModifyPrefab: CharacterPrefab missing CharacterBody component.");
+            }
         }
 
         private void AssignEffects()
@@ -56,11 +73,12 @@ namespace SS2.Survivors
             EntityStates.Duke.FireADSShot.tracerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoDefault.prefab").WaitForCompletion();
             EntityStates.Duke.FireADSShot.hitPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommando.prefab").WaitForCompletion();
 
-            // ADS weakpoint crosshair — clone Railgunner's scope crosshair and add SniperTargetViewer for weakpoint display
-            var baseCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerScopeCrosshairLight.prefab").WaitForCompletion();
+            // ADS weakpoint crosshair — clone StandardCrosshair and add weakpoint visualization (Pilot pattern)
+            var baseCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/StandardCrosshair.prefab").WaitForCompletion();
             var dukeCrosshair = UnityEngine.Object.Instantiate(baseCrosshair);
             dukeCrosshair.name = "DukeADSCrosshair";
             var visualizerPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/DLC1/Railgunner/RailgunnerSniperTargetVisualizerLight.prefab").WaitForCompletion();
+            dukeCrosshair.AddComponent<RoR2.UI.PointViewer>(); // required by SniperTargetViewer
             var targetViewer = dukeCrosshair.AddComponent<SniperTargetViewer>();
             targetViewer.visualizerPrefab = visualizerPrefab;
             EntityStates.Duke.AimDownSights.crosshairOverridePrefab = dukeCrosshair;
@@ -90,7 +108,7 @@ namespace SS2.Survivors
             if (damageInfo.procChainMask.HasModdedProc(RicochetProc)) return;
 
             // Trigger conditions: crit OR victim has Duke stun debuff
-            bool shouldRicochet = damageInfo.crit || victimBody.HasBuff(SS2Content.Buffs.bdDukeStun);
+            bool shouldRicochet = damageInfo.crit || (bdDukeStun && victimBody.HasBuff(bdDukeStun));
             if (!shouldRicochet) return;
 
             // Find nearest enemy to the victim
