@@ -27,6 +27,9 @@ namespace SS2.Equipments
         }
 
         public static GameObject projectilePrefab;
+
+        private static int etherealFirePillarIndex = -1;
+
         public override void Initialize()
         {
             Material matEtherealOverlay = AssetCollection.FindAsset<Material>("matEtherealOverlay");
@@ -41,6 +44,26 @@ namespace SS2.Equipments
             BuffOverlays.AddBuffOverlay(EquipmentDef.passiveBuffDef, matEtherealOverlay);
             // Used for suicide buff
             BuffOverlays.AddBuffOverlay(buffHakai, matHakaiOverlay);
+
+            On.RoR2.HealthComponent.TakeDamageProcess += OnTakeDamageProcess;
+            RoR2Application.onLoad += () =>
+            {
+                etherealFirePillarIndex = ProjectileCatalog.FindProjectileIndex("EtherealFirePillar");
+            };
+        }
+
+        private static void OnTakeDamageProcess(On.RoR2.HealthComponent.orig_TakeDamageProcess orig, HealthComponent self, DamageInfo damageInfo)
+        {
+            // I know haha Eth is hard but we dont need to one shot peoples drones
+            // We could also explore reducing the damage here if it turns out its too OP
+            if (etherealFirePillarIndex >= 0
+                && self.body && self.body.IsDrone
+                && damageInfo.inflictor && damageInfo.inflictor.TryGetComponent(out ProjectileController pc)
+                && pc.catalogIndex == etherealFirePillarIndex)
+            {
+                damageInfo.rejected = true;
+            }
+            orig(self, damageInfo);
         }
 
 
