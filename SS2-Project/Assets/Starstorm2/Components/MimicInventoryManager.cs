@@ -81,6 +81,15 @@ namespace SS2.Components
 
         public void DropItems()
         {
+            // Fix for Github Issue #936
+            if (!pickupPivot)
+                FindPivot();
+            if (!pickupPivot)
+            {
+                SS2Log.Error("MimicInventoryManager.DropItems: pickupPivot is null, cannot drop items");
+                return;
+            }
+
             var temp = pickupPivot.position;
             EffectData effectData = new EffectData
             {
