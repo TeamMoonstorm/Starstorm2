@@ -31,10 +31,12 @@ namespace EntityStates.NemToolbot
 
                 if (!controller.HasAmmo(cachedWeapon))
                 {
+                    Debug.Log($"[NemToolbot] DispatchWeapon: No ammo for {cachedWeapon}, returning to main");
                     outer.SetNextStateToMain();
                     return;
                 }
 
+                Debug.Log($"[NemToolbot] DispatchWeapon: Firing {cachedWeapon} (ammo: {controller.GetAmmo(cachedWeapon)})");
                 EntityState nextState = cachedWeapon switch
                 {
                     NemToolbotController.WeaponType.Shotgun => new FireShotgun(),

@@ -14,8 +14,7 @@ namespace EntityStates.NemToolbot
     /// </summary>
     public class FireGrapplingHook : BaseSkillState
     {
-        [SerializeField]
-        public GameObject projectilePrefab;
+        public static GameObject projectilePrefab;
 
         public static float damageCoefficient = 1f;
         public static string fireSoundString = "";

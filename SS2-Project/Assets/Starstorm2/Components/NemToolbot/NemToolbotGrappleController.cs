@@ -34,7 +34,6 @@ namespace SS2.Components
             public readonly GameObject gameObject;
             public readonly CharacterBody characterBody;
             public readonly CharacterMotor characterMotor;
-            public readonly Rigidbody rigidbody;
             public readonly EntityStateMachine stateMachine;
             public readonly bool hasEffectiveAuthority;
 
@@ -59,10 +58,7 @@ namespace SS2.Components
                 }
                 characterMotor = motor;
 
-                gameObject.TryGetComponent(out Rigidbody rb);
-                rigidbody = rb;
-
-                hasEffectiveAuthority = Util.HasEffectiveAuthority(gameObject);
+                hasEffectiveAuthority= Util.HasEffectiveAuthority(gameObject);
 
                 EntityStateMachine[] esms = gameObject.GetComponents<EntityStateMachine>();
                 for (int i = 0; i < esms.Length; i++)
@@ -288,7 +284,6 @@ namespace SS2.Components
                 lastDistance = Vector3.Distance(aimOrigin, position);
                 if (base.ownerValid)
                 {
-                    grappleController.didStick = true;
                     if ((bool)base.owner.characterMotor)
                     {
                         Vector3 direction = GetOwnerAimRay().direction;
@@ -495,7 +490,6 @@ namespace SS2.Components
 
         private Type resolvedOwnerHookStateType;
         private OwnerInfo owner;
-        private bool didStick;
         private uint soundID;
 
         #endregion
@@ -594,7 +588,7 @@ namespace SS2.Components
             if (modelTransform.TryGetComponent(out ChildLocator childLocator))
             {
                 Transform muzzle = childLocator.FindChild(muzzleStringOnBody);
-                if ((bool)muzzle)
+                if ((bool)muzzle && (bool)ropeEndTransform)
                 {
                     ropeEndTransform.SetParent(muzzle, worldPositionStays: false);
                 }
@@ -629,6 +623,16 @@ namespace SS2.Components
                 default:
                     return null;
             }
+        }
+
+        /// <summary>
+        /// Configures a projectile's EntityStateMachine to use this controller's inner FlyState.
+        /// Call this when setting up the grapple hook projectile prefab in code.
+        /// </summary>
+        public static void ConfigureProjectileESM(EntityStateMachine esm)
+        {
+            esm.initialStateType = new SerializableEntityStateType(typeof(FlyState));
+            esm.mainStateType = new SerializableEntityStateType(typeof(FlyState));
         }
 
         #endregion

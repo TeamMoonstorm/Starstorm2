@@ -14,15 +14,7 @@ namespace SS2.Components
             SniperLaser = 3
         }
 
-        // Dirty bit layout: 0=weapon, 1=ballForm, 2=shotgunAmmo, 3=rapidAmmo, 4=grenadeAmmo, 5=sniperAmmo
-        private const uint DIRTY_WEAPON = 1U;
-        private const uint DIRTY_BALLFORM = 2U;
-        private const uint DIRTY_SHOTGUN_AMMO = 4U;
-        private const uint DIRTY_RAPID_AMMO = 8U;
-        private const uint DIRTY_GRENADE_AMMO = 16U;
-        private const uint DIRTY_SNIPER_AMMO = 32U;
-
-        // Range thresholds (meters) for weapon selection
+        // Range thresholds(meters) for weapon selection
         public static float shotgunMaxRange = 3f;
         public static float rapidLaserMaxRange = 6f;
         public static float grenadeLauncherMaxRange = 9f;
@@ -101,26 +93,22 @@ namespace SS2.Components
         /// <summary>
         /// Sets the current weapon. Server-only.
         /// </summary>
+        [Server]
         public void SetWeapon(WeaponType weapon)
         {
-            if (!NetworkServer.active)
-            {
-                Debug.LogError("NemToolbotController.SetWeapon called on client.");
-                return;
-            }
+            Debug.Log($"[NemToolbot] SetWeapon: {_currentWeapon} -> {weapon}");
+            OnWeaponChanged(weapon);
             _currentWeapon = weapon;
         }
 
         /// <summary>
         /// Sets ball form state. Server-only.
         /// </summary>
+        [Server]
         public void SetBallForm(bool ballForm)
         {
-            if (!NetworkServer.active)
-            {
-                Debug.LogError("NemToolbotController.SetBallForm called on client.");
-                return;
-            }
+            Debug.Log($"[NemToolbot] SetBallForm: {_isBallForm} -> {ballForm}");
+            OnFormChanged(ballForm);
             _isBallForm = ballForm;
         }
 
@@ -168,14 +156,9 @@ namespace SS2.Components
         /// Attempts to consume 1 ammo from the given weapon's pool. Server-only.
         /// Returns true if ammo was consumed, false if the pool was empty.
         /// </summary>
+        [Server]
         public bool TryConsumeAmmo(WeaponType weapon)
         {
-            if (!NetworkServer.active)
-            {
-                Debug.LogError("NemToolbotController.TryConsumeAmmo called on client.");
-                return false;
-            }
-
             switch (weapon)
             {
                 case WeaponType.Shotgun:
@@ -269,119 +252,6 @@ namespace SS2.Components
         private void OnFormChanged(bool newBallForm)
         {
             _isBallForm = newBallForm;
-        }
-
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write((byte)_currentWeapon);
-                writer.Write(_isBallForm);
-                writer.WritePackedUInt32((uint)_shotgunAmmo);
-                writer.WritePackedUInt32((uint)_rapidLaserAmmo);
-                writer.WritePackedUInt32((uint)_grenadeLauncherAmmo);
-                writer.WritePackedUInt32((uint)_sniperLaserAmmo);
-                return true;
-            }
-            bool written = false;
-            if ((syncVarDirtyBits & DIRTY_WEAPON) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.Write((byte)_currentWeapon);
-            }
-            if ((syncVarDirtyBits & DIRTY_BALLFORM) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.Write(_isBallForm);
-            }
-            if ((syncVarDirtyBits & DIRTY_SHOTGUN_AMMO) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.WritePackedUInt32((uint)_shotgunAmmo);
-            }
-            if ((syncVarDirtyBits & DIRTY_RAPID_AMMO) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.WritePackedUInt32((uint)_rapidLaserAmmo);
-            }
-            if ((syncVarDirtyBits & DIRTY_GRENADE_AMMO) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.WritePackedUInt32((uint)_grenadeLauncherAmmo);
-            }
-            if ((syncVarDirtyBits & DIRTY_SNIPER_AMMO) != 0U)
-            {
-                if (!written)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    written = true;
-                }
-                writer.WritePackedUInt32((uint)_sniperLaserAmmo);
-            }
-            if (!written)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return written;
-        }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _currentWeapon = (WeaponType)reader.ReadByte();
-                _isBallForm = reader.ReadBoolean();
-                _shotgunAmmo = (int)reader.ReadPackedUInt32();
-                _rapidLaserAmmo = (int)reader.ReadPackedUInt32();
-                _grenadeLauncherAmmo = (int)reader.ReadPackedUInt32();
-                _sniperLaserAmmo = (int)reader.ReadPackedUInt32();
-                return;
-            }
-            int bits = (int)reader.ReadPackedUInt32();
-            if ((bits & (int)DIRTY_WEAPON) != 0)
-            {
-                OnWeaponChanged((WeaponType)reader.ReadByte());
-            }
-            if ((bits & (int)DIRTY_BALLFORM) != 0)
-            {
-                OnFormChanged(reader.ReadBoolean());
-            }
-            if ((bits & (int)DIRTY_SHOTGUN_AMMO) != 0)
-            {
-                _shotgunAmmo = (int)reader.ReadPackedUInt32();
-            }
-            if ((bits & (int)DIRTY_RAPID_AMMO) != 0)
-            {
-                _rapidLaserAmmo = (int)reader.ReadPackedUInt32();
-            }
-            if ((bits & (int)DIRTY_GRENADE_AMMO) != 0)
-            {
-                _grenadeLauncherAmmo = (int)reader.ReadPackedUInt32();
-            }
-            if ((bits & (int)DIRTY_SNIPER_AMMO) != 0)
-            {
-                _sniperLaserAmmo = (int)reader.ReadPackedUInt32();
-            }
         }
     }
 }
