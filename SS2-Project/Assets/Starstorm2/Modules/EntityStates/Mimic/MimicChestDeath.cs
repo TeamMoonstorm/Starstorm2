@@ -25,6 +25,13 @@ namespace EntityStates.Mimic
         {
             base.OnEnter();
 
+            // TODO: Idk if this works actually - Buns
+            // Deactivate hurtboxes so the corpse can't be targeted or procced off by damage sources (ATG, Ukulele, etc.)
+            if (characterBody && characterBody.hurtBoxGroup)
+            {
+                characterBody.hurtBoxGroup.hurtBoxesDeactivatorCounter++;
+            }
+
             PlayAnimation("Gesture, Override", "BufferEmpty");
 
             if(characterBody.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var cmodel))
