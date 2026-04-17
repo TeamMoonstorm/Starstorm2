@@ -1,4 +1,11 @@
 **Warning: content spoilers below!**
+### 0.6.37 buns updated the readme to inflate download numbers
+* General
+    * Updated the minimum version dependencies in the manifest
+    * Updated the README cross-compat section to add more mods
+    * Added a "more great mods" section in the README to highlight community efforts
+* Beta
+    * MULE for real this time
 
 ### 0.6.36 buns wheres the changelogs
 * General
