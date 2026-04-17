@@ -47,6 +47,9 @@ namespace SS2.Survivors
             ModifyPrefab();
         }
 
+        public void ModifyContentPack(ContentPack contentPack)
+        {
+        }
 
         private void ModifyPrefab()
         {
