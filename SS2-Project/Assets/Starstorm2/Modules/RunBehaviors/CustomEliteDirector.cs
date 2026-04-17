@@ -75,9 +75,15 @@ namespace SS2.Components
 #endif
         }
 
+        private void OnDestroy()
+        {
+            if (instance == this)
+                instance = null;
+        }
+
         public void FixedUpdate()
         {
-            if(NetworkServer.active && Run.instance)
+            if(NetworkServer.active && Run.instance && rng != null)
             {
                 timer += Time.fixedDeltaTime;
                 if (timer > directorTickInterval)
@@ -244,7 +250,7 @@ namespace SS2.Components
         public override bool IsBoss => true;
         public override bool IsAvailable()
         {
-            return Run.instance.stageClearCount > 7;
+            return Run.instance && Run.instance.stageClearCount > 7 && !(Run.instance is InfiniteTowerRun);
         }
         public override bool CanAfford(float baseCost, float totalCost, CombatDirector combatDirector)
         {
@@ -299,7 +305,10 @@ namespace SS2.Components
             }
 
             // create separate class for drop component. create catalog of super elites somewhere
-            body.gameObject.AddComponent<OnBossKilledServer>().drop = CustomEliteDirector.instance.treasureRng.NextElementUniform(new ItemIndex[] { SS2Content.Items.ShardEarth.itemIndex, SS2Content.Items.ShardFire.itemIndex, SS2Content.Items.ShardIce.itemIndex, SS2Content.Items.ShardLightning.itemIndex }); // hi
+            if (CustomEliteDirector.instance && CustomEliteDirector.instance.treasureRng != null)
+            {
+                body.gameObject.AddComponent<OnBossKilledServer>().drop = CustomEliteDirector.instance.treasureRng.NextElementUniform(new ItemIndex[] { SS2Content.Items.ShardEarth.itemIndex, SS2Content.Items.ShardFire.itemIndex, SS2Content.Items.ShardIce.itemIndex, SS2Content.Items.ShardLightning.itemIndex }); // hi
+            }
             
             if (body.TryGetComponent(out RigidbodyMotor motor))
             {
