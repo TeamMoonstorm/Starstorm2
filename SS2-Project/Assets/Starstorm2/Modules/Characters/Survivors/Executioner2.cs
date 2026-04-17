@@ -312,7 +312,7 @@ namespace SS2.Survivors
             {
                 if (effectInstance) Destroy(effectInstance);
                 
-                effectInstance = Instantiate(inMasterySkin ? fearEffectPrefabMastery : fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                effectInstance = Instantiate(inMasterySkin ? fearEffectPrefabMastery : fearEffectPrefab, characterBody.corePosition, Quaternion.identity);
                 Util.PlaySound(activationSoundString, gameObject); //?????????????
             }
 
