@@ -30,19 +30,19 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), orbeezeater22, [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), [Zenithrium](https://ko-fi.com/zenithrium), EarthZebra, JaceCascade, Chinchi
+* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), [orbeezeater22](https://thunderstore.io/package/kinggrinyov/Vegeta/), [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), [Zenithrium](https://ko-fi.com/zenithrium), [EarthZebra](https://thunderstore.io/package/tsuyoikenko/Cadet/), [JaceCascade](https://thunderstore.io/package/kinggrinyov/Trunks/), [Chinchi](https://thunderstore.io/package/rob/Regigigas/)
 
 With previous and one-off code contributions by...
-* Anreol, bread, Chinchi, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
+* Anreol, bread, Lordryn, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas
 
 With Art/Modelling/Animation/Sound/Music contributions by...
-* Alexstarwras, Anreol, Bolty, [Bog](https://ko-fi.com/bog116834), bread, [Brennan R](https://brennancar.artstation.com/), Cexeub, dotflare, Draymarc, [Domi](https://ko-fi.com/dominober), JestAnotherAnimator, Gem, [goodguy](https://www.patreon.com/c/Goodguy182), GrooveSalad, JaceDaDorito, [LucidInceptor](https://ko-fi.com/imbeepo), Neik, KevinFromHPCustomerService, ihate.evictionnoitce, orbeezeater22, PapaZach, Plexus, prodzpod, QuietAnon, [rekkadraws](https://ko-fi.com/rekkadraws), redacted, rob, [Gemo](https://github.com/elementGEMO), SkeletorChampion, SOM, Squidt, SalvadorBunny, Spenny, Starnoenas, Smxrez, [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), Slipskip, xpcybic, Reithierion, UnknownGlaze, Winslow, YarrowQueen/Resident Providence, Zenithrium
+* Alexstarwras, Anreol, Bolty, [Bog](https://ko-fi.com/bog116834), bread, [Brennan R](https://brennancar.artstation.com/), Cexeub, dotflare, Draymarc, [Domi](https://ko-fi.com/dominober), JestAnotherAnimator, Gem, [goodguy](https://www.patreon.com/c/Goodguy182), GrooveSalad, JaceDaDorito, [LucidInceptor](https://ko-fi.com/imbeepo), Neik, KevinFromHPCustomerService, ihate.evictionnoitce, [orbeezeater22](https://thunderstore.io/package/kinggrinyov/Vegeta/), PapaZach, Plexus, prodzpod, QuietAnon, [rekkadraws](https://ko-fi.com/rekkadraws), redacted, rob, [Gemo](https://github.com/elementGEMO), SkeletorChampion, SOM, Squidt, SalvadorBunny, Spenny, Starnoenas, Smxrez, [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), Slipskip, xpcybic, Reithierion, UnknownGlaze, Winslow, YarrowQueen/Resident Providence, Zenithrium
 
 Additional thanks to... 
 * Writing - Blimblam, Lyrical Endymion, rekkadraws, [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), T_Dimensional, Zenithrium
 * Translations - Anreol, BannyDee (Spanish), MysticSword + DSOverlord (Russian), Damglador (Ukrainian), 乃茶, Etundit, Dying_Twilight + EternitySwarmCrowm (Chinese), Kauzok + Balorfist (Portuguese), StyleMyk & DarSitam (French)
 * Sound - KevinFromHPCustomerService, Neik, SOM, UnknownGlaze, NAIRB zepol, [eviction notice](https://open.spotify.com/artist/5Ybh1Em8ckE7z8Rjs9DfQq?si=_VWQjaySSR6gSG5OGN0bzw), [Winslow](https://ko-fi.com/winslowror)
-* Special thanks - Altzeus, bread, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
+* Special thanks - Altzeus, bread, Lordryn, DestroyedClone, Dee', don, Gnome, JesusPxP, KomradeSpectre, MinimalEffort, Moshinate, MysticSword, Riskka, Ruxbieno, SalvadorBunny, SlipSkip, Twiner, VioletChaolan, valerie♥, Whitedude887 
 
 ## More Great Mods
 * [EnemiesReturns](https://thunderstore.io/package/Risky_Sleeps/EnemiesReturns/) Adds a new boss fight ported from Starstorm 1.
