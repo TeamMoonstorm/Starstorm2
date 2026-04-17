@@ -84,12 +84,13 @@ namespace EntityStates.Events
         }
         public void StartEvent()
         {
+            HasWarned = true;
             if (musicOverridePrefab)
                 musicTrack.track = mainTrack;
             if (NetworkServer.active && !hasSpawned)
             {
-                SpawnNemesisBoss();
                 hasSpawned = true;
+                SpawnNemesisBoss();
             }
         }
         private void FindSpawnTarget()
@@ -180,17 +181,29 @@ namespace EntityStates.Events
             {
                 if (pcmc && pcmc.master && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
                 {
-                    target = pcmc.master.GetBodyObject();
+                    if (pcmc.master.hasBody)
+                    {
+                        target = pcmc.master.GetBodyObject();
+                    }
                     break;
                 }
 
             }
-            RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
-            if (ai)
-                ai.currentEnemy.gameObject = target;
+            if (master.TryGetComponent<RoR2.CharacterAI.BaseAI>(out var ai))
+            {
+                if (target)
+                    ai.currentEnemy.gameObject = target;
+            }
+            else
+            {
+                SS2Log.Error("GenericNemesisBossState: master missing BaseAI component");
+            }
             new FriendManager.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
             combatSquad.AddMember(master);
-            combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
+            if (combatSquad.TryGetComponent<TeamFilter>(out var teamFilter))
+                teamFilter.defaultTeam = TeamIndex.Monster;
+            else
+                SS2Log.Error("GenericNemesisBossState: combatSquad missing TeamFilter component");
             NetworkServer.Spawn(combatSquad.gameObject);
         }
 
