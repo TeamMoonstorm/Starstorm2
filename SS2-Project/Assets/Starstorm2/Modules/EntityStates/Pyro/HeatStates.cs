@@ -29,7 +29,7 @@ namespace EntityStates.Pyro
             if (pyroController) pyroController.SetHighHeat(false);
             Util.PlaySound(enterSoundString, gameObject);
 
-            // figure out hwhat kind of effect this hsould be
+            // TODO: figure out hwhat kind of effect this hsould be
             //EffectManager.SimpleEffect(effectPrefab, transform.position, Quaternion.identity, false);
         }
         public override void FixedUpdate()
