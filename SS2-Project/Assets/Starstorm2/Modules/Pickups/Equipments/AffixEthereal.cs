@@ -57,7 +57,7 @@ namespace SS2.Equipments
             // I know haha Eth is hard but we dont need to one shot peoples drones
             // We could also explore reducing the damage here if it turns out its too OP
             if (etherealFirePillarIndex >= 0
-                && self.body && self.body.IsDrone
+                && self.body && self.body.IsDrone && !self.body.isPlayerControlled
                 && damageInfo.inflictor && damageInfo.inflictor.TryGetComponent(out ProjectileController pc)
                 && pc.catalogIndex == etherealFirePillarIndex)
             {
