@@ -43,16 +43,21 @@ namespace EntityStates.Pyro
         {
             base.OnEnter();
 
-            heat = GetComponent<PyroController>();
+            if (!TryGetComponent(out heat))
+            {
+                SS2Log.Error("PyroHoverpack.OnEnter: PyroController missing");
+            }
 
             ChildLocator cl = GetModelChildLocator();
             if (cl != null)
             {
-                cl.FindChild("HoverLParticles").TryGetComponent(out ParticleSystem left);
+                Transform hoverLTransform = cl.FindChild("HoverLParticles");
+                if (hoverLTransform && hoverLTransform.TryGetComponent(out ParticleSystem left))
                 {
                     hoverL = left;
                 }
-                cl.FindChild("HoverRParticles").TryGetComponent(out ParticleSystem right);
+                Transform hoverRTransform = cl.FindChild("HoverRParticles");
+                if (hoverRTransform && hoverRTransform.TryGetComponent(out ParticleSystem right))
                 {
                     hoverR = right;
                 }
@@ -91,8 +96,8 @@ namespace EntityStates.Pyro
                 heatTimer += GetDeltaTime();
                 if (heatTimer >= baseDurationBetweenTicks)
                 {
-                    heatTimer -= heatTimer;
-                    heat.AddHeat(-heatPerTick);
+                    heatTimer -= baseDurationBetweenTicks;
+                    if (heat) heat.AddHeat(-heatPerTick);
                 }
             }
 
@@ -139,7 +144,7 @@ namespace EntityStates.Pyro
 
             if (isAuthority)
             {
-                if (inputBank.skill3.down == false || heat.heat <= 0f)
+                if (inputBank.skill3.down == false || (heat && heat.heat <= 0f))
                 {
                     outer.SetNextStateToMain();
                 }

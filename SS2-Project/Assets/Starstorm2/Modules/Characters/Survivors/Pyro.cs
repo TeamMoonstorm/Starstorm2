@@ -22,6 +22,8 @@ namespace SS2.Survivors
         public static GameObject _hotFireVFX;
         public static BuffDef _bdPyroManiac;
 
+        public static float passiveHeatPerSecond = 2.5f;
+
         private BodyIndex pyroIndex;
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -46,6 +48,7 @@ namespace SS2.Survivors
 
 
         private static float pyroBurnDuration = 4f;
+        
         const float igniteDamageCoefficient = 0.5f; // value from vanilla igniteonhit
         
         private void OnServerDamageDealt(DamageReport damageReport)

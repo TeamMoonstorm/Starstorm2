@@ -29,7 +29,7 @@ namespace EntityStates.Pyro
 
         private bool hasBegunFlamethrower;
 
-        private static float heatCostPerSecond = 20f;
+        private static float heatCostPerSecond = 25f;
         public static float tickProcCoefficient;
         private static float damageCoefficientPerSecond = 4.51f;
         public static float recoilForce;
@@ -80,8 +80,11 @@ namespace EntityStates.Pyro
 
             characterBody.isSprinting = false;
 
-            pc = GetComponent<PyroController>();
-            pc.inNapalm = true;
+            if (!TryGetComponent(out pc))
+            {
+                SS2Log.Error("SuppressiveFire.OnEnter: PyroController missing");
+            }
+            if (pc) pc.inNapalm = true;
 
             hasBegunFlamethrower = false;
 
@@ -94,7 +97,7 @@ namespace EntityStates.Pyro
             Transform modelTransform = GetModelTransform();
             if (modelTransform)
             {
-                childLocator = modelTransform.GetComponent<ChildLocator>();
+                modelTransform.TryGetComponent(out childLocator);
             }
 
             // fake "agile", only while hovering.
@@ -168,8 +171,12 @@ namespace EntityStates.Pyro
                 {
                     hasBegunFlamethrower = true;
                     Util.PlaySound(startFireSoundLoopString, gameObject);
-                    effectInstance = GameObject.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString));
-                    effectInstance.transform.forward = inputBank.aimDirection;
+                    Transform muzzle = childLocator ? childLocator.FindChild(muzzleString) : null;
+                    if (muzzle)
+                    {
+                        effectInstance = GameObject.Instantiate(flameEffectPrefab, muzzle);
+                        effectInstance.transform.forward = inputBank.aimDirection;
+                    }
                 }
             }
 
@@ -197,7 +204,7 @@ namespace EntityStates.Pyro
 
             if (isAuthority)
             {
-                if (!inputBank.skill2.down || pc.heat <= 0f)
+                if (!inputBank.skill2.down || (pc && pc.heat <= 0f))
             {
                     outer.SetNextStateToMain();
                     return;
@@ -210,7 +217,7 @@ namespace EntityStates.Pyro
         {
             base.OnExit();
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
-            pc.inNapalm = false;
+            if (pc) pc.inNapalm = false;
 
             Util.PlaySound(stopFireSoundLoopString, gameObject);
             Util.PlaySound(exitSoundString, gameObject);
@@ -253,7 +260,7 @@ namespace EntityStates.Pyro
                 aimRay.direction = currentAimVector;
 
                 GameObject prefab = projectilePrefab;
-                if (pc.isHighHeat)
+                if (pc && pc.isHighHeat)
                 {
                     prefab = igniteProjectilePrefab;
                 }

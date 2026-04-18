@@ -23,7 +23,7 @@ namespace EntityStates.Pyro
         private bool hasLaunched = false;
         private bool hasMax = false;
 
-        private static float heatPerSecond = 10f;
+        private static float heatPerSecond = 12.5f;
 
         public static float launchHeat;
 
@@ -40,24 +40,26 @@ namespace EntityStates.Pyro
         {
             base.OnEnter();
 
-            pyroController = GetComponent<PyroController>();
-            if (pyroController == null)
+            if (!TryGetComponent(out pyroController))
             {
+                SS2Log.Error("PyroLaunch.OnEnter: PyroController missing");
                 outer.SetNextStateToMain();
-                SS2Log.Error("PyroLaunch.OnEnter : Failed to find PyroController on body! Is this a Pyro?");
+                return;
             }
 
             maxDuration = baseMaxDuration / attackSpeedStat;            
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
 
-            ChildLocator bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement = GetModelChildLocator();
-            if (bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement != null)
+            ChildLocator cl = GetModelChildLocator();
+            if (cl != null)
             {
-                if (bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement.FindChild("ExhaustLParticles").TryGetComponent(out ParticleSystem left))
+                Transform exhaustL = cl.FindChild("ExhaustLParticles");
+                if (exhaustL && exhaustL.TryGetComponent(out ParticleSystem left))
                 {
                     leftExhaust = left;
                 }
-                if (bunsDoesntLikeWhenIHaveFunCodingAnywayThisIsAChildLocatorThatWeDontReferToAgainAfterThisIfStatement.FindChild("ExhaustRParticles").TryGetComponent(out ParticleSystem right))
+                Transform exhaustR = cl.FindChild("ExhaustRParticles");
+                if (exhaustR && exhaustR.TryGetComponent(out ParticleSystem right))
                 {
                     rightExhaust = right;
                 }
@@ -77,7 +79,7 @@ namespace EntityStates.Pyro
 
             characterBody.SetAimTimer(1f);
 
-            if (isAuthority)
+            if (isAuthority && pyroController)
             {
                 if (!hasLaunched)
                 {
@@ -132,7 +134,7 @@ namespace EntityStates.Pyro
                 Vector3 aimVector = GetAimRay().direction;
                 Vector3 moveVector = inputBank.moveVector;
 
-                if (isAuthority)
+                if (isAuthority && pyroController)
                 {
                     pyroController.AddHeat(Mathf.Max(-launchHeat));
 

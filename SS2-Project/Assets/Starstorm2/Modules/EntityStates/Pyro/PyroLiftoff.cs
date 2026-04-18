@@ -116,8 +116,10 @@ namespace EntityStates.Pyro
         {
             base.OnEnter();
 
-            hoverL = FindModelChild("HoverLParticles")?.GetComponent<ParticleSystem>();
-            hoverR = FindModelChild("HoverRParticles")?.GetComponent<ParticleSystem>();
+            Transform hoverLTransform = FindModelChild("HoverLParticles");
+            if (hoverLTransform) hoverLTransform.TryGetComponent(out hoverL);
+            Transform hoverRTransform = FindModelChild("HoverRParticles");
+            if (hoverRTransform) hoverRTransform.TryGetComponent(out hoverR);
 
             originalAirControl = BodyCatalog.GetBodyPrefab(characterBody.bodyIndex).GetComponent<CharacterMotor>().airControl;
             skillLocator.utility.SetSkillOverride(this, overrideSkillDef, GenericSkill.SkillOverridePriority.Contextual);

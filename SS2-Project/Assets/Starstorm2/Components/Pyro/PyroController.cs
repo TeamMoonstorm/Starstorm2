@@ -63,7 +63,12 @@ namespace SS2.Components
 
         public void Awake()
         {
-            characterBody = GetComponent<CharacterBody>();
+            // This seriously should never happen but I guess this modding community causes
+            // insane incompats and users disable even cool shit like Pyro
+            if (!TryGetComponent(out characterBody))
+            {
+                SS2Log.Error("PyroController.Awake: CharacterBody missing");
+            }
         }
         private void Start()
         {
@@ -89,6 +94,8 @@ namespace SS2.Components
         {
             if (hasEffectiveAuthority)
             {
+                AddHeat(Survivors.Pyro.passiveHeatPerSecond * Time.fixedDeltaTime);
+
                 enemyCheckStopwatch += Time.fixedDeltaTime;
                 if (enemyCheckStopwatch >= enemyCheckInterval)
                 {

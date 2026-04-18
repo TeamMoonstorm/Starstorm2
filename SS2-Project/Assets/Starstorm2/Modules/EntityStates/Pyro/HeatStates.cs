@@ -11,7 +11,10 @@ namespace EntityStates.Pyro
         public override void OnEnter()
         {
             base.OnEnter();
-            pyroController = GetComponent<PyroController>();
+            if (!TryGetComponent(out pyroController))
+            {
+                SS2Log.Error("BaseHeatState.OnEnter: PyroController missing");
+            }
         }
     }
     public class LowHeat : BaseHeatState
@@ -21,7 +24,7 @@ namespace EntityStates.Pyro
         public override void OnEnter()
         {
             base.OnEnter();
-            pyroController.SetHighHeat(false);
+            if (pyroController) pyroController.SetHighHeat(false);
             Util.PlaySound(enterSoundString, gameObject);
 
             // figure out hwhat kind of effect this hsould be
@@ -30,7 +33,7 @@ namespace EntityStates.Pyro
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (isAuthority && pyroController.heat >= pyroController.highHeat)
+            if (isAuthority && pyroController && pyroController.heat >= pyroController.highHeat)
             {
                 outer.SetNextState(new HighHeat());
             }
@@ -48,7 +51,7 @@ namespace EntityStates.Pyro
         public override void OnEnter()
         {
             base.OnEnter();
-            pyroController.SetHighHeat(true);
+            if (pyroController) pyroController.SetHighHeat(true);
             Util.PlaySound(enterSoundString, gameObject);
 
             // figure out hwhat kind of effect this hsould be
@@ -63,7 +66,8 @@ namespace EntityStates.Pyro
                 flashOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
                 flashOverlayInstance.destroyComponentOnEnd = true;
                 flashOverlayInstance.originalMaterial = flashMaterial;
-                flashOverlayInstance.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
+                if (modelTransform.TryGetComponent(out CharacterModel flashCharModel))
+                    flashOverlayInstance.AddToCharacterModel(flashCharModel);
 
                 overlayInstance = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
                 overlayInstance.duration = 0.4f;
@@ -72,7 +76,8 @@ namespace EntityStates.Pyro
                 overlayInstance.destroyComponentOnEnd = true;
                 overlayInstance.originalMaterial = overlayMaterial;
                 overlayInstance.stopwatch = 0f;
-                overlayInstance.AddToCharacterModel(modelTransform.GetComponent<CharacterModel>());
+                if (modelTransform.TryGetComponent(out CharacterModel overlayCharModel))
+                    overlayInstance.AddToCharacterModel(overlayCharModel);
             }
         }
         public override void Update()
@@ -88,7 +93,7 @@ namespace EntityStates.Pyro
         {
             base.FixedUpdate();
             
-            if (isAuthority && pyroController.heat < pyroController.highHeat)
+            if (isAuthority && pyroController && pyroController.heat < pyroController.highHeat)
             {
                 outer.SetNextState(new LowHeat());
             }

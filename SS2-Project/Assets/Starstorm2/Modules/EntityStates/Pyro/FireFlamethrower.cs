@@ -24,7 +24,7 @@ namespace EntityStates.Pyro
 
         private bool hasBegunFlamethrower;
 
-        private static float heatPerSecond = 6.25f;
+        private static float heatPerSecond = 4f;
         private static float procCoefficientPerSecond = 5f;
         private static float damageCoefficientPerSecond = 2.7f;
         private static float spreadBloonPerSecond = 1f;
@@ -54,7 +54,10 @@ namespace EntityStates.Pyro
 
             characterBody.isSprinting = false;
 
-            pc = GetComponent<PyroController>();
+            if (!TryGetComponent(out pc))
+            {
+                SS2Log.Error("FireFlamethrower.OnEnter: PyroController missing");
+            }
 
             stopwatch = 0f;
 
@@ -67,10 +70,13 @@ namespace EntityStates.Pyro
             characterBody.SetAimTimer(2f);
 
             Transform modelTransform = GetModelTransform();
-            if (modelTransform)
+            if (modelTransform && modelTransform.TryGetComponent(out childLocator))
             {
-                childLocator = modelTransform.GetComponent<ChildLocator>();
-                smokeMuzzleEffect = childLocator.FindChild(smokeMuzzleEffectString).GetComponent<ScaleParticleSystemDuration>();
+                Transform smokeMuzzleTransform = childLocator.FindChild(smokeMuzzleEffectString);
+                if (smokeMuzzleTransform)
+                {
+                    smokeMuzzleTransform.TryGetComponent(out smokeMuzzleEffect);
+                }
             }
 
             Util.PlaySound("Play_pyro_primary_start", gameObject);
@@ -150,10 +156,14 @@ namespace EntityStates.Pyro
             //Debug.Log("entering flamethrower");
             hasBegunFlamethrower = true;
             // silly visual flamethrower for sake of making it look fuller
-            if (flameEffectPrefab)
-                flamethrowerTransform = GameObject.Instantiate(flameEffectPrefab, childLocator.FindChild(muzzleString)).transform;
-            if (beamEffectPrefab)
-                beamTransform = GameObject.Instantiate(beamEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+            Transform muzzle = childLocator ? childLocator.FindChild(muzzleString) : null;
+            if (muzzle)
+            {
+                if (flameEffectPrefab)
+                    flamethrowerTransform = GameObject.Instantiate(flameEffectPrefab, muzzle).transform;
+                if (beamEffectPrefab)
+                    beamTransform = GameObject.Instantiate(beamEffectPrefab, muzzle).transform;
+            }
 
         }
         public override void Update()
