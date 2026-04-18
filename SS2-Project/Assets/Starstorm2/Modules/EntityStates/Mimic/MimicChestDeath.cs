@@ -32,6 +32,20 @@ namespace EntityStates.Mimic
                 characterBody.hurtBoxGroup.hurtBoxesDeactivatorCounter++;
             }
 
+            // TODO: I also have no clue if this works, need to test - Buns
+            // Force all non-Body ESMs (e.g. Weapon) to idle so the dead mimic stops attacking.
+            // GenericCharacterDeath only enters the Body ESM — other ESMs keep running.
+            // Without this, a Chirr-tamed mimic reverts to the Monster team on death
+            // (via ChirrFriendController.RemoveFriend) while its weapon ESM still fires,
+            // causing bullets to target the player.
+            foreach (EntityStateMachine esm in gameObject.GetComponents<EntityStateMachine>())
+            {
+                if (esm != outer)
+                {
+                    esm.SetNextStateToMain();
+                }
+            }
+
             PlayAnimation("Gesture, Override", "BufferEmpty");
 
             if(characterBody.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var cmodel))
