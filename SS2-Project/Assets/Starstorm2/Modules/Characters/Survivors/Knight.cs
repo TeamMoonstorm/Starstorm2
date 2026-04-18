@@ -10,8 +10,18 @@ using RoR2.Skills;
 
 namespace SS2.Survivors
 {
+    // TODO:  When I am back in Unityland to bump parryBuffDuration from 0.4s to 1.0s+ in escKnightShield.asset
     public sealed class Knight : SS2Survivor
     {
+        /// <summary>
+        /// How long (in seconds) the "before" parry window remembers the last attacker
+        /// When the player presses secondary, Shield.OnEnter checks if an attack landed within
+        /// this window and triggers a retroactive parry (visual feedback + buffed skills)
+        /// We want to reward players whose timing was slightly late by still granting the parry payoff
+        /// and where network latency might have caused issues too
+        /// This wont retroactively reject damage though
+        /// </summary>
+        public static float lastAttackWindow = 0.5f;
         public override SS2AssetRequest<SurvivorAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<SurvivorAssetCollection>("acKnight", SS2Bundle.Indev);
         
         public static GameObject KnightImpactEffect;

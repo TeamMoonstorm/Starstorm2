@@ -2,10 +2,8 @@
 using RoR2;
 using RoR2.Skills;
 using SS2;
-using System;
 using UnityEngine.Networking;
 using MSU.Config;
-using EntityStates.BrotherMonster;
 using SS2.Components;
 
 namespace EntityStates.Knight
@@ -41,7 +39,11 @@ namespace EntityStates.Knight
             base.OnEnter();
             rollStateMachine = EntityStateMachine.FindByCustomName(this.characterBody.gameObject, "Roll");
             parryHurtbox = FindModelChildGameObject("ParryHurtbox");
-            blockTracker = characterBody.GetComponent<KnightBlockTracker>();
+            if (!characterBody.TryGetComponent(out blockTracker))
+            {
+                SS2Log.Error("Shield.OnEnter: KnightBlockTracker missing");
+                return;
+            }
             animator = GetModelAnimator();
 
             PlayCrossfade("Gesture, Override", "RaiseShield", 0.1f);
@@ -120,7 +122,16 @@ namespace EntityStates.Knight
 
             blockTracker.onIncomingDamageAuthority += ParryAttacker;
             parryHurtbox.SetActive(true);
-            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+
+            if (NetworkServer.active)
+            {
+                characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
+
+            if (isAuthority && blockTracker)
+            {
+                blockTracker.CmdArmParry(parryBuffDuration);
+            }
 
             // TODO
             //EffectData effectData = new EffectData();
@@ -138,22 +149,20 @@ namespace EntityStates.Knight
 
             blockTracker.onIncomingDamageAuthority -= ParryAttacker;
             parryHurtbox.SetActive(false);
-            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+
+            if (NetworkServer.active)
+            {
+                characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
+
+            if (isAuthority && blockTracker)
+            {
+                blockTracker.CmdDisarmParry();
+            }
         }
 
         private void ParryAttacker(GameObject attacker)
         {
-            if (attacker && attacker.TryGetComponent(out SetStateOnHurt setStateOnHurt) && setStateOnHurt.canBeStunned)
-            {
-                // Stun the enemy
-                Type state = setStateOnHurt.targetStateMachine.state.GetType();
-                if (state != typeof(StunState) && state != typeof(ShockState) && state != typeof(FrozenState))
-                {
-                    setStateOnHurt.SetStun(3f);
-                }
-            }
-
-            // TODO: Should we have a custom sound for this?
             Util.PlaySound("NemmandoDecisiveStrikeReady", gameObject);
 
             EndParrying();
@@ -228,7 +237,10 @@ namespace EntityStates.Knight
             characterBody.SetAimTimer(0.5f);
             PlayCrossfade("Gesture, Override", "BufferEmpty", 0.1f);
 
-            characterBody.RemoveBuff(shieldBuff);
+            if (NetworkServer.active)
+            {
+                characterBody.RemoveBuff(shieldBuff);
+            }
             SetPrimaryOverride(false);
             EndParrying();
 
