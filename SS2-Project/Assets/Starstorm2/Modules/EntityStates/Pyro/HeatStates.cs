@@ -56,7 +56,7 @@ namespace EntityStates.Pyro
             if (pyroController) pyroController.SetHighHeat(true);
             Util.PlaySound(enterSoundString, gameObject);
 
-            // figure out hwhat kind of effect this hsould be
+            // TODO: figure out hwhat kind of effect this hsould be
             //EffectManager.SimpleEffect(effectPrefab, transform.position, Quaternion.identity, false);
 
             modelTransform = GetModelTransform();
