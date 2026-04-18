@@ -3,6 +3,7 @@ using RoR2.Orbs;
 using UnityEngine;
 namespace SS2.Orbs
 {
+    // TODO: Is this dead code? Looks like we're using ChirrFriendOrb now
     public class ChirrSiphonOrb : Orb
     {
         public float siphonPercent;
