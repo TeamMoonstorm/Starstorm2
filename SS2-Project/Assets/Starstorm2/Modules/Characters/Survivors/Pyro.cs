@@ -22,7 +22,7 @@ namespace SS2.Survivors
         public static GameObject _hotFireVFX;
         public static BuffDef _bdPyroManiac;
 
-        public static float passiveHeatPerSecond = 2.5f;
+        public static float passiveHeatPerSecond = 1.7f;
 
         private BodyIndex pyroIndex;
         public override bool IsAvailable(ContentPack contentPack)

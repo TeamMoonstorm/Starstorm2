@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using RoR2;
 using SS2.Components;
+using SS2;
+
 namespace EntityStates.Pyro
 {
     // for networking purposes, since heat is client auth.. needs sounds, vfx, anims
