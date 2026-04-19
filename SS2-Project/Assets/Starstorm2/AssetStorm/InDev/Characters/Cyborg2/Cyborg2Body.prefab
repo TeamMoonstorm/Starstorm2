@@ -37,6 +37,8 @@ GameObject:
   - component: {fileID: 8467841194318990007}
   - component: {fileID: 4269496153077987429}
   - component: {fileID: 1004718732815417702}
+  - component: {fileID: 3736198632451785268}
+  - component: {fileID: 5464692534816640513}
   m_Layer: 0
   m_Name: Cyborg2Body
   m_TagString: Player
@@ -749,6 +751,67 @@ MonoBehaviour:
   canBeFrozen: 1
   isFrozen: 1
   canBeTaunted: 1
+--- !u!114 &3736198632451785268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260960647979714696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1143142494, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  body: {fileID: 0}
+  itemDisplayRuleSet: {fileID: 0}
+  autoPopulateLightInfos: 1
+  gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
+  baseRendererInfos: []
+  fullBodyPing: 0
+  baseLightInfos: []
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
+  corpseFade: 1
+  speedFade: 1
+  CharacterOnScreen: 0
+  visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
+  activeOverlays: 0
+  oldOverlays: 0
+  hitFlashValue: 0
+  healFlashValue: 0
+  oldHit: 0
+  oldHeal: 0
+  oldFade: 0
+  forceUpdate: 0
+--- !u!114 &5464692534816640513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260960647979714696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
+  skins:
+  - {fileID: 11400000, guid: a38e0ea4218dc9e4bb177461ead40ffc, type: 2}
+  prefabInstantiationDatas: []
 --- !u!1 &4426841502502991441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,32 +1811,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
---- !u!114 &7060471386824513616
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5008875975933509408}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
-  _animatorControllerAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _animatorController: {fileID: 0}
-  _avatarAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _avatar: {fileID: 0}
-  skins:
-  - {fileID: 11400000, guid: a38e0ea4218dc9e4bb177461ead40ffc, type: 2}
-  prefabInstantiationDatas: []
 --- !u!114 &7720387413032466013
 MonoBehaviour:
   m_ObjectHideFlags: 0
