@@ -32,6 +32,9 @@ namespace SS2
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
         public bool runIsEclipse;
+        public int bonusLevels = 0;
+        private int lastBonusLevels;
+
 
         [SystemInitializer]
         internal static void Init()
@@ -51,7 +54,27 @@ namespace SS2
             //Initialize related prefabs
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
-            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });         
+            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });
+        }
+
+        private void AmbientLevelDisplay_Update(On.RoR2.UI.AmbientLevelDisplay.orig_Update orig, RoR2.UI.AmbientLevelDisplay self)
+        {
+            int realLastLevel = self.lastLevel;
+
+            orig(self);
+
+            // add to text if bonus levels > 0 and the level changes
+            if (Run.instance != null && Run.instance.ambientLevelFloor != realLastLevel && bonusLevels > 0)
+            {
+                self.text.text = self.text.text + " <color=#34EB8F>+" + bonusLevels;
+            }
+
+            // update to add to text if bonus levels # changes
+            if (bonusLevels != lastBonusLevels)
+            {
+                lastBonusLevels = bonusLevels;
+                self.text.text = self.text.text + " <color=#34EB8F>+" + bonusLevels;
+            }
         }
 
         public static void AddEtherealDifficulty(DifficultyIndex baseDifficulty, SerializableDifficultyDef etherealDef)
@@ -73,6 +96,7 @@ namespace SS2
             Run.ambientLevelCap = defaultLevelCap;
             Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.UI.AmbientLevelDisplay.Update += AmbientLevelDisplay_Update;
         }
 
         private void OnServerStageComplete(Stage stage)
@@ -86,6 +110,7 @@ namespace SS2
             Run.ambientLevelCap = defaultLevelCap;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
             Stage.onServerStageComplete -= OnServerStageComplete;
+            On.RoR2.UI.AmbientLevelDisplay.Update -= AmbientLevelDisplay_Update;
         }
 
         public void OnEtherealTeleporterCharged()
@@ -273,7 +298,9 @@ namespace SS2
                 curDiff.scalingValue = EtherealDifficulty.GetDefaultScaling(run.selectedDifficulty) + 0.5f * (etherealsCompleted - 1);
             }
 
-            Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);          
+            bonusLevels = 20 * (int)Mathf.Pow(2, etherealsCompleted - 1);
+
+            Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);  
             run.RecalculateDifficultyCoefficent();
             pendingDifficultyUp = false;          
         }
