@@ -5,6 +5,7 @@ using RoR2.Skills;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using UnityEngine.Networking;
+using SS2;
 namespace SS2.Components
 {
     public class TeleporterProjectile : MonoBehaviour
@@ -21,13 +22,24 @@ namespace SS2.Components
 		private static float funnyNumber = 0.5f;
         void Start()
         {
-            this.controller = base.GetComponent<ProjectileController>();
+            if (!base.TryGetComponent(out this.controller))
+            {
+                SS2Log.Warning("TeleporterProjectile.Start: missing ProjectileController");
+                return;
+            }
             this.owner = this.controller.owner;
             if(this.owner)
             {
-                this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
+                // TODO: This might be another issue but trying this for duplicate teleporters on client fix
+                // Reuse existing ownership component if one exists
+                // This prevents duplicate skill overrides when both prediction and authoritative
+                // copies of the projectile call Start()
+                if (!this.owner.TryGetComponent(out this.ownership))
+                {
+                    this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
+                }
                 this.ownership.teleporter = this;
-				ownerBody = owner.GetComponent<CharacterBody>();
+                this.owner.TryGetComponent(out ownerBody);
             }
         }
 
@@ -112,7 +124,11 @@ namespace SS2.Components
             public static bool destroyOnFirstTeleport = true;
             private void Awake()
             {
-                this.body = base.GetComponent<CharacterBody>();
+                if (!base.TryGetComponent(out this.body))
+                {
+                    SS2Log.Warning("ProjectileTeleporterOwnership.Awake: missing CharacterBody");
+                    return;
+                }
 
                 this.teleportSkillDef = SS2Assets.LoadAsset<SkillDef>("Cyborg2Teleport", SS2Bundle.Indev);
                 if (this.body)

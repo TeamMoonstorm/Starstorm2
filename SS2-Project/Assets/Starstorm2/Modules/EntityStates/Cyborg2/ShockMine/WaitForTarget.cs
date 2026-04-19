@@ -1,5 +1,6 @@
 ﻿using RoR2.Projectile;
 using UnityEngine.Networking;
+using SS2;
 
 namespace EntityStates.Cyborg2.ShockMine
 {
@@ -12,8 +13,10 @@ namespace EntityStates.Cyborg2.ShockMine
 			base.OnEnter();
 			if (NetworkServer.active)
 			{
-				this.targetFinder = base.GetComponent<ProjectileSphereTargetFinder>();
-				this.targetFinder.enabled = true;
+				if (base.TryGetComponent(out this.targetFinder))
+					this.targetFinder.enabled = true;
+				else
+					SS2Log.Warning("WaitForTarget missing ProjectileSphereTargetFinder");
 			}
 		}
 

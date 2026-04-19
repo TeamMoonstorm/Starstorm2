@@ -24,7 +24,8 @@ namespace EntityStates.Cyborg2.ShockMine
         {
             base.OnEnter();
 
-            this.projectileDamage = base.GetComponent<ProjectileDamage>();
+            if (!base.TryGetComponent(out this.projectileDamage))
+                SS2Log.Warning("ShockNearby missing ProjectileDamage");
             this.shockInterval = numShocks / baseDuration;
         }
 

@@ -10,8 +10,13 @@ namespace EntityStates.Cyborg2.ShockMine
 			base.OnEnter();
 			this.duration = Unburrow.baseDuration;
 
-			Vector3 upVelocity = Vector3.up * hopVelocity;
-			base.rigidbody.velocity = upVelocity;// base.transform.rotation * upVelocity;
+			// Only set velocity on server
+			//  clients receive position via ProjectileNetworkTransform
+			if (NetworkServer.active)
+			{
+				Vector3 upVelocity = Vector3.up * hopVelocity;
+				base.rigidbody.velocity = upVelocity;
+			}
 		}
 
 		public override void FixedUpdate()
