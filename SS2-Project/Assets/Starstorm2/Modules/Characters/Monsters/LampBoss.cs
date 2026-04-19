@@ -5,6 +5,7 @@ using RoR2.ContentManagement;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using RoR2.CameraModes;
 using System.Reflection;
 using static RoR2.ExplicitPickupDropTable;
@@ -16,10 +17,12 @@ namespace SS2.Monsters
 
         public static BodyIndex BodyIndex;
         public static GameObject lampBuffEffectPrefab;
+        public static GameObject _masterPrefab;
         public override void Initialize()
         {
 
             lampBuffEffectPrefab = SS2Assets.LoadAsset<GameObject>("LampBuffEffect", SS2Bundle.Monsters);
+            _masterPrefab = AssetCollection.masterPrefab;
             RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
             On.RoR2.CameraModes.CameraModeBase.ApplyLookInput += CameraModeBase_ApplyLookInput;
@@ -117,6 +120,41 @@ namespace SS2.Monsters
         public class PhaseData
         {
             public string phase;
+        }
+
+        [ConCommand(commandName = "spawn_lampboss", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns LampBoss enemies at the sender's position. Usage: spawn_lampboss [count=1]")]
+        public static void CCSpawnLampBoss(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            int count = args.TryGetArgInt(0) ?? 1;
+
+            CharacterMaster master = args.GetSenderMaster();
+            if (!master || !master.GetBody())
+            {
+                SS2Log.Error("spawn_lampboss: No valid body found.");
+                return;
+            }
+
+            if (!_masterPrefab)
+            {
+                SS2Log.Error("spawn_lampboss: LampBossMaster prefab not loaded.");
+                return;
+            }
+
+            Vector3 position = master.GetBody().footPosition;
+            for (int i = 0; i < count; i++)
+            {
+                MasterSummon summon = new MasterSummon
+                {
+                    masterPrefab = _masterPrefab,
+                    position = position + Vector3.up * 3f + Random.insideUnitSphere * 5f,
+                    rotation = Quaternion.identity,
+                    teamIndexOverride = TeamIndex.Monster
+                };
+                summon.Perform();
+            }
+            SS2Log.Info($"spawn_lampboss: Spawned {count} LampBoss(es).");
         }
     }
 }

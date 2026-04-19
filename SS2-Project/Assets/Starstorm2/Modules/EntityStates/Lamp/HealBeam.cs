@@ -264,6 +264,7 @@ namespace EntityStates.Lamp
             if (healthComponent && healthComponent.body && hurtBox.transform)
             {
                 CharacterMotor characterMotor = healthComponent.body.characterMotor;
+                bool hasAuthority = healthComponent.body.hasEffectiveAuthority;
 
                 Vector3 between = hurtBox.transform.position - transform.position;  
                 float heightDiff = Mathf.Abs(between.y);
@@ -273,34 +274,43 @@ namespace EntityStates.Lamp
                 float forceCoefficient = Mathf.Clamp(heightDiff / maxHeightDiff, 1f, forceCoefficientAtMaxHeightDiff);
                 Vector3 forceVector = forceDirection * forceMagnitude * forceCoefficient;
 
-                Vector3 currentVerticalVelocity = Vector3.zero;
                 float mass = 0f;
-                bool useGravity = false;
+                Vector3 dampingForce = Vector3.zero;
+
                 if (characterMotor)
                 {
-                    useGravity = characterMotor.useGravity;
-                    currentVerticalVelocity = Vector3.up * characterMotor.velocity.y;
                     mass = characterMotor.mass;
+                    // only apply velocity damping for server-authoritative bodies;
+                    // for client bodies the server has stale velocity data which causes
+                    // force oscillation and violent slamming
+                    if (hasAuthority)
+                    {
+                        Vector3 currentVerticalVelocity = Vector3.up * characterMotor.velocity.y;
+                        if (characterMotor.useGravity)
+                            currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
+                        dampingForce = currentVerticalVelocity * forceDamping * mass * forceCoefficient;
+                    }
                 }
                 else
                 {
                     Rigidbody rigidbody = healthComponent.body.rigidbody;
                     if (rigidbody)
                     {
-                        useGravity = rigidbody.useGravity;
-                        currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
                         mass = rigidbody.mass;
+                        if (hasAuthority)
+                        {
+                            Vector3 currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
+                            if (rigidbody.useGravity)
+                                currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
+                            dampingForce = currentVerticalVelocity * forceDamping * mass * forceCoefficient;
+                        }
                     }
-                }
-                if (useGravity)
-                {
-                    currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
                 }
                 if (ignoreMass)
                 {
                     forceVector *= mass;
                 }
-                healthComponent.TakeDamageForce(forceVector - currentVerticalVelocity * forceDamping * mass * forceCoefficient, true, false);
+                healthComponent.TakeDamageForce(forceVector - dampingForce, true, false);
             }
         }
 
