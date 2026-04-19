@@ -41,7 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2942509041794450991}
   - component: {fileID: 6460089162439241661}
-  - component: {fileID: 3979966911097047151}
   m_Layer: 0
   m_Name: Cyborg2Display
   m_TagString: Untagged
@@ -100,32 +99,6 @@ MonoBehaviour:
   oldHeal: 0
   oldFade: 0
   forceUpdate: 0
---- !u!114 &3979966911097047151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8308556267028715609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
-  _animatorControllerAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _animatorController: {fileID: 0}
-  _avatarAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _avatar: {fileID: 0}
-  skins:
-  - {fileID: 11400000, guid: a38e0ea4218dc9e4bb177461ead40ffc, type: 2}
-  prefabInstantiationDatas: []
 --- !u!1001 &8329871487314338267
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -996,3 +969,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
+--- !u!114 &402126579458382863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176308721897938058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
+  skins:
+  - {fileID: 11400000, guid: a38e0ea4218dc9e4bb177461ead40ffc, type: 2}
+  prefabInstantiationDatas: []
