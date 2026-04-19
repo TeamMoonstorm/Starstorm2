@@ -1,4 +1,10 @@
 **Warning: content spoilers below!**
+### 0.6.40 (this branch) all your bugs belong to us
+TODO ADD THIS BRANCHES CHANGES HERE
+
+## 0.6.39 Nemmando Games
+- Swuff's Nemmando animation PR ideally, and my Ambush config PR
+
 ### 0.6.38 
 * Beta
     * Got rid of MULE's hold to jump higher mechanic to fix MULE not working in release builds. If this doesnt work I give up I need to go work on the MULE rework anyways 
