@@ -53,6 +53,8 @@ namespace SS2
             new SS2Config(this);
             new SS2Content();
 
+            UnlockAllHandler.Init();
+
             LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");
             LoadingScreenSpriteUtility.AddSpriteAnimations(SS2Assets.GetLoadingScreenBundle());
