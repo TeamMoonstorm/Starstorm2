@@ -122,6 +122,8 @@ namespace SS2.Monsters
             public string phase;
         }
 
+        // Shorthand dev command for testing since I am lazy
+        #if DEBUG
         [ConCommand(commandName = "spawn_lampboss", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns LampBoss enemies at the sender's position. Usage: spawn_lampboss [count=1]")]
         public static void CCSpawnLampBoss(ConCommandArgs args)
         {
@@ -156,5 +158,6 @@ namespace SS2.Monsters
             }
             SS2Log.Info($"spawn_lampboss: Spawned {count} LampBoss(es).");
         }
+        #endif
     }
 }
