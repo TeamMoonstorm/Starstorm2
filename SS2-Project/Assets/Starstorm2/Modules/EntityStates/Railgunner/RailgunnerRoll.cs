@@ -1,5 +1,6 @@
 using EntityStates.Railgunner.Reload;
 using RoR2;
+using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -53,11 +54,27 @@ namespace EntityStates.Railgunner
 
             if (isAuthority)
             {
-                EntityStateMachine entityStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
+                EntityStateMachine reloadMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
 
-                if (entityStateMachine && entityStateMachine.state is Reloading reloadState && !reloadState.hasAttempted)
+                if (reloadMachine)
                 {
-                    entityStateMachine.SetNextState(new BoostConfirm());
+                    bool shouldReload = false;
+
+                    if (reloadMachine.state is Reloading reloadState && !reloadState.hasAttempted)
+                    {
+                        shouldReload = true;
+                    }
+                    else if (reloadMachine.state is Waiting && AnyRailgunSkillNeedsRestock())
+                    {
+                        // Scoped or waiting  reload is queued but blocked by scope gate
+                        RestockAllRailgunSkills();
+                        shouldReload = true;
+                    }
+
+                    if (shouldReload)
+                    {
+                        reloadMachine.SetNextState(new BoostConfirm());
+                    }
                 }
             }
         }
@@ -99,6 +116,29 @@ namespace EntityStates.Railgunner
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
             characterMotor.disableAirControlUntilCollision = false;
             base.OnExit();
+        }
+
+        private bool AnyRailgunSkillNeedsRestock()
+        {
+            if (!skillLocator) return false;
+            for (int i = 0; i < skillLocator.skillSlotCount; i++)
+            {
+                GenericSkill skill = skillLocator.GetSkillAtIndex(i);
+                if (skill && skill.skillDef is RailgunSkillDef rsd && rsd.restockOnReload && skill.stock == 0)
+                    return true;
+            }
+            return false;
+        }
+
+        private void RestockAllRailgunSkills()
+        {
+            if (!skillLocator) return;
+            for (int i = 0; i < skillLocator.skillSlotCount; i++)
+            {
+                GenericSkill skill = skillLocator.GetSkillAtIndex(i);
+                if (skill && skill.skillDef is RailgunSkillDef rsd && rsd.restockOnReload)
+                    skill.stock = skill.maxStock;
+            }
         }
 
         public override void OnSerialize(NetworkWriter writer)
