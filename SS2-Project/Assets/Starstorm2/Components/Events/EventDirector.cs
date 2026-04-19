@@ -380,5 +380,94 @@ namespace SS2
                 spawnStateOverride = spawnState,
             });
         }
+
+        [ConCommand(commandName = "list_nems", flags = ConVarFlags.None, helpText = "Lists all registered nemesis spawn cards with their index.")]
+        public static void CCListNemeses(ConCommandArgs args)
+        {
+            var cards = readonlySpawnCards;
+            if (cards == null || cards.Length == 0)
+            {
+                SS2Log.Info("No nemesis spawn cards registered.");
+                return;
+            }
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                var card = cards[i];
+                string masterName = card.prefab ? card.prefab.name : "null";
+                string itemName = card.itemDef ? Language.GetString(card.itemDef.nameToken) : "none";
+                SS2Log.Info($"[{i}] {masterName} (drops: {itemName}, weight: {card.selectionWeight})");
+            }
+        }
+
+        [ConCommand(commandName = "spawn_nem", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns a nemesis boss by catalog index. If no index given, picks randomly. Format: {index}")]
+        public static void CCSpawnNemesis(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            var cards = readonlySpawnCards;
+            if (cards == null || cards.Length == 0)
+            {
+                SS2Log.Error("spawn_nem: No nemesis spawn cards registered.");
+                return;
+            }
+
+            NemesisSpawnCard spawnCard;
+            if (args.Count > 0)
+            {
+                int index = args.GetArgInt(0);
+                if (index < 0 || index >= cards.Length)
+                {
+                    SS2Log.Error($"spawn_nem: Index {index} out of range. Valid range: 0-{cards.Length - 1}. Use list_nems to see available entries.");
+                    return;
+                }
+                spawnCard = cards[index];
+            }
+            else
+            {
+                spawnCard = cards[UnityEngine.Random.Range(0, cards.Length)];
+            }
+
+            if (!spawnCard)
+            {
+                SS2Log.Error("spawn_nem: Selected spawn card is null.");
+                return;
+            }
+
+            CharacterMaster senderMaster = args.GetSenderMaster();
+            if (!senderMaster || !senderMaster.GetBody())
+            {
+                SS2Log.Error("spawn_nem: No valid body found.");
+                return;
+            }
+
+            var clonedCard = UnityEngine.Object.Instantiate(spawnCard);
+            DirectorPlacementRule placementRule = new DirectorPlacementRule
+            {
+                spawnOnTarget = senderMaster.GetBody().coreTransform,
+                placementMode = DirectorPlacementRule.PlacementMode.NearestNode
+            };
+            DirectorCore.GetMonsterSpawnDistance(DirectorCore.MonsterSpawnDistance.Close, out placementRule.minDistance, out placementRule.maxDistance);
+
+            DirectorSpawnRequest request = new DirectorSpawnRequest(clonedCard, placementRule, Run.instance.spawnRng);
+            request.teamIndexOverride = TeamIndex.Monster;
+            request.ignoreTeamMemberLimit = true;
+            request.onSpawnedServer += (result) =>
+            {
+                if (!result.success || !result.spawnedInstance) return;
+
+                if (result.spawnedInstance.TryGetComponent(out CharacterMaster master))
+                {
+                    master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+                    int level = Mathf.FloorToInt(Run.instance.ambientLevel);
+                    if (level < 60)
+                        master.inventory.GiveItem(RoR2Content.Items.LevelBonus, 60 - level);
+                }
+            };
+
+            DirectorCore.instance.TrySpawnObject(request);
+            UnityEngine.Object.Destroy(clonedCard);
+            SS2Log.Info($"spawn_nem: Spawned {spawnCard.prefab.name}.");
+        }
     }
 }
