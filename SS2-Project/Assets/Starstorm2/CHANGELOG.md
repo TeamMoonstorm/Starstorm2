@@ -1,4 +1,7 @@
 **Warning: content spoilers below!**
+### 0.6.XX
+* General
+* Beta
 
 ### 0.6.36 buns wheres the changelogs
 * General

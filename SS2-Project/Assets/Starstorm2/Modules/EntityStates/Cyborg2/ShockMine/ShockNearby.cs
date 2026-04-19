@@ -33,6 +33,9 @@ namespace EntityStates.Cyborg2.ShockMine
         {
             base.FixedUpdate();
 
+            if (!NetworkServer.active)
+                return;
+
             base.rigidbody.velocity = Vector3.zero;
 
             this.shockTimer -= Time.fixedDeltaTime;
@@ -52,9 +55,6 @@ namespace EntityStates.Cyborg2.ShockMine
 
         private void Shock()
         {
-            if (!NetworkServer.active)
-                return;
-
             if (shockEffectPrefab)
             {
                 EffectManager.SpawnEffect(shockEffectPrefab, new EffectData

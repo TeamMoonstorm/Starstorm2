@@ -139,6 +139,14 @@ namespace SS2.Components
                 Destroy(this);
             }
 
+            private void OnDestroy()
+            {
+                if (this.skillLocator)
+                {
+                    this.skillLocator.utility.UnsetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
+                }
+            }
+
             private void FixedUpdate()
             {
                 if(!this.teleporter)

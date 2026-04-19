@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.Networking;
+
 namespace EntityStates.Cyborg2.ShockMine
 {
     public class Unburrow : BaseShockMineState
@@ -15,7 +17,7 @@ namespace EntityStates.Cyborg2.ShockMine
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (base.isAuthority)
+			if (NetworkServer.active)
 			{
 				if(base.fixedAge >= this.duration)
                 {

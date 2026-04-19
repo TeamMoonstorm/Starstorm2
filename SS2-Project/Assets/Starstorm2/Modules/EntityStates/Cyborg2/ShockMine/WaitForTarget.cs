@@ -20,7 +20,7 @@ namespace EntityStates.Cyborg2.ShockMine
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (base.isAuthority)
+			if (NetworkServer.active)
 			{
 				EntityState entityState = null;
 				if (!base.projectileStickOnImpact.stuck)
