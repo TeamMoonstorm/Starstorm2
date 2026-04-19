@@ -19,6 +19,7 @@ namespace SS2
     [BepInDependency("com.bepis.r2api.prefab")]
     [BepInDependency("com.bepis.r2api.difficulty")]
     [BepInDependency("com.bepis.r2api.tempvisualeffect")]
+    [BepInDependency("com.bepis.r2api.content_management")]
     #endregion
     [BepInDependency(MSU.MSUMain.GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
