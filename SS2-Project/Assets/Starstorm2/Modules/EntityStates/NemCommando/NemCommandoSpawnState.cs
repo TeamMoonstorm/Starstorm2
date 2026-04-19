@@ -2,49 +2,20 @@
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.NemCommando
 {
-    public class NemCommandoSpawnState : NemesisSpawnState
+    public class NemCommandoSpawnState : EntityStates.Nemmando.Spawn
     {
-        public static string portalMuz;
-        public static SkillDef gunSecondary;
-        public static SkillDef gunSpecial;
-        private bool hasGun = true;
-        public static float throwGunDelay;
-        private float throwGunTime;
-        private bool thrownGun = false;
-
-        public override void OnEnter()
-        {
-            base.OnEnter();
-
-            throwGunTime = throwGunDelay * duration;
-
-            if (skillLocator.secondary.skillDef != gunSecondary && skillLocator.special.skillDef != gunSpecial)
-            {
-                hasGun = false;
-                GetModelAnimator().SetBool("gunEquipped", hasGun);
-                PlayAnimation("FullBody, Override", "SpawnNoGun");
-            }
-        }
-
         public override void FixedUpdate()
         {
-            base.FixedUpdate();
+            fixedAge += GetDeltaTime();
 
-            if (!hasGun && !thrownGun && fixedAge >= throwGunTime)
+            if (isAuthority && fixedAge >= minimumIdleDuration)
             {
-                FindModelChild("gunParticle").GetComponent<ParticleSystem>().Emit(1);
-                FindModelChild("GunModel").gameObject.SetActive(false);
-                thrownGun = true;
+                outer.SetNextState(new NemCommandoAppearState());
             }
-        }
-
-        public override void SpawnEffect()
-        {
-            portalMuzzle = portalMuz;
-            base.SpawnEffect();
         }
     }
 }
