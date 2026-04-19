@@ -48,12 +48,13 @@ namespace SS2
                     ss2Unlockables.Add(def.unlockableDef);
                 }
             }
-            for (int i = 0; i < contentPack.skillDefs.Length; i++)
-            {
-                var def = contentPack.skillDefs[i];
-                if (def && def.unlockableDef)
-                    ss2Unlockables.Add(def.unlockableDef);
-            }
+            // TODO: WWoops
+            //for (int i = 0; i < contentPack.skillDefs.Length; i++)
+            //{
+            //    var def = contentPack.skillDefs[i];
+            //    if (def && def.unlockableDef)
+            //        ss2Unlockables.Add(def.unlockableDef);
+            //}
             for (int i = 0; i < contentPack.artifactDefs.Length; i++)
             {
                 var def = contentPack.artifactDefs[i];

@@ -148,7 +148,7 @@ namespace SS2.Monsters
                 MasterSummon summon = new MasterSummon
                 {
                     masterPrefab = _masterPrefab,
-                    position = position + Vector3.up * 3f + Random.insideUnitSphere * 5f,
+                    position = position + Vector3.up * 3f + UnityEngine.Random.insideUnitSphere * 5f,
                     rotation = Quaternion.identity,
                     teamIndexOverride = TeamIndex.Monster
                 };

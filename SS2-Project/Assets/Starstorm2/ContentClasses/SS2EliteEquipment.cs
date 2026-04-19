@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using RoR2.ContentManagement;
+using MSU.Config;
+using RiskOfOptions.OptionConfigs;
 
 namespace SS2
 {
