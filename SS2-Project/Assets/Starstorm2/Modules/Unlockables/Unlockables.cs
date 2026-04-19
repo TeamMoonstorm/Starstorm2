@@ -48,7 +48,8 @@ namespace SS2
                     ss2Unlockables.Add(def.unlockableDef);
                 }
             }
-            // TODO: WWoops
+            // TODO: Have UnlockAll work for Skills too
+            // This is what happens when I code without Unity installed and then push this to my computer with Unity
             //for (int i = 0; i < contentPack.skillDefs.Length; i++)
             //{
             //    var def = contentPack.skillDefs[i];

@@ -105,7 +105,7 @@ namespace SS2
             {
                 b.section = "General";
                 b.key = "Unlock All";
-                b.description = "Unlocks all SS2 content (items, survivors, skills) without needing to complete achievements. Skins are excluded. Requires a restart to take effect.";
+                b.description = "Unlocks all SS2 content (items, and survivors) without needing to complete achievements. Skills and skins are excluded. Requires a restart to take effect.";
                 b.configFile = SS2Config.ConfigMain;
             }).DoConfigure();
         }
