@@ -20,6 +20,8 @@ namespace SS2.Monsters
             RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBody");
         }
 
+        // Shorthand dev command for testing since I am lazy
+        #if DEBUG
         [ConCommand(commandName = "spawn_lamp", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns Lamp (Follower) enemies at the sender's position. Usage: spawn_lamp [count=3]")]
         public static void CCSpawnLamp(ConCommandArgs args)
         {
@@ -54,5 +56,6 @@ namespace SS2.Monsters
             }
             SS2Log.Info($"spawn_lamp: Spawned {count} Lamp(s).");
         }
+        #endif
     }
 }
