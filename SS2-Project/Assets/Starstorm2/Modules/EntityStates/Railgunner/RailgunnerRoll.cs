@@ -1,4 +1,3 @@
-using EntityStates.Railgunner.Reload;
 using RoR2;
 using RoR2.Skills;
 using UnityEngine;
@@ -54,28 +53,7 @@ namespace EntityStates.Railgunner
 
             if (isAuthority)
             {
-                EntityStateMachine reloadMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
-
-                if (reloadMachine)
-                {
-                    bool shouldReload = false;
-
-                    if (reloadMachine.state is Reloading reloadState && !reloadState.hasAttempted)
-                    {
-                        shouldReload = true;
-                    }
-                    else if (reloadMachine.state is Waiting && AnyRailgunSkillNeedsRestock())
-                    {
-                        // Scoped or waiting  reload is queued but blocked by scope gate
-                        RestockAllRailgunSkills();
-                        shouldReload = true;
-                    }
-
-                    if (shouldReload)
-                    {
-                        reloadMachine.SetNextState(new BoostConfirm());
-                    }
-                }
+                RestockAllRailgunSkills();
             }
         }
 
@@ -116,18 +94,6 @@ namespace EntityStates.Railgunner
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
             characterMotor.disableAirControlUntilCollision = false;
             base.OnExit();
-        }
-
-        private bool AnyRailgunSkillNeedsRestock()
-        {
-            if (!skillLocator) return false;
-            for (int i = 0; i < skillLocator.skillSlotCount; i++)
-            {
-                GenericSkill skill = skillLocator.GetSkillAtIndex(i);
-                if (skill && skill.skillDef is RailgunSkillDef rsd && rsd.restockOnReload && skill.stock == 0)
-                    return true;
-            }
-            return false;
         }
 
         private void RestockAllRailgunSkills()
