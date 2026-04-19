@@ -269,6 +269,34 @@ namespace SS2.Monsters
 				}
 			}
 		}
+
+		[ConCommand(commandName = "mimic_debug", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns a mimic chest interactable at the sender's position.")]
+		public static void CCSpawnMimic(ConCommandArgs args)
+		{
+			if (!NetworkServer.active) return;
+
+			CharacterMaster master = args.GetSenderMaster();
+			if (!master || !master.GetBody())
+			{
+				SS2Log.Error("mimic_debug: No valid body found.");
+				return;
+			}
+
+			InteractableSpawnCard spawnCard = SS2Assets.LoadAsset<InteractableSpawnCard>("iscMimic", SS2Bundle.Monsters);
+			if (!spawnCard)
+			{
+				SS2Log.Error("mimic_debug: Could not load iscMimic.");
+				return;
+			}
+
+			DirectorPlacementRule placementRule = new DirectorPlacementRule
+			{
+				placementMode = DirectorPlacementRule.PlacementMode.Direct,
+				position = master.GetBody().footPosition
+			};
+
+			DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placementRule, Run.instance.spawnRng));
+		}
 	}
 
 	public class MimicTheftMessage : SubjectChatMessage

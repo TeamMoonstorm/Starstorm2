@@ -327,6 +327,20 @@ namespace SS2
                 FindObjectOfType<RoR2.UI.CurrentDifficultyIconController>()?.Start(); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             }
         }
+
+        [ConCommand(commandName = "activate_eth", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Activates ethereal difficulty on the current teleporter.")]
+        public static void CCActivateEthereal(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            if (!TeleporterUpgradeController.instance)
+            {
+                SS2Log.Error("activate_eth: No TeleporterUpgradeController found.");
+                return;
+            }
+
+            TeleporterUpgradeController.instance.UpgradeEthereal();
+        }
     }
 
     public struct EtherealDifficulty
