@@ -1,7 +1,15 @@
 **Warning: content spoilers below!**
-### 0.6.XX
-* General
+### 0.6.38 
 * Beta
+    * Got rid of MULE's hold to jump higher mechanic to fix MULE not working in release builds. If this doesnt work I give up I need to go work on the MULE rework anyways 
+
+### 0.6.37 buns updated the readme to inflate download numbers
+* General
+    * Updated the minimum version dependencies in the manifest
+    * Updated the README cross-compat section to add more mods
+    * Added a "more great mods" section in the README to highlight community efforts
+* Beta
+    * MULE for real this time
 
 ### 0.6.36 buns wheres the changelogs
 * General
