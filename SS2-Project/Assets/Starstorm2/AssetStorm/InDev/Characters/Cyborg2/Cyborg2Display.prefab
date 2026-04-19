@@ -812,6 +812,32 @@ MonoBehaviour:
     transform: {fileID: 7715746942834777419}
   - name: MuzzleLaser
     transform: {fileID: 7536965916930200193}
+--- !u!114 &2340112178752379690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9176308721897938058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
+  skins:
+  - {fileID: 11400000, guid: a38e0ea4218dc9e4bb177461ead40ffc, type: 2}
+  prefabInstantiationDatas: []
 --- !u!114 &2666917881116076054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -933,28 +959,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundCenter: {fileID: 0}
---- !u!114 &2340112178752379690
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9176308721897938058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
-  _animatorControllerAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _animatorController: {fileID: 0}
-  _avatarAddress:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
-  _avatar: {fileID: 0}
-  skins: []
-  prefabInstantiationDatas: []
