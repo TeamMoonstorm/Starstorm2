@@ -86,25 +86,35 @@ namespace SS2.Monsters
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdLampBuff;
 
             private TemporaryVisualEffect instance;
+
+            // TODO: Maybe useful in SS2Utils
+            // Ensure cb is null null/destroyed before passing effect string
+            private string GetSafeChildOverride()
+            {
+                return characterBody.modelLocator && characterBody.modelLocator.modelTransform
+                    ? effectChildString
+                    : "";
+            }
+
             private void FixedUpdate()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), GetSafeChildOverride());
                 }
             }
             private void OnEnable()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), GetSafeChildOverride());
                 }
             }
             private void OnDisable()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, false, GetSafeChildOverride());
                 }
             }
 
