@@ -155,12 +155,12 @@ namespace SS2
 
                 if (isEthereal)
                 {
-                    etherealIcon.transform.localPosition = position + Vector3.forward * z;
+                    etherealIcon.transform.localPosition = position + Vector3.up * z;
                     z += iconHeightOffset;
                 }
                 if (isStorm)
                 {
-                    stormIcon.transform.localPosition = position + Vector3.forward * z;
+                    stormIcon.transform.localPosition = position + Vector3.up * z;
                     z += iconHeightOffset;
                 }
             }
