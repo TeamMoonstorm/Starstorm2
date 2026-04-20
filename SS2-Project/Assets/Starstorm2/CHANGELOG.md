@@ -5,6 +5,10 @@
     * Updated animations for Decisive Strike, Submission
     * Fixed missing VFX for Decisive Strike
     * Fixed Gouge keyword using incorrect string
+* Beta
+	  * Ethereals now add a flat number of levels to monsters
+	  * Ethereal difficulties now properly show on run end/run history screens
+	  * Fixed Drizzle being selected by default with Beta content enabled
 
 ### 0.6.38 
 * Beta
