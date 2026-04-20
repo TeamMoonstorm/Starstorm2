@@ -26,7 +26,6 @@ namespace SS2.Survivors
         
         public static GameObject KnightImpactEffect;
         public static GameObject KnightCrosshair;
-        public static GameObject KnightDroppod;
         public static GameObject KnightPassiveWard;
         public static GameObject KnightHitEffect;
         public static GameObject KnightSpinEffect;
@@ -76,8 +75,6 @@ namespace SS2.Survivors
             //AssetCollection.FindAsset<UpgradedSkillDef>("sdKnightBuffedSpecialLunar").upgradedFrom = Addressables.LoadAssetAsync<LunarDetonatorSkill>("RoR2/Base/LunarSkillReplacements/LunarDetonatorSpecialReplacement.asset").WaitForCompletion();
 
             KnightImpactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Bandit2/Bandit2SmokeBomb.prefab").WaitForCompletion();
-            KnightCrosshair = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
-            KnightDroppod = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion();
 
             ExtendedStunDamageType = R2API.DamageAPI.ReserveDamageType();
             Smite = R2API.ProcTypeAPI.ReserveProcType();
@@ -114,8 +111,8 @@ namespace SS2.Survivors
         public void ModifyPrefab()
         {
             var cb = CharacterPrefab.GetComponent<CharacterBody>();
-            cb._defaultCrosshairPrefab = KnightCrosshair;
-            cb.preferredPodPrefab = KnightDroppod;
+            cb._defaultCrosshairPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/UI/SimpleDotCrosshair.prefab").WaitForCompletion();
+            cb.preferredPodPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion();
 
             EntityStateMachine bodyState = EntityStateMachine.FindByCustomName(cb.gameObject, "Body");
             bodyState.mainStateType = new EntityStates.SerializableEntityStateType(typeof(EntityStates.Knight.MainState));

@@ -34,11 +34,13 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
 * Beta
     * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
     * Ethereal
-        
         * Ethereal pillars no longer destroy drones
         * Fixed harmless NRE on Ethereal when closing the game
+    * Cyborg
+        * Cyborg now has a proper drop pod
     * Knight
         * Knight now has a proper drop pod
+        * Fixed Knight's parry not working correctly for clients
 
 TODO: Confirm the below are fixed before mergining
 * Unconfirmed
