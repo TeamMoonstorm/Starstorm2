@@ -38,6 +38,7 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
         * Fixed harmless NRE on Ethereal when closing the game
     * Cyborg
         * Cyborg now has a proper drop pod
+        * Fixed Cyborg's shock mines not visually appearing as client
     * Knight
         * Knight now has a proper drop pod
         * Fixed Knight's parry not working correctly for clients
@@ -47,14 +48,13 @@ TODO: Confirm the below are fixed before mergining
     * Ethereal
         * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
     * Knight
-        * Fixed Knight's parry not working correctly for clients
         * Increased Knight's parry window to address latency issues
     * Railgunner
         * Tactical roll alt skill now properly reloads while scoped
     * Cyborg
         * Fixed bug where Cyborg could not charge the teleporter to 100%
         * Fixed Cyborg's teleporter projectile spawning a duplicate as client
-        * Fixed Cyborg's shock mines not visually appearing as client
+        
     * Fixed Shard Poison / Shard Void Zanzan trader interaction
     * Fixed OpenSlow Curse interaction with Scavenger bags
     * Self-Repair skill fixes

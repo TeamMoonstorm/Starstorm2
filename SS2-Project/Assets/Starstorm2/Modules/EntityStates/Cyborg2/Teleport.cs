@@ -44,7 +44,6 @@ namespace EntityStates.Cyborg2
 
             if (NetworkServer.active)
             {
-                
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }
