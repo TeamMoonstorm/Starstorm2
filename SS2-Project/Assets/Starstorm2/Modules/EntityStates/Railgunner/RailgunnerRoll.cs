@@ -1,5 +1,4 @@
 using RoR2;
-using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -51,9 +50,12 @@ namespace EntityStates.Railgunner
             //PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
            Util.PlaySound(dodgeSoundString, gameObject);
 
-            if (isAuthority)
+            if (isAuthority && skillLocator)
             {
-                RestockAllRailgunSkills();
+                if (skillLocator.primary)
+                    skillLocator.primary.stock = skillLocator.primary.maxStock;
+                if (skillLocator.secondary)
+                    skillLocator.secondary.stock = skillLocator.secondary.maxStock;
             }
         }
 
@@ -94,17 +96,6 @@ namespace EntityStates.Railgunner
             if (cameraTargetParams) cameraTargetParams.fovOverride = -1f;
             characterMotor.disableAirControlUntilCollision = false;
             base.OnExit();
-        }
-
-        private void RestockAllRailgunSkills()
-        {
-            if (!skillLocator) return;
-            for (int i = 0; i < skillLocator.skillSlotCount; i++)
-            {
-                GenericSkill skill = skillLocator.GetSkillAtIndex(i);
-                if (skill && skill.skillDef is RailgunSkillDef rsd && rsd.restockOnReload)
-                    skill.stock = skill.maxStock;
-            }
         }
 
         public override void OnSerialize(NetworkWriter writer)
