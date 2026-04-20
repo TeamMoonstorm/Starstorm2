@@ -50,6 +50,8 @@ namespace SS2.Survivors
 
         private static float fearExecuteThresholdAdditive = (1f / 0.85f) - 1f;   //0.15f with ExecuteAPI
 
+        public static BodyIndex xiConstructBodyIndex = BodyIndex.None;
+
         public static void AddBodyToSuperChargeCollection(string body)
         {
             bodiesThatGiveSuperCharge.Add(body);
@@ -81,6 +83,15 @@ namespace SS2.Survivors
                 ScepterCompat();
             }
         }
+
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitCache()
+        {
+            SS2Log.Info("We be looking for Xi");
+            xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MajorConstructBody");
+            SS2Log.Info("We found him: " + xiConstructBodyIndex);
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public void ScepterCompat()
         {
