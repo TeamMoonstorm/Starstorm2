@@ -49,6 +49,7 @@ namespace SS2
                 AddEtherealDifficulty(DifficultyIndex.Easy, SS2Assets.LoadAsset<SerializableDifficultyDef>("Deluge", SS2Bundle.Base));
                 AddEtherealDifficulty(DifficultyIndex.Normal, SS2Assets.LoadAsset<SerializableDifficultyDef>("Tempest", SS2Bundle.Base));
                 AddEtherealDifficulty(DifficultyIndex.Hard, SS2Assets.LoadAsset<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base));
+                On.RoR2.UI.RuleBookViewerStrip.SetData += RuleBookViewerStrip_SetData;
             }
 
 
@@ -56,10 +57,6 @@ namespace SS2
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
             SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });
-            // On.RoR2.UI.RuleCategoryController.Awake += RuleCategoryController_Awake;
-            // On.RoR2.UI.RuleCategoryController.AllocateStrips += RuleCategoryController_AllocateStrips;
-            // On.RoR2.UI.RuleCategoryController.AllocateResultIcons += RuleCategoryController_AllocateResultIcons;
-            On.RoR2.UI.RuleBookViewerStrip.SetData += RuleBookViewerStrip_SetData;
         }
 
         private static void RuleBookViewerStrip_SetData(On.RoR2.UI.RuleBookViewerStrip.orig_SetData orig, RuleBookViewerStrip self, List<RuleChoiceDef> newChoices, int choiceIndex)
@@ -363,11 +360,21 @@ namespace SS2
                 curDiff.scalingValue = EtherealDifficulty.GetDefaultScaling(run.selectedDifficulty) + 0.5f * (etherealsCompleted - 1);
             }
 
-            bonusLevels = 30 * (int)Mathf.Pow(2, etherealsCompleted - 1);
-
-            Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);
+            if (NetworkServer.active)
+            {
+                bonusLevels = 30 * (int)Mathf.Pow(2, etherealsCompleted - 1);
+                Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);
+                RpcModifyLevelCaps(Run.ambientLevelCap, bonusLevels);
+            }
             run.RecalculateDifficultyCoefficent();
             pendingDifficultyUp = false;
+        }
+
+        [ClientRpc]
+        private void RpcModifyLevelCaps(int levelCap, int bonusLvls)
+        {
+            Run.ambientLevelCap = levelCap;
+            bonusLevels = bonusLvls;
         }
 
         //one-time difficulty adjustments - stealing this for shrines too :3 ,,.
