@@ -1,5 +1,5 @@
 **Warning: content spoilers below!**
-### 0.6.40 (this branch) all your bugs belong to us
+### 0.6.40 all your bugs belong to us
 This is a huge bugfix release, we want to start ironing out bugs as the team prepares for 0.7 sometime later this year. This version also includes some much requested community qol fixes like Drone/Ethereal interactions, Nerfs to Stormborn Clay Templars, Cyborg MP fixes, and lots of Knight fixes to bring Knight closer to complete. 
 
 We are going to beginning priortising multiplayer stability in Beta moving forward, so more cautious fans can try SS2 Beta with friends. For that reason MULE/DU-T are going to be disabled. They both might return after DU-T gets additional polish and MULE gets his kit rework. Not that MULE was ever playable anyways....
@@ -30,8 +30,8 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
         * Fixed Wayfarer LampBuff TemporaryVisualEffect NRE spam
     * Nemesis
         * Fixed NRE when Nemesis spawns and players spawn in late
-        
 * Beta
+    * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
     * Ethereal
         * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
         * Ethereal pillars no longer destroy drones
@@ -39,6 +39,7 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
     * Knight
         * Knight now has a proper drop pod
 
+TODO: Confirm the below are fixed before mergining
 * Unconfirmed
     * Knight
         * Fixed Knight's parry not working correctly for clients
@@ -50,10 +51,10 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
         * Fixed Cyborg's teleporter projectile spawning a duplicate as client
         * Fixed Cyborg's shock mines not visually appearing as client
     * Fixed Shard Poison / Shard Void Zanzan trader interaction
-    * Xi Construct no longer runs away when Fear'd by Executioner
+    * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
     * Fixed OpenSlow Curse interaction with Scavenger bags
     * Self-Repair skill fixes
-    * New Arti alt special
+    * New Arti alt special inspired by Wayfarer's projectile attack. LampGirly at home!
     * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
 
 

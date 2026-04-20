@@ -88,7 +88,7 @@ namespace SS2.Survivors
         private static void InitCache()
         {
             SS2Log.Info("We be looking for Xi");
-            xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MajorConstructBody");
+            xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MegaConstructBody");
             SS2Log.Info("We found him: " + xiConstructBodyIndex);
         }
 
