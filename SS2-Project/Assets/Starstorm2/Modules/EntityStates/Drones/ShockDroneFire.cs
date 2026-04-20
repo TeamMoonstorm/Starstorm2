@@ -1,5 +1,8 @@
 ﻿using UnityEngine;
 using RoR2;
+using System.Linq;
+using System.Collections.Generic;
+using RoR2.Orbs;
 
 namespace EntityStates.ShockDrone
 {
@@ -29,24 +32,39 @@ namespace EntityStates.ShockDrone
             Vector3 firepos = childLocator.FindChild(muzzleString).position;
             bool crit = RollCrit();
             DamageTypeCombo damageType = DamageType.Shock5s | DamageTypeCombo.GenericPrimary | DamageTypeExtended.Electrical;
-            BlastAttack blast = new BlastAttack()
+
+            BullseyeSearch search = new BullseyeSearch();
+            search.searchOrigin = firepos;
+            search.searchDirection = transform.forward;
+            search.sortMode = BullseyeSearch.SortMode.Distance;
+            search.teamMaskFilter = TeamMask.all;
+            search.teamMaskFilter.RemoveTeam(GetTeam());
+            search.filterByLoS = true;
+            search.minAngleFilter = 0f;
+            search.maxAngleFilter = 360f;
+            search.maxDistanceFilter = radius;
+            search.RefreshCandidates();
+
+            foreach (HurtBox hurt in search.GetResults())
             {
-                radius = radius,
-                procCoefficient = 1f,
-                position = firepos,
-                attacker = gameObject,
-                teamIndex = teamComponent.teamIndex,
-                crit = crit,
-                baseDamage = damageCoefficient * damageStat,
-                damageColorIndex = DamageColorIndex.Fragile,
-                falloffModel = BlastAttack.FalloffModel.None,
-                attackerFiltering = AttackerFiltering.NeverHitSelf,
-                damageType = damageType,
-            };
+                SS2.Orbs.ExecutionerTaserOrb teslaOrb = new SS2.Orbs.ExecutionerTaserOrb();
+                teslaOrb.bouncedObjects = new List<HealthComponent>();
+                teslaOrb.attacker = gameObject;
+                teslaOrb.inflictor = gameObject;
+                teslaOrb.teamIndex = GetTeam();
+                teslaOrb.damageValue = damageCoefficient * damageStat;
+                teslaOrb.isCrit = crit;
+                teslaOrb.origin = firepos;
+                teslaOrb.bouncesRemaining = 0;
+                teslaOrb.procCoefficient = 1f;
+                teslaOrb.target = hurt;
+                teslaOrb.damageColorIndex = DamageColorIndex.Default;
+                teslaOrb.damageType = damageType;
+                teslaOrb.skinNameToken = "Default";
+                OrbManager.instance.AddOrb(teslaOrb);
+            }
 
-            blast.Fire();
-
-            EffectManager.SimpleEffect(blastEffect, firepos, Quaternion.identity, true);
+            // EffectManager.SimpleEffect(blastEffect, firepos, Quaternion.identity, true);
         }
 
         public override void FixedUpdate()

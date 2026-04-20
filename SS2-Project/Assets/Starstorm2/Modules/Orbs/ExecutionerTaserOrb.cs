@@ -43,10 +43,12 @@ namespace SS2.Orbs
 						break;
 					}
 				}
-			} 
+			}
             else
 			{
-				SS2Log.Warning("something wrong happened .,. oh well !");
+				// fallback to default because i want to use this on another guy
+				EffectManager.SpawnEffect(Executioner2.taserVFX, effectData, true);
+				// SS2Log.Warning("ExecutionerTaserOrb.Begin : Failed to resolve effect type!");
             }
 
         }
