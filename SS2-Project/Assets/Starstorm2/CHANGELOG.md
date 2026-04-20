@@ -11,6 +11,7 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
 * Survivors
     * Executioner
         * Rare Executioner orb NRE fix (I cant seem to reproduce this one, but a null check was added where it happened)
+        * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
 * Storms
     * Misc NRE fixes
 * Drones
@@ -33,7 +34,7 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
 * Beta
     * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
     * Ethereal
-        * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
+        
         * Ethereal pillars no longer destroy drones
         * Fixed harmless NRE on Ethereal when closing the game
     * Knight
@@ -41,6 +42,8 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
 
 TODO: Confirm the below are fixed before mergining
 * Unconfirmed
+    * Ethereal
+        * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
     * Knight
         * Fixed Knight's parry not working correctly for clients
         * Increased Knight's parry window to address latency issues
@@ -51,7 +54,6 @@ TODO: Confirm the below are fixed before mergining
         * Fixed Cyborg's teleporter projectile spawning a duplicate as client
         * Fixed Cyborg's shock mines not visually appearing as client
     * Fixed Shard Poison / Shard Void Zanzan trader interaction
-    * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
     * Fixed OpenSlow Curse interaction with Scavenger bags
     * Self-Repair skill fixes
     * New Arti alt special inspired by Wayfarer's projectile attack. LampGirly at home!
