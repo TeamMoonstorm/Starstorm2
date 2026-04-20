@@ -32,6 +32,8 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
     * Nemesis
         * Fixed NRE when Nemesis spawns and players spawn in late
 * Beta
+    * Fixed a harmless NRE for Void Shop RNG on clients
+    * Fixed a harmless NRE for ItemOnEliteKill on clients
     * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
     * Ethereal
         * Ethereal pillars no longer destroy drones

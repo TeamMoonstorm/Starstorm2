@@ -17,10 +17,14 @@ namespace SS2.Items
         {
             dropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtItemOnEliteKill", SS2Bundle.Items);
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
-            // TODO: Another NRE here? Null check I guess
+            
             Run.onRunStartGlobal += (run) =>
             {
-                dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
+                // This is a harmless NRE on clients, but causes log noise that can confuse players thinking SS2 is root of X issue
+                if (run && run.treasureRng != null)
+                {
+                    dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
+                } 
             };
         }
         private void OnCharacterDeathGlobal(DamageReport damageReport)
