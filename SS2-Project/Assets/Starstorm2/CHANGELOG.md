@@ -62,8 +62,16 @@ TODO: Confirm the below are fixed before mergining
     * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
 
 
-## 0.6.39 Nemmando Games
-- Swuff's Nemmando animation PR ideally, and my Ambush config PR
+### 0.6.39
+* Nemesis Commando
+    * Re-implemented unique set of animations for when gun isn't in use (thanks Domi!)
+    * Updated animations for Decisive Strike, Submission
+    * Fixed missing VFX for Decisive Strike
+    * Fixed Gouge keyword using incorrect string
+* Beta
+	* Ethereals now add a flat number of levels to monsters
+	* Ethereal difficulties now properly show on run end/run history screens
+	* Fixed Drizzle being selected by default with Beta content enabled
 
 ### 0.6.38 
 * Beta
