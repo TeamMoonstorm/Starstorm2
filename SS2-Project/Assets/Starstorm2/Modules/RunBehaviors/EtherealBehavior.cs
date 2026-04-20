@@ -2,7 +2,6 @@ using R2API;
 using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
-using RoR2.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -56,60 +55,6 @@ namespace SS2
             shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
             SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });
-            // On.RoR2.UI.RuleCategoryController.Awake += RuleCategoryController_Awake;
-            // On.RoR2.UI.RuleCategoryController.AllocateStrips += RuleCategoryController_AllocateStrips;
-            // On.RoR2.UI.RuleCategoryController.AllocateResultIcons += RuleCategoryController_AllocateResultIcons;
-            On.RoR2.UI.RuleBookViewerStrip.SetData += RuleBookViewerStrip_SetData;
-        }
-
-        private static void RuleBookViewerStrip_SetData(On.RoR2.UI.RuleBookViewerStrip.orig_SetData orig, RuleBookViewerStrip self, List<RuleChoiceDef> newChoices, int choiceIndex)
-        {
-            orig(self, newChoices, choiceIndex);
-
-            // >>>>>>
-            if (self.transform.parent.parent.TryGetComponent(out RuleCategoryController rcc) && rcc.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
-            {
-                self.currentDisplayChoiceIndex = 1;
-            }
-
-            // stupid fucking way to make sure we're set to Rainstorm by default:
-            // if youre seeing this and can do a better job divining the correct way to actually re-set the rule as default on CSS, heres your chance!!
-            // i assume its caused because were technically slotting new difficulty options in between drizz and rainstorm, so an index of '1' is technically drizz+1 instead of rainstorm
-            // and thats not available on css so it just defaults to 0 or something
-            // i really dont know
-            // but anyway we just manually force the host to click the button
-            // only host actually defaults it- i think is consistent with vanilla
-            // by default, only p1 is forced to vote, no one else does -> p1's default vote, rainstorm
-            // and if someone else selects a diff, then host will have to change their vote to agree, or otherwise it does whatever happens when its 50/50. idk.
-            // ultimately i think it's fine to give host a potential extgra click just to fix this shit already, im so tired of defaulting to drizz
-            // also it makes some visual bugs with green squares but id rather have the functionality than whatever tf is happening with that atm
-            Transform stupid = self.transform.Find("ChoiceContainer/Choice (Difficulty.Normal)");
-            if (NetworkServer.active && stupid != null && stupid.TryGetComponent(out RuleChoiceController omfg))
-            {
-                omfg.OnClick();
-            }
-        }
-
-        private static void RuleCategoryController_AllocateResultIcons(On.RoR2.UI.RuleCategoryController.orig_AllocateResultIcons orig, RuleCategoryController self, int desiredCount)
-        {
-            orig(self, desiredCount);
-
-            // ughhhhhh
-            if (self.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
-            {
-                SS2Log.Info("found difficulty slider");
-                Transform SC = self.transform.Find("StripContainer");
-                if (SC != null)
-                {
-                    Transform RSP = SC.Find("RuleStripPrefab(Clone)");
-                    if (RSP != null && RSP.TryGetComponent(out RuleBookViewerStrip rbvs)) // shinji screaming gif
-                    {
-                        SS2Log.Info("rbvs edit?");
-                        SS2Log.Info("rbvs is " + rbvs.currentDisplayChoiceIndex);
-                        rbvs.currentDisplayChoiceIndex = 1;
-                    }
-                }
-            }
         }
 
         private void AmbientLevelDisplay_Update(On.RoR2.UI.AmbientLevelDisplay.orig_Update orig, RoR2.UI.AmbientLevelDisplay self)
@@ -345,17 +290,7 @@ namespace SS2
             {
                 runIsEthereal = true;
                 run.selectedDifficulty = GetUpdatedDifficulty();
-                // run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
-                for (int i = 0; i < run.ruleBook.ruleValues.Length; ++i)
-                {
-                    RuleDef rd = RuleCatalog.GetRuleDef(i);
-                    RuleChoiceDef rcd = rd.choices[run.ruleBook.ruleValues[i]];
-                    if (rcd.difficultyIndex != DifficultyIndex.Invalid)
-                    {
-                        rcd.difficultyIndex = GetUpdatedDifficulty();
-                        // run.ruleBook.ApplyChoice(rcd);
-                    }
-                }
+                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
             }
             else
             {
@@ -363,7 +298,7 @@ namespace SS2
                 curDiff.scalingValue = EtherealDifficulty.GetDefaultScaling(run.selectedDifficulty) + 0.5f * (etherealsCompleted - 1);
             }
 
-            bonusLevels = 30 * (int)Mathf.Pow(2, etherealsCompleted - 1);
+            bonusLevels = 20 * (int)Mathf.Pow(2, etherealsCompleted - 1);
 
             Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);  
             run.RecalculateDifficultyCoefficent();
