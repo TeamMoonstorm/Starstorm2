@@ -118,6 +118,8 @@ namespace EntityStates.Nemmando
 
             characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
 
+            PlayCrossfade("FullBody, Override", "BufferEmpty", 0.15f);
+
             if (dashEffectInstance)
             {
                 Destroy(dashEffectInstance);
