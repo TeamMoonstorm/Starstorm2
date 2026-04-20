@@ -59,6 +59,7 @@ namespace SS2.Components
             instance = this;
             On.RoR2.SceneDirector.Start += SceneDirector_Start; /////// fuck OFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             base.transform.SetParent(Run.instance.transform);
+            // TODO: NREs on Run??? Null check I guess
             voidshopRng = new Xoroshiro128Plus(Run.instance.runRNG.nextUlong);
         }
 

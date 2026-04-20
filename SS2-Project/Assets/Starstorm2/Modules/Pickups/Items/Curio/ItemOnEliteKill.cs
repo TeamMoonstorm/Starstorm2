@@ -17,6 +17,7 @@ namespace SS2.Items
         {
             dropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtItemOnEliteKill", SS2Bundle.Items);
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+            // TODO: Another NRE here? Null check I guess
             Run.onRunStartGlobal += (run) =>
             {
                 dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
