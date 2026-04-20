@@ -4,11 +4,16 @@ using R2API;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
+using RiskOfOptions.OptionConfigs;
 namespace SS2.Interactables
 {
     public sealed class Ambush : SS2Interactable
     {
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acAmbush", SS2Bundle.Interactables);
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Ambush", configNameOverride = "Enable On All Difficulties", configDescOverride = "(Requires SS2 Beta) When enabled, Ambush encounters can spawn on any difficulty, not just Typhoon.")]
+        public static bool enableOnAllDifficulties = false;
+
         public override void Initialize()
         {
             SceneDirector.onGenerateInteractableCardSelection += OnGenerateInteractableCardSelection;
@@ -16,7 +21,7 @@ namespace SS2.Interactables
 
         private static void OnGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
         {
-            if (Run.instance.selectedDifficulty != Typhoon.sdd.DifficultyIndex)
+            if (!enableOnAllDifficulties && Run.instance.selectedDifficulty != Typhoon.sdd.DifficultyIndex)
             {
                 dccs.RemoveCardsThatFailFilter(new Predicate<DirectorCard>(IsNotAmbush));
             }
