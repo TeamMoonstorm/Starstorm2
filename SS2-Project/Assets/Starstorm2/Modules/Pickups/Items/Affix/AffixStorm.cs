@@ -17,10 +17,15 @@ namespace SS2.Items
         private static int boostAttackSpeedStacks = 10;
         private static int clayTemplarBoostAttackSpeedStacks = boostAttackSpeedStacks / 2;
 
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitCache()
+        {
+            clayTemplarBodyIndex = BodyCatalog.FindBodyIndex("ClayBruiserBody");
+        }
+
         public override void Initialize()
         {
             BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffAffixStorm"), SS2Assets.LoadAsset<Material>("matAffixLightning", SS2Bundle.Equipments));
-            RoR2Application.onLoad += () => clayTemplarBodyIndex = BodyCatalog.FindBodyIndex("ClayBruiserBody");
         }
         public override bool IsAvailable(ContentPack contentPack)
         {

@@ -20,13 +20,10 @@ namespace EntityStates.AI.Walker
 
         private static BodyIndex xiConstructBodyIndex = BodyIndex.None;
 
-        [SystemInitializer]
-        private static void Init()
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitCache()
         {
-            RoR2Application.onLoad += () =>
-            {
-                xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MajorConstructBody");
-            };
+            xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MajorConstructBody");
         }
 
         public override void OnEnter()
