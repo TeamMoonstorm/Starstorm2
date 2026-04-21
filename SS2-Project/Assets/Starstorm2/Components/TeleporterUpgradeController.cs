@@ -97,6 +97,7 @@ namespace SS2
         {
             if (isEthereal)
             {
+                // TODO: Why do we have this twice here?
                 if (tele.bossDirector)
                 {
                     tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));

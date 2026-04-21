@@ -131,43 +131,5 @@ namespace SS2.Monsters
         {
             public string phase;
         }
-
-        // Shorthand dev command for testing since I am lazy
-        #if DEBUG
-        [ConCommand(commandName = "spawn_lampboss", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns LampBoss enemies at the sender's position. Usage: spawn_lampboss [count=1]")]
-        public static void CCSpawnLampBoss(ConCommandArgs args)
-        {
-            if (!NetworkServer.active) return;
-
-            int count = args.TryGetArgInt(0) ?? 1;
-
-            CharacterMaster master = args.GetSenderMaster();
-            if (!master || !master.GetBody())
-            {
-                SS2Log.Error("spawn_lampboss: No valid body found.");
-                return;
-            }
-
-            if (!_masterPrefab)
-            {
-                SS2Log.Error("spawn_lampboss: LampBossMaster prefab not loaded.");
-                return;
-            }
-
-            Vector3 position = master.GetBody().footPosition;
-            for (int i = 0; i < count; i++)
-            {
-                MasterSummon summon = new MasterSummon
-                {
-                    masterPrefab = _masterPrefab,
-                    position = position + Vector3.up * 3f + UnityEngine.Random.insideUnitSphere * 5f,
-                    rotation = Quaternion.identity,
-                    teamIndexOverride = TeamIndex.Monster
-                };
-                summon.Perform();
-            }
-            SS2Log.Info($"spawn_lampboss: Spawned {count} LampBoss(es).");
-        }
-        #endif
     }
 }

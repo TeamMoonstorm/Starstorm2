@@ -2,6 +2,7 @@ using R2API;
 using R2API.ScriptableObjects;
 using R2API.Utils;
 using RoR2;
+using RoR2.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +33,9 @@ namespace SS2
         public bool pendingDifficultyUp;
         public bool runIsEthereal;
         public bool runIsEclipse;
+        public int bonusLevels = 0;
+        private int lastBonusLevels;
+
 
         [SystemInitializer]
         internal static void Init()
@@ -45,17 +49,88 @@ namespace SS2
                 AddEtherealDifficulty(DifficultyIndex.Easy, SS2Assets.LoadAsset<SerializableDifficultyDef>("Deluge", SS2Bundle.Base));
                 AddEtherealDifficulty(DifficultyIndex.Normal, SS2Assets.LoadAsset<SerializableDifficultyDef>("Tempest", SS2Bundle.Base));
                 AddEtherealDifficulty(DifficultyIndex.Hard, SS2Assets.LoadAsset<SerializableDifficultyDef>("Cyclone", SS2Bundle.Base));
+                On.RoR2.UI.RuleBookViewerStrip.SetData += RuleBookViewerStrip_SetData;
             }
-            
+
 
             //Initialize related prefabs
-            shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);          
+            shrinePrefab = SS2Assets.LoadAsset<GameObject>("ShrineEthereal", SS2Bundle.Indev);
             portalPrefab = SS2Assets.LoadAsset<GameObject>("PortalStranger1", SS2Bundle.SharedStages);
-            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });         
+            SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });
+        }
+
+        private static void RuleBookViewerStrip_SetData(On.RoR2.UI.RuleBookViewerStrip.orig_SetData orig, RuleBookViewerStrip self, List<RuleChoiceDef> newChoices, int choiceIndex)
+        {
+            orig(self, newChoices, choiceIndex);
+
+            // >>>>>>
+            if (self.transform.parent.parent.TryGetComponent(out RuleCategoryController rcc) && rcc.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
+            {
+                self.currentDisplayChoiceIndex = 1;
+            }
+
+            // stupid fucking way to make sure we're set to Rainstorm by default:
+            // if youre seeing this and can do a better job divining the correct way to actually re-set the rule as default on CSS, heres your chance!!
+            // i assume its caused because were technically slotting new difficulty options in between drizz and rainstorm, so an index of '1' is technically drizz+1 instead of rainstorm
+            // and thats not available on css so it just defaults to 0 or something
+            // i really dont know
+            // but anyway we just manually force the host to click the button
+            // only host actually defaults it- i think is consistent with vanilla
+            // by default, only p1 is forced to vote, no one else does -> p1's default vote, rainstorm
+            // and if someone else selects a diff, then host will have to change their vote to agree, or otherwise it does whatever happens when its 50/50. idk.
+            // ultimately i think it's fine to give host a potential extgra click just to fix this shit already, im so tired of defaulting to drizz
+            // also it makes some visual bugs with green squares but id rather have the functionality than whatever tf is happening with that atm
+            Transform stupid = self.transform.Find("ChoiceContainer/Choice (Difficulty.Normal)");
+            if (NetworkServer.active && stupid != null && stupid.TryGetComponent(out RuleChoiceController omfg))
+            {
+                omfg.OnClick();
+            }
+        }
+
+        private static void RuleCategoryController_AllocateResultIcons(On.RoR2.UI.RuleCategoryController.orig_AllocateResultIcons orig, RuleCategoryController self, int desiredCount)
+        {
+            orig(self, desiredCount);
+
+            // ughhhhhh
+            if (self.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
+            {
+                SS2Log.Info("found difficulty slider");
+                Transform SC = self.transform.Find("StripContainer");
+                if (SC != null)
+                {
+                    Transform RSP = SC.Find("RuleStripPrefab(Clone)");
+                    if (RSP != null && RSP.TryGetComponent(out RuleBookViewerStrip rbvs)) // shinji screaming gif
+                    {
+                        SS2Log.Info("rbvs edit?");
+                        SS2Log.Info("rbvs is " + rbvs.currentDisplayChoiceIndex);
+                        rbvs.currentDisplayChoiceIndex = 1;
+                    }
+                }
+            }
+        }
+
+        private void AmbientLevelDisplay_Update(On.RoR2.UI.AmbientLevelDisplay.orig_Update orig, RoR2.UI.AmbientLevelDisplay self)
+        {
+            int realLastLevel = self.lastLevel;
+
+            orig(self);
+
+            // add to text if bonus levels > 0 and the level changes
+            if (Run.instance != null && Run.instance.ambientLevelFloor != realLastLevel && bonusLevels > 0)
+            {
+                self.text.text = self.text.text + " <color=#34EB8F>+" + bonusLevels;
+            }
+
+            // update to add to text if bonus levels # changes
+            if (bonusLevels != lastBonusLevels)
+            {
+                lastBonusLevels = bonusLevels;
+                self.text.text = self.text.text + " <color=#34EB8F>+" + bonusLevels;
+            }
         }
 
         public static void AddEtherealDifficulty(DifficultyIndex baseDifficulty, SerializableDifficultyDef etherealDef)
-        {          
+        {
             DifficultyAPI.AddDifficulty(etherealDef);
             etherealDifficulties.Add(new EtherealDifficulty(etherealDef));
             diffDicts.Add(baseDifficulty, etherealDef.DifficultyIndex);
@@ -73,6 +148,7 @@ namespace SS2
             Run.ambientLevelCap = defaultLevelCap;
             Stage.onServerStageComplete += OnServerStageComplete;
             On.RoR2.SceneDirector.Start += SceneDirector_Start;
+            On.RoR2.UI.AmbientLevelDisplay.Update += AmbientLevelDisplay_Update;
         }
 
         private void OnServerStageComplete(Stage stage)
@@ -86,6 +162,7 @@ namespace SS2
             Run.ambientLevelCap = defaultLevelCap;
             On.RoR2.SceneDirector.Start -= SceneDirector_Start;
             Stage.onServerStageComplete -= OnServerStageComplete;
+            On.RoR2.UI.AmbientLevelDisplay.Update -= AmbientLevelDisplay_Update;
         }
 
         public void OnEtherealTeleporterCharged()
@@ -97,13 +174,13 @@ namespace SS2
         // probably not the right hook but new async stage stuff makes timing a headache so im not going to bother changing it
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
-            orig(self);         
+            orig(self);
             if (self.teleporterInstance && NetworkServer.active)
             {
-                SpawnShrine();               
+                SpawnShrine();
                 // from what i could tell, we only wanted to increase difficulty if the new stage had time running
                 if (pendingDifficultyUp && SceneCatalog.GetSceneDefForCurrentScene().sceneType == SceneType.Stage)
-                    SetEtherealsCompleted(etherealsCompleted+1);
+                    SetEtherealsCompleted(etherealsCompleted + 1);
             }
         }
 
@@ -215,10 +292,10 @@ namespace SS2
                     ReplaceRandomNewtStatue();
                     return;
                     break;
-            }          
+            }
             GameObject term = Instantiate(shrinePrefab, position, rotation);
             NetworkServer.Spawn(term);
-            
+
         }
 
         // pick a random disabled statue to replace with an ethereal shrine
@@ -226,15 +303,15 @@ namespace SS2
         {
             PortalStatueBehavior[] statues = GameObject.FindObjectsOfType<PortalStatueBehavior>(true).Where(p => p.portalType == PortalStatueBehavior.PortalType.Shop).ToArray();
             PortalStatueBehavior[] disabledStatues = statues.Where(p => !p.gameObject.activeInHierarchy).ToArray();
-            if(disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
+            if (disabledStatues.Length > 0) // FUCK newt. that shits getting replaced 25 to 33 percent of the time
             {
                 Transform newt = disabledStatues[UnityEngine.Random.Range(0, disabledStatues.Length)].transform;
                 GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
-                NetworkServer.Spawn(term);  
+                NetworkServer.Spawn(term);
             }
             else if (statues.Length > 0)
             {
-                Transform newt = statues[UnityEngine.Random.Range(0, statues.Length)].transform;           
+                Transform newt = statues[UnityEngine.Random.Range(0, statues.Length)].transform;
                 GameObject term = Instantiate(shrinePrefab, newt.position + Vector3.up * -1.2f, newt.rotation);
                 NetworkServer.Spawn(term);
                 Destroy(newt.gameObject);
@@ -257,15 +334,25 @@ namespace SS2
                 return;
             }
             ChatMessage.Send(Language.GetStringFormatted("SS2_ETHEREAL_DIFFICULTY_WARNING"));
-            
+
             var run = Run.instance;
             DifficultyDef curDiff = DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty);
-            
+
             if (!runIsEthereal && !runIsEclipse)
             {
                 runIsEthereal = true;
                 run.selectedDifficulty = GetUpdatedDifficulty();
-                run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
+                // run.ruleBook.ApplyChoice(RuleCatalog.FindChoiceDef("Difficulty." + DifficultyCatalog.GetDifficultyDef(run.selectedDifficulty).nameToken));
+                for (int i = 0; i < run.ruleBook.ruleValues.Length; ++i)
+                {
+                    RuleDef rd = RuleCatalog.GetRuleDef(i);
+                    RuleChoiceDef rcd = rd.choices[run.ruleBook.ruleValues[i]];
+                    if (rcd.difficultyIndex != DifficultyIndex.Invalid)
+                    {
+                        rcd.difficultyIndex = GetUpdatedDifficulty();
+                        // run.ruleBook.ApplyChoice(rcd);
+                    }
+                }
             }
             else
             {
@@ -273,9 +360,21 @@ namespace SS2
                 curDiff.scalingValue = EtherealDifficulty.GetDefaultScaling(run.selectedDifficulty) + 0.5f * (etherealsCompleted - 1);
             }
 
-            Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);          
+            if (NetworkServer.active)
+            {
+                bonusLevels = 30 * (int)Mathf.Pow(2, etherealsCompleted - 1);
+                Run.ambientLevelCap = defaultLevelCap + (100 * etherealsCompleted);
+                RpcModifyLevelCaps(Run.ambientLevelCap, bonusLevels);
+            }
             run.RecalculateDifficultyCoefficent();
-            pendingDifficultyUp = false;          
+            pendingDifficultyUp = false;
+        }
+
+        [ClientRpc]
+        private void RpcModifyLevelCaps(int levelCap, int bonusLvls)
+        {
+            Run.ambientLevelCap = levelCap;
+            bonusLevels = bonusLvls;
         }
 
         //one-time difficulty adjustments - stealing this for shrines too :3 ,,.
@@ -284,12 +383,12 @@ namespace SS2
             //switch to ethereal difficulty
             DifficultyIndex newDiffIndex;
             DifficultyIndex currentDiffIndex = run.selectedDifficulty;
-            
+
             var diff = DifficultyCatalog.GetDifficultyDef(currentDiffIndex);
             if (!diffDicts.TryGetValue(currentDiffIndex, out newDiffIndex))
-            {   
-                if(runIsEclipse) return currentDiffIndex;
-                
+            {
+                if (runIsEclipse) return currentDiffIndex;
+
                 SS2Log.Warning($"EtherealBehavior.UpdateDifficulty(): Could not find ethereal difficulty for DifficultyDef {Language.GetString(diff.nameToken)}, using it's scaling value instead.");
                 if (diff.scalingValue >= 1 && diff.scalingValue < 2 && diffDicts.TryGetValue(DifficultyIndex.Easy, out newDiffIndex)) // if drizzle scaling
                 {
@@ -362,7 +461,7 @@ namespace SS2
         }
         private static void ResetAll(Run obj)
         {
-            foreach(EtherealDifficulty diff in instances)
+            foreach (EtherealDifficulty diff in instances)
             {
                 // DifficultyCatalog is null when closing RoR2, this is a harmless NRE, but good practice :)
                 DifficultyDef def = DifficultyCatalog.GetDifficultyDef(diff.index);

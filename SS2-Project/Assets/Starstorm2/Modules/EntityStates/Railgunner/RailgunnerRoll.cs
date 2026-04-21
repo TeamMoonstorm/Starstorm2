@@ -1,3 +1,4 @@
+using EntityStates.Railgunner.Reload;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -50,12 +51,14 @@ namespace EntityStates.Railgunner
             //PlayAnimation("FullBody, Override", "Roll", "Roll.playbackRate", duration);
            Util.PlaySound(dodgeSoundString, gameObject);
 
-            if (isAuthority && skillLocator)
+            if (isAuthority)
             {
-                if (skillLocator.primary)
-                    skillLocator.primary.stock = skillLocator.primary.maxStock;
-                if (skillLocator.secondary)
-                    skillLocator.secondary.stock = skillLocator.secondary.maxStock;
+                EntityStateMachine entityStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
+
+                if (entityStateMachine && entityStateMachine.state is Reloading reloadState && !reloadState.hasAttempted)
+                {
+                    entityStateMachine.SetNextState(new BoostConfirm());
+                }
             }
         }
 

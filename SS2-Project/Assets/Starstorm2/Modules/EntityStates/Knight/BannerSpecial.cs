@@ -184,7 +184,8 @@ namespace EntityStates.Knight
         {
             PlayAnimation("FullBody, Override", "SpecialLeapEnd", "Special.playbackRate", detonateNextFrame ? 1f : 0.2f);
 
-            Util.PlaySound("Play_huntress_R_snipe_shoot", gameObject);
+            // TODO: Bro needs sound
+            //Util.PlaySound("Play_huntress_R_snipe_shoot", gameObject);
 
             if (base.isAuthority)
             {
@@ -218,10 +219,6 @@ namespace EntityStates.Knight
 
                 bannerObject.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
                 NetworkServer.Spawn(bannerObject);
-
-                //slowBuffWardInstance = UnityEngine.Object.Instantiate(slowBuffWard, position, Quaternion.identity);
-                //slowBuffWardInstance.GetComponent<TeamFilter>().teamIndex = characterBody.teamComponent.teamIndex;
-                //slowBuffWardInstance.GetComponent<NetworkedBodyAttachment>().AttachToGameObjectAndSpawn(bannerObject);
             }
         }
 

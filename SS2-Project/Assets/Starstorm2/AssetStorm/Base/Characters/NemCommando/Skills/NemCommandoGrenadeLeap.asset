@@ -15,24 +15,33 @@ MonoBehaviour:
   skillName: NemCommandoGrenade
   skillNameToken: SS2_NEMCOMMANDO_UTILITY_GRENADE_NAME
   skillDescriptionToken: SS2_NEMCOMMANDO_UTILITY_GRENADE_DESCRIPTION
-  keywordTokens: []
+  keywordTokens:
+  - KEYWORD_STUNNING
   icon: {fileID: 21300000, guid: 7396109387b621949897c35a758d1a51, type: 3}
   activationStateMachineName: Body
   activationState:
     _typeName: EntityStates.NemCommando.GrenadeLeap, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
   interruptPriority: 2
-  baseRechargeInterval: 7
+  baseRechargeInterval: 6
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 0
   forceSprintDuringState: 1
   canceledFromSprinting: 0
   isCombatSkill: 0
   mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
