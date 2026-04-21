@@ -35,13 +35,14 @@ namespace SS2
             blitzRun.uiPrefab = classicRun.uiPrefab;
             blitzRun.rebirthDropTable = classicRun.rebirthDropTable;
 
-            // All required components (RequireComponent doesn't work at runtime)
             blitzRunPrefab.AddComponent<TeamManager>();
             blitzRunPrefab.AddComponent<NetworkRuleBook>();
+            blitzRunPrefab.AddComponent<TeamFilter>();
+            blitzRunPrefab.AddComponent<EnemyInfoPanelInventoryProvider>();
+            blitzRunPrefab.AddComponent<DirectorCore>();
+            blitzRunPrefab.AddComponent<ExpansionRequirementComponent>();
             blitzRunPrefab.AddComponent<RunCameraManager>();
-            blitzRunPrefab.AddComponent<RunArtifactManager>();
 
-            // R2API
             blitzRunPrefab.AddComponent<GameModeInfo>().buttonHoverDescription = "SS2_GAMEMODE_BLITZ_DESC";
 
             SS2Content.SS2ContentPack.gameModePrefabs.Add(new[] { blitzRunPrefab });
