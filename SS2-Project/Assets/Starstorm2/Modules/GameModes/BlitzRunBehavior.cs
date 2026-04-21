@@ -10,6 +10,13 @@ namespace SS2
     {
         private static BlitzRunBehavior instance;
 
+        private float intervalStopwatch;
+        private float gameOverStopwatch;
+        private bool isGameOver;
+
+        private const float eventInterval = 120f; // 2 minutes
+        private const float blitzDuration = 600f; // 10 minutes
+
         private void OnEnable()
         {
             instance = this;
@@ -26,6 +33,34 @@ namespace SS2
             On.RoR2.SceneDirector.PopulateScene -= OnPopulateScene;
             ObjectivePanelController.collectObjectiveSources -= OnCollectObjectiveSources;
             instance = null;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!NetworkServer.active || isGameOver)
+                return;
+
+            float dt = Time.fixedDeltaTime;
+
+            intervalStopwatch += dt;
+            if (intervalStopwatch >= eventInterval)
+            {
+                intervalStopwatch -= eventInterval;
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                {
+                    baseToken = "SS2_GAMEMODE_BLITZ_INTERVAL"
+                });
+            }
+
+            gameOverStopwatch += dt;
+            if (gameOverStopwatch >= blitzDuration)
+            {
+                isGameOver = true;
+                Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                {
+                    baseToken = "SS2_GAMEMODE_BLITZ_OVER"
+                });
+            }
         }
 
         private void OnRunStart(Run run)
