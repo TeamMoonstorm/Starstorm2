@@ -5,7 +5,7 @@ namespace SS2
 {
     public class BlitzRun : Run
     {
-        protected override void Start()
+        public override void Start()
         {
             base.Start();
 
