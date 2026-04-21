@@ -25,6 +25,10 @@ namespace SS2
             blitzRun.nameToken = "SS2_GAMEMODE_BLITZ_NAME";
             blitzRun.userPickable = true;
 
+            // Both ClassicRun and WeeklyRun prefabs have these — required for cameras and team XP
+            blitzRunPrefab.AddComponent<TeamManager>();
+            blitzRunPrefab.AddComponent<RunCameraManager>();
+
             // Register for networking so NetworkServer.Spawn works
             PrefabAPI.RegisterNetworkPrefab(blitzRunPrefab);
 
@@ -67,6 +71,7 @@ namespace SS2
             blitzRun.startingSceneGroup = classicRun.startingSceneGroup;
             blitzRun.gameOverPrefab = classicRun.gameOverPrefab;
             blitzRun.lobbyBackgroundPrefab = classicRun.lobbyBackgroundPrefab;
+            blitzRun.uiPrefab = classicRun.uiPrefab;
 
             blitzRun.startingScenes = SceneCatalog.allStageSceneDefs
                 .Where(s => s.validForRandomSelection)
