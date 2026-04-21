@@ -14,17 +14,35 @@ namespace SS2
 
         internal static IEnumerator Init()
         {
-            // Clone ClassicRun to inherit all components and field values
+            // Inactive holder prevents Awake/OnEnable on the clone
+            var holder = new GameObject("SS2_GameModePrefabs");
+            holder.SetActive(false);
+            Object.DontDestroyOnLoad(holder);
+
+            // Clone ClassicRun under inactive parent
             var classicRunPrefab = Addressables.LoadAssetAsync<GameObject>(
                 "RoR2/Base/ClassicRun/ClassicRun.prefab").WaitForCompletion();
-            blitzRunPrefab = PrefabAPI.InstantiateClone(classicRunPrefab, "BlitzRun");
+            blitzRunPrefab = Object.Instantiate(classicRunPrefab, holder.transform);
+            blitzRunPrefab.name = "BlitzRun";
 
-            // Swap Run → BlitzRun, preserving all fields
+            // Swap Run to BlitzRun, preserving all fields
             var oldRun = blitzRunPrefab.GetComponent<Run>();
+            if (oldRun == null)
+            {
+                SS2Log.Error("GameModeModule: Cloned prefab has no Run component.");
+                yield break;
+            }
+
             var saved = new RunFieldSnapshot(oldRun);
             Object.DestroyImmediate(oldRun);
 
             var blitzRun = blitzRunPrefab.AddComponent<BlitzRun>();
+            if (blitzRun == null)
+            {
+                SS2Log.Error("GameModeModule: Failed to add BlitzRun component.");
+                yield break;
+            }
+
             saved.ApplyTo(blitzRun);
             blitzRun.nameToken = "SS2_GAMEMODE_BLITZ_NAME";
             blitzRun.userPickable = true;
@@ -34,6 +52,9 @@ namespace SS2
                 Object.DestroyImmediate(tutorial);
             if (blitzRunPrefab.TryGetComponent<PreloadContent>(out var preload))
                 Object.DestroyImmediate(preload);
+
+            // Register for networking AFTER component swap
+            PrefabAPI.RegisterNetworkPrefab(blitzRunPrefab);
 
             // R2API hooks
             blitzRunPrefab.AddComponent<GameModeInfo>().buttonHoverDescription = "SS2_GAMEMODE_BLITZ_DESC";
