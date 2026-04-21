@@ -5,6 +5,8 @@ using System;
 using UnityEngine;
 using UnityEngine.Networking;
 using RiskOfOptions.OptionConfigs;
+using MSU.Config;
+
 namespace SS2.Interactables
 {
     public sealed class Ambush : SS2Interactable
