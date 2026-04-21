@@ -22,10 +22,8 @@ namespace EntityStates.Lamp
         private static float searchRadius = 27f;
         private static float beamBreakDistance = 36f;
         private static int maxBeams = 1;
-        private static bool ignoreMass = true;
 
         private static float forceMagnitude = -1.25f;
-        private static float forceDamping = 0.4f;
         private static float maxHeightDiff = 15f;
         private static float forceCoefficientAtMaxHeightDiff = 2f;
 
@@ -246,7 +244,6 @@ namespace EntityStates.Lamp
         }
 
         // TODO: Add forces if multiple beams are targetting one body, instead of separate damage
-        // ALSO todo::::::::::::::::: fizz force flags
         
         protected void Lifto(HurtBox hurtBox)
         {
@@ -263,54 +260,19 @@ namespace EntityStates.Lamp
 
             if (healthComponent && healthComponent.body && hurtBox.transform)
             {
-                CharacterMotor characterMotor = healthComponent.body.characterMotor;
-                bool hasAuthority = healthComponent.body.hasEffectiveAuthority;
-
                 Vector3 between = hurtBox.transform.position - transform.position;  
                 float heightDiff = Mathf.Abs(between.y);
-                Vector3 forceDirection = new Vector3(0, between.y, 0);
-                forceDirection = forceDirection.normalized;
+                Vector3 forceDirection = new Vector3(0, between.y, 0).normalized;
 
                 float forceCoefficient = Mathf.Clamp(heightDiff / maxHeightDiff, 1f, forceCoefficientAtMaxHeightDiff);
                 Vector3 forceVector = forceDirection * forceMagnitude * forceCoefficient;
 
-                float mass = 0f;
-                Vector3 dampingForce = Vector3.zero;
-
-                if (characterMotor)
-                {
-                    mass = characterMotor.mass;
-                    // only apply velocity damping for server-authoritative bodies;
-                    // for client bodies the server has stale velocity data which causes
-                    // force oscillation and violent slamming
-                    if (hasAuthority)
-                    {
-                        Vector3 currentVerticalVelocity = Vector3.up * characterMotor.velocity.y;
-                        if (characterMotor.useGravity)
-                            currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
-                        dampingForce = currentVerticalVelocity * forceDamping * mass * forceCoefficient;
-                    }
-                }
-                else
-                {
-                    Rigidbody rigidbody = healthComponent.body.rigidbody;
-                    if (rigidbody)
-                    {
-                        mass = rigidbody.mass;
-                        if (hasAuthority)
-                        {
-                            Vector3 currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
-                            if (rigidbody.useGravity)
-                                currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
-                            dampingForce = currentVerticalVelocity * forceDamping * mass * forceCoefficient;
-                        }
-                    }
-                }
-                if (ignoreMass)
-                {
-                    forceVector *= mass;
-                }
-                healthComponent.TakeDamageForce(forceVector - dampingForce, true, false);
+                PhysForceInfo forceInfo = PhysForceInfo.Create();
+                forceInfo.force = forceVector;
+                forceInfo.massIsOne = true;
+                forceInfo.ignoreGroundStick = true;
+                forceInfo.doNotExceed = true;
+                healthComponent.TakeDamageForce(forceInfo);
             }
         }
 
