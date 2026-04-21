@@ -50,6 +50,11 @@ namespace SS2
             }
         }
 
+        public override void HandlePlayerFirstEntryAnimation(CharacterBody body, Vector3 spawnPosition, Quaternion spawnRotation)
+        {
+            // No survivor pod, players teleport in directly (same as WeeklyRun/Prismatic Trials)
+        }
+
         public override bool OnSerialize(NetworkWriter writer, bool forceAll)
         {
             bool flag = base.OnSerialize(writer, forceAll);
