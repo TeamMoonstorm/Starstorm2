@@ -4,6 +4,7 @@ using RoR2.ContentManagement;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 namespace SS2
 {
@@ -13,71 +14,85 @@ namespace SS2
 
         internal static IEnumerator Init()
         {
-            var holder = new GameObject("SS2_GameModePrefabs");
-            holder.SetActive(false);
-            Object.DontDestroyOnLoad(holder);
+            // Clone ClassicRun to inherit all components and field values
+            var classicRunPrefab = Addressables.LoadAssetAsync<GameObject>(
+                "RoR2/Base/ClassicRun/ClassicRun.prefab").WaitForCompletion();
+            blitzRunPrefab = PrefabAPI.InstantiateClone(classicRunPrefab, "BlitzRun");
 
-            blitzRunPrefab = new GameObject("BlitzRun");
-            blitzRunPrefab.transform.SetParent(holder.transform);
+            // Swap Run → BlitzRun, preserving all fields
+            var oldRun = blitzRunPrefab.GetComponent<Run>();
+            var saved = new RunFieldSnapshot(oldRun);
+            Object.DestroyImmediate(oldRun);
 
-            // [RequireComponent] on Run auto-adds NetworkIdentity, NetworkRuleBook, RunArtifactManager
             var blitzRun = blitzRunPrefab.AddComponent<BlitzRun>();
+            saved.ApplyTo(blitzRun);
             blitzRun.nameToken = "SS2_GAMEMODE_BLITZ_NAME";
             blitzRun.userPickable = true;
 
-            // Both ClassicRun and WeeklyRun prefabs have these — required for cameras and team XP
-            blitzRunPrefab.AddComponent<TeamManager>();
-            blitzRunPrefab.AddComponent<RunCameraManager>();
+            // Remove ClassicRun-only components we don't need
+            if (blitzRunPrefab.TryGetComponent<TutorialManager>(out var tutorial))
+                Object.DestroyImmediate(tutorial);
+            if (blitzRunPrefab.TryGetComponent<PreloadContent>(out var preload))
+                Object.DestroyImmediate(preload);
 
-            // Register for networking so NetworkServer.Spawn works
-            PrefabAPI.RegisterNetworkPrefab(blitzRunPrefab);
-
-            // Add GameModeInfo for R2API's GameModeFixes UI hooks
+            // R2API hooks
             blitzRunPrefab.AddComponent<GameModeInfo>().buttonHoverDescription = "SS2_GAMEMODE_BLITZ_DESC";
 
-            // Add directly to SS2's content pack 
             SS2Content.SS2ContentPack.gameModePrefabs.Add(new[] { blitzRunPrefab });
 
-            // Copy startingSceneGroup/gameOverPrefab/lobbyBackgroundPrefab from ClassicRun after catalogs init
-            RoR2Application.onLoad += CopyClassicRunFields;
+            // Populate startingScenes with all valid stages after catalogs init
+            RoR2Application.onLoad += PopulateStartingScenes;
 
             SS2Log.Info("Blitz gamemode registered.");
             yield break;
         }
 
-        // TODO: Temp
-        private static void CopyClassicRunFields()
+        private static void PopulateStartingScenes()
         {
-            var classicIndex = GameModeCatalog.FindGameModeIndex("ClassicRun");
-            if (classicIndex == GameModeIndex.Invalid)
-            {
-                SS2Log.Error("GameModeModule: Could not find ClassicRun to copy fields from.");
-                return;
-            }
-
-            var classicRun = GameModeCatalog.GetGameModePrefabComponent(classicIndex);
-            if (classicRun == null)
-            {
-                SS2Log.Error("GameModeModule: ClassicRun prefab component is null.");
-                return;
-            }
-
             if (blitzRunPrefab == null || !blitzRunPrefab.TryGetComponent<BlitzRun>(out var blitzRun))
             {
                 SS2Log.Error("GameModeModule: BlitzRun prefab or component missing.");
                 return;
             }
 
-            blitzRun.startingSceneGroup = classicRun.startingSceneGroup;
-            blitzRun.gameOverPrefab = classicRun.gameOverPrefab;
-            blitzRun.lobbyBackgroundPrefab = classicRun.lobbyBackgroundPrefab;
-            blitzRun.uiPrefab = classicRun.uiPrefab;
-
             blitzRun.startingScenes = SceneCatalog.allStageSceneDefs
                 .Where(s => s.validForRandomSelection)
                 .ToArray();
 
-            SS2Log.Info("Blitz gamemode: copied fields from ClassicRun. startingScenes: " + blitzRun.startingScenes.Length + " scenes.");
+            SS2Log.Info("Blitz gamemode: populated " + blitzRun.startingScenes.Length + " starting scenes.");
+        }
+
+        /// <summary>
+        /// Saves serialized Run fields so they survive a component swap.
+        /// </summary>
+        private struct RunFieldSnapshot
+        {
+            public SceneCollection startingSceneGroup;
+            public SceneDef[] startingScenes;
+            public GameObject gameOverPrefab;
+            public GameObject lobbyBackgroundPrefab;
+            public GameObject uiPrefab;
+            public PickupDropTable rebirthDropTable;
+
+            public RunFieldSnapshot(Run run)
+            {
+                startingSceneGroup = run.startingSceneGroup;
+                startingScenes = run.startingScenes;
+                gameOverPrefab = run.gameOverPrefab;
+                lobbyBackgroundPrefab = run.lobbyBackgroundPrefab;
+                uiPrefab = run.uiPrefab;
+                rebirthDropTable = run.rebirthDropTable;
+            }
+
+            public void ApplyTo(Run run)
+            {
+                run.startingSceneGroup = startingSceneGroup;
+                run.startingScenes = startingScenes;
+                run.gameOverPrefab = gameOverPrefab;
+                run.lobbyBackgroundPrefab = lobbyBackgroundPrefab;
+                run.uiPrefab = uiPrefab;
+                run.rebirthDropTable = rebirthDropTable;
+            }
         }
     }
 }
