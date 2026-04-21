@@ -39,11 +39,11 @@ namespace SS2.Survivors
 
         private void DUTDrift(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
-            // orig(self);
-            // if (self && self.HasBuff(SS2Content.Buffs.bdDUTDrift))
-            // {
-            //     self.acceleration /= 6;
-            // }
+            orig(self);
+            if (self && self.HasBuff(SS2Content.Buffs.bdDUTDrift))
+            {
+                self.acceleration /= 6;
+            }
         }
 
         private void DUTDriftBoost(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
