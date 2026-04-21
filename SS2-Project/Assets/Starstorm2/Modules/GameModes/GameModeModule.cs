@@ -2,6 +2,7 @@ using R2API;
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 namespace SS2
@@ -67,7 +68,11 @@ namespace SS2
             blitzRun.gameOverPrefab = classicRun.gameOverPrefab;
             blitzRun.lobbyBackgroundPrefab = classicRun.lobbyBackgroundPrefab;
 
-            SS2Log.Info("Blitz gamemode: copied fields from ClassicRun.");
+            blitzRun.startingScenes = SceneCatalog.allStageSceneDefs
+                .Where(s => s.validForRandomSelection)
+                .ToArray();
+
+            SS2Log.Info("Blitz gamemode: copied fields from ClassicRun. startingScenes: " + blitzRun.startingScenes.Length + " scenes.");
         }
     }
 }

@@ -1,6 +1,6 @@
 using RoR2;
 using System;
-using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -38,14 +38,6 @@ namespace SS2
 
         public override void Start()
         {
-            if (NetworkServer.active && !startingSceneGroup && (startingScenes == null || startingScenes.Length == 0))
-            {
-                startingScenes = SceneCatalog.allStageSceneDefs
-                    .Where(s => s.validForRandomSelection)
-                    .ToArray();
-                SS2Log.Warning("BlitzRun: startingSceneGroup was null, populated startingScenes from SceneCatalog (" + startingScenes.Length + " scenes).");
-            }
-
             base.Start();
 
             if (NetworkServer.active)
