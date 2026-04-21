@@ -16,7 +16,7 @@ MonoBehaviour:
   skillNameToken: SS2_NEMCOMMANDO_PRIMARY_BLADE_NAME
   skillDescriptionToken: SS2_NEMCOMMANDO_PRIMARY_BLADE_DESCRIPTION
   keywordTokens:
-  - SS2_KEYWORD_GOUGE2
+  - SS2_KEYWORD_GOUGE
   - KEYWORD_AGILE
   icon: {fileID: 21300000, guid: 38b1b442fe03c9b4b87350329b48fb15, type: 3}
   activationStateMachineName: Weapon
@@ -29,22 +29,14 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 0
   stockToConsume: 0
-  attackSpeedBuffsRestockSpeed: 0
-  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 0
   dontAllowPastMaxStocks: 0
   beginSkillCooldownOnSkillEnd: 0
-  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 0
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
-  triggeredByPressRelease: 0
-  autoHandleLuminousShot: 1
-  suppressSkillActivation: 0
-  hideStockCount: 0
-  hideCooldown: 0
   stepCount: 4
   stepGraceDuration: 0.1

@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 2346251416338170964}
   - component: {fileID: 1549285608928461415}
   - component: {fileID: 6621685576807409278}
-  m_Layer: 14
+  m_Layer: 0
   m_Name: NemCommandoGrenadeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8542696705224348893}
   m_Father: {fileID: 0}
@@ -53,7 +52,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.3164085
   m_Center: {x: 0, y: 0.020004988, z: 0.07343182}
 --- !u!114 &4749387562800238891
 MonoBehaviour:
@@ -119,22 +118,14 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 1044595096780915, guid: e8420c7a43799f5429aaa85237a4df90,
     type: 3}
-  ghostPrefabReference:
-    m_AssetGUID: 
-    m_SubObjectName: 
-    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
-  authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
-  localCollisionHappened: 0
   procCoefficient: 1
-  combo: 0
-  CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!114 &6413858188192124550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,10 +141,6 @@ MonoBehaviour:
   positionTransmitInterval: 0.033333335
   interpolationFactor: 1
   allowClientsideCollision: 0
-  checkForLocalPlayerAuthority: 0
-  singletonArrayIndex: -1
-  serverPosition: {x: 0, y: 0, z: 0}
-  serverRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &7982728212751214630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,7 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnEffect: {fileID: 0}
   lifetime: 5
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 50
@@ -207,33 +193,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falloffModel: 2
-  blastRadius: 8
+  blastRadius: 5
   blastDamageCoefficient: 1
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 3794562455339532125, guid: 0750b542c3d172340b1594ac6bec68be,
-    type: 3}
-  blastImpactEffect: {fileID: 0}
-  preserveExplosionOrientation: 0
+  explosionEffect: {fileID: 0}
   explosionSoundString: 
   fireChildren: 0
   childrenProjectilePrefab: {fileID: 0}
   childrenCount: 0
   childrenDamageCoefficient: 0
-  childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0
   rangeRollDegrees: 0
   minPitchDegrees: 0
   rangePitchDegrees: 0
-  minYawDegrees: 0
-  rangeYawDegrees: 0
   useLocalSpaceForChildren: 0
-  useChildRotation: 0
   applyDot: 0
   dotIndex: -1
   dotDuration: 0
@@ -242,24 +221,18 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
-  timedDebuffs: []
   impactEffect: {fileID: 0}
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 0
   destroyOnEnemy: 0
-  detonateOnEnemy: 0
   destroyOnWorld: 0
-  destroyOnDistance: 0
-  maxDistance: 0
   impactOnWorld: 1
   timerAfterImpact: 1
-  lifetime: 5
-  lifetimeAfterImpact: 0
+  lifetime: 2
+  lifetimeAfterImpact: 0.2
   lifetimeRandomOffset: 0
-  minimumPhysicsStepsToKeepAliveAfterImpact: 0
   transformSpace: 0
-  explodeOnLifeTimeExpiration: 0
 --- !u!114 &1549285608928461415
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,10 +249,7 @@ MonoBehaviour:
   crit: 0
   force: 0
   damageColorIndex: 0
-  damageType:
-    damageType: 32
-    damageTypeExtended: 0
-    damageSource: 0
+  damageType: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &6621685576807409278
@@ -323,7 +293,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1587690105491648378}
   m_RootOrder: 0
@@ -340,4 +309,3 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showAsSphere: 0

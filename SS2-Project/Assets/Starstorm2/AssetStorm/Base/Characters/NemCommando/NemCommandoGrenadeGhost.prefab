@@ -28,7 +28,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4445445978624144}
   - {fileID: 4111633482094657}
@@ -47,11 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 678291247, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emh: {fileID: 0}
   inheritScaleFromProjectile: 0
-  ParentProjectileDestroyedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &3280165704963835178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,8 +61,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vfxPriority: 2
   vfxIntensity: 0
-  DoNotPool: 0
-  DoNotCullPool: 0
   optionalLights: []
   secondaryParticleSystem: []
 --- !u!1 &1175127690416654
@@ -98,7 +91,6 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4510996933255097}
   m_RootOrder: 1
@@ -114,8 +106,8 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.8962264, g: 0.038047332, b: 0.14155743, a: 1}
-  m_Intensity: 2
+  m_Color: {r: 0.899422, g: 0.71342117, b: 0.9056604, a: 1}
+  m_Intensity: 60
   m_Range: 2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -162,7 +154,6 @@ Light:
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
 --- !u!114 &3280121571477077054
@@ -217,8 +208,7 @@ Transform:
   m_GameObject: {fileID: 1635116843160855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4510996933255097}
   m_RootOrder: 0
@@ -242,12 +232,10 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -272,7 +260,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &3280385095581207580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,9 +291,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
-  resetOnAwake: 1
-  resetOnDisable: 0
-  useUnscaledTime: 0
   curveX:
     serializedVersion: 2
     m_Curve:
@@ -404,5 +388,3 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.45
-  ignoreResetOnEnable: 0
-  loop: 0

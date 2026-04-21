@@ -1,15 +1,4 @@
 **Warning: content spoilers below!**
-### 0.6.39
-* Nemesis Commando
-    * Re-implemented unique set of animations for when gun isn't in use (thanks Domi!)
-    * Updated animations for Decisive Strike, Submission
-    * Fixed missing VFX for Decisive Strike
-    * Fixed Gouge keyword using incorrect string
-* Beta
-	* Ethereals now add a flat number of levels to monsters
-	* Ethereal difficulties now properly show on run end/run history screens
-	* Fixed Drizzle being selected by default with Beta content enabled
-
 ### 0.6.38 
 * Beta
     * Got rid of MULE's hold to jump higher mechanic to fix MULE not working in release builds. If this doesnt work I give up I need to go work on the MULE rework anyways 

@@ -119,15 +119,10 @@ namespace EntityStates.Nemmando
             }
             FireAttack();
 
-            Util.PlaySound("NemmandoDecisiveStrikeFire", gameObject);
-
-            if (charge >= 1.0f)
+            if (charge >= 0.6f)
             {
                 PlayAnimation("FullBody, Override", "DecisiveStrikeMax", "DecisiveStrike.playbackRate", duration);
-            }
-            else if (charge >= 0.5f)
-            {
-                PlayAnimation("FullBody, Override", "DecisiveStrikeMid", "DecisiveStrike.playbackRate", duration);
+                Util.PlaySound("NemmandoDecisiveStrikeFire", gameObject);
             }
             else
             {

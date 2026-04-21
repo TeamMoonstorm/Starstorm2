@@ -163,9 +163,9 @@ namespace EntityStates.Nemmando
             }
 
             bool keyDown = IsKeyDownAuthority();
-            if (!characterBody.isPlayerControlled) keyDown = true;
+            if (GetTeam() == TeamIndex.Monster) keyDown = true;
 
-            if (isAuthority && (fixedAge >= chargeDuration || !keyDown && fixedAge >= 0.1f))
+            if (isAuthority && (fixedAge >= 1.25f * chargeDuration || !keyDown && fixedAge >= 0.1f))
             {
                 BossAttackEntry nextState = new BossAttackEntry();
                 nextState.charge = charge;
