@@ -1,6 +1,7 @@
 using R2API;
 using RoR2;
 using RoR2.ContentManagement;
+using RoR2.ExpansionManagement;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -40,7 +41,7 @@ namespace SS2
             blitzRunPrefab.AddComponent<TeamFilter>();
             blitzRunPrefab.AddComponent<EnemyInfoPanelInventoryProvider>();
             blitzRunPrefab.AddComponent<DirectorCore>();
-            blitzRunPrefab.AddComponent<ExpansionRequirementComponent>();
+            //blitzRunPrefab.AddComponent<ExpansionRequirementComponent>();
             blitzRunPrefab.AddComponent<RunCameraManager>();
 
             blitzRunPrefab.AddComponent<GameModeInfo>().buttonHoverDescription = "SS2_GAMEMODE_BLITZ_DESC";
