@@ -30,12 +30,6 @@ namespace SS2
             return (ulong)GetCurrentSeedCycle() << 32;
         }
 
-        public override void OverrideRuleChoices(RuleChoiceMask mustInclude, RuleChoiceMask mustExclude, ulong runSeed)
-        {
-            base.OverrideRuleChoices(mustInclude, mustExclude, seed);
-            ForceChoice(mustInclude, mustExclude, "Misc.StageOrder.Random");
-        }
-
         public override void Start()
         {
             base.Start();
@@ -52,7 +46,6 @@ namespace SS2
 
         public override void HandlePlayerFirstEntryAnimation(CharacterBody body, Vector3 spawnPosition, Quaternion spawnRotation)
         {
-            // No survivor pod, players teleport in directly (same as WeeklyRun/Prismatic Trials)
         }
 
         public override bool OnSerialize(NetworkWriter writer, bool forceAll)
