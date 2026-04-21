@@ -31,7 +31,7 @@ namespace SS2.Monsters
         private void SlipperyBuff(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
-            if(self.HasBuff(SS2Content.Buffs.bdMongerSlippery))
+            if(self && self.HasBuff(SS2Content.Buffs.bdMongerSlippery))
             {
                 self.acceleration /= 3;
             }

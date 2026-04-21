@@ -40,7 +40,7 @@ namespace SS2.Survivors
         private void DUTDrift(On.RoR2.CharacterBody.orig_RecalculateStats orig, CharacterBody self)
         {
             orig(self);
-            if (self.HasBuff(SS2Content.Buffs.bdDUTDrift))
+            if (self && self.HasBuff(SS2Content.Buffs.bdDUTDrift))
             {
                 self.acceleration /= 6;
             }
@@ -48,7 +48,7 @@ namespace SS2.Survivors
 
         private void DUTDriftBoost(CharacterBody sender, R2API.RecalculateStatsAPI.StatHookEventArgs args)
         {
-            if (!sender.HasBuff(SS2Content.Buffs.bdDUTDrift))
+            if (sender == null || !sender.HasBuff(SS2Content.Buffs.bdDUTDrift))
                 return;
 
             args.moveSpeedMultAdd += 1.5f;
