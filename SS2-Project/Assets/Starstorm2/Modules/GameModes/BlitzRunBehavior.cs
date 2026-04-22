@@ -117,12 +117,12 @@ namespace SS2
 
         public class BlitzSurviveObjectiveTracker : ObjectivePanelController.ObjectiveTracker
         {
-            protected override string GenerateString()
+            public override string GenerateString()
             {
                 return Language.GetString("SS2_GAMEMODE_BLITZ_OBJECTIVE");
             }
 
-            protected override bool IsDirty()
+            public override bool IsDirty()
             {
                 return false;
             }
