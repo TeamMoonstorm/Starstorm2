@@ -83,7 +83,9 @@ namespace SS2.Equipments
             // want our cursor after the maxHealth so we can modify it.
             // num75 += maxHealth;
             bool ILFound2 = c.TryGotoNext(MoveType.After,
-                x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth")
+                    x => x.MatchCallOrCallvirt<CharacterBody>("set_maxHealth")
+                ) && c.TryGotoNext(MoveType.After,
+                    x => x.MatchCallOrCallvirt<CharacterBody>("get_maxHealth")
                 );
             if (ILFound2)
             {
