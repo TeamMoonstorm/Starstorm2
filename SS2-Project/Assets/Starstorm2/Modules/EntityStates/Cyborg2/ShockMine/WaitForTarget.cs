@@ -1,6 +1,5 @@
 ﻿using RoR2.Projectile;
 using UnityEngine.Networking;
-using SS2;
 
 namespace EntityStates.Cyborg2.ShockMine
 {
@@ -13,17 +12,15 @@ namespace EntityStates.Cyborg2.ShockMine
 			base.OnEnter();
 			if (NetworkServer.active)
 			{
-				if (base.TryGetComponent(out this.targetFinder))
-					this.targetFinder.enabled = true;
-				else
-					SS2Log.Warning("WaitForTarget missing ProjectileSphereTargetFinder");
+				this.targetFinder = base.GetComponent<ProjectileSphereTargetFinder>();
+				this.targetFinder.enabled = true;
 			}
 		}
 
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (NetworkServer.active)
+			if (base.isAuthority)
 			{
 				EntityState entityState = null;
 				if (!base.projectileStickOnImpact.stuck)

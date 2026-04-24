@@ -24,8 +24,7 @@ namespace EntityStates.Cyborg2.ShockMine
         {
             base.OnEnter();
 
-            if (!base.TryGetComponent(out this.projectileDamage))
-                SS2Log.Warning("ShockNearby missing ProjectileDamage");
+            this.projectileDamage = base.GetComponent<ProjectileDamage>();
             this.shockInterval = numShocks / baseDuration;
         }
 
@@ -33,9 +32,6 @@ namespace EntityStates.Cyborg2.ShockMine
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-
-            if (!NetworkServer.active)
-                return;
 
             base.rigidbody.velocity = Vector3.zero;
 
@@ -56,6 +52,9 @@ namespace EntityStates.Cyborg2.ShockMine
 
         private void Shock()
         {
+            if (!NetworkServer.active)
+                return;
+
             if (shockEffectPrefab)
             {
                 EffectManager.SpawnEffect(shockEffectPrefab, new EffectData

@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Networking;
-
 namespace EntityStates.Cyborg2.ShockMine
 {
     public class Unburrow : BaseShockMineState
@@ -10,19 +8,14 @@ namespace EntityStates.Cyborg2.ShockMine
 			base.OnEnter();
 			this.duration = Unburrow.baseDuration;
 
-			// Only set velocity on server
-			//  clients receive position via ProjectileNetworkTransform
-			if (NetworkServer.active)
-			{
-				Vector3 upVelocity = Vector3.up * hopVelocity;
-				base.rigidbody.velocity = upVelocity;
-			}
+			Vector3 upVelocity = Vector3.up * hopVelocity;
+			base.rigidbody.velocity = upVelocity;// base.transform.rotation * upVelocity;
 		}
 
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (NetworkServer.active)
+			if (base.isAuthority)
 			{
 				if(base.fixedAge >= this.duration)
                 {

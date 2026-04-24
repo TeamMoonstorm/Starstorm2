@@ -1,6 +1,4 @@
-﻿using UnityEngine.Networking;
-
-namespace EntityStates.Cyborg2.ShockMine
+﻿namespace EntityStates.Cyborg2.ShockMine
 {
     public class Burrow : BaseShockMineState
     {
@@ -13,7 +11,7 @@ namespace EntityStates.Cyborg2.ShockMine
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
-			if (NetworkServer.active)
+			if (base.isAuthority)
 			{
 				EntityState entityState = null;
 				if (!base.projectileStickOnImpact.stuck)
