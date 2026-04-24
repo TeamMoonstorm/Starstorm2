@@ -102,10 +102,12 @@ namespace EntityStates.Events
                     TeleporterUpgradeController.instance.UpgradeStorm(false);
                 }
 
+                // TODO: Not 100% sure if every new director needs a new class object created. is this ok?
+                modifyMonsters = new UnityAction<GameObject>(ModifySpawnedMasters);
                 foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                 {
                     if (combatDirector != bossDirector)
-                        combatDirector.onSpawnedServer.AddListener(modifyMonsters = new UnityAction<GameObject>(ModifySpawnedMasters));
+                        combatDirector.onSpawnedServer.AddListener(modifyMonsters);
                 }
 
                 CharacterBody.onBodyStartGlobal += BuffEnemy;
@@ -307,7 +309,7 @@ namespace EntityStates.Events
             {
                 // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-                if (bossDirector && stormLevel >= 4)
+                if (bossDirector && stormLevel >= 4 && modifyBoss != null)
                 {
                     bossDirector.onSpawnedServer.RemoveListener(modifyBoss);
                 }
@@ -315,7 +317,7 @@ namespace EntityStates.Events
                 {
                     foreach (CombatDirector combatDirector in CombatDirector.instancesList)
                     {
-                        if (combatDirector != bossDirector)
+                        if (combatDirector != bossDirector && modifyMonsters != null)
                             combatDirector.onSpawnedServer.RemoveListener(modifyMonsters);
                     }
                 }

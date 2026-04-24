@@ -13,21 +13,27 @@ namespace SS2
     {
         public override SS2AssetRequest<SerializableDifficultyDef> AssetRequest => SS2Assets.LoadAssetAsync<SerializableDifficultyDef>("Typhoon", SS2Bundle.Base);
         
+        private const string token = "SS2_DIFFICULTY_TYPHOON_DESC";
+
         // Typhoon Config
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Increase Team Limit", configDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size by 2 (or the configured value) when enabled. May affect performance.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Increase Team Limit", configDescOverride = "Multiplies the Monster, Lunar, and Void Team maximum size when enabled. May affect performance.")]
         internal static bool IncreaseSpawnCap = true;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Spawn Cap Multiplier", configDescOverride = "The spawn cap multiplier to increase enemy team sizes by. Only works if you have Increase Team Limit enabled. Default is 2.")]
-        public static int spawnCapMultiplier = 2;
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Spawn Cap Increase Percent", configDescOverride = "Percentage to increase enemy team sizes by. Only works if you have Increase Team Limit enabled. Default is 100 (doubles team size).")]
+        [FormatToken(token, 0)]
+        public static float spawnCapIncrease = 100f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Credit Multiplier",  configDescOverride = "The credit multipler the monster director has for spawning enemies.")]
-        public static float creditMultiplierVal = 1.4f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Credit Increase Percent", configDescOverride = "Percentage to increase monster director credits by. Default is 40.")]
+        [FormatToken(token, 1)]
+        public static float creditIncrease = 40f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Experience Reward Multipler", configDescOverride = "The experience reward multipler when defeating an enemy.")]
-        public static float expRewardCoefficientVal = 0.8f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Experience Reward Reduction Percent", configDescOverride = "Percentage to reduce experience rewards by. Default is 20.")]
+        [FormatToken(token, 2)]
+        public static float expRewardReduction = 20f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Gold Reward Multipler", configDescOverride = "The gold reward multipler when defeating an enemy.")]
-        public static float goldRewardCoefficientVal = 0.8f;
+        [RiskOfOptionsConfigureField(SS2Config.ID_MAIN, configSectionOverride = "Typhoon", configNameOverride = "Gold Reward Reduction Percent", configDescOverride = "Percentage to reduce gold rewards by. Default is 20.")]
+        [FormatToken(token, 3)]
+        public static float goldRewardReduction = 20f;
 
 
         private int defMonsterCap;
@@ -62,9 +68,10 @@ namespace SS2
 
             if (IncreaseSpawnCap)
             {
-                TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit *= spawnCapMultiplier;
-                TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit *= spawnCapMultiplier;
-                TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit *= spawnCapMultiplier;
+                int newCap = (int)(defMonsterCap * (1f + spawnCapIncrease / 100f));
+                TeamCatalog.GetTeamDef(TeamIndex.Monster).softCharacterLimit = newCap;
+                TeamCatalog.GetTeamDef(TeamIndex.Void).softCharacterLimit = newCap;
+                TeamCatalog.GetTeamDef(TeamIndex.Lunar).softCharacterLimit = newCap;
                 On.RoR2.CombatDirector.Awake += CombatDirector_Awake;
             }
             run.SetEventFlag("PermanentStorms");
@@ -74,9 +81,9 @@ namespace SS2
         {
             if (IncreaseSpawnCap)
             {
-                self.creditMultiplier *= creditMultiplierVal;
-                self.expRewardCoefficient *= expRewardCoefficientVal;
-                self.goldRewardCoefficient *= goldRewardCoefficientVal;
+                self.creditMultiplier *= (1f + creditIncrease / 100f);
+                self.expRewardCoefficient *= (1f - expRewardReduction / 100f);
+                self.goldRewardCoefficient *= (1f - goldRewardReduction / 100f);
             }
             orig(self);
         }

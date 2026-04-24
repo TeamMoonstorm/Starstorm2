@@ -16,7 +16,10 @@ namespace SS2.Equipments
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("SuperFireball", SS2Bundle.Equipments);
         }
 
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
 
         public override bool Execute(EquipmentSlot slot)
         {

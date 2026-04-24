@@ -24,10 +24,9 @@ namespace EntityStates.Cyborg2.ShockMine
 						origin = base.transform.position,
 					}, true);
 				}
-			}
-			
 
-			Destroy(base.gameObject);
+				Destroy(base.gameObject);
+			}
 		}
 
 

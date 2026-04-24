@@ -1,4 +1,72 @@
 **Warning: content spoilers below!**
+### 0.6.40 all your bugs belong to us
+This is a huge bugfix release, we want to start ironing out bugs as the team prepares for 0.7 sometime later this year. This version also includes some much requested community qol fixes like Drone/Ethereal interactions, Nerfs to Stormborn Clay Templars, Cyborg MP fixes, and lots of Knight fixes to bring Knight closer to complete. 
+
+We are going to beginning priortising multiplayer stability in Beta moving forward, so more cautious fans can try SS2 Beta with friends. For that reason MULE/DU-T are going to be disabled. They both might return after DU-T gets additional polish and MULE gets his kit rework. Not that MULE was ever playable anyways....
+
+* General
+    * Fixed Typhoon language tokens not appearing correctly if you adjusted Typhoon config
+    * Added back `unlock_all` config option. Only works on Survivors and Items for now
+    * Added config support to disable Curios (Beta items) and Elite Equipment
+* Survivors
+    * Executioner
+        * Rare Executioner orb NRE fix (I cant seem to reproduce this one, but a null check was added where it happened)
+        * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
+* Storms
+    * Misc NRE fixes
+* Drones
+    *  Fixed Shock Drone VFX NRE
+    *  Drones spawned by Drone Head now have a 4 second invincibility window to escape on death Elite attacks
+* Elites
+    * Stormborn
+        * Clay Templars now recieve half of the attack speed buff when Stormborn
+    * Empyrean
+        * Empyreans are now invincible during their spawn animation
+        * Fixed Empyrean simulacrum interaction
+* Items
+    * Gave FieldAccelerator the AI Blacklist tag
+    * Field Accelerator, Droid Head, and Trematode were missing the "Can Be Temporary" tags, they can now spawn as temporary items!
+* Enemies
+    * Mimic 
+        * Fixed Mimic and Chirr death friend interaction
+        * Fixed Mimic's dead body being targetted by ATG and other items
+    * Wayfarer
+        * Fixed Wayfarer LampBuff TemporaryVisualEffect NRE spam
+    * Nemesis
+        * Fixed NRE when Nemesis spawns and players spawn in late
+* Beta
+    * Fixed a harmless NRE for Void Shop RNG on clients
+    * Fixed a harmless NRE for ItemOnEliteKill on clients
+    * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
+    * Ethereal
+        * Ethereal pillars no longer destroy drones
+        * Fixed harmless NRE on Ethereal when closing the game
+    * Cyborg
+        * Cyborg now has a proper drop pod
+        * Fixed Cyborg's shock mines not visually appearing as client
+    * Knight
+        * Knight now has a proper drop pod
+        * Fixed Knight's parry not working correctly for clients
+
+TODO: Confirm the below are fixed before mergining
+* Unconfirmed
+    * Ethereal
+        * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
+    * Knight
+        * Increased Knight's parry window to address latency issues
+    * Railgunner
+        * Tactical roll alt skill now properly reloads while scoped
+    * Cyborg
+        * Fixed bug where Cyborg could not charge the teleporter to 100%
+        * Fixed Cyborg's teleporter projectile spawning a duplicate as client
+        
+    * Fixed Shard Poison / Shard Void Zanzan trader interaction
+    * Fixed OpenSlow Curse interaction with Scavenger bags
+    * Self-Repair skill fixes
+    * New Arti alt special inspired by Wayfarer's projectile attack. LampGirly at home!
+    * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
+
+
 ### 0.6.39
 * Nemesis Commando
     * Re-implemented unique set of animations for when gun isn't in use (thanks Domi!)

@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using System.Linq;
 using MSU;
 using RoR2.ExpansionManagement;
@@ -374,6 +375,21 @@ namespace SS2
                     continue; //????????????????????????
                 }
             }
+        }
+
+        [ConCommand(commandName = "give_voidrock", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Gives the VoidRock item to the sender.")]
+        public static void CCGiveVoidRock(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            CharacterMaster master = args.GetSenderMaster();
+            if (!master || !master.inventory)
+            {
+                SS2Log.Error("give_voidrock: No valid master or inventory found.");
+                return;
+            }
+
+            master.inventory.GiveItem(SS2Content.Items.VoidRock, 1);
         }
 
         public static T CopyComponent<T>(T original, GameObject destination) where T : Component

@@ -426,6 +426,20 @@ namespace SS2
                 FindObjectOfType<RoR2.UI.CurrentDifficultyIconController>()?.Start(); // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
             }
         }
+
+        [ConCommand(commandName = "activate_eth", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Activates ethereal difficulty on the current teleporter.")]
+        public static void CCActivateEthereal(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            if (!TeleporterUpgradeController.instance)
+            {
+                SS2Log.Error("activate_eth: No TeleporterUpgradeController found.");
+                return;
+            }
+
+            TeleporterUpgradeController.instance.UpgradeEthereal();
+        }
     }
 
     public struct EtherealDifficulty
@@ -449,8 +463,13 @@ namespace SS2
         {
             foreach (EtherealDifficulty diff in instances)
             {
-                DifficultyCatalog.GetDifficultyDef(diff.index).scalingValue = diff.defaultScalingValue;
-            }
+                // DifficultyCatalog is null when closing RoR2, this is a harmless NRE, but good practice :)
+                DifficultyDef def = DifficultyCatalog.GetDifficultyDef(diff.index);
+                if (def != null)
+                    def.scalingValue = diff.defaultScalingValue;
+                else
+                    SS2Log.Warning($"EtherealDifficulty.ResetAll: DifficultyDef for index {diff.index} is null, catalog may be torn down.");
+            }         
         }
         public DifficultyIndex index;
         public float defaultScalingValue;
