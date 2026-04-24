@@ -179,13 +179,13 @@ namespace EntityStates.Events
             GameObject target = null;
             foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController.instances)
             {
-                if (pcmc && pcmc.master && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
+                if (pcmc && pcmc.master && pcmc.master.inventory && pcmc.master.inventory.GetItemCount(SS2Content.Items.VoidRock) > 0)
                 {
                     if (pcmc.master.hasBody)
                     {
                         target = pcmc.master.GetBodyObject();
+                        break;
                     }
-                    break;
                 }
 
             }
