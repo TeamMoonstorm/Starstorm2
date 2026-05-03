@@ -111,6 +111,10 @@ namespace SS2.Components
 
             float baseCost = spawnResult.spawnRequest.spawnCard.directorCreditCost;
             float totalCost = baseCost;
+            if (body.inventory != null && EtherealBehavior.instance != null && EtherealBehavior.instance.bonusLevels > 0)
+            {
+                body.inventory.GiveItemPermanent(RoR2Content.Items.LevelBonus, EtherealBehavior.instance.bonusLevels);
+            }
             // yeah im hard coding it whho caresNOT ME thats who
             if(body.HasBuff(SS2Content.Buffs.BuffAffixSuperFire) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperIce) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperLightning) || body.HasBuff(SS2Content.Buffs.BuffAffixSuperEarth))
             {

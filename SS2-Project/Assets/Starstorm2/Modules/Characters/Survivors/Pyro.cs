@@ -47,6 +47,7 @@ namespace SS2.Survivors
 
         private static float pyroBurnDuration = 4f;
         const float igniteDamageCoefficient = 0.5f; // value from vanilla igniteonhit
+        
         private void OnServerDamageDealt(DamageReport damageReport)
         {
             if (damageReport.damageInfo.HasModdedDamageType(PyroIgniteOnHit))

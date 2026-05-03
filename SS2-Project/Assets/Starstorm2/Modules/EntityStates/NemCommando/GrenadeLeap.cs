@@ -36,6 +36,8 @@ namespace EntityStates.NemCommando
             animator = GetModelAnimator();
 
             PlayCrossfade("Body", "AltUtility", "Utility.rate", duration * 1.4f, 0.05f);
+            PlayCrossfade("FullBody, Override", "AltUtility", "Utility.rate", duration * 1.4f, 0.05f);
+            Util.PlaySound(Commando.DodgeState.dodgeSoundString, gameObject);
 
             Vector3 direction = -GetAimRay().direction;
 
@@ -62,6 +64,7 @@ namespace EntityStates.NemCommando
             {
                 hasThrown = true;
                 ThrowGrenades();
+                Util.PlaySound("Play_commando_M2_grenade_throw", gameObject);
             }
 
             base.FixedUpdate();
@@ -83,7 +86,7 @@ namespace EntityStates.NemCommando
         {
             float damage = damageCoefficient * damageStat;
             Ray aimRay = GetAimRay();
-            DamageTypeCombo damageType = DamageType.Generic;
+            DamageTypeCombo damageType = DamageType.Stun1s;
             damageType.damageSource = DamageSource.Utility;
             ProjectileManager.instance.FireProjectile(
                 projectilePrefab,
