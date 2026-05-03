@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5085952826614806404}
   - component: {fileID: 260463891656695763}
   - component: {fileID: 1215507391946870013}
+  - component: {fileID: -5646132710909595473}
   m_Layer: 0
   m_Name: StormController
   m_TagString: Untagged
@@ -107,6 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b667dc295a914b549a89d8a86ad78daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stormStateMachine: {fileID: 0}
+  barStateMachine: {fileID: 0}
   eventVFX:
   - stageSerde:
       Value: 2
@@ -242,10 +245,28 @@ MonoBehaviour:
   m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customName: 
+  customName: Storm
   initialStateType:
     _typeName: EntityStates.Events.Calm, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  mainStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  debug: 0
+--- !u!114 &-5646132710909595473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2411806691537455876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297580292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customName: WeatherBar
+  initialStateType:
+    _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   debug: 0

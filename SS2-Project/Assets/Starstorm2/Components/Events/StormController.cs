@@ -5,129 +5,46 @@ using RoR2;
 using System;
 using R2API;
 using RoR2.UI;
-using EntityStates;
 using EntityStates.Events;
-using UnityEngine.Events;
-using static MSU.GameplayEventTextController;
 using MSU;
+using SS2.Components;
 
-namespace SS2.Components
+namespace SS2
 {
     public class StormController : NetworkBehaviour
     {
+        #region Static Init
         public static StormController instance;
         public static PickupDropTable dropTable;
         
-        public static bool shouldShowObjective = false; // weather radio? config setting?
-        private static Color etherealTextColor = new Color(.204f, .921f, .561f);
-
-
-        // OLD SHIT FUC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        /// <summary>
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// </summary>
-        public static readonly Xoroshiro128Plus chargeRng = new Xoroshiro128Plus(0UL);
-        public static readonly Xoroshiro128Plus mobChargeRng = new Xoroshiro128Plus(0UL);
-        /// <summary>
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// 
-        /// </summary>
-
+        public static bool debugObjective = false;
+        private static Vector3 weatherBarLocalPosition = new Vector3(-15.6f, -105.6f, 0f);
         [SystemInitializer]
-        //[RuntimeInitializeOnLoadMethod] // IDK WHY THIS DOESNT WORK
         static void Init()
         {
-            // custom drop table? maybe?
-            // souls soon.............
-
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            Stage.onStageStartGlobal += OnStageStartGlobal;
+            On.RoR2.Run.InstantiateUi += InstantiateWeatherBar;
         }
 
-        private static void OnStageStartGlobal(Stage stage)
+        private static GameObject InstantiateWeatherBar(On.RoR2.Run.orig_InstantiateUi orig, Run self, Transform uiRoot)
         {
-            if (Run.instance.IsExpansionEnabled(SS2Content.SS2ContentPack.expansionDefs[0]) && Events.EnableEvents.value && NetworkServer.active && stage.sceneDef.sceneType == SceneType.Stage && TeleporterInteraction.instance) // this should cover every stage we want storms on? im pretty sure
+            GameObject uiInstance = orig(self, uiRoot);
+            if (uiInstance)
             {
-                chargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
-                mobChargeRng.ResetSeed(Run.instance.treasureRng.nextUlong);
+                var weatherBarPrefab = SS2Assets.LoadAsset<GameObject>("WeatherBar", SS2Bundle.Events);
+                if (weatherBarPrefab)
+                {
+                    var weatherBarInstance = GameObject.Instantiate(weatherBarPrefab, uiInstance.transform);
+                    weatherBarInstance.transform.localPosition = weatherBarLocalPosition;
+                }
             }
-
+            return uiInstance;
         }
+        #endregion
 
+        [SerializeField] private EntityStateMachine stormStateMachine;
+        [SerializeField] private EntityStateMachine barStateMachine;
 
-        // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]
-        public static void CCSetStormLevel(ConCommandArgs args)
-        {
-            if (!NetworkServer.active) return;
-
-            int level = args.GetArgInt(0);
-            StormController stormController = StormController.instance;
-            if(!stormController)
-            {
-                stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
-
-                var evt = stormController.GetComponent<GameplayEvent>();
-                evt.doNotAnnounceEnd = true;
-                evt.doNotAnnounceStart = true;
-
-                NetworkServer.Spawn(stormController.gameObject);              
-            }
-
-            stormController.ForceStormLevel(level);
-
-        }
         [Serializable]
         public struct StormVFX
         {
@@ -136,7 +53,7 @@ namespace SS2.Components
             public GameObject effectPrefab;
             public float cloudHeight;
         }
-
+        // TODO: really dont think this information should be kept in StormController
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
 
         private float endLerpIntensity;
@@ -147,11 +64,12 @@ namespace SS2.Components
 
         public IIntensityScaler[] intensityScalers;
 
-        private int stormLevel;
+        public int currentLevel { get; private set; }
         public int MaxStormLevel { get; private set; }
         public bool IsPermanent { get; private set; }
+        public float levelPercentComplete { get; private set; }
+        public float levelFractionComplete { get => levelPercentComplete * 0.01f; }
 
-        private float levelPercentComplete;
         public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
         public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
         [NonSerialized]
@@ -159,8 +77,6 @@ namespace SS2.Components
 
         [NonSerialized]
         public bool hasStarted;
-
-        private EntityStateMachine stateMachine;
 
         [SyncVar]
         private float chargeInCurrentLevel;
@@ -183,24 +99,29 @@ namespace SS2.Components
         }
         private void Awake()
         {
-            this.stateMachine = base.GetComponent<EntityStateMachine>();
+            this.stormStateMachine = base.GetComponent<EntityStateMachine>();
         }
 
         private void Start()
         {
             InstantiateEffect();         
             this.SetEffectIntensity(this.effectIntensity);
+
+            // TODO: reevaluate rng usage
             timeRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
             treasureRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
-#if DEBUG
-            shouldShowObjective = true;
-#endif
+
+            // TODO: dont use difficulty scaling value
             DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
             MaxStormLevel = Mathf.FloorToInt(difficulty.scalingValue) + 1;
             MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 4); // drizzle 2, monsoon/typhoon+ 4
 
             IsPermanent = Run.instance.GetEventFlag("PermanentStorms");
-            if (shouldShowObjective)
+
+            #if DEBUG
+            debugObjective = true;
+            #endif
+            if (debugObjective)
                 ObjectivePanelController.collectObjectiveSources += StormObjective;        
         }
 
@@ -209,7 +130,31 @@ namespace SS2.Components
             ObjectivePanelController.collectObjectiveSources -= StormObjective;
         }
 
-        
+        // TODO: implement this
+        //[Serializable]
+        //public struct StormLevel
+        //{
+        //    public EntityStates.SerializableEntityStateType stateType;
+        //    public Sprite icon;
+        //}
+
+        // TODO: not this !!
+        public Sprite GetWeatherIcon(int level)
+        {
+            string path = "texIconStorm" + level;
+            var icon = SS2Assets.LoadAsset<Sprite>(path, SS2Bundle.Events);
+            if (!icon) SS2Log.Error($"Could not find Sprite `{path}`");
+            return icon;
+        }
+        // TODO: Figure out when to start the animation. We want it slightly inaccurate (offset by a couple seconds).
+        public void StartBarAnimation(float newIntensity, float duration = -1f)
+        {
+            if (barStateMachine)
+            {
+                // TODO: Figure out which values to pass in, or if AnimateWeatherBar should calculate it itself.
+                barStateMachine.SetNextState(new AnimateWeatherBar());
+            }
+        }
         public void StartLerp(float newIntensity, float lerpDuration)
         {
             this.endLerpIntensity = newIntensity;
@@ -257,26 +202,20 @@ namespace SS2.Components
         {
             if(stormLevel > 0)
             {
-                this.stateMachine.SetNextState(new EntityStates.Events.Storm { stormLevel = stormLevel, lerpDuration = 5f });
+                this.stormStateMachine.SetNextState(new EntityStates.Events.Storm { stormLevel = stormLevel, lerpDuration = 5f });
             }
             else
             {
-                this.stateMachine.SetNextState(new Calm());
+                this.stormStateMachine.SetNextState(new Calm());
             }
 
-            this.stormLevel = stormLevel;
+            this.currentLevel = stormLevel;
         }
 
         public void OnStormLevelCompleted()
         {
             hasStarted = true;
-            this.stormLevel++;
-        }
-
-        [Server]
-        public void AddCharge(float charge)
-        {
-            this.chargeInCurrentLevel += charge;         
+            this.currentLevel++;
         }
 
         public void InstantiateEffect()
@@ -301,10 +240,29 @@ namespace SS2.Components
                 cloud.gameObject.SetActive(true);
                 cloud.position = Vector3.up * cloudHeight;
             }
-            
         }
 
-        #region hud stuff
+
+        // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]
+        public static void CCSetStormLevel(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+
+            int level = args.GetArgInt(0);
+            StormController stormController = StormController.instance;
+            if (!stormController)
+            {
+                stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events)).GetComponent<StormController>();
+
+                var evt = stormController.GetComponent<GameplayEvent>();
+                evt.doNotAnnounceEnd = true;
+                evt.doNotAnnounceStart = true;
+
+                NetworkServer.Spawn(stormController.gameObject);
+            }
+            stormController.ForceStormLevel(level);
+        }
         private void StormObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)
         {
             dest.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
@@ -321,7 +279,7 @@ namespace SS2.Components
             {
                 StormController instance = StormController.instance;
                 float intensity = (float)Math.Round(instance.effectIntensity, 1);
-                return string.Format("effectIntensity: {0} hehe storm level {1}, {2}%", intensity, instance.stormLevel, Mathf.FloorToInt(instance.levelPercentComplete));
+                return string.Format("effectIntensity: {0} hehe storm level {1}, {2}%", intensity, instance.currentLevel, Mathf.FloorToInt(instance.levelPercentComplete));
             }
 
             public override bool IsDirty()
@@ -329,137 +287,6 @@ namespace SS2.Components
                 return true;
             }
         }
-
-        public class EtherealFadeIn : EventTextState
-        {
-            public override void OnEnter()
-            {
-                base.OnEnter();
-                uiJuice.destroyOnEndOfTransition = false;
-                uiJuice.transitionDuration = duration;
-                uiJuice.TransitionAlphaFadeIn();
-                uiJuice.originalAlpha = 1;
-                uiJuice.transitionEndAlpha = 1;
-            }
-
-            public override void Update()
-            {
-                base.Update();
-                if (age > duration)
-                {
-                    outer.SetNextState(new EtherealBlinkOut
-                    {
-                        duration = duration
-                    });
-                }
-            }
-        }
-
-        public class EtherealBlinkOut : EventTextState
-        {
-            public static float endX = 0f;
-            public static float endY = 4f;
-            public static float FUCK = 2350;
-            private static float blinkDuration = 0.07f;
-            public override void OnEnter()
-            {
-                base.OnEnter();
-                duration = .5f;
-            }
-
-            public override void Update()
-            {
-                base.Update();
-                float t = Mathf.Clamp01(age / blinkDuration);
-                float x = Mathf.Lerp(1, endX, t);
-                float y = Mathf.Lerp(1, endY, t);
-                float fuck = Mathf.Lerp(690, FUCK, t);
-                base.transform.localScale = new Vector3(x, y, 1);              
-                base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
-                if (age > duration)
-                {
-                    outer.SetNextState(new EtherealBlinkIn
-                    {
-                        duration = duration
-                    });
-                }
-            }
-        }
-
-        public class EtherealBlinkIn : EventTextState
-        {
-            private static float blinkDuration = 0.07f;
-            public override void OnEnter()
-            {
-                base.OnEnter();
-                // ??????????????????? i hate this so much
-                uiJuice.transitionDuration = 0.01f;
-                uiJuice.TransitionAlphaFadeIn();
-                uiJuice.originalAlpha = 1;
-                uiJuice.transitionEndAlpha = 1;
-
-                base.textController.textMeshProUGUI.color = etherealTextColor;
-                base.textController.textMeshProUGUI.SetText("<link=\"textShaky\">ethereal moment</link>");// String.Format("<link=\"textShaky\">{0}</link>", TextController.TextMeshProUGUI.text));
-                EffectManager.SpawnEffect(SS2Assets.LoadAsset<GameObject>("EtherealStormWarning", SS2Bundle.Events), new EffectData { }, false);
-                duration = blinkDuration;
-            }
-
-            public override void Update()
-            {
-                base.Update();
-                float t = Mathf.Clamp01(age / duration);
-                float x = Mathf.Lerp(EtherealBlinkOut.endX, 1, t);
-                float y = Mathf.Lerp(EtherealBlinkOut.endY, 1, t);
-                float fuck = Mathf.Lerp(EtherealBlinkOut.FUCK, 690, t);
-                base.transform.localScale = new Vector3(x, y, 1);
-                base.transform.localPosition = new Vector3(0, fuck, 0); // the text isnt fucking centered so scaling it is fucked
-
-                if (age > duration)
-                {                 
-                    outer.SetNextState(new EtherealWait
-                    {
-                        duration = 3f
-                    });
-                }
-            }
-        }
-        public class EtherealWait : EventTextState
-        {
-            public override void Update()
-            {
-                base.Update();
-                if (age > duration)
-                {
-                    outer.SetNextState(new EtherealFadeOut
-                    {
-                        duration = 2f
-                    });
-                }
-            }
-        }
-        public class EtherealFadeOut : EventTextState
-        {
-            public override void OnEnter()
-            {
-                base.OnEnter();
-                uiJuice.transitionDuration = duration;
-                uiJuice.originalAlpha = 1;
-                uiJuice.transitionEndAlpha = 1;
-                uiJuice.TransitionAlphaFadeOut();
-            }
-
-            public override void Update()
-            {
-                base.Update();
-                if (age > duration)
-                {
-                    NullRequest();
-                    
-                    outer.SetNextStateToMain();
-                }
-            }
-        }
-        #endregion
     }
 }
 
