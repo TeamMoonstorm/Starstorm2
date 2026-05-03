@@ -22,47 +22,46 @@ namespace SS2.Monsters
             lampBuffEffectPrefab = SS2Assets.LoadAsset<GameObject>("LampBuffEffect", SS2Bundle.Monsters);
             RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
-            On.RoR2.CameraModes.CameraModeBase.ApplyLookInput += CameraModeBase_ApplyLookInput;
-        }
+			On.RoR2.CameraModes.CameraModeBase.CollectLookInput += CameraModeBase_CollectLookInput;
+		}
 
-        public static float pullSpeed = 1000f; // idkkkkkkkkkkkkkkkkkkkkk
+		public static float pullSpeed = 1000f; // idkkkkkkkkkkkkkkkkkkkkk
         public static AnimationCurve pullCurve = AnimationCurve.EaseInOut(0, 1, 1, 1); //idk
         public static float distanceSqrForMaxPull = 0f; //idk
         private static bool log = false;
 
-        private void CameraModeBase_ApplyLookInput(On.RoR2.CameraModes.CameraModeBase.orig_ApplyLookInput orig, CameraModeBase self, ref CameraModeBase.CameraModeContext context, ref CameraModeBase.ApplyLookInputArgs args)
-        {
-            if (context.targetInfo.body)
-            {
-                var lamp = LampCameraPullAttachment.GetAttachmentForBody(context.targetInfo.body.gameObject);
-                if (lamp && lamp.target)
-                {
-                    Vector2 currentInput = args.lookInput;
-                    // Get position of lamp on screen
-                    Vector2 center = new Vector2(0.5f, 0.5f);
-                    Vector3 screenPoint = context.cameraInfo.sceneCam.WorldToViewportPoint(lamp.target.transform.position);
-                    Vector2 between = new Vector2(screenPoint.x, screenPoint.y) - center;
+		private void CameraModeBase_CollectLookInput(On.RoR2.CameraModes.CameraModeBase.orig_CollectLookInput orig, CameraModeBase self, ref CameraModeBase.CameraModeContext context, out CameraModeBase.CollectLookInputResult result)
+		{
+			orig(self, ref context, out result);
+			if (context.targetInfo.body)
+			{
+				var lamp = LampCameraPullAttachment.GetAttachmentForBody(context.targetInfo.body.gameObject);
+				if (lamp && lamp.target)
+				{
+					Vector2 currentInput = result.lookInput;
+					// Get position of lamp on screen
+					Vector2 center = new Vector2(0.5f, 0.5f);
+					Vector3 screenPoint = context.cameraInfo.sceneCam.WorldToViewportPoint(lamp.target.transform.position);
+					Vector2 between = new Vector2(screenPoint.x, screenPoint.y) - center;
 
-                    float distanceThing = Mathf.Clamp01(between.sqrMagnitude / distanceSqrForMaxPull);
-                    float mult = pullCurve.Evaluate(distanceThing);
-                    // if target is behind the camera, rotate in opposite direction
-                    // pretty sure this is a bandaid fix. im stupid
-                    if (screenPoint.z < 0) 
-                    {
-                        mult *= -1f;
-                    }
+					float distanceThing = Mathf.Clamp01(between.sqrMagnitude / distanceSqrForMaxPull);
+					float mult = pullCurve.Evaluate(distanceThing);
+					// if target is behind the camera, rotate in opposite direction
+					// pretty sure this is a bandaid fix. im stupid
+					if (screenPoint.z < 0)
+					{
+						mult *= -1f;
+					}
 
-                    args.lookInput += between * pullSpeed * mult * Time.deltaTime;
+					result.lookInput += between * pullSpeed * mult * Time.deltaTime;
 
-                    if (log)
-                    {
-                        SS2Log.Debug($"current = {currentInput} || screenPoint = {screenPoint} || between = {between} || distanceThing = {distanceThing} || mult = {mult} || result = {args.lookInput}");
-                    }
-                }
-            }
-            
-            orig(self, ref context, ref args);
-        }
+					if (log)
+					{
+						SS2Log.Debug($"current = {currentInput} || screenPoint = {screenPoint} || between = {between} || distanceThing = {distanceThing} || mult = {mult} || result = {result.lookInput}");
+					}
+				}
+			}
+		}
 
         private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
         {
