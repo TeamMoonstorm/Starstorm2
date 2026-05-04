@@ -18,7 +18,9 @@ namespace SS2
         public static PickupDropTable dropTable;
         
         public static bool debugObjective = false;
-        private static Vector3 weatherBarLocalPosition = new Vector3(-15.6f, -105.6f, 0f);
+
+        private static GameObject weatherBarPrefab;
+        private static Vector3 weatherBarLocalPosition = new Vector3(-15.5f, -106.9f, 0f);
         [SystemInitializer]
         static void Init()
         {
@@ -31,11 +33,27 @@ namespace SS2
             GameObject uiInstance = orig(self, uiRoot);
             if (uiInstance)
             {
-                var weatherBarPrefab = SS2Assets.LoadAsset<GameObject>("WeatherBar", SS2Bundle.Events);
+                if (!weatherBarPrefab)
+                {
+                    weatherBarPrefab = SS2Assets.LoadAsset<GameObject>("WeatherBar", SS2Bundle.Events);
+                }
+                
                 if (weatherBarPrefab)
                 {
                     var weatherBarInstance = GameObject.Instantiate(weatherBarPrefab, uiInstance.transform);
-                    weatherBarInstance.transform.localPosition = weatherBarLocalPosition;
+                    ((RectTransform)weatherBarInstance.transform).anchoredPosition = weatherBarLocalPosition;
+
+                    // set sibling index to directly after DifficultyBar. this matters for ui layering
+                    Transform difficultyBar = uiInstance.transform.Find("DifficultyBar");
+                    if (difficultyBar)
+                    {
+                        int siblingIndex = difficultyBar.GetSiblingIndex();
+                        weatherBarInstance.transform.SetSiblingIndex(siblingIndex + 1);
+                    }
+                }
+                else
+                {
+                    SS2Log.Error("WeatherBar prefab is null!");
                 }
             }
             return uiInstance;
@@ -67,8 +85,7 @@ namespace SS2
         public int currentLevel { get; private set; }
         public int MaxStormLevel { get; private set; }
         public bool IsPermanent { get; private set; }
-        public float levelPercentComplete { get; private set; }
-        public float levelFractionComplete { get => levelPercentComplete * 0.01f; }
+        public float chargeInCurrentLevel { get; private set; }
 
         public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
         public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
@@ -78,8 +95,6 @@ namespace SS2
         [NonSerialized]
         public bool hasStarted;
 
-        [SyncVar]
-        private float chargeInCurrentLevel;
         private void OnEnable()
         {
             if (StormController.instance)
@@ -155,6 +170,7 @@ namespace SS2
                 barStateMachine.SetNextState(new AnimateWeatherBar());
             }
         }
+
         public void StartLerp(float newIntensity, float lerpDuration)
         {
             this.endLerpIntensity = newIntensity;
@@ -169,9 +185,11 @@ namespace SS2
             this.lerpTimeScale = 0;
         }
 
+        // TODO: Figure out how storms progress and report that progression
+        [NonSerialized] public float progressfuck = 0f;
         private void FixedUpdate()
         {
-            this.levelPercentComplete = Mathf.Clamp(this.chargeInCurrentLevel, 0, 100);
+            chargeInCurrentLevel = Mathf.Clamp(progressfuck, 0, 100);
 
             this.lerpTime += Time.fixedDeltaTime * lerpTimeScale;
             if(this.lerpTime <= 1)
@@ -279,7 +297,7 @@ namespace SS2
             {
                 StormController instance = StormController.instance;
                 float intensity = (float)Math.Round(instance.effectIntensity, 1);
-                return string.Format("effectIntensity: {0} hehe storm level {1}, {2}%", intensity, instance.currentLevel, Mathf.FloorToInt(instance.levelPercentComplete));
+                return string.Format("effectIntensity: {0} hehe storm level {1}, {2}%", intensity, instance.currentLevel, Mathf.FloorToInt(instance.chargeInCurrentLevel * 100f));
             }
 
             public override bool IsDirty()

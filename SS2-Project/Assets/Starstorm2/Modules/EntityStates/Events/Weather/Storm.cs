@@ -42,11 +42,15 @@ namespace EntityStates.Events
             base.OnEnter();
             this.stormController.StartLerp(0, 8f);
             stormController.StartBarAnimation(0, 8f);
+
+            duration = stormController.stormStartTime - Run.FixedTimeStamp.now;
         }
 
         public override void ServerFixedUpdate()
         {
             base.ServerFixedUpdate();
+            stormController.progressfuck = fixedAge / duration; // TODO: stupid fuck
+
             if (!stormController.hasStarted && ShouldCharge() && stormController.stormStartTime.hasPassed)
             {
                 this.stormController.OnStormLevelCompleted();
@@ -67,6 +71,9 @@ namespace EntityStates.Events
             base.OnExit();
         }
     }
+
+    // TODO: base storm state and inheritance instead of that big stupid fuck storm state
+
     //public class BaseStormState : BaseWeatherState
     //{
     //    public override void OnEnter()
@@ -124,6 +131,19 @@ namespace EntityStates.Events
         public int stormLevel;
 
         private float duration;
+
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write(this.stormLevel);
+            writer.Write(this.lerpDuration);
+            writer.Write(duration);
+        }
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            this.stormLevel = reader.ReadInt32();
+            this.lerpDuration = reader.ReadSingle();
+            duration = reader.ReadSingle();
+        }
         public override void OnEnter()
         {
             base.OnEnter();
@@ -244,6 +264,10 @@ namespace EntityStates.Events
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (stormController)
+            {
+                stormController.progressfuck = fixedAge / duration;
+            }
             if (!NetworkServer.active) return;
 
             // im stupid or what
@@ -319,16 +343,7 @@ namespace EntityStates.Events
                 }
             }
         }
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            writer.Write(this.stormLevel);
-            writer.Write(this.lerpDuration);
-        }
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            this.stormLevel = reader.ReadInt32();
-            this.lerpDuration = reader.ReadSingle();
-        }
+       
 
         // am i just stupid? where the fuck is the event
         private class OnBossKilled : MonoBehaviour, IOnKilledServerReceiver

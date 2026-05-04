@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b667dc295a914b549a89d8a86ad78daa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stormStateMachine: {fileID: 0}
-  barStateMachine: {fileID: 0}
+  stormStateMachine: {fileID: 1215507391946870013}
+  barStateMachine: {fileID: -5646132710909595473}
   eventVFX:
   - stageSerde:
       Value: 2
@@ -233,6 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stateMachines:
   - {fileID: 1215507391946870013}
+  - {fileID: -5646132710909595473}
 --- !u!114 &1215507391946870013
 MonoBehaviour:
   m_ObjectHideFlags: 0

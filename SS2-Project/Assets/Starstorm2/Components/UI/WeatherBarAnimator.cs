@@ -33,7 +33,7 @@ namespace SS2.UI
         {
             public Vector3 originalPosition;
             public Vector3 targetPosition;
-            public Transform transform;
+            public RectTransform rectTransform;
         }
         private List<ChildInfo> targetChildren;
 
@@ -43,8 +43,8 @@ namespace SS2.UI
         public AnimationCurve alphaCurve = AnimationCurve.EaseInOut(0.5f, 0f, 1f, 1f);
 
         public AnimationCurve childMovementCurve = AnimationCurve.EaseInOut(0f, 0f, .5f, 1f);
-        private static float defaultRightInfoBarY = -40.5f;
-        private static float childTargetY = -100f;
+        private static float defaultRightInfoBarY = -90.5f;
+        private static float childTargetY = -150f; // values r from what looked good in editor
         private float childDeltaY => childTargetY - defaultRightInfoBarY;
         public AnimationCurve scaleCurve = AnimationCurve.EaseInOut(0f, 0f, .5f, 1f);
         private static float scaleHeightStart = -16f;
@@ -61,24 +61,25 @@ namespace SS2.UI
         private void Awake()
         {
             root = transform.parent;
+            rectTransform = (RectTransform)transform;
             rootChildLocator = root.GetComponent<ChildLocator>();
             targetChildren = new List<ChildInfo>();
 
             for (int i = 0; i < childrenToMove.Count; i++)
             {
                 string childName = childrenToMove[i];
-                Transform child = rootChildLocator?.FindChild(childName);
+                RectTransform child = (RectTransform)rootChildLocator?.FindChild(childName);
                 if (!child)
                 {
-                    child = root.Find(childName);
+                    child = (RectTransform)root.Find(childName);
                 }
                 if (child)
                 {
                     var childInfo = new ChildInfo
                     {
-                        transform = child,
-                        originalPosition = child.position,
-                        targetPosition = child.position + Vector3.up * childDeltaY,
+                        rectTransform = child,
+                        originalPosition = child.anchoredPosition,
+                        targetPosition = child.anchoredPosition + new Vector2(0, childDeltaY),
                     };
                     targetChildren.Add(childInfo);
                 }
@@ -157,9 +158,9 @@ namespace SS2.UI
             {
                 var child = targetChildren[i];
                 float curvedTime = childMovementCurve.Evaluate(time);
-                if (child.transform)
+                if (child.rectTransform)
                 {
-                    child.transform.position = Vector3.Lerp(child.originalPosition, child.targetPosition, curvedTime);
+                    child.rectTransform.anchoredPosition = Vector3.Lerp(child.originalPosition, child.targetPosition, curvedTime);
                 }
             }
 
