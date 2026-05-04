@@ -7,12 +7,12 @@ using RoR2;
 using System.Collections.Generic;
 namespace SS2
 {
-    public class PedestalBehavior : NetworkBehaviour
+    public class PedestalBehavior : NetworkBehaviour, IDisplayNameProvider
     {
         public PickupDropTable dropTable;
         public Transform dropTransform;
         public PickupDisplay pickupDisplay;
-
+        public string displayNameToken;
         public Vector3 dropVelocity;
 
         [SyncVar(hook = nameof(OnSyncPickupIndex))]
@@ -168,6 +168,11 @@ namespace SS2
         public UniquePickup GetPickup()
         {
             return pickup;
+        }
+
+        public string GetDisplayName()
+        {
+            return RoR2.UI.PingIndicator.GetFormattedTargetString("SS2_PEDESTAL_NAME", GetPickup().pickupIndex, true);
         }
     }
 }
