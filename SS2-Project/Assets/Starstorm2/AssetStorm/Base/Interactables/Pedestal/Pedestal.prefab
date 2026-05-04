@@ -28559,7 +28559,6 @@ GameObject:
   - component: {fileID: 2387141556881963324}
   - component: {fileID: 2339111977453525924}
   - component: {fileID: 2339982743738900448}
-  - component: {fileID: 2339505559719762183}
   - component: {fileID: 7365756189491050094}
   m_Layer: 0
   m_Name: Pedestal
@@ -28632,6 +28631,7 @@ MonoBehaviour:
   dropTable: {fileID: 11400000, guid: 94829663659303942810d1e342ca8f2f, type: 2}
   dropTransform: {fileID: 2445931165938730533}
   pickupDisplay: {fileID: 2437049111885295833}
+  displayNameToken: SS2_PEDESTAL_NAME
   dropVelocity: {x: 0, y: 0, z: 0}
 --- !u!114 &2338562187482689631
 MonoBehaviour:
@@ -28777,19 +28777,6 @@ MonoBehaviour:
   m_Script: {fileID: -1977880532, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2339505559719762183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2441745343759980720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1620867292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  displayToken: SS2_PEDESTAL_NAME
 --- !u!114 &7365756189491050094
 MonoBehaviour:
   m_ObjectHideFlags: 0
