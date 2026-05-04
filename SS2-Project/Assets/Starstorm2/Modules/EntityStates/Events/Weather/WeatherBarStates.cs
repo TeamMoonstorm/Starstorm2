@@ -35,10 +35,13 @@ namespace EntityStates.Events
         }
         private SubState subState;
         private float stopwatch;
-        private float scrollStart;
+        public float scrollStart;
 
         public float targetDuration = -1f;
-        private float timeMultiplier;
+        private float timeMultiplier = 1f;
+
+        private int currentStormLevel;
+        private float calculatedScroll;
 
         // serialize the randomized values
         public override void OnSerialize(NetworkWriter writer)
@@ -61,6 +64,7 @@ namespace EntityStates.Events
 
             WeatherBarController.calcNoise += CalculateNoise;
             WeatherBarController.calcScroll += CalculateScroll;
+            currentStormLevel = StormController.instance.currentLevel;
 
             if (isAuthority)
             {
@@ -70,6 +74,7 @@ namespace EntityStates.Events
                 fractionEnd = UnityEngine.Random.Range(minFractionEnd, maxFractionEnd);
             }
 
+            timeMultiplier = 1f;
             if (targetDuration > 0)
             {
                 float baseDuration = slowdownDuration + movementDuration;
@@ -84,41 +89,52 @@ namespace EntityStates.Events
             WeatherBarController.calcScroll -= CalculateScroll;
         }
 
+        // send the current animated scroll value to the next state so it knows where to start from
+        public override void ModifyNextState(EntityState nextState)
+        {
+            if ((nextState is AnimateWeatherBar state))
+            {
+                state.scrollStart = calculatedScroll;
+            }
+        }
+
         private void CalculateScroll(ref float scroll)
         {
             if (subState == SubState.SlowDown)
             {
-                // cache the current scroll value so we know where to start during MoveFast
-                scrollStart = scroll;
+                scroll = scrollStart;
             }
             else if (subState == SubState.MoveFast)
             {
                 // Accelerate the scroll bar to the starting point of the next storm level
                 float progress = Mathf.Clamp01(stopwatch / movementDuration);
                 float curvedProgress = movementCurve.Evaluate(progress);
-                float scrollEnd = StormController.instance.currentLevel + fractionStart;
+                // TODO: calculate our own version chargeInCurrentLevel in this state, dont rely on stormcontroller for live values.
+                float scrollEnd = currentStormLevel + Util.Remap(StormController.instance.chargeInCurrentLevel, 0f, 1f, fractionStart, fractionEnd);
                 scroll = Mathf.Lerp(scrollStart, scrollEnd, curvedProgress);
             }
             else if (subState == SubState.Idle)
             {
                 // Let the scroll bar progress, but remap it
-                float remapScrollFraction = Util.Remap(StormController.instance.levelFractionComplete, 0f, 1f, fractionStart, fractionEnd);
-                scroll = StormController.instance.currentLevel + remapScrollFraction;
+                float remapScrollFraction = Util.Remap(StormController.instance.chargeInCurrentLevel, 0f, 1f, fractionStart, fractionEnd);
+                scroll = currentStormLevel + remapScrollFraction;
             }
+
+            calculatedScroll = scroll;
         }
 
         private void CalculateNoise(ref WeatherBarController.NoiseValues noise)
         {
             if (subState == SubState.SlowDown)
             {
-                // lerp noise down to zero in preparation for MoveFast
+                // lerp noise speed down to zero in preparation for MoveFast
                 float t = (slowdownDuration - stopwatch) / slowdownDuration;
                 t = Mathf.Clamp01(t);
                 noise.frequency *= t;
             }
             else if (subState == SubState.MoveFast)
             {
-                // no noise during MoveFast
+                // dont progress noise during MoveFast
                 noise.frequency = 0f;
             }
             else if (subState == SubState.Idle)

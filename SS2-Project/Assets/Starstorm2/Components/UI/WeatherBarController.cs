@@ -66,6 +66,7 @@ namespace SS2.UI
 
         [Header("Final Segment")]
         public Sprite finalSegmentSprite;
+        public float maxFinalScroll = 0.63f; // added max scroll, instead of looping
 
         private HUD hud;
         private float scrollX;
@@ -148,9 +149,11 @@ namespace SS2.UI
             float scrollValue = debugTime;
             if (StormController.instance)
             {
-                scrollValue = StormController.instance.currentLevel + StormController.instance.levelFractionComplete;
+                scrollValue = StormController.instance.currentLevel + StormController.instance.chargeInCurrentLevel;
                 calcScroll?.Invoke(ref scrollValue);
             }
+            float maxScrollValue = segmentDefs.Length - 1 + maxFinalScroll;
+            scrollValue = Mathf.Min(scrollValue, maxScrollValue);
             if (enableNoise)
             {
                 NoiseValues noiseValues = new NoiseValues
@@ -168,6 +171,11 @@ namespace SS2.UI
                 noise *= noiseValues.strength;
 
                 scrollValue += noise;
+            }
+
+            if (!Application.isPlaying)
+            {
+                SetupSegments();
             }
 
             SetSegmentScroll(scrollValue);
@@ -195,9 +203,9 @@ namespace SS2.UI
             {
                 SegmentImageAnimation segmentImageAnimation = playingAnimations[i];
                 segmentImageAnimation.age += deltaTime;
-                float num = Mathf.Clamp01(segmentImageAnimation.age / segmentImageAnimation.duration);
-                segmentImageAnimation.Update(num);
-                if (num >= 1f)
+                float t = Mathf.Clamp01(segmentImageAnimation.age / segmentImageAnimation.duration);
+                segmentImageAnimation.Update(t);
+                if (t >= 1f)
                 {
                     playingAnimations.RemoveAt(i);
                 }
@@ -210,16 +218,21 @@ namespace SS2.UI
                 return;
             }
             lastSegmentScroll = segmentScroll;
-            float num = (float)(segmentDefs.Length + 2);
-            if (segmentScroll > num)
-            {
-                segmentScroll = num - 1f + (segmentScroll - Mathf.Floor(segmentScroll));
-            }
+
+            // this handles looping the final segment. we need to do something else because we dont want "Heavy Storm" looping forever
+            //float maxScroll = segmentDefs.Length + 2;
+            //if (segmentScroll > maxScroll)
+            //{
+            //    segmentScroll = maxScroll - 1f + (segmentScroll - Mathf.Floor(segmentScroll));
+            //}
+            //
+
             scrollXRaw = (segmentScroll - 1f) * -elementWidth;
             scrollX = Mathf.Floor(scrollXRaw);
-            int num2 = currentSegmentIndex;
+
+            int oldSegmentIndex = currentSegmentIndex;
             currentSegmentIndex = Mathf.Clamp(Mathf.FloorToInt(segmentScroll), 0, segmentContainer.childCount - 1);
-            if (num2 != currentSegmentIndex)
+            if (oldSegmentIndex != currentSegmentIndex)
             {
                 OnCurrentSegmentIndexChanged(currentSegmentIndex);
             }
@@ -228,15 +241,15 @@ namespace SS2.UI
             segmentContainer.offsetMin = offsetMin;
             if (segmentContainer && segmentContainer.childCount > 0)
             {
-                int num3 = segmentContainer.childCount - 1;
-                RectTransform rectTransform = (RectTransform)segmentContainer.GetChild(num3);
+                int finalSegmentIndex = segmentContainer.childCount - 1;
+                RectTransform rectTransform = (RectTransform)segmentContainer.GetChild(finalSegmentIndex);
                 RectTransform rectTransform2 = (RectTransform)rectTransform.Find("Label");
-                TextMeshProUGUI textMeshProUGUI = labels[num3];
-                if (segmentScroll >= (float)(num3 - 1))
+                TextMeshProUGUI textMeshProUGUI = labels[finalSegmentIndex];
+                if (segmentScroll >= finalSegmentIndex - 1)
                 {
                     float num4 = elementWidth;
                     Vector2 offsetMin2 = rectTransform.offsetMin;
-                    offsetMin2.x = CalcSegmentStartX(num3);
+                    offsetMin2.x = CalcSegmentStartX(finalSegmentIndex);
                     rectTransform.offsetMin = offsetMin2;
                     Vector2 offsetMax = rectTransform.offsetMax;
                     offsetMax.x = offsetMin2.x + num4;
@@ -245,10 +258,12 @@ namespace SS2.UI
                     rectTransform2.anchorMax = new Vector2(0f, 1f);
                     rectTransform2.offsetMin = new Vector2(0f, 0f);
                     rectTransform2.offsetMax = new Vector2(elementWidth, 0f);
-                    return;
                 }
-                rectTransform.offsetMax = rectTransform.offsetMin + new Vector2(elementWidth, 0f);
-                SetLabelDefaultDimensions(rectTransform2);
+                else
+                {
+                    rectTransform.offsetMax = rectTransform.offsetMin + new Vector2(elementWidth, 0f);
+                    SetLabelDefaultDimensions(rectTransform2);
+                }
             }
         }
         private void OnCurrentSegmentIndexChanged(int newSegmentIndex)
@@ -257,11 +272,9 @@ namespace SS2.UI
             {
                 return;
             }
-            int num = newSegmentIndex - 1;
+            int oldSegmentIndex = newSegmentIndex - 1;
             float width = viewPort.rect.width;
-            int i = 0;
-            int num2 = images.Length - 1;
-            while (i < num2)
+            for (int i = 0, iEnd = images.Length - 1; i < iEnd; i++)
             {
                 Image image = images[i];
                 TextMeshProUGUI textMeshProUGUI = labels[i];
@@ -271,45 +284,48 @@ namespace SS2.UI
                 textMeshProUGUI.enabled = enabled;
                 i++;
             }
-            int num3 = images.Length - 1;
-            Image image2 = images[num3];
-            TextMeshProUGUI textMeshProUGUI2 = labels[num3];
-            bool enabled2 = image2.rectTransform.offsetMax.x + scrollX >= 0f;
-            image2.enabled = enabled2;
-            textMeshProUGUI2.enabled = enabled2;
-            for (int j = 0; j <= num; j++)
             {
-                images[j].color = ColorMultiplySaturationAndValue(ref segmentDefs[j].color, pastSaturationMultiplier, pastValueMultiplier);
-                labels[j].color = pastLabelColor;
+                int finalSegment = images.Length - 1;
+                Image finalImage = images[finalSegment];
+                TextMeshProUGUI finalLabel = labels[finalSegment];
+                bool enabled = finalImage.rectTransform.offsetMax.x + scrollX >= 0f;
+                finalImage.enabled = enabled;
+                finalLabel.enabled = enabled;
             }
-            for (int k = newSegmentIndex + 1; k < images.Length; k++)
+            
+            for (int i = 0; i <= oldSegmentIndex; i++)
             {
-                images[k].color = ColorMultiplySaturationAndValue(ref segmentDefs[k].color, upcomingSaturationMultiplier, upcomingValueMultiplier);
-                labels[k].color = upcomingLabelColor;
+                images[i].color = ColorMultiplySaturationAndValue(ref segmentDefs[i].color, pastSaturationMultiplier, pastValueMultiplier);
+                labels[i].color = pastLabelColor;
             }
-            Image image3 = (num != -1) ? images[num] : null;
-            Image image4 = (newSegmentIndex != -1) ? images[newSegmentIndex] : null;
-            TextMeshProUGUI textMeshProUGUI3 = (newSegmentIndex != -1) ? labels[newSegmentIndex] : null;
-            if (image3)
+            for (int i = newSegmentIndex + 1; i < images.Length; i++)
+            {
+                images[i].color = ColorMultiplySaturationAndValue(ref segmentDefs[i].color, upcomingSaturationMultiplier, upcomingValueMultiplier);
+                labels[i].color = upcomingLabelColor;
+            }
+            Image oldImage = (oldSegmentIndex != -1) ? images[oldSegmentIndex] : null;
+            Image newImage = (newSegmentIndex != -1) ? images[newSegmentIndex] : null;
+            TextMeshProUGUI newLabel = (newSegmentIndex != -1) ? labels[newSegmentIndex] : null;
+            if (oldImage)
             {
                 playingAnimations.Add(new SegmentImageAnimation
                 {
                     age = 0f,
                     duration = fadeAnimationDuration,
-                    segmentImage = image3,
+                    segmentImage = oldImage,
                     colorCurve = fadeAnimationCurve,
-                    color0 = segmentDefs[num].color,
-                    color1 = ColorMultiplySaturationAndValue(ref segmentDefs[num].color, pastSaturationMultiplier, pastValueMultiplier)
+                    color0 = segmentDefs[oldSegmentIndex].color,
+                    color1 = ColorMultiplySaturationAndValue(ref segmentDefs[oldSegmentIndex].color, pastSaturationMultiplier, pastValueMultiplier)
                 });
             }
             Color color = ColorMultiplySaturationAndValue(ref segmentDefs[newSegmentIndex].color, currentSaturationMultiplier, currentValueMultiplier);
-            if (image4)
+            if (newImage)
             {
                 playingAnimations.Add(new SegmentImageAnimation
                 {
                     age = 0f,
                     duration = flashAnimationDuration,
-                    segmentImage = image4,
+                    segmentImage = newImage,
                     colorCurve = flashAnimationCurve,
                     color0 = color,
                     color1 = Color.white
@@ -337,9 +353,9 @@ namespace SS2.UI
                     }
                 }
             }
-            if (textMeshProUGUI3)
+            if (newLabel)
             {
-                textMeshProUGUI3.color = currentLabelColor;
+                newLabel.color = currentLabelColor;
             }
 
             // Added weather icon assignment
@@ -357,11 +373,11 @@ namespace SS2.UI
 
         private float CalcSegmentStartX(int i)
         {
-            return (float)i * elementWidth;
+            return i * elementWidth;
         }
         private float CalcSegmentEndX(int i)
         {
-            return (float)(i + 1) * elementWidth;
+            return (i + 1) * elementWidth;
         }
         private void SetLabelDefaultDimensions(RectTransform labelRectTransform)
         {
@@ -380,6 +396,7 @@ namespace SS2.UI
             return Color.HSVToRGB(h, num * saturationMultiplier, num2 * valueMultiplier);
         }
 
+        // TODO: need to derive segments from StormController, since it will change based on the map and difficulty 
         #region Segment Setup
         private void SetupSegments()
         {
@@ -400,34 +417,41 @@ namespace SS2.UI
             {
                 return;
             }
-            uint num = (uint)segmentContainer.childCount;
-            if (images == null || (long)images.Length != (long)((ulong)desiredCount))
+            uint childCount = (uint)segmentContainer.childCount;
+
+            if (!Application.isPlaying)
+            {
+                images = null;
+                labels = null;
+            }
+
+            if (images == null || images.Length != desiredCount)
             {
                 images = new Image[desiredCount];
                 labels = new TextMeshProUGUI[desiredCount];
             }
-            int i = 0;
-            int num2 = Mathf.Min(images.Length, segmentContainer.childCount);
-            while (i < num2)
+            int imageIndex = 0;
+            int imageCount = Mathf.Min(images.Length, segmentContainer.childCount);
+            for (; imageIndex < imageCount; ++imageIndex)
             {
-                Transform child = segmentContainer.GetChild(i);
-                images[i] = child.GetComponent<Image>();
-                labels[i] = child.Find("Label").GetComponent<TextMeshProUGUI>();
-                i++;
+                Transform child = segmentContainer.GetChild(imageIndex);
+                images[imageIndex] = child.GetComponent<Image>();
+                labels[imageIndex] = child.Find("Label").GetComponent<TextMeshProUGUI>();
+                imageIndex++;
             }
-            while (num > desiredCount)
+            while (childCount > desiredCount)
             {
-                UnityEngine.Object.DestroyImmediate(segmentContainer.GetChild((int)(num - 1U)).gameObject);
-                num -= 1U;
+                UnityEngine.Object.DestroyImmediate(segmentContainer.GetChild((int)(childCount - 1)).gameObject);
+                childCount--;
             }
-            while (num < desiredCount)
+            while (childCount < desiredCount)
             {
                 GameObject gameObject = UnityEngine.Object.Instantiate<GameObject>(segmentPrefab, segmentContainer);
                 gameObject.SetActive(true);
-                images[i] = gameObject.GetComponent<Image>();
-                labels[i] = gameObject.transform.Find("Label").GetComponent<TextMeshProUGUI>();
-                i++;
-                num += 1U;
+                images[imageIndex] = gameObject.GetComponent<Image>();
+                labels[imageIndex] = gameObject.transform.Find("Label").GetComponent<TextMeshProUGUI>();
+                imageIndex++;
+                childCount++;
             }
         }
         private void SetupSegment(RectTransform segmentTransform, ref SegmentDef segmentDef, int i)
@@ -449,40 +473,45 @@ namespace SS2.UI
             }
             ((RectTransform)segmentTransform.Find("Label")).GetComponent<LanguageTextMeshController>().token = labelToken;
         }
+
         private void SetupFinalSegment(RectTransform segmentTransform)
         {
-            TextMeshProUGUI[] array = segmentTransform.GetComponentsInChildren<TextMeshProUGUI>();
-            int num = 4;
-            if (array.Length < num)
-            {
-                TextMeshProUGUI[] array2 = new TextMeshProUGUI[num];
-                for (int i = 0; i < array.Length; i++)
-                {
-                    array2[i] = array[i];
-                }
-                for (int j = array.Length; j < num; j++)
-                {
-                    array2[j] = UnityEngine.Object.Instantiate<GameObject>(array[0].gameObject, segmentTransform).GetComponent<TextMeshProUGUI>();
-                }
-                array = array2;
-            }
-            int k = 0;
-            int num2 = array.Length;
-            while (k < num2)
-            {
-                TextMeshProUGUI textMeshProUGUI = array[k];
-                textMeshProUGUI.enableWordWrapping = false;
-                textMeshProUGUI.overflowMode = TextOverflowModes.Overflow;
-                textMeshProUGUI.alignment = TextAlignmentOptions.MidlineLeft;
-                textMeshProUGUI.text = Language.GetString(segmentDefs[segmentDefs.Length - 1].token);
-                textMeshProUGUI.enableAutoSizing = true;
-                Vector3 localPosition = textMeshProUGUI.transform.localPosition;
-                localPosition.x = (float)k * elementWidth;
-                textMeshProUGUI.transform.localPosition = localPosition;
-                k++;
-            }
             segmentTransform.GetComponent<Image>().sprite = finalSegmentSprite;
         }
+
+        // copied from vanilla. this loops the text in the final segment, which we dont want
+        //private void SetupFinalSegment(RectTransform segmentTransform)
+        //{
+        //    TextMeshProUGUI[] labels = segmentTransform.GetComponentsInChildren<TextMeshProUGUI>();
+        //    int maxLabels = 4;
+        //    if (labels.Length < maxLabels)
+        //    {
+        //        TextMeshProUGUI[] newLabels = new TextMeshProUGUI[maxLabels];
+        //        for (int i = 0; i < labels.Length; i++)
+        //        {
+        //            newLabels[i] = labels[i];
+        //        }
+        //        for (int j = labels.Length; j < maxLabels; j++)
+        //        {
+        //            newLabels[j] = UnityEngine.Object.Instantiate<GameObject>(labels[0].gameObject, segmentTransform).GetComponent<TextMeshProUGUI>();
+        //        }
+        //        labels = newLabels;
+        //    }
+        //    for (int i = 0, iEnd = labels.Length; i < iEnd; ++i)
+        //    {
+        //        TextMeshProUGUI textMeshProUGUI = labels[i];
+        //        textMeshProUGUI.enableWordWrapping = false;
+        //        textMeshProUGUI.overflowMode = TextOverflowModes.Overflow;
+        //        textMeshProUGUI.alignment = TextAlignmentOptions.MidlineLeft;
+        //        textMeshProUGUI.text = Language.GetString(segmentDefs[segmentDefs.Length - 1].token);
+        //        textMeshProUGUI.enableAutoSizing = true;
+        //        Vector3 localPosition = textMeshProUGUI.transform.localPosition;
+        //        localPosition.x = i * elementWidth;
+        //        textMeshProUGUI.transform.localPosition = localPosition;
+        //        k++;
+        //    }
+        //    segmentTransform.GetComponent<Image>().sprite = finalSegmentSprite;
+        //}
         #endregion
     }
 }
