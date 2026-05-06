@@ -172,7 +172,7 @@ namespace SS2
 
         public string GetDisplayName()
         {
-            return RoR2.UI.PingIndicator.GetFormattedTargetString("SS2_PEDESTAL_NAME", GetPickup().pickupIndex, true);
+            return RoR2.UI.PingIndicator.GetFormattedTargetString(Language.GetString(displayNameToken), GetPickup().pickupIndex, true);
         }
     }
 }

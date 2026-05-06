@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   serializedCardPairs:
   - stage:
-      Value: 2198217871870
+      Value: 2189550342606
     customStageNames: []
     interactableCategory: 3
     customCategoryWeight: 0
@@ -27,6 +27,68 @@ MonoBehaviour:
     card:
       spawnCard:
         _asset: {fileID: 11400000, guid: 5377e0501a2c7f649a1141360acfc8f1, type: 2}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+  - stage:
+      Value: -4389448187888
+    customStageNames:
+    - SANDY
+    interactableCategory: 3
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions:
+    - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+      _address: 
+      _useDirectReference: 1
+      _canLoadFromCatalog: 0
+    card:
+      spawnCard:
+        _asset: {fileID: 11400000, guid: bf16a3ce8cfbe8140a881a7aabfa6fdd, type: 2}
+        _address: 
+        _useDirectReference: 1
+      selectionWeight: 2
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+      forbiddenUnlockableDef:
+        _asset: {fileID: 0}
+        _address: 
+        _useDirectReference: 0
+        _canLoadFromCatalog: 0
+  - stage:
+      Value: -4397977305056
+    customStageNames:
+    - SNOWY
+    interactableCategory: 3
+    customCategoryWeight: 0
+    customCategoryName: 
+    requiredExpansions:
+    - _asset: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
+      _address: 
+      _useDirectReference: 1
+      _canLoadFromCatalog: 0
+    card:
+      spawnCard:
+        _asset: {fileID: 11400000, guid: 85585b8bed9213e4eb3261fbc72984aa, type: 2}
         _address: 
         _useDirectReference: 1
       selectionWeight: 2
