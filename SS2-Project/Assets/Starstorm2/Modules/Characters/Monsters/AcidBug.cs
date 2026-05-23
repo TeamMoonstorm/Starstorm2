@@ -19,7 +19,23 @@ namespace SS2.Monsters
         }
         public override void Initialize()
         {
-            
+            var larvaFamily = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<FamilyDirectorCardCategorySelection>("RoR2/DLC1/Common/dccsAcidLarvaFamily.asset").WaitForCompletion();
+
+            if (larvaFamily && larvaFamily is DirectorCardCategorySelection category)
+            {
+                var card = new DirectorCard
+                {
+                    spawnCard = SS2Assets.LoadAsset<SpawnCard>("cscAcidBug", SS2Bundle.Monsters),
+                    selectionWeight = 1,
+                    spawnDistance = DirectorCore.MonsterSpawnDistance.Standard,
+                    preventOverhead = false,
+                    minimumStageCompletions = 0,
+                    requiredUnlockableDef = null,
+                    forbiddenUnlockableDef = null,
+                };
+
+                category.AddCard(0, card); // add AcidBug to the "Basic Monsters" category, with AcidLarva
+            }
         }
     }
 }
