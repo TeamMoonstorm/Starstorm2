@@ -158,7 +158,8 @@ namespace EntityStates.Events
             master.onBodyDeath.AddListener(OnBodyDeath);
             master.onBodyStart += (body) =>
             {
-                FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
+                string vfxName = spawnCard.visualEffect ? spawnCard.visualEffect.name : null;
+                FriendManager.instance.RpcSetupNemBoss(body.gameObject, vfxName);
             };
             int itemCount = Run.instance.stageClearCount;
             master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, itemCount);
@@ -212,7 +213,7 @@ namespace EntityStates.Events
         public override void OnExit()
         {
             base.OnExit();        
-            // need to do outro here instead of destroying
+            // TODO: need to do outro here instead of destroying
             if (musicTrack)
                 Destroy(musicTrack.gameObject);
         }
