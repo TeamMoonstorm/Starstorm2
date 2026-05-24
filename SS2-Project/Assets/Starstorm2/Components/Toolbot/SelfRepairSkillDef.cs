@@ -13,14 +13,16 @@ namespace SS2.ScriptableObjects
     {
         public override BaseSkillInstanceData OnAssigned([NotNull] GenericSkill skillSlot)
         {
-            skillSlot.characterBody.gameObject.AddComponent<SelfRepairController>();
+            SelfRepairController selfRepairController = skillSlot.characterBody.gameObject.EnsureComponent<SelfRepairController>();
 
-            SelfRepairController selfRepairMeter = skillSlot.characterBody.gameObject.EnsureComponent<SelfRepairController>();
-            //selfRepairMeter.repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
-            
+            if (SS2.Survivors.Toolbot.RepairOverlayPrefab != null)
+            {
+                selfRepairController.repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
+            }
+
             return new SelfRepairSkillDef.InstanceData
             {
-                selfRepairMeter = selfRepairMeter
+                selfRepairMeter = selfRepairController
             };
         }
 
