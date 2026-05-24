@@ -8,9 +8,12 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: SMWater
-  m_Shader: {fileID: 0}
+  m_Shader: {fileID: 4800000, guid: 8f3f3d0bf2267f74ca405c5ec04db15a, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
+  - CLOUDOFFSET
+  - FRESNEL
+  - VERTEXCOLOR
   - _DISPLACEMENTMODE_OFF
   - _DISPLACEMENT_ON
   - _DISTORTIONQUALITY_HIGH
@@ -21,7 +24,7 @@ Material:
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -34,6 +37,14 @@ Material:
     - _BumpMapLarge:
         m_Texture: {fileID: 2800000, guid: 7fb9e4ff704352742a2428eb205d7d13, type: 3}
         m_Scale: {x: 5, y: 5}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud1Tex:
+        m_Texture: {fileID: 2800000, guid: ddd2da77fbe3adc47868bd128fca3747, type: 3}
+        m_Scale: {x: 1.99, y: 25}
+        m_Offset: {x: 0, y: 0}
+    - _Cloud2Tex:
+        m_Texture: {fileID: 2800000, guid: f381aa5a63b7b75419aa7ec320b4bb1c, type: 3}
+        m_Scale: {x: 2, y: 20}
         m_Offset: {x: 0, y: 0}
     - _Cube:
         m_Texture: {fileID: 0}
@@ -60,7 +71,7 @@ Material:
         m_Scale: {x: 200, y: 70}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 9fbf51e29dc61044ab70452f1e3fd87e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -72,6 +83,10 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Normal2Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -87,37 +102,61 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _RemapTex:
+        m_Texture: {fileID: 2800000, guid: f4fd961a408774142a5a2873a51280b9, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AlphaBias: 0.223
+    - _AlphaBoost: 0.7
     - _Amplitude: 2
+    - _Boost: 2.01
     - _BumpLargeStrength: 0.356
     - _BumpScale: 1
     - _BumpStrength: 0.39
+    - _CalcTextureAlphaOn: 0
+    - _CloudOffsetOn: 1
+    - _CloudsOn: 0
+    - _Cull: 0
     - _Cutoff: 0.5
     - _Depth: 0.97
+    - _DepthOffset: -10
     - _DetailNormalMapScale: 1
+    - _DisableRemapOn: 0
     - _DisplacementMode: 0
     - _Distortion: 100
     - _DistortionQuality: 0
-    - _DstBlend: 0
+    - _DistortionStrength: -0.66
+    - _DstBlend: 10
     - _EdgeFade: 6.34
     - _EnableFog: 0
     - _EnableLargeBump: 0
+    - _ExternalAlpha: 1
     - _FOAM: 1
+    - _Fade: 1
+    - _FadeCloseDistance: 0.5
+    - _FadeCloseOn: 0
     - _FoamSize: 5.46
     - _Frequency: 0.97
+    - _FresnelOn: 1
+    - _FresnelPower: 0.5
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _InternalSimpleBlendMode: 0
+    - _InvFade: 0.08
     - _Metallic: 0
     - _Mode: 0
     - _NormalStrength: 1
     - _OcclusionStrength: 1
+    - _OffsetAmount: 0
     - _Parallax: 0.02
     - _RampInfo: 0
     - _Reflection: 0.761
     - _ReflectionType: 3
     - _RimPower: 4.95
+    - _SkyboxOnly: 0
     - _Smoothing: 0
     - _Smoothness: 5
     - _SmoothnessTextureChannel: 0
@@ -125,23 +164,31 @@ Material:
     - _SpecularHighlights: 1
     - _SpecularStrength: 0
     - _Speed: 1
-    - _SrcBlend: 1
+    - _SrcBlend: 5
     - _Steepness: 0.54
     - _Tess: 1
     - _UVSec: 0
+    - _UseUV1On: 0
+    - _VertexAlphaOn: 0
+    - _VertexColorOn: 1
+    - _VertexOffsetOn: 0
     - _VertexOffsetStrength: 0
     - _WorldSpace: 0
+    - _ZTest: 4
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 0.57254905, g: 0.6320918, b: 0.9254902, a: 1}
     - _CubeColor: {r: 0.48460305, g: 0.71115524, b: 0.8490566, a: 1}
+    - _CutoffScroll: {r: -30, g: 0, b: -20, a: 0}
     - _DepthColor: {r: 0.056046546, g: 0.043137252, b: 0.29411766, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FoamColor: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+    - _PerlinScale: {r: 0, g: 0, b: 0, a: 0}
     - _Scroll: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.4392157, g: 0.59458846, b: 0.59607846, a: 1}
     - _Speeds: {r: 0.1, g: 0.1, b: 0.25, a: 0.25}
     - _SpeedsLarge: {r: -0.1, g: 0.25, b: 0, a: 0}
+    - _TintColor: {r: 0.047058824, g: 0.047058824, b: 0.1882353, a: 0.6862745}
     - _WDirectionAB: {r: -0.17, g: 0.55, b: -0.62, a: -0.25}
     - _WDirectionCD: {r: 0.44, g: 0.71, b: 0.41, a: 0.5}
     - _WSpeed: {r: 0.35, g: 0.5, b: 0.35, a: 0.5}
