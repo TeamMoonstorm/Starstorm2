@@ -435,7 +435,10 @@ namespace SS2
         // doing this in awake didnt work idk
         private static void ChestBehavior_Open(On.RoR2.ChestBehavior.orig_Open orig, ChestBehavior self)
         {
-            if (GetActiveCurseCount(CurseIndex.ChestTimer) > 0)
+            // only override vanilla chests, 
+            // non-standard chests (scav bags, lunar chests, void cradles) have their own opening states and break if we replace them with OpeningSlow
+            if (GetActiveCurseCount(CurseIndex.ChestTimer) > 0
+                && self.openState.stateType == typeof(EntityStates.Barrel.Opening))
             {
                 self.openState = openState;
             }
@@ -525,10 +528,6 @@ namespace SS2
 
                     }
                 }
-                if(chestTimer > 0)
-                {
-                    chestBehavior.openState = openState;
-                }
             }			
         }
 
@@ -606,6 +605,13 @@ namespace SS2
                     this.outer.SetNextState(new EntityStates.Barrel.Opened());
                     return;
                 }
+            }
+            // always clean up timer VFX on state exit, even if isChestOpened was never set
+            // I think void cradles drop rewards through OptionChestBehavior, not ChestBehavior.ItemDrop
+            public override void OnExit()
+            {
+                if (timerInstance) Destroy(timerInstance);
+                base.OnExit();
             }
             private float duration = 1f;
         }

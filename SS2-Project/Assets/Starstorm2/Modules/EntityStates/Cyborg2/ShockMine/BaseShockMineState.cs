@@ -1,4 +1,5 @@
 ﻿using RoR2.Projectile;
+using SS2;
 namespace EntityStates.Cyborg2.ShockMine
 {
     public class BaseShockMineState : BaseState
@@ -9,8 +10,13 @@ namespace EntityStates.Cyborg2.ShockMine
         {
             base.OnEnter();
 
-            this.projectileTargetComponent = base.GetComponent<ProjectileTargetComponent>();
-            this.projectileStickOnImpact = base.GetComponent<ProjectileStickOnImpact>();
+            if (!base.TryGetComponent(out this.projectileTargetComponent))
+                SS2Log.Warning("BaseShockMineState: missing ProjectileTargetComponent");
+            if (!base.TryGetComponent(out this.projectileStickOnImpact))
+            {
+                SS2Log.Warning("BaseShockMineState: missing ProjectileStickOnImpact");
+                return;
+            }
 
             if (this.projectileStickOnImpact.enabled != this.shouldStick)
             {

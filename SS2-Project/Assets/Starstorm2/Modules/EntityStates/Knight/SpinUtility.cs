@@ -3,8 +3,6 @@ using MSU.Config;
 using RoR2;
 using RoR2.Skills;
 using SS2;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace EntityStates.Knight
@@ -23,7 +21,6 @@ namespace EntityStates.Knight
         public float fireFrequency;
         public float fireAge;
         public float fireInterval;
-        public Transform modelTransform;
         #region test
         [RiskOfOptionsConfigureField(SS2Config.ID_SURVIVOR), Tooltip("overridden by configs")]
         public static float testbaseDuration = 0.69f;
@@ -62,10 +59,10 @@ namespace EntityStates.Knight
 
             base.OnEnter();
             this.attack.damageType.damageSource = DamageSource.Utility;
+            this.attack.pushAwayForce = 0f;
+            this.attack.physForceFlags = PhysForceFlags.doNotExceed | PhysForceFlags.massIsOne;
             fireFrequency = baseFireFrequency * attackSpeedStat;
             fireInterval = 1 / fireFrequency;
-
-            modelTransform = GetModelTransform();
 
             swordPivot = FindModelChild("HitboxAnchor");
             swordPivot.rotation = Util.QuaternionSafeLookRotation(GetAimRay().direction);
@@ -84,71 +81,17 @@ namespace EntityStates.Knight
                 fireAge += Time.fixedDeltaTime;
             }
 
-            List<HurtBox> hurtBoxes = new List<HurtBox>();
-
-
             while ((fireAge >= fireInterval))
             {
                 fireAge -= fireInterval;
                 attack.ResetIgnoredHealthComponents();
-                hurtBoxes.Clear();
+                attack.forceVector = forwardDirection * rollSpeed * fireInterval * 6f;
                 PlaySwingEffect();
 
-                if (isAuthority && attack.Fire(hurtBoxes))
+                if (isAuthority && attack.Fire())
                 {
-                    for (int i = 0; i < hurtBoxes.Count; i++)
-                    {
-                        PushVictim(hurtBoxes[i]);
-                    }
                     OnHitEnemyAuthority();
                 }
-            }
-        }
-
-        //public for hot compile
-        public void PushVictim(HurtBox hurtBox)
-        {
-            if (hurtBox.healthComponent.body == null)
-                return;
-
-            float sizeMultiplier = 1;
-            switch (hurtBox.healthComponent.body.hullClassification)
-            {
-                default:
-                case HullClassification.Human:
-                    break;
-                case HullClassification.Golem:
-                    sizeMultiplier = 0.5f;
-                    break;
-                case HullClassification.BeetleQueen:
-                    sizeMultiplier = 0.2f;
-                    break;
-            }
-
-            Vector3 hurtboxPos = hurtBox.healthComponent.transform.position;
-            float z = modelTransform.InverseTransformPoint(hurtboxPos).z;
-
-            //0 to 1 based on how far the enemy is in front of or behind, with 0 being furthest in front
-            float positionMultiplier = Mathf.InverseLerp(8, -8, z);
-            PhysForceInfo physInfo = new PhysForceInfo()
-            {
-                massIsOne = true,
-                disableAirControlUntilCollision = true,
-                ignoreGroundStick = true,                               //presto!
-                force = forwardDirection * ((rollSpeed * fireInterval * 6f) + (positionMultiplier * 3)) * sizeMultiplier,
-            };
-
-            if (hurtBox.healthComponent.body.characterMotor)
-            {
-                hurtBox.healthComponent.body.characterMotor.velocity = Vector3.zero;
-                hurtBox.healthComponent.body.characterMotor.ApplyForceImpulse(physInfo);
-                //should probably just set velocity instead of setting to zero and applying impulse, but the disableaircontrol and ignoregroundstick are useful
-            }
-            if(hurtBox.healthComponent.TryGetComponent(out RigidbodyMotor motor))
-            {
-                physInfo.disableAirControlUntilCollision = false;
-                motor.rigid.velocity = Vector3.zero;
-                motor.ApplyForceImpulse(physInfo);
             }
         }
 

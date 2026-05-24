@@ -45,7 +45,10 @@ namespace SS2.Equipments
             On.RoR2.GlobalEventManager.OnHitAllProcess += OnHitAllProcess;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
         }
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
         public override bool Execute(EquipmentSlot slot)
         {
             return false;

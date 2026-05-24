@@ -7,16 +7,24 @@ namespace SS2.Items
     public sealed class ItemOnEliteKill : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemDef>("ItemOnEliteKill", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
         private static BasicPickupDropTable dropTable;
         private static Xoroshiro128Plus dropRng;
         public override void Initialize()
         {
             dropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtItemOnEliteKill", SS2Bundle.Items);
             GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
+            
             Run.onRunStartGlobal += (run) =>
             {
-                dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
+                // This is a harmless NRE on clients, but causes log noise that can confuse players thinking SS2 is root of X issue
+                if (run && run.treasureRng != null)
+                {
+                    dropRng = new Xoroshiro128Plus(run.treasureRng.nextUlong);
+                } 
             };
         }
         private void OnCharacterDeathGlobal(DamageReport damageReport)

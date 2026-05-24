@@ -1,7 +1,10 @@
-﻿using RoR2.CharacterAI;
+﻿using RoR2;
+using RoR2.CharacterAI;
 using RoR2.Navigation;
 using UnityEngine;
 using SS2;
+using SS2.Survivors;
+
 namespace EntityStates.AI.Walker
 {
     public class Fear : BaseAIState
@@ -16,9 +19,20 @@ namespace EntityStates.AI.Walker
 
         private float fallbackNodeStartAge;
         private readonly float fallbackNodeDuration = 4f;
+
         public override void OnEnter()
         {
             base.OnEnter();
+
+            // Xi Construct flies to unreachable heights when feared 
+            // Instead we jump straight into LookBusy. O(1) check, Nebby will be proud
+            if (base.body && base.body.bodyIndex == SS2.Survivors.Executioner2.xiConstructBodyIndex)
+            {
+                SS2Log.Info("Xi CCP");
+                this.outer.SetNextState(new LookBusy());
+                return;
+            }
+
             if (base.ai)
             {
                 this.lastPathUpdate = base.ai.broadNavigationAgent.output.lastPathUpdate;

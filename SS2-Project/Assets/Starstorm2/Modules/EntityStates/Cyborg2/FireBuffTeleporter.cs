@@ -48,7 +48,12 @@ namespace EntityStates.Cyborg2
 		{
 			this.hasFired = true;
 			Util.PlaySound(soundString, base.gameObject);
-			EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
+			
+			if (muzzleEffectPrefab)
+			{
+				EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, base.gameObject, "CannonR", true);
+			}
+			
 			AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 			base.characterBody.AddSpreadBloom(bloom);
 			Ray aimRay = GetAimRay();

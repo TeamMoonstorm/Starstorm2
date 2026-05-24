@@ -12,6 +12,11 @@ namespace EntityStates.AffixEmpyrean
 		{
 			base.OnEnter();
 
+			if (NetworkServer.active)
+			{
+				characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+			}
+
 			// NEED CUSTOM SFX
 
 			float minX = Mathf.Infinity;
@@ -96,6 +101,11 @@ namespace EntityStates.AffixEmpyrean
         public override void OnExit()
         {
             base.OnExit();
+
+			if (NetworkServer.active)
+			{
+				characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+			}
 			Transform modelTransform = base.GetModelTransform();
 			if(modelTransform)
             {
@@ -109,7 +119,7 @@ namespace EntityStates.AffixEmpyrean
 
 			}
 
-			characterBody.bodyFlags &= CharacterBody.BodyFlags.IgnoreKnockup;
+			characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreKnockup;
 			if (animator) animator.enabled = true;
 			if (aimAnimator)
 			{

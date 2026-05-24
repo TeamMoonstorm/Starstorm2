@@ -97,6 +97,7 @@ namespace SS2
         {
             if (isEthereal)
             {
+                // TODO: Why do we have this twice here?
                 if (tele.bossDirector)
                 {
                     tele.bossDirector.monsterCredit += (float)(int)(100f * Mathf.Pow(Run.instance.compensatedDifficultyCoefficient, 0.5f));
@@ -134,35 +135,22 @@ namespace SS2
         {
             stormIcon.gameObject.SetActive(isStorm && !ti.isCharged);
             etherealIcon.gameObject.SetActive(isEthereal && !ti.isCharged);
-            Vector3 position = ti._bossShrineCounter.transform.localPosition;
-            float z = 0;
 
-            // Buns: Adding a cautious null check here post-AC since I dont understand how this code worked previously and dont 
-            // wanna break someones game over an indicator error
-            if (position != null)
+
+            Vector3 basePosition = teleBase.InverseTransformPoint(
+                ti._bossShrineCounter.targetTransform.position);
+
+            // Stack SS2 icons above any existing mountain shrine indicators.
+            float y = iconHeightOffset * ti._bossShrineCounter.indicatorCount;
+
+            if (isEthereal)
             {
-                // Buns: The new bossShrineCounter added support for multiple indicators and removed activeSelf param
-                // Buns: idk if this will work but need to fix the compile error to get SS2 to work so YOLO
-                // TODO: Might be the source of a bug!
-                if (ti._bossShrineCounter.indicatorCount == 0)
-                {
-                    z += iconHeightOffset;
-                }
-                else if (ti._bossShrineCounter.indicatorCount >= 1)
-                {
-                    z += iconHeightOffset * ti._bossShrineCounter.indicatorCount;
-                }
-
-                if (isEthereal)
-                {
-                    etherealIcon.transform.localPosition = position + Vector3.forward * z;
-                    z += iconHeightOffset;
-                }
-                if (isStorm)
-                {
-                    stormIcon.transform.localPosition = position + Vector3.forward * z;
-                    z += iconHeightOffset;
-                }
+                etherealIcon.transform.localPosition = basePosition + Vector3.up * y;
+                y += iconHeightOffset;
+            }
+            if (isStorm)
+            {
+                stormIcon.transform.localPosition = basePosition + Vector3.up * y;
             }
         }
 
