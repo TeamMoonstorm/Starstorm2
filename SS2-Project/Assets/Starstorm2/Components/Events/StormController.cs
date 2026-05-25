@@ -17,46 +17,33 @@ namespace SS2
         public static StormController instance;
         public static PickupDropTable dropTable;
         
-        public static bool debugObjective = false;
+        public static bool debug = false;
 
-        private static GameObject weatherBarPrefab;
-        private static Vector3 weatherBarLocalPosition = new Vector3(-15.5f, -106.9f, 0f);
+        private static Vector3 weatherBarLocalPositionDefault = new Vector3(-15.5f, -106.9f, 0f);
+
+        public static StormVFX defaultStormVFX { get; private set; }
+
         [SystemInitializer]
         static void Init()
         {
+            #if DEBUG
+            debug = true;
+            #endif
+
             StormController.dropTable = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<PickupDropTable>("RoR2/Base/Chest1/dtChest1.asset").WaitForCompletion();
-            On.RoR2.Run.InstantiateUi += InstantiateWeatherBar;
-        }
 
-        private static GameObject InstantiateWeatherBar(On.RoR2.Run.orig_InstantiateUi orig, Run self, Transform uiRoot)
-        {
-            GameObject uiInstance = orig(self, uiRoot);
-            if (uiInstance)
+            defaultStormVFX = new StormVFX
             {
-                if (!weatherBarPrefab)
-                {
-                    weatherBarPrefab = SS2Assets.LoadAsset<GameObject>("WeatherBar", SS2Bundle.Events);
-                }
-                
-                if (weatherBarPrefab)
-                {
-                    var weatherBarInstance = GameObject.Instantiate(weatherBarPrefab, uiInstance.transform);
-                    ((RectTransform)weatherBarInstance.transform).anchoredPosition = weatherBarLocalPosition;
-
-                    // set sibling index to directly after DifficultyBar. this matters for ui layering
-                    Transform difficultyBar = uiInstance.transform.Find("DifficultyBar");
-                    if (difficultyBar)
-                    {
-                        int siblingIndex = difficultyBar.GetSiblingIndex();
-                        weatherBarInstance.transform.SetSiblingIndex(siblingIndex + 1);
-                    }
-                }
-                else
-                {
-                    SS2Log.Error("WeatherBar prefab is null!");
-                }
-            }
-            return uiInstance;
+                effectPrefab = SS2Assets.LoadAsset<GameObject>("DefaultThunderstormEffect", SS2Bundle.Events),
+                weatherBarPrefab = SS2Assets.LoadAsset<GameObject>("WeatherBar", SS2Bundle.Events),
+                eventStartToken = "SS2_EVENT_THUNDERSTORM_START",
+                eventEndToken = "SS2_EVENT_THUNDERSTORM_END",
+            };
+        }
+        [ConCommand(commandName = "storm_debug", flags = (ConVarFlags.Cheat), helpText = "Toggle Storm debugging.")]
+        private static void CCToggleDebug(ConCommandArgs args)
+        {
+            debug = !debug;
         }
         #endregion
 
@@ -67,12 +54,20 @@ namespace SS2
         public struct StormVFX
         {
             public R2API.DirectorAPI.StageSerde stageSerde;
+
+            [Header("VFX")]
             public string customStageName;
             public GameObject effectPrefab;
             public float cloudHeight;
+
+            [Header("UI")]
+            public GameObject weatherBarPrefab;
+            public string eventStartToken; // idk
+            public string eventEndToken; 
         }
         // TODO: really dont think this information should be kept in StormController
         public StormVFX[] eventVFX = Array.Empty<StormVFX>();
+        private StormVFX stormVFX;
 
         private float endLerpIntensity;
         private float startLerpIntensity;
@@ -80,17 +75,27 @@ namespace SS2
         private float lerpTime = 1f;
         private float effectIntensity;
 
-        public IIntensityScaler[] intensityScalers;
+        [NonSerialized] public IIntensityScaler[] intensityScalers;
 
         public int currentLevel { get; private set; }
         public int MaxStormLevel { get; private set; }
         public bool IsPermanent { get; private set; }
         public float chargeInCurrentLevel { get; private set; }
+        public bool shouldActivateHud { get => _shouldActivateHud ; private set => _shouldActivateHud = value; } // exists for WeatherBarAnimator to listen to. seems weird
+
+        private bool _shouldActivateHud;
 
         public Xoroshiro128Plus timeRng = new Xoroshiro128Plus(0UL);
         public Xoroshiro128Plus treasureRng = new Xoroshiro128Plus(0UL);
-        [NonSerialized]
-        public Run.FixedTimeStamp stormStartTime;
+        public Xoroshiro128Plus ballRng = new Xoroshiro128Plus(0UL);
+
+        public Run.FixedTimeStamp stormStartTime 
+        { 
+            get => new Run.FixedTimeStamp(_stormStartTime); 
+            set => _stormStartTime = value.t; 
+        }
+        [SyncVar]
+        private float _stormStartTime; //  The type of the SyncVar variable cannot be from an external DLL or assembly.The type of the SyncVar variable cannot be from an external DLL or assembly.The type of the SyncVar variable cannot be from an external DLL or assembly.
 
         [NonSerialized]
         public bool hasStarted;
@@ -99,7 +104,7 @@ namespace SS2
         {
             if (StormController.instance)
             {
-                Debug.LogError("Only one StormController can exist at a time.");
+                SS2Log.Error("Only one StormController can exist at a time.");
                 Destroy(base.gameObject);
                 return;
             }
@@ -125,6 +130,7 @@ namespace SS2
             // TODO: reevaluate rng usage
             timeRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
             treasureRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
+            ballRng = new Xoroshiro128Plus(Run.instance.stageRng.nextUlong);
 
             // TODO: dont use difficulty scaling value
             DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
@@ -133,11 +139,7 @@ namespace SS2
 
             IsPermanent = Run.instance.GetEventFlag("PermanentStorms");
 
-            #if DEBUG
-            debugObjective = true;
-            #endif
-            if (debugObjective)
-                ObjectivePanelController.collectObjectiveSources += StormObjective;        
+            ObjectivePanelController.collectObjectiveSources += StormObjective;        
         }
 
         private void OnDestroy()
@@ -145,24 +147,17 @@ namespace SS2
             ObjectivePanelController.collectObjectiveSources -= StormObjective;
         }
 
-        // TODO: implement this
-        //[Serializable]
-        //public struct StormLevel
-        //{
-        //    public EntityStates.SerializableEntityStateType stateType;
-        //    public Sprite icon;
-        //}
-
-        // TODO: not this !!
-        public Sprite GetWeatherIcon(int level)
+        public string GetStartToken()
         {
-            string path = "texIconStorm" + level;
-            var icon = SS2Assets.LoadAsset<Sprite>(path, SS2Bundle.Events);
-            if (!icon) SS2Log.Error($"Could not find Sprite `{path}`");
-            return icon;
+            return stormVFX.eventStartToken;
         }
+        public string GetEndToken()
+        {
+            return stormVFX.eventEndToken;
+        }
+
         // TODO: Figure out when to start the animation. We want it slightly inaccurate (offset by a couple seconds).
-        public void StartBarAnimation(float newIntensity, float duration = -1f)
+        public void StartBarAnimation(float newIntensity, float? duration = null)
         {
             if (barStateMachine)
             {
@@ -170,8 +165,13 @@ namespace SS2
                 barStateMachine.SetNextState(new AnimateWeatherBar());
             }
         }
+        // ??
+        public void SetBarActive(bool active)
+        {
+            shouldActivateHud = active;
+        }
 
-        public void StartLerp(float newIntensity, float lerpDuration)
+        public void StartEffectIntensityLerp(float newIntensity, float lerpDuration)
         {
             this.endLerpIntensity = newIntensity;
             if(lerpDuration > 0)
@@ -186,10 +186,10 @@ namespace SS2
         }
 
         // TODO: Figure out how storms progress and report that progression
-        [NonSerialized] public float progressfuck = 0f;
+        [NonSerialized] public float progressInCurrentLevel = 0f;
         private void FixedUpdate()
         {
-            chargeInCurrentLevel = Mathf.Clamp(progressfuck, 0, 100);
+            chargeInCurrentLevel = Mathf.Clamp(progressInCurrentLevel, 0, 100);
 
             this.lerpTime += Time.fixedDeltaTime * lerpTimeScale;
             if(this.lerpTime <= 1)
@@ -230,39 +230,71 @@ namespace SS2
             this.currentLevel = stormLevel;
         }
 
-        public void OnStormLevelCompleted()
+        public void SetStormLevel(int level)
         {
-            hasStarted = true;
-            this.currentLevel++;
+            if (!hasStarted)
+            {
+                hasStarted = level > 0;
+            }
+            currentLevel = level;
         }
 
         public void InstantiateEffect()
         {
-            GameObject effectPrefab = SS2Assets.LoadAsset<GameObject>("DefaultThunderstormEffect", SS2Bundle.Events);
-            float cloudHeight = 100f;
-            foreach(StormVFX vfx in this.eventVFX)
+            stormVFX = defaultStormVFX;
+            var currentStage = DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene());
+
+            // Stage VFX
+            foreach (StormVFX vfx in this.eventVFX)
             {
                 var stageFlags = (DirectorAPI.Stage)vfx.stageSerde;
-                if (stageFlags.HasFlag(DirectorAPI.GetStageEnumFromSceneDef(SceneCatalog.GetSceneDefForCurrentScene()))) // im gonna puke
+                if (stageFlags.HasFlag(currentStage)) // im gonna puke
                 {
-                    effectPrefab = vfx.effectPrefab;
-                    cloudHeight = vfx.cloudHeight;
+                    stormVFX = vfx;
                     break;
                 }
             }
-            GameObject effectInstance = GameObject.Instantiate(effectPrefab, base.gameObject.transform);
-            this.intensityScalers = effectInstance.GetComponentsInChildren<IIntensityScaler>(true);
-            Transform cloud = effectInstance.GetComponent<ChildLocator>()?.FindChild("CloudLayer");
-            if(cloud)
+            if (stormVFX.effectPrefab)
             {
-                cloud.gameObject.SetActive(true);
-                cloud.position = Vector3.up * cloudHeight;
+                GameObject effectInstance = GameObject.Instantiate(stormVFX.effectPrefab, base.gameObject.transform);
+                this.intensityScalers = effectInstance.GetComponentsInChildren<IIntensityScaler>(true);
+                Transform cloud = effectInstance.GetComponent<ChildLocator>()?.FindChild("CloudLayer");
+                if (cloud)
+                {
+                    cloud.gameObject.SetActive(true);
+                    cloud.position = Vector3.up * stormVFX.cloudHeight;
+                }
+            }
+
+            // Weather Bar
+            for (int i = 0; i < Run.instance.uiInstances.Count; i++)
+            {
+                var uiInstance = Run.instance.uiInstances[i];
+                if (uiInstance)
+                {
+                    if (stormVFX.weatherBarPrefab)
+                    {
+                        var weatherBarInstance = GameObject.Instantiate(stormVFX.weatherBarPrefab, uiInstance.transform);
+                        ((RectTransform)weatherBarInstance.transform).anchoredPosition = weatherBarLocalPositionDefault; // TODO: UI mod support
+
+                        // set sibling index to directly after DifficultyBar. this matters for ui layering
+                        Transform difficultyBar = uiInstance.transform.Find("DifficultyBar");
+                        if (difficultyBar)
+                        {
+                            int siblingIndex = difficultyBar.GetSiblingIndex();
+                            weatherBarInstance.transform.SetSiblingIndex(siblingIndex + 1);
+                        }
+                    }
+                    else
+                    {
+                        SS2Log.Error("WeatherBar prefab is null!");
+                    }
+                }
             }
         }
 
-
         // START STORM 2!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: {stormLevel}")]
+        [ConCommand(commandName = "start_storm", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Sets the current storm level. Zero to disable. Format: start_storm {stormLevel}")]
         public static void CCSetStormLevel(ConCommandArgs args)
         {
             if (!NetworkServer.active) return;
@@ -283,12 +315,15 @@ namespace SS2
         }
         private void StormObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)
         {
-            dest.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+            if (debug)
             {
-                master = master,
-                objectiveType = typeof(StormObjectiveTracker),
-                source = base.gameObject
-            });
+                dest.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
+                {
+                    master = master,
+                    objectiveType = typeof(StormObjectiveTracker),
+                    source = base.gameObject
+                });
+            }
         }
 
         private class StormObjectiveTracker : ObjectivePanelController.ObjectiveTracker
@@ -304,6 +339,43 @@ namespace SS2
             {
                 return true;
             }
+        }
+
+        [ConCommand(commandName = "balllllightning", flags = (ConVarFlags.Cheat), helpText = "Spawns ball.")]
+        private static void CCSpawnBall(ConCommandArgs args)
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+            Transform spawnTarget = null;
+            DirectorPlacementRule.PlacementMode placementMode = DirectorPlacementRule.PlacementMode.Random;
+
+            var rng = new Xoroshiro128Plus(0L);
+
+            List<GameObject> playerBodyObjects = new List<GameObject>();
+            foreach (PlayerCharacterMasterController player in PlayerCharacterMasterController._instances)
+            {
+                if (player.master.hasBody)
+                {
+                    playerBodyObjects.Add(player.master.GetBodyObject());
+                }
+            }
+            var playerBodyObject = rng.NextElementUniform(playerBodyObjects);
+            if (playerBodyObject)
+            {
+                spawnTarget = playerBodyObject.transform;
+                placementMode = DirectorPlacementRule.PlacementMode.Approximate;
+            }
+
+            var ballSpawnCard = SS2Assets.LoadAsset<SpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ballSpawnCard, new DirectorPlacementRule
+            {
+                minDistance = 10f,
+                maxDistance = 120f,
+                placementMode = placementMode,
+                spawnOnTarget = spawnTarget,
+            }, rng));
         }
     }
 }

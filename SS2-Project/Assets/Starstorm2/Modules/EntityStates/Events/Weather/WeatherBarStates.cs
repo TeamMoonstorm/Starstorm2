@@ -37,7 +37,7 @@ namespace EntityStates.Events
         private float stopwatch;
         public float scrollStart;
 
-        public float targetDuration = -1f;
+        public float? targetDuration;
         private float timeMultiplier = 1f;
 
         private int currentStormLevel;
@@ -75,10 +75,18 @@ namespace EntityStates.Events
             }
 
             timeMultiplier = 1f;
-            if (targetDuration > 0)
+            if (targetDuration.HasValue)
             {
                 float baseDuration = slowdownDuration + movementDuration;
-                timeMultiplier = targetDuration / baseDuration;
+                timeMultiplier = targetDuration.Value / baseDuration;
+            }
+
+            if (scrollStart == 0)
+            {
+                fractionStart = 0;
+                subState = SubState.Idle; // stupid idiot
+                                          // when going from calm -> storm 1, skip the animation and just start at 0
+                                          // TODO: just pass values into this state instead of calculating it here!!
             }
         }
         public override void OnExit()
@@ -140,6 +148,7 @@ namespace EntityStates.Events
             else if (subState == SubState.Idle)
             {
                 // TODO: change noise strength and frequency based on wind and storm level
+                // also, clamp noise within the current segment (weatherbarcontroller should probably handle that itself!)
             }
         }
 

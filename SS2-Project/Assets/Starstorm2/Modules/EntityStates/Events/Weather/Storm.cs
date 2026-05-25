@@ -6,8 +6,10 @@ using UnityEngine.Networking;
 using SS2;
 using RoR2.UI;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine.Events;
+using System.Linq;
+using System;
+
 namespace EntityStates.Events
 {
     public abstract class BaseWeatherState : EntityStates.GameplayEvents.GameplayEventState
@@ -18,117 +20,153 @@ namespace EntityStates.Events
             base.OnEnter();
             this.stormController = base.GetComponent<StormController>();
         }
-
-        public override void FixedUpdate()
+        public void SetBuffCountGlobal(int count)
         {
-            base.FixedUpdate();
-
-            if (NetworkServer.active)
+            var mask = TeamMask.GetEnemyTeams(TeamIndex.Player);
+            mask.RemoveTeam(TeamIndex.Neutral);
+            
+            for (int i = 0; i < CharacterBody.readOnlyInstancesList.Count; i++)
             {
-                ServerFixedUpdate();
+                var body = CharacterBody.readOnlyInstancesList[i];
+                if (body)
+                {
+                    var team = body.teamComponent.teamIndex;
+                    if (mask.HasTeam(team) && !body.bodyFlags.HasFlag(CharacterBody.BodyFlags.Masterless))
+                    {
+                        body.SetBuffCount(SS2Content.Buffs.BuffStorm.buffIndex, count);
+                    }
+                }
             }
-        }
-
-        public virtual void ServerFixedUpdate()
-        {
-
         }
     }
     public class Calm : BaseWeatherState
     {
         public float duration;
+
+        private static Color textColor = Color.gray;
+        private static float warningDuration = 8.5f;
+
+        private static float hudRevealDuration = 4f;
+
+        private bool hasWarned;
+        private bool hasRevealed;
         public override void OnEnter()
         {
             base.OnEnter();
-            this.stormController.StartLerp(0, 8f);
-            stormController.StartBarAnimation(0, 8f);
 
-            duration = stormController.stormStartTime - Run.FixedTimeStamp.now;
+            duration = stormController.stormStartTime - Run.FixedTimeStamp.now; // bro
+
+            stormController.SetStormLevel(0); // why is the entitystate doing this??
+            stormController.StartEffectIntensityLerp(0, 8f);
+            stormController.StartBarAnimation(0f, 0f); // TODO: figure out what to put in this stupdi method
+            stormController.SetBarActive(false); // probably want to hide it later since storm fx is still lerping away?
+
+            if (stormController.hasStarted)
+            {
+                if (TeleporterUpgradeController.instance)
+                {
+                    TeleporterUpgradeController.instance.UpgradeStorm(false);
+                }
+                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                {
+                    eventToken = stormController.GetEndToken(),
+                    eventColor = textColor,
+                    textDuration = 6,
+                };
+                GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
+            }
+
+            if (NetworkServer.active)
+            {
+                SetBuffCountGlobal(0);
+            }
         }
 
-        public override void ServerFixedUpdate()
+        public override void FixedUpdate()
         {
-            base.ServerFixedUpdate();
-            stormController.progressfuck = fixedAge / duration; // TODO: stupid fuck
+            base.FixedUpdate();
 
-            if (!stormController.hasStarted && ShouldCharge() && stormController.stormStartTime.hasPassed)
+            if (!ShouldCharge()) // ??
             {
-                this.stormController.OnStormLevelCompleted();
-                outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
                 return;
             }
+
+            stormController.progressInCurrentLevel = fixedAge / duration; // TODO: stupid fuck.
+
+            Run.FixedTimeStamp warnTime = stormController.stormStartTime - warningDuration;
+            if (warnTime.hasPassed && !hasWarned)
+            {
+                hasWarned = true;
+                EnqueueWarningText();
+            }
+
+            Run.FixedTimeStamp revealTime = stormController.stormStartTime - hudRevealDuration;
+            if (revealTime.hasPassed && !hasRevealed)
+            {
+                hasRevealed = true;
+                stormController.SetBarActive(true);
+            }
+
+            if (isAuthority)
+            {
+                if (stormController.stormStartTime.hasPassed)
+                {
+                    outer.SetNextState(new Storm { stormLevel = 1, lerpDuration = 15f });
+                }
+            }
+        }
+
+        public void EnqueueWarningText()
+        {
+            hasWarned = true;
+            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+            {
+                eventToken = stormController.GetStartToken(),
+                eventColor = textColor,
+                textDuration = 6,
+            };
+            GameplayEventTextController.instance.EnqueueNewTextRequest(request, true);
         }
 
         private bool ShouldCharge()
         {
             bool shouldCharge = !TeleporterInteraction.instance;
             shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
+            shouldCharge |= !stormController.hasStarted;
             return shouldCharge;
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
         }
     }
 
-    // TODO: base storm state and inheritance instead of that big stupid fuck storm state
-
-    //public class BaseStormState : BaseWeatherState
-    //{
-    //    public override void OnEnter()
-    //    {
-    //        base.OnEnter();
-
-    //        if (NetworkServer.active)
-    //        {
-    //            float variance = baseDuration * durationVariance;
-    //            this.duration = stormController.timeRng.RangeFloat(baseDuration - variance, baseDuration + variance);
-
-    //            CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-    //            if (bossDirector && stormLevel >= bossEliteLevel)
-    //            {
-    //                if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(true);
-    //                BossGroup.onBossGroupDefeatedServer += OnBossGroupDefeatedServer;
-    //                bossDirector.onSpawnedServer.AddListener(ModifySpawnedBoss);
-    //            }
-
-    //            foreach (CombatDirector combatDirector in CombatDirector.instancesList)
-    //            {
-    //                if (combatDirector != bossDirector)
-    //                    combatDirector.onSpawnedServer.AddListener(ModifySpawnedMasters);
-    //            }
-
-    //            CharacterBody.onBodyStartGlobal += BuffEnemy;
-    //            var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-    //            foreach (var teamMember in enemies)
-    //            {
-    //                BuffEnemy(teamMember.body);
-    //            }
-    //        }
-    //    }
-    //}
+    // TODO: base storm state and inheritance and defined levels instead of this big stupid fuck storm state
     public class Storm : BaseWeatherState
     {
-        private static float baseDuration = 60f;
+        private static float baseDuration = 80f;
         private static float durationVariance = 0.4f;
-        private static float effectLerpDuration = 5f;
 
-        private static Color textColor = Color.gray;
-        private static int bossEliteLevel = 4;
-        private static int eliteLevel = 3;
+        // Storm elite spawning values
+        private static int bossEliteLevel = 3;
+        private static int eliteLevel = 2;
         private static float eliteChancePerExtraLevelCoefficient = 2f;
         private static float eliteChancePerSecond = 2.5f;
-        private static float baseEliteChance = 10f;
-        private bool isPermanent;
-        private float eliteChance;
+        private static float baseEliteChance = 0f;
+        private static float maxEliteChanceInterval = 24f;
+        private static float minEliteChanceInterval = 4f;
+        private float currentEliteChance;
         private float eliteChanceStopwatch;
-        private float eliteChanceTimer;
-        private float maxEliteChanceInterval = 24f;
-        private float minEliteChanceInterval = 4f;
+        private float eliteChanceInterval;
+
+        // Ball lightning spawning values
+        private static float ballSpawnAttemptInterval = 3f;
+        private static float ballChancePerSecond = 0.5f;
+        private static float ballMinSpawnDistance = 10f;
+        private static float ballMaxSpawnDistance = 120f;
+        private float ballSpawnStopwatch;
+
+        // Monster wave values
 
         public float lerpDuration;
         public int stormLevel;
+        private bool isPermanent;
 
         private float duration;
 
@@ -148,24 +186,139 @@ namespace EntityStates.Events
         {
             base.OnEnter();
 
-            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-            {
-                eventToken = "ermmmm..... storm " + stormLevel,
-                eventColor = textColor,
-                textDuration = 6,
-            };
-            GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-
-            this.stormController.StartLerp(stormLevel, lerpDuration);
+            stormController.SetStormLevel(stormLevel); // ???????????????????????????? dude
+            this.stormController.StartEffectIntensityLerp(stormLevel, lerpDuration);
             stormController.StartBarAnimation(stormLevel, lerpDuration);
+            stormController.SetBarActive(true); // in case we skipped calm
 
             isPermanent = stormController.IsPermanent && this.stormLevel >= stormController.MaxStormLevel;
 
+            eliteChanceInterval = UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
+
+            SetHooks();
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (stormController)
+            {
+                stormController.progressInCurrentLevel = fixedAge / duration;
+            }
+
+
+            if (!NetworkServer.active) return;
+
+            // Update elite chance
+            eliteChanceStopwatch -= Time.fixedDeltaTime;
+            if (eliteChanceStopwatch <= 0)
+            {
+                // add elite chance according to current interval
+                currentEliteChance += eliteChancePerSecond * eliteChanceInterval;
+                if (currentEliteChance > 100) currentEliteChance = 100;
+
+                // start new interval
+                eliteChanceInterval = UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
+                eliteChanceStopwatch += eliteChanceInterval;
+            }
+
+            // Update ball chance
+            // TODO: guaranteed ball lightning spawns during upgraded tp event
+            ballSpawnStopwatch -= Time.fixedDeltaTime;
+            if (ballSpawnStopwatch <= 0)
+            {
+                ballSpawnStopwatch += ballSpawnAttemptInterval;
+
+                float percentChance = ballChancePerSecond * ballSpawnAttemptInterval * 0.01f;
+                if (stormController.ballRng.nextNormalizedFloat >= percentChance)
+                {
+                    SpawnBall();
+                }
+            }
+
+            if (!isPermanent && fixedAge > duration && ShouldCharge())
+            {
+                if (stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
+                {
+                    outer.SetNextState(new Calm());
+                    return;
+                }
+
+                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
+                return;
+            }
+        }
+        private bool ShouldCharge()
+        {
+            bool shouldCharge = !TeleporterInteraction.instance;
+            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
+            return shouldCharge;
+        }
+
+        public override void ModifyNextState(EntityState nextState)
+        {
+            base.ModifyNextState(nextState);
+
+            if (nextState is Storm stormState)
+            {
+                stormState.currentEliteChance = this.currentEliteChance;
+            }
+        }
+
+        public override void OnExit()
+        {
+            UnsetHooks();
+
+            base.OnExit();
+        }
+        private void SpawnBall()
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+            Transform spawnTarget = null;
+            DirectorPlacementRule.PlacementMode placementMode = DirectorPlacementRule.PlacementMode.Random;
+
+            // pick random player, then spawn randomly in a radius around it
+            List<GameObject> playerBodyObjects = new List<GameObject>();
+            foreach (PlayerCharacterMasterController player in PlayerCharacterMasterController._instances)
+            {
+                if (player.master.hasBody)
+                {
+                    playerBodyObjects.Add(player.master.GetBodyObject());
+                }
+            }
+            var playerBodyObject = stormController.ballRng.NextElementUniform(playerBodyObjects);
+            if (playerBodyObject)
+            {
+                spawnTarget = playerBodyObject.transform;
+                placementMode = DirectorPlacementRule.PlacementMode.Approximate;
+            }
+
+            var ballSpawnCard = SS2Assets.LoadAsset<SpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
+            DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ballSpawnCard, new DirectorPlacementRule
+            {
+                minDistance = ballMinSpawnDistance,
+                maxDistance = ballMaxSpawnDistance,
+                placementMode = placementMode,
+                spawnOnTarget = spawnTarget,
+            }, stormController.ballRng));
+        }
+
+
+        // hooks go in the uggo corner
+        #region Event Hooks
+
+        private void SetHooks()
+        {
             if (NetworkServer.active)
             {
                 float variance = baseDuration * durationVariance;
                 this.duration = stormController.timeRng.RangeFloat(baseDuration - variance, baseDuration + variance);
 
+                // TODO: probably put these events into stormcontroller?
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
@@ -181,35 +334,35 @@ namespace EntityStates.Events
                 }
 
                 CharacterBody.onBodyStartGlobal += BuffEnemy;
-                var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                foreach (var teamMember in enemies)
-                {
-                    BuffEnemy(teamMember.body);
-                }
+                SetBuffCountGlobal(stormLevel);
             }
 
             TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
         }
 
-        private void OnBossGroupDefeatedServer(BossGroup bossGroup)
+        private void UnsetHooks()
         {
-            if (bossGroup == TeleporterInteraction.instance.bossGroup && Run.instance.participatingPlayerCount > 0)
+            CharacterBody.onBodyStartGlobal -= BuffEnemy;
+            TeleporterInteraction.onTeleporterChargedGlobal -= OnTeleporterChargedGlobal;
+            if (NetworkServer.active)
             {
-                int playerCount = Run.instance.participatingPlayerCount;
-                float angle = 360f / (float)playerCount;
-                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
-                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                PickupIndex drop = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardStorm.itemIndex);
-                int i = 0;
-                while (i < playerCount)
+                // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
+                CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
+                if (bossDirector && stormLevel >= bossEliteLevel)
                 {
-                    PickupDropletController.CreatePickupDroplet(drop, bossGroup.dropPosition.position, vector);
-                    i++;
-                    vector = rotation * vector;
+                    BossGroup.onBossGroupDefeatedServer -= OnBossGroupDefeatedServer;
+                    bossDirector.onSpawnedServer.RemoveListener(ModifySpawnedBoss);
+                }
+                if (!stormController.IsPermanent)
+                {
+                    foreach (CombatDirector combatDirector in CombatDirector.instancesList)
+                    {
+                        if (combatDirector != bossDirector)
+                            combatDirector.onSpawnedServer.RemoveListener(ModifySpawnedMasters);
+                    }
                 }
             }
         }
-
         private void OnTeleporterChargedGlobal(TeleporterInteraction _)
         {
             this.outer.SetNextState(new Calm());
@@ -218,10 +371,10 @@ namespace EntityStates.Events
         private void ModifySpawnedMasters(GameObject masterObject)
         {
             int extraLevels = this.stormLevel - eliteLevel;
-            float chance = eliteChance * (1 + extraLevels * eliteChancePerExtraLevelCoefficient);
+            float chance = baseEliteChance + currentEliteChance * (1 + extraLevels * eliteChancePerExtraLevelCoefficient);
             if (Util.CheckRoll(chance))
             {
-                eliteChance /= 2f;
+                currentEliteChance /= 2f;
                 CreateStormElite(masterObject);
             }
         }
@@ -239,7 +392,6 @@ namespace EntityStates.Events
             CharacterMaster master = masterObject.GetComponent<CharacterMaster>();
             if (master.inventory.currentEquipmentIndex == SS2Content.Equipments.AffixEmpyrean.equipmentIndex) return;
             master.inventory.GiveItem(SS2Content.Items.AffixStorm);
-            master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, 2 * (stormLevel - eliteLevel)); // lvl 3 = 2, lvl4 = 4
             GameObject bodyObject = master.GetBodyObject();
             if (bodyObject)
             {
@@ -261,89 +413,24 @@ namespace EntityStates.Events
             }
         }
 
-        public override void FixedUpdate()
+        private void OnBossGroupDefeatedServer(BossGroup bossGroup)
         {
-            base.FixedUpdate();
-            if (stormController)
+            if (bossGroup == TeleporterInteraction.instance.bossGroup && Run.instance.participatingPlayerCount > 0)
             {
-                stormController.progressfuck = fixedAge / duration;
-            }
-            if (!NetworkServer.active) return;
-
-            // im stupid or what
-            this.eliteChanceStopwatch -= Time.fixedDeltaTime;
-            eliteChanceTimer += Time.fixedDeltaTime;
-            if (eliteChanceStopwatch <= 0)
-            {
-                eliteChanceStopwatch += UnityEngine.Random.Range(minEliteChanceInterval, maxEliteChanceInterval);
-                eliteChance += eliteChancePerSecond * eliteChanceTimer;
-                if (eliteChance > 100) eliteChance = 100;
-                eliteChanceTimer = 0;
-            }
-            if (!isPermanent && base.fixedAge > duration && ShouldCharge())
-            {
-                if (stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
+                int playerCount = Run.instance.participatingPlayerCount;
+                float angle = 360f / (float)playerCount;
+                Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
+                Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
+                PickupIndex drop = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardStorm.itemIndex);
+                int i = 0;
+                while (i < playerCount)
                 {
-                    outer.SetNextState(new Calm());
-                    if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(false);
-                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                    {
-                        eventToken = "ermmmm..... bye storm",
-                        eventColor = textColor,
-                        textDuration = 6,
-                    };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                    return;
-                }
-
-                this.stormController.OnStormLevelCompleted();
-                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
-                return;
-            }
-        }
-
-        private bool ShouldCharge()
-        {
-            bool shouldCharge = !TeleporterInteraction.instance;
-            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
-            return shouldCharge;
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-
-            CharacterBody.onBodyStartGlobal -= BuffEnemy;
-            TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
-            if (NetworkServer.active)
-            {
-                // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
-                CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-                if (bossDirector && stormLevel >= 4)
-                {
-                    BossGroup.onBossGroupDefeatedServer -= OnBossGroupDefeatedServer;
-                    bossDirector.onSpawnedServer.RemoveListener(ModifySpawnedBoss);
-                }
-                if (!stormController.IsPermanent)
-                {
-                    foreach (CombatDirector combatDirector in CombatDirector.instancesList)
-                    {
-                        if (combatDirector != bossDirector)
-                            combatDirector.onSpawnedServer.RemoveListener(ModifySpawnedMasters);
-                    }
-                }
-
-                if (this.outer.nextState is Calm) // un buff
-                {
-                    var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                    foreach (var teamMember in enemies)
-                    {
-                        teamMember.body.SetBuffCount(SS2Content.Buffs.BuffStorm.buffIndex, 0);
-                    }
+                    PickupDropletController.CreatePickupDroplet(drop, bossGroup.dropPosition.position, vector);
+                    i++;
+                    vector = rotation * vector;
                 }
             }
         }
-       
 
         // am i just stupid? where the fuck is the event
         private class OnBossKilled : MonoBehaviour, IOnKilledServerReceiver
@@ -357,6 +444,8 @@ namespace EntityStates.Events
                 }
             }
         }
+        #endregion
+
     }
 
 }

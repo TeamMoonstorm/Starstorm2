@@ -98,6 +98,9 @@ namespace SS2.UI
 
             [Tooltip("The color to use for the panel.")]
             public Color color;
+
+            [Tooltip("The icon to use for the panel.")]
+            public Sprite iconSprite;
         }
         
         // Added hooks
@@ -274,23 +277,29 @@ namespace SS2.UI
             }
             int oldSegmentIndex = newSegmentIndex - 1;
             float width = viewPort.rect.width;
+
             for (int i = 0, iEnd = images.Length - 1; i < iEnd; i++)
             {
                 Image image = images[i];
-                TextMeshProUGUI textMeshProUGUI = labels[i];
+                TextMeshProUGUI label = labels[i];
                 RectTransform rectTransform = image.rectTransform;
                 bool enabled = rectTransform.offsetMax.x + scrollX >= 0f && rectTransform.offsetMin.x + scrollX <= width;
-                image.enabled = enabled;
-                textMeshProUGUI.enabled = enabled;
-                i++;
+                //image.enabled = enabled;
+                //label.enabled = enabled;
+                image.enabled = true; // vanilla disables segments if the scroll isnt far enough. but we do some weird offset stuff for the weather bar so that looks funky.
+                                      // cba to figure out the math for this. making UI is fucked without playmode in editor.
+                                      // i dont know why vanilla even does this anyways, segments are behind a ui mask already
+                label.enabled = true;
             }
             {
                 int finalSegment = images.Length - 1;
                 Image finalImage = images[finalSegment];
                 TextMeshProUGUI finalLabel = labels[finalSegment];
                 bool enabled = finalImage.rectTransform.offsetMax.x + scrollX >= 0f;
-                finalImage.enabled = enabled;
-                finalLabel.enabled = enabled;
+                //finalImage.enabled = enabled;
+                //finalLabel.enabled = enabled;
+                finalImage.enabled = true; // same as above
+                finalLabel.enabled = true;
             }
             
             for (int i = 0; i <= oldSegmentIndex; i++)
@@ -364,10 +373,7 @@ namespace SS2.UI
                 int level = newSegmentIndex;
                 calcIconLevel?.Invoke(ref level);
 
-                if(StormController.instance)
-                {
-                    weatherIcon.sprite = StormController.instance.GetWeatherIcon(level);
-                }
+                weatherIcon.sprite = segmentDefs[level].iconSprite;
             }
         }
 
@@ -437,7 +443,6 @@ namespace SS2.UI
                 Transform child = segmentContainer.GetChild(imageIndex);
                 images[imageIndex] = child.GetComponent<Image>();
                 labels[imageIndex] = child.Find("Label").GetComponent<TextMeshProUGUI>();
-                imageIndex++;
             }
             while (childCount > desiredCount)
             {
