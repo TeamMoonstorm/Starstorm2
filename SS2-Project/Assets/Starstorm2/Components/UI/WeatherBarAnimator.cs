@@ -56,8 +56,8 @@ namespace SS2.UI
         private float startLerpTime;
         private float lerpTimeScale;
         private float lerpTime = 1f;
-        private float currentTime;
-
+        private float currentTime = -1f;
+        private bool barActive;
         private void Awake()
         {
             root = transform.parent;
@@ -98,18 +98,34 @@ namespace SS2.UI
             SetAnimationTime(0f);
         }
 
-
-        // TODO: Figure out where to reveal weather bar from!!!!!!!!!!!!! want the animation to play right before switching from calm to rain
-        private void OnEnable()
-        {
-            StartLerp(1f, animDuration);
-        }
-
         private void OnDisable()
         {
             SetAnimationTime(0f);
         }
-
+        private void FixedUpdate()
+        {
+            if (StormController.instance)
+            {
+                // ???? ?
+                if (StormController.instance.shouldActivateHud)
+                {
+                    if (!barActive)
+                    {
+                        barActive = true;
+                        StartLerp(1f, animDuration);
+                    }
+                }
+                else
+                {
+                    if (barActive)
+                    {
+                        barActive = false;
+                        StartLerp(0f, animDuration);
+                    }
+                    
+                }
+            }
+        }
         public void StartLerp(float newTargetTime, float lerpDuration)
         {
             endLerpTime = newTargetTime;

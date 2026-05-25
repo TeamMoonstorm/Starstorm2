@@ -183,15 +183,19 @@ MonoBehaviour:
   - debugString: Calm
     token: SS2_WEATHER_BAR_0
     color: {r: 0.5137255, g: 1, b: 0.6392157, a: 1}
+    iconSprite: {fileID: 21300000, guid: 9c0d108571b46be438e4fa2120d72913, type: 3}
   - debugString: Rain
     token: SS2_WEATHER_BAR_1
     color: {r: 0.252759, g: 0.754717, b: 0.66876525, a: 1}
+    iconSprite: {fileID: 21300000, guid: 3afaca3bd5ac9854883b1bd2e561bac2, type: 3}
   - debugString: Storm
     token: SS2_WEATHER_BAR_2
     color: {r: 0.05526879, g: 0.354213, b: 0.509434, a: 1}
+    iconSprite: {fileID: 21300000, guid: 8cf9ce077e177dd47ba952c7b5ece23d, type: 3}
   - debugString: Heavy Storm
     token: SS2_WEATHER_BAR_3
     color: {r: 0.13710395, g: 0.17783703, b: 0.3679245, a: 1}
+    iconSprite: {fileID: 21300000, guid: 65ea1489c88d2ab4eb70f363b1fd69f3, type: 3}
   segmentPrefab: {fileID: 2641391533113492552}
   pastSaturationMultiplier: 0.75
   pastValueMultiplier: 0.3
@@ -262,7 +266,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 0
   flashAnimationDuration: 1
-  onDifficultyChangeSoundString: 
+  onDifficultyChangeSoundString: Play_UI_conversion_item
   enableNoise: 1
   perlinNoiseCutoffMax: 1
   perlinNoiseCutoffMin: 0
@@ -274,14 +278,14 @@ MonoBehaviour:
   maxFinalScroll: 0.63
   images:
   - {fileID: 6210567453584534077}
-  - {fileID: 0}
+  - {fileID: 34640071651521001}
   - {fileID: 5451394688783086493}
-  - {fileID: 0}
+  - {fileID: 1088291060302440916}
   labels:
   - {fileID: 159155421712500685}
-  - {fileID: 0}
+  - {fileID: 2746665933004571729}
   - {fileID: 9100211974125333666}
-  - {fileID: 0}
+  - {fileID: 242373685581391872}
   wormGearImages:
   - {fileID: 1248298071608540687}
   UVScaleToScrollX: 0
@@ -1741,8 +1745,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 40, y: 1}
-  m_SizeDelta: {x: -40, y: 2}
+  m_AnchoredPosition: {x: 57, y: 1}
+  m_SizeDelta: {x: -57, y: 2}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &4715483749419813552
 GameObject:
@@ -2023,7 +2027,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -37.5, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 100, y: 16}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7051398950419175876
 GameObject:
