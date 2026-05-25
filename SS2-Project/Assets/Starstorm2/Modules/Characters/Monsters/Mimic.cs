@@ -86,9 +86,33 @@ namespace SS2.Monsters
 
 			ChatMessageBase.chatMessageTypeToIndex.Add(typeof(MimicTheftMessage), (byte)ChatMessageBase.chatMessageIndexToType.Count);
 			ChatMessageBase.chatMessageIndexToType.Add(typeof(MimicTheftMessage));
-
 		}
 
+        [ConCommand(commandName = "mimic_surprise", flags = (ConVarFlags.Cheat), helpText = "Spawns a mimic somewhere on the map.")]
+        private static void CCSpawnMimic(ConCommandArgs args)
+        {
+			int count = args.TryGetArgInt(0) ?? 1;
+
+			for (int i = 0; i < count; i++)
+			{
+                DirectorPlacementRule placementRule = new DirectorPlacementRule
+                {
+                    placementMode = DirectorPlacementRule.PlacementMode.Random
+                };
+				var spawnCard = SS2Assets.LoadAsset<SpawnCard>("iscMimic", SS2Bundle.Monsters);
+                GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placementRule, Run.instance.stageRng));
+                if (gameObject)
+                {
+                    PurchaseInteraction purchaseInteraction = gameObject.GetComponent<PurchaseInteraction>();
+                    if (purchaseInteraction && purchaseInteraction.costType == CostTypeIndex.Money)
+                    {
+                        purchaseInteraction.Networkcost = Run.instance.GetDifficultyScaledCost(purchaseInteraction.cost);
+                        break;
+                    }
+                    break;
+                }
+            }
+        }
         private string GetBestBodyNameRenameMimic(On.RoR2.Util.orig_GetBestBodyName orig, GameObject bodyObject)
         {
             if (bodyObject && bodyObject.TryGetComponent<MimicPingCorrecter>(out var mpc) && mpc.isInteractable)

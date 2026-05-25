@@ -12,6 +12,7 @@ namespace EntityStates.Mimic
     public class MimicChestActivateEnter : BaseState
     {
         public static float baseDuration;
+        private static string enterSoundString = "Play_UI_chest_unlock";
         private float duration;
 
         protected PurchaseInteraction purchaseInter;
@@ -37,6 +38,7 @@ namespace EntityStates.Mimic
             duration = baseDuration / attackSpeedStat;
             base.OnEnter();
 
+            Util.PlaySound(enterSoundString, gameObject);
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
             PlayCrossfade("Body", "Idle", .05f);
 
