@@ -130,7 +130,7 @@ public class BallLightningImpactProjectile : NetworkBehaviour
                 CharacterBody victimBody = victim.healthComponent.body;
                 processedHurtboxes.Add(victimBody);
 
-                PerformDamageServer(victim);
+                PerformDamageServer(victim.hurtBoxGroup ? victim.hurtBoxGroup.mainHurtBox : victim);
 
                 if (impactEffectPrefab)
                 {

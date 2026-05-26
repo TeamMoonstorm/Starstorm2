@@ -105,6 +105,15 @@ namespace EntityStates.BallLightning
             }
         }
 
+        public override void OnExit()
+        {
+            if (effectInstance)
+            {
+                Destroy(effectInstance);
+            }
+
+            base.OnExit();
+        }
         public void Detonate()
         {
             if (networkedBodyAttachment.attachedBody)
@@ -132,6 +141,7 @@ namespace EntityStates.BallLightning
 
                 outer.SetNextState(new Idle());
             }
+
         }
 
         public class SelfDestructOrb : GenericDamageOrb, IOrbFixedUpdateBehavior

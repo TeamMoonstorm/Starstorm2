@@ -135,7 +135,7 @@ namespace SS2
             // TODO: dont use difficulty scaling value
             DifficultyDef difficulty = DifficultyCatalog.GetDifficultyDef(Run.instance.selectedDifficulty);
             MaxStormLevel = Mathf.FloorToInt(difficulty.scalingValue) + 1;
-            MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 4); // drizzle 2, monsoon/typhoon+ 4
+            MaxStormLevel = Mathf.Clamp(MaxStormLevel, 2, 3);
 
             IsPermanent = Run.instance.GetEventFlag("PermanentStorms");
 
@@ -368,7 +368,7 @@ namespace SS2
                 placementMode = DirectorPlacementRule.PlacementMode.Approximate;
             }
 
-            var ballSpawnCard = SS2Assets.LoadAsset<SpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
+            var ballSpawnCard = SS2Assets.LoadAsset<InteractableSpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ballSpawnCard, new DirectorPlacementRule
             {
                 minDistance = 10f,
