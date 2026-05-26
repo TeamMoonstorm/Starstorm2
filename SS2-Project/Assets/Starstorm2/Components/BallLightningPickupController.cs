@@ -9,12 +9,16 @@ namespace SS2.Components
     public class BallLightningPickupController : MonoBehaviour
     {
         public GameObject spawnEffectPrefab;
+        public GameObject lifetimeExpiredEffectPrefab;
 
+        public float lifetime = 24f;
         public float spawnHeight = 2.5f;
         public float minForwardSpeed = 3f;
         public float maxForwardSpeed = 20f;
         public float yVelocityCoefficient = 0.33f;
         private Rigidbody rigidbody;
+
+        private float stopwatch;
         public void Awake()
         {
             if (spawnEffectPrefab)
@@ -35,8 +39,28 @@ namespace SS2.Components
 
                 float randomSpeed = UnityEngine.Random.Range(minForwardSpeed, maxForwardSpeed);
 
-                rigidbody.AddForce(randomSpeed * randomDirection);
+                rigidbody.velocity = (randomSpeed * randomDirection);
             }
+        }
+
+        private void FixedUpdate()
+        {
+            if (NetworkServer.active)
+            {
+                stopwatch += Time.fixedDeltaTime;
+
+                if (stopwatch >= lifetime)
+                {
+                    if (lifetimeExpiredEffectPrefab)
+                    {
+                        EffectManager.SimpleEffect(lifetimeExpiredEffectPrefab, transform.position, Quaternion.identity, true);
+                        Destroy(gameObject);
+                    }
+                }
+            }
+            
+
+
         }
 
 

@@ -231,7 +231,7 @@ namespace EntityStates.Events
                 ballSpawnStopwatch += ballSpawnAttemptInterval;
 
                 float percentChance = ballChancePerSecond * ballSpawnAttemptInterval * 0.01f;
-                if (stormController.ballRng.nextNormalizedFloat >= percentChance)
+                if (stormController.ballRng.nextNormalizedFloat <= percentChance)
                 {
                     SpawnBall();
                 }
@@ -297,7 +297,7 @@ namespace EntityStates.Events
                 placementMode = DirectorPlacementRule.PlacementMode.Approximate;
             }
 
-            var ballSpawnCard = SS2Assets.LoadAsset<SpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
+            var ballSpawnCard = SS2Assets.LoadAsset<InteractableSpawnCard>("iscBallLightningPickup", SS2Bundle.Events);
             DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(ballSpawnCard, new DirectorPlacementRule
             {
                 minDistance = ballMinSpawnDistance,

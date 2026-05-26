@@ -28,7 +28,7 @@ namespace SS2.Components
                         }, true);
                     }
 
-                    GameObject.Destroy(gameObject);
+                    GameObject.Destroy(baseObject);
                 }
             }
         }

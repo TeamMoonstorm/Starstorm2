@@ -34,6 +34,7 @@ namespace SS2.Equipments
         {
             projectilePrefab = AssetCollection.FindAsset<GameObject>("BallLightningProjectile");
             muzzleflashEffectPrefab = AssetCollection.FindAsset<GameObject>("MuzzleflashBallLightning");
+            attachmentPrefab = AssetCollection.FindAsset<GameObject>("BallLightningAttachment");
 
             On.RoR2.GenericPickupController.BodyHasPickupPermission += GenericPickupController_BodyHasPickupPermission;
         }
@@ -70,6 +71,8 @@ namespace SS2.Equipments
                 fireProjectileInfo.damage = slot.characterBody.damage * projectileDamageCoefficient;
 
                 ProjectileManager.instance.FireProjectile(fireProjectileInfo);
+
+                slot.inventory.SetEquipmentIndex(EquipmentIndex.None);
             }
 
             slot.subcooldownTimer = 1f;
