@@ -1,21 +1,21 @@
 {
 	"strings": {
-		"SS2_MULE_NAME": "MULA",
+		"SS2_MULE_NAME": "MULA (PROTÓTIPO BETA)",
 		"SS2_MULE_SUBTITLE": "Diretiva: Sobreviver",
-		"SS2_MULE_DESCRIPTION": "",
+		"SS2_MULE_DESCRIPTION": "Sério, este é um protótipo bem inicial de um design antigo de MULA para o SS2. Um retrabalho completo está planejado. Aproveite como novidade, mas está cheio de bugs.",
 		"SS2_MULE_OUTRO_FLAVOR": "... e assim ele se foi, com o motor engasgando e a diretiva cumprida.",
 		"SS2_MULE_OUTRO_FAILURE": "... e assim ele desapareceu, finalmente fora de operação.",
 		"SS2_MULE_LORE": "",
 
-		"SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o botão para extender a duração da habilidade, mas também aumenta o tempo de espera da habilidade.</sub>",
-		"SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o botão para carregar mais a habilidade, mas também aumenta o tempo de espera da habilidade.</sub>",
+		"SS2_MULE_KEYWORD_OVERCLOCKING": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o botão para prolongar a duração da habilidade, mas também aumentar o tempo de recarga.</sub>",
+		"SS2_MULE_KEYWORD_OVERCLOCKING2": "<style=cKeywordName>Overclocking</style></style=cSub>Segure o botão para carregar mais a habilidade, mas também aumentar o tempo de recarga.</sub>",
 
 		"SS2_MULE_PASSIVE_DRONE_NAME": "Assistência à Prova de Falhas",
-		"SS2_MULE_PASSIVE_DRONE_DESC": "Receber danos abaixo de <style=cIsHealth>25% de saúde</style> libera um <style=cIsUtility>Drone de Reparo Pessoal</style>, curando <style=cIsHealing>50%</style> da sua saúde. Possui <style=cIsUtility>60</style> segundos de tempo de recarga.",
+		"SS2_MULE_PASSIVE_DRONE_DESC": "Receber dano até cair abaixo de <style=cIsHealth>25% de saúde</style> ativa seu <style=cIsHealing>Drone de Reparo</style>, curando <style=cIsHealing>50%</style> da sua saúde. Possui <style=cIsUtility>60</style> segundos de tempo de recarga.",
 
 		"SS2_MULE_PUNCH_NAME": "Remoção de Interferência",
 		"SS2_MULE_PUNCH_DESC": "Soque inimigos para causar <style=cIsDamage>330% de dano</style>.",
-		"SS2_MULE_KEYWORD_PUNCH_CALIBRATED": "<style=cKeywordName>Calibrado</style></style=cSub><style=cSub>Bata no chão à sua frente, causando uma grande quantidade de dano e enviando uma onda de choque. (%s tbd)</style>",
+		"SS2_MULE_KEYWORD_PUNCH_CALIBRATED": "<style=cKeywordName>Calibrado</style></style=cSub><style=cSub>Bata no chão à sua frente, causando mais dano e enviando uma onda de choque. (%s tbd)</style>",
 
 		"SS2_MULE_UPHEAVAL_NAME": "Turbulência",
 		"SS2_MULE_UPHEAVAL_DESC": "<style=cIsDamage>Atordoante</style>. Soque o chão à sua frente, levantando uma <style=cIsUtility>pedra</style> que causa <style=cIsDamage>450% de dano</style>. <style=cIsDamage>Pedras podem ser socadas para serem roladas.</style>",
@@ -27,15 +27,15 @@
 		"SS2_MULE_JUMP_NAME": "Realocar",
 		"SS2_MULE_JUMP_DESC": "<style=cIsUtility>Segure para carregar</style> um poderoso salto para cima.",
 
-		"SS2_MULE_SPIN_NAME": "Calibração Torque",
+		"SS2_MULE_SPIN_NAME": "Calibração de Torque",
 		"SS2_MULE_SPIN_DESC": "<style=cIsUtility>Overclocking</style>. Gire rapidamente, gradualmente aumentando sua <style=cIsUtility>velocidade de movimento</style> e <style=cIsUtility>aumentando sua armadura</style> enquanto causa <style=cIsDamage>100% de dano</style> por rotação.",
 
 		"SS2_MULE_NET_NAME": "Imobilizar",
-		"SS2_MULE_NET_DESC": "Lance uma <style=cIsUtility>rede</style> que segura inimigos a <style=cIsUtility>12m</style> do impacto, impedindo eles de atacar por <style=cIsUtility>5</style> segundos. <style=cIsUtility>Inimigos voadores caem no chão</style>.",
+		"SS2_MULE_NET_DESC": "Lance uma <style=cIsUtility>rede</style> que segura inimigos dentro de <style=cIsUtility>12m</style> do impacto no lugar, impedindo-os de atacar por <style=cIsUtility>5</style> segundos. <style=cIsUtility>Inimigos voadores são trazidos ao chão</style>.",
 
-		"SS2_MULE_CHARGE_NAME": "Calibração Torque",
+		"SS2_MULE_CHARGE_NAME": "Calibração de Torque",
 		"SS2_MULE_CHARGE_DESC": "<style=cIsUtility>Calibrando</style>. <style=cIsUtility>Segure para carregar</style>, e solte para <style=cIsUtility>se arremessar para frente</style> enquanto gira para causar <style=cIsDamage>(medium-high damage TBD)% de dano</style>.",
 
-		"SS2_MULE_KEYWORD_CALIBRATING": "<style=cKeywordName>Calibrando</style><style=cSub>Pode ser cancelado com sua habiliade primária, segundária, ou com o pulo, para performar uma versão mais \"calibrada\" dessas ações.</style>"
+		"SS2_MULE_KEYWORD_CALIBRATING": "<style=cKeywordName>Calibrando</style><style=cSub>Pode ser cancelado com sua habilidade primária, secundária ou pulo para realizar uma versão mais \"calibrada\" dessas ações.</style>"
 	}
 }

@@ -1,28 +1,62 @@
 {
   "strings": {
-    "SS2_NEMCAPTAIN_NAME": "Nêmesis Capitão",
+    "SS2_NEMCAPTAIN_NAME": "Capitão Nêmesis",
     "SS2_NEMCAPTAIN_SUBTITLE": "Afundar com o Navio",
-    "SS2_NEMCAPTAIN_DESCRIPTION": "O Nêmesis Capitão emite ordens para controlar o campo de batalha e lutar com segurança de trás de seus Microrrobôs Adaptávelis\n\n<color=#CCD3E0>< ! > Mantenha a calma.",
+    "SS2_NEMCAPTAIN_DESCRIPTION": "O Capitão Nêmesis emite ordens para controlar o campo de batalha e lutar com segurança atrás de seus Microrrobôs Adaptáveis\n\n<color=#CCD3E0>< ! > Mantenha a calma. Usar Ordens muito rápido acumulará Estresse, deixando você vulnerável.",
     "SS2_NEMCAPTAIN_OUTRO_FLAVOR": "... e assim ele se foi, acendendo um novo cigarro.",
     "SS2_NEMCAPTAIN_OUTRO_FAILURE": "... e assim ele retornou, de férias ao menos.",
-    "SS2_NEMCAPTAIN_LORE": "Esse planeta é uma droga cara... *acende um cigarro*",
+    "SS2_NEMCAPTAIN_LORE": "Esse planeta é uma droga, cara... *acende um cigarro*",
 
-   "SS2_NEMCAPTAIN_PASSIVE_NAME": "Uma Guerra Interminável",
-   "SS2_NEMCAPTAIN_PASSIVE_DESCRIPTION": "A exposição prolongada ao combate gera <style=cIsHealth>estresse</style>, diminuindo a <style=cIsHealing>regeneração</style> e a <style=cIsUtility>precisão</style> à medida que se acumula. O estresse diminui quando você está longe de inimigos.",
 
    "SS2_NEMCAPTAIN_STRESSPASSIVE_NAME": "Fardo do Capitão",
-   "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "<style=cIsHealth>Estresse</style> diminui a <style=cIsHealth>regeneração de saúde</style> e aumenta a <style=cIsDamage>propagação das armas</style> e a <style=cIsDamage>velocidade de recarregar</style>. Ao ficar com o máximo de <style=cIsHealth>Estresse</style>, torne-se <style=cIsHealth>Ansioso</style>.",
+   "SS2_NEMCAPTAIN_STRESSPASSIVE_DESC": "Ganha <style=cIsHealth>Estresse</style> enquanto estiver em perigo. Quando o Estresse atingir o máximo, torne-se temporariamente <style=cIsHealth>Ansioso</style>, reduzindo <style=cIsUtility>velocidade de movimento</style>, <style=cIsUtility>armadura</style> e <style=cIsDamage>dano</style>.",
 
-   "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Estresse</style><style=cSub>Ganhe estresse ao estar em combate ou receber dano. O Estresse é reduzido com Acertos Críticos, cursa, abates, e manter-se fora de combate.",
-   "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS":  "<style=cKeywordName>Ansioso</style><style=cSub>Trone-se sujeito aos efeitos do Estresse máximo, além de receber -40 de armadura, até o contador de Estresse chegar a 0.",
+   "SS2_NEMCAPTAIN_KEYWORD_STRESS": "<style=cKeywordName>Estresse</style><style=cSub>Acumule Estresse ao ser cercado por inimigos, receber dano ou usar Ordens. Reduza o Estresse ao realizar Golpes Críticos, curar-se, eliminar inimigos, usar certas Ordens e ficar fora de combate.",
+   "SS2_NEMCAPTAIN_KEYWORD_OVERSTRESS":  "<style=cKeywordName>Ansioso</style><style=cSub>Sujeito aos efeitos do Estresse máximo, além de -30% de velocidade de movimento, -20 de armadura e -50% de dano até o medidor de Estresse chegar a 0.",
     
-   "SS2_NEMCAPTAIN_PRIMARY_NAME": "Poblema Padrão",
+   "SS2_NEMCAPTAIN_PRIMARY_NAME": "Problema Padrão",
    "SS2_NEMCAPTAIN_PRIMARY_DESCRIPTION": "Rapidamente dispara para causar <style=cIsDamage>90% de dano</style> por bala. Máximo de 20 projéteis.",
 
    "SS2_NEMCAPTAIN_SECONDARY_NAME": "Reserva Pessoal",
-   "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Atordoante</style>. Pegue sua Pistola de Bengala e dispare uma bala <style=cIsDamage>perfurante</style>, causando <style=cIsDamage>1.100% de dano</style>.",
+   "SS2_NEMCAPTAIN_SECONDARY_DESCRIPTION": "<style=cIsDamage>Atordoante</style>. Arme sua pistola de bengala e dispare um tiro para causar <style=cIsDamage>680% de dano</style>.",
     
+   "SS2_NEMCAPTAIN_PUNCH_NAME": "Fujin",
+   "SS2_NEMCAPTAIN_PUNCH_DESCRIPTION": "<style=cIsDamage>Atordoante</style>. Dê um soco para frente causando <style=cIsDamage>150% de dano</style>.",
+
+   "SS2_NEMCAPTAIN_HAIDARA_NAME": "Raijin",
+   "SS2_NEMCAPTAIN_HAIDARA_DESCRIPTION": "<style=cIsDamage>Eletrizante</style>. Dispare um raio para frente causando <style=cIsDamage>440% de dano</style>.",
+
    "SS2_NEMCAPTAIN_ORDERS_NAME": "Microrrobôs Adaptáveis",
-   "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Implante 1 dos 4 <style=cIsUtility>Pedidos de Microrrobôs</style> atuais. Pedidos são <style=cIsUtility>descartados</style> após o uso, e após os 4 serem usados, <style=cIsUtility>ganhe mais 4</style>, mas também ganhe<style=cIshealth>35 de Estresse</style>. <style=cIsHealth>Não pode ser utilizado caso esteja Ansioso</style>."
+   "SS2_NEMCAPTAIN_ORDERS_DESCRIPTION": "Implante 1 de 4 <style=cIsUtility>Pedidos de Microrrobôs</style>. Usar Pedidos aumenta o <style=cIsHealth>Estresse</style>. <style=cIsUtility>Segure a tecla</style> de um Pedido para <style=cIsUtility>descartá-lo</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERNULL_NAME": "Renovar Ordens",
+   "SS2_NEMCAPTAIN_ORDERNULL_DESCRIPTION": "Trace um novo plano de ataque, aumentando ligeiramente o <style=cIsHealth>Estresse</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERSTRIKE_NAME": "ORDEM: Ataque",
+   "SS2_NEMCAPTAIN_ORDERSTRIKE_DESCRIPTION": "<style=cIsUtility>Atordoante</style>. Mire um Microrrobô e dispare um laser, <style=cIsDamage>explodindo</style> para causar <style=cIsDamage>1.400% de dano</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_NAME": "ORDEM: Ataque 3x",
+   "SS2_NEMCAPTAIN_ORDERSTRIKETRIPLE_DESCRIPTION": "<style=cIsUtility>Atordoante</style>. Mire um Microrrobô e dispare um laser, <style=cIsDamage>explodindo</style> para causar <style=cIsDamage>600% de dano</style>. <style=cIsUtility>Pode ser disparado 3 vezes.</style>",
+
+   "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_NAME": "ORDEM: Ataque PSI",
+   "SS2_NEMCAPTAIN_ORDERSTRIKEFROST_DESCRIPTION": "<style=cIsUtility>Congelante</style>. Mire um Microrrobô e dispare um laser, <style=cIsDamage>explodindo</style> para causar <style=cIsDamage>1.100% de dano</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_NAME": "ORDEM: Ataque KOPPA",
+   "SS2_NEMCAPTAIN_ORDERSTRIKESHOCK_DESCRIPTION": "<style=cIsUtility>Eletrizante</style>. Mire um Microrrobô e dispare um laser, <style=cIsDamage>explodindo</style> para causar <style=cIsDamage>900% de dano</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERREGEN_NAME": "ORDEM: Administrar Relaxante",
+   "SS2_NEMCAPTAIN_ORDERREGEN_DESCRIPTION": "Aumenta temporariamente a taxa na qual o Estresse diminui por <style=cIsUtility>15 segundos</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERREDUCE_NAME": "ORDEM: Administrar Estimulante",
+   "SS2_NEMCAPTAIN_ORDERREDUCE_DESCRIPTION": "Diminui temporariamente a quantidade de Estresse ganho de todas as fontes em <style=cIsUtility>50%</style> por <style=cIsUtility>10 segundos</style>.",
+
+   "SS2_NEMCAPTAIN_ORDERRECOVER_NAME": "ORDEM: Reinicialização Total",
+   "SS2_NEMCAPTAIN_ORDERRECOVER_DESCRIPTION": "Diminui massivamente seu Estresse atual, enquanto também <style=cIsUtility>descarta todas as outras Ordens</style>. O Estresse removido é aumentado por Ordem perdida.",
+
+   "SS2_NEMCAPTAIN_ORDERHEAL_NAME": "ORDEM: Campo Revigorante",
+   "SS2_NEMCAPTAIN_ORDERHEAL_DESCRIPTION": "<style=cIsHealing>Cura</style> aliados próximos em <style=cIsHealing>6%</style> de sua <style=cIsHealth>vida máxima</style> a cada segundo, e também concede <style=cIsUtility>50 de armadura</style> e <style=cIsDamage>+20% de velocidade de ataque</style> por <style=cIsUtility>12 segundos</style.",
+
+   "SS2_NEMCAPTAIN_ORDERGRAVITY_NAME": "ORDEM: Poço Gravitacional",
+   "SS2_NEMCAPTAIN_ORDERGRAVITY_DESCRIPTION": "<style=cIsUtility>Atrai</style> inimigos próximos por <style=cIsUtility>8 segundos</style>."
   }
 }

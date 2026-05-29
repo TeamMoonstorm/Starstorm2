@@ -1,17 +1,43 @@
 {
-    "strings":
-    {
-        "SS2_PYRO_NAME": "Pyro",
-		"SS2_PYRO_SUBTITLE": "O Piromaníaco",
-		"SS2_PYRO_DESCRIPTION": "O Pyro é um sobrevivente que se destaca no controle de multidões, incendiando qualquer coisa que se atreva a chegar muito perto.",
-		"SS2_PYRO_OUTRO_FLAVOR": "... e assim ele se foi, com o peito prestes a explodir.",
-		"SS2_PYRO_OUTRO_FAILURE": "... e assim ele desapareceu, a chama extinguida.",
+  "strings": {
+    "SS2_PYRO_NAME": "Pyro",
+    "SS2_PYRO_SUBTITLE": "Ecocídio Profissional",
+    "SS2_PYRO_DESCRIPTION": "O Pyro é um sobrevivente que se destaca no controle de multidões, incinerando pragas com fúria e precisão.",
+    "SS2_PYRO_OUTRO_FLAVOR": "... e assim ele se foi, seu coração queimando de paixão.",
+    "SS2_PYRO_OUTRO_FAILURE": "... e assim ele desapareceu, as chamas finalmente extintas.",
 
-        
-		
-        "SS2_PYRO_SCORCH_NAME": "Chamuscar",
-		"SS2_PYRO_SCORCH_DESCRIPTION": "<color=#D78326>Aqueça</color> ao <style=cIsDamage>queimar inimigos próximos causando <style=cIsDamage>60% de dano</style>. Acertar inimigos com <color=#D78326>calor alto</color > <style=cIsDamage>incendeia</style> inimigos, <style=cIsDamage>infligindo dano ao longo do tempo</style>.",
-		"SS2_PYRO_AIRBLAST_NAME": "Onda de Calor",
-		"SS2_PYRO_AIRBLAST_DESCRIPTION": "<color=#D78326>30% de calor</color>. Dispare uma rajada de chamas, <color=#D78326>incendiando</color> inimigos causando <style=cIsDamage>400% de dano</style> e <style=cIsUtility>refletindo projéteis</style>. Estoques extras <color=#D78326>reduzem o consumo de calor em 15%</color>."
-    }
+    "SS2_PYRO_SKIN_DEFAULT": "Padrão",
+
+    "SS2_PYRO_LORE": "Zumbido, zumbido e mais zumbido. Enquanto tentavam revisar os últimos detalhes do trabalho, o zumbido de asas de insetos era o único som que rompia o silêncio — mas isso não importava. O trabalho era simples, e ele sabia como realizá-lo direito. A mulher de capacete seguiu de volta ao porto enquanto o homem de fibras poliméricas equipou uma arma considerável de suas costas. Segurando-a firmemente com uma mão, usou a outra para manusear as portas do compartimento de carga, preparando-se para o enxame lá dentro.\n\nUm miasma sufocante de ácido preencheu o ar assim que as portas se abriram. Não fosse por seu respirador, os vapores teriam sido insuportáveis, tóxicos o bastante para nocauteá-lo em minutos. O ar denso estava povoado por incontáveis insetos verdes gigantes, voando ativamente entre contêineres corroídos e as estruturas de colmeia que construíram entre eles. O zumbido incessante abafava seus pensamentos — exatamente como ele gostava. Nenhum dos insetos notou o intruso até que uma torrente de napalm explodiu em chamas.\n\nGuerreiros desceram enquanto operários se dispersavam, mas já era tarde para todos. Os rápidos o bastante para formar uma ofensiva apenas apressaram seu fim, caindo a seus pés enquanto o fogo os devorava. O napalm grudava indiscriminadamente em ninho, praga e baú de segurança enquanto ele serpenteava lentamente pelo labirinto de carga que formava as fundações do covil. Fumaça negra começou a preencher o compartimento, engrossando a cada passo que dava, enquanto o chão se acumulava de restos carbonizados. Mais do que tudo, porém, era o calor — o calor implacável e abrasador de suas chamas purificadoras — que preenchia a sala. Contêineres de carga se transformaram em fornos, e o compartimento em um cemitério enquanto ele purgava sistematicamente a infestação.\n\nHoras depois, pouco restava além do fedor acre da decomposição, ocasionais mandíbulas ou tórax, e uma fina camada de cinzas cobrindo o chão. Após uma terceira volta no compartimento, ele finalmente encontrou o que procurava, escondido atrás de contêineres rachados...",
+
+    "SS2_KEYWORD_HEAT": "<style=cKeywordName>Calor</style><style=cSub>Recurso que é ganho e gasto por várias habilidades.",
+    "SS2_KEYWORD_BLAZEBORNE": "<style=cKeywordName>Chamejante</style><style=cSub>Estar perto de inimigos em chamas concede bônus. Inimigos maiores queimam mais forte. Monstros elites Chamejantes sempre queimam.\nDano de ataques baseados em fogo é reduzido em 25% e concede <color=#D78326>5% de calor</color>.\nCompletamente imune a <style=cIsDamage>Ignite.</style>",
+    "SS2_KEYWORD_COMBUSTING": "<style=cKeywordName>Em Combustão</style><style=cSub>Redefine a duração de acúmulos de ignição a cada segundo.",
+    "SS2_KEYWORD_TORCHING": "<style=cKeywordName>Chamuscante</style><style=cSub>Em alcance próximo, causa 1,5x de dano e tem 75% de chance de incendiar inimigos a partir de <color=#D78326>35% de calor</color>. Com <color=#D78326>70% de calor</color> ou mais, tem 50% de chance adicional de incendiar inimigos em qualquer alcance.",
+    "SS2_KEYWORD_LIFTOFF": "<style=cKeywordName>Decolagem</style><style=cSub>Enquanto no ar, substitui sua utilitária por Decolagem:\nConsuma <color=#D78326>calor</color> para <style=cIsUtility>pairar</style> no ar.",
+
+    "SS2_PYRO_PASSIVE_NAME": "Chamejante",
+    "SS2_PYRO_PASSIVE_DESC": "O Pyro é <style=cIsUtility>imune</style> a queimaduras e ganha <color=#D78326>calor</color> de inimigos em chamas próximos.",
+
+    "SS2_PYRO_PRIMARY_NAME": "Causticar",
+    "SS2_PYRO_PRIMARY_DESC": "<color=#D78326>Aqueça</color> queimando inimigos causando <style=cIsDamage>270% de dano por segundo</style>. Com <color=#D78326>70% de calor</color>, ganha chance de <style=cIsDamage>Ignitar</style>.",
+
+    "SS2_PYRO_SECONDARY_NAME": "Redução de Perigo",
+    "SS2_PYRO_SECONDARY_DESC": "<style=cIsDamage>Ignite</style>. Consuma <color=#D78326>calor</color> para queimar inimigos causando <style=cIsDamage>451% de dano por segundo</style>. Com <color=#D78326>70% de calor</color>, deixe um rastro de fogo causando <style=cIsDamage>200% de dano por segundo</style>.",
+
+    "SS2_PYRO_SECONDARY_ALT_NAME": "Onda de Calor",
+    "SS2_PYRO_SECONDARY_ALT_DESC": "<color=#D78326>30% de calor</color>. Dispare uma rajada de chamas, <color=#D78326>incendiando</color> inimigos causando <style=cIsDamage>400% de dano</style> e <style=cIsUtility>refletindo projéteis</style>. Estoques extras <color=#D78326>reduzem o consumo de calor em 15%</color>.",
+
+    "SS2_PYRO_UTILITY_NAME": "Checagem de Ignição",
+    "SS2_PYRO_UTILITY_DESC": "Consuma <color=#D78326>calor</color> para carregar um pulo explosivo causando <style=cIsDamage>350% de dano</style>. Pode ser <style=cIsUtility>reativado</style> para pairar no ar.",
+
+    "SS2_PYRO_UTILITY2_NAME": "Decolagem",
+    "SS2_PYRO_UTILITY2_DESC": "Consuma <color=#D78326>calor</color> para <style=cIsUtility>pairar</style> no ar.",
+
+    "SS2_PYRO_SPECIAL_NAME": "Incinerar",
+    "SS2_PYRO_SPECIAL_DESC": "<color=#D78326>70% de Calor</color>. Lance uma bola de fogo causando <style=cIsDamage>800% de dano</style>. Inimigos ignitados aumentam o raio da explosão, então explodem causando <style=cIsDamage>400% de dano</style>.",
+
+    "SS2_PYRO_SPECIAL_ALT_NAME": "DM34 \"Exterminador\"",
+    "SS2_PYRO_SPECIAL_ALT_DESC": "<style=cIsDamage>Em Combustão</style>. Dispare uma rajada de espingarda causando <style=cIsDamage>8x50% de dano</style>."
+  }
 }
