@@ -1,4 +1,4 @@
-﻿using EntityStates;
+using EntityStates;
 using MSU;
 using MSU.Config;
 using R2API;
@@ -9,10 +9,16 @@ using RoR2.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
 using static SS2.Items.FieldAccelerator;
+using Console = RoR2.Console;
+using GoldTitanManager = IL.RoR2.GoldTitanManager;
+using HealthBar = On.RoR2.UI.HealthBar;
+using Object = System.Object;
+using Random = UnityEngine.Random;
 
 namespace SS2.Items
 {
@@ -36,12 +42,15 @@ namespace SS2.Items
         public InteractableSpawnCard indevCard;
         public static PrimalPrevention? primalToken;
         public Xoroshiro128Plus birthrightRng;
+        public static DamageColorIndex primalStormDamageColor;
+        public static GameObject stormObject;
 
         public override void Initialize()
         {
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += TeleporterInteractionPrimalOverride;
             On.RoR2.SceneDirector.PopulateScene += PopulateSceneAddPrimalChest;
             On.RoR2.PurchaseInteraction.GetDisplayName += GetDisplayNameAlterPrimalName;
+            On.RoR2.UI.HealthBar.UpdateBarInfos += HealthBarOnUpdateBarInfos;
             //On.RoR2.SceneDirector.OnServerTeleporterPlaced += OnTeleporterPlacedAddPrimalToken;
             //ObjectivePanelController.collectObjectiveSources -= this.OnCollectObjectiveSources;
 
@@ -113,6 +122,41 @@ namespace SS2.Items
             Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
             Addressables.LoadAssetAsync<GameObject>("RoR2/DLC3/conduitcanyon/Teleporter_ConduitCanyon_Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
 
+            //storm stuff .,. ,
+            primalStormDamageColor = ColorsAPI.RegisterDamageColor(new Color32(200, 200, 255, 255));
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStorm.prefab").Completed += (r) =>
+            {
+                stormObject = PrefabAPI.InstantiateClone(r.Result, "PrimalMeteorStorm");
+                
+                MeteorStormController regularController = stormObject.GetComponent<MeteorStormController>();
+                PrimalMeteorStormController primalController = stormObject.AddComponent<PrimalMeteorStormController>();
+                primalController.waveCount = 40;
+                primalController.waveMinInterval = 10f;
+                primalController.waveMaxInterval = 20f;
+                primalController.warningEffectPrefab = regularController.warningEffectPrefab;
+                primalController.impactEffectPrefab = regularController.impactEffectPrefab;
+                primalController.blastDamageType = regularController.blastDamageType;
+                primalController.impactDelay = 2;
+                primalController.blastRadius = 8;
+                primalController.blastDamageCoefficient = 3;
+                UnityEngine.Object.Destroy(regularController);
+                
+                PrefabAPI.RegisterNetworkPrefab(stormObject);
+            };
+        }
+
+        private void HealthBarOnUpdateBarInfos(HealthBar.orig_UpdateBarInfos orig, RoR2.UI.HealthBar self)
+        {
+            //stolen from neb neb ,.., probably should use an item like they did too ,., .
+            orig(self);
+            
+            HealthComponent healthComponent = self._source;
+            if (!healthComponent) return;
+            
+            if (PrimalMeteorStormController.golemList.Contains(healthComponent.body))
+            {
+                self.barInfoCollection.trailingOverHealthbarInfo.color = new Color32(100, 200, 255, 255);
+            }
         }
 
         private string GetDisplayNameAlterPrimalName(On.RoR2.PurchaseInteraction.orig_GetDisplayName orig, PurchaseInteraction self)
@@ -290,6 +334,8 @@ namespace SS2.Items
     public class PrimalBirthrightObjectiveToken : NetworkBehaviour {
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
         public PurchaseInteraction pinter;
+        public static float timer;
+        public GameObject spawnedMeteors;
 
         [SyncVar(hook = "SetMaster")]
         public GameObject masterObject;
@@ -300,6 +346,7 @@ namespace SS2.Items
         {
             pinter = this.gameObject.GetComponent<PurchaseInteraction>();
             instanceList.Add(pinter);
+            timer = 270;
 
             if (instanceList.Count == 1)
             {
@@ -322,6 +369,43 @@ namespace SS2.Items
             }
         }
 
+        public void FixedUpdate()
+        {
+            if (timer > 0)
+            {
+                timer -= Time.deltaTime;
+                return;
+            }
+
+            if (NetworkServer.active && !spawnedMeteors)
+            {
+                spawnedMeteors = Instantiate(PrimalBirthright.stormObject);
+                NetworkServer.Spawn(spawnedMeteors);
+                SS2Log.Debug("spawning meteors !!");
+
+                //add meteors at each birthright because i am evil ., 
+                foreach (PurchaseInteraction birthrightPurchaseInteraction in instanceList)
+                {
+                    MeteorStormController.Meteor meteor = new MeteorStormController.Meteor();
+                    meteor.impactPosition = birthrightPurchaseInteraction.gameObject.transform.position;
+                    
+                    Vector3 origin = meteor.impactPosition + Vector3.up * 6f;
+                    Vector3 onUnitSphere = Random.onUnitSphere;
+                    onUnitSphere.y = -1f;
+                    if (Physics.Raycast(origin, onUnitSphere, out var hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+                    {
+                        meteor.impactPosition = hitInfo.point;
+                    }
+                    else if (Physics.Raycast(meteor.impactPosition, Vector3.down, out hitInfo, float.PositiveInfinity, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+                    {
+                        meteor.impactPosition = hitInfo.point;
+                    }
+                    
+                    spawnedMeteors.GetComponent<PrimalMeteorStormController>().DetonateMeteor(meteor);
+                }
+            }
+        }
+
         [ClientRpc]
         public void RpcSetToken(bool enable)
         {
@@ -339,7 +423,18 @@ namespace SS2.Items
     {
         public override string GenerateString()
         {
-            return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count);
+            if (PrimalBirthrightObjectiveToken.timer <= 0)
+            {
+                return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
+            }
+            
+            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthrightObjectiveToken.timer.ToString("0"));
+            if (PrimalBirthrightObjectiveToken.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
+            {
+                text = $"<style=cDeath>{text}</style>";
+            }
+
+            return text;
         }
 
         public override bool IsDirty()
@@ -348,6 +443,128 @@ namespace SS2.Items
         }
     }
 
+    public class PrimalMeteorStormController : MeteorStormController
+    {
+        public CharacterMaster master;
+        public static List<CharacterBody> golemList = new List<CharacterBody>();
+        private void FixedUpdate()
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+            
+            waveTimer -= Time.fixedDeltaTime;
+            if (waveTimer <= 0f && waveList.Count == 0)
+            {
+                waveTimer = UnityEngine.Random.Range(waveMinInterval, waveMaxInterval);
+                SS2Log.Debug("adding new wave ,.,.");
+                MeteorWave wave = new MeteorWave(master?.GetBody() ? new[]{master.GetBody()} : CharacterBody.readOnlyInstancesList.ToArray(), master?.GetBody() ? master.GetBody().transform.position : CharacterBody.readOnlyInstancesList.FirstOrDefault(body => body != null) != null ? CharacterBody.readOnlyInstancesList.FirstOrDefault(body => body != null).transform.position : base.transform.position);
+                waveList.Add(wave);
+            }
+
+            for (int i = waveList.Count - 1; i >= 0; i--)
+            {
+                MeteorWave meteorWave = waveList[i];
+                meteorWave.timer -= Time.fixedDeltaTime;
+                if (meteorWave.timer <= 0f)
+                {
+                    meteorWave.timer = UnityEngine.Random.Range(1f, 3f);
+                    Meteor nextMeteor = meteorWave.GetNextMeteor();
+                    
+                    if (nextMeteor == null)
+                    {
+                        waveList.RemoveAt(i);
+                    }
+                    else if (nextMeteor.valid)
+                    {
+                        meteorList.Add(nextMeteor);
+                        EffectManager.SpawnEffect(warningEffectPrefab, new EffectData
+                        {
+                            origin = nextMeteor.impactPosition,
+                            scale = blastRadius
+                        }, transmit: true);
+                    }
+                }
+            }
+            
+            float num2 = Run.instance.time - impactDelay;
+            float num3 = num2 - travelEffectDuration;
+            for (int num4 = meteorList.Count - 1; num4 >= 0; num4--)
+            {
+                Meteor meteor = meteorList[num4];
+                if (meteor.startTime < num3 && !meteor.didTravelEffect)
+                {
+                    DoMeteorEffect(meteor);
+                }
+                if (meteor.startTime < num2)
+                {
+                    meteorList.RemoveAt(num4);
+                    DetonateMeteor(meteor);
+                }
+            }
+        }
+        
+        private void DetonateMeteor(Meteor meteor)
+        {
+            SS2Log.Debug("spawning evil ,., ");
+
+            if (TeamComponent.GetTeamMembers(TeamIndex.Lunar).Count < 15)
+            {
+                CharacterSpawnCard spawnCard = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/LunarGolem/cscLunarGolem.asset").WaitForCompletion();
+                DirectorSpawnRequest spawnRequest = new DirectorSpawnRequest(
+                    spawnCard,
+                    new DirectorPlacementRule
+                    {
+                        placementMode = DirectorPlacementRule.PlacementMode.Direct,
+                        position = meteor.impactPosition
+                    },
+                    RoR2Application.rng
+                );
+                spawnRequest.teamIndexOverride = TeamIndex.Lunar;
+                spawnRequest.onSpawnedServer += result =>
+                {
+                    CharacterMaster golemMaster = result.spawnedInstance?.GetComponent<CharacterMaster>();
+                    if (!golemMaster) return;
+                
+                    golemMaster.onBodyDeath.AddListener(testDeath);
+                    golemList.Add(golemMaster.GetBody());
+                    return;
+
+                    void testDeath()
+                    {
+                        golemList.Remove(null);
+                    }
+                };
+                RoR2.DirectorCore.instance.TrySpawnObject(spawnRequest);
+            }
+     
+            EffectData effectData = new EffectData
+            {
+                origin = meteor.impactPosition
+            };
+            EffectManager.SpawnEffect(impactEffectPrefab, effectData, transmit: true);
+            BlastAttack blastAttack = new BlastAttack
+            {
+                inflictor = base.gameObject,
+                baseDamage = blastDamageCoefficient * golemList[0].damage,
+                baseForce = blastForce,
+                attackerFiltering = AttackerFiltering.Default,
+                crit = false,
+                falloffModel = BlastAttack.FalloffModel.Linear,
+                attacker = null,
+                bonusForce = Vector3.zero,
+                damageColorIndex = PrimalBirthright.primalStormDamageColor,
+                position = meteor.impactPosition,
+                procChainMask = default(ProcChainMask),
+                procCoefficient = 1f,
+                teamIndex = TeamIndex.Lunar,
+                radius = blastRadius,
+                damageType = blastDamageType
+            };
+            blastAttack.Fire();
+        }
+    }
 }
 
 

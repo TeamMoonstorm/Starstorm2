@@ -293,6 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8689053108934583612}
   - component: {fileID: 7311580636059491762}
+  - component: {fileID: -4169306943847602973}
   m_Layer: 0
   m_Name: DisplayPrimalBirthright
   m_TagString: Untagged
@@ -330,21 +331,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rendererInfos:
   - renderer: {fileID: 7621787769617234868}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: a2ca95dba8e8994498d4e9e4ef9dcc55, type: 2}
     defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 8502163561342858990}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: c232a4021cf92154b8b9efb8415bee01, type: 2}
     defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer: {fileID: 3603608113982032237}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: d92c39e793099864eabef2290a67219e, type: 2}
     defaultShadowCastingMode: 0
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   hideOnDeathObjects: []
+--- !u!114 &-4169306943847602973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8349224457750773638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31acabefee3f47b4a3b5d1ee7b61b9b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  birthrightIDR: {fileID: 7311580636059491762}
+  scroll: {fileID: 7621787769617234868}
