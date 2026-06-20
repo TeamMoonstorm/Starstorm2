@@ -5,13 +5,12 @@ using RoR2;
 using RoR2.Skills;
 using System.Collections.Generic;
 using System.Linq;
-using RiskOfOptions.Components.Panel;
 using SS2;
 using SS2.Components;
 using SS2.Equipments;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using Console = RoR2.Console;
 using Object = UnityEngine.Object;
 
 namespace SS2.Equipments
@@ -42,7 +41,6 @@ namespace SS2.Equipments
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for specific steamids. Will override survivor overrides. Follows formatting \"Steamid,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\", \"pansexual\", \"genderfluid\", \"asexual\", \"aromantic\" and \"bi\". Steamid must be in a style such as \"STEAM_0:1:174533492\".")]
         public static string steamidPrideFlagOverrides = "";
         
-        public static Dictionary<Texture, Color[]> flagTextures = new Dictionary<Texture, Color[]>();
         public static readonly bool usePrideEdits = (yearRoundPride || DateTime.Now.Month == 6);
 
         public override bool Execute(EquipmentSlot slot)
@@ -55,11 +53,11 @@ namespace SS2.Equipments
             
             if (usePrideEdits)
             {
-                WhiteFlagWardPrider wardPrider = gameObject.transform.Find("Model")?.Find("mdlWhiteFlag")?.Find("FlagBendy")?.gameObject.GetComponent<WhiteFlagWardPrider>();
+                WhiteFlagWardPrider wardPrider = gameObject.GetComponent<WhiteFlagWardPrider>();
                 
                 if (wardPrider)
                 {
-                    wardPrider.Pridify(slot.characterBody?.master);
+                    wardPrider.flagType = slot.characterBody.master.gameObject.GetComponent<WardPrideIntStore>().flagType;
                 }
             }
             
@@ -80,17 +78,19 @@ namespace SS2.Equipments
             {
                 SS2Log.Info("its pride month nemesis commando ,.. you know what that means ,.,.,..");
                 
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("texWhiteFlagDiffuse", SS2Bundle.Equipments), new[] {Color.white});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("nonbinary", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FCF434"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#9C59D1"), PrideHelper.GetHex("#2C2C2C")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("trans", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#20bbf8"), PrideHelper.GetHex("#ec5f7b"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#ec5f7b"), PrideHelper.GetHex("#20bbf8")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("lesbian", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#D52D00"), PrideHelper.GetHex("#EF7627"), PrideHelper.GetHex("#FF9A56"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#D162A4"), PrideHelper.GetHex("#B55690"), PrideHelper.GetHex("#A30262")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("bi", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#D60270"), PrideHelper.GetHex("#9B4F96"), PrideHelper.GetHex("#0038A8")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("gay", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#E40303"), PrideHelper.GetHex("#FF8C00"), PrideHelper.GetHex("#FFED00"), PrideHelper.GetHex("#008026"), PrideHelper.GetHex("#004CFF"), PrideHelper.GetHex("#732982")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("aromantic", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#3DA542"), PrideHelper.GetHex("#A7D379"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#A9A9A9"), PrideHelper.GetHex("#000000")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("genderfluid", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF76A4"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#C011D7"), PrideHelper.GetHex("#000000"), PrideHelper.GetHex("#2F3CBE")});
-                flagTextures.Add(SS2Assets.LoadAsset<Texture>("pansexual", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF218C"), PrideHelper.GetHex("#FFD800"), PrideHelper.GetHex("#21B1FF")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("texWhiteFlagDiffuse", SS2Bundle.Equipments), new[] {Color.white});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("nonbinary", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FCF434"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#9C59D1"), PrideHelper.GetHex("#2C2C2C")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("trans", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#20bbf8"), PrideHelper.GetHex("#ec5f7b"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#ec5f7b"), PrideHelper.GetHex("#20bbf8")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("lesbian", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#D52D00"), PrideHelper.GetHex("#EF7627"), PrideHelper.GetHex("#FF9A56"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#D162A4"), PrideHelper.GetHex("#B55690"), PrideHelper.GetHex("#A30262")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("bi", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#D60270"), PrideHelper.GetHex("#9B4F96"), PrideHelper.GetHex("#0038A8")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("gay", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#E40303"), PrideHelper.GetHex("#FF8C00"), PrideHelper.GetHex("#FFED00"), PrideHelper.GetHex("#008026"), PrideHelper.GetHex("#004CFF"), PrideHelper.GetHex("#732982")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("aromantic", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#3DA542"), PrideHelper.GetHex("#A7D379"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#A9A9A9"), PrideHelper.GetHex("#000000")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("genderfluid", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF76A4"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#C011D7"), PrideHelper.GetHex("#000000"), PrideHelper.GetHex("#2F3CBE")});
+                PrideHelper.AddFlag(SS2Assets.LoadAsset<Texture>("pansexual", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF218C"), PrideHelper.GetHex("#FFD800"), PrideHelper.GetHex("#21B1FF")});
 
                 EquipmentDef.pickupIconSprite = SS2Assets.LoadAsset<Sprite>("texIconPickupPrideFlag", SS2Bundle.Equipments);
+                
+                Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Core/PlayerMaster.prefab").Completed += handle => { handle.Result.AddComponent<WardPrideIntStore>(); };
             }
         }
 
@@ -176,49 +176,44 @@ namespace SS2.Equipments
 //pride month stuff ,.,. 
 public static class PrideHelper
 {
-    public static Texture GetFlagTexture(CharacterMaster master)
+    public static List<Material> flagMaterials = new List<Material>();
+    public static List<Color[]> flagColors = new List<Color[]>();
+    private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+
+    public static void AddFlag(Texture texture, Color[] colors)
+    {
+        flagColors.Add(colors);
+        Material flagMat = Object.Instantiate(SS2Assets.LoadAsset<Material>("matWhiteFlag", SS2Bundle.Equipments));
+        flagMat.SetTexture(MainTex, texture);
+        flagMat.name = texture.name;
+        flagMaterials.Add(flagMat);
+    }
+    
+    public static Material GetFlagMaterial(CharacterMaster master)
     {
         if (!master || !WhiteFlag.usePrideEdits)
         {
-            return WhiteFlag.flagTextures.Keys.ToArray()[0];
+            return flagMaterials[0];
         }
 
         WardPrideIntStore store = master.gameObject.GetComponent<WardPrideIntStore>();
-        if (store == null)
-        {
-            store = master.gameObject.AddComponent<WardPrideIntStore>();
-        }
-
-        return WhiteFlag.flagTextures.Keys.ToArray()[store.flagType];
+        return store == null ? flagMaterials[0] : flagMaterials[store.flagType];
     }
     
-    public static Color[] GetFlagColors(CharacterMaster master)
+    public static Color[] GetFlagColors(int index)
     {
-        if (!master)
-        {
-            SS2Log.Debug("master was null when trying to get flag colors !! returning base flag color ,.,.");
-            return WhiteFlag.flagTextures.Values.ToArray()[0];
-        }
-
-        WardPrideIntStore store = master.gameObject.GetComponent<WardPrideIntStore>();
-        if (store == null)
-        {
-            store = master.gameObject.AddComponent<WardPrideIntStore>();
-        }
-
-        return WhiteFlag.flagTextures.Values.ToArray()[store.flagType];
+        return !WhiteFlag.usePrideEdits ? flagColors[0] : flagColors[index];
     }
     
     public static int GetFlagIndexFromName(string name)
     {
-        Texture[] textures = WhiteFlag.flagTextures.Keys.ToArray();
-        for (int i = 0; i < textures.Length; i++)
+        for (int i = 0; i < flagMaterials.Count; i++)
         {
-            if (textures[i].name != name) continue;
+            if (flagMaterials[i].name != name) continue;
             return i;
         }
 
-        return -1;
+        return 0;
     }
 
     public static Color GetHex(string hex)
@@ -242,7 +237,7 @@ public class WardPrideIntStore : NetworkBehaviour
     {
         if (!NetworkServer.active) return;
 
-        flagType = UnityEngine.Random.Range(1, WhiteFlag.flagTextures.Count);
+        flagType = Run.instance.runRNG.RangeInt(1, PrideHelper.flagMaterials.Count);
 
         CharacterMaster master = gameObject.GetComponent<CharacterMaster>();
         
@@ -291,6 +286,6 @@ public class WardPrideIntStore : NetworkBehaviour
             }
         }
         
-        SS2Log.Debug($"set master flag type {WhiteFlag.flagTextures.Keys.ToArray()[flagType].name}");
+        SS2Log.Debug($"set master flag type {PrideHelper.flagMaterials[flagType].name}");
     }
 }

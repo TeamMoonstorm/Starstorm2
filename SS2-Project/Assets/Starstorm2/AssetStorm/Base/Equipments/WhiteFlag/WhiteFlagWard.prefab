@@ -97,6 +97,7 @@ GameObject:
   - component: {fileID: 7171043123205621952}
   - component: {fileID: 3796176264540401278}
   - component: {fileID: 4939665208970981198}
+  - component: {fileID: 2479842151210982506}
   m_Layer: 0
   m_Name: WhiteFlagWard
   m_TagString: Untagged
@@ -330,6 +331,20 @@ MonoBehaviour:
   m_Script: {fileID: 733712478, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2479842151210982506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051865978132069439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8240d4274e9d4c1ebe9f95d955a0fbee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flagRenderer: {fileID: 3768033072199080949}
+  indicatorRenderer: {fileID: 6682878602989967048}
 --- !u!1 &1840984349646112479
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +359,6 @@ GameObject:
   - component: {fileID: 3768033072199080949}
   - component: {fileID: 8463045533267168064}
   - component: {fileID: 5408731008713854908}
-  - component: {fileID: 3766947015813210583}
   m_Layer: 0
   m_Name: FlagBendy
   m_TagString: Untagged
@@ -768,21 +782,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &3766947015813210583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1840984349646112479}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8240d4274e9d4c1ebe9f95d955a0fbee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flagRenderer: {fileID: 3768033072199080949}
-  indicatorRenderer: {fileID: 6682878602989967048}
-  characterBody: {fileID: 0}
 --- !u!1 &3043783492295246145
 GameObject:
   m_ObjectHideFlags: 0

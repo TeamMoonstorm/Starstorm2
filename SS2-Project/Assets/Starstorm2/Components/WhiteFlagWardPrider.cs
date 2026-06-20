@@ -1,44 +1,41 @@
-using System.Linq;
-using RoR2;
-using SS2;
 using SS2.Equipments;
 using UnityEngine;
 using UnityEngine.Networking;
 
 namespace SS2.Components
 {
-    public class WhiteFlagWardPrider : MonoBehaviour
+    public class WhiteFlagWardPrider : NetworkBehaviour
     {
+        [SyncVar(hook = "Pridify")]
+        public int flagType;
+        
         [SerializeField]
         public SkinnedMeshRenderer flagRenderer;
         
         [SerializeField]
         public MeshRenderer indicatorRenderer;
         
-        private static readonly int MainTex = Shader.PropertyToID("_MainTex");
         private static readonly int Tint = Shader.PropertyToID("_TintColor");
         private Material wardFlagMat;
         private Material indicatorMat;
         private Color[] indicatorColors;
         private float colorIndex;
 
-        public void Pridify(CharacterMaster master)
+        public void Pridify(int flagIndex)
         {
-            wardFlagMat = Instantiate(flagRenderer.material);
-            wardFlagMat.SetTexture(MainTex, PrideHelper.GetFlagTexture(master));
+            flagRenderer.material = PrideHelper.flagMaterials[flagIndex];
             
             indicatorMat = Instantiate(indicatorRenderer.material);
-            
-            flagRenderer.material = wardFlagMat;
             indicatorRenderer.material = indicatorMat;
 
-            indicatorColors = PrideHelper.GetFlagColors(master);
+            indicatorColors = PrideHelper.GetFlagColors(flagIndex);
         }
 
         private void Update()
         {
             if (!WhiteFlag.usePrideEdits) return;
             if (!indicatorMat) return;
+            
             if (indicatorColors.Length < (int)colorIndex)
             {
                 colorIndex = 0; 
@@ -55,7 +52,7 @@ namespace SS2.Components
         {
             if (!WhiteFlag.usePrideEdits) return;
             
-            Destroy(wardFlagMat);
+            Destroy(indicatorMat);
         }
     }
 }
