@@ -5,11 +5,13 @@ using RoR2;
 using RoR2.Skills;
 using System.Collections.Generic;
 using System.Linq;
+using RiskOfOptions.Components.Panel;
 using SS2;
 using SS2.Components;
 using SS2.Equipments;
 using UnityEngine;
 using UnityEngine.Networking;
+using Console = RoR2.Console;
 using Object = UnityEngine.Object;
 
 namespace SS2.Equipments
@@ -34,10 +36,10 @@ namespace SS2.Equipments
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Enable year round pride.")]
         public static bool yearRoundPride = false;
         
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for survivors. Follows formatting \"BodyName,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\" and \"bi\".")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for survivors. Follows formatting \"BodyName,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\", \"pansexual\", \"genderfluid\", \"asexual\", \"aromantic\" and \"bi\".")]
         public static string survivorPrideFlagOverrides = "";
         
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for specific steamids. Will override survivor overrides. Follows formatting \"Steamid,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\" and \"bi\". Steamid must be in a style such as \"STEAM_0:1:174533492\".")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for specific steamids. Will override survivor overrides. Follows formatting \"Steamid,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\", \"pansexual\", \"genderfluid\", \"asexual\", \"aromantic\" and \"bi\". Steamid must be in a style such as \"STEAM_0:1:174533492\".")]
         public static string steamidPrideFlagOverrides = "";
         
         public static Dictionary<Texture, Color[]> flagTextures = new Dictionary<Texture, Color[]>();
@@ -87,25 +89,31 @@ namespace SS2.Equipments
                 flagTextures.Add(SS2Assets.LoadAsset<Texture>("aromantic", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#3DA542"), PrideHelper.GetHex("#A7D379"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#A9A9A9"), PrideHelper.GetHex("#000000")});
                 flagTextures.Add(SS2Assets.LoadAsset<Texture>("genderfluid", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF76A4"), PrideHelper.GetHex("#FFFFFF"), PrideHelper.GetHex("#C011D7"), PrideHelper.GetHex("#000000"), PrideHelper.GetHex("#2F3CBE")});
                 flagTextures.Add(SS2Assets.LoadAsset<Texture>("pansexual", SS2Bundle.Equipments), new[] {PrideHelper.GetHex("#FF218C"), PrideHelper.GetHex("#FFD800"), PrideHelper.GetHex("#21B1FF")});
-                
-                SS2Log.Debug("lang tokens for white flag pre");
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_NAME"));
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_PICKUP"));
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_DESC"));
 
-                List<KeyValuePair<string, string>> replacementTokens = new List<KeyValuePair<string, string>>
-                {
-                    new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_NAME", Language.GetString("SS2_EQUIP_WHITEFLAG_NAME").Replace("white", "pride")),
-                    new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_PICKUP", Language.GetString("SS2_EQUIP_WHITEFLAG_PICKUP").Replace("white", "pride")),
-                    new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_DESC", Language.GetString("SS2_EQUIP_WHITEFLAG_DESC").Replace("white", "pride"))
-                };
-                Language.english.SetStringsByTokens(replacementTokens);
-                
-                SS2Log.Debug("lang tokens for white flag post");
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_NAME"));
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_PICKUP"));
-                SS2Log.Debug(Language.GetString("SS2_EQUIP_WHITEFLAG_DESC"));
+                EquipmentDef.pickupIconSprite = SS2Assets.LoadAsset<Sprite>("texIconPickupPrideFlag", SS2Bundle.Equipments);
             }
+        }
+
+        //RoR2Application.OnLoad listner is too early for msu to process the config description, this seems to be good ,.. 
+        [InitDuringStartupPhase(GameInitPhase.PostProgressBar)]
+        private static void Init()
+        {
+            RenameWhiteFlag();
+        }
+        
+        private static void RenameWhiteFlag()
+        {
+            if (!usePrideEdits) return;
+            
+            //this wont change with game config changes even with a listener on ModOptionPanelController.OnModOptionsExit since msu does a coroutine .,.,,. i think its fine since it only effects the desc and its like a silly single word change but istg someones going to open a github issue abt it <////3 .,,.
+            List<KeyValuePair<string, string>> replacementTokens = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_NAME", Language.GetString("SS2_EQUIP_WHITEFLAG_NAME").Replace("White", "Pride")),
+                new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_PICKUP", Language.GetString("SS2_EQUIP_WHITEFLAG_PICKUP").Replace("white", "pride")),
+                new KeyValuePair<string, string>("SS2_EQUIP_WHITEFLAG_DESC", Language.GetString("SS2_EQUIP_WHITEFLAG_DESC").Replace("white", "pride")),
+            };
+            
+            Language.english.SetStringsByTokens(replacementTokens);
         }
 
         public override void OnEquipmentLost(CharacterBody CharacterBody)
@@ -266,7 +274,8 @@ public class WardPrideIntStore : NetworkBehaviour
             int index = -1;
             for (int i = 0; i < steamIds.Length; i++)
             {
-                if (steamIds[i] == steamid && steamIds.Length != i + 1)
+                //in my experience steam ids can be slightly different prior to the numbers .,,. just in case ! ,.
+                if (steamIds[i].Split(":")[steamIds[i].Split(":").Length - 1] == steamid.Split(":")[steamid.Split(":").Length - 1] && steamIds.Length != i + 1)
                 {
                     index = i;
                 }
