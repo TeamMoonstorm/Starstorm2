@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3067577734408679254}
   - component: {fileID: 1778378727442903170}
   - component: {fileID: 4818245043651780871}
+  - component: {fileID: 7448271763976170141}
   m_Layer: 0
   m_Name: FlagBendy
   m_TagString: Untagged
@@ -83,6 +84,21 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7448271763976170141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2682124123784273487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c69939577e084292af3e7497afe4f3b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  display: {fileID: 5152528175221398497}
+  displayFlagRenderer: {fileID: 4818245043651780871}
+  characterBody: {fileID: 0}
 --- !u!1 &5415213849319030633
 GameObject:
   m_ObjectHideFlags: 0
@@ -213,15 +229,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rendererInfos:
   - renderer: {fileID: 4818245043651780871}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 47c2934cf5e3ff142a0d013f3412e79e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 1409271583210545588}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 47c2934cf5e3ff142a0d013f3412e79e, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   hideOnDeathObjects: []
 --- !u!1 &5698808511325864341
 GameObject:
