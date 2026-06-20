@@ -57,7 +57,7 @@ namespace SS2.Equipments
                 
                 if (wardPrider)
                 {
-                    wardPrider.flagType = slot.characterBody.master.gameObject.GetComponent<WardPrideIntStore>().flagType;
+                    wardPrider.flagType = slot.characterBody.master.gameObject.GetComponent<PrideFlagTypeStorer>().flagType;
                 }
             }
             
@@ -90,7 +90,7 @@ namespace SS2.Equipments
 
                 EquipmentDef.pickupIconSprite = SS2Assets.LoadAsset<Sprite>("texIconPickupPrideFlag", SS2Bundle.Equipments);
                 
-                Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Core/PlayerMaster.prefab").Completed += handle => { handle.Result.AddComponent<WardPrideIntStore>(); };
+                Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Core/PlayerMaster.prefab").Completed += handle => { handle.Result.AddComponent<PrideFlagTypeStorer>(); };
             }
         }
 
@@ -196,7 +196,7 @@ public static class PrideHelper
             return flagMaterials[0];
         }
 
-        WardPrideIntStore store = master.gameObject.GetComponent<WardPrideIntStore>();
+        PrideFlagTypeStorer store = master.gameObject.GetComponent<PrideFlagTypeStorer>();
         return store == null ? flagMaterials[0] : flagMaterials[store.flagType];
     }
     
@@ -228,7 +228,7 @@ public static class PrideHelper
     }
 }
 
-public class WardPrideIntStore : NetworkBehaviour
+public class PrideFlagTypeStorer : NetworkBehaviour
 {
     [SyncVar]
     public int flagType;
