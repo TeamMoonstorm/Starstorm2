@@ -41,6 +41,9 @@ namespace SS2.Equipments
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Pride overrides for specific steamids. Will override survivor overrides. Follows formatting \"Steamid,Flag\" with available options of \"nonbinary\", \"lesbian\", \"gay\", \"trans\", \"pansexual\", \"genderfluid\", \"asexual\", \"aromantic\" and \"bi\". Steamid must be in a style such as \"STEAM_0:1:174533492\".")]
         public static string steamidPrideFlagOverrides = "";
         
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Custom pride flags. Follows formatting \"FlagName,#Hex,#Hex\" seperated by \";\".")]
+        public static string customFlags = "";
+        
         public static readonly bool usePrideEdits = (yearRoundPride || DateTime.Now.Month == 6);
 
         public override bool Execute(EquipmentSlot slot)
@@ -90,11 +93,30 @@ namespace SS2.Equipments
 
                 EquipmentDef.pickupIconSprite = SS2Assets.LoadAsset<Sprite>("texIconPickupPrideFlag", SS2Bundle.Equipments);
                 
+                // was a bit at a loss on how networking the display would go .,.,. figured either a dontdestroyonload object or a master component and since its just a silly event thing master probabl;y fine .,,. if you know a better way please yell at me 🥺 ,..,
                 Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Core/PlayerMaster.prefab").Completed += handle => { handle.Result.AddComponent<PrideFlagTypeStorer>(); };
+
+                PrideHelper.baseTex = (Texture2D)SS2Assets.LoadAsset<Texture>("texWhiteFlagDiffuse", SS2Bundle.Equipments);
+                PrideHelper.texPixels = PrideHelper.baseTex.GetPixels(0, 0, PrideHelper.baseTex.width, PrideHelper.baseTex.height);
+                foreach (string customFlag in customFlags.Split(";"))
+                {
+                    if (customFlag.Split(',').Length == 1) return;
+                    
+                    string[] flagColorString = customFlag.Split(',')[1..];
+                    string flagName = customFlag.Split(',')[0];
+
+                    Color[] flagColors = new Color[flagColorString.Length];
+                    for (int i = 0; i < flagColorString.Length; i++)
+                    {
+                        flagColors[flagColorString.Length - 1 - i] = PrideHelper.GetHex(flagColorString[i].Trim());
+                    }
+                    
+                    PrideHelper.AddFlagFromColors(flagName, flagColors);
+                }
             }
         }
 
-        //RoR2Application.OnLoad listner is too early for msu to process the config description, this seems to be good ,.. 
+        //RoR2Application.OnLoad listener is too early for msu to process the config description, this seems to be good ,.. 
         [InitDuringStartupPhase(GameInitPhase.PostProgressBar)]
         private static void Init()
         {
@@ -179,6 +201,16 @@ public static class PrideHelper
     public static List<Material> flagMaterials = new List<Material>();
     public static List<Color[]> flagColors = new List<Color[]>();
     private static readonly int MainTex = Shader.PropertyToID("_MainTex");
+    
+    //magic numbers .,,.. ,.:nikodurr:,.,..,., (cordinates of where the white flag actually is on the texture(,.,.
+    private const int flagXStart = 0;
+    private const int flagXEnd = 621;
+    private const int flagYStart = 103;
+    private const int flagYEnd = 502;
+    private const int total = flagYEnd - flagYStart;
+    private const int textureHeight = 1024;
+    public static Texture2D baseTex;
+    public static Color[] texPixels;
 
     public static void AddFlag(Texture texture, Color[] colors)
     {
@@ -187,6 +219,37 @@ public static class PrideHelper
         flagMat.SetTexture(MainTex, texture);
         flagMat.name = texture.name;
         flagMaterials.Add(flagMat);
+    }
+
+    public static void AddFlagFromColors(string flagName, Color[] colors)
+    {
+        Texture2D returnTexture = new Texture2D(baseTex.width, baseTex.height);
+        Color[] instanceColors = new Color[texPixels.Length];
+        Array.Copy(texPixels, instanceColors, texPixels.Length);
+        
+        for (int x = flagXStart; x < flagXEnd; x++)
+        {
+            for (int y = textureHeight - flagYEnd; y < textureHeight - flagYStart; y++)
+            {
+                for (int i = 1; i <= colors.Length; i++)
+                {
+                    if (y - (textureHeight - flagYEnd) < (total / colors.Length) * i)
+                    {
+                        Color newCol = colors[i - 1];
+                        newCol.a = texPixels[x + (y * textureHeight)].a;
+                        instanceColors[x + (y * textureHeight)] = newCol;
+                        break;
+                    }
+                }
+
+            }
+        }
+
+        returnTexture.SetPixels(instanceColors);
+        returnTexture.Apply();
+        returnTexture.name = flagName;
+
+        PrideHelper.AddFlag(returnTexture, colors);
     }
     
     public static Material GetFlagMaterial(CharacterMaster master)
