@@ -1,6 +1,7 @@
 **Warning: content spoilers below!**
 ### 0.6.39 Happy Pride!
 * General
+    * NOTE: The mod will still say 0.6.38 when loading because I built the mod before updating this in Unity. Its a small technical detail that doesnt matter to most people except those filing bug reports
     * White Flag will now display a random Pride flag every run during the month of June. We got to this late! There is a config to enable this year round. (Thanks bread)
 * Nemesis Commando
     * Re-implemented unique set of animations for when gun isn't in use (Thanks Domi!)
@@ -13,7 +14,7 @@
 	* Fixed Drizzle being selected by default with Beta content enabled
     * Slate mines interactables fixed (Thanks Lordryn)
     * Fixes to Empyrean VFX overlay, HP bar being tiny, and having wrong shield amount (Thanks Lordryn)
-    * If Buns (me) didnt forget to set the correct slate mines water material that should be fixed too
+    * If Buns (me) didnt forget to set the correct Slate Mines water material that should be fixed too
 
 ### 0.6.38 
 * Beta
