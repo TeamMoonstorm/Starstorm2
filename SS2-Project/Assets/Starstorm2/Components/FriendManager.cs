@@ -53,14 +53,20 @@ namespace SS2
 		public void RpcSetupNemBoss(GameObject bodyObject, string prefabName)
         {
 			CharacterBody body = bodyObject.GetComponent<CharacterBody>();
-			GameObject prefab = SS2Assets.LoadAsset<GameObject>(prefabName, SS2Bundle.Events);
-			if (prefab)
+			if (!string.IsNullOrEmpty(prefabName))
 			{
-				var effect = GameObject.Instantiate(prefab, body.corePosition, Quaternion.identity, body.coreTransform);
-				body.master.onBodyDeath.AddListener(RemoveEffect);
-				void RemoveEffect() => Destroy(effect);
+				GameObject prefab = SS2Assets.LoadAsset<GameObject>(prefabName, SS2Bundle.Events);
+				if (prefab)
+				{
+					var effect = GameObject.Instantiate(prefab, body.corePosition, Quaternion.identity, body.coreTransform);
+					body.master.onBodyDeath.AddListener(RemoveEffect);
+					void RemoveEffect() => Destroy(effect);
+				}
+				else
+				{
+					SS2Log.Warning("No effect prefab found for " + prefabName);
+				}
 			}
-			else SS2Log.Warning("No effect prefab for " + body.GetDisplayName());
 			body.gameObject.AddComponent<Components.NemesisResistances>();
 			if (body.mainHurtBox)
 			{
