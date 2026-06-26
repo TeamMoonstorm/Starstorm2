@@ -24,8 +24,9 @@ We are going to beginning priortising multiplayer stability in Beta moving forwa
         * Empyreans are now invincible during their spawn animation
         * Fixed Empyrean simulacrum interaction
 * Items
-    * Gave FieldAccelerator the AI Blacklist tag
+    * Gave Rainbow Root and Field Accelerator the AI Blacklist tag
     * Field Accelerator, Droid Head, and Trematode were missing the "Can Be Temporary" tags, they can now spawn as temporary items!
+    * Strange Can debuff is now properly marked as debuff
 * Enemies
     * Mimic 
         * Fixed Mimic and Chirr death friend interaction
