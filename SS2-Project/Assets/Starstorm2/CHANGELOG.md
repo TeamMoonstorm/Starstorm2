@@ -34,7 +34,7 @@
 * Beta
     * Fixed a harmless NRE for Void Shop RNG on clients
     * Fixed a harmless NRE for ItemOnEliteKill on clients
-    * MULE and DU-T have been re-disabled. They might return in a future version after additional polish and fixing!
+    * MULE sent to permanent disable jail until future rework
     * Ethereal
         * Ethereal pillars no longer destroy drones
         * Fixed harmless NRE on Ethereal when closing the game
@@ -44,19 +44,16 @@
     * Knight
         * Knight now has a proper drop pod
         * Fixed Knight's parry not working correctly for clients
+        * Increased Knight's parry window to address latency issues
 
 TODO: Confirm the below are fixed before mergining
 * Unconfirmed
     * Ethereal
         * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
-    * Knight
-        * Increased Knight's parry window to address latency issues
     * Railgunner
         * Tactical roll alt skill now properly reloads while scoped
     * Cyborg
-        * Fixed bug where Cyborg could not charge the teleporter to 100%
-        * Fixed Cyborg's teleporter projectile spawning a duplicate as client
-        
+        * Fixed bug where Cyborg could not charge the teleporter 100%        
     * Fixed Shard Poison / Shard Void Zanzan trader interaction
     * Fixed OpenSlow Curse interaction with Scavenger bags
     * Self-Repair skill fixes
