@@ -1,9 +1,5 @@
 **Warning: content spoilers below!**
-### 0.6.40 all your bugs belong to us
-This is a huge bugfix release, we want to start ironing out bugs as the team prepares for 0.7 sometime later this year. This version also includes some much requested community qol fixes like Drone/Ethereal interactions, Nerfs to Stormborn Clay Templars, Cyborg MP fixes, and lots of Knight fixes to bring Knight closer to complete. 
-
-We are going to beginning priortising multiplayer stability in Beta moving forward, so more cautious fans can try SS2 Beta with friends. For that reason MULE/DU-T are going to be disabled. They both might return after DU-T gets additional polish and MULE gets his kit rework. Not that MULE was ever playable anyways....
-
+### 0.6.40 
 * General
     * Fixed Typhoon language tokens not appearing correctly if you adjusted Typhoon config
     * Added back `unlock_all` config option. Only works on Survivors and Items for now
