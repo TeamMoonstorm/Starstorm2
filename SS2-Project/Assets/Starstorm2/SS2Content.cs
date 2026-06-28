@@ -441,6 +441,7 @@ namespace SS2
             public static ItemDef StackShieldGate;
             public static ItemDef StackHitList;
             public static ItemDef PrimalBirthright;
+            public static ItemDef BirthrightChimeraHelper;
 
 
             public static ItemDef GalvanicCore;

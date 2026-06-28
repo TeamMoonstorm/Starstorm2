@@ -3,22 +3,15 @@ using MSU;
 using MSU.Config;
 using R2API;
 using RoR2;
-using RoR2.ContentManagement;
 using RoR2.Items;
 using RoR2.UI;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
+using Starstorm2.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using static SS2.Items.FieldAccelerator;
-using Console = RoR2.Console;
-using GoldTitanManager = IL.RoR2.GoldTitanManager;
-using HealthBar = On.RoR2.UI.HealthBar;
-using Object = System.Object;
-using Random = UnityEngine.Random;
+using TeleporterInteraction = On.RoR2.TeleporterInteraction;
 
 namespace SS2.Items
 {
@@ -36,22 +29,43 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount the price of the Legendary chest is multiplied by. (1 = 100%, normal value for current level)")]
         [FormatToken("SS2_ITEM_RELICOFMASS_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
-        public static float priceModifier = 2.1f;
+        public static float birthrightPriceModifier = 0.8f;
 
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Required stage count for Lunar Wisps to start replacing Lunar Golems upon failing to claim your birthright.")]
+        public static float lunarWispStageCount = 3f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Lunar Wisps to replace Lunar Golems upon failing to claim your birthright.")]
+        public static float lunarWispChance = 30f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for perfected enemies to replace regular enemy spawns upon failing to claim your birthright.")]
+        public static float perfectedReplacementChance = 15f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Wait time between waves of Lunar Chimeras upon failing to claim your birthright.")]
+        public static float chimeraWaitTime = 30f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Wait time variance between waves of Lunar Chimeras upon failing to claim your birthright. (Minimum wait time will be base wait time - variance)")]
+        public static float chimeraWaitTimeVariance = 5f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How quickly you must claim your birthright (base).")]
+        public static float birthrightCompletionTime = 250f;
+        
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How quickly you must claim your birthright (stacking).")]
+        public static float birthrightCompletionTimeStacking = 125f;
+        
         public GameObject indevChest; // this probably not be here in a live build i just wanted to do it fast
         public InteractableSpawnCard indevCard;
         public static PrimalPrevention? primalToken;
         public Xoroshiro128Plus birthrightRng;
         public static DamageColorIndex primalStormDamageColor;
-        public static GameObject stormObject;
-
+        public static GameObject stormPrefab;
+        
         public override void Initialize()
         {
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += TeleporterInteractionPrimalOverride;
             On.RoR2.SceneDirector.PopulateScene += PopulateSceneAddPrimalChest;
             On.RoR2.PurchaseInteraction.GetDisplayName += GetDisplayNameAlterPrimalName;
-            On.RoR2.UI.HealthBar.UpdateBarInfos += HealthBarOnUpdateBarInfos;
-            //On.RoR2.SceneDirector.OnServerTeleporterPlaced += OnTeleporterPlacedAddPrimalToken;
+            On.RoR2.CombatDirector.Spawn += CombatDirectorOnSpawnPerfected;
+            On.RoR2.TeleporterInteraction.Awake += TeleporterInteractionAwakeAddPrimalPrevention;
             //ObjectivePanelController.collectObjectiveSources -= this.OnCollectObjectiveSources;
 
             var tempChest = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldChest/GoldChest.prefab").WaitForCompletion();
@@ -116,47 +130,27 @@ namespace SS2.Items
             indevCard.orientToFloor = true;
             indevCard.skipSpawnWhenSacrificeArtifactEnabled = false;
             indevCard.maxSpawnsPerStage = -1;
-
-            // TODO: A util method for adding components to all the teleporters in the game so it remains future proof + mod compat
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/DLC3/conduitcanyon/Teleporter_ConduitCanyon_Variant.prefab").Completed += (r) => r.Result.AddComponent<PrimalPrevention>();
-
+            
             //storm stuff .,. ,
             primalStormDamageColor = ColorsAPI.RegisterDamageColor(new Color32(200, 200, 255, 255));
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStorm.prefab").Completed += (r) =>
-            {
-                stormObject = PrefabAPI.InstantiateClone(r.Result, "PrimalMeteorStorm");
-                
-                MeteorStormController regularController = stormObject.GetComponent<MeteorStormController>();
-                PrimalMeteorStormController primalController = stormObject.AddComponent<PrimalMeteorStormController>();
-                primalController.waveCount = 40;
-                primalController.waveMinInterval = 10f;
-                primalController.waveMaxInterval = 20f;
-                primalController.warningEffectPrefab = regularController.warningEffectPrefab;
-                primalController.impactEffectPrefab = regularController.impactEffectPrefab;
-                primalController.blastDamageType = regularController.blastDamageType;
-                primalController.impactDelay = 2;
-                primalController.blastRadius = 8;
-                primalController.blastDamageCoefficient = 3;
-                UnityEngine.Object.Destroy(regularController);
-                
-                PrefabAPI.RegisterNetworkPrefab(stormObject);
-            };
+            stormPrefab = SS2Assets.LoadAsset<GameObject>("PrimalMeteorStorm", SS2Bundle.Items);
         }
 
-        private void HealthBarOnUpdateBarInfos(HealthBar.orig_UpdateBarInfos orig, RoR2.UI.HealthBar self)
+        private void TeleporterInteractionAwakeAddPrimalPrevention(TeleporterInteraction.orig_Awake orig, RoR2.TeleporterInteraction self)
         {
-            //stolen from neb neb ,.., probably should use an item like they did too ,., .
             orig(self);
-            
-            HealthComponent healthComponent = self._source;
-            if (!healthComponent) return;
-            
-            if (PrimalMeteorStormController.golemList.Contains(healthComponent.body))
+            self.gameObject.AddComponent<PrimalPrevention>();
+        }
+
+        private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn orig, RoR2.CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
+        {
+            if (NetworkServer.active && Behavior.timer?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
             {
-                self.barInfoCollection.trailingOverHealthbarInfo.color = new Color32(100, 200, 255, 255);
+                elitedef = RoR2Content.Elites.Lunar;
+                SS2Log.Debug($"set {spawncard.prefab.name} to be perfected ,.., ,.");
             }
+
+            return orig(self, spawncard, elitedef, spawntarget, spawndistance, preventoverhead, valuemultiplier, placementmode, singlescaledboss);
         }
 
         private string GetDisplayNameAlterPrimalName(On.RoR2.PurchaseInteraction.orig_GetDisplayName orig, PurchaseInteraction self)
@@ -301,7 +295,7 @@ namespace SS2.Items
                         if (pinter && behav)
                         {
                             //primalToken.purchaseInteractions.Add((pinter, player.master));
-                            pinter.Networkcost = (int)(Run.instance.GetDifficultyScaledCost(pinter.cost) * priceModifier);
+                            pinter.Networkcost = (int)(Run.instance.GetDifficultyScaledCost(pinter.cost) * birthrightPriceModifier);
 
                             pinter.onPurchase.AddListener(delegate (Interactor interactor)
                             {
@@ -321,7 +315,24 @@ namespace SS2.Items
                 }
             }
         }
+        
+        public class Behavior : BaseItemBodyBehavior
+        {
+            [ItemDefAssociation(useOnServer = true, useOnClient = false)]
+            private static ItemDef GetItemDef() => SS2Content.Items.PrimalBirthright;
+            
+            public static BirthrightObjectiveTimer timer;
 
+            private void OnEnable()
+            {
+                if (!timer)
+                {
+                    GameObject birthrightTrackerHelper = Instantiate(stormPrefab);
+                    NetworkServer.Spawn(birthrightTrackerHelper);
+                    timer = birthrightTrackerHelper.GetComponent<BirthrightObjectiveTimer>();
+                }
+            }
+        }
     }
 
     public class PrimalPrevention : MonoBehaviour
@@ -333,24 +344,25 @@ namespace SS2.Items
 
     public class PrimalBirthrightObjectiveToken : NetworkBehaviour {
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
+        
         public PurchaseInteraction pinter;
-        public static float timer;
-        public GameObject spawnedMeteors;
-
+        
         [SyncVar(hook = "SetMaster")]
         public GameObject masterObject;
 
         public CharacterMaster master;
+
+        private static bool shouldRemoveObjective;
         
         public void OnEnable()
         {
             pinter = this.gameObject.GetComponent<PurchaseInteraction>();
             instanceList.Add(pinter);
-            timer = 270;
 
             if (instanceList.Count == 1)
             {
                 ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
+                shouldRemoveObjective = false;
             }
         }
 
@@ -360,7 +372,12 @@ namespace SS2.Items
 
             if (instanceList.Count <= 0)
             {
-                ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
+                // we dont want to remove it if they failed the birthright, but it causes errors from the object getting destroyed eg. quitting the run or something . ,
+                if (!PrimalBirthright.Behavior.timer || !PrimalBirthright.Behavior.timer.spawnedMeteors)
+                {
+                    ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
+                    shouldRemoveObjective = true;
+                }
 
                 if (PrimalBirthright.primalToken)
                 {
@@ -369,40 +386,12 @@ namespace SS2.Items
             }
         }
 
-        public void FixedUpdate()
+        public void OnDestroy()
         {
-            if (timer > 0)
+            if (shouldRemoveObjective)
             {
-                timer -= Time.deltaTime;
-                return;
-            }
-
-            if (NetworkServer.active && !spawnedMeteors)
-            {
-                spawnedMeteors = Instantiate(PrimalBirthright.stormObject);
-                NetworkServer.Spawn(spawnedMeteors);
-                SS2Log.Debug("spawning meteors !!");
-
-                //add meteors at each birthright because i am evil ., 
-                foreach (PurchaseInteraction birthrightPurchaseInteraction in instanceList)
-                {
-                    MeteorStormController.Meteor meteor = new MeteorStormController.Meteor();
-                    meteor.impactPosition = birthrightPurchaseInteraction.gameObject.transform.position;
-                    
-                    Vector3 origin = meteor.impactPosition + Vector3.up * 6f;
-                    Vector3 onUnitSphere = Random.onUnitSphere;
-                    onUnitSphere.y = -1f;
-                    if (Physics.Raycast(origin, onUnitSphere, out var hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
-                    {
-                        meteor.impactPosition = hitInfo.point;
-                    }
-                    else if (Physics.Raycast(meteor.impactPosition, Vector3.down, out hitInfo, float.PositiveInfinity, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
-                    {
-                        meteor.impactPosition = hitInfo.point;
-                    }
-                    
-                    spawnedMeteors.GetComponent<PrimalMeteorStormController>().DetonateMeteor(meteor);
-                }
+                ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
+                shouldRemoveObjective = false;
             }
         }
 
@@ -416,20 +405,32 @@ namespace SS2.Items
         {
             master = masterObj.GetComponent<CharacterMaster>();
         }
-
     }
 
     public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
     {
+        private BirthrightObjectiveTimer objectiveTimer;
+        
         public override string GenerateString()
         {
-            if (PrimalBirthrightObjectiveToken.timer <= 0)
+            if (!objectiveTimer)
+            {
+                objectiveTimer = PrimalBirthright.Behavior.timer;
+                
+                if (!objectiveTimer)
+                {
+                    // this *shouldnt* happen but in case if like .,., multiplayer somehow a client is late to recieve it uhhhh go my base case, ,. 
+                    SS2Log.Warning("PrimalBirthrightObjectiveTracker not found !!!");
+                    return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1)));;
+                }
+            }
+            if (objectiveTimer.timer <= 0)
             {
                 return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
             }
             
-            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthrightObjectiveToken.timer.ToString("0"));
-            if (PrimalBirthrightObjectiveToken.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
+            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, objectiveTimer.timer.ToString("0"));
+            if (objectiveTimer.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
             {
                 text = $"<style=cDeath>{text}</style>";
             }
@@ -442,129 +443,4 @@ namespace SS2.Items
             return true;
         }
     }
-
-    public class PrimalMeteorStormController : MeteorStormController
-    {
-        public CharacterMaster master;
-        public static List<CharacterBody> golemList = new List<CharacterBody>();
-        private void FixedUpdate()
-        {
-            if (!NetworkServer.active)
-            {
-                return;
-            }
-            
-            waveTimer -= Time.fixedDeltaTime;
-            if (waveTimer <= 0f && waveList.Count == 0)
-            {
-                waveTimer = UnityEngine.Random.Range(waveMinInterval, waveMaxInterval);
-                SS2Log.Debug("adding new wave ,.,.");
-                MeteorWave wave = new MeteorWave(master?.GetBody() ? new[]{master.GetBody()} : CharacterBody.readOnlyInstancesList.ToArray(), master?.GetBody() ? master.GetBody().transform.position : CharacterBody.readOnlyInstancesList.FirstOrDefault(body => body != null) != null ? CharacterBody.readOnlyInstancesList.FirstOrDefault(body => body != null).transform.position : base.transform.position);
-                waveList.Add(wave);
-            }
-
-            for (int i = waveList.Count - 1; i >= 0; i--)
-            {
-                MeteorWave meteorWave = waveList[i];
-                meteorWave.timer -= Time.fixedDeltaTime;
-                if (meteorWave.timer <= 0f)
-                {
-                    meteorWave.timer = UnityEngine.Random.Range(1f, 3f);
-                    Meteor nextMeteor = meteorWave.GetNextMeteor();
-                    
-                    if (nextMeteor == null)
-                    {
-                        waveList.RemoveAt(i);
-                    }
-                    else if (nextMeteor.valid)
-                    {
-                        meteorList.Add(nextMeteor);
-                        EffectManager.SpawnEffect(warningEffectPrefab, new EffectData
-                        {
-                            origin = nextMeteor.impactPosition,
-                            scale = blastRadius
-                        }, transmit: true);
-                    }
-                }
-            }
-            
-            float num2 = Run.instance.time - impactDelay;
-            float num3 = num2 - travelEffectDuration;
-            for (int num4 = meteorList.Count - 1; num4 >= 0; num4--)
-            {
-                Meteor meteor = meteorList[num4];
-                if (meteor.startTime < num3 && !meteor.didTravelEffect)
-                {
-                    DoMeteorEffect(meteor);
-                }
-                if (meteor.startTime < num2)
-                {
-                    meteorList.RemoveAt(num4);
-                    DetonateMeteor(meteor);
-                }
-            }
-        }
-        
-        private void DetonateMeteor(Meteor meteor)
-        {
-            SS2Log.Debug("spawning evil ,., ");
-
-            if (TeamComponent.GetTeamMembers(TeamIndex.Lunar).Count < 15)
-            {
-                CharacterSpawnCard spawnCard = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/LunarGolem/cscLunarGolem.asset").WaitForCompletion();
-                DirectorSpawnRequest spawnRequest = new DirectorSpawnRequest(
-                    spawnCard,
-                    new DirectorPlacementRule
-                    {
-                        placementMode = DirectorPlacementRule.PlacementMode.Direct,
-                        position = meteor.impactPosition
-                    },
-                    RoR2Application.rng
-                );
-                spawnRequest.teamIndexOverride = TeamIndex.Lunar;
-                spawnRequest.onSpawnedServer += result =>
-                {
-                    CharacterMaster golemMaster = result.spawnedInstance?.GetComponent<CharacterMaster>();
-                    if (!golemMaster) return;
-                
-                    golemMaster.onBodyDeath.AddListener(testDeath);
-                    golemList.Add(golemMaster.GetBody());
-                    return;
-
-                    void testDeath()
-                    {
-                        golemList.Remove(null);
-                    }
-                };
-                RoR2.DirectorCore.instance.TrySpawnObject(spawnRequest);
-            }
-     
-            EffectData effectData = new EffectData
-            {
-                origin = meteor.impactPosition
-            };
-            EffectManager.SpawnEffect(impactEffectPrefab, effectData, transmit: true);
-            BlastAttack blastAttack = new BlastAttack
-            {
-                inflictor = base.gameObject,
-                baseDamage = blastDamageCoefficient * golemList[0].damage,
-                baseForce = blastForce,
-                attackerFiltering = AttackerFiltering.Default,
-                crit = false,
-                falloffModel = BlastAttack.FalloffModel.Linear,
-                attacker = null,
-                bonusForce = Vector3.zero,
-                damageColorIndex = PrimalBirthright.primalStormDamageColor,
-                position = meteor.impactPosition,
-                procChainMask = default(ProcChainMask),
-                procCoefficient = 1f,
-                teamIndex = TeamIndex.Lunar,
-                radius = blastRadius,
-                damageType = blastDamageType
-            };
-            blastAttack.Fire();
-        }
-    }
 }
-
-

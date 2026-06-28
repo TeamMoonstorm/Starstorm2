@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using RoR2;
 using SS2.Items;
+using Starstorm2.Components;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Object = System.Object;
