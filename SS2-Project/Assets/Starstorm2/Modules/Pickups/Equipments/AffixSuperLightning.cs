@@ -27,7 +27,10 @@ namespace SS2.Equipments
             }          
         }
 
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
 
         public override bool Execute(EquipmentSlot slot)
         {

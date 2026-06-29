@@ -130,6 +130,7 @@ namespace SS2.Items
         public class FieldAcceleratorTeleporterBehavior : MonoBehaviour
         {
             private HoldoutZoneController hzc;
+            private float originalBaseRadius;
             private Transform pos;
             public static GameObject displayPrefab;
             private ChildLocator displayChildLocator;
@@ -157,6 +158,8 @@ namespace SS2.Items
             private void Awake()
             {
                 hzc = GetComponent<HoldoutZoneController>();
+                if (hzc != null)
+                    originalBaseRadius = hzc.baseRadius;
                 TeleporterInteraction.onTeleporterBeginChargingGlobal += TeleporterInteraction_onTeleporterBeginChargingGlobal;
                 TeleporterInteraction.onTeleporterChargedGlobal += TeleporterInteraction_onTeleporterChargedGlobal;
                 RecalcRadius();
@@ -330,9 +333,12 @@ namespace SS2.Items
                 }
                 
 
-                if (hzc != null && acceleratorCount > 0 && monstersCleared)
+                if (hzc != null)
                 {
-                    hzc.baseRadius *= 1 + (radiusPerStack * acceleratorCount); // *= is bad. this is run multiple times
+                    if (acceleratorCount > 0 && monstersCleared)
+                        hzc.baseRadius = originalBaseRadius * (1 + (radiusPerStack * acceleratorCount));
+                    else
+                        hzc.baseRadius = originalBaseRadius;
                 }
             }
         }

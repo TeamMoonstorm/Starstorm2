@@ -43,7 +43,7 @@ namespace SS2
         {
 			for (int i = 0; i < trades.Length; i++)
 			{
-				if (trades[i].desiredItem)
+				if (trades[i].desiredItem && trades[i].desiredItem.itemIndex != ItemIndex.None)
 					desiredItems.Add(trades[i].desiredItem.itemIndex);
 			}
 			if(NetworkServer.active)
@@ -88,22 +88,26 @@ namespace SS2
 		public void BeginTrading(int intPickupIndex)
 		{
 			PickupDef pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));
-			if (pickupDef != null && this.interactor)
+			if (pickupDef == null || !this.interactor)
 			{
-				this.lastTradedItemIndex = pickupDef.itemIndex;
-				CharacterBody component = this.interactor.GetComponent<CharacterBody>();
-				if (component && component.inventory)
+				SS2Log.Error("TradeController.BeginTrading: pickupDef or interactor is null");
+				return;
+			}
+
+			this.lastTradedItemIndex = pickupDef.itemIndex;
+			CharacterBody component = this.interactor.GetComponent<CharacterBody>();
+			if (component && component.inventory)
+			{
+				if (component.inventory.GetItemCount(pickupDef.itemIndex) > 0)
 				{
-					if (component.inventory.GetItemCount(pickupDef.itemIndex) > 0)
-					{
-						component.inventory.RemoveItem(pickupDef.itemIndex);
-						ScrapperController.CreateItemTakenOrb(component.corePosition, base.gameObject, pickupDef.itemIndex);
-					}
+					component.inventory.RemoveItem(pickupDef.itemIndex);
+					ScrapperController.CreateItemTakenOrb(component.corePosition, base.gameObject, pickupDef.itemIndex);
 				}
 			}
+
 			foreach(TradeDef trade in trades) // temp ///////////////////////////////////////////////////////////////////////////////////
             {
-				if(trade.desiredItem.itemIndex == pickupDef.itemIndex)
+				if(trade.desiredItem && trade.desiredItem.itemIndex == pickupDef.itemIndex)
                 {
 					Transform dropTransform = this.dropTransform ? this.dropTransform : base.transform;
 					GenericPickupController.CreatePickupInfo createPickupInfo = new GenericPickupController.CreatePickupInfo

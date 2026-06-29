@@ -1,8 +1,70 @@
 **Warning: content spoilers below!**
+### 0.6.40 
+* General
+    * Fixed Typhoon language tokens not appearing correctly if you adjusted Typhoon config
+    * Added back `unlock_all` config option. Only works on Survivors and Items for now
+    * Added config support to disable Curios (Beta items) and Elite Equipment
+* Survivors
+    * Executioner
+        * Rare Executioner orb NRE fix (I cant seem to reproduce this one, but a null check was added where it happened)
+        * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
+* Storms
+    * Misc NRE fixes
+* Drones
+    *  Fixed Shock Drone VFX NRE
+    *  Drones spawned by Drone Head now have a 4 second invincibility window to escape on death Elite attacks
+* Elites
+    * Stormborn
+        * Clay Templars now recieve half of the attack speed buff when Stormborn
+    * Empyrean
+        * Empyreans are now invincible during their spawn animation
+        * Fixed Empyrean simulacrum interaction
+* Items
+    * Gave Rainbow Root and Field Accelerator the AI Blacklist tag
+    * Field Accelerator, Droid Head, and Trematode were missing the "Can Be Temporary" tags, they can now spawn as temporary items!
+* Enemies
+    * Mimic 
+        * Fixed Mimic and Chirr death friend interaction
+        * Fixed Mimic's dead body being targetted by ATG and other items
+    * Wayfarer
+        * Fixed Wayfarer LampBuff TemporaryVisualEffect NRE spam
+    * Nemesis
+        * Fixed NRE when Nemesis spawns and players spawn in late
+* Beta
+    * Fixed a harmless NRE for Void Shop RNG on clients
+    * Fixed a harmless NRE for ItemOnEliteKill on clients
+    * MULE sent to permanent disable jail until future rework
+    * Ethereal
+        * Ethereal pillars no longer destroy drones
+        * Fixed harmless NRE on Ethereal when closing the game
+    * Cyborg
+        * Cyborg now has a proper drop pod
+        * Fixed Cyborg's shock mines not visually appearing as client
+    * Knight
+        * Knight now has a proper drop pod
+        * Fixed Knight's parry not working correctly for clients
+        * Increased Knight's parry window to address latency issues
+
+TODO: Confirm the below are fixed before mergining
+* Unconfirmed
+    * Cyborg
+        * Fixed bug where Cyborg could not charge the teleporter 100%        
+    * Fixed Shard Poison / Shard Void Zanzan trader interaction
+    * Fixed OpenSlow Curse interaction with Scavenger bags
+    * Self-Repair skill fixes
+    * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
+
+TODO BEFORE RELEASING 0.6.40:
+* Ethereal
+    * Fixed Ethereal teleporter icon placement
+* Railgunner
+    * Tactical roll alt skill now properly reloads while scoped
+
 ### 0.6.39 Happy Pride!
 * General
     * NOTE: The mod will still say 0.6.38 when loading because I built the mod before updating this in Unity. Its a small technical detail that doesnt matter to most people except those filing bug reports
     * White Flag will now display a random Pride flag every run during the month of June. We got to this late! There is a config to enable this year round. (Thanks bread)
+    * Fixes to Empyrean VFX overlay, HP bar being tiny, and having wrong shield amount (Thanks Lordryn)
 * Nemesis Commando
     * Re-implemented unique set of animations for when gun isn't in use (Thanks Domi!)
     * Updated animations for Decisive Strike, Submission
@@ -13,7 +75,7 @@
 	* Ethereal difficulties now properly show on run end/run history screens
 	* Fixed Drizzle being selected by default with Beta content enabled
     * Slate mines interactables fixed (Thanks Lordryn)
-    * Fixes to Empyrean VFX overlay, HP bar being tiny, and having wrong shield amount (Thanks Lordryn)
+
     * If Buns (me) didnt forget to set the correct Slate Mines water material that should be fixed too
 
 ### 0.6.38 

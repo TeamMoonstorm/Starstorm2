@@ -51,6 +51,7 @@ namespace SS2
         public static float FlashingEffectsIntensity = 100f;
 
         public static ConfiguredBool enableBeta;
+        public static ConfiguredBool unlockAll;
 
 
         internal static IEnumerator RegisterToModSettingsManager()
@@ -99,6 +100,14 @@ namespace SS2
             }).DoConfigure();
 
             ConfigAccessibility = CreateConfigFile(ID_ACCESSIBILITY, true);
+
+            unlockAll = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
+            {
+                b.section = "General";
+                b.key = "Unlock All";
+                b.description = "Unlocks all SS2 content (items, and survivors) without needing to complete achievements. Skills and skins are excluded. Requires a restart to take effect.";
+                b.configFile = SS2Config.ConfigMain;
+            }).DoConfigure();
         }
 
 

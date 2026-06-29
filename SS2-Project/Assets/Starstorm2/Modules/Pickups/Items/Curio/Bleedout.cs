@@ -8,7 +8,10 @@ namespace SS2.Items
     public sealed class Bleedout : SS2Item
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBleedout", SS2Bundle.Items);
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
 
         public static DotController.DotIndex bleedout;
         public override void Initialize()

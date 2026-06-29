@@ -134,6 +134,7 @@ namespace SS2
             SS2Main main = SS2Main.Instance;
             _loadDispatchers = new Func<IEnumerator>[]
             {
+                GameModeModule.Init,
                 DifficultyModule.Init,
                 Events.Init,
                 //Bulwark.Init,

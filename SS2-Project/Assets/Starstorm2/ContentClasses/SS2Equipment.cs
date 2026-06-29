@@ -44,8 +44,8 @@ namespace SS2
             ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
             {
                 b.section = "00 - Equipment Disabling";
-                b.key = $"Disable Eqipment: {MSUtil.NicifyString(GetType().Name)}";
-                b.description = "Set this to true if you want to disable this eqipment from appearing in game.";
+                b.key = $"Disable Equipment: {MSUtil.NicifyString(GetType().Name)}";
+                b.description = "Set this to true if you want to disable this equipment from appearing in game. Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur as this prevents the content from being loaded entirely. Restart required.";
                 b.configFile = SS2Config.ConfigItem;
                 b.checkBoxConfig = new CheckBoxConfig
                 {

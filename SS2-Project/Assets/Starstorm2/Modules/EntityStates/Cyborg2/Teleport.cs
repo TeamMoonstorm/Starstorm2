@@ -23,10 +23,9 @@ namespace EntityStates.Cyborg2
         {
             base.OnEnter();
 
-            this.teleporterOwnership = base.GetComponent<TeleporterProjectile.ProjectileTeleporterOwnership>();
-            if(!this.teleporterOwnership)
+            if (!base.TryGetComponent(out this.teleporterOwnership))
             {
-                Debug.LogError("Cyborg2 teleport failed! No teleporter component. (howw?????)");
+                SS2Log.Error("Cyborg2 teleport failed! No teleporter component.");
                 this.outer.SetNextStateToMain();
                 return;
             }
@@ -45,7 +44,6 @@ namespace EntityStates.Cyborg2
 
             if (NetworkServer.active)
             {
-                
                 base.characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
             }
         }

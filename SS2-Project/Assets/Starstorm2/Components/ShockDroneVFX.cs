@@ -6,23 +6,35 @@ namespace SS2.Components
 {
     public class ShockDroneVFX : NetworkBehaviour
     {
-        private ModelLocator modelLocator;
-        private GameObject model;
-        private ChildLocator childLocator;
         private GameObject chargeVFX;
         private SkillLocator skillLocator;
         private HealthComponent healthComponent;
-        private bool chargeEnabled;
         private AkEvent[] droneAkEvents;
 
         private void Awake()
         {
-            modelLocator = GetComponent<ModelLocator>();
-            model = modelLocator.modelTransform.gameObject;
-            childLocator = model.GetComponent<ChildLocator>();
-            chargeVFX = childLocator.FindChild("ChargeSparks").gameObject;
-            skillLocator = GetComponent<SkillLocator>();
-            healthComponent = GetComponent<HealthComponent>();
+            if (!TryGetComponent<ModelLocator>(out var modelLocator))
+            {
+                SS2Log.Error("ShockDroneVFX: missing ModelLocator");
+                return;
+            }
+
+            var modelTransform = modelLocator.modelTransform;
+            if (!modelTransform)
+            {
+                SS2Log.Error("ShockDroneVFX: modelTransform is null");
+                return;
+            }
+
+            if (modelTransform.TryGetComponent<ChildLocator>(out var childLocator))
+            {
+                var chargeSparks = childLocator.FindChild("ChargeSparks");
+                if (chargeSparks)
+                    chargeVFX = chargeSparks.gameObject;
+            }
+
+            TryGetComponent(out skillLocator);
+            TryGetComponent(out healthComponent);
 
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
 
@@ -45,7 +57,10 @@ namespace SS2.Components
 
         private void FixedUpdate()
         {
-            if (skillLocator.primary.stock == 0 || !healthComponent.alive)
+            if (!chargeVFX)
+                return;
+
+            if (!skillLocator || !healthComponent || skillLocator.primary.stock == 0 || !healthComponent.alive)
             {
                 chargeVFX.SetActive(false);
             }

@@ -4,6 +4,7 @@ using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 namespace SS2.Monsters
 {
     public sealed class Lamp : SS2Monster
