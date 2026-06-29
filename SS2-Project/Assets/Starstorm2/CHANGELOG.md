@@ -22,7 +22,6 @@
 * Items
     * Gave Rainbow Root and Field Accelerator the AI Blacklist tag
     * Field Accelerator, Droid Head, and Trematode were missing the "Can Be Temporary" tags, they can now spawn as temporary items!
-    * Strange Can debuff is now properly marked as debuff
 * Enemies
     * Mimic 
         * Fixed Mimic and Chirr death friend interaction
@@ -48,17 +47,18 @@
 
 TODO: Confirm the below are fixed before mergining
 * Unconfirmed
-    * Ethereal
-        * Fixed Ethereal teleporter icon placement (kind of, its still slightly too high, but its in the right spot now!)
-    * Railgunner
-        * Tactical roll alt skill now properly reloads while scoped
     * Cyborg
         * Fixed bug where Cyborg could not charge the teleporter 100%        
     * Fixed Shard Poison / Shard Void Zanzan trader interaction
     * Fixed OpenSlow Curse interaction with Scavenger bags
     * Self-Repair skill fixes
-    * New Arti alt special inspired by Wayfarer's projectile attack. LampGirly at home!
     * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
+
+TODO BEFORE RELEASING 0.6.40:
+* Ethereal
+    * Fixed Ethereal teleporter icon placement
+* Railgunner
+    * Tactical roll alt skill now properly reloads while scoped
 
 ### 0.6.39 Happy Pride!
 * General

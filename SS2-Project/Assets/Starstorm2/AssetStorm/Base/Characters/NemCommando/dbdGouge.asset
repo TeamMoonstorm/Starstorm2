@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1783169300, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: BuffIntoxicated
+  m_Script: {fileID: 11500000, guid: adf8a95badcc74d40a27d8bc46f38205, type: 3}
+  m_Name: dbdGouge
   m_EditorClassIdentifier: 
   iconPath: 
-  iconSprite: {fileID: 21300000, guid: 03a50b6489b3ae441b57e3f2778f041a, type: 3}
-  buffColor: {r: 0.5575382, g: 0.6320754, b: 0.5575382, a: 1}
+  iconSprite: {fileID: 21300000, guid: 1d337e60299983247bab956d53a13210, type: 3}
+  buffColor: {r: 1, g: 1, b: 1, a: 1}
   canStack: 1
   eliteDef: {fileID: 0}
   isDebuff: 0
@@ -25,3 +25,9 @@ MonoBehaviour:
   flags: 0
   stackingDisplayMethod: 0
   startSfx: {fileID: 0}
+  interval: 0
+  damageCoefficient: 0
+  damageColor: {fileID: 0}
+  terminalTimedBuff: {fileID: 0}
+  terminalTimedBuffDuration: 0
+  resetTimerOnAdd: 0
