@@ -1,14 +1,10 @@
 ﻿using MSU.Config;
 using MSU;
-using R2API.ScriptableObjects;
 using RoR2;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using UObject = UnityEngine.Object;
 using RoR2.ContentManagement;
 using RoR2.Items;
 
@@ -99,7 +95,7 @@ namespace SS2.Artifacts
             if (!victimMaster.hasBody)
                 return false;
 
-            if (victimMaster.inventory.GetItemCount(SS2Content.Items.CognationHelper) != 0)
+            if (victimMaster.inventory.GetItemCountEffective(SS2Content.Items.CognationHelper) != 0)
                 return false;
 
             if (BlacklistedMasterIndices.Contains(victimMaster.masterIndex))
@@ -115,14 +111,16 @@ namespace SS2.Artifacts
         {
             var body = master.GetBody();
 
-            var ghostSummon = new MasterSummon();
-            ghostSummon.ignoreTeamMemberLimit = true;
-            ghostSummon.masterPrefab = MasterCatalog.GetMasterPrefab(master.masterIndex);
-            ghostSummon.position = body.corePosition;
-            ghostSummon.rotation = Quaternion.LookRotation(body.inputBank.GetAimRay().direction);
-            ghostSummon.teamIndexOverride = master.teamIndex;
-            ghostSummon.summonerBodyObject = null;
-            ghostSummon.inventoryToCopy = inheritInventory ? master.inventory : null;
+            var ghostSummon = new MasterSummon
+            {
+                ignoreTeamMemberLimit = true,
+                masterPrefab = MasterCatalog.GetMasterPrefab(master.masterIndex),
+                position = body.corePosition,
+                rotation = Quaternion.LookRotation(body.inputBank.GetAimRay().direction),
+                teamIndexOverride = master.teamIndex,
+                summonerBodyObject = null,
+                inventoryToCopy = inheritInventory ? master.inventory : null
+            };
 
             return ghostSummon;
         }
@@ -151,8 +149,8 @@ namespace SS2.Artifacts
                     }
                 }
 
-                ghostMaster.inventory.SetEquipmentIndex(originalMaster.inventory.currentEquipmentIndex);
-                ghostMaster.inventory.GiveItem(SS2Content.Items.CognationHelper);
+                ghostMaster.inventory.SetEquipmentIndex(originalMaster.inventory.currentEquipmentIndex, true);
+                ghostMaster.inventory.GiveItemPermanent(SS2Content.Items.CognationHelper);
             }
 
             var timer = ghostMaster.gameObject.AddComponent<MasterSuicideOnTimer>();
@@ -170,13 +168,13 @@ namespace SS2.Artifacts
             {
                 if (body.teamComponent.teamIndex == TeamIndex.Player)
                 {
-                    body.inventory.RemoveItem(SS2Content.Items.CognationHelper, stack);
+                    body.inventory.RemoveItemPermanent(SS2Content.Items.CognationHelper, stack);
                     Destroy(this);
                 }
 
-                if (body.inventory.GetItemCount(SS2Content.Items.TerminationHelper) > 0)
+                if (body.inventory.GetItemCountEffective(SS2Content.Items.TerminationHelper) > 0)
                 {
-                    body.inventory.RemoveItem(SS2Content.Items.TerminationHelper);
+                    body.inventory.RemoveItemPermanent(SS2Content.Items.TerminationHelper);
                 }
 
                 body.baseMaxHealth *= 3;
@@ -193,27 +191,32 @@ namespace SS2.Artifacts
                     Transform modelTransform = modelLoc.modelTransform;
                     if (modelTransform)
                     {
-                        model = modelTransform.GetComponent<CharacterModel>();
+                        model = modelTransform.gameObject.GetComponent<CharacterModel>();
                     }
                 }
-
-                if (model)
+                
+                ModelSkinController skinController = model?.gameObject.GetComponent<ModelSkinController>();
+                if (skinController)
                 {
-                    //SS2Log.Info("swapping shader");
-                    ModifyCharacterModel();
+                    skinController.onSkinApplied += OnonSkinApplied;
                 }
             }
 
-            private void ModifyCharacterModel()
+            private void OnonSkinApplied(int obj)
             {
-                for (int i = 0; i < model.baseRendererInfos.Length; i++)
+                if (model)
                 {
-                    var mat = model.baseRendererInfos[i].defaultMaterial;
-                    if (mat.shader.name.StartsWith("Hopoo Games/Deferred"))
+                    //SS2Log.Info($"swapping shader skin applied {model.baseRendererInfos.Length}");
+                    
+                    for (int i = 0; i < model.baseRendererInfos.Length; i++)
                     {
-                        //SS2Log.Info("swapping shader real " +mat.shader.name + " | " + ghostMaterial + "
-                        mat = ghostMaterial;
-                        model.baseRendererInfos[i].defaultMaterial = mat;
+                        var mat = model.baseRendererInfos[i].defaultMaterial;
+                        if (mat.shader.name.StartsWith("Hopoo Games/Deferred"))
+                        {
+                            //SS2Log.Info("swapping shader real " + mat.shader.name + " | " + ghostMaterial);
+                            mat = ghostMaterial;
+                            model.baseRendererInfos[i].defaultMaterial = mat;
+                        }
                     }
                 }
             }

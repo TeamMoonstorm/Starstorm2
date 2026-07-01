@@ -1,3 +1,4 @@
+using RoR2;
 using RoR2.UI;
 using SS2;
 using SS2.Components;
@@ -20,7 +21,14 @@ namespace Starstorm2.Components
         {
             if (NetworkServer.active)
             {
-                timer = PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1));
+                foreach (PlayerCharacterMasterController pcmc in PlayerCharacterMasterController._instancesReadOnly)
+                {
+                    int? itemCount = pcmc.master?.inventory?.GetItemCountEffective(SS2Content.Items.PrimalBirthright.itemIndex);
+                    if (itemCount is > 0) // rider wants to turn it into a is so its probably fine .,,
+                    {
+                        timer += PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (itemCount.Value - 1));
+                    }
+                }
             }
             
             if (PrimalBirthrightObjectiveToken.instanceList.Count == 0)
@@ -76,6 +84,7 @@ namespace Starstorm2.Components
 
         public void TryRemoveObjective()
         {
+            //only remove the objective if the player hasnt activated the survive text .,,. 
             if (!spawnedMeteors)
             {
                 ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
