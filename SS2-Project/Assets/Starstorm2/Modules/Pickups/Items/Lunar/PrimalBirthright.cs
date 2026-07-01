@@ -35,7 +35,7 @@ namespace SS2.Items
         public static float lunarWispStageCount = 3f;
         
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for Lunar Wisps to replace Lunar Golems upon failing to claim your birthright.")]
-        public static float lunarWispChance = 30f;
+        public static float lunarWispChance = 20f;
         
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for perfected enemies to replace regular enemy spawns upon failing to claim your birthright.")]
         public static float perfectedReplacementChance = 15f;
@@ -66,7 +66,6 @@ namespace SS2.Items
             On.RoR2.PurchaseInteraction.GetDisplayName += GetDisplayNameAlterPrimalName;
             On.RoR2.CombatDirector.Spawn += CombatDirectorOnSpawnPerfected;
             On.RoR2.TeleporterInteraction.Awake += TeleporterInteractionAwakeAddPrimalPrevention;
-            //ObjectivePanelController.collectObjectiveSources -= this.OnCollectObjectiveSources;
 
             var tempChest = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldChest/GoldChest.prefab").WaitForCompletion();
             indevChest = PrefabAPI.InstantiateClone(tempChest, "PrimalChest");
@@ -133,7 +132,7 @@ namespace SS2.Items
             
             //storm stuff .,. ,
             primalStormDamageColor = ColorsAPI.RegisterDamageColor(new Color32(200, 200, 255, 255));
-            stormPrefab = SS2Assets.LoadAsset<GameObject>("PrimalMeteorStorm", SS2Bundle.Items);
+            stormPrefab = AssetCollection.FindAsset<GameObject>("PrimalMeteorStorm");
         }
 
         private void TeleporterInteractionAwakeAddPrimalPrevention(TeleporterInteraction.orig_Awake orig, RoR2.TeleporterInteraction self)
@@ -144,7 +143,7 @@ namespace SS2.Items
 
         private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn orig, RoR2.CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
         {
-            if (NetworkServer.active && Behavior.timer?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
+            if (NetworkServer.active && Behavior.timerComponent?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
             {
                 elitedef = RoR2Content.Elites.Lunar;
                 SS2Log.Debug($"set {spawncard.prefab.name} to be perfected ,.., ,.");
@@ -162,7 +161,7 @@ namespace SS2.Items
                 
                 if (pbot.master) 
                 {
-                    return intermediate.Replace("{0}", Util.GetBestMasterName(pbot.master));
+                    return intermediate.Replace("{0}", pbot.playerName);
                 }
                 //intermediate.Replace("{0}", pbot.masterObject.GetComponent<CharacterMaster>().GetBody().GetDisplayName())
                
@@ -303,9 +302,9 @@ namespace SS2.Items
                             });
 
                             var objtoken = chest.GetComponent<PrimalBirthrightObjectiveToken>();
-                            objtoken.masterObject = player.master.gameObject;
                             objtoken.master = player.master;
-                            
+                            objtoken.playerName = Util.GetBestMasterName(player.master);
+
                             //objtoken.playername = Util.GetBestMasterName(player.master);
 
                             //pinter.GetDisplayName
@@ -320,16 +319,17 @@ namespace SS2.Items
         {
             [ItemDefAssociation(useOnServer = true, useOnClient = false)]
             private static ItemDef GetItemDef() => SS2Content.Items.PrimalBirthright;
+
+            private static GameObject stormObject;
             
-            public static BirthrightObjectiveTimer timer;
+            public static BirthrightObjectiveTimer timerComponent;
 
             private void OnEnable()
             {
-                if (!timer)
+                if (!stormObject)
                 {
-                    GameObject birthrightTrackerHelper = Instantiate(stormPrefab);
-                    NetworkServer.Spawn(birthrightTrackerHelper);
-                    timer = birthrightTrackerHelper.GetComponent<BirthrightObjectiveTimer>();
+                    stormObject = Instantiate(stormPrefab);
+                    NetworkServer.Spawn(stormObject);
                 }
             }
         }
@@ -344,26 +344,16 @@ namespace SS2.Items
 
     public class PrimalBirthrightObjectiveToken : NetworkBehaviour {
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
-        
         public PurchaseInteraction pinter;
-        
-        [SyncVar(hook = "SetMaster")]
-        public GameObject masterObject;
-
         public CharacterMaster master;
 
-        private static bool shouldRemoveObjective;
+        [SyncVar] 
+        public string playerName;
         
         public void OnEnable()
         {
             pinter = this.gameObject.GetComponent<PurchaseInteraction>();
             instanceList.Add(pinter);
-
-            if (instanceList.Count == 1)
-            {
-                ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
-                shouldRemoveObjective = false;
-            }
         }
 
         public void OnDisable()
@@ -372,11 +362,9 @@ namespace SS2.Items
 
             if (instanceList.Count <= 0)
             {
-                // we dont want to remove it if they failed the birthright, but it causes errors from the object getting destroyed eg. quitting the run or something . ,
-                if (!PrimalBirthright.Behavior.timer || !PrimalBirthright.Behavior.timer.spawnedMeteors)
+                if (PrimalBirthright.Behavior.timerComponent)
                 {
-                    ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
-                    shouldRemoveObjective = true;
+                    PrimalBirthright.Behavior.timerComponent.TryRemoveObjective();
                 }
 
                 if (PrimalBirthright.primalToken)
@@ -385,20 +373,11 @@ namespace SS2.Items
                 }
             }
         }
-
-        public void OnDestroy()
-        {
-            if (shouldRemoveObjective)
-            {
-                ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
-                shouldRemoveObjective = false;
-            }
-        }
-
+        
         [ClientRpc]
         public void RpcSetToken(bool enable)
         {
-            this.enabled = enable;
+            enabled = enable;
         }
 
         public void SetMaster(GameObject masterObj)
@@ -409,28 +388,22 @@ namespace SS2.Items
 
     public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
     {
-        private BirthrightObjectiveTimer objectiveTimer;
-        
         public override string GenerateString()
         {
-            if (!objectiveTimer)
+            if (!PrimalBirthright.Behavior.timerComponent)
             {
-                objectiveTimer = PrimalBirthright.Behavior.timer;
-                
-                if (!objectiveTimer)
-                {
-                    // this *shouldnt* happen but in case if like .,., multiplayer somehow a client is late to recieve it uhhhh go my base case, ,. 
-                    SS2Log.Warning("PrimalBirthrightObjectiveTracker not found !!!");
-                    return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1)));;
-                }
+                // this *shouldnt* happen but in case if like .,., multiplayer somehow a client is late to recieve it uhhhh go my base case, ,. 
+                SS2Log.Warning("PrimalBirthrightObjectiveTracker not found !!!");
+                return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1)));;
             }
-            if (objectiveTimer.timer <= 0)
+            
+            if (PrimalBirthright.Behavior.timerComponent.timer <= 0)
             {
                 return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
             }
             
-            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, objectiveTimer.timer.ToString("0"));
-            if (objectiveTimer.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
+            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, ((int)(PrimalBirthright.Behavior.timerComponent.timer)));
+            if (PrimalBirthright.Behavior.timerComponent.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
             {
                 text = $"<style=cDeath>{text}</style>";
             }

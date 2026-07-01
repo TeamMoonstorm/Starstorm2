@@ -1,19 +1,10 @@
-using EntityStates;
-using MSU;
-using MSU.Config;
-using R2API;
 using RoR2;
-using RoR2.UI;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using SS2;
 using SS2.Items;
-using Starstorm2.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.Networking;
-using UnityEngine.Rendering.PostProcessing;
 using Random = UnityEngine.Random;
 
 namespace SS2.Components
@@ -45,13 +36,13 @@ namespace SS2.Components
             //add meteors at each birthright because i am evil ., 
             foreach (PurchaseInteraction birthrightPurchaseInteraction in PrimalBirthrightObjectiveToken.instanceList)
             {
-                MeteorStormController.Meteor meteor = new MeteorStormController.Meteor();
+                Meteor meteor = new Meteor();
                 meteor.impactPosition = birthrightPurchaseInteraction.gameObject.transform.position;
                     
                 Vector3 origin = meteor.impactPosition + Vector3.up * 6f;
                 Vector3 onUnitSphere = Random.onUnitSphere;
                 onUnitSphere.y = -1f;
-                if (Physics.Raycast(origin, onUnitSphere, out var hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+                if (Physics.Raycast(origin, onUnitSphere, out RaycastHit hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
                 {
                     meteor.impactPosition = hitInfo.point;
                 }
@@ -73,6 +64,18 @@ namespace SS2.Components
             }
             
             CharacterBody characterBody = wave.targets[wave.currentStep % wave.targets.Length];
+            if (!characterBody)
+            {
+                return null;
+            }
+            
+            SS2Log.Debug($"body {characterBody.name} at {wave.currentStep}");
+            SS2Log.Debug($"length {wave.targets.Length}");
+            foreach (CharacterBody body in wave.targets)
+            {
+                SS2Log.Debug($"body in wave targets {body.name}");
+            }
+            
             Meteor meteor = new Meteor();
             if (characterBody && Random.value < wave.hitChance)
             {
@@ -116,7 +119,7 @@ namespace SS2.Components
             waveTimer -= Time.fixedDeltaTime;
             if (waveTimer <= 0f && waveList.Count == 0)
             {
-                waveTimer = UnityEngine.Random.Range(PrimalBirthright.chimeraWaitTime - PrimalBirthright.chimeraWaitTimeVariance, PrimalBirthright.chimeraWaitTime + PrimalBirthright.chimeraWaitTimeVariance);
+                waveTimer = Random.Range(PrimalBirthright.chimeraWaitTime - PrimalBirthright.chimeraWaitTimeVariance, PrimalBirthright.chimeraWaitTime + PrimalBirthright.chimeraWaitTimeVariance);
                 chimeraCount = Random.Range(1, 4);
                 if (PrimalBirthrightObjectiveToken.instanceList.Count > 0 && aliveChimeras < 15)
                 {
@@ -129,8 +132,7 @@ namespace SS2.Components
                 
                 SS2Log.Debug("adding new wave ,.,.");
                 
-                //add meteor wave with array of alive players .,, .
-                waveList.Add(new MeteorWave((from pcmc in PlayerCharacterMasterController.instances where pcmc.body select pcmc.body).ToArray(), base.transform.position));
+                waveList.Add(new MeteorWave(PlayerCharacterMasterController._instancesReadOnly.Select(master => master.master.GetBody()).ToArray(), base.transform.position));
             }
 
             for (int i = waveList.Count - 1; i >= 0; i--)
@@ -202,10 +204,23 @@ namespace SS2.Components
                 spawnRequest.teamIndexOverride = TeamIndex.Monster;
                 spawnRequest.onSpawnedServer += result =>
                 {
+                    // i had a single NRE on client while testing i dont trust spawnedserver anymore ,.. 
+                    if (!NetworkServer.active) return;
+                    
                     CharacterMaster golemMaster = result.spawnedInstance?.GetComponent<CharacterMaster>();
                     if (!golemMaster) return;
                     
                     golemMaster.inventory.GiveItemPermanent(SS2Content.Items.BirthrightChimeraHelper.itemIndex);
+                    
+                    //basically just copy how combat director rewards stuff .,,. 
+                    DeathRewards deathRewards = golemMaster.GetBodyObject()?.GetComponent<DeathRewards>();
+                    if (!deathRewards) return;
+                    
+                    float total = 6f; //this is around 12 gold which isnt much but shouldnt be rewarded too much ,.,. 
+                    deathRewards.spawnValue = (int)Mathf.Max(1f, total);
+             
+                    deathRewards.expReward = (uint)Mathf.Max(1f, total * Run.instance.compensatedDifficultyCoefficient);
+                    deathRewards.goldReward = (uint)Mathf.Max(1f, total * 2f * Run.instance.compensatedDifficultyCoefficient);
                 };
                 
                 DirectorCore.instance.TrySpawnObject(spawnRequest);
