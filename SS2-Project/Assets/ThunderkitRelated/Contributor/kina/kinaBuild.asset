@@ -108,6 +108,7 @@ MonoBehaviour:
   - {fileID: -3576180096776599551}
   - {fileID: -3853556619106336772}
   - {fileID: -216652644370084839}
+  - {fileID: 5812675449588299462}
   - {fileID: -368528284118131793}
   QuickAccess: 1
   manifest: {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405,
@@ -126,3 +127,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Active: 1
   buildMode: 0
+--- !u!114 &5812675449588299462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03063c7a6ec04cc4c82c75cf9bcc8db8, type: 3}
+  m_Name: Copy
+  m_EditorClassIdentifier: 
+  Active: 1
+  PerManifest: 1
+  ListType: 1
+  Manifests:
+  - {fileID: -3892906877110538616, guid: bcbdefdb47e2f8f45bdd7a2a4559b405, type: 2}
+  - {fileID: 11400000, guid: 5ceb1d8ed3af40d4d806e9756b403649, type: 2}
+  ReplaceDirectory: 1
+  Recursive: 1
+  SourceRequired: 0
+  EstablishDestination: 1
+  Source: <MSUBuildPath>
+  Destination: <kinaTestingPathClient>

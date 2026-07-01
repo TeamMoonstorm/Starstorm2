@@ -50,7 +50,7 @@ namespace SS2.Components
                 return;
             };
             
-            timer += Time.fixedDeltaTime;
+            timer += Time.deltaTime;
             if (timer > closestBirthrightDistance)
             {
                 timer = 0;

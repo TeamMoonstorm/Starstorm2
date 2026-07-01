@@ -159,12 +159,10 @@ namespace SS2.Items
             {
                 var intermediate = Language.GetString(self.displayNameToken);
                 
-                if (pbot.master) 
+                if (pbot.playerName != "") 
                 {
                     return intermediate.Replace("{0}", pbot.playerName);
                 }
-                //intermediate.Replace("{0}", pbot.masterObject.GetComponent<CharacterMaster>().GetBody().GetDisplayName())
-               
             }
             return orig(self);
         }
@@ -303,7 +301,7 @@ namespace SS2.Items
 
                             var objtoken = chest.GetComponent<PrimalBirthrightObjectiveToken>();
                             objtoken.master = player.master;
-                            objtoken.playerName = Util.GetBestMasterName(player.master);
+                            objtoken.playerName = player.networkUser.userName;
 
                             //objtoken.playername = Util.GetBestMasterName(player.master);
 
@@ -342,7 +340,8 @@ namespace SS2.Items
 
     }
 
-    public class PrimalBirthrightObjectiveToken : NetworkBehaviour {
+    public class PrimalBirthrightObjectiveToken : NetworkBehaviour
+    {
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
         public PurchaseInteraction pinter;
         public CharacterMaster master;
@@ -378,11 +377,6 @@ namespace SS2.Items
         public void RpcSetToken(bool enable)
         {
             enabled = enable;
-        }
-
-        public void SetMaster(GameObject masterObj)
-        {
-            master = masterObj.GetComponent<CharacterMaster>();
         }
     }
 

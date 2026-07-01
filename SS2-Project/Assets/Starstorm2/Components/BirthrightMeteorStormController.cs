@@ -9,13 +9,29 @@ using Random = UnityEngine.Random;
 
 namespace SS2.Components
 {
-    public class BirthrightMeteorStormController : MeteorStormController
+    public class BirthrightMeteorStormController : MonoBehaviour
     {
         private int aliveChimeras => Util.GetItemCountGlobal(SS2Content.Items.BirthrightChimeraHelper.itemIndex, true);
         private int chimeraCount;
         private CharacterSpawnCard golemSpawnCard;
-        private CharacterSpawnCard wispSpawnCard; 
+        private CharacterSpawnCard wispSpawnCard;
+        private GameObject warningEffectPrefab;
+        private GameObject impactEffectPrefab;
+        private float waveTimer;
+        private List<ChimeraSpawn> chimeraSpawns = new List<ChimeraSpawn>();
+        
+        public class ChimeraSpawn
+        {
+            public float detonationTime;
+            public Vector3 impactPos;
+        }
 
+        public float impactDelay = 1f;
+        public float blastRadius = 8f;
+        public float blastDamageCoefficient = 3f;
+        public float blastForce = 4000f;
+        public DamageTypeCombo blastDamageType;
+        
         private void OnEnable()
         {
             golemSpawnCard = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/LunarGolem/cscLunarGolem.asset").WaitForCompletion();
@@ -23,104 +39,47 @@ namespace SS2.Components
          
             warningEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStrikePredictionEffect.prefab").WaitForCompletion();
             impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStrikeImpact.prefab").WaitForCompletion();
-        }
-
-        private void Start()
-        {
-            if (NetworkServer.active)
-            {
-                meteorList = new List<Meteor>();
-                waveList = new List<MeteorWave>();
-            }
             
-            //add meteors at each birthright because i am evil ., 
+            //add meteors at each birthright because i am evil <3., 
             foreach (PurchaseInteraction birthrightPurchaseInteraction in PrimalBirthrightObjectiveToken.instanceList)
             {
-                Meteor meteor = new Meteor();
-                meteor.impactPosition = birthrightPurchaseInteraction.gameObject.transform.position;
+                ChimeraSpawn chimeraSpawn = new ChimeraSpawn();
+                chimeraSpawn.impactPos = birthrightPurchaseInteraction.gameObject.transform.position;
                     
-                Vector3 origin = meteor.impactPosition + Vector3.up * 6f;
+                Vector3 origin = chimeraSpawn.impactPos + Vector3.up * 6f;
                 Vector3 onUnitSphere = Random.onUnitSphere;
                 onUnitSphere.y = -1f;
                 if (Physics.Raycast(origin, onUnitSphere, out RaycastHit hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
                 {
-                    meteor.impactPosition = hitInfo.point;
+                    chimeraSpawn.impactPos = hitInfo.point;
                 }
-                else if (Physics.Raycast(meteor.impactPosition, Vector3.down, out hitInfo, float.PositiveInfinity, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
+                else if (Physics.Raycast(chimeraSpawn.impactPos, Vector3.down, out hitInfo, float.PositiveInfinity, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
                 {
-                    meteor.impactPosition = hitInfo.point;
+                    chimeraSpawn.impactPos = hitInfo.point;
                 }
                     
-                gameObject.GetComponent<BirthrightMeteorStormController>().DetonateMeteor(meteor);
+                SpawnChimera(chimeraSpawn);
             }
         }
 
-        //copied version of MeteorWave.GetNextMeteor but to spawn several enemies instead of just 1 ,.,
-        private Meteor GetNextMeteorPrimal(MeteorWave wave)
-        {
-            if (wave.currentStep >= wave.targets.Length * chimeraCount)
-            {
-                return null;
-            }
-            
-            CharacterBody characterBody = wave.targets[wave.currentStep % wave.targets.Length];
-            if (!characterBody)
-            {
-                return null;
-            }
-            
-            SS2Log.Debug($"body {characterBody.name} at {wave.currentStep}");
-            SS2Log.Debug($"length {wave.targets.Length}");
-            foreach (CharacterBody body in wave.targets)
-            {
-                SS2Log.Debug($"body in wave targets {body.name}");
-            }
-            
-            Meteor meteor = new Meteor();
-            if (characterBody && Random.value < wave.hitChance)
-            {
-                meteor.impactPosition = characterBody.corePosition;
-                Vector3 origin = meteor.impactPosition + Vector3.up * 6f;
-                Vector3 onUnitSphere = UnityEngine.Random.onUnitSphere;
-                onUnitSphere.y = -1f;
-                if (Physics.Raycast(origin, onUnitSphere, out var hitInfo, 12f, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
-                {
-                    meteor.impactPosition = hitInfo.point;
-                }
-                else if (Physics.Raycast(meteor.impactPosition, Vector3.down, out hitInfo, float.PositiveInfinity, LayerIndex.world.mask, QueryTriggerInteraction.Ignore))
-                {
-                    meteor.impactPosition = hitInfo.point;
-                }
-            }
-            else if (characterBody)
-            {
-                int randomVariance = 60;
-                Vector3 nodeFindPos = new Vector3(characterBody.corePosition.x + Random.Range(-randomVariance, randomVariance), characterBody.corePosition.y + Random.Range(-randomVariance, randomVariance), characterBody.corePosition.z + Random.Range(-randomVariance, randomVariance));
-                SceneInfo.instance.groundNodes.GetNodePosition(SceneInfo.instance.groundNodes.FindClosestNode(nodeFindPos, HullClassification.Golem), out meteor.impactPosition);
-            }
-            else
-            {
-                meteor.valid = false;
-            }
-            
-            meteor.startTime = Run.instance.time;
-            wave.currentStep++;
-            return meteor;
-        }
-        
-        //copied version of MeteorStormController.FixedUpdate with minor edits ,,.
         private void FixedUpdate()
         {
-            if (!NetworkServer.active)
+            if (!NetworkServer.active) return;
+            
+            for (int i = chimeraSpawns.Count - 1; i >= 0; i--)
             {
-                return;
+                ChimeraSpawn chimeraSpawn = chimeraSpawns[i];
+                if (chimeraSpawn.detonationTime < Run.instance.time)
+                {
+                    chimeraSpawns.RemoveAt(i);
+                    SpawnChimera(chimeraSpawn);
+                }
             }
             
             waveTimer -= Time.fixedDeltaTime;
-            if (waveTimer <= 0f && waveList.Count == 0)
+            if (waveTimer <= 0)
             {
                 waveTimer = Random.Range(PrimalBirthright.chimeraWaitTime - PrimalBirthright.chimeraWaitTimeVariance, PrimalBirthright.chimeraWaitTime + PrimalBirthright.chimeraWaitTimeVariance);
-                chimeraCount = Random.Range(1, 4);
                 if (PrimalBirthrightObjectiveToken.instanceList.Count > 0 && aliveChimeras < 15)
                 {
                     waveTimer *= 1.15f; // players probably taking a bit to clear them lets be slightly nice ,.., 
@@ -130,57 +89,35 @@ namespace SS2.Components
                     waveTimer *= 1.4f; // take longer between waves if the player got all birthrights ,.,. 
                 }
                 
-                SS2Log.Debug("adding new wave ,.,.");
-                
-                waveList.Add(new MeteorWave(PlayerCharacterMasterController._instancesReadOnly.Select(master => master.master.GetBody()).ToArray(), base.transform.position));
-            }
-
-            for (int i = waveList.Count - 1; i >= 0; i--)
-            {
-                MeteorWave meteorWave = waveList[i];
-                meteorWave.timer -= Time.fixedDeltaTime;
-                if (meteorWave.timer <= 0f)
+                foreach (CharacterBody body in PlayerCharacterMasterController._instancesReadOnly.Select(pcmc => pcmc.master?.GetBody()))
                 {
-                    meteorWave.timer = UnityEngine.Random.Range(0.25f, 0.75f);
-                    Meteor nextMeteor = GetNextMeteorPrimal(meteorWave);
-                    //SS2Log.Debug($"currentstep {meteorWave.currentStep}");
-                    //SS2Log.Debug($"targets {meteorWave.targets.Length}");
+                    int spawnCount = Random.Range(1, 4);
                     
-                    if (nextMeteor == null)
+                    for (int i = 0; i < spawnCount; i++)
                     {
-                        waveList.RemoveAt(i);
-                    }
-                    else if (nextMeteor.valid)
-                    {
-                        meteorList.Add(nextMeteor);
+                        ChimeraSpawn chimeraSpawn = new ChimeraSpawn();
+                        if (body)
+                        {
+                            //once i had one of these spawn inside one of the arches in titanic plains .,., no clue how ,. ,.,. https://files.catbox.moe/v1as12.mp4 ,,.,
+                            int randomVariance = 40;
+                            Vector3 nodeFindPos = new Vector3(body.corePosition.x + Random.Range(-randomVariance, randomVariance), body.corePosition.y + Random.Range(-randomVariance, randomVariance), body.corePosition.z + Random.Range(-randomVariance, randomVariance));
+                            SceneInfo.instance.groundNodes.GetNodePosition(SceneInfo.instance.groundNodes.FindClosestNode(nodeFindPos, HullClassification.Golem), out chimeraSpawn.impactPos);
+                        }
+                        
                         EffectManager.SpawnEffect(warningEffectPrefab, new EffectData
                         {
-                            origin = nextMeteor.impactPosition,
+                            origin = chimeraSpawn.impactPos,
                             scale = blastRadius
                         }, transmit: true);
+                        
+                        chimeraSpawn.detonationTime = Run.instance.time + impactDelay;
+                        chimeraSpawns.Add(chimeraSpawn);
                     }
-                }
-            }
-            
-            float num2 = Run.instance.time - impactDelay;
-            float num3 = num2 - travelEffectDuration;
-            for (int num4 = meteorList.Count - 1; num4 >= 0; num4--)
-            {
-                Meteor meteor = meteorList[num4];
-                if (meteor.startTime < num3 && !meteor.didTravelEffect)
-                {
-                    DoMeteorEffect(meteor);
-                }
-                if (meteor.startTime < num2)
-                {
-                    meteorList.RemoveAt(num4);
-                    DetonateMeteor(meteor);
                 }
             }
         }
         
-        //copied version of MeteorStormController.DetonateMeteor but spawns enemies alongside the meteor ,. .
-        private void DetonateMeteor(Meteor meteor)
+        private void SpawnChimera(ChimeraSpawn chimeraSpawn)
         {
             SS2Log.Debug("spawning evil ,., ");
 
@@ -197,7 +134,7 @@ namespace SS2.Components
                     new DirectorPlacementRule
                     {
                         placementMode = DirectorPlacementRule.PlacementMode.Direct,
-                        position = meteor.impactPosition
+                        position = chimeraSpawn.impactPos
                     },
                     RoR2Application.rng
                 );
@@ -228,13 +165,12 @@ namespace SS2.Components
      
             EffectData effectData = new EffectData
             {
-                origin = meteor.impactPosition
+                origin = chimeraSpawn.impactPos
             };
             EffectManager.SpawnEffect(impactEffectPrefab, effectData, transmit: true);
             
             //lunar golem base damage + level damage .,., not magic numbers i promise !!
             uint damage = 35 + 7 * TeamManager.instance.GetTeamLevel(TeamIndex.Monster);
-            SS2Log.Debug($"meteor damage {damage}");
             BlastAttack blastAttack = new BlastAttack
             {
                 inflictor = base.gameObject,
@@ -246,7 +182,7 @@ namespace SS2.Components
                 attacker = null,
                 bonusForce = Vector3.zero,
                 damageColorIndex = PrimalBirthright.primalStormDamageColor,
-                position = meteor.impactPosition,
+                position = chimeraSpawn.impactPos,
                 procChainMask = default,
                 procCoefficient = 1f,
                 teamIndex = TeamIndex.Monster,

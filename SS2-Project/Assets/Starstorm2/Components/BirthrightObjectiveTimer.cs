@@ -11,18 +11,26 @@ namespace Starstorm2.Components
     {
         [SyncVar] 
         public float timer;
+        [SyncVar] 
+        public bool completed;
+        
         public bool spawnedMeteors;
 
         private void OnEnable()
         {
-            PrimalBirthright.Behavior.timerComponent = this;
-            if (PrimalBirthrightObjectiveToken.instanceList.Count > 0) // dont add objective on first pickup when no chests exist ,.. 
+            if (NetworkServer.active)
             {
-                ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
+                timer = PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1));
             }
             
-            if (!NetworkServer.active) return;
-            timer = PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (RoR2.Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1));
+            if (PrimalBirthrightObjectiveToken.instanceList.Count == 0)
+            {
+                completed = true;
+                return;
+            }
+            
+            PrimalBirthright.Behavior.timerComponent = this;
+            ObjectivePanelController.collectObjectiveSources += PrimalBirthright.OnCollectObjectiveSources;
         }
 
         private void OnDisable()
@@ -33,6 +41,11 @@ namespace Starstorm2.Components
         private void FixedUpdate()
         {
             if (!NetworkServer.active) return;
+
+            if (completed)
+            {
+                return;
+            }
             
             if (timer > 0)
             {
@@ -66,6 +79,7 @@ namespace Starstorm2.Components
             if (!spawnedMeteors)
             {
                 ObjectivePanelController.collectObjectiveSources -= PrimalBirthright.OnCollectObjectiveSources;
+                completed = true;
             }
         }
     }
