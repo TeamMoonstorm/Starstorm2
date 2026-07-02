@@ -19,7 +19,7 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acPrimalBirthright", SS2Bundle.Items);
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of legendary chests the first stack grants per stage.")]
-        [FormatToken("", 0)]
+        [FormatToken("SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC", 0)]
         public static float legendaryCountBase = 1f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of legendary chests each additional stack grants per stage.")]
@@ -28,14 +28,14 @@ namespace SS2.Items
         
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How quickly you must claim your birthright (base).")]
         [FormatToken("SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC", 2)]
-        public static float birthrightCompletionTime = 250f;
+        public static float birthrightCompletionTime = 200f;
         
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "How quickly you must claim your birthright (stacking).")]
         [FormatToken("SS2_ITEM_PRIMAL_BIRTHRIGHT_DESC", 3)]
         public static float birthrightCompletionTimeStacking = 125f;
         
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount the price of the Legendary chest is multiplied by. (1 = 100%, normal value for current level)")]
-        public static float birthrightPriceModifier = 0.8f;
+        public static float birthrightPriceModifier = 1.3f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Required stage count for Lunar Wisps to start replacing Lunar Golems upon failing to claim your birthright.")]
         public static float lunarWispStageCount = 3f;
@@ -131,7 +131,7 @@ namespace SS2.Items
 
         private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn orig, CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
         {
-            if (NetworkServer.active && Behavior.timerComponent?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
+            if (NetworkServer.active && BirthrightObjectiveTimer.instance?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
             {
                 elitedef = RoR2Content.Elites.Lunar;
                 SS2Log.Debug($"set {spawncard.prefab.name} to be perfected ,.., ,.");
@@ -163,18 +163,6 @@ namespace SS2.Items
                 pbot.enabled = false;
                 pbot.RpcSetToken(false);
             }
-        }
-
-        public static void OnCollectObjectiveSources(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> objectiveSourcesList)
-        {
-            var newObjective = new ObjectivePanelController.ObjectiveSourceDescriptor
-            {
-                master = master,
-                objectiveType = typeof(PrimalBirthrightObjectiveTracker),
-                source = primalToken
-            };
-
-            objectiveSourcesList.Add(newObjective);
         }
 
         private void TeleporterInteractionPrimalOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)
@@ -296,10 +284,10 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.PrimalBirthright;
 
             private static GameObject stormObject;
-            public static BirthrightObjectiveTimer timerComponent;
 
             private void OnEnable()
             {
+                // !BirthrightObjectiveTimer.instance would probably work here too but im worried if 2 players have it and instance is set too late or something and it spawns 2 and oough ,.,.
                 if (!stormObject)
                 {
                     stormObject = Instantiate(stormPrefab);
@@ -337,7 +325,7 @@ namespace SS2.Items
 
             if (instanceList.Count <= 0)
             {
-                PrimalBirthright.Behavior.timerComponent?.TryRemoveObjective();
+                BirthrightObjectiveTimer.instance?.TryRemoveObjective();
 
                 if (PrimalBirthright.primalToken)
                 {
@@ -350,37 +338,6 @@ namespace SS2.Items
         public void RpcSetToken(bool enable)
         {
             enabled = enable;
-        }
-    }
-
-    public class PrimalBirthrightObjectiveTracker : ObjectivePanelController.ObjectiveTracker
-    {
-        public override string GenerateString()
-        {
-            if (!PrimalBirthright.Behavior.timerComponent)
-            {
-                // this *shouldnt* happen but in case if like .,., multiplayer somehow a client is late to recieve it uhhhh go my base case, ,. 
-                SS2Log.Warning("PrimalBirthrightObjectiveTracker not found !!!");
-                return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, PrimalBirthright.birthrightCompletionTime + (PrimalBirthright.birthrightCompletionTimeStacking * (Util.GetItemCountGlobal(SS2Content.Items.PrimalBirthright.itemIndex, false) - 1)));;
-            }
-            
-            if (PrimalBirthright.Behavior.timerComponent.timer <= 0)
-            {
-                return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
-            }
-            
-            string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, ((int)(PrimalBirthright.Behavior.timerComponent.timer)));
-            if (PrimalBirthright.Behavior.timerComponent.timer < 30 && (int)(Time.time * 12f) % 2 == 0)
-            {
-                text = $"<style=cDeath>{text}</style>";
-            }
-
-            return text;
-        }
-
-        public override bool IsDirty()
-        {
-            return true;
         }
     }
 }
