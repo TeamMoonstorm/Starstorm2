@@ -306,6 +306,8 @@ namespace SS2.Items
 
     public class PrimalBirthrightObjectiveToken : NetworkBehaviour
     {
+        private float oobTimer;
+        private bool dontTryRemove;
         public static List<PurchaseInteraction> instanceList = new List<PurchaseInteraction>();
         public PurchaseInteraction pinter;
         public CharacterMaster master;
@@ -325,11 +327,43 @@ namespace SS2.Items
 
             if (instanceList.Count <= 0)
             {
-                BirthrightObjectiveTimer.instance?.TryRemoveObjective();
+                if (!dontTryRemove)
+                {
+                    BirthrightObjectiveTimer.instance?.TryRemoveObjective();
+                }
 
                 if (PrimalBirthright.primalToken)
                 {
                     PrimalBirthright.primalToken.filter.shouldAllowOnInteractionBeginProc = true;
+                }
+            }
+        }
+
+        public void FixedUpdate()
+        {
+            oobTimer += Time.deltaTime;
+            if (oobTimer > 15)
+            {
+                oobTimer = 0;
+
+                if (!Util.IsPositionWithinMapBounds(gameObject.transform.position))
+                {
+                    if (instanceList.Count == 1)
+                    {
+                        //if youre drifter and throw the last birthright off the map be evil and spawn meteors. ,., 
+                        BirthrightObjectiveTimer.instance.timer = 0;
+                        dontTryRemove = true;
+                    }
+                    
+                    if (NetworkServer.active)
+                    {
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                        {
+                            baseToken = "SS2_BIRTHRIGHT_UNCLAIMED_RARE"
+                        });
+                    }
+                    
+                    Destroy(gameObject);
                 }
             }
         }

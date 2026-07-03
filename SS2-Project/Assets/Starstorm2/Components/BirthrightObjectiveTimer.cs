@@ -122,7 +122,7 @@ namespace Starstorm2.Components
             
             if (BirthrightObjectiveTimer.instance.timer <= 0)
             {
-                return string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
+                return PrimalBirthrightObjectiveToken.instanceList.Count == 0 ? Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILEDCLAIMEDALL") : string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVEFAILED"), PrimalBirthrightObjectiveToken.instanceList.Count);
             }
             
             string text = string.Format(Language.GetString("SS2_BIRTHRIGHT_OBJECTIVE"), PrimalBirthrightObjectiveToken.instanceList.Count, ((int)(BirthrightObjectiveTimer.instance.timer) + 1));
