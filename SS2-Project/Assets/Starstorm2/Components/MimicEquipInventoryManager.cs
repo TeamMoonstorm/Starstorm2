@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using RoR2;
 using System.Collections.Generic;
-using System.Collections;
+using MSU;
+using R2API;
+using SS2.Monsters;
 using UnityEngine.Networking;
 
 namespace SS2.Components
@@ -11,6 +13,7 @@ namespace SS2.Components
     public class MimicEquipInventoryManager : MonoBehaviour
     {
         private List<EquipmentIndex> equipmentIndex = new List<EquipmentIndex>();
+        private CharacterBody characterBody;
         public Transform pickupPivot;
         public CharacterDirection cdir;
         public BasicPickupDropTable dropTable;
@@ -23,32 +26,37 @@ namespace SS2.Components
                 FindPivot();
             }
 
-            if (NetworkServer.active)
-            {
-                var pickup = dropTable.GeneratePickupPreReplacement(Run.instance.treasureRng);
-                var equipIndex = PickupCatalog.GetPickupDef(pickup.pickupIndex).equipmentIndex;
-                var def = EquipmentCatalog.GetEquipmentDef(equipIndex);
-                var cb = GetComponent<CharacterBody>();
+            if (!NetworkServer.active) return;
+            
+            GlobalEventManager.onServerDamageDealt += PreventRechest;
 
-                if (cb && cb.inventory)
+            UniquePickup pickup = dropTable.GeneratePickupPreReplacement(Run.instance.treasureRng);
+            EquipmentIndex equipIndex = PickupCatalog.GetPickupDef(pickup.pickupIndex)!.equipmentIndex;
+            characterBody = GetComponent<CharacterBody>();
+
+            //this could potentially create infinite recursion i thinksies .,,. very icky .,, no good ,.., 
+            if (characterBody?.HasItem(DLC1Content.Items.GummyCloneIdentifier) == true) return;
+            
+            if (characterBody && characterBody.inventory)
+            {
+                if (characterBody.inventory.GetItemCountEffective(RoR2Content.Items.UseAmbientLevel) <= 0)
                 {
-                    if (cb.inventory.GetItemCountEffective(RoR2Content.Items.UseAmbientLevel) <= 0)
-                    {
-                        cb.inventory.GiveItemPermanent(RoR2Content.Items.UseAmbientLevel);
-                    }
-#if DEBUG
-                    SS2Log.Warning("giving items ");
-#endif
-                    if (cb.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLifeConsumed) <= 0 && cb.inventory.GetItemCountEffective(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
-                    {
-                        cb.inventory.SetEquipmentIndexForSlot(equipIndex, 0);
-                        
-                        AddItem(equipIndex);
-                        SS2Log.Warning($"gave {def.name} item");
-                    }
+                    characterBody.inventory.GiveItemPermanent(RoR2Content.Items.UseAmbientLevel);
                 }
 
+                if (characterBody.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLifeConsumed) <= 0 && characterBody.inventory.GetItemCountEffective(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
+                {
+                    characterBody.inventory.SetEquipmentIndexForSlot(equipIndex, 0);
+                        
+                    AddItem(equipIndex);
+                }
             }
+        }
+
+        private void PreventRechest(DamageReport obj)
+        {
+            if (obj.attackerBody != characterBody) return;
+            rechestPreventionTime = 2.5f;
         }
 
         public void FindPivot()
@@ -80,9 +88,6 @@ namespace SS2.Components
 
         public void DropItems()
         {
-            SS2Log.Warning("Dropping items");
-            SS2Log.Warning($"lefnthj {equipmentIndex.Count}");
-
             var temp = pickupPivot.position;
             EffectData effectData = new EffectData
             {
@@ -93,8 +98,6 @@ namespace SS2.Components
 
             if (equipmentIndex.Count > 0 && pickupPivot && cdir)
             {
-                SS2Log.Warning("Dropping items 1");
-                
                 var dir = cdir.forward;
                 var angle = 90 / equipmentIndex.Count;
 
@@ -103,7 +106,6 @@ namespace SS2.Components
                 
                 foreach (var ind in equipmentIndex)
                 {
-                    SS2Log.Warning($"dropping item {EquipmentCatalog.GetEquipmentDef(ind).nameToken}");
                     var pind = RoR2.PickupCatalog.FindPickupIndex(ind);
                     PickupDropletController.CreatePickupDroplet(pind, pickupPivot.position, vec);
                     vec = rot * vec;

@@ -3,7 +3,10 @@ using EntityStates.Mimic;
 using RoR2;
 using System.Collections;
 using System.Collections.Generic;
+using RoR2.CharacterAI;
+using SS2;
 using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.MimicEquip
 {
@@ -12,6 +15,7 @@ namespace EntityStates.MimicEquip
 		public static float baseDuration;
 		private float duration;
 		private bool endedSuccessfully = false;
+		private BaseAI ai;
 
 		public override void OnEnter()
 		{
@@ -25,10 +29,11 @@ namespace EntityStates.MimicEquip
 
 			characterMotor.walkSpeedPenaltyCoefficient += .6f;
 		}
-
+		
 		public override void FixedUpdate()
 		{
 			base.FixedUpdate();
+
 			if (fixedAge >= duration)
 			{
 				characterMotor.walkSpeedPenaltyCoefficient -= .6f;

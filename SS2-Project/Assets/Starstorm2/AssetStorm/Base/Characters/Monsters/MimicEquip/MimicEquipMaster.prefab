@@ -179,8 +179,8 @@ MonoBehaviour:
     t: -Infinity
   prioritizePlayers: 1
   copyLeaderTarget: 0
-  aimVectorDampTime: 0.05
-  aimVectorMaxSpeed: 100
+  aimVectorDampTime: 0.02
+  aimVectorMaxSpeed: 200
   selectedSkilldriverName: 
   shouldMissFirstOffScreenShot: 0
   forceUpdateEveryFrame: 0
@@ -275,7 +275,7 @@ MonoBehaviour:
   requireSkillReady: 0
   requireEquipmentReady: 1
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: Infinity
+  maxUserHealthFraction: 0.95
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 5
@@ -318,14 +318,14 @@ MonoBehaviour:
   customName: UseSecondaryWhenInRange
   skillSlot: 0
   requiredSkill: {fileID: 0}
-  requireSkillReady: 1
+  requireSkillReady: 0
   requireEquipmentReady: 0
   minUserHealthFraction: -Infinity
   maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 0
-  maxDistance: 40
+  maxDistance: 50
   selectionRequiresTargetLoS: 1
   selectionRequiresOnGround: 0
   selectionRequiresTargetNonFlier: 0
@@ -335,13 +335,13 @@ MonoBehaviour:
   activationRequiresTargetLoS: 0
   activationRequiresAimTargetLoS: 0
   activationRequiresAimConfirmation: 0
-  movementType: 2
-  moveInputScale: 0.6
+  movementType: 1
+  moveInputScale: 0.25
   aimVectorDampTimeOverride: -1
   aimVectorMaxSpeedOverride: -1
   aimType: 2
   ignoreNodeGraph: 1
-  shouldSprint: 0
+  shouldSprint: 1
   shouldFireEquipment: 0
   shouldTapButton: 0
   buttonPressType: 0

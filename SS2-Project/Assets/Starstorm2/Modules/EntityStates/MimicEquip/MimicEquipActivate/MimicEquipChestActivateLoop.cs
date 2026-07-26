@@ -114,7 +114,7 @@ namespace EntityStates.MimicEquip
 		{
 			DamageTypeCombo damageTypeCombo = DamageType.Generic;
 			damageTypeCombo.damageSource = DamageSource.Special;
-			var attack =  new BlastAttack
+			BlastAttack attack =  new BlastAttack
 			{
 				attacker = gameObject,
 				baseDamage = damageStat * damageCoeff,
@@ -130,7 +130,7 @@ namespace EntityStates.MimicEquip
 				teamIndex = teamComponent.teamIndex,
 			};
 
-			DamageAPI.AddModdedDamageType(attack, SS2.Monsters.MimicEquip.StealItemDamageType);
+			attack.AddModdedDamageType(SS2.Monsters.MimicEquip.StealItemDamageType);
 
 			EffectData effectData = new EffectData
 			{

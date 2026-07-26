@@ -25,13 +25,8 @@ namespace EntityStates.MimicEquip
         public CharacterBody? target;
         public HurtBox? hurt;
 
-        protected virtual bool enableInteraction
-        {
-            get
-            {
-                return false;
-            }
-        }
+        protected virtual bool enableInteraction => false;
+
         public override void OnEnter()
         {
             duration = baseDuration / attackSpeedStat;
@@ -72,20 +67,21 @@ namespace EntityStates.MimicEquip
 
             //Trying to aim at the interactor if it was purchased, or just at the nearest player
             GetComponent<CapsuleCollider>().enabled = true;
-
-
+            
             if (target)
             {
                 AimInDirection(ref ai.bodyInputs, (target.corePosition - transform.position).normalized);
             }
             else if(NetworkServer.active && isAuthority)
             {
+                SS2Log.Debug($"entering target attem,2pt .,., ");
                 SphereSearch sphere = new SphereSearch();
                 List<HurtBox> list = new List<HurtBox>();
 
                 sphere.origin = this.transform.position;
+                SS2Log.Debug($"{this.transform.position} .,., ");
                 sphere.mask = LayerIndex.entityPrecise.mask;
-                sphere.radius = 10f;
+                sphere.radius = 25f;
                 sphere.RefreshCandidates();
                 sphere.FilterCandidatesByHurtBoxTeam(TeamMask.GetUnprotectedTeams(characterBody.teamComponent.teamIndex));
                 sphere.FilterCandidatesByDistinctHurtBoxEntities();
@@ -105,6 +101,7 @@ namespace EntityStates.MimicEquip
             base.FixedUpdate();
             if (fixedAge >= duration/4 && isAuthority && ai)
             {
+                SS2Log.Debug($"updating aim to look at {ai.bodyInputs.desiredAimDirection}");
                 ai.UpdateBodyAim(Time.fixedDeltaTime);
             }
 
@@ -146,20 +143,7 @@ namespace EntityStates.MimicEquip
             characterBody.skillLocator.special.RemoveAllStocks();
             GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_BODY_NAME";
         }
-
-        protected void AimAt(ref BaseAI.BodyInputs dest, BaseAI.Target aimTarget)
-        {
-            if (aimTarget == null)
-            {
-                return;
-            }
-            Vector3 a;
-            if (aimTarget.GetBullseyePosition(out a))
-            {
-                dest.desiredAimDirection = (a - inputBank.aimOrigin).normalized;
-                
-            }
-        }
+        
 
         protected void AimInDirection(ref BaseAI.BodyInputs dest, Vector3 aimDirection)
         {
@@ -167,7 +151,6 @@ namespace EntityStates.MimicEquip
             {
                 dest.desiredAimDirection = aimDirection;
             }
-          
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

@@ -93,7 +93,7 @@ Transform:
   - {fileID: 8838666100927316831}
   m_Father: {fileID: 6051050727882116457}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30.605297, y: -0.8974335, z: 177.20021}
 --- !u!1 &644894017013332485
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,7 +125,7 @@ Transform:
   - {fileID: 2207532783887675138}
   m_Father: {fileID: 7892656268036691507}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 5.4348374e-15, y: 179.99997, z: 180}
 --- !u!1 &670801513153127413
 GameObject:
   m_ObjectHideFlags: 0
@@ -409,7 +409,17 @@ MonoBehaviour:
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
   customGameObjectActivationTransforms: []
-  baseRendererInfos: []
+  baseRendererInfos:
+  - renderer: {fileID: 0}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+    defaultMaterial: {fileID: 0}
+    defaultShadowCastingMode: 0
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   fullBodyPing: 1
   baseLightInfos: []
   constraintItemDisplaysScale: 0
@@ -534,9 +544,10 @@ MonoBehaviour:
   m_Script: {fileID: -1792105662, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hurtBoxes: []
+  hurtBoxes:
+  - {fileID: 2771918638846159504}
   mainHurtBox: {fileID: 2771918638846159504}
-  bullseyeCount: 0
+  bullseyeCount: 1
 --- !u!114 &7438633278764533251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,7 +592,7 @@ Transform:
   - {fileID: 8107468101336957531}
   m_Father: {fileID: 2398988637790403799}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 66.013626, y: -8.09422, z: -5.286915}
 --- !u!1 &4076356327166452498
 GameObject:
   m_ObjectHideFlags: 0
@@ -606,7 +617,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4076356327166452498}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.74, z: -0.05}
+  m_LocalPosition: {x: 4.62, y: 1.74, z: 0.42}
   m_LocalScale: {x: 5.5, y: 5.5, z: 5.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -731,7 +742,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6268449419614641823}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 2.075, z: -0.05}
+  m_LocalPosition: {x: 0, y: 4.02, z: -0.05}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -770,7 +781,7 @@ Transform:
   - {fileID: 4391810834976632466}
   m_Father: {fileID: 8838666100927316831}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0.00000062513124, y: 0.00000018598942, z: -0.000000092994725}
 --- !u!1 &7096113393629376220
 GameObject:
   m_ObjectHideFlags: 0
@@ -813,13 +824,13 @@ GameObject:
   - component: {fileID: 8695373066991535534}
   - component: {fileID: 4066714400053438238}
   - component: {fileID: 4375175657796813748}
-  - component: {fileID: 2520160472482996592}
   - component: {fileID: 92759885951771341}
   - component: {fileID: 6449461314649773876}
   - component: {fileID: -8898214638666698048}
   - component: {fileID: 2170935777624408277}
   - component: {fileID: 4450646946248128791}
   - component: {fileID: 4369875244371290731}
+  - component: {fileID: 4763056412758605163}
   m_Layer: 0
   m_Name: MimicEquipBodyNew
   m_TagString: Untagged
@@ -911,7 +922,7 @@ MonoBehaviour:
   baseMoveSpeed: 12
   baseAcceleration: 80
   baseJumpPower: 15
-  baseDamage: 4
+  baseDamage: 2.5
   baseAttackSpeed: 1
   baseCrit: 1
   baseArmor: 0
@@ -924,7 +935,7 @@ MonoBehaviour:
   levelMaxShield: 0
   levelMoveSpeed: 0
   levelJumpPower: 0
-  levelDamage: 0.8
+  levelDamage: 0.5
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
@@ -1537,8 +1548,8 @@ MonoBehaviour:
   m_Script: {fileID: 370243918, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayNameToken: CHEST1_NAME
-  contextToken: CHEST1_CONTEXT
+  displayNameToken: EQUIPMENTBARREL_NAME
+  contextToken: EQUIPMENTBARREL_CONTEXT
   costType: 1
   available: 1
   cost: 25
@@ -1561,7 +1572,7 @@ MonoBehaviour:
   onPurchase:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4763056412758605163}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -1573,7 +1584,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 2520160472482996592}
+      - m_Target: {fileID: 1077414546854084905}
         m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -1597,66 +1608,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8695373066991535534}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
@@ -1669,7 +1620,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 4066714400053438238}
         m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
@@ -1709,7 +1660,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayDistance: 10
-  hologramPivot: {fileID: 0}
+  hologramPivot: {fileID: 678353269931368157}
   disableHologramRotation: 0
   hologramContentInstance: {fileID: 0}
 --- !u!114 &8695373066991535534
@@ -1740,7 +1691,7 @@ MonoBehaviour:
   m_Script: {fileID: -1620867292, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayToken: CHEST1_NAME
+  displayToken: EQUIPMENTBARREL_NAME
 --- !u!114 &4375175657796813748
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,19 +1706,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InspectInfo: {fileID: 11400000, guid: 503ec34b995ea9fec865f6ced481dc73, type: 2}
   inspectHintOverrideToken: 
---- !u!65 &2520160472482996592
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7096113393629376220}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.06, y: 3.98, z: 1.4704889}
-  m_Center: {x: 0.02, y: 2.13, z: 0.022903383}
 --- !u!114 &92759885951771341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1808,7 +1746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logUnlockableName: 
-  logUnlockableDef: {fileID: 11400000, guid: f288acf60e7e8cd4f86f6b53fa75ec02, type: 2}
+  logUnlockableDef: {fileID: 11400000, guid: b11dcdd4b66e6374f93cbdb6b2f49bf9, type: 2}
   bossDropTable: {fileID: 0}
   useLogbookDropChanceOverride: 0
   logbookDropChanceOverride: 1
@@ -1854,15 +1792,11 @@ MonoBehaviour:
     damageTypeExtended: 0
     damageSource: 0
   collisionToDisable: []
-  renderersToDisable:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  renderersToDisable: []
   behavioursToDisable:
   - {fileID: 946040045462687264}
   - {fileID: 4180917173228779840}
   - {fileID: 8769408873676659687}
-  - {fileID: 0}
   childObjectsToDisable: []
   pickupDisplaysToDisable: []
   lightsToDisable: []
@@ -1896,6 +1830,19 @@ MonoBehaviour:
   cdir: {fileID: 6887562311180294278}
   dropTable: {fileID: 11400000, guid: a795f4cafd0f103339738fd6b3288447, type: 2}
   rechestPreventionTime: 2.5
+--- !u!65 &4763056412758605163
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7096113393629376220}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2.57, z: 1}
+  m_Center: {x: 0, y: 1.72, z: 0}
 --- !u!1 &8161477118289861842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1948,7 +1895,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4637519048616892231, guid: 8a177f65b91aafd88b283fe293aca79b, type: 3}
+  - {fileID: 2100000, guid: 4350f50e3bec9e4d196ab5921030961a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1985,8 +1932,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 6051050727882116457}
   m_AABB:
-    m_Center: {x: -0.000001561828, y: -0.0005077454, z: 0.0008072292}
-    m_Extent: {x: 0.004166593, y: 0.014778366, z: 0.008471987}
+    m_Center: {x: -0.000001561828, y: 0.006579917, z: 0.00060561206}
+    m_Extent: {x: 0.004166593, y: 0.02186603, z: 0.0059414553}
   m_DirtyAABB: 0
 --- !u!1 &8388828687281866481
 GameObject:
@@ -2029,11 +1976,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8388828687281866481}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.92, y: 4.49, z: 2.4}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.92, y: 7.2543488, z: 2.4}
+  m_Center: {x: -0.000000002377837, y: 1.4121453, z: -0.000000049786962}
 --- !u!114 &2771918638846159504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2051,7 +1998,7 @@ MonoBehaviour:
   isSniperTarget: 0
   bypassInvulnerable: 0
   damageModifier: 0
-  hurtBoxGroup: {fileID: 0}
+  hurtBoxGroup: {fileID: 2954814506775662006}
   indexInGroup: 0
 --- !u!1 &8581489645838212217
 GameObject:
@@ -2086,7 +2033,7 @@ Transform:
   - {fileID: 8897372380751572885}
   m_Father: {fileID: 1240896032430982829}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98021, y: 0, z: 0}
 --- !u!1 &8896676859997109854
 GameObject:
   m_ObjectHideFlags: 0
@@ -2120,4 +2067,4 @@ Transform:
   - {fileID: 4754153173828970806}
   m_Father: {fileID: 7892656268036691507}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 82.8497, y: -172.29924, z: -172.18745}

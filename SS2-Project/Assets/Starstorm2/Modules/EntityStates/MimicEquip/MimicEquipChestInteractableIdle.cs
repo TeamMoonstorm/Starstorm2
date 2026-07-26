@@ -68,7 +68,7 @@ namespace EntityStates.MimicEquip
                 characterBody.GetComponent<BoxCollider>().enabled = true;
                 characterBody.GetComponent<CapsuleCollider>().enabled = false;
 
-                characterBody.GetComponent<GenericDisplayNameProvider>().displayToken = "CHEST1_NAME";
+                characterBody.GetComponent<GenericDisplayNameProvider>().displayToken = "EQUIPMENTBARREL_NAME";
 
                 var intermediate = GetComponent<ModelLocator>();
                 intermediate.modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(true);
