@@ -1,8 +1,11 @@
-﻿using MSU;
+﻿using System.Linq;
+using MSU;
 using R2API;
 using RoR2;
 using SS2.Components;
 using EntityStates.MimicEquip;
+using On.EntityStates.GummyClone;
+using RoR2.ContentManagement;
 using RoR2.Orbs;
 using Starstorm2.Components;
 using UnityEngine;
@@ -34,18 +37,12 @@ namespace SS2.Monsters
 			GlobalEventManager.onCharacterDeathGlobal += CharacterDeathGlobalMimicTaunt;
 
 			On.RoR2.Util.GetBestBodyName += GetBestBodyNameRenameMimic;
-
 			On.RoR2.CharacterMaster.Respawn_Vector3_Quaternion_bool += RespawnMimicFixHitboxes;
-
+			On.EntityStates.GummyClone.GummyCloneSpawnState.OnEnter += GummyCloneSpawnStateOnOnEnter;
+			
 			StealItemDamageType = ReserveDamageType();
 
-			equipOrb = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/VFX/ItemTakenOrbEffect.prefab")
-				.WaitForCompletion();//.InstantiateClone("EquipTakenOrbEffect");
-			ItemTakenOrbEffect itemTakenEffect = equipOrb.GetComponent<ItemTakenOrbEffect>();
-			MimicEquipTakenOrbEffect equipTakenEffect = equipOrb.AddComponent<MimicEquipTakenOrbEffect>();
-			equipTakenEffect.iconSpriteRenderer = itemTakenEffect.iconSpriteRenderer;
-			equipTakenEffect.trailToColor = itemTakenEffect.trailToColor;
-			Object.Destroy(itemTakenEffect);
+			equipOrb = AssetCollection.FindAsset<GameObject>("EquipTakenOrbEffect");
 			
 			jetVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/CommandoDashJets.prefab").WaitForCompletion();
 			leapLandVFX = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/CryoCanisterExplosionSecondary.prefab").WaitForCompletion();
@@ -64,6 +61,17 @@ namespace SS2.Monsters
 			SS2Util.CopyComponent<AkBank>(commandoBank, AssetCollection.bodyPrefab);
 		}
 
+		private void GummyCloneSpawnStateOnOnEnter(GummyCloneSpawnState.orig_OnEnter orig, EntityStates.GummyClone.GummyCloneSpawnState self)
+		{
+			orig(self);
+			
+			if (self.characterBody.baseNameToken == "SS2_MIMIC_EQUIP_BODY_NAME")
+			{
+				var next = new MimicEquipChestInteractableIdle() { };
+				self.outer.SetNextState(next); //leap begin
+			}
+		}
+
 		private void ServerDamageStealItem(DamageReport obj)
 		{
 			if (obj.damageInfo.HasModdedDamageType(MimicEquip.StealItemDamageType) && obj.victimBody && obj.victimBody.inventory && obj.attackerBody && obj.attackerBody.inventory)
@@ -77,7 +85,7 @@ namespace SS2.Monsters
 				// i think its more interesting if ther mimic has a random equip it uses .,., .but idk  !
 				//obj.attackerBody.inventory.SetEquipmentIndex(itemList, false);
 				obj.victimBody.inventory.RemoveEquipment(survEquipIndex);
-				equipInventoryManager.AddItem(survEquipIndex);
+				equipInventoryManager.AddEquip(survEquipIndex);
 
 				EffectData effectData = new EffectData
 				{
@@ -140,6 +148,46 @@ namespace SS2.Monsters
             }
 
 			return output;
+        }
+
+        [ConCommand(commandName = "spawn_equipmimic", flags = ConVarFlags.None, helpText = "Spawns a Security Barrel with the specified equipment def.")]
+        public static void SpawnEquipMimic(ConCommandArgs args)
+        {
+	        var spawnCard = SS2Assets.LoadAsset<CharacterSpawnCard>("scMimicEquip", SS2Bundle.Indev);
+	        if (spawnCard == null)
+	        {
+		        spawnCard = ScriptableObject.CreateInstance<CharacterSpawnCard>();
+		        spawnCard.prefab = _masterPrefab;
+		        spawnCard.sendOverNetwork = true;
+		        var body = spawnCard.prefab.GetComponent<CharacterMaster>().bodyPrefab;
+	        }
+	        var spawnRequest = new DirectorSpawnRequest(
+		        spawnCard,
+		        new DirectorPlacementRule
+		        {
+			        placementMode = DirectorPlacementRule.PlacementMode.Direct,
+			        position = args.senderBody.footPosition
+		        },
+		        RoR2Application.rng
+	        );
+	        spawnRequest.summonerBodyObject = null;
+	        spawnRequest.teamIndexOverride = TeamIndex.Monster;
+	        spawnRequest.ignoreTeamMemberLimit = true;
+
+	        var masterGameObject = spawnCard.DoSpawn(args.senderBody.footPosition, Quaternion.identity, spawnRequest).spawnedInstance;
+	        if (args.TryGetArgInt(0) != null)
+	        {
+		        masterGameObject.GetComponent<CharacterMaster>().inventory.SetEquipmentIndexForSlot((EquipmentIndex)args.GetArgInt(0), 0);
+	        }
+	        else
+	        {
+		        masterGameObject.GetComponent<CharacterMaster>().inventory.SetEquipmentIndexForSlot(EquipmentCatalog.equipmentDefs.FirstOrDefault(def => def.name == args.GetArgString(0)).equipmentIndex, 0);
+	        }
+        }
+        
+        public override bool IsAvailable(ContentPack contentPack)
+        {
+	        return false;
         }
 	}
 }

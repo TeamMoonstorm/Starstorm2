@@ -26,6 +26,7 @@ namespace EntityStates.MimicEquip
             base.OnEnter();
 
             PlayAnimation("Gesture, Override", "BufferEmpty");
+            PlayAnimation("FullBody, Override", "BufferEmpty");
 
             if(characterBody.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var cmodel))
             {
@@ -61,7 +62,7 @@ namespace EntityStates.MimicEquip
 
             //Let them smush into the ground more
             var kinematic = GetComponent<KinematicCharacterMotor>();
-            kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
+            kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, 1.88f);
 
             mimicInventory = gameObject.GetComponent<MimicEquipInventoryManager>();
 

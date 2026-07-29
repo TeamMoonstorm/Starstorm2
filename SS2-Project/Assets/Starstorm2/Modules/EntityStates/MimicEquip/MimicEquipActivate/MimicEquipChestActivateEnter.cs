@@ -33,7 +33,6 @@ namespace EntityStates.MimicEquip
             base.OnEnter();
 
             PlayCrossfade("FullBody, Override", "ActivateEnter", "Activate.playbackRate", duration, 0.05f);
-            PlayCrossfade("Body", "Idle", .05f);
 
             var animator = GetModelAnimator();
             animator.SetBool("isGrounded", false);
@@ -141,7 +140,8 @@ namespace EntityStates.MimicEquip
             intermediate.modelTransform.GetComponent<BoxCollider>().enabled = false;
 
             characterBody.skillLocator.special.RemoveAllStocks();
-            GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_BODY_NAME";
+            characterBody.skillLocator.secondary.AddOneStock();
+            GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_EQUIP_BODY_NAME";
         }
         
 

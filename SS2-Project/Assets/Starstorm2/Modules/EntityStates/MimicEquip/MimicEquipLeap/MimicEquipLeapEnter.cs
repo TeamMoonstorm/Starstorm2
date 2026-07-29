@@ -28,6 +28,7 @@ namespace EntityStates.MimicEquip
 			animator.SetBool("isGrounded", false);
 
 			characterMotor.walkSpeedPenaltyCoefficient += .6f;
+			characterBody.skillLocator.secondary.AddOneStock(); // dont rteally have a better spot just need it to be added <3 .,
 		}
 		
 		public override void FixedUpdate()

@@ -6,7 +6,7 @@ namespace SS2.Interactables
 {
     public sealed class MimicEquipInteractable : SS2Interactable
     {
-        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest =>  SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acMimicEquipInteractable", SS2Bundle.Monsters);
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest =>  SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acMimicEquipInteractable", SS2Bundle.Indev);
 
         public override void Initialize()
         {

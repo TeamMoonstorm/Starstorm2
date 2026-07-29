@@ -33,9 +33,6 @@ namespace SS2.Components
             UniquePickup pickup = dropTable.GeneratePickupPreReplacement(Run.instance.treasureRng);
             EquipmentIndex equipIndex = PickupCatalog.GetPickupDef(pickup.pickupIndex)!.equipmentIndex;
             characterBody = GetComponent<CharacterBody>();
-
-            //this could potentially create infinite recursion i thinksies .,,. very icky .,, no good ,.., 
-            if (characterBody?.HasItem(DLC1Content.Items.GummyCloneIdentifier) == true) return;
             
             if (characterBody && characterBody.inventory)
             {
@@ -44,11 +41,11 @@ namespace SS2.Components
                     characterBody.inventory.GiveItemPermanent(RoR2Content.Items.UseAmbientLevel);
                 }
 
-                if (characterBody.inventory.GetItemCountEffective(RoR2Content.Items.ExtraLifeConsumed) <= 0 && characterBody.inventory.GetItemCountEffective(DLC1Content.Items.ExtraLifeVoidConsumed) <= 0)
+                if (characterBody.inventory.currentEquipmentIndex == EquipmentIndex.None)
                 {
                     characterBody.inventory.SetEquipmentIndexForSlot(equipIndex, 0);
                         
-                    AddItem(equipIndex);
+                    AddEquip(equipIndex);
                 }
             }
         }
@@ -81,7 +78,7 @@ namespace SS2.Components
             }
         }
 
-        public void AddItem(EquipmentIndex ind)
+        public void AddEquip(EquipmentIndex ind)
         {
             equipmentIndex.Add(ind);
         }

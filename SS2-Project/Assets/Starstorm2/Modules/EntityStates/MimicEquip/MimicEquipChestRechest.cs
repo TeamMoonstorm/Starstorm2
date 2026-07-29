@@ -66,6 +66,7 @@ namespace EntityStates.MimicEquip
                 {
                     skillLocator.special.cooldownOverride = 1;
                     skillLocator.special.AddOneStock();
+                    skillLocator.secondary.RemoveAllStocks();
 
                     var next = new MimicEquipChestInteractableIdle { rechest = true };
                     outer.SetNextState(next);

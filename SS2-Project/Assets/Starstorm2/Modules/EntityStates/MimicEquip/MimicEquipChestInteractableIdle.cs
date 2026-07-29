@@ -4,6 +4,7 @@ using RoR2.Hologram;
 using SS2;
 using SS2.Components;
 using System;
+using MSU;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -36,7 +37,7 @@ namespace EntityStates.MimicEquip
         {
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
-
+            
             purchaseInter = GetComponent<PurchaseInteraction>();
             if (NetworkServer.active && purchaseInter)
             {
@@ -120,6 +121,20 @@ namespace EntityStates.MimicEquip
                     }
                 }
             }
+            
+            //respawn edge cases ,.,. 
+            if (characterBody.HasItem(DLC1Content.Items.GummyCloneIdentifier) || characterBody.HasBuff(DLC2Content.Buffs.ExtraLifeBuff))
+            {
+                characterBody.master.money = (uint)purchaseInter.cost;
+                //having it repurchase itself since some purchase stuff is done in unity .,,.
+                purchaseInter.OnInteractionBegin(characterBody.gameObject.GetComponent<Interactor>());
+                timer = duration;
+                target = null;
+                
+                GetComponent<HologramProjector>().enabled = false;
+                GetComponent<ModelLocator>().modelTransform.GetComponent<ChildLocator>().FindChildGameObject("HologramPivot").SetActive(false);
+                purchaseInter.SetAvailable(false);
+            }
         }
 
         private void OnPurchaseMimic(Interactor interactor, PurchaseInteraction purchaseInter)
@@ -127,7 +142,7 @@ namespace EntityStates.MimicEquip
             PlayCrossfade("Body", "Activate", "Activate.playbackRate", 1, 0.05f);
             timer = 0;
             activated = true;
-            target = interactor.GetComponent<CharacterBody>();
+            target = interactor?.GetComponent<CharacterBody>();
         }
 
         public override void FixedUpdate()
@@ -135,6 +150,7 @@ namespace EntityStates.MimicEquip
             base.FixedUpdate();
 
             HandleSkill(base.skillLocator.special, ref base.inputBank.skill4);
+            skillLocator.secondary.RemoveAllStocks();
 
             if (activated)
             {
@@ -237,7 +253,7 @@ namespace EntityStates.MimicEquip
 
             //Set their height to a value more appropriate for moving nicely visually
             var kinematic = GetComponent<KinematicCharacterMotor>();
-            kinematic.SetCapsuleDimensions(kinematic.CapsuleRadius, kinematic.CapsuleHeight, .925f);
+            kinematic.SetCapsuleDimensions(0.53f, 3.43f, 1.77f);
 
             var setstate = GetComponent<SetStateOnHurt>();
             if (setstate)

@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: -1765526969896535573}
   - component: {fileID: 8305640852465544022}
   - component: {fileID: 2839862792029512511}
+  - component: {fileID: 5131728062548151070}
   m_Layer: 0
   m_Name: MimicEquipMaster
   m_TagString: Untagged
@@ -270,12 +271,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customName: Equipment
-  skillSlot: -1
+  skillSlot: 1
   requiredSkill: {fileID: 0}
-  requireSkillReady: 0
+  requireSkillReady: 1
   requireEquipmentReady: 1
   minUserHealthFraction: -Infinity
-  maxUserHealthFraction: 0.95
+  maxUserHealthFraction: Infinity
   minTargetHealthFraction: -Infinity
   maxTargetHealthFraction: Infinity
   minDistance: 5
@@ -614,3 +615,20 @@ MonoBehaviour:
           m_StringArgument: BoostEquipmentRecharge
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5131728062548151070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5609412355061465226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1067940895, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraParams: {fileID: 11400000, guid: 3689e21683e79a246b1a395b07559984, type: 2}
+  cameraPivotTransform: {fileID: 0}
+  fovOverride: 0
+  recoil: {x: 0, y: 0}
+  dontRaycastToPivot: 0
