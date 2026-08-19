@@ -57,21 +57,21 @@ namespace SS2
         {
             SS2AssetRequest<Sprite> spriteRequest = SS2Assets.LoadAssetAsync<Sprite>("icon", SS2Bundle.Main);
             spriteRequest.StartLoad();
-
+            
             while (!spriteRequest.IsComplete)
                 yield return null;
+            
             Sprite icon = spriteRequest.Asset;
-            ModSettingsManager.SetModIcon(icon, SS2Main.GUID, SS2Main.MODNAME);
             ModSettingsManager.SetModIcon(icon, GUID(ID_MAIN), MODNAME(ID_MAIN));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ITEM), MODNAME(ID_ITEM));
             ModSettingsManager.SetModIcon(icon, GUID(ID_SURVIVOR), MODNAME(ID_SURVIVOR));
+            ModSettingsManager.SetModIcon(icon, GUID(ID_MONSTER), MODNAME(ID_MONSTER));
             ModSettingsManager.SetModIcon(icon, GUID(ID_EVENT), MODNAME(ID_EVENT));
-            ModSettingsManager.SetModIcon(icon, GUID(ID_INTERACTABLE), MODNAME(ID_INTERACTABLE));
+            //ModSettingsManager.SetModIcon(icon, GUID(ID_INTERACTABLE), MODNAME(ID_INTERACTABLE));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ARTIFACT), MODNAME(ID_ARTIFACT));
             ModSettingsManager.SetModIcon(icon, GUID(ID_MISC), MODNAME(ID_MISC));
             ModSettingsManager.SetModIcon(icon, GUID(ID_BETA), MODNAME(ID_BETA));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ACCESSIBILITY), MODNAME(ID_ACCESSIBILITY));
-            ModSettingsManager.SetModDescription("A general content mod adapting ideas from Risk of Rain 1's Starstorm", SS2Main.GUID, SS2Main.MODNAME);
         }
 
 
