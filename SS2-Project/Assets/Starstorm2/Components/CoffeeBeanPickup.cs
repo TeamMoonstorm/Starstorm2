@@ -30,7 +30,9 @@ namespace SS2.Components
 					else
 						SS2Util.RefreshOldestBuffStack(body, SS2Content.Buffs.BuffCoffeeBag, CoffeeBag.buffDuration * stack);
 					EffectManager.SimpleEffect(this.pickupEffect, base.transform.position, Quaternion.identity, true);
-
+					
+					body.OnPickup(CharacterBody.PickupClass.Minor); // handle collectors compulsion 
+					
 					this.alive = false;
 
                     pooler.Cleanup();
