@@ -41,7 +41,6 @@ namespace EntityStates.MimicEquip
             if (NetworkServer.active && purchaseInter)
             {
                 purchaseInter.SetAvailable(enableInteraction);
-                
             }
 
             //Replicating the chest opening zipper
@@ -73,12 +72,10 @@ namespace EntityStates.MimicEquip
             }
             else if(NetworkServer.active && isAuthority)
             {
-                SS2Log.Debug($"entering target attem,2pt .,., ");
                 SphereSearch sphere = new SphereSearch();
                 List<HurtBox> list = new List<HurtBox>();
 
                 sphere.origin = this.transform.position;
-                SS2Log.Debug($"{this.transform.position} .,., ");
                 sphere.mask = LayerIndex.entityPrecise.mask;
                 sphere.radius = 25f;
                 sphere.RefreshCandidates();
@@ -116,8 +113,6 @@ namespace EntityStates.MimicEquip
 
         public override void OnExit()
         {
-            base.OnExit();
-
             Destroy(lVFX);
             Destroy(rVFX);
 
@@ -142,6 +137,8 @@ namespace EntityStates.MimicEquip
             characterBody.skillLocator.special.RemoveAllStocks();
             characterBody.skillLocator.secondary.AddOneStock();
             GetComponent<GenericDisplayNameProvider>().displayToken = "SS2_MIMIC_EQUIP_BODY_NAME";
+            
+            base.OnExit();
         }
         
 

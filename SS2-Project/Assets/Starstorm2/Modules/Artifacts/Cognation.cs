@@ -198,11 +198,11 @@ namespace SS2.Artifacts
                 ModelSkinController skinController = model?.gameObject.GetComponent<ModelSkinController>();
                 if (skinController)
                 {
-                    skinController.onSkinApplied += OnonSkinApplied;
+                    skinController.onSkinApplied += ApplyGhostMat;
                 }
             }
 
-            private void OnonSkinApplied(int obj)
+            private void ApplyGhostMat(int obj)
             {
                 if (model)
                 {

@@ -52,6 +52,9 @@ namespace SS2.Items
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Wait time variance between waves of Lunar Chimeras upon failing to claim your birthright. (Minimum wait time will be base wait time - variance)")]
         public static float chimeraWaitTimeVariance = 5f;
         
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Whether Lunar Chimeras should use Lunar team. (causes enemy infighting (silly))")]
+        public static bool useLunarTeam = false;
+        
         public GameObject indevChest; // this probably not be here in a live build i just wanted to do it fast
         public InteractableSpawnCard indevCard;
         public static PrimalPrevention? primalToken;
@@ -131,7 +134,7 @@ namespace SS2.Items
 
         private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn orig, CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
         {
-            if (NetworkServer.active && BirthrightObjectiveTimer.instance?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance)
+            if (NetworkServer.active && BirthrightObjectiveTimer.instance?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance && spawncard.prefab.GetComponent<CharacterMaster>()?.bodyPrefab?.GetComponent<CharacterBody>()?.isChampion != true)
             {
                 elitedef = RoR2Content.Elites.Lunar;
                 SS2Log.Debug($"set {spawncard.prefab.name} to be perfected ,.., ,.");

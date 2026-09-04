@@ -48,11 +48,11 @@ namespace EntityStates.MimicEquip
 
 		public override void OnExit()
 		{
-			base.OnExit();
             if (!endedSuccessfully)
             {
 				PlayAnimation("FullBody, Override", "BufferEmpty");
             }
+            base.OnExit();
 		}
 
 		public override InterruptPriority GetMinimumInterruptPriority()

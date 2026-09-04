@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using RoR2;
 using RoR2.UI;
@@ -50,6 +51,11 @@ namespace Starstorm2.Components
         private void OnDisable()
         {
             ObjectivePanelController.collectObjectiveSources -= OnCollectObjectiveSources;
+        }
+
+        private void OnDestroy()
+        {
+            instance = null; // turns out static refs like this dont make it null once the object is destroyed .,.,., ,. thank you swuff, .,. .
         }
 
         private void FixedUpdate()

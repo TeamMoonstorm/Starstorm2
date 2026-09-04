@@ -1,3 +1,4 @@
+using System;
 using RoR2;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,14 +32,21 @@ namespace SS2.Components
         public float blastDamageCoefficient = 3f;
         public float blastForce = 4000f;
         public DamageTypeCombo blastDamageType;
-        
-        private void OnEnable()
+
+        private void Awake()
         {
+            if (!NetworkServer.active) return;
+            
             golemSpawnCard = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/LunarGolem/cscLunarGolem.asset").WaitForCompletion();
             wispSpawnCard = Addressables.LoadAssetAsync<CharacterSpawnCard>("RoR2/Base/LunarWisp/cscLunarWisp.asset").WaitForCompletion();
          
             warningEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStrikePredictionEffect.prefab").WaitForCompletion();
             impactEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Meteor/MeteorStrikeImpact.prefab").WaitForCompletion();
+        }
+
+        private void OnEnable()
+        {
+            if (!NetworkServer.active) return;
             
             //add meteors at each birthright because i am evil <3., 
             foreach (PurchaseInteraction birthrightPurchaseInteraction in PrimalBirthrightObjectiveToken.instanceList)
@@ -138,7 +146,7 @@ namespace SS2.Components
                     },
                     RoR2Application.rng
                 );
-                spawnRequest.teamIndexOverride = TeamIndex.Monster;
+                spawnRequest.teamIndexOverride = PrimalBirthright.useLunarTeam ? TeamIndex.Lunar : TeamIndex.Monster;
                 spawnRequest.onSpawnedServer += result =>
                 {
                     // i had a single NRE on client while testing i dont trust spawnedserver anymore ,.. 
@@ -185,7 +193,7 @@ namespace SS2.Components
                 position = chimeraSpawn.impactPos,
                 procChainMask = default,
                 procCoefficient = 1f,
-                teamIndex = TeamIndex.Monster,
+                teamIndex = PrimalBirthright.useLunarTeam ? TeamIndex.Lunar : TeamIndex.Monster,
                 radius = blastRadius,
                 damageType = blastDamageType
             };
