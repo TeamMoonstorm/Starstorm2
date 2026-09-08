@@ -1,4 +1,4 @@
-﻿using RoR2.ExpansionManagement;
+using RoR2.ExpansionManagement;
 using RoR2.ContentManagement;
 using System;
 using System.Collections;
@@ -187,6 +187,7 @@ namespace SS2
                     return VanillaSurvivorModule.InitializeVanillaSurvivorContentPieces(main);
                 },
                 LoadFromAssetBundles,
+                SS2Config.RegisterToModSettingsManager
             };
 
             _fieldAssignDispatchers = new Func<IEnumerator>[]
@@ -441,6 +442,7 @@ namespace SS2
             public static ItemDef StackShieldGate;
             public static ItemDef StackHitList;
             public static ItemDef PrimalBirthright;
+            public static ItemDef BirthrightChimeraHelper;
 
 
             public static ItemDef GalvanicCore;
