@@ -9,7 +9,7 @@ namespace SS2.Items
 {
     public sealed class LuckyPup : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLuckuPup", SS2Bundle.Indev);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLuckyPup", SS2Bundle.Indev);
 
         public static float percentPupChange = 10f;
 
@@ -24,7 +24,7 @@ namespace SS2.Items
         //Clay monger's appearance are based off "Chanchitos", which are three legged clay pigs from a small town on chile known to be good luck charms, ergo, during the single week of independence day players get slight increases to all the chance effects.
         private bool IncreaseChance(On.RoR2.Util.orig_CheckRoll_float_float_CharacterMaster orig, float percentChance, float luck, CharacterMaster effectOriginMaster)
         {
-            if(effectOriginMaster.inventory.GetItemCount(SS2Content.Items.LuckyPup) > 0)
+            if(effectOriginMaster?.inventory?.GetItemCountEffective(SS2Content.Items.LuckyPup) > 0)
             {
                 var newPercentChance = percentChance;
                 newPercentChance += percentChance / 10;

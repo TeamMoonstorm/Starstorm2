@@ -1,4 +1,8 @@
 **Warning: content spoilers below!**
+### 0.6.40
+* General
+    * Fixed a bug that caused the game to not load during the week of Chilean Independence Day (September 18th). Sorry about that! 
+
 ### 0.6.39 Happy Pride!
 * General
     * NOTE: The mod will still say 0.6.38 when loading because I built the mod before updating this in Unity. Its a small technical detail that doesnt matter to most people except those filing bug reports
