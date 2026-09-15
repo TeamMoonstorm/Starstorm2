@@ -1,35 +1,49 @@
 ﻿using SS2.Components;
+using UnityEngine;
+using UnityEngine.Networking;
 
 namespace EntityStates.Toolbot
 {
     public class SelfRepair : BaseSkillState
     {
-        public float baseDuration = 1f;
-        private float duration = 3f;
-        private float healthGainPerRepair = 0.05f;
-        private float repairLossPerTick = 1f;
+        public static float baseDuration = 3f;
+        public static float healthFractionPerTick = 0.05f;
+        public static float repairCostPerTick = 1f;
+        public static float tickInterval = 0.5f;
 
+        private float duration;
+        private float tickTimer;
         private SelfRepairController selfRepairController;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            selfRepairController = GetComponent<SelfRepairController>();
+            duration = baseDuration / attackSpeedStat;
+
+            if (!gameObject.TryGetComponent(out selfRepairController))
+            {
+                Debug.LogError("SelfRepair: Missing SelfRepairController on " + gameObject.name);
+            }
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            if (base.fixedAge >= duration && selfRepairController.repair <= repairLossPerTick)
+            if (NetworkServer.active && selfRepairController != null)
             {
-                outer.SetNextStateToMain();
+                tickTimer -= Time.fixedDeltaTime;
+                if (tickTimer <= 0f && selfRepairController.repair >= repairCostPerTick)
+                {
+                    tickTimer = tickInterval;
+                    characterBody.healthComponent.HealFraction(healthFractionPerTick, default);
+                    selfRepairController.AddRepair(-repairCostPerTick);
+                }
             }
 
-            if (selfRepairController && base.isAuthority && selfRepairController.repair >= repairLossPerTick)
+            if (isAuthority && (fixedAge >= duration || selfRepairController == null || selfRepairController.repair < repairCostPerTick))
             {
-                this.characterBody.healthComponent.HealFraction(healthGainPerRepair, default);
-                selfRepairController.AddRepair(-repairLossPerTick);
+                outer.SetNextStateToMain();
             }
         }
 
