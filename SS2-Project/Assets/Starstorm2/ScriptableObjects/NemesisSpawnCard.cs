@@ -10,7 +10,7 @@ using UnityEngine.Networking;
 namespace SS2
 {
     [CreateAssetMenu(fileName = "NemesisSpawnCard", menuName = "Starstorm2/NemesisSpawnCard")]
-    public class NemesisSpawnCard : CharacterSpawnCard // add IsAvailable() here to check for unlocks or whatever
+    public class NemesisSpawnCard : CharacterSpawnCard // TODO: add IsAvailable() here to check for unlocks or whatever
     {
 
         public NemesisInventory nemesisInventory;
@@ -20,6 +20,7 @@ namespace SS2
         public SkillOverride[] skillOverrides;
         public GameObject visualEffect;
         public ItemDef itemDef;
+        public float selectionWeight = 1f;
 
 
         public override void Spawn(Vector3 position, Quaternion rotation, DirectorSpawnRequest directorSpawnRequest, ref SpawnResult result)
@@ -43,17 +44,29 @@ namespace SS2
                 var master = result.spawnedInstance.GetComponent<CharacterMaster>();
                 var body = master.GetBody();
 
-                nemesisInventory.GiveItems(master.inventory);
-                //master.inventory.GiveItem(SS2Content.Items.NemBossHelper);
+                if (nemesisInventory)
+                {
+                    nemesisInventory.GiveItems(master.inventory);
+                }
+                else
+                {
+                    master.inventory.GiveItem(RoR2Content.Items.TeleportWhenOob);
+                }
 
-                var component = body.gameObject.AddComponent<NemesisItemDrop>();
-                component.itemDef = itemDef;
+                if (itemDef)
+                {
+                    var component = body.gameObject.AddComponent<NemesisItemDrop>();
+                    component.itemDef = itemDef;
+                }
 
                 ModifyCharacterBody(body);
 
-                var skillLocator = body.skillLocator;
-                foreach (var skillOverride in skillOverrides)
-                    skillLocator.GetSkill(skillOverride.skillSlot).SetSkillOverride(this, skillOverride.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+                if (skillOverrides != null && skillOverrides.Length > 0)
+                {
+                    var skillLocator = body.skillLocator;
+                    foreach (var skillOverride in skillOverrides)
+                        skillLocator.GetSkill(skillOverride.skillSlot).SetSkillOverride(this, skillOverride.skillDef, GenericSkill.SkillOverridePriority.Replacement);
+                }
 
                 if (useOverrideState)
                 {
@@ -61,7 +74,7 @@ namespace SS2
                     stateMachine = EntityStateMachine.FindByCustomName(body.gameObject, "Body");
                     if (!stateMachine)
                     {
-                        Debug.LogError($"Error: override Entity State on Nemesis Spawn Card {this} must play on a Body State Machine. Skipping override.");
+                        SS2Log.Error($"Override Entity State on Nemesis Spawn Card {this} must play on a Body State Machine. Skipping override.");
                         return;
                     }
                     EntityState state = (EntityState)Activator.CreateInstance(overrideSpawnState.stateType);
@@ -71,25 +84,28 @@ namespace SS2
         }
         private void ModifyCharacterBody(CharacterBody characterBody)
         {
-            characterBody.isChampion = true;       
-            foreach (var statModifier in statModifiers)
+            characterBody.isChampion = true;
+            if (statModifiers != null)
             {
-                if (GetField(statModifier.fieldName, out var field))
+                foreach (var statModifier in statModifiers)
                 {
-                    float value = (float)field.GetValue(characterBody);
-                    switch (statModifier.statModifierType)
+                    if (GetField(statModifier.fieldName, out var field))
                     {
-                        case StatModifierType.Additive:
-                            value += statModifier.modifier;
-                            break;
-                        case StatModifierType.Multiplicative:
-                            value *= statModifier.modifier;
-                            break;
-                        case StatModifierType.Override:
-                            value = statModifier.modifier;
-                            break;
+                        float value = (float)field.GetValue(characterBody);
+                        switch (statModifier.statModifierType)
+                        {
+                            case StatModifierType.Additive:
+                                value += statModifier.modifier;
+                                break;
+                            case StatModifierType.Multiplicative:
+                                value *= statModifier.modifier;
+                                break;
+                            case StatModifierType.Override:
+                                value = statModifier.modifier;
+                                break;
+                        }
+                        field.SetValue(characterBody, value);
                     }
-                    field.SetValue(characterBody, value);
                 }
             }
             characterBody.PerformAutoCalculateLevelStats();
@@ -100,7 +116,7 @@ namespace SS2
             field = typeof(CharacterBody).GetField(fieldName);
             if (field == null)
             {
-                Debug.LogError($"Error: {fieldName} in Nemesis Spawn Card {name} is not a valid field for a CharacterBody");
+                SS2Log.Error($"{fieldName} in Nemesis Spawn Card {name} is not a valid field for a CharacterBody");
                 return false;
             }
             return true;
@@ -108,6 +124,7 @@ namespace SS2
 
         private void OnValidate()
         {
+            if (statModifiers == null) return;
             foreach (var statModifier in statModifiers)
             {
                 GetField(statModifier.fieldName, out _);
