@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 2633876825743998819}
   - component: {fileID: -8798934544087373604}
   - component: {fileID: 5726270184540862950}
+  - component: {fileID: 4854028423353936051}
   m_Layer: 0
   m_Name: ShrineEthereal
   m_TagString: Untagged
@@ -237,8 +238,30 @@ MonoBehaviour:
     transform: {fileID: 2550105493390441451}
   - name: Symbol
     transform: {fileID: 6198059097493727124}
-  - name: ChargeVFX
-    transform: {fileID: 4206835901839666625}
+--- !u!114 &4854028423353936051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1756738345324778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -565067572, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeOnStart: 0
+  shakeOnEnable: 0
+  shakeOnDelay: 0
+  startDelay: 0
+  wave:
+    amplitude: 0.5
+    frequency: 3
+    cycleOffset: 0
+  duration: 0.5
+  radius: 100
+  scaleShakeRadiusWithLocalScale: 0
+  amplitudeTimeDecay: 1
 --- !u!1 &80779711787346390
 GameObject:
   m_ObjectHideFlags: 0
@@ -5189,7 +5212,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5231662080453601277}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 180, y: 0.0003380943, z: 180}
 --- !u!114 &928403461206473894
 MonoBehaviour:
@@ -17018,7 +17041,6 @@ Transform:
   - {fileID: 7213827350043385674}
   - {fileID: 6768599581008903910}
   - {fileID: 2550105493390441451}
-  - {fileID: 4206835901839666625}
   - {fileID: 6198059097493727124}
   - {fileID: 3294577469502415145}
   m_Father: {fileID: 9162622995618610225}
@@ -19492,96 +19514,6 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!1001 &4210500338801809487
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 5231662080453601277}
-    m_Modifications:
-    - target: {fileID: 1833737943356694, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_Name
-      value: ChargeEthereal
-      objectReference: {fileID: 0}
-    - target: {fileID: 1833737943356694, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.008
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 3.068
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 198417912943131576, guid: de5db4ac7fc1b6626964ba9a4657f797,
-        type: 3}
-      propertyPath: simulationSpeed
-      value: 0.345
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: de5db4ac7fc1b6626964ba9a4657f797, type: 3}
---- !u!4 &4206835901839666625 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4254324984313230, guid: de5db4ac7fc1b6626964ba9a4657f797,
-    type: 3}
-  m_PrefabInstance: {fileID: 4210500338801809487}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &4209497193098022996 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1566645448149019, guid: de5db4ac7fc1b6626964ba9a4657f797,
-    type: 3}
-  m_PrefabInstance: {fileID: 4210500338801809487}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &174248660681962985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4209497193098022996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 422384671, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &5960491521052456778
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19592,7 +19524,7 @@ PrefabInstance:
     - target: {fileID: 338903140217835742, guid: 8fa58149dd30787468f395ffafbf0b8e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 338903140217835742, guid: 8fa58149dd30787468f395ffafbf0b8e,
         type: 3}
