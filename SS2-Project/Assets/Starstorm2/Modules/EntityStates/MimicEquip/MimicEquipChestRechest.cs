@@ -13,19 +13,13 @@ namespace EntityStates.MimicEquip
     {
         protected PurchaseInteraction purchaseInter;
 
-        protected virtual bool enableInteraction
-        {
-            get
-            {
-                return false;
-            }
-        }
+        protected virtual bool enableInteraction => false;
 
         public static float baseDuration;
         private float duration;
 
-        public bool taunting = false;
-        public bool tryRechest = true;
+        public bool taunting;
+        private bool tryRechest = true;
         private MimicEquipInventoryManager mim;
 
         public override void OnEnter()
@@ -42,7 +36,7 @@ namespace EntityStates.MimicEquip
             PlayAnimation("Gesture, Override", "BufferEmpty");
             PlayAnimation("FullBody, Override", "BufferEmpty");
 
-            mim = GetComponent<MimicEquipInventoryManager>();
+            TryGetComponent(out mim);
         }
 
         public override void FixedUpdate()
@@ -72,11 +66,6 @@ namespace EntityStates.MimicEquip
                     outer.SetNextState(next);
                 }
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

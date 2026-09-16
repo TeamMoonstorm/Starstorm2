@@ -22,7 +22,7 @@ namespace SS2.Components
 
         private void OnEnable()
         {
-            characterModel = GetComponentInParent<CharacterModel>();
+            gameObject.transform.parent?.TryGetComponent(out characterModel);
             
             overlayMat = new Material(birthrightIDR.rendererInfos[0].defaultMaterial);
             birthrightIDR.rendererInfos[0].defaultMaterial = overlayMat;
@@ -53,8 +53,7 @@ namespace SS2.Components
             if (timer > closestBirthrightDistance)
             {
                 timer = 0;
-                CharacterBody body = this.characterModel?.body;
-                if (body)
+                if (characterModel?.body)
                 {
                     PlayRadar();
                 }

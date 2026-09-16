@@ -20,8 +20,8 @@ namespace SS2.Components
         private GameObject impactEffectPrefab;
         private float waveTimer;
         private List<ChimeraSpawn> chimeraSpawns = new List<ChimeraSpawn>();
-        
-        public class ChimeraSpawn
+
+        private class ChimeraSpawn
         {
             public float detonationTime;
             public Vector3 impactPos;
@@ -77,7 +77,7 @@ namespace SS2.Components
             for (int i = chimeraSpawns.Count - 1; i >= 0; i--)
             {
                 ChimeraSpawn chimeraSpawn = chimeraSpawns[i];
-                if (chimeraSpawn.detonationTime < Run.instance.time)
+                if (chimeraSpawn != null && chimeraSpawn.detonationTime < Run.instance.time)
                 {
                     chimeraSpawns.RemoveAt(i);
                     SpawnChimera(chimeraSpawn);
@@ -129,7 +129,7 @@ namespace SS2.Components
         {
             SS2Log.Debug("spawning evil ,., ");
 
-            if (aliveChimeras < 15)
+            if (aliveChimeras < PrimalBirthright.chimeraSpawnCap)
             {
                 CharacterSpawnCard spawnCard = golemSpawnCard;
                 if (PrimalBirthright.lunarWispStageCount <= Run.instance.stageClearCount + 1 && Run.instance.spawnRng.RangeFloat(0, 100) < PrimalBirthright.lunarWispChance)

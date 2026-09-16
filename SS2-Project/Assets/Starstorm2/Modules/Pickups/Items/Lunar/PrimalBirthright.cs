@@ -52,6 +52,9 @@ namespace SS2.Items
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Wait time variance between waves of Lunar Chimeras upon failing to claim your birthright. (Minimum wait time will be base wait time - variance)")]
         public static float chimeraWaitTimeVariance = 5f;
         
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Maximum amount of Chimeras that can be alive at once.")]
+        public static float chimeraSpawnCap = 15;
+        
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Whether Lunar Chimeras should use Lunar team. (causes enemy infighting (silly))")]
         public static bool useLunarTeam = false;
         
