@@ -103,6 +103,10 @@ namespace SS2
             hasStarted = true;
             foreach (CombatDirector director in allCombatDirectors)
             {
+                if (director == bossDirector)
+                {
+                    continue;
+                }
                 // apparently this makes monsters rarely ever spawn ??? idk
                 //directorToOriginalEliteBias.Add(director, director.eliteBias);
                 //director.eliteBias = Mathf.Infinity; // stop credits from being spent on elites
@@ -117,6 +121,11 @@ namespace SS2
             hasStarted = false;
             foreach (CombatDirector director in allCombatDirectors)
             {
+                if (director == bossDirector)
+                {
+                    continue;
+                }
+
                 //director.eliteBias = directorToOriginalEliteBias.TryGetValue(director, out float eliteBias) ? eliteBias : 1;
                 director.onSpawnedServer.RemoveListener(OnSpawnedServer);
             }
@@ -181,7 +190,7 @@ namespace SS2
             Inventory inventory = masterObject.GetComponent<Inventory>();
             if (inventory)
             {
-                inventory.SetEquipmentIndex(bossEliteEquipment.equipmentIndex);
+                inventory.SetEquipmentIndexForSlot(bossEliteEquipment.equipmentIndex, 0, 0);
                 int loopCount = Mathf.Max(Run.instance.loopClearCount, 0);
                 inventory.GiveItemPermanent(SS2Content.Items.BoostCharacterSize, 100);
                 inventory.GiveItemPermanent(SS2Content.Items.MaxHealthPerMinute, 2 + Run.instance.stageClearCount * loopCount * loopCount * (1 + EtherealBehavior.instance.etherealStagesCompleted));
