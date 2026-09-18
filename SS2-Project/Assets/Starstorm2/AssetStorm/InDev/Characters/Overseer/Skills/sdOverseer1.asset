@@ -10,29 +10,37 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 1391837873, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: sdNemHuntressHatchet
+  m_Name: sdOverseer1
   m_EditorClassIdentifier: 
-  skillName: Throw Glaive
-  skillNameToken: SS2_NEMHUNTRESS_THROW_GLAIVE_NAME
-  skillDescriptionToken: SS2_NEMHUNTRESS_THROW_GLAIVE_DESC
+  skillName: 
+  skillNameToken: SS2_OVERSEER_PRIMARY
+  skillDescriptionToken: 
   keywordTokens: []
-  icon: {fileID: 21300000, guid: 3d2118b63241b8240bba22a040b632fe, type: 3}
+  icon: {fileID: 0}
   activationStateMachineName: Weapon
   activationState:
-    _typeName: EntityStates.NemHuntress2.GlaiveHop, Starstorm2, Version=1.0.0.0,
+    _typeName: EntityStates.Overseer.Weapon.FireEyeBolt, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  interruptPriority: 1
-  baseRechargeInterval: 1
+  interruptPriority: 0
+  baseRechargeInterval: 2
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
+  beginSkillCooldownOnSkillEnd: 1
+  isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 1
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0

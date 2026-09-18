@@ -29,10 +29,13 @@ namespace EntityStates.NemHuntress2
             //skillLocator.primary.stock = primaryStockCount;
             //Debug.Log("primary : " + skillLocator.primary.stock);
 
-            nhc = characterBody.GetComponent<NemHuntressController>();
-            if (nhc != null)
+            if (isAuthority)
             {
-                nhc.currentArrow = arrowPrefab;
+                nhc = characterBody.GetComponent<NemHuntressController>();
+                if (nhc != null)
+                {
+                    nhc.currentArrow = arrowPrefab;
+                }
             }
 
             //skillLocator.special.cooldownScale = 0;

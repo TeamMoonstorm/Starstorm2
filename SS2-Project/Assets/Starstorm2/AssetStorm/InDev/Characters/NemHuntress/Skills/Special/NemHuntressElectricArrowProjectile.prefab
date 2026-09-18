@@ -20,11 +20,13 @@ GameObject:
   - component: {fileID: 1489379237820249183}
   - component: {fileID: 7921749458278298968}
   - component: {fileID: 491998528521803633}
+  - component: {fileID: 191376690058525211}
+  - component: {fileID: 1498468406749433412}
   - component: {fileID: 443320341021778346}
   - component: {fileID: 30851864050746402}
   - component: {fileID: 8715006697365490053}
   m_Layer: 14
-  m_Name: NemHuntressExplosiveArrowProjectile
+  m_Name: NemHuntressElectricArrowProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,6 +42,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -105,14 +108,22 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 9109107077444889926, guid: 3f2d13bacb1b1794caab64064caec9ee,
     type: 3}
+  ghostPrefabReference:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 0}
   canImpactOnTrigger: 0
   allowPrediction: 1
   owner: {fileID: 0}
+  localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
+  CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!54 &471935226894170559
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,6 +155,10 @@ MonoBehaviour:
   positionTransmitInterval: 0.033333335
   interpolationFactor: 1
   allowClientsideCollision: 0
+  checkForLocalPlayerAuthority: 0
+  singletonArrayIndex: -1
+  serverPosition: {x: 0, y: 0, z: 0}
+  serverRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &8139749819055078254
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,7 +171,8 @@ MonoBehaviour:
   m_Script: {fileID: -1819008361, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lifetime: 10
+  spawnEffect: {fileID: 0}
+  lifetime: 15
   lifetimeExpiredEffect: {fileID: 0}
   desiredForwardSpeed: 160
   updateAfterFiring: 0
@@ -200,7 +216,10 @@ MonoBehaviour:
   crit: 0
   force: 0
   damageColorIndex: 0
-  damageType: 32
+  damageType:
+    damageType: 16777216
+    damageTypeExtended: 0
+    damageSource: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &1489379237820249183
@@ -229,9 +248,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyWhenNotAlive: 0
-  destroyOnWorld: 1
+  destroyOnWorld: 0
   impactEffect: {fileID: 7162646827672994295, guid: d007286375bfb3d4ebf3c8ba83e3b98e,
     type: 3}
+  hitSound: {fileID: 0}
+  enemyHitSound: {fileID: 0}
   hitSoundString: Play_bandit2_m2_impact
   enemyHitSoundString: Play_bandit2_m2_impact
 --- !u!114 &491998528521803633
@@ -251,10 +272,14 @@ MonoBehaviour:
   ignoreCharacters: 0
   ignoreWorld: 0
   alignNormals: 1
+  invertNormal: 0
+  ignoreSteepSlopes: 0
+  distanceFromGround: -1
   stickEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 443320341021778346}
+      - m_Target: {fileID: 191376690058525211}
+        m_TargetAssemblyTypeName: 
         m_MethodName: CallDelayed
         m_Mode: 4
         m_Arguments:
@@ -265,6 +290,86 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1498468406749433412}
+        m_TargetAssemblyTypeName: RoR2.EntityLogic.DelayedEvent, RoR2
+        m_MethodName: CallDelayed
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 2
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 443320341021778346}
+        m_TargetAssemblyTypeName: RoR2.EntityLogic.DelayedEvent, RoR2
+        m_MethodName: CallDelayed
+        m_Mode: 4
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 3.5
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &191376690058525211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015354430083388510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 924743675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8715006697365490053}
+        m_TargetAssemblyTypeName: RoR2.Projectile.ProjectileExplosion, RoR2
+        m_MethodName: DetonateNoDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  timeStepType: 0
+--- !u!114 &1498468406749433412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7015354430083388510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 924743675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8715006697365490053}
+        m_TargetAssemblyTypeName: RoR2.Projectile.ProjectileExplosion, RoR2
+        m_MethodName: DetonateNoDestroy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  timeStepType: 0
 --- !u!114 &443320341021778346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,18 +386,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 8715006697365490053}
+        m_TargetAssemblyTypeName: 
         m_MethodName: Detonate
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 30851864050746402}
-        m_MethodName: DestroySelf
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -328,27 +423,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   falloffModel: 0
-  blastRadius: 4
-  blastDamageCoefficient: 2
+  blastRadius: 13
+  blastDamageCoefficient: 0.2
   blastProcCoefficient: 1
   blastAttackerFiltering: 0
   bonusBlastForce: {x: 0, y: 0, z: 0}
   canRejectForce: 1
   projectileHealthComponent: {fileID: 0}
-  explosionEffect: {fileID: 1145431817363450728, guid: c11ff9d93aac00349a5f11b232c0b6ca,
+  explosionEffect: {fileID: 1145431817363450728, guid: f32ee8e5c6868d2498790894a57f3598,
     type: 3}
+  blastImpactEffect: {fileID: 0}
+  preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 0
   childrenProjectilePrefab: {fileID: 0}
   childrenCount: 0
   childrenDamageCoefficient: 0
+  childrenInheritDamageType: 0
   minAngleOffset: {x: 0, y: 0, z: 0}
   maxAngleOffset: {x: 0, y: 0, z: 0}
   minRollDegrees: 0
   rangeRollDegrees: 0
   minPitchDegrees: 0
   rangePitchDegrees: 0
+  minYawDegrees: 0
+  rangeYawDegrees: 0
   useLocalSpaceForChildren: 0
+  useChildRotation: 0
   applyDot: 0
   dotIndex: -1
   dotDuration: 0
@@ -357,3 +458,4 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
+  timedDebuffs: []

@@ -10,50 +10,63 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: escChargeArrowExplosive
+  m_Name: escFireEyeBolt
   m_EditorClassIdentifier: 
   targetType:
-    assemblyQualifiedName: EntityStates.NemHuntress2.ChargeExplosiveArrow, Starstorm2,
+    assemblyQualifiedName: EntityStates.Overseer.Weapon.FireEyeBolt, Starstorm2,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   serializedFieldsCollection:
     serializedFields:
-    - fieldName: baseChargeDuration
+    - fieldName: effectPrefab
       fieldValue:
-        stringValue: 1
+        stringValue: 
         objectValue: {fileID: 0}
-    - fieldName: maxDamageCoefficient
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2782280739697205676, guid: 17a055add6e990c4d9acff2bbb22cf09,
+          type: 3}
+    - fieldName: damageCoefficient
       fieldValue:
         stringValue: 2
         objectValue: {fileID: 0}
-    - fieldName: minDamageCoefficient
+    - fieldName: force
+      fieldValue:
+        stringValue: 100
+        objectValue: {fileID: 0}
+    - fieldName: minSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: maxSpread
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: baseDuration
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: recoilAmplitude
+      fieldValue:
+        stringValue: 1
+        objectValue: {fileID: 0}
+    - fieldName: attackSoundString
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+    - fieldName: projectilePitchBonus
+      fieldValue:
+        stringValue: 0
+        objectValue: {fileID: 0}
+    - fieldName: baseDelayBeforeFiringProjectile
       fieldValue:
         stringValue: 0.5
         objectValue: {fileID: 0}
-    - fieldName: procCoefficient
+    - fieldName: targetMuzzle
       fieldValue:
-        stringValue: 1
+        stringValue: EyeMuzzle
         objectValue: {fileID: 0}
-    - fieldName: minRecoil
+    - fieldName: bloom
       fieldValue:
-        stringValue: 0.25
-        objectValue: {fileID: 0}
-    - fieldName: maxRecoil
-      fieldValue:
-        stringValue: 2
-        objectValue: {fileID: 0}
-    - fieldName: minProjectileSpeed
-      fieldValue:
-        stringValue: 40
-        objectValue: {fileID: 0}
-    - fieldName: maxProjectileSpeed
-      fieldValue:
-        stringValue: 300
-        objectValue: {fileID: 0}
-    - fieldName: fireDuration
-      fieldValue:
-        stringValue: 0.4
-        objectValue: {fileID: 0}
-    - fieldName: maxSpreadAngle
-      fieldValue:
-        stringValue: 12
+        stringValue: 0
         objectValue: {fileID: 0}

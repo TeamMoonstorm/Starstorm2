@@ -752,6 +752,8 @@ namespace SS2
 
             public static SurvivorDef survivorNemCommando;
 
+            public static SurvivorDef survivorNemHuntress;
+
             public static SurvivorDef survivorNemCaptain;
 
             public static SurvivorDef survivorKnight;
