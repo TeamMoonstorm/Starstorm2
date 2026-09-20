@@ -126,7 +126,7 @@ namespace SS2.Items
 
         public override bool IsAvailable(ContentPack conentPack)
         {
-            return SS2Config.enableBeta;
+            return SS2Config.enableBeta && base.IsAvailable(conentPack);
         }
 
         private void SurvivorPodBaseState_OnEnter(On.EntityStates.SurvivorPod.SurvivorPodBaseState.orig_OnEnter orig, EntityStates.SurvivorPod.SurvivorPodBaseState self)
