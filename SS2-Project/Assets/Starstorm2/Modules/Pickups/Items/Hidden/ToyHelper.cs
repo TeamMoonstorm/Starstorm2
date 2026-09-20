@@ -15,11 +15,11 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acToyHelper", SS2Bundle.Items);
         public static Texture toyMandoSprite;
-        private static float toyScale = 55f; // gets multiplied by .01
+        private static float toyScale = 25f; // gets multiplied by .01 then subracted from 1 e.g. 25f -> 0.25f -> (1 - 0.25f) = .75 scale
 
         public override void Initialize()
         {
-            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("bdToy"), AssetCollection.FindAsset<Material>("matToyOverlay"));
+            BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("bdToy"), AssetCollection.FindAsset<Material>("matToySoldier"));
             toyMandoSprite = AssetCollection.FindAsset<Texture>("texToyCommandoIcon");
         }
 

@@ -40,7 +40,7 @@ namespace SS2.Items
         public static int stackHealth = 10;
 
         // also referenced by ToyHelper
-        public static float soldierScale = 0.55f;
+        public static float soldierScale = 0.65f;
 
         private static GameObject soldierPodPrefab;
         private static GameObject commandoMasterPrefab;
@@ -77,7 +77,7 @@ namespace SS2.Items
                         {
                             List<Material> podMaterials = new List<Material>();
                             podMaterials.Add(mr.material);
-                            podMaterials.Add(AssetCollection.FindAsset<Material>("matToyPodOverlay"));
+                            podMaterials.Add(AssetCollection.FindAsset<Material>("matToyPod"));
 
                             mr.SetMaterials(podMaterials);
 
@@ -199,6 +199,11 @@ namespace SS2.Items
                             if (toyBody.TryGetComponent(out NetworkStateMachine nsm))
                             {
                                 nsm.stateMachines[0].SetNextStateToMain();
+                            }
+
+                            if (toyBody.TryGetComponent(out SfxLocator sfx))
+                            {
+                                sfx.deathSound = null; // shut up! this sound is for bodies with actual physical souls puppetting them through their electornic devices ONLY!!!!
                             }
 
                             Inventory toyInventory = toyMaster.inventory;
