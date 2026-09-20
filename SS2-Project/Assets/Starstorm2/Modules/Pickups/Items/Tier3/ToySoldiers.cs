@@ -124,6 +124,11 @@ namespace SS2.Items
             On.EntityStates.SurvivorPod.Release.FixedUpdate += Release_FixedUpdate;
         }
 
+        public override bool IsAvailable(ContentPack conentPack)
+        {
+            return SS2Config.enableBeta;
+        }
+
         private void SurvivorPodBaseState_OnEnter(On.EntityStates.SurvivorPod.SurvivorPodBaseState.orig_OnEnter orig, EntityStates.SurvivorPod.SurvivorPodBaseState self)
         {
             if (self.gameObject.TryGetComponent(out ToySoldierDropPodHandler tsdph))
