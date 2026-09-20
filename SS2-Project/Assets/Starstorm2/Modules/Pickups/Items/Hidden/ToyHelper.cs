@@ -15,22 +15,12 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acToyHelper", SS2Bundle.Items);
         public static Texture toyMandoSprite;
+        private static float toyScale = 55f; // gets multiplied by .01
 
         public override void Initialize()
         {
             BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("bdToy"), AssetCollection.FindAsset<Material>("matToyOverlay"));
             toyMandoSprite = AssetCollection.FindAsset<Texture>("texToyCommandoIcon");
-
-            On.RoR2.CharacterBody.OnDeathStart += CharacterBody_OnDeathStart;
-        }
-
-        private void CharacterBody_OnDeathStart(On.RoR2.CharacterBody.orig_OnDeathStart orig, CharacterBody self)
-        {
-            // to-do:
-            // get body ragdoll & freeze joint rotations so they just fall to ground static
-            // ideally after very small delay so they're in a mid-death pose
-
-            orig(self);
         }
 
         public override bool IsAvailable(ContentPack contentPack)
@@ -48,20 +38,86 @@ namespace SS2.Items
             private Transform modelTransform;
             private Texture oldIcon = null;
 
+            // for death handling
+            private HealthComponent healthComponent;
+            private float timeUntilFreeze = 0.2f;
+            private float deathTimer = 0f;
+            private bool froze = false;
+
             public void Start()
             {
-                UpdateScale(55f);
+                // these should always be the same
+                UpdateScale(toyScale);
 
                 // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                // i really hate this override thats specifically for commando, but i dont want to procedurally green every icon while accounting for the blue outline that should remain blue
+                // additionally, i dont want to make a new ToyCommandoBody prefab because that kind of would defeat the entire point of this helper item / the entire setup
+                // ughhh
                 if (BodyCatalog.FindBodyIndex(body) == BodyCatalog.FindBodyIndex("CommandoBody"))
                 {
                     oldIcon = body.portraitIcon;
                     body.portraitIcon = ToyHelper.toyMandoSprite;
                 }
-                
-                if (NetworkServer.active)
+
+
+                if (body.healthComponent != null)
+                {
+                    healthComponent = body.healthComponent;
+                }
+
+                // for some reason when players die they get like 7 overlays????????? and they shine bright like a small green sun. nothing like epilipsy tier but jarring to me as a player
+                // thankfully im never playing as a toy, and the ai bodies dont seem to do this, but would be nice to know why and how to fix. thought checking for alive / already owning buff would
+                if (NetworkServer.active && healthComponent != null && healthComponent.alive && !body.HasBuff(SS2Content.Buffs.bdToy))
                 {
                     body.AddBuff(SS2Content.Buffs.bdToy);
+                }
+            }
+
+            private void FixedUpdate()
+            {
+                if (!froze && healthComponent != null && !healthComponent.alive)
+                {
+                    deathTimer += Time.fixedDeltaTime;
+                    if (deathTimer >= timeUntilFreeze)
+                    {
+                        if (body.modelLocator != null && body.modelLocator.modelTransform != null && body.modelLocator.modelTransform.TryGetComponent(out RagdollController rc))
+                        {
+                            // fall over in static pose e.g. https://youtu.be/TXvR6yxUVSw?t=77 
+                            foreach (Transform bone in rc.bones)
+                            {
+                                if (bone.gameObject.layer != LayerIndex.ragdoll.intVal)
+                                {
+                                    continue;
+                                }
+
+                                foreach (Joint joint in bone.GetComponents<Joint>())
+                                {
+                                    // its in the world and not attached to a body
+                                    if (!joint.connectedBody || joint is FixedJoint)
+                                    {
+                                        continue;
+                                    }
+
+                                    Rigidbody connectedBody = joint.connectedBody;
+                                    Vector3 anchor = joint.anchor;
+                                    bool enableCollision = joint.enableCollision;
+
+                                    Destroy(joint);
+
+                                    // make new fixedjoint with properties of old joint
+                                    FixedJoint fixedJoint = bone.gameObject.AddComponent<FixedJoint>();
+                                    fixedJoint.anchor = anchor;
+                                    fixedJoint.autoConfigureConnectedAnchor = true;
+                                    fixedJoint.connectedBody = connectedBody;
+                                    fixedJoint.enableCollision = enableCollision;
+                                    fixedJoint.breakForce = Mathf.Infinity;
+                                    fixedJoint.breakTorque = Mathf.Infinity;
+                                }
+                            }
+                        }
+
+                        froze = true;
+                    }
                 }
             }
 
@@ -82,6 +138,23 @@ namespace SS2.Items
                 {
                     body.radius *= deltaScale;
                     modelTransform.localScale *= deltaScale;
+
+                    if (modelTransform.TryGetComponent(out RagdollController rc))
+                    {
+                        foreach (Transform bone in rc.bones)
+                        {
+                            if (bone.gameObject.layer != LayerIndex.ragdoll.intVal)
+                                continue;
+
+                            foreach (Joint joint in bone.GetComponents<Joint>())
+                            {
+                                Vector3 worldAnchor = joint.transform.TransformPoint(joint.anchor);
+
+                                joint.autoConfigureConnectedAnchor = false;
+                                joint.connectedAnchor = joint.connectedBody.transform.InverseTransformPoint(worldAnchor);
+                            }
+                        }
+                    }
                 }
 
                 if (NetworkServer.active && body.master)
@@ -111,19 +184,21 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                if (NetworkServer.active && body.HasBuff(SS2Content.Buffs.bdToy))
-                {
-                    body.SetBuffCount(SS2Content.Buffs.bdToy.buffIndex, 0);
-                }
-
-                // ??????????
-                if (oldIcon != null)
-                {
-                    body.portraitIcon = oldIcon;
-                }
-
                 if (body.healthComponent.alive)
+                {
                     UpdateScale(0);
+
+                    // ??????????
+                    if (oldIcon != null)
+                    {
+                        body.portraitIcon = oldIcon;
+                    }
+
+                    if (NetworkServer.active && body.HasBuff(SS2Content.Buffs.bdToy))
+                    {
+                        body.SetBuffCount(SS2Content.Buffs.bdToy.buffIndex, 0);
+                    }
+                }
             }
         }
     }

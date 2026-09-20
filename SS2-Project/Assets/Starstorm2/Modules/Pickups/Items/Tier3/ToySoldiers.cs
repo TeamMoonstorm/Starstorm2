@@ -22,9 +22,25 @@ namespace SS2.Items
     {
         private const string token = "SS2_ITEM_TOYSOLDIERS_DESC";
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acToySoldiers", SS2Bundle.Items);
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Bonus percent damage per fork. (1 = 1%)")]
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base damage of Toy Soldiers. (10 = 100%)")]
         [FormatToken(token, 0)]
-        public static float percentDamageBonus = 8f;
+        public static int baseDamage = 10;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base health of Toy Soldiers. (10 = 100%)")]
+        [FormatToken(token, 0)]
+        public static int baseHealth = 10;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage per stack of Toy Soldiers. (10 = 100%)")]
+        [FormatToken(token, 0)]
+        public static int stackDamage = 5;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Health per stack of Toy Soldiers. (10 = 100%)")]
+        [FormatToken(token, 0)]
+        public static int stackHealth = 10;
+
+        // also referenced by ToyHelper
+        public static float soldierScale = 0.55f;
 
         private static GameObject soldierPodPrefab;
         private static GameObject commandoMasterPrefab;
@@ -34,7 +50,7 @@ namespace SS2.Items
             soldierPodPrefab = Addressables.LoadAssetAsync<GameObject>("659066785bfffe94fbbd9183a5b12618").WaitForCompletion().InstantiateClone("ToySoldierPod");
             if (soldierPodPrefab != null)
             {
-                soldierPodPrefab.transform.localScale *= 0.55f;
+                soldierPodPrefab.transform.localScale *= soldierScale;
 
                 // there is, a lot, to do here
                 if (soldierPodPrefab.TryGetComponent(out SurvivorPodController spc))
@@ -178,16 +194,24 @@ namespace SS2.Items
                         {
                             CharacterBody toyBody = toyMaster.GetBody();
 
+                            tsdph.AddSummonedBody(toyBody.gameObject);
+
+                            if (toyBody.TryGetComponent(out NetworkStateMachine nsm))
+                            {
+                                nsm.stateMachines[0].SetNextStateToMain();
+                            }
+
                             Inventory toyInventory = toyMaster.inventory;
                             toyInventory.GiveItemPermanent(SS2Content.Items.ToyHelper);
                             toyInventory.GiveItemPermanent(SS2Content.Items.SpiderverseHelper);
 
-                            toyInventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, 5 * tsdph.stacks);
-                            toyInventory.GiveItemPermanent(RoR2Content.Items.BoostHp, 10 * tsdph.stacks);
+                            toyInventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, (stackDamage + Mathf.Max(baseDamage - 10, 0)) * tsdph.stacks);
+                            toyInventory.GiveItemPermanent(RoR2Content.Items.BoostHp, (stackHealth + Mathf.Max(baseHealth - 10, 0)) * tsdph.stacks);
 
-                            if (toyMaster.TryGetComponent(out BaseAI ai) && TeleporterInteraction.instance != null && TeleporterInteraction.instance.bossGroup != null && TeleporterInteraction.instance.bossGroup.combatSquad != null)
+                            if (toyMaster.TryGetComponent(out BaseAI ai))
                             {
-                                ai.SetCustomTargetGameObject(TeleporterInteraction.instance.bossGroup.combatSquad.membersList[UnityEngine.Random.Range(0, TeleporterInteraction.instance.bossGroup.combatSquad.membersList.Count)].bodyInstanceObject);
+                                ai.copyLeaderTarget = true;
+                                ai.UpdateTargets();
                             }
                         }
                     }
