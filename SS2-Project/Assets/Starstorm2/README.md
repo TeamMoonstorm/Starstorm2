@@ -30,7 +30,7 @@
 ![Credits](https://github.com/swuff-star/Starstorm2/blob/main/SS2-Project/Assets/Starstorm2/ReadmeAssets/ss2credits.gif?raw=true)
 
 Starstorm 2 is currently being developed and maintained by...
-* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), [orbeezeater22](https://thunderstore.io/package/kinggrinyov/Vegeta/), [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), [Zenithrium](https://ko-fi.com/zenithrium), [EarthZebra](https://thunderstore.io/package/tsuyoikenko/Cadet/), [JaceCascade](https://thunderstore.io/package/kinggrinyov/Trunks/), [Chinchi](https://thunderstore.io/package/rob/Regigigas/)
+* [Buns](https://github.com/WarmBuns), [Nebby](https://github.com/Nebby1999), [orbeezeater22](https://thunderstore.io/package/kinggrinyov/Vegeta/), [swuff★](https://thunderstore.io/package/kinggrinyov/Goku/), [Zenithrium](https://ko-fi.com/zenithrium), [EarthZebra](https://thunderstore.io/package/tsuyoikenko/Cadet/), [JaceCascade](https://thunderstore.io/package/kinggrinyov/Trunks/), [Chinchi](https://thunderstore.io/package/rob/Regigigas/), [Kina](https://soystorm.kina.party/)
 
 With previous and one-off code contributions by...
 * Anreol, kina (bread), Lordryn, Flan, Gaforb, GrooveSalad, HIFU, KevinFromHPCustomerService, MagicGonads, malfaisant, Moffein, Nebby, Phreel, prod, rob, sebacame, Shared, .score, TheTimesweeper, Mystical Chicken, Vale-X, xpcybic, Xubas

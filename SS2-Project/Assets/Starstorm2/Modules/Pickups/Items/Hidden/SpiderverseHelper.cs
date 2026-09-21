@@ -39,7 +39,7 @@ namespace SS2.Items
             {
                 base.Awake();
 
-                if (body.modelLocator != null && body.modelLocator.modelTransform != null && body.modelLocator.modelTransform.TryGetComponent(out Animator anim))
+                if (body && body.modelLocator && body.modelLocator.modelTransform && body.modelLocator.modelTransform.TryGetComponent(out Animator anim))
                 {
                     animator = anim;
                 }
@@ -47,7 +47,7 @@ namespace SS2.Items
 
             private void Update()
             {
-                if (animator != null)
+                if (animator)
                 {
                     timer += Time.deltaTime;
                     var updateTime = 1f / fps;
@@ -63,7 +63,10 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                animator.speed = 1f;
+                if (animator)
+                {
+                    animator.speed = 1f;
+                }
             }
         }
     }

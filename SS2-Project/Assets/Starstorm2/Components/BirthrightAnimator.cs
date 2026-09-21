@@ -57,12 +57,10 @@ namespace SS2.Components
                 {
                     PlayRadar();
                 }
-                //SS2Log.Info($"################ distance from furthest birthright/75f {closestBirthrightDistance}");
             }
             
             newAlpha = ((closestBirthrightDistance - timer) / closestBirthrightDistance) * 3;
             overlayMat.SetFloat(propertyID, newAlpha);
-            //SS2Log.Debug($"set overlay mat propid to {newAlpha}");
         }
         
         private void PlayRadar()
