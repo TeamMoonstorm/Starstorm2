@@ -135,24 +135,12 @@ namespace EntityStates.Executioner2
                 if (lamp)
                 {
                     lamp.IncrementFire();
-                    //SS2Log.Info("special lamp incrementing fire");
                 }
 
 
                 if (useAimAssist)
                 {
-
-
-
-
-
-
                     /// TODO: BULLETATTACK PRECOLLECTED RAYCASTS!!!!!!!!!
-                    /// 
-
-
-
-
 
                     // only aim assist if we hit nothing
                     bool shouldAimAssist = true;
@@ -215,7 +203,10 @@ namespace EntityStates.Executioner2
                 };
 
                 bulletAttack.Fire();
-                characterBody.AddIncreasePrimaryDamageStack();
+                if(characterBody.inventory.GetItemCountEffective(DLC2Content.Items.IncreasePrimaryDamage) > 0)
+                {
+                    characterBody.AddIncreasePrimaryDamageStack();
+                }
             }
         }
 
