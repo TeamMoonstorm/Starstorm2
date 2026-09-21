@@ -1,4 +1,7 @@
 **Warning: content spoilers below!**
+### 0.6.42
+* 0.6.41 was accidentally a debug build.... 
+
 ### 0.6.41
 * General
     * Welcome longtime community member Kina to the SS2 dev team! Everyone falls for the pipeline eventually...
