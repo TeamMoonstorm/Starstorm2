@@ -1,4 +1,25 @@
 **Warning: content spoilers below!**
+### 0.6.41
+* General
+    * Coganition artifact ghost mat fix
+    * Fixes shock drones being too big in trishops (sorry we left this bug in the mod for so long!)
+* Items
+    * Coffee Bag pick-ups now trigger Collector's Compulsion
+    * Primal Birthright rework! We will leave the rework as a surprise and update the changelog next version. Should have a more noticable downside
+    * Fixed a bug with Drifter being able to throw Primal Birthright chest off the map
+    * Birthright chests should now properly display the name of the player with the item
+* Survivors
+    * Executioner luminous shot fix (real)
+    * Fixes bug that allowed Chirr to pickup and rearrange Solus Wing's weakspots
+    * Fixes material bug with Merc Vestige Skin Sword
+    * Fixes Engineer's Laser Focus failing to set LaserEnds and breaking VFX
+* Beta
+    * Makes ethereal sapling a single interact to activate and makes it not NRE on teleporter 
+    * Added new content: Toy Soldiers (red item), New Mimic type (enjoy!)
+    * Fixes Scavenger's Fortune NREs when given to enemies
+    * Makes sure the special elite gets the new equipment via updated SetEquipment method
+
+
 ### 0.6.40
 * General
     * Fixed a bug that caused the game to not load during the week of Chilean Independence Day (September 18th). Sorry about that! 
