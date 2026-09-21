@@ -8,6 +8,9 @@
     * Executioner
         * Rare Executioner orb NRE fix (I cant seem to reproduce this one, but a null check was added where it happened)
         * Xi Construct no longer runs away when Fear'd by Executioner. This caused a softlock making Xi impossible to reach/kill as Xi flees to the edge of the skybox.
+        * Increase the raidus of Execution special from 8 to 10. This should get enemies you feel should have been hit by slam as indicated by VFX but took no damage.
+        * Decrease damage coeff of Taser from 0.8 to 0.7
+        * Increase the bullet radius of default pistol primary from 0.7 to 0.9.
 * Storms
     * Misc NRE fixes
 * Drones
@@ -48,12 +51,8 @@
 
 TODO: Confirm the below are fixed before mergining
 * Unconfirmed   
-    
-   
     * Self-Repair skill fixes
     * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
-
-TODO BEFORE RELEASING 0.6.40:
 * Ethereal
     * Fixed Ethereal teleporter icon placement
 * Railgunner
