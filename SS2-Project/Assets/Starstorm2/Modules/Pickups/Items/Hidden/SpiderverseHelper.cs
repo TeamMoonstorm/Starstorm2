@@ -47,7 +47,7 @@ namespace SS2.Items
 
             private void Update()
             {
-                if (animator != null)
+                if (animator)
                 {
                     timer += Time.deltaTime;
                     var updateTime = 1f / fps;
@@ -63,7 +63,10 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                animator.speed = 1f;
+                if (animator)
+                {
+                    animator.speed = 1f;
+                }
             }
         }
     }
