@@ -84,12 +84,11 @@ namespace SS2.Survivors
             }
         }
 
+        // Part of the fix to prevent Xi from fleeing to the OOB of the map and softlocking the game for players
         [SystemInitializer(typeof(BodyCatalog))]
         private static void InitCache()
         {
-            SS2Log.Info("We be looking for Xi");
             xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MegaConstructBody");
-            SS2Log.Info("We found him: " + xiConstructBodyIndex);
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

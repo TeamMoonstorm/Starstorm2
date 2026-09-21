@@ -5,7 +5,6 @@ using RoR2.Skills;
 using RoR2.Orbs;
 using System.Collections.Generic;
 using UnityEngine.Networking;
-using SS2;
 namespace SS2.Components
 {
     public class TeleporterProjectile : MonoBehaviour
@@ -27,19 +26,13 @@ namespace SS2.Components
                 SS2Log.Warning("TeleporterProjectile.Start: missing ProjectileController");
                 return;
             }
+
             this.owner = this.controller.owner;
             if(this.owner)
             {
-                // TODO: This might be another issue but trying this for duplicate teleporters on client fix
-                // Reuse existing ownership component if one exists
-                // This prevents duplicate skill overrides when both prediction and authoritative
-                // copies of the projectile call Start()
-                if (!this.owner.TryGetComponent(out this.ownership))
-                {
-                    this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
-                }
+                this.ownership = this.owner.AddComponent<ProjectileTeleporterOwnership>();
                 this.ownership.teleporter = this;
-                this.owner.TryGetComponent(out ownerBody);
+				ownerBody = owner.GetComponent<CharacterBody>();
             }
         }
 
@@ -155,14 +148,6 @@ namespace SS2.Components
                 Destroy(this);
             }
 
-            private void OnDestroy()
-            {
-                if (this.skillLocator)
-                {
-                    this.skillLocator.utility.UnsetSkillOverride(this, teleportSkillDef, GenericSkill.SkillOverridePriority.Contextual);
-                }
-            }
-
             private void FixedUpdate()
             {
                 if(!this.teleporter)
@@ -173,4 +158,3 @@ namespace SS2.Components
         }
     }
 }
-
