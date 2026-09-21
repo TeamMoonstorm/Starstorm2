@@ -1,6 +1,7 @@
 **Warning: content spoilers below!**
 ### 0.6.41
 * General
+    * Welcome longtime community member Kina to the SS2 dev team! Everyone falls for the pipeline eventually...
     * Coganition artifact ghost mat fix
     * Fixes shock drones being too big in trishops (sorry we left this bug in the mod for so long!)
 * Items
@@ -15,7 +16,7 @@
     * Fixes Engineer's Laser Focus failing to set LaserEnds and breaking VFX
 * Beta
     * Makes ethereal sapling a single interact to activate and makes it not NRE on teleporter 
-    * Added new content: Toy Soldiers (red item), New Mimic type (enjoy!)
+    * Added new content: Toy Soldiers (red item)
     * Fixes Scavenger's Fortune NREs when given to enemies
     * Makes sure the special elite gets the new equipment via updated SetEquipment method
 
