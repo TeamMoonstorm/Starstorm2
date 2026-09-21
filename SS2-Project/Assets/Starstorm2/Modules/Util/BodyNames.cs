@@ -44,7 +44,12 @@ namespace SS2
             {
                 result = Language.GetStringFormatted("SS2_ELITE_MODIFIER_STORM", result);
             }
-          
+
+            if (characterBody.inventory && characterBody.inventory.GetItemCountEffective(SS2Content.Items.ToyHelper) > 0)
+            {
+                result = Language.GetStringFormatted("SS2_ITEM_TOYHELPER_PREFIX", result);
+            }
+
             return result;
         }
 
@@ -66,6 +71,7 @@ namespace SS2
                 result = Language.GetStringFormatted("SS2_ITEM_RELICOFTERMINATION_PREFIX", result); // relicopter
                 SS2Log.Warning("Termination Result after : " + result);
             }
+
             return result;
         }
         
