@@ -1,6 +1,6 @@
 **Warning: content spoilers below!**
 ### 0.6.42
-* 0.6.41 was accidentally a debug build.... 
+* 0.6.41 was accidentally a debug build.... Same changes applied instead this is a production build now!
 
 ### 0.6.41
 * General
