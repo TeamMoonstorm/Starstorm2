@@ -86,6 +86,8 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 ![](https://files.catbox.moe/6odrmh.gif)
 
+* Once done importing, right click the "AssetStorm" folder and then "Reimport All" - some prefabs will lose vital references after freshly importing, and this will cause a plethora of issues with specific pieces of content if not addressed before building! **This is practically a silent failure, and you will still be able to build without having reimported all assets**, though in doing so, many bugs will occur at runtime.
+
 * You're now ready to start development.
 
 ## Branch Structure

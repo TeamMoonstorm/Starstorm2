@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using SS2.Survivors;
 using R2API;
+using SS2;
 
 namespace EntityStates.Engi
 {
@@ -69,14 +70,30 @@ namespace EntityStates.Engi
                     {
                         leftLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleLeft.position, muzzleLeft.rotation);
                         leftLaserInstance.transform.parent = transform;
-                        leftLaserInstanceEnd = leftLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        // leftLaserInstanceEnd = leftLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        if (leftLaserInstance.TryGetComponent(out ChildLocator cl) && cl.TryFindChild("LaserEnd", out Transform laserEnd))
+                        {
+                            leftLaserInstanceEnd = laserEnd;
+                        }
+                        else
+                        {
+                            SS2Log.Error("LaserFocus.OnEnter : Failed to initialize leftLaserInstanceEnd!");
+                        }
                     }
                     muzzleRight = component.FindChild("MuzzleRight");
                     if (muzzleRight && laserPrefab)
                     {
                         rightLaserInstance = UnityEngine.Object.Instantiate<GameObject>(laserPrefab, muzzleRight.position, muzzleRight.rotation);
                         rightLaserInstance.transform.parent = transform;
-                        rightLaserInstanceEnd = rightLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        //rightLaserInstanceEnd = rightLaserInstance.GetComponent<ChildLocator>().FindChild("LaserEnd");
+                        if (rightLaserInstance.TryGetComponent(out ChildLocator cl) && cl.TryFindChild("LaserEnd", out Transform laserEnd))
+                        {
+                            rightLaserInstanceEnd = laserEnd;
+                        }
+                        else
+                        {
+                            SS2Log.Error("LaserFocus.OnEnter : Failed to initialize rightLaserInstanceEnd!");
+                        }
                     }
                 }
             }
@@ -223,7 +240,6 @@ namespace EntityStates.Engi
 
         public override void OnExit()
         {
-            base.OnExit();
             Util.PlaySound("Play_engi_R_walkingTurret_laser_end", base.gameObject);
             this.PlayAnimation("Gesture, Additive", "Empty");
 
@@ -233,6 +249,7 @@ namespace EntityStates.Engi
             if (rightLaserInstance)
                 EntityState.Destroy(rightLaserInstance);
 
+            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()
