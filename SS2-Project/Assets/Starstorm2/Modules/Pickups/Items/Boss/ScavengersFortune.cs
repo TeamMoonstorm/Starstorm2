@@ -67,7 +67,7 @@ namespace SS2.Items
 
             public void FixedUpdate()
             {
-                int currentMoney = (int)body.master.money;
+                int currentMoney = body.master ? (int)body.master.money : 0; // spams nre on corpses ,.,.
                 int moneyMade = (currentMoney - updateMoney);
                 if (currentMoney > updateMoney)
                 {
