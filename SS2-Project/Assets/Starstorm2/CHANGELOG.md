@@ -31,6 +31,8 @@
     * Nemesis
         * Fixed NRE when Nemesis spawns and players spawn in late
 * Beta
+    * Fixed Shard Poison / Shard Void Zanzan trader interaction
+    * Fixed OpenSlow Curse interaction with Scavenger bags
     * Fixed a harmless NRE for Void Shop RNG on clients
     * Fixed a harmless NRE for ItemOnEliteKill on clients
     * MULE sent to permanent disable jail until future rework
@@ -39,18 +41,15 @@
         * Fixed harmless NRE on Ethereal when closing the game
     * Cyborg
         * Cyborg now has a proper drop pod
-        * Fixed Cyborg's shock mines not visually appearing as client
     * Knight
         * Knight now has a proper drop pod
         * Fixed Knight's parry not working correctly for clients
         * Increased Knight's parry window to address latency issues
 
 TODO: Confirm the below are fixed before mergining
-* Unconfirmed
-    * Cyborg
-        * Fixed bug where Cyborg could not charge the teleporter 100%        
-    * Fixed Shard Poison / Shard Void Zanzan trader interaction
-    * Fixed OpenSlow Curse interaction with Scavenger bags
+* Unconfirmed   
+    
+   
     * Self-Repair skill fixes
     * Follower no longer instakills or slams down clients when it grabs them with its beam in MP
 
