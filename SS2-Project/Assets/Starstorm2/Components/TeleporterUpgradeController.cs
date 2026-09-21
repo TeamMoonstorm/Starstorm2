@@ -12,9 +12,15 @@ namespace SS2
         private static void Init()
         {
             //Add teleporter upgrading component to teleporters
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/Teleporter1.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Teleporters/LunarTeleporter Variant.prefab").WaitForCompletion().AddComponent<TeleporterUpgradeController>();
+            On.RoR2.TeleporterInteraction.Awake += TeleporterInteractionAwakeAddFieldAcceleratorTeleporter;
         }
+
+        private static void TeleporterInteractionAwakeAddFieldAcceleratorTeleporter(On.RoR2.TeleporterInteraction.orig_Awake orig, TeleporterInteraction self)
+        {
+            orig(self);
+            self.gameObject.AddComponent<TeleporterUpgradeController>();
+        }
+
         [SyncVar]
         public bool isEthereal = false;
         [SyncVar]

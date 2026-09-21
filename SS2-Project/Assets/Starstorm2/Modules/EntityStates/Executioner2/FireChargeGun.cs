@@ -215,6 +215,7 @@ namespace EntityStates.Executioner2
                 };
 
                 bulletAttack.Fire();
+                characterBody.AddIncreasePrimaryDamageStack();
             }
         }
 

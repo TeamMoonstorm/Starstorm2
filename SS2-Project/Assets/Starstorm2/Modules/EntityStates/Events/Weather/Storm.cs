@@ -266,13 +266,18 @@ namespace EntityStates.Events
             {
                 case R2API.DirectorAPI.Stage.RallypointDelta:
                 case R2API.DirectorAPI.Stage.SiphonedForest:
+                case R2API.DirectorAPI.Stage.PretendersPrecipice:
                     fuk = "SS2_EVENT_BLIZZARD";
                     break;
                 case R2API.DirectorAPI.Stage.AbyssalDepths:
                 case R2API.DirectorAPI.Stage.ScorchedAcres:
+                case R2API.DirectorAPI.Stage.HelminthHatchery:
                     fuk = "SS2_EVENT_ASHSTORM";
                     break;
                 case R2API.DirectorAPI.Stage.AbandonedAqueduct:
+                case R2API.DirectorAPI.Stage.IronAlluvium:
+                case R2API.DirectorAPI.Stage.IronAuroras:
+                case R2API.DirectorAPI.Stage.RepurposedCrater:
                     fuk = "SS2_EVENT_SANDSTORM";
                     break;
                 default:

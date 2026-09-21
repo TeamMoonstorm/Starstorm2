@@ -85,31 +85,29 @@ namespace EntityStates.Chirr
             sphereSearch.FilterCandidatesByDistinctHurtBoxEntities();
             HurtBox[] hurtBoxes = sphereSearch.GetHurtBoxes();
 			foreach (HurtBox hurtBox in hurtBoxes)
-			{
-				if (hurtBox)
-				{
-                    HealthComponent healthComponent = hurtBox.healthComponent;
-					if (healthComponent && healthComponent.gameObject != base.gameObject)
-					{
-						if (!healthComponent.body.isChampion || (healthComponent.gameObject.name.Contains("Brother") && healthComponent.gameObject.name.Contains("Body")) || healthComponent.body.GetComponent<NemesisResistances>())
-						{
-                            //Vector3 between = hurtBox.healthComponent.transform.position - base.transform.position;
-                            //Vector3 v = between / 4f;
-                            //v.y = Math.Max(v.y, between.y);
-                            //base.characterMotor.AddDisplacement(v);
-                            // ^^^ SNAP TO VICTIM
-                            bool canGrab = BodyIsGrabbable(healthComponent.gameObject);
-                            if (!SS2.Survivors.Chirr.grabDrones) canGrab &= !IsBodyDrone(healthComponent.body);
-                            if(canGrab)
-                            {
-                                this.OnGrabBodyAuthority(hurtBox.healthComponent.body);
-                                return;
-                            }
-                                					
-						}
-					}
-				}
-			}
+            {
+                if (!hurtBox) continue;
+                
+                HealthComponent healthComponent = hurtBox.healthComponent;
+                if (!healthComponent || healthComponent.gameObject == base.gameObject) continue;
+                
+                if (!healthComponent.body.isChampion || (healthComponent.gameObject.name.Contains("Brother") && healthComponent.gameObject.name.Contains("Body")) || healthComponent.body.GetComponent<NemesisResistances>())
+                {
+                    //Vector3 between = hurtBox.healthComponent.transform.position - base.transform.position;
+                    //Vector3 v = between / 4f;
+                    //v.y = Math.Max(v.y, between.y);
+                    //base.characterMotor.AddDisplacement(v);
+                    // ^^^ SNAP TO VICTIM
+                    bool canGrab = BodyIsGrabbable(healthComponent.gameObject);
+                    if (!SS2.Survivors.Chirr.grabDrones) canGrab &= !IsBodyDrone(healthComponent.body);
+                    if (healthComponent.body.bodyIndex == DLC3Content.BodyPrefabs.ExhaustPortWeakpointBody.bodyIndex) canGrab = false;
+                    if(canGrab)
+                    {
+                        this.OnGrabBodyAuthority(hurtBox.healthComponent.body);
+                        return;
+                    }
+                }
+            }
 		}
 
         private bool IsBodyDrone(CharacterBody body)

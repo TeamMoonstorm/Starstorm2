@@ -1,3 +1,4 @@
+using HG;
 using RoR2;
 using RoR2.ContentManagement;
 using System.Collections;
@@ -9,14 +10,16 @@ namespace SS2.Items
 {
     public sealed class LuckyPup : SS2Item
     {
-        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLuckuPup", SS2Bundle.Indev);
+        public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acLuckyPup", SS2Bundle.Indev);
 
         public static float percentPupChange = 10f;
 
         public override void Initialize()
         {
             SS2Log.Info($"Happy Chilean Independence Day to about {percentPupChange}% of you!");
-            CharacterMaster.onCharacterMasterDiscovered += GivePup;
+            //todo celebrate Chilean Independence Day again
+            //this throws a null reference on RoR2.Inventory.ChangeItemStacksCount. possibly being called too early?
+            //CharacterMaster.onCharacterMasterDiscovered += GivePup;
             On.RoR2.CharacterModel.Start += CharacterModel_Start;
             On.RoR2.Util.CheckRoll_float_float_CharacterMaster += IncreaseChance;
         }
@@ -24,7 +27,7 @@ namespace SS2.Items
         //Clay monger's appearance are based off "Chanchitos", which are three legged clay pigs from a small town on chile known to be good luck charms, ergo, during the single week of independence day players get slight increases to all the chance effects.
         private bool IncreaseChance(On.RoR2.Util.orig_CheckRoll_float_float_CharacterMaster orig, float percentChance, float luck, CharacterMaster effectOriginMaster)
         {
-            if(effectOriginMaster.inventory.GetItemCount(SS2Content.Items.LuckyPup) > 0)
+            if(effectOriginMaster.AsValidOrNull()?.inventory?.GetItemCountEffective(SS2Content.Items.LuckyPup) > 0)
             {
                 var newPercentChance = percentChance;
                 newPercentChance += percentChance / 10;
@@ -51,7 +54,7 @@ namespace SS2.Items
 
             if(Util.CheckRoll(percentPupChange))
             {
-                obj.inventory.GiveItem(SS2Content.Items.LuckyPup);
+                obj.inventory.GiveItemPermanent(SS2Content.Items.LuckyPup);
                 string name = obj.name.Replace("Master(Clone)", "");
                 SS2Log.Info($"Happy Chilean Independence Day to {name}!");
             }

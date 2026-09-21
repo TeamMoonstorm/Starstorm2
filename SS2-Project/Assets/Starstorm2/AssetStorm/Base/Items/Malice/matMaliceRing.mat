@@ -9,8 +9,7 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: matMaliceRing
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
-  m_ValidKeywords:
-  - FRESNEL_EMISSION
+  m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -46,7 +45,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 1a5176e19103e5f4692dba4dd38fccba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -82,7 +81,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d33cdb1f6c2b7554d9b9a4acb2bef3b8, type: 3}
+        m_Texture: {fileID: 2800000, guid: dc0f9165553e3874fa5c7933eeb4c8bc, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -90,7 +89,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cb9f829f6ab4dc444986309a73c34525, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
@@ -106,7 +105,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SliceAlphaTex:
-        m_Texture: {fileID: 2800000, guid: d33cdb1f6c2b7554d9b9a4acb2bef3b8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SplatmapTex:
@@ -132,7 +131,7 @@ Material:
     - _EliteIndex: 0
     - _EmPower: 1
     - _EnableCutout: 0
-    - _FEON: 1
+    - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
     - _FlowEmissionStrength: 1
@@ -180,7 +179,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _EmColor: {r: 0, g: 0, b: 0, a: 1}
+    - _EmColor: {r: 0.8679245, g: 0.05322181, b: 0.3300072, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlashColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

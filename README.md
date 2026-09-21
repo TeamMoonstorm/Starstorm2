@@ -23,14 +23,14 @@ That said, if you are looking to contribute to the project, set-up instructions 
 
 * You'll need:
     * Unity Hub
-    * Unity version 2019.4.37f1 (Available from: https://unity.com/releases/editor/archive)
+    * Unity version 2021.3.33f1 (Available from: https://unity.com/releases/editor/archive)
     * A Git client (IE: GithubDesktop, Gitkraken, etc)
 
 * Begin by cloning the repository to your hard drive.
 
 ![](https://files.catbox.moe/2dz2k4.gif)
 
-* Once the project downloads, open the `SS2-Project` folder with Unity 2019.4.37f1. Keep in mind that opening the project for the first time will take time, so patience is key.
+* Once the project downloads, open the `SS2-Project` folder with Unity 2021.3.33f1. Keep in mind that opening the project for the first time will take time, so patience is key.
 
 ![](https://files.catbox.moe/gyzq2y.gif)
 
@@ -85,6 +85,8 @@ That said, if you are looking to contribute to the project, set-up instructions 
     * Hit Import
 
 ![](https://files.catbox.moe/6odrmh.gif)
+
+* Once done importing, right click the "AssetStorm" folder and then "Reimport All" - some prefabs will lose vital references after freshly importing, and this will cause a plethora of issues with specific pieces of content if not addressed before building! **This is practically a silent failure, and you will still be able to build without having reimported all assets**, though in doing so, many bugs will occur at runtime.
 
 * You're now ready to start development.
 
