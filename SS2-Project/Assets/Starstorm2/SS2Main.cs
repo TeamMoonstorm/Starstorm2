@@ -19,6 +19,7 @@ namespace SS2
     [BepInDependency("com.bepis.r2api.prefab")]
     [BepInDependency("com.bepis.r2api.difficulty")]
     [BepInDependency("com.bepis.r2api.tempvisualeffect")]
+    [BepInDependency("com.bepis.r2api.content_management")]
     #endregion
     [BepInDependency(MSU.MSUMain.GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]
@@ -52,6 +53,8 @@ namespace SS2
             new SS2Log(Logger);
             new SS2Config(this);
             new SS2Content();
+
+            UnlockAllHandler.Init();
 
             LoadBurstAssembly();
             LanguageFileLoader.AddLanguageFilesFromMod(this, "languages");

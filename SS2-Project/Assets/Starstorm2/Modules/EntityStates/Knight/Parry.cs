@@ -7,6 +7,7 @@ using SS2.Components;
 using System;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.Networking;
 
 namespace EntityStates.Knight
 {
@@ -44,7 +45,10 @@ namespace EntityStates.Knight
 
             base.OnEnter();
 
-            characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            if (NetworkServer.active)
+            {
+                characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
             animator = GetModelAnimator();
 
             // Grab and set the original skills
@@ -52,7 +56,7 @@ namespace EntityStates.Knight
             utilitySkill = skillLocator.utility;
             specialSkill = skillLocator.special;
 
-            upgradedSkillCache = gameObject.GetComponent<UpgradedSkillCache>();
+            gameObject.TryGetComponent(out upgradedSkillCache);
 
             TryOverrideSkill(primarySkill, ref buffedPrimarySkillDef);
             TryOverrideSkill(utilitySkill, ref buffedUtilitySkillDef);
@@ -153,7 +157,10 @@ namespace EntityStates.Knight
             TryUnsetOverride(utilitySkill, buffedUtilitySkillDef);
             TryUnsetOverride(specialSkill, buffedSpecialSkillDef);
 
-            characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+            if (NetworkServer.active)
+            {
+                characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+            }
             
             base.OnExit();
         }

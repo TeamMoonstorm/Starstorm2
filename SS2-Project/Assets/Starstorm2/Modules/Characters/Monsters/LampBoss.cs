@@ -5,6 +5,7 @@ using RoR2.ContentManagement;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Networking;
 using RoR2.CameraModes;
 using System.Reflection;
 using static RoR2.ExplicitPickupDropTable;
@@ -16,10 +17,12 @@ namespace SS2.Monsters
 
         public static BodyIndex BodyIndex;
         public static GameObject lampBuffEffectPrefab;
+        public static GameObject _masterPrefab;
         public override void Initialize()
         {
 
             lampBuffEffectPrefab = SS2Assets.LoadAsset<GameObject>("LampBuffEffect", SS2Bundle.Monsters);
+            _masterPrefab = AssetCollection.masterPrefab;
             RoR2Application.onLoad += () => BodyIndex = BodyCatalog.FindBodyIndex("LampBossBody");
             R2API.RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
             On.RoR2.CameraModes.CameraModeBase.ApplyLookInput += CameraModeBase_ApplyLookInput;
@@ -83,25 +86,35 @@ namespace SS2.Monsters
             private static BuffDef GetBuffDef() => SS2Content.Buffs.bdLampBuff;
 
             private TemporaryVisualEffect instance;
+
+            // TODO: Maybe useful in SS2Utils
+            // Ensure cb is null null/destroyed before passing effect string
+            private string GetSafeChildOverride()
+            {
+                return characterBody.modelLocator && characterBody.modelLocator.modelTransform
+                    ? effectChildString
+                    : "";
+            }
+
             private void FixedUpdate()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), GetSafeChildOverride());
                 }
             }
             private void OnEnable()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), GetSafeChildOverride());
                 }
             }
             private void OnDisable()
             {
                 if (characterBody && lampBuffEffectPrefab)
                 {
-                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, characterBody.HasBuff(SS2Content.Buffs.bdLampBuff), effectChildString);
+                    characterBody.UpdateSingleTemporaryVisualEffect(ref instance, lampBuffEffectPrefab, characterBody.radius, false, GetSafeChildOverride());
                 }
             }
 

@@ -13,6 +13,16 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acAffixStorm", SS2Bundle.Equipments);
 
+        private static BodyIndex clayTemplarBodyIndex;
+        private static int boostAttackSpeedStacks = 10;
+        private static int clayTemplarBoostAttackSpeedStacks = boostAttackSpeedStacks / 2;
+
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitCache()
+        {
+            clayTemplarBodyIndex = BodyCatalog.FindBodyIndex("ClayBruiserBody");
+        }
+
         public override void Initialize()
         {
             BuffOverlays.AddBuffOverlay(AssetCollection.FindAsset<BuffDef>("BuffAffixStorm"), SS2Assets.LoadAsset<Material>("matAffixLightning", SS2Bundle.Equipments));
@@ -41,7 +51,7 @@ namespace SS2.Items
                     body.inventory.GiveItem(SS2Content.Items.BoostMovespeed, 25);
                     body.inventory.GiveItem(SS2Content.Items.BoostCharacterSize, 20);
                     body.inventory.GiveItem(RoR2Content.Items.BoostHp, 25);
-                    body.inventory.GiveItem(RoR2Content.Items.BoostAttackSpeed, 10);
+                    body.inventory.GiveItem(RoR2Content.Items.BoostAttackSpeed, body.bodyIndex == clayTemplarBodyIndex ? clayTemplarBoostAttackSpeedStacks : boostAttackSpeedStacks);
                 }
 
                 // If something else is going to override death states, then we need to make a skilloverride equivalent system.

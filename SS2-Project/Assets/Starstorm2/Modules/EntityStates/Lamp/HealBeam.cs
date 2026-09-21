@@ -22,10 +22,8 @@ namespace EntityStates.Lamp
         private static float searchRadius = 27f;
         private static float beamBreakDistance = 36f;
         private static int maxBeams = 1;
-        private static bool ignoreMass = true;
 
         private static float forceMagnitude = -1.25f;
-        private static float forceDamping = 0.4f;
         private static float maxHeightDiff = 15f;
         private static float forceCoefficientAtMaxHeightDiff = 2f;
 
@@ -246,7 +244,6 @@ namespace EntityStates.Lamp
         }
 
         // TODO: Add forces if multiple beams are targetting one body, instead of separate damage
-        // ALSO todo::::::::::::::::: fizz force flags
         
         protected void Lifto(HurtBox hurtBox)
         {
@@ -263,44 +260,19 @@ namespace EntityStates.Lamp
 
             if (healthComponent && healthComponent.body && hurtBox.transform)
             {
-                CharacterMotor characterMotor = healthComponent.body.characterMotor;
-
                 Vector3 between = hurtBox.transform.position - transform.position;  
                 float heightDiff = Mathf.Abs(between.y);
-                Vector3 forceDirection = new Vector3(0, between.y, 0);
-                forceDirection = forceDirection.normalized;
+                Vector3 forceDirection = new Vector3(0, between.y, 0).normalized;
 
                 float forceCoefficient = Mathf.Clamp(heightDiff / maxHeightDiff, 1f, forceCoefficientAtMaxHeightDiff);
                 Vector3 forceVector = forceDirection * forceMagnitude * forceCoefficient;
 
-                Vector3 currentVerticalVelocity = Vector3.zero;
-                float mass = 0f;
-                bool useGravity = false;
-                if (characterMotor)
-                {
-                    useGravity = characterMotor.useGravity;
-                    currentVerticalVelocity = Vector3.up * characterMotor.velocity.y;
-                    mass = characterMotor.mass;
-                }
-                else
-                {
-                    Rigidbody rigidbody = healthComponent.body.rigidbody;
-                    if (rigidbody)
-                    {
-                        useGravity = rigidbody.useGravity;
-                        currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
-                        mass = rigidbody.mass;
-                    }
-                }
-                if (useGravity)
-                {
-                    currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
-                }
-                if (ignoreMass)
-                {
-                    forceVector *= mass;
-                }
-                healthComponent.TakeDamageForce(forceVector - currentVerticalVelocity * forceDamping * mass * forceCoefficient, true, false);
+                PhysForceInfo forceInfo = PhysForceInfo.Create();
+                forceInfo.force = forceVector;
+                forceInfo.massIsOne = true;
+                forceInfo.ignoreGroundStick = true;
+                forceInfo.doNotExceed = true;
+                healthComponent.TakeDamageForce(forceInfo);
             }
         }
 

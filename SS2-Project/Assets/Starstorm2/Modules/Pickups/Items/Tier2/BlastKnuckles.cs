@@ -83,9 +83,9 @@ namespace SS2.Items
 		}
 
         public override bool IsAvailable(ContentPack contentPack)
-		{
-			return SS2Config.enableBeta;
-		}
+        {
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+        }
 
 		public class BlastKnucklesBehavior : BaseItemBodyBehavior
 		{

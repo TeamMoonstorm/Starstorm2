@@ -59,7 +59,12 @@ namespace SS2.Components
             instance = this;
             On.RoR2.SceneDirector.Start += SceneDirector_Start; /////// fuck OFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
             base.transform.SetParent(Run.instance.transform);
-            voidshopRng = new Xoroshiro128Plus(Run.instance.runRNG.nextUlong);
+
+            // This is a harmless NRE on clients, but causes log noise that can confuse players thinking SS2 is root of X issue
+            if (Run.instance && Run.instance.runRNG != null)
+            {
+                voidshopRng = new Xoroshiro128Plus(Run.instance.runRNG.nextUlong);
+            }
         }
 
         private void OnDestroy()

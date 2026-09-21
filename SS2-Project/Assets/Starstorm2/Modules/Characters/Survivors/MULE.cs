@@ -30,7 +30,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return SS2Config.enableBeta && base.IsAvailable(contentPack);
+            return false;
         }
 
         public void ModifyPrefab()

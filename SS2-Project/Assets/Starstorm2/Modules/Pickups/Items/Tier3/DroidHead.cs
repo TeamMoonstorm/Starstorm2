@@ -84,7 +84,14 @@ namespace SS2.Items
                                 droneMaster.gameObject.AddComponent<MasterSuicideOnTimer>().lifeTimer = baseLifeTime + (stackLifeTime * (stack - 1));
 
                                 CharacterBody droidBody = droneMaster.GetBody();
-                                droidBody.baseDamage *= (baseDamage * stack);
+
+                                // In order for Droid Head drones to not just die on spawn from Elite death effects, 
+                                // give them a small window of invic
+                                if (droidBody)
+                                {
+                                    droidBody.baseDamage *= (baseDamage * stack);
+                                    droidBody.AddTimedBuff(RoR2Content.Buffs.Immune, 4f);
+                                }
 
                                 Inventory droidInventory = droneMaster.inventory;
 

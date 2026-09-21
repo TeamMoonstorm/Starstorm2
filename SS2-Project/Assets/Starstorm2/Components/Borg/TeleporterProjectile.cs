@@ -21,7 +21,12 @@ namespace SS2.Components
 		private static float funnyNumber = 0.5f;
         void Start()
         {
-            this.controller = base.GetComponent<ProjectileController>();
+            if (!base.TryGetComponent(out this.controller))
+            {
+                SS2Log.Warning("TeleporterProjectile.Start: missing ProjectileController");
+                return;
+            }
+
             this.owner = this.controller.owner;
             if(this.owner)
             {
@@ -112,7 +117,11 @@ namespace SS2.Components
             public static bool destroyOnFirstTeleport = true;
             private void Awake()
             {
-                this.body = base.GetComponent<CharacterBody>();
+                if (!base.TryGetComponent(out this.body))
+                {
+                    SS2Log.Warning("ProjectileTeleporterOwnership.Awake: missing CharacterBody");
+                    return;
+                }
 
                 this.teleportSkillDef = SS2Assets.LoadAsset<SkillDef>("Cyborg2Teleport", SS2Bundle.Indev);
                 if (this.body)
@@ -149,4 +158,3 @@ namespace SS2.Components
         }
     }
 }
-

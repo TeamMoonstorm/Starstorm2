@@ -14,7 +14,7 @@ namespace EntityStates.Executioner
         private static float spreadBloom = 0.75f;
         private static float force = 120f;
 
-        private static float bulletRadius = .7f;
+        private static float bulletRadius = 0.9f;
         [HideInInspector]
         private static GameObject muzzleEffectPrefab = LegacyResourcesAPI.Load<GameObject>("prefabs/effects/muzzleflashes/Muzzleflash1");
         [HideInInspector]

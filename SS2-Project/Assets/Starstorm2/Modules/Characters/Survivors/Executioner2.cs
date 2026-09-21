@@ -50,6 +50,8 @@ namespace SS2.Survivors
 
         private static float fearExecuteThresholdAdditive = (1f / 0.85f) - 1f;   //0.15f with ExecuteAPI
 
+        public static BodyIndex xiConstructBodyIndex = BodyIndex.None;
+
         public static void AddBodyToSuperChargeCollection(string body)
         {
             bodiesThatGiveSuperCharge.Add(body);
@@ -81,6 +83,14 @@ namespace SS2.Survivors
                 ScepterCompat();
             }
         }
+
+        // Part of the fix to prevent Xi from fleeing to the OOB of the map and softlocking the game for players
+        [SystemInitializer(typeof(BodyCatalog))]
+        private static void InitCache()
+        {
+            xiConstructBodyIndex = BodyCatalog.FindBodyIndex("MegaConstructBody");
+        }
+
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]
         public void ScepterCompat()
         {
@@ -312,7 +322,7 @@ namespace SS2.Survivors
             {
                 if (effectInstance) Destroy(effectInstance);
                 
-                effectInstance = Instantiate(inMasterySkin ? fearEffectPrefabMastery : fearEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                effectInstance = Instantiate(inMasterySkin ? fearEffectPrefabMastery : fearEffectPrefab, characterBody.corePosition, Quaternion.identity);
                 Util.PlaySound(activationSoundString, gameObject); //?????????????
             }
 

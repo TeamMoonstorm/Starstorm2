@@ -47,7 +47,7 @@ namespace SS2
             {
                 b.section = "00 - Item Disabling";
                 b.key = $"Disable Item: {MSUtil.NicifyString(GetType().Name)}";
-                b.description = "Set this to true if you want to disable this item from appearing in game. Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur.";
+                b.description = "Set this to true if you want to disable this item from appearing in game. Make sure everyone has this enabled or disabled in multiplayer otherwise desyncs could occur as this prevents the content from being loaded entirely. Restart required.";
                 b.configFile = SS2Config.ConfigItem;
                 b.checkBoxConfig = new CheckBoxConfig
                 {
