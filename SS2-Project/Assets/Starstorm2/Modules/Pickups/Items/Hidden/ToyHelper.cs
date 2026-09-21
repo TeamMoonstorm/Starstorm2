@@ -15,7 +15,7 @@ namespace SS2.Items
     {
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acToyHelper", SS2Bundle.Items);
         public static Texture toyMandoSprite;
-        private static float toyScale = 25f; // gets multiplied by .01 then subracted from 1 e.g. 25f -> 0.25f -> (1 - 0.25f) = .75 scale
+        private static float toyScale = 25f; // gets multiplied by .01 then subracted from 1 e.g. 25f -> 0
 
         public override void Initialize()
         {
@@ -184,7 +184,7 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                if (body.healthComponent.alive)
+                if (healthComponent != null && healthComponent.alive)
                 {
                     UpdateScale(0);
 

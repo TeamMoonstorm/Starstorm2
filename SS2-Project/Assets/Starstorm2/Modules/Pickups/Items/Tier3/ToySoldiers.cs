@@ -48,7 +48,7 @@ namespace SS2.Items
         {
             commandoMasterPrefab = Addressables.LoadAssetAsync<GameObject>("f146e1c7699e35b43b70e119b46875e8").WaitForCompletion();
             soldierPodPrefab = Addressables.LoadAssetAsync<GameObject>("659066785bfffe94fbbd9183a5b12618").WaitForCompletion().InstantiateClone("ToySoldierPod");
-            if (soldierPodPrefab != null)
+            if (commandoMasterPrefab != null && soldierPodPrefab != null)
             {
                 soldierPodPrefab.transform.localScale *= soldierScale;
 
