@@ -60,14 +60,14 @@ namespace SS2.Items
                 }
 
 
-                if (body.healthComponent != null)
+                if (body && body.healthComponent)
                 {
                     healthComponent = body.healthComponent;
                 }
 
                 // for some reason when players die they get like 7 overlays????????? and they shine bright like a small green sun. nothing like epilipsy tier but jarring to me as a player
                 // thankfully im never playing as a toy, and the ai bodies dont seem to do this, but would be nice to know why and how to fix. thought checking for alive / already owning buff would
-                if (NetworkServer.active && healthComponent != null && healthComponent.alive && !body.HasBuff(SS2Content.Buffs.bdToy))
+                if (NetworkServer.active && healthComponent && healthComponent.alive && body && !body.HasBuff(SS2Content.Buffs.bdToy))
                 {
                     body.AddBuff(SS2Content.Buffs.bdToy);
                 }
@@ -75,17 +75,17 @@ namespace SS2.Items
 
             private void FixedUpdate()
             {
-                if (!froze && healthComponent != null && !healthComponent.alive)
+                if (!froze && healthComponent && !healthComponent.alive)
                 {
                     deathTimer += Time.fixedDeltaTime;
                     if (deathTimer >= timeUntilFreeze)
                     {
-                        if (body.modelLocator != null && body.modelLocator.modelTransform != null && body.modelLocator.modelTransform.TryGetComponent(out RagdollController rc))
+                        if (body && body.modelLocator && body.modelLocator.modelTransform && body.modelLocator.modelTransform.TryGetComponent(out RagdollController rc))
                         {
                             // fall over in static pose e.g. https://youtu.be/TXvR6yxUVSw?t=77 
                             foreach (Transform bone in rc.bones)
                             {
-                                if (bone.gameObject.layer != LayerIndex.ragdoll.intVal)
+                                if (bone && bone.gameObject && bone.gameObject.layer != LayerIndex.ragdoll.intVal)
                                 {
                                     continue;
                                 }
@@ -93,7 +93,7 @@ namespace SS2.Items
                                 foreach (Joint joint in bone.GetComponents<Joint>())
                                 {
                                     // its in the world and not attached to a body
-                                    if (!joint.connectedBody || joint is FixedJoint)
+                                    if (joint && !joint.connectedBody || joint is FixedJoint)
                                     {
                                         continue;
                                     }
@@ -143,8 +143,10 @@ namespace SS2.Items
                     {
                         foreach (Transform bone in rc.bones)
                         {
-                            if (bone.gameObject.layer != LayerIndex.ragdoll.intVal)
+                            if (bone && bone.gameObject && bone.gameObject.layer != LayerIndex.ragdoll.intVal)
+                            {
                                 continue;
+                            }
 
                             foreach (Joint joint in bone.GetComponents<Joint>())
                             {
@@ -157,7 +159,7 @@ namespace SS2.Items
                     }
                 }
 
-                if (NetworkServer.active && body.master)
+                if (NetworkServer.active && body &&body.master)
                 {
                     ModifySkillDrivers(deltaScale);
                 }
@@ -165,7 +167,7 @@ namespace SS2.Items
 
             private void ModifySkillDrivers(float deltaScale)
             {
-                if (body == null || body.master.aiComponents.Length < 1)
+                if (!body || body.master.aiComponents.Length < 1)
                 {
                     return;
                 }
@@ -184,12 +186,12 @@ namespace SS2.Items
 
             private void OnDestroy()
             {
-                if (healthComponent != null && healthComponent.alive)
+                if (healthComponent && healthComponent.alive)
                 {
                     UpdateScale(0);
 
                     // ??????????
-                    if (oldIcon != null)
+                    if (oldIcon)
                     {
                         body.portraitIcon = oldIcon;
                     }

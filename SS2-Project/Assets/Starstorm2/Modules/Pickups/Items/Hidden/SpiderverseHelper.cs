@@ -39,7 +39,7 @@ namespace SS2.Items
             {
                 base.Awake();
 
-                if (body.modelLocator && body.modelLocator.modelTransform && body.modelLocator.modelTransform.TryGetComponent(out Animator anim))
+                if (body && body.modelLocator && body.modelLocator.modelTransform && body.modelLocator.modelTransform.TryGetComponent(out Animator anim))
                 {
                     animator = anim;
                 }

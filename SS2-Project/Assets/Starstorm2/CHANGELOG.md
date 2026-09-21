@@ -16,7 +16,7 @@
     * Fixes Engineer's Laser Focus failing to set LaserEnds and breaking VFX
 * Beta
     * Makes ethereal sapling a single interact to activate and makes it not NRE on teleporter 
-    * Added new content: Toy Soldiers (red item)
+    * Added new content: Toy Soldiers (red item) (visuals not properly networked, toy commandos wont appear green)
     * Fixes Scavenger's Fortune NREs when given to enemies
     * Makes sure the special elite gets the new equipment via updated SetEquipment method
 

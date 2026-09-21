@@ -208,7 +208,8 @@ namespace SS2.Items
 
                             if (toyBody.TryGetComponent(out SfxLocator sfx))
                             {
-                                sfx.deathSound = "Play_engi_R_turret_death";
+                                // shut up! this sound is for bodies with actual physical souls puppetting them through their electornic devices ONLY!!!!
+                                sfx.deathSound = "Play_engi_R_turret_death"; 
                             }
 
                             Inventory toyInventory = toyMaster.inventory;
