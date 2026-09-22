@@ -1,5 +1,8 @@
+using EntityStates.Railgunner.Backpack;
 using EntityStates.Railgunner.Reload;
 using RoR2;
+using RoR2.Skills;
+using SS2;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -53,11 +56,46 @@ namespace EntityStates.Railgunner
 
             if (isAuthority)
             {
-                EntityStateMachine entityStateMachine = EntityStateMachine.FindByCustomName(base.gameObject, "Reload");
+                EntityStateMachine scopeStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Scope");
+                EntityStateMachine reloadStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Reload");
+                EntityStateMachine backpackStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Backpack");
 
-                if (entityStateMachine && entityStateMachine.state is Reloading reloadState && !reloadState.hasAttempted)
+                if (!scopeStateMachine || !reloadStateMachine || !backpackStateMachine || !skillLocator)
                 {
-                    entityStateMachine.SetNextState(new BoostConfirm());
+                    SS2Log.Error("Tactical Roll requires Railgunner's Scope, Reload, and Backpack state machines and SkillLocator.");
+                    return;
+                }
+
+                // Scope overrides must be removed before refilling the underlying skills
+                if (!scopeStateMachine.IsInMainState() || scopeStateMachine.HasPendingState())
+                {
+                    scopeStateMachine.SetState(EntityStateCatalog.InstantiateState(ref scopeStateMachine.mainStateType));
+                }
+
+                if (backpackStateMachine.state is Offline || backpackStateMachine.nextState is Offline)
+                {
+                    return;
+                }
+
+                if (reloadStateMachine.nextState is BoostConfirm boostConfirm)
+                {
+                    // Preserve a successful manual reload that has not transitioned yet
+                    reloadStateMachine.SetState(boostConfirm);
+                }
+                else if (reloadStateMachine.state is Waiting || reloadStateMachine.state is Reloading
+                    || reloadStateMachine.nextState is Waiting)
+                {
+                    // Also clear a queued reload, restoring stock alone does not cancel it
+                    reloadStateMachine.SetState(new Waiting());
+                }
+
+                for (int i = 0; i < skillLocator.skillSlotCount; i++)
+                {
+                    GenericSkill skill = skillLocator.GetSkillAtIndex(i);
+                    if (skill && skill.skillDef is RailgunSkillDef railgunSkillDef && railgunSkillDef.restockOnReload)
+                    {
+                        skill.stock = skill.maxStock;
+                    }
                 }
             }
         }

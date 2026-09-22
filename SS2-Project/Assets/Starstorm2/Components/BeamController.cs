@@ -13,6 +13,7 @@ namespace SS2
     public class BeamController : NetworkBehaviour
     {
         public static event Action<BeamController> onBeamStartGlobal;
+        public event Action onBreakServer;
         [Serializable]
         public class OnTickUnityEvent : UnityEvent<BeamController>
         {
@@ -38,10 +39,12 @@ namespace SS2
         private float scaleFactor;
 
         public GenericOwnership ownership { get; private set; }
+        public bool isBroken => this.broken;
         public HurtBox target
         {
             get
             {
+                this.UpdateCachedHurtBox();
                 return this.cachedHurtBox;
             }
             [Server]
@@ -100,6 +103,7 @@ namespace SS2
         }
         private void FixedUpdate()
         {
+            this.UpdateCachedHurtBox();
             if (NetworkServer.active)
             {
                 this.FixedUpdateServer();
@@ -107,7 +111,11 @@ namespace SS2
         }
         private void FixedUpdateServer()
         {
-            if (!this.cachedHurtBox)
+            if (this.broken)
+            {
+                return;
+            }
+            if (!this.cachedHurtBox || !this.cachedHurtBox.healthComponent || !this.cachedHurtBox.healthComponent.alive)
             {
                 this.BreakServer();
                 return;
@@ -115,7 +123,7 @@ namespace SS2
             if (this.tickInterval > 0f)
             {
                 this.stopwatchServer += Time.fixedDeltaTime;
-                while (this.stopwatchServer >= this.tickInterval)
+                while (!this.broken && this.stopwatchServer >= this.tickInterval)
                 {
                     this.stopwatchServer -= this.tickInterval;
                     this.OnTickServer();
@@ -124,7 +132,7 @@ namespace SS2
         }
         private void OnTickServer()
         {
-            if (!this.cachedHurtBox || !this.cachedHurtBox.healthComponent)
+            if (this.broken || !this.cachedHurtBox || !this.cachedHurtBox.healthComponent || !this.cachedHurtBox.healthComponent.alive)
             {
                 this.BreakServer();
                 return;
@@ -133,7 +141,7 @@ namespace SS2
         }
         private void UpdateCachedHurtBox()
         {
-            if (!this.previousHurtBoxReference.Equals(this.netTarget))
+            if (!this.cachedHurtBox || !this.previousHurtBoxReference.Equals(this.netTarget))
             {
                 this.cachedHurtBox = this.netTarget.ResolveHurtBox();
                 this.previousHurtBoxReference = this.netTarget;
@@ -183,7 +191,7 @@ namespace SS2
             Vector3 localScale = new Vector3(this.scaleFactor, this.scaleFactor, this.scaleFactor);
             this.startPointTransform.SetPositionAndRotation(base.transform.position, base.transform.rotation);
             this.startPointTransform.localScale = localScale;
-            if (this.cachedHurtBox)
+            if (this.cachedHurtBox && this.cachedHurtBox.healthComponent && this.cachedHurtBox.healthComponent.body)
             {
                 this.endPointTransform.position = this.cachedHurtBox.healthComponent.body.corePosition;
             }
@@ -198,6 +206,7 @@ namespace SS2
                 return;
             }
             this.broken = true;
+            this.onBreakServer?.Invoke();
             this.target = null;
             base.transform.SetParent(null);
             this.ownership.ownerObject = null;

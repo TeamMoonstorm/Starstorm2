@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 2098122733664339179}
   - component: {fileID: 2097779436862480679}
   - component: {fileID: -2978938097193509915}
+  - component: {fileID: 6195187213054494630}
   m_Layer: 0
   m_Name: LampHealBeamBlue
   m_TagString: Untagged
@@ -369,6 +370,18 @@ MonoBehaviour:
   breakOnTargetFullyHealed: 0
   lineRenderer: {fileID: 2906734541348969894}
   lingerAfterBrokenDuration: 0.6
+--- !u!114 &6195187213054494630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3025222034792280126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f91b768a634edaa49fb0a2d3c18375, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!1 &3025223499015515047
 GameObject:
   m_ObjectHideFlags: 0

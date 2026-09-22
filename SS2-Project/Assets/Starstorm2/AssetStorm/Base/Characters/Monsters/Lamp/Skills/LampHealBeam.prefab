@@ -267,6 +267,7 @@ GameObject:
   - component: {fileID: 3810425909555055278}
   - component: {fileID: 1446224037584869863}
   - component: {fileID: 7579912662135416803}
+  - component: {fileID: 6195187213054494630}
   m_Layer: 0
   m_Name: LampHealBeam
   m_TagString: Untagged
@@ -370,6 +371,18 @@ MonoBehaviour:
   breakOnTargetFullyHealed: 0
   lineRenderer: {fileID: 120294061088273967}
   lingerAfterBrokenDuration: 0.6
+--- !u!114 &6195187213054494630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735081237257143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4f91b768a634edaa49fb0a2d3c18375, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
 --- !u!114 &7579912662135416803
 MonoBehaviour:
   m_ObjectHideFlags: 0

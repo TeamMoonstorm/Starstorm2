@@ -23,10 +23,6 @@ namespace EntityStates.Lamp
         private static float beamBreakDistance = 36f;
         private static int maxBeams = 1;
 
-        private static float forceMagnitude = -1.25f;
-        private static float maxHeightDiff = 15f;
-        private static float forceCoefficientAtMaxHeightDiff = 2f;
-
         private static float selfUpSpeed = 3f;
 
         public static GameObject healBeamPrefab;
@@ -98,16 +94,24 @@ namespace EntityStates.Lamp
                     CharacterBody body = h.healthComponent.body;
                     if (CanHeal(body) && beamCount < maxBeams)
                     {
-                        beamCount++;
                         GameObject beam = isBlue ? healBeamPrefabBlue : healBeamPrefab;
                         GameObject beamInstance = Object.Instantiate(beam, muzzle);
+                        LampBeamPullController pullController = beamInstance.GetComponent<LampBeamPullController>();
+                        if (!pullController)
+                        {
+                            SS2Log.Error("Follower beam is missing LampBeamPullController. Rebuild the monster asset bundle.");
+                            Object.Destroy(beamInstance);
+                            continue;
+                        }
+                        beamCount++;
                         BeamController beamController = beamInstance.GetComponent<BeamController>();
                         beamController.onTickServer.AddListener(OnTickServer);
                         beamController.tickInterval = tickInterval;
                         beamController.target = h.hurtBoxGroup.mainHurtBox;
                         beamController.ownership.ownerObject = gameObject;
+                        pullController.TryClaimLiftServer();
                         healBeams.Add(beamController);
-                        NetworkServer.Spawn(gameObject);
+                        NetworkServer.Spawn(beamInstance);
 
                         if (!shouldFlyUp && ShouldDamage(h))
                         {
@@ -134,6 +138,12 @@ namespace EntityStates.Lamp
         private void OnTickServer(BeamController beam)
         {
             HurtBox target = beam.target;
+            if (!characterBody || !characterBody.healthComponent || !characterBody.healthComponent.alive
+                || !target || !target.healthComponent || !target.healthComponent.alive)
+            {
+                beam.BreakServer();
+                return;
+            }
             float tickInterval = beam.tickInterval;
 
             if (!ShouldDamage(target))
@@ -159,7 +169,10 @@ namespace EntityStates.Lamp
             }
             
 
-            target.healthComponent.body.AddTimedBuff(SS2Content.Buffs.bdLampBuff.buffIndex, buffDuration);
+            if (target && target.healthComponent && target.healthComponent.body)
+            {
+                target.healthComponent.body.AddTimedBuff(SS2Content.Buffs.bdLampBuff.buffIndex, buffDuration);
+            }
         }
 
         private bool CanHeal(CharacterBody body)
@@ -215,15 +228,6 @@ namespace EntityStates.Lamp
                                 beam.BreakServer();
                             }
                         }
-                        else
-                        {
-                            // Additional null check since it seems target might die right after this check. For #882
-                            if (beam && beam.target && ShouldDamage(beam.target))
-                            {
-                                Lifto(beam.target);
-                            }
-                        }
-
                     }
                 }
             }
@@ -240,39 +244,6 @@ namespace EntityStates.Lamp
                     outer.SetNextStateToMain();
                 }
                 
-            }
-        }
-
-        // TODO: Add forces if multiple beams are targetting one body, instead of separate damage
-        
-        protected void Lifto(HurtBox hurtBox)
-        {
-            if (!NetworkServer.active)
-            {
-                return;
-            }
-            if (!hurtBox)
-            {
-                return;
-            }
-
-            HealthComponent healthComponent = hurtBox.healthComponent;
-
-            if (healthComponent && healthComponent.body && hurtBox.transform)
-            {
-                Vector3 between = hurtBox.transform.position - transform.position;  
-                float heightDiff = Mathf.Abs(between.y);
-                Vector3 forceDirection = new Vector3(0, between.y, 0).normalized;
-
-                float forceCoefficient = Mathf.Clamp(heightDiff / maxHeightDiff, 1f, forceCoefficientAtMaxHeightDiff);
-                Vector3 forceVector = forceDirection * forceMagnitude * forceCoefficient;
-
-                PhysForceInfo forceInfo = PhysForceInfo.Create();
-                forceInfo.force = forceVector;
-                forceInfo.massIsOne = true;
-                forceInfo.ignoreGroundStick = true;
-                forceInfo.doNotExceed = true;
-                healthComponent.TakeDamageForce(forceInfo);
             }
         }
 
