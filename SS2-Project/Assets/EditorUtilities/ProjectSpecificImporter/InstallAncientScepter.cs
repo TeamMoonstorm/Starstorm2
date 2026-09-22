@@ -5,7 +5,7 @@ using ThunderKit.Core;
 using ThunderKit.Core.Config;
 using ThunderKit.Integrations.Thunderstore;
 
-namespace Moonstorm.Starstorm2.Editor
+namespace SS2.Editor.Importers
 {
     internal class InstallAncientScepter : ThunderstorePackageInstaller
     {

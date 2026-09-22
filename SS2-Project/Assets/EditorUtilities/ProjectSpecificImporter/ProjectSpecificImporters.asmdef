@@ -1,10 +1,13 @@
 {
     "name": "ProjectSpecificImporters",
+    "rootNamespace": "",
     "references": [
         "ThunderKit.Common",
         "ThunderKit.Core",
         "ThunderKit.Thunderstore",
-        "RoR2Importers"
+        "RoR2Importers",
+        "RoR2.Editor",
+        "Unity.EditorCoroutines.Editor"
     ],
     "includePlatforms": [
         "Editor"
