@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9a2adbf9d235e542a8ee6fba5f7f347, type: 3}
   m_Name: sdNemCapStressableOrders
   m_EditorClassIdentifier: 
-  skillName: NemCapSetupDroneOrders
+  skillName: NemCapSetupDroneOrdersOld
   skillNameToken: SS2_NEMCAPTAIN_ORDERS_NAME
   skillDescriptionToken: SS2_NEMCAPTAIN_ORDERS_DESCRIPTION
   keywordTokens: []
@@ -21,12 +21,14 @@ MonoBehaviour:
   activationState:
     _typeName: EntityStates.NemCaptain.Weapon.SetupDroneOrders, Starstorm2, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
-  interruptPriority: 2
-  baseRechargeInterval: 0.5
+  interruptPriority: 1
+  baseRechargeInterval: 0
   baseMaxStock: 1
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,4 +38,6 @@ MonoBehaviour:
   canceledFromSprinting: 1
   isCombatSkill: 1
   mustKeyPress: 1
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
   canCastIfOverstressed: 0
