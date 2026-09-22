@@ -17,7 +17,7 @@ MonoBehaviour:
   skillDescriptionToken: SS2_NEMCAPTAIN_HAIDARA_DESCRIPTION
   keywordTokens:
   - KEYWORD_SHOCKING
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: a2dad89f8a215b740a68a4d45fdc8786, type: 3}
   activationStateMachineName: Weapon
   activationState:
     _typeName: EntityStates.NemCaptain.Haidara, Starstorm2, Version=1.0.0.0, Culture=neutral,
@@ -28,6 +28,8 @@ MonoBehaviour:
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -37,3 +39,5 @@ MonoBehaviour:
   canceledFromSprinting: 0
   isCombatSkill: 1
   mustKeyPress: 1
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
