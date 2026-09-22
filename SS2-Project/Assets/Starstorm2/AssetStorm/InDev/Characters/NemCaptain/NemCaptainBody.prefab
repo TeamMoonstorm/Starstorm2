@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &139545381367638667
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,6 +537,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &528192378443125727
 GameObject:
   m_ObjectHideFlags: 0
@@ -580,6 +582,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &570348684736257358
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,6 +2307,7 @@ MonoBehaviour:
   healthComponent: {fileID: 4102255655407398668}
   isBullseye: 1
   isSniperTarget: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 7848643340294355472}
   indexInGroup: 0
@@ -3251,6 +3255,7 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 0}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 7963851107090326908}
     defaultMaterialAddress:
@@ -3302,10 +3307,15 @@ MonoBehaviour:
     ignoreOverlays: 1
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos: []
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0
@@ -3929,6 +3939,7 @@ GameObject:
   - component: {fileID: -6421377625998616615}
   - component: {fileID: 263349432300893736}
   - component: {fileID: 5612468648286512462}
+  - component: {fileID: 2422925653001228619}
   m_Layer: 0
   m_Name: NemCaptainBody
   m_TagString: Player
@@ -4025,6 +4036,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_NEMCAPTAIN_SUBTITLE
   bodyFlags: 16
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 110
@@ -4050,8 +4062,6 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
@@ -4060,6 +4070,7 @@ MonoBehaviour:
   boostAllStatsDisplay: {fileID: 0}
   currentGrowthNectarBuffCount: 0
   maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.45
   spreadBloomCurve:
@@ -4088,6 +4099,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -4096,13 +4109,18 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 7156576157115183856}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 0}
   bodyColor: {r: 0.509434, g: 0.34543827, b: 0.21386614, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
   altDeathBodyName: 
+  vehicleIdleStateMachine: []
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -4147,6 +4165,7 @@ MonoBehaviour:
   isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 7994026586980312019}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &2308244639629627277
 MonoBehaviour:
@@ -4190,6 +4209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
 --- !u!114 &2196301728555140223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4247,9 +4267,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 527a4e9b2d5782045a6696fa20c69d0b, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &711173282977369456
 MonoBehaviour:
@@ -4265,9 +4289,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 524bbec3794b7894dbf01250dfca08ee, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &8088283001040087884
 MonoBehaviour:
@@ -4283,9 +4311,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 36e0e15e190c2904388be08f6e650967, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &8306923874295302173
 MonoBehaviour:
@@ -4301,9 +4333,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 7309233cd97b4ff44b41c050cf627cac, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &3026157821763874476
 MonoBehaviour:
@@ -4319,9 +4355,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 241124904d1cf9948b98b1c743e9fdeb, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &4777647452042247494
 MonoBehaviour:
@@ -4422,6 +4462,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 0.1
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 2520711261745657046}
   idleStateMachine: []
   hurtState:
@@ -4430,6 +4471,8 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+  isFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &2334411435597588698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4448,6 +4491,10 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   idleStateMachine:
   - {fileID: 7175763700555500974}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!136 &512786809835301965
 CapsuleCollider:
@@ -4542,11 +4589,15 @@ MonoBehaviour:
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &8580278735659730853
@@ -4567,6 +4618,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 720
   turnSoundName: 
 --- !u!114 &4656717228000344130
@@ -4602,6 +4654,7 @@ MonoBehaviour:
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 4790240928265810839}
   modelScaleCompensation: 1
+  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
   dontDetatchFromParent: 0
   noCorpse: 0
@@ -4611,6 +4664,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &8578835051055927170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4626,6 +4681,7 @@ MonoBehaviour:
   deathSound: Play_ui_player_death
   barkSound: 
   openSound: 
+  jumpSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage
   aliveLoopStart: 
@@ -4657,20 +4713,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterBody: {fileID: 7994026586980312019}
+  skillLocator: {fileID: 5616537615862492254}
   characterAnimator: {fileID: 2280356976782772585}
-  deck: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
-  hand1: {fileID: -8895812555022209055}
-  hand2: {fileID: 766899857383436856}
-  hand3: {fileID: -6421377625998616615}
-  hand4: {fileID: 263349432300893736}
-  nullSkill: {fileID: 11400000, guid: a17f4088df05b2c4d929fe13e49d3411, type: 2}
-  cachedPrimary: {fileID: 0}
+  weaponStateMachine: {fileID: 7175763700555500974}
+  deck1:
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: 10732a02bfd08b84bad799fb7a4ea36c, type: 2}
+  - {fileID: 11400000, guid: 7fe4d152c38175f4f9f8870f2b318017, type: 2}
+  - {fileID: 11400000, guid: 30daad84d69abc1499a1ed1f9dc9570e, type: 2}
+  - {fileID: 11400000, guid: 9287d9f3a2858dc428b6ed5a9b26bb2d, type: 2}
+  - {fileID: 11400000, guid: 91d15b19306c5b047b3ce0c7deb843f4, type: 2}
+  - {fileID: 11400000, guid: 37ddbb30aa1667342bd8a8e6f858a2d0, type: 2}
+  - {fileID: 11400000, guid: 86749ee6a1d68df40a1b975a32c11f7d, type: 2}
+  deck2:
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: 30daad84d69abc1499a1ed1f9dc9570e, type: 2}
+  - {fileID: 11400000, guid: 1a0514b65377d414ab8b0e8fed1f19d2, type: 2}
+  - {fileID: 11400000, guid: 91d15b19306c5b047b3ce0c7deb843f4, type: 2}
+  deck3:
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: b369e22c860ade5479e7d5abd4dd40d2, type: 2}
+  - {fileID: 11400000, guid: 7fe4d152c38175f4f9f8870f2b318017, type: 2}
   minStress: 0
   maxStress: 100
+  bonusMaxStressPerStack: 0
   stressPerSecondInCombat: 0
   stressPerSecondOutOfCombat: -3
   stressPerSecondWhileOverstressed: -12.5
+  stressPerSecondWhileTotalReset: 0
   stressPerSecondWhileRegenBuff: -4
+  stressPerSecondWhileBarriered: 0
   stressGainedOnFullDamage: 55
   stressGainedOnOSP: 0
   stressGainedOnHeal: -40
@@ -4681,18 +4755,17 @@ MonoBehaviour:
   stressGainedWhenSurrounded: 2.5
   stressGainedOnItem: -1
   stressOnOutOfOrders: 35
-  surroundedThreshold: 8
-  enemyRadius: 13
-  stressOverlayPrefab: {fileID: 1894802512682313, guid: 7aa69281e0edca147beeff3020ab1703,
+  bonusMaxStressStacks: 0
+  stressOverlayPrefab: {fileID: 7039459296565525742, guid: 06ba0fb7bfb00774db1af6be8618bf52,
     type: 3}
   stressOverlayChildLocatorEntry: CrosshairExtras
   cardOverlayPrefab: {fileID: 3976287298108836530, guid: 8f3b51d523e04d749ac348210c6bcfa2,
     type: 3}
   cardOverlayChildLocatorEntry: CrosshairExtras
-  droneA: {fileID: 0}
-  droneB: {fileID: 0}
-  droneC: {fileID: 0}
-  droneAimRoot: {fileID: 0}
+  droneA: {fileID: 227468042961019162}
+  droneB: {fileID: 5175381176774464349}
+  droneC: {fileID: 5229709098936043967}
+  droneAimRoot: {fileID: 4432911291685938371}
 --- !u!114 &-8895812555022209055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4707,9 +4780,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
   skillName: hand1
+  loadoutTitleToken: 
   hideInCharacterSelect: 1
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &766899857383436856
 MonoBehaviour:
@@ -4725,9 +4802,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
   skillName: hand2
+  loadoutTitleToken: 
   hideInCharacterSelect: 1
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &-6421377625998616615
 MonoBehaviour:
@@ -4743,9 +4824,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
   skillName: hand3
+  loadoutTitleToken: 
   hideInCharacterSelect: 1
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &263349432300893736
 MonoBehaviour:
@@ -4761,9 +4846,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 427f593700ccf7141aa7e4abea80eae3, type: 2}
   skillName: hand4
+  loadoutTitleToken: 
   hideInCharacterSelect: 1
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &5612468648286512462
 MonoBehaviour:
@@ -4783,6 +4872,28 @@ MonoBehaviour:
   mainStateType:
     _typeName: EntityStates.Idle, RoR2, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
   debug: 0
+--- !u!114 &2422925653001228619
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6087713977417582395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 298587437, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _skillFamily: {fileID: 11400000, guid: 6ee2e07b09602c04fba0a9a6b0d70b9c, type: 2}
+  skillName: decks
+  loadoutTitleToken: 
+  hideInCharacterSelect: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
+  hasExecutedSuccessfully: 0
 --- !u!1 &6114954042290170794
 GameObject:
   m_ObjectHideFlags: 0
@@ -4954,6 +5065,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &6712482405820446071
 GameObject:
   m_ObjectHideFlags: 0
