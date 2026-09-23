@@ -30,7 +30,8 @@ namespace EntityStates.NemCroco
             duration = baseDuration / attackSpeedStat;
 
             StartAimMode(duration + 2f, false);
-            PlayAnimation("Gesture, Mouth", "FireSpit", "FireSpit.playbackRate", duration);
+            // PlayAnimation("Gesture, Mouth", "FireSpit", "FireSpit.playbackRate", duration);
+            PlayAnimation("Gesture, Override", "FireSpit", "FireSpit.playbackRate", duration);
             Util.PlaySound(attackString, gameObject);
             AddRecoil(-1f * recoilAmplitude, -1.5f * recoilAmplitude, -0.25f * recoilAmplitude, 0.25f * recoilAmplitude);
 

@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1028836815967264
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4960832822767728}
+  - component: {fileID: -8813872889886456920}
+  m_Layer: 0
+  m_Name: NemCrocoAcidTrail
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4960832822767728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028836815967264}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
+--- !u!114 &-8813872889886456920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028836815967264}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddbd2cd2e99aa434ba824623a5a4c6a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pointUpdateInterval: 0.2
+  pointUpdateDistance: 2
+  damageUpdateInterval: 0.2
+  radius: 4
+  height: 0.5
+  pointLifetime: 3
+  damageType:
+    damageType: 0
+    damageTypeExtended: 0
+    damageSource: 0
+  lineRenderer: {fileID: 0}
+  active: 1
+  segmentPrefab: {fileID: 1760327921723487, guid: a3b11ab4f06d4d042bd5ea77b750e728,
+    type: 3}
+  impactEffectPrefab: {fileID: 1993144065286245, guid: 5f66b1e921e7041469e5a8b6f2fab896,
+    type: 3}
+  destroyTrailSegments: 0
+  damagePerSecond: 0
+  procCoefficientPerSecond: 0
+  crit: 0
+  owner: {fileID: 0}

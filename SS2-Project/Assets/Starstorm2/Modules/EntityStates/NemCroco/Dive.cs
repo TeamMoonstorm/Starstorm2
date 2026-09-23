@@ -53,7 +53,7 @@ namespace EntityStates.NemCroco
             }
             
             GetModelTransform().GetComponent<AimAnimator>().enabled = true;
-            PlayCrossfade("Gesture, Override", "Dive", 0.1f);
+            PlayCrossfade("FullBody, Override", "Dive", 0.1f);
             //PlayCrossfade("Gesture, AdditiveHigh", "Leap", 0.1f); // TODO: Check what this does on acrid
 
             Util.PlaySound(leapSoundString, gameObject);

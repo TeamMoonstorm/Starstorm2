@@ -35,7 +35,9 @@ namespace SS2.Components
         public bool active = true;
         [Tooltip("Prefab to use per segment.")]
         public GameObject segmentPrefab;
+        public GameObject impactEffectPrefab;
         public bool destroyTrailSegments;
+        public static bool doStretchingThing = false;
         public float damagePerSecond;
         public float procCoefficientPerSecond;
         public bool crit;
@@ -48,6 +50,7 @@ namespace SS2.Components
         private float localTime;
         private float nextTrailPointUpdate;
         private float nextTrailDamageUpdate;
+        private Vector3 lastPlacedPosition;
         private static float optimizedDamageUpdateinterval;
         private struct TrailPoint
         {
@@ -111,7 +114,8 @@ namespace SS2.Components
         private void FixedUpdate()
         {
             localTime += Time.fixedDeltaTime;
-            if (localTime >= nextTrailPointUpdate)
+            Vector3 between = transform.position - lastPlacedPosition; ///////////////////////////////
+            if (localTime >= nextTrailPointUpdate || between.sqrMagnitude >= pointUpdateDistance * pointUpdateDistance)
             {
                 nextTrailPointUpdate += pointUpdateInterval;
                 UpdateTrail(active);
@@ -141,24 +145,28 @@ namespace SS2.Components
                 }
             }
 
-            if (segmentPrefab)
+            if (doStretchingThing)
             {
-                Vector3 previousPosition = transform.position;
-                for (int i = pointsList.Count - 1; i >= 0; i--)
+                if (segmentPrefab)
                 {
-                    Transform segmentTransform = pointsList[i].segmentTransform;
-                    if (segmentTransform)
+                    Vector3 previousPosition = transform.position;
+                    for (int i = pointsList.Count - 1; i >= 0; i--)
                     {
-                        segmentTransform.LookAt(previousPosition, Vector3.up);
-                        Vector3 diff = pointsList[i].position - previousPosition;
-                        segmentTransform.position = previousPosition + diff * 0.5f;
-                        float t = Mathf.Clamp01(Mathf.InverseLerp(pointsList[i].localStartTime, pointsList[i].localEndTime, localTime));
-                        Vector3 segmentScale = new Vector3(radius * (1f - t), radius * (1f - t), diff.magnitude);
-                        segmentTransform.localScale = segmentScale;
-                        previousPosition = pointsList[i].position;
+                        Transform segmentTransform = pointsList[i].segmentTransform;
+                        if (segmentTransform)
+                        {
+                            segmentTransform.LookAt(previousPosition, Vector3.up);
+                            Vector3 diff = pointsList[i].position - previousPosition;
+                            segmentTransform.position = previousPosition + diff * 0.5f;
+                            float t = Mathf.Clamp01(Mathf.InverseLerp(pointsList[i].localStartTime, pointsList[i].localEndTime, localTime));
+                            Vector3 segmentScale = new Vector3(radius * (1f - t), radius * (1f - t), diff.magnitude);
+                            segmentTransform.localScale = segmentScale;
+                            previousPosition = pointsList[i].position;
+                        }
                     }
                 }
             }
+            
         }
 
         private void UpdateTrail(bool addPoint)
@@ -229,6 +237,11 @@ namespace SS2.Components
                                         damageInfo.position = hits[hitIndex].transform.position;
                                         damageInfo.inflictedHurtbox = hurtBox;
                                         healthComponent.TakeDamage(damageInfo);
+
+                                        if (impactEffectPrefab)
+                                        {
+                                            EffectManager.SimpleEffect(impactEffectPrefab, damageInfo.position, Quaternion.identity, true);
+                                        }
                                     }
                                 }
                             }
@@ -270,6 +283,7 @@ namespace SS2.Components
                     newPoint.segmentTransform = efh.gameObject.transform;
                 }
             }
+            lastPlacedPosition = transform.position;
             pointsList.Add(newPoint);
         }
 
