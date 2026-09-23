@@ -4,24 +4,24 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using SS2;
+using R2API;
 
-namespace EntityStates.Ghoul
+namespace EntityStates.NemCroco
 {
     // get head height and position
     // calculate horizontal velocity from set flight duration
     // calculate y velocity needed to reach head (capped) from set flight duration
-    //
-    public class Leap : BaseGhoulState
+    public class ChompLeap : BaseSkillState
     {
-        private static float searchDistance = 24f;
-        private static float searchAngle = 60f;
-        private static string enterSoundString = "Play_imp_attack_tell";
+        private static string enterSoundString = "Play_acrid_shift_jump";
         public static GameObject leapEffectPrefab;
 
         private static float flightDuration = 0.4f;
         private static float maxHeight = 10f;
 
         private static float leapDistanceIfNoTarget = 10f;
+
+        public HurtBox target;
         public override void OnEnter()
         {
             base.OnEnter();
@@ -29,33 +29,14 @@ namespace EntityStates.Ghoul
             if (isAuthority)
             {
                 Ray aimRay = GetAimRay();
-                BullseyeSearch search = new BullseyeSearch();
-                search.maxDistanceFilter = searchDistance;
-                search.maxAngleFilter = searchAngle;
-                search.searchOrigin = aimRay.origin;
-                search.searchDirection = aimRay.direction;
-                search.teamMaskFilter = TeamMask.GetEnemyTeams(attackerBody.teamComponent.teamIndex);
-                search.sortMode = BullseyeSearch.SortMode.Angle;
-                search.viewer = characterBody;
-                search.RefreshCandidates();
-                search.FilterOutGameObject(gameObject);
-
-                HurtBox target = null;
-                foreach (HurtBox hurtBox in search.GetResults())
-                {
-                    if (hurtBox && hurtBox.healthComponent && hurtBox.healthComponent.alive)
-                    {
-                        target = hurtBox;
-                        break;
-                    }
-                }
+                ////////////////////////////////////////target = tuh;
 
                 Vector3 targetPosition = aimRay.GetPoint(leapDistanceIfNoTarget);
                 if (target)
                 {
                     targetPosition = GetHighestPoint(target);
                 }
-                else if (Util.CharacterSpherecast(gameObject, aimRay, 2f, out RaycastHit hit, searchDistance, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Ignore))
+                else if (Util.CharacterSpherecast(gameObject, aimRay, 2f, out RaycastHit hit, leapDistanceIfNoTarget, LayerIndex.entityPrecise.mask, QueryTriggerInteraction.Ignore))
                 {
                     targetPosition = hit.point;
                 }
@@ -86,7 +67,6 @@ namespace EntityStates.Ghoul
             Util.PlaySound(enterSoundString, gameObject);
         }
 
-        // TODO: gimme head
         private Vector3 GetHighestPoint(HurtBox hurtBox)
         {
             return hurtBox.transform.position;
@@ -98,63 +78,71 @@ namespace EntityStates.Ghoul
 
             characterDirection.forward = characterMotor.velocity;
 
-            if(isAuthority && fixedAge >= flightDuration)
+            if (isAuthority && fixedAge >= flightDuration)
             {
-                outer.SetNextState(new Swipe());
+                outer.SetNextState(new Chomp { target = target });
             }
         }
     }
-    public class Swipe : BaseGhoulState
+    public class Chomp : BaseSkillState
     {
         private static float baseDuration = .4f;
         private static float damageCoefficient = 1f;
+        private static float procCoefficient = 1f;
+        private static float pushForce = 300f;
+        private static Vector3 bonusForce = Vector3.zero;
         private static float forceMagnitude = 16f;
         private static float hitHopVelocity = 7f;
         private static float hitVelocityMultiplier = 0.2f;
-        private static float bleedPercentChance = 25f;
+        private static float bloom = 1f;
+        private static float recoil = 0f;
+
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
+        private static string hitboxGroupName = "Bite";
+        private static string muzzleString = "MuzzleBite";
         private static string attackSoundString = "Play_imp_attack";
 
         private static float attackStartTime = 0.0f;
-        private static float attackEndTime = .8f;
+        private static float attackEndTime = 0.5f;
+
+        public HurtBox target;
 
         private OverlapAttack attack;
         private Animator modelAnimator;
         private float duration;
         private bool hasAttacked;
-
-        private bool isBleed;
+        private bool hasHit;
         public override void OnEnter()
         {
             base.OnEnter();
-            isBleed = Util.CheckRoll(bleedPercentChance, attackerBody.master);
 
-            duration = Swipe.baseDuration / attackSpeedStat; // scales with own attackspeed
+            duration = baseDuration / attackSpeedStat;
             modelAnimator = base.GetModelAnimator();
             Transform modelTransform = base.GetModelTransform();
             attack = new OverlapAttack();
-            attack.attacker = attackerObject;
+            attack.damageType = DamageTypeCombo.GenericPrimary;
+            attack.attacker = gameObject;
             attack.inflictor = gameObject;
-            attack.teamIndex = attackerBody.teamComponent.teamIndex;
-            attack.damage = Swipe.damageCoefficient * attackerBody.damage;
-            attack.damageType = isBleed ? DamageType.BleedOnHit : DamageType.Generic;
-            attack.hitEffectPrefab = Swipe.hitEffectPrefab;
-            attack.isCrit = attackerBody.RollCrit();
-            
+            attack.teamIndex = GetTeam();
+            attack.damage = damageCoefficient * damageStat;
+            attack.procCoefficient = procCoefficient;
+            attack.hitEffectPrefab = hitEffectPrefab;
+            attack.forceVector = bonusForce;
+            attack.pushAwayForce = pushForce;
+            attack.hitBoxGroup = FindHitBoxGroup(hitboxGroupName);
+            attack.isCrit = RollCrit();
+            attack.maximumOverlapTargets = 1000;
 
-            if (modelTransform)
-            {
-                attack.hitBoxGroup = Array.Find<HitBoxGroup>(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Swipe");
-            }
+            attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemesisPoisonOnHit);
+            attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemCrocoExecute);
+
             if (modelAnimator)
             {
-                base.PlayAnimation("Gesture, Override", "Swipe", "Swipe.playbackRate", duration);
+                PlayCrossfade("Gesture, Override", "Bite", "Bite.playbackRate", duration, 0.05f);
             }
-            if (base.characterBody)
-            {
-                base.characterBody.SetAimTimer(2f);
-            }
+            characterBody.SetAimTimer(2f);
+            
         }
 
         public override void FixedUpdate()
@@ -166,14 +154,15 @@ namespace EntityStates.Ghoul
             {
                 if (!hasAttacked)
                 {
-                    Util.PlayAttackSpeedSound(attackSoundString, base.gameObject, attackSpeedStat);
-                    EffectManager.SimpleMuzzleFlash(Swipe.effectPrefab, gameObject, "SwipeLeft", false);
+                    base.AddRecoil(0.9f * recoil, 1.1f * recoil, -0.1f * recoil, 0.1f * recoil);
+                    Util.PlayAttackSpeedSound(attackSoundString, gameObject, attackSpeedStat);
+                    EffectManager.SimpleMuzzleFlash(effectPrefab, gameObject, muzzleString, false);
                     hasAttacked = true;
                 }
 
                 if (isAuthority)
                 {
-                    attack.forceVector = transform.forward * Swipe.forceMagnitude;
+                    attack.forceVector = transform.forward * forceMagnitude;
                     if (attack.Fire(null))
                     {
                         OnHitEnemyAuthority();
@@ -189,10 +178,15 @@ namespace EntityStates.Ghoul
 
         private void OnHitEnemyAuthority()
         {
-            if (characterMotor)
+            characterBody.AddSpreadBloom(bloom);
+
+            if (!hasHit)
             {
+                hasHit = true;
                 characterMotor.velocity *= hitVelocityMultiplier;
                 SmallHop(characterMotor, hitHopVelocity);
+
+                characterBody.AddTimedBuffAuthority(RoR2Content.Buffs.CrocoRegen.buffIndex, 0.5f);
             }
         }
 
@@ -201,6 +195,6 @@ namespace EntityStates.Ghoul
             return InterruptPriority.PrioritySkill;
         }
 
-        
+
     }
 }

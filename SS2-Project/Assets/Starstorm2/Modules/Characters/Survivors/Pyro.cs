@@ -53,7 +53,7 @@ namespace SS2.Survivors
             if (damageReport.damageInfo.HasModdedDamageType(PyroIgniteOnHit))
             {
                 float targetTotalDamage = damageReport.damageInfo.damage * igniteDamageCoefficient;
-                float damageMultiplier = GetDotDamageMultiplier(damageReport.attackerBody, targetTotalDamage, pyroBurnDuration, DotController.DotIndex.Burn);
+                float damageMultiplier = SS2Util.GetDotDamageMultiplier(damageReport.attackerBody, targetTotalDamage, pyroBurnDuration, DotController.DotIndex.Burn);
                 var dotInfo = new InflictDotInfo()
                 {
                     attackerObject = damageReport.attacker,
@@ -70,13 +70,7 @@ namespace SS2.Survivors
             }
         }
 
-        // if you want a DoT to deal a specific amount of damage over a set duration, this method will return the necessary value for InflictDotInfo.damageMultiplier
-        // using InflictDotInfo.totalDamage would make the DoT have a variable duration with a static damage-per-tick
-        public static float GetDotDamageMultiplier(CharacterBody attackerBody, float desiredTotalDamage, float desiredDuration, DotController.DotIndex dotIndex)
-        {
-            var dotDef = DotController.GetDotDef(dotIndex);
-            return (desiredTotalDamage * dotDef.interval) / (desiredDuration * dotDef.damageCoefficient) / attackerBody.damage;
-        }
+        
 
         public void ModifyPrefab()
         {

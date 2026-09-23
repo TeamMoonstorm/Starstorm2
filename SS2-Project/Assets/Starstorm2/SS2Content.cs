@@ -719,6 +719,14 @@ namespace SS2
             public static BuffDef bdDUTDrift;
 
             public static BuffDef bdBallLightningTimer;
+
+            public static BuffDef bdNemCrocoPoison;
+
+            public static BuffDef bdNemCrocoRadiation;
+
+            public static BuffDef bdNemCrocoRadValue;
+
+            public static BuffDef bdNemCrocoDamageShare;
         }
 
         public static class Elites

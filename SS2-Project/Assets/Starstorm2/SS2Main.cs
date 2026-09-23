@@ -27,7 +27,7 @@ namespace SS2
     [BepInPlugin(GUID, MODNAME, VERSION)]
     public class SS2Main : BaseUnityPlugin
     {
-        public const string GUID = "com.TeamMoonstorm";
+        public const string GUID = "com.TeamMoonstorm.Starstorm2";
         public const string MODNAME = "Starstorm 2";
         public const string VERSION = "0.6.38";
 
