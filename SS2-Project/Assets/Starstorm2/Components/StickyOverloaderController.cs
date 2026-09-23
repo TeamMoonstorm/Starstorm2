@@ -227,9 +227,9 @@ namespace SS2.Components
                 if(stuckBody)
                     stuckBody.SetBuffCount(SS2Content.Buffs.BuffStickyOverloader.buffIndex, 0);
             }
-            
-            Destroy(base.gameObject);
-            if (indicator) Destroy(indicator.gameObject);
+
+            NetworkServer.Destroy(gameObject);
+            if (indicator) NetworkServer.Destroy(indicator.gameObject);
         }
     }
 }

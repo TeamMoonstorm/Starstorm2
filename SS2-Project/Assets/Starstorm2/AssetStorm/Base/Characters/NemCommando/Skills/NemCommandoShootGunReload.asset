@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1537144414, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 11500000, guid: a49c5fde1c2bb8b43bbba2d0bf734ced, type: 3}
   m_Name: NemCommandoShootGunReload
   m_EditorClassIdentifier: 
-  skillName: NemCommandoShootGunReloadingOld
+  skillName: NemCommandoShootGunReloading
   skillNameToken: SS2_NEMCOMMANDO_SECONDARY_SHOOT_NAME
   skillDescriptionToken: SS2_NEMCOMMANDO_SECONDARY_SHOOT_DESCRIPTION
   keywordTokens:
@@ -28,6 +28,8 @@ MonoBehaviour:
   rechargeStock: 0
   requiredStock: 1
   stockToConsume: 1
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
@@ -36,9 +38,11 @@ MonoBehaviour:
   forceSprintDuringState: 0
   canceledFromSprinting: 0
   isCombatSkill: 1
-  mustKeyPress: 1
+  mustKeyPress: 0
+  autoHandleLuminousShot: 1
+  hideStockCount: 0
   reloadState:
     _typeName: EntityStates.NemCommando.ReloadGun, Starstorm2, Version=1.0.0.0, Culture=neutral,
       PublicKeyToken=null
   reloadInterruptPriority: 0
-  graceDuration: 0.5
+  graceDuration: 1

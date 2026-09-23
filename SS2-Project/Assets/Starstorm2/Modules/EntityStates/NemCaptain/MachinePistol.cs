@@ -123,12 +123,6 @@ namespace EntityStates.NemCaptain
 
             if (fixedAge >= duration && isAuthority)
             {
-                if (inputBank.skill1.down & skillLocator.primary.stock >= 1)
-                {
-                    outer.SetNextState(new MachinePistol());
-                    skillLocator.primary.stock -= 1;
-                    return;
-                }
                 outer.SetNextStateToMain();
                 return;
             }

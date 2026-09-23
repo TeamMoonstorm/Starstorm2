@@ -90,8 +90,9 @@ namespace SS2.Components
         {
 			bool healthRequirement = true;// body.healthComponent.health < body.healthComponent.fullHealth * maximumFriendHealthFraction;
 			bool bossRequirement = !body.isBoss; // scepter
+			bool masterRequirement = body.master; // nres without master,. .
 
-			return healthRequirement && bossRequirement;
+			return healthRequirement && bossRequirement && masterRequirement;
         }
         public HurtBox GetTrackingTarget()
 		{
