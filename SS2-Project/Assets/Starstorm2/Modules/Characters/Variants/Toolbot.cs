@@ -23,6 +23,14 @@ namespace SS2.Survivors
             SkillFamily secondarySkillFamily = skillLocator.secondary.skillFamily;
 
             RepairOverlayPrefab = assetCollection.FindAsset<GameObject>("ToolbotRepairUI");
+            if (!RepairOverlayPrefab)
+            {
+                SS2Log.Error("Toolbot: Missing ToolbotRepairUI prefab");
+            }
+
+            SelfRepairController selfRepairController = toolbotBodyPrefab.EnsureComponent<SelfRepairController>();
+            selfRepairController.enabled = false;
+            selfRepairController.repairOverlayPrefab = RepairOverlayPrefab;
 
             SelfRepairSkillDef sdSelfRepair = assetCollection.FindAsset<SelfRepairSkillDef>("sdSelfRepair");
 

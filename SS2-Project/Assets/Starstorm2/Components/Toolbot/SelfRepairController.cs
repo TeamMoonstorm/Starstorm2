@@ -10,12 +10,13 @@ namespace SS2.Components
     public class SelfRepairController : NetworkBehaviour
     {
         public float repairMax = 10f;
-        public float repairGainPerUpdate = 0.10f;
+        public float repairGainPerSecond = 1.25f;
 
         public GameObject repairOverlayPrefab;
         public string repairOverlayChildLocatorEntry = "CrosshairExtras";
 
         private CharacterBody characterBody;
+        private EntityStateMachine repairStateMachine;
         private OverlayController repairOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
 
@@ -37,11 +38,20 @@ namespace SS2.Components
             }
         }
 
+        public bool isRepairing => repairStateMachine && (repairStateMachine.state is EntityStates.Toolbot.SelfRepair
+            || repairStateMachine.nextState is EntityStates.Toolbot.SelfRepair);
+
         public void OnEnable()
         {
             if (!TryGetComponent(out characterBody))
             {
-                Debug.LogError("SelfRepairController: Missing CharacterBody on " + gameObject.name);
+                SS2Log.Error("SelfRepairController: Missing CharacterBody on " + gameObject.name);
+            }
+
+            repairStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Toolbox");
+            if (!repairStateMachine)
+            {
+                SS2Log.Error("SelfRepairController: Missing Toolbox state machine on " + gameObject.name);
             }
 
             if (repairOverlayPrefab != null)
@@ -63,22 +73,28 @@ namespace SS2.Components
             {
                 repairOverlayController.onInstanceAdded -= OnRepairOverlayInstanceAdded;
                 repairOverlayController.onInstanceRemove -= OnRepairOverlayInstanceRemoved;
-                fillUiList.Clear();
                 HudOverlayManager.RemoveOverlay(repairOverlayController);
+                repairOverlayController = null;
             }
+            fillUiList.Clear();
         }
 
         private void FixedUpdate()
         {
-            if (NetworkServer.active)
+            if (NetworkServer.active && characterBody && characterBody.healthComponent.alive && !isRepairing && !isMaxRepair)
             {
-                if (!isMaxRepair)
-                {
-                    AddRepair(repairGainPerUpdate);
-                }
+                AddRepair(repairGainPerSecond * Time.fixedDeltaTime);
             }
 
             UpdateUI();
+        }
+
+        public bool CanRepair(float cost)
+        {
+            return isActiveAndEnabled && characterBody && repairStateMachine
+                && characterBody.healthComponent.alive
+                && characterBody.healthComponent.health < characterBody.healthComponent.fullHealth
+                && repair >= cost;
         }
 
         private void UpdateUI()
@@ -94,10 +110,11 @@ namespace SS2.Components
             if (instance.TryGetComponent(out ImageFillController ifc))
             {
                 fillUiList.Add(ifc);
+                ifc.SetTValue(repair / repairMax);
             }
             else
             {
-                Debug.LogError("SelfRepairController: Overlay instance missing ImageFillController");
+                SS2Log.Error("SelfRepairController: Overlay instance missing ImageFillController");
             }
         }
 
