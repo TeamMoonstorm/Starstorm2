@@ -14,7 +14,7 @@ namespace EntityStates.NemCroco
 {
     public class ChargeLaserBreath : BaseSkillState
     {
-        private static float baseDuration = 0.25f;
+        private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
         private static string enterSoundString = "";
         private float duration;
@@ -50,10 +50,12 @@ namespace EntityStates.NemCroco
                             effectInstance = _efhChargeEffect.gameObject;
                         }
                         effectInstance.transform.parent = muzzleTransform;
+                        effectInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = duration;
                     }
                 }
             }
-            PlayAnimation("Gesture, Mouth", "ChargeLaserBreath", "ChargeLaserBreath.playbackRate", duration);
+            //PlayAnimation("Gesture, Mouth", "ChargeLaserBreath", "ChargeLaserBreath.playbackRate", duration);
+            PlayAnimation("Gesture, Override", "ChargeLaserBreath", "LaserBreath.playbackRate", duration);
         }
 
         public override void OnExit()
@@ -117,7 +119,7 @@ namespace EntityStates.NemCroco
         public static GameObject exitMuzzleEffectPrefab;
         public static GameObject exitTracerPrefab;
 
-        private static string muzzleString = "Muzzle";
+        private static string muzzleString = "MouthMuzzle";
         private static string enterSoundString = "";
         private static string startLoopSoundString = "Play_mage_R_start";
         private static string endLoopSoundString = "Play_mage_R_end";
@@ -158,11 +160,11 @@ namespace EntityStates.NemCroco
 
             Util.PlaySound(enterSoundString, gameObject);
             Util.PlaySound(startLoopSoundString, gameObject);
-            PlayCrossfade("Gesture, Mouth", "FireLaserBreath", 0.1f);
-
+            //PlayCrossfade("Gesture, Mouth", "FireLaserBreath", 0.1f);
+            PlayCrossfade("Gesture, Override", "FireLaserBreath", 0.1f);
             if (muzzleEffectPrefab)
             {
-                flamethrowerTransform = GameObject.Instantiate(muzzleEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleString, false);
             }
             if (beamEffectPrefab)
             {
@@ -298,6 +300,10 @@ namespace EntityStates.NemCroco
         {
             PlayCrossfade("Gesture, Mouth", "FireLaserBurst", 0.1f);
             AddRecoil(-0.4f * exitRecoil, -0.8f * exitRecoil, -0.3f * exitRecoil, 0.3f * exitRecoil);
+            if (exitMuzzleEffectPrefab)
+            {
+                EffectManager.SimpleMuzzleFlash(exitMuzzleEffectPrefab, gameObject, muzzleString, false);
+            }
 
             Ray aimRay = GetAimRay();
             aimRay.direction = currentAimVector;
@@ -322,6 +328,9 @@ namespace EntityStates.NemCroco
                 bulletAttack.smartCollision = true;
                 bulletAttack.damageType = DamageTypeCombo.GenericSecondary;
                 bulletAttack.damageType.AddModdedDamageType(SS2.Survivors.NemCroco.RadiationOnHit);
+
+                bulletAttack.tracerEffectPrefab = exitTracerPrefab;
+
                 bulletAttack.Fire();
                 if (characterMotor)
                 {

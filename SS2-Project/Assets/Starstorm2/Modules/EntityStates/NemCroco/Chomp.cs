@@ -29,7 +29,10 @@ namespace EntityStates.NemCroco
             if (isAuthority)
             {
                 Ray aimRay = GetAimRay();
-                ////////////////////////////////////////target = tuh;
+                if (TryGetComponent(out SS2.Components.NemCrocoTracker tracker))
+                {
+                    target = tracker.GetTrackingTarget();
+                }
 
                 Vector3 targetPosition = aimRay.GetPoint(leapDistanceIfNoTarget);
                 if (target)
@@ -65,6 +68,7 @@ namespace EntityStates.NemCroco
                 EffectManager.SimpleEffect(leapEffectPrefab, characterBody.footPosition, direction, false);
             }
             Util.PlaySound(enterSoundString, gameObject);
+            PlayCrossfade("FullBody, Override", "ChompLeap", 0.05f);
         }
 
         private Vector3 GetHighestPoint(HurtBox hurtBox)
@@ -100,7 +104,7 @@ namespace EntityStates.NemCroco
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
         private static string hitboxGroupName = "Bite";
-        private static string muzzleString = "MuzzleBite";
+        private static string muzzleString = "MouthMuzzle";
         private static string attackSoundString = "Play_imp_attack";
 
         private static float attackStartTime = 0.0f;
@@ -139,7 +143,7 @@ namespace EntityStates.NemCroco
 
             if (modelAnimator)
             {
-                PlayCrossfade("Gesture, Override", "Bite", "Bite.playbackRate", duration, 0.05f);
+                PlayCrossfade("FullBody, Override", "Bite", "Bite.playbackRate", duration, 0.05f);
             }
             characterBody.SetAimTimer(2f);
             

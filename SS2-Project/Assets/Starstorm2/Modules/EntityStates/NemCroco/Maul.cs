@@ -15,16 +15,16 @@ namespace EntityStates.NemCroco
     public abstract class Maul : BaseSkillState, RoR2.Skills.SteppedSkillDef.IStepSetter
     {
         private static string hitboxGroupName = "Swipe";
-        private static float damageCoefficient = 3.5f;
+        private static float damageCoefficient = 2.4f;
         private static float procCoefficient = 1f;
         private static float pushForce = 300f;
         private static Vector3 bonusForce = Vector3.zero;
 
-        private static float baseDuration = 1f;
-        private static float animDuration = 1f;
+        private static float baseDuration = 1.33f;
+        private static float animDuration = 2.5f;
 
-        private static float attackStartTime = 0f;
-        private static float attackEndTime = 1f;
+        private static float attackStartTime = 0.15f;
+        private static float attackEndTime = 0.25f;
         private static float earlyExitTime = 0.4f;
 
         private static float hitStopDuration = 0.012f;
@@ -35,7 +35,7 @@ namespace EntityStates.NemCroco
         private static string enterSoundString = "Play_acrid_m2_bite_shoot";
         private static string swingSoundString = "";
         private static string hitSoundString = "";
-        private static string playbackRateParam = "Slash.playbackRate";
+        private static string playbackRateParam = "Swipe.playbackRate";
 
         private static float forwardSpeedCoefficient = 7f;
         public static AnimationCurve forwardSpeedCurve;
@@ -96,14 +96,14 @@ namespace EntityStates.NemCroco
             if (step % 2 == 0)
             {
                 muzzleString = "SwipeLeft";
-                PlayCrossfade("Gesture, Additive", "Bite", "Bite.playbackRate", animDuration, 0.05f);
-                PlayCrossfade("Gesture, Override", "Bite", "Bite.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Additive", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Override", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
             }
             else
             {
                 muzzleString = "SwipeRight";
-                PlayCrossfade("Gesture, Additive", "Bite", "Bite.playbackRate", animDuration, 0.05f);
-                PlayCrossfade("Gesture, Override", "Bite", "Bite.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Additive", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Override", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
             }
             
 
