@@ -1,4 +1,5 @@
 using RoR2;
+using SS2;
 using RoR2.Projectile;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,8 +10,7 @@ namespace EntityStates.NemToolbot
     /// Ball form secondary. Fires a grappling hook projectile that pulls NemToolbot
     /// toward the impact point, following Loader's FireHook pattern. The hook projectile
     /// handles the actual pull physics; this state manages animation and lifetime.
-    /// 
-    /// Key difference from Loader: pressing the skill button again disconnects the hook.
+    /// Hold the skill button to grapple; Loader's projectile retracts on release.
     /// </summary>
     public class FireGrapplingHook : BaseSkillState
     {
@@ -18,7 +18,6 @@ namespace EntityStates.NemToolbot
 
         public static float damageCoefficient = 1f;
         public static string fireSoundString = "";
-        public static string disconnectSoundString = "";
         public static GameObject muzzleflashEffectPrefab;
         public static string muzzleString = "Muzzle";
         public static float maxDuration = 8f;
@@ -32,11 +31,10 @@ namespace EntityStates.NemToolbot
         protected ProjectileStickOnImpact hookStickOnImpact;
         private bool isStuck;
         private bool hadHookInstance;
-        private bool hasReleasedButton;
 
-        private static readonly int FireHookIntroHash = Animator.StringToHash("FireHookIntro");
-        private static readonly int FireHookLoopHash = Animator.StringToHash("FireHookLoop");
-        private static readonly int FireHookExitHash = Animator.StringToHash("FireHookExit");
+        // private static readonly int FireHookIntroHash = Animator.StringToHash("FireHookIntro");
+        // private static readonly int FireHookLoopHash = Animator.StringToHash("FireHookLoop");
+        // private static readonly int FireHookExitHash = Animator.StringToHash("FireHookExit");
 
         public override void OnEnter()
         {
@@ -65,7 +63,7 @@ namespace EntityStates.NemToolbot
                 }
                 else
                 {
-                    Debug.LogError("NemToolbot FireGrapplingHook: projectilePrefab is null.");
+                    SS2Log.Error("NemToolbot FireGrapplingHook: projectilePrefab is null.");
                     outer.SetNextStateToMain();
                     return;
                 }
@@ -75,9 +73,9 @@ namespace EntityStates.NemToolbot
             {
                 EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, muzzleString, transmit: false);
             }
-            Util.PlaySound(fireSoundString, gameObject);
+            // Util.PlaySound(fireSoundString, gameObject);
 
-            PlayAnimation("Grapple", FireHookIntroHash);
+            // PlayAnimation("Grapple", FireHookIntroHash);
         }
 
         /// <summary>
@@ -93,7 +91,7 @@ namespace EntityStates.NemToolbot
             }
             else
             {
-                Debug.LogError("NemToolbot FireGrapplingHook: Hook projectile missing ProjectileStickOnImpact on " + hook.name);
+                SS2Log.Error("NemToolbot FireGrapplingHook: Hook projectile missing ProjectileStickOnImpact on " + hook.name);
             }
             hadHookInstance = true;
         }
@@ -107,7 +105,7 @@ namespace EntityStates.NemToolbot
             {
                 if (hookStickOnImpact.stuck && !isStuck)
                 {
-                    PlayAnimation("Grapple", FireHookLoopHash);
+                    // PlayAnimation("Grapple", FireHookLoopHash);
                 }
                 isStuck = hookStickOnImpact.stuck;
             }
@@ -115,21 +113,6 @@ namespace EntityStates.NemToolbot
             if (!isAuthority)
                 return;
 
-            // Track button release so we can detect a second press to disconnect
-            if (!hasReleasedButton && !IsKeyDownAuthority())
-            {
-                hasReleasedButton = true;
-            }
-
-            // Disconnect on second press (button was released then pressed again)
-            if (hasReleasedButton && IsKeyDownAuthority() && hookInstance != null)
-            {
-                Util.PlaySound(disconnectSoundString, gameObject);
-                EntityState.Destroy(hookInstance);
-                hookInstance = null;
-            }
-
-            // Failsafe: exit if hook was never linked (e.g. missing ModelLocator/ChildLocator)
             if (fixedAge >= maxDuration)
             {
                 outer.SetNextStateToMain();
@@ -145,7 +128,7 @@ namespace EntityStates.NemToolbot
 
         public override void OnExit()
         {
-            PlayAnimation("Grapple", FireHookExitHash);
+            // PlayAnimation("Grapple", FireHookExitHash);
             if (muzzleflashEffectPrefab != null)
             {
                 EffectManager.SimpleMuzzleFlash(muzzleflashEffectPrefab, gameObject, muzzleString, transmit: false);

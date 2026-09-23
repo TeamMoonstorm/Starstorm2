@@ -1,6 +1,6 @@
 using SS2.Components;
+using SS2;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -9,65 +9,46 @@ namespace EntityStates.NemToolbot
     /// Reads the currently selected weapon from NemToolbotController
     /// and immediately transitions to the appropriate weapon entity state.
     /// </summary>
-    public class DispatchWeapon : BaseState
+    public class DispatchWeapon : BaseSkillState
     {
-        private NemToolbotController controller;
-        private NemToolbotController.WeaponType cachedWeapon = NemToolbotController.WeaponType.RapidLaser;
-
         public override void OnEnter()
         {
             base.OnEnter();
 
             if (isAuthority)
             {
-                if (!gameObject.TryGetComponent(out controller))
+                if (!gameObject.TryGetComponent(out NemToolbotController controller))
                 {
-                    Debug.LogError("NemToolbot DispatchWeapon: Failed to get NemToolbotController on " + gameObject.name);
+                    SS2Log.Error("NemToolbot DispatchWeapon: Missing NemToolbotController on " + gameObject.name);
                     outer.SetNextStateToMain();
                     return;
                 }
 
-                cachedWeapon = controller.currentWeapon;
+                NemToolbotController.WeaponType weapon = controller.currentWeapon;
 
-                if (!controller.HasAmmo(cachedWeapon))
+                if (!controller.HasAmmo(weapon))
                 {
-                    Debug.Log($"[NemToolbot] DispatchWeapon: No ammo for {cachedWeapon}, returning to main");
                     outer.SetNextStateToMain();
                     return;
                 }
 
-                Debug.Log($"[NemToolbot] DispatchWeapon: Firing {cachedWeapon} (ammo: {controller.GetAmmo(cachedWeapon)})");
-                EntityState nextState = cachedWeapon switch
+                BaseSkillState nextState = weapon switch
                 {
                     NemToolbotController.WeaponType.Shotgun => new FireShotgun(),
                     NemToolbotController.WeaponType.RapidLaser => new FireRapidLaser(),
                     NemToolbotController.WeaponType.GrenadeLauncher => new FireGrenadeLauncher(),
                     NemToolbotController.WeaponType.SniperLaser => new FireSniperLaser(),
-                    _ => new FireRapidLaser()
+                    _ => null
                 };
+                if (nextState == null)
+                {
+                    SS2Log.Error("NemToolbot DispatchWeapon: Invalid weapon " + weapon);
+                    outer.SetNextStateToMain();
+                    return;
+                }
+                nextState.activatorSkillSlot = activatorSkillSlot;
                 outer.SetNextState(nextState);
             }
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (isAuthority)
-            {
-                outer.SetNextStateToMain();
-            }
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write((byte)cachedWeapon);
-        }
-
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            cachedWeapon = (NemToolbotController.WeaponType)reader.ReadByte();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

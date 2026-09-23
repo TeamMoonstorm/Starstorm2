@@ -1,3 +1,6 @@
+using EntityStates;
+using EntityStates.NemToolbot;
+using R2API;
 using RoR2;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -14,71 +17,215 @@ namespace SS2.Components
             SniperLaser = 3
         }
 
-        // Range thresholds(meters) for weapon selection
         public static float shotgunMaxRange = 3f;
         public static float rapidLaserMaxRange = 6f;
         public static float grenadeLauncherMaxRange = 9f;
 
-        // Ammo pool configuration
         public static int shotgunMaxAmmo = 10;
         public static int rapidLaserMaxAmmo = 50;
         public static int grenadeLauncherMaxAmmo = 10;
         public static int sniperLaserMaxAmmo = 10;
 
-        // Regen rates (ammo per second, only while in ball form)
         public static float shotgunRegenRate = 1f;
         public static float rapidLaserRegenRate = 5f;
         public static float grenadeLauncherRegenRate = 1f;
         public static float sniperLaserRegenRate = 1f;
 
-        [SyncVar(hook = nameof(OnWeaponChanged))]
-        private WeaponType _currentWeapon = WeaponType.RapidLaser;
+        public GenericSkill ballPrimary;
+        public GenericSkill ballSecondary;
+        public GenericSkill ballSpecial;
 
+        // States apply form immediately; this also supplies the form to newly spawned peers.
         [SyncVar(hook = nameof(OnFormChanged))]
-        private bool _isBallForm;
+        private bool syncedBallForm;
 
-        [SyncVar]
-        private int _shotgunAmmo;
-        [SyncVar]
-        private int _rapidLaserAmmo;
-        [SyncVar]
-        private int _grenadeLauncherAmmo;
-        [SyncVar]
-        private int _sniperLaserAmmo;
+        public WeaponType currentWeapon { get; private set; } = WeaponType.RapidLaser;
+        public bool isBallForm { get; private set; }
 
-        // Sub-frame regen accumulators (server-only, not synced)
-        private float shotgunRegenAccumulator;
-        private float rapidLaserRegenAccumulator;
-        private float grenadeLauncherRegenAccumulator;
-        private float sniperLaserRegenAccumulator;
-
+        // Like GenericSkill stock, these resources belong to the firing authority.
+        private int[] ammo;
+        private readonly float[] regenRemainders = new float[4];
         private CharacterBody characterBody;
         private CharacterMotor characterMotor;
-
-        public WeaponType currentWeapon => _currentWeapon;
-        public bool isBallForm => _isBallForm;
+        private SkillLocator skillLocator;
+        private EntityStateMachine bodyStateMachine;
+        private EntityStateMachine hookStateMachine;
+        private SerializableEntityStateType deployedMainState;
+        private GenericSkill deployedPrimary;
+        private GenericSkill deployedSecondary;
+        private GenericSkill deployedSpecial;
+        private ModelLocator modelLocator;
+        // private Animator modelAnimator;
+        private float originalAirControl;
+        // private float originalAimWeight;
+        private bool originalNormalizeToFloor;
+        private bool armorApplied;
+        private bool initialized;
+        // private uint ballLoopSoundID;
+        // private static readonly int aimWeightHash = Animator.StringToHash("aimWeight");
 
         private void Awake()
         {
-            if (!TryGetComponent(out characterBody))
+            characterBody = GetComponent<CharacterBody>();
+            characterMotor = GetComponent<CharacterMotor>();
+            skillLocator = GetComponent<SkillLocator>();
+            bodyStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Body");
+            hookStateMachine = EntityStateMachine.FindByCustomName(gameObject, "Hook");
+            modelLocator = GetComponent<ModelLocator>();
+            // if (modelLocator && modelLocator.modelTransform)
+            //     modelAnimator = modelLocator.modelTransform.GetComponent<Animator>();
+
+            ammo = new[] { shotgunMaxAmmo, rapidLaserMaxAmmo, grenadeLauncherMaxAmmo, sniperLaserMaxAmmo };
+            if (!characterBody || !characterMotor || !skillLocator || !bodyStateMachine || !hookStateMachine ||
+                !skillLocator.primary || !skillLocator.secondary || !skillLocator.special ||
+                !ballPrimary || !ballSecondary || !ballSpecial)
             {
-                Debug.LogError("NemToolbotController: Failed to get CharacterBody on " + gameObject.name);
-            }
-            if (!TryGetComponent(out characterMotor))
-            {
-                Debug.LogError("NemToolbotController: Failed to get CharacterMotor on " + gameObject.name);
+                SS2Log.Error("NemToolbotController: Body, motor, Body/Hook state machines and deployed/ball skill slots must be authored on " + gameObject.name);
+                enabled = false;
+                return;
             }
 
-            // Initialize ammo to max
-            _shotgunAmmo = shotgunMaxAmmo;
-            _rapidLaserAmmo = rapidLaserMaxAmmo;
-            _grenadeLauncherAmmo = grenadeLauncherMaxAmmo;
-            _sniperLaserAmmo = sniperLaserMaxAmmo;
+            deployedMainState = bodyStateMachine.mainStateType;
+            deployedPrimary = skillLocator.primary;
+            deployedSecondary = skillLocator.secondary;
+            deployedSpecial = skillLocator.special;
+            initialized = true;
         }
 
-        /// <summary>
-        /// Maps a raycast distance to the appropriate weapon type.
-        /// </summary>
+        private void OnEnable()
+        {
+            if (!initialized)
+                return;
+            RecalculateStatsAPI.GetStatCoefficients += ModifyStats;
+            characterBody.onRecalculateStats += ModifyAcceleration;
+        }
+
+        private void OnDisable()
+        {
+            RecalculateStatsAPI.GetStatCoefficients -= ModifyStats;
+            if (characterBody)
+                characterBody.onRecalculateStats -= ModifyAcceleration;
+            if (NetworkServer.active)
+                syncedBallForm = false;
+            ApplyForm(false);
+        }
+
+        public override void OnStartClient()
+        {
+            base.OnStartClient();
+            ApplyForm(syncedBallForm);
+        }
+
+        public bool SetBallForm(bool ballForm)
+        {
+            if (!initialized || !enabled)
+                return false;
+            if (NetworkServer.active)
+                syncedBallForm = ballForm;
+            ApplyForm(ballForm);
+            return true;
+        }
+
+        private void OnFormChanged(bool ballForm)
+        {
+            syncedBallForm = ballForm;
+            // The owner already applied its state transition; don't replay a delayed server echo.
+            if (!Util.HasEffectiveAuthority(gameObject))
+                ApplyForm(ballForm);
+        }
+
+        private void ApplyForm(bool ballForm)
+        {
+            if (!initialized || isBallForm == ballForm)
+                return;
+
+            if (!ballForm && hookStateMachine.state is FireGrapplingHook hook)
+            {
+                if (NetworkServer.active && hook.hookInstance)
+                    Destroy(hook.hookInstance);
+                // Cancel before changing secondary: Loader deducts the currently bound slot on impact.
+                if (Util.HasEffectiveAuthority(gameObject))
+                    hookStateMachine.SetState(EntityStateCatalog.InstantiateState(ref hookStateMachine.mainStateType));
+            }
+
+            isBallForm = ballForm;
+            bodyStateMachine.mainStateType = ballForm
+                ? new SerializableEntityStateType(typeof(BallMainState))
+                : deployedMainState;
+            skillLocator.primary = ballForm ? ballPrimary : deployedPrimary;
+            skillLocator.secondary = ballForm ? ballSecondary : deployedSecondary;
+            skillLocator.special = ballForm ? ballSpecial : deployedSpecial;
+
+            if (ballForm)
+            {
+                // Util.PlaySound(BallMainState.enterSoundString, gameObject);
+                // ballLoopSoundID = Util.PlaySound(BallMainState.loopSoundString, gameObject);
+                originalAirControl = characterMotor.airControl;
+                characterMotor.airControl = BallMainState.ballAirControl;
+                if (modelLocator)
+                {
+                    originalNormalizeToFloor = modelLocator.normalizeToFloor;
+                    modelLocator.normalizeToFloor = true;
+                }
+                // if (modelAnimator)
+                // {
+                //     originalAimWeight = modelAnimator.GetFloat(aimWeightHash);
+                //     modelAnimator.SetFloat(aimWeightHash, 0f);
+                // }
+                if (NetworkServer.active)
+                {
+                    characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
+                    armorApplied = true;
+                }
+            }
+            else
+            {
+                // if (ballLoopSoundID != 0)
+                //     AkSoundEngine.StopPlayingID(ballLoopSoundID);
+                // Util.PlaySound(BallMainState.exitSoundString, gameObject);
+                characterMotor.airControl = originalAirControl;
+                if (modelLocator)
+                    modelLocator.normalizeToFloor = originalNormalizeToFloor;
+                // if (modelAnimator)
+                //     modelAnimator.SetFloat(aimWeightHash, originalAimWeight);
+                if (NetworkServer.active && armorApplied)
+                {
+                    characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
+                    armorApplied = false;
+                }
+                System.Array.Clear(regenRemainders, 0, regenRemainders.Length);
+                if (Util.HasEffectiveAuthority(gameObject))
+                    characterBody.isSprinting = false;
+            }
+            characterBody.statsDirty = true;
+        }
+
+        private void ModifyStats(CharacterBody body, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            if (body == characterBody && isBallForm)
+                args.baseMoveSpeedAdd += body.baseMoveSpeed * (BallMainState.moveSpeedMultiplier - 1f);
+        }
+
+        private void ModifyAcceleration(CharacterBody body)
+        {
+            if (isBallForm)
+            {
+                // Vanilla divides by baseMoveSpeed; the form no longer mutates that base field.
+                body.acceleration *= BallMainState.accelerationMultiplier / BallMainState.moveSpeedMultiplier;
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (isBallForm && characterBody.healthComponent.alive && Util.HasEffectiveAuthority(gameObject))
+            {
+                RegenWeaponAmmo(WeaponType.Shotgun, shotgunRegenRate);
+                RegenWeaponAmmo(WeaponType.RapidLaser, rapidLaserRegenRate);
+                RegenWeaponAmmo(WeaponType.GrenadeLauncher, grenadeLauncherRegenRate);
+                RegenWeaponAmmo(WeaponType.SniperLaser, sniperLaserRegenRate);
+            }
+        }
+
         public static WeaponType GetWeaponFromRange(float distance)
         {
             if (distance < shotgunMaxRange)
@@ -90,33 +237,22 @@ namespace SS2.Components
             return WeaponType.SniperLaser;
         }
 
-        /// <summary>
-        /// Sets the current weapon. Server-only.
-        /// </summary>
-        [Server]
         public void SetWeapon(WeaponType weapon)
         {
-            Debug.Log($"[NemToolbot] SetWeapon: {_currentWeapon} -> {weapon}");
-            OnWeaponChanged(weapon);
-            _currentWeapon = weapon;
+            if (!IsValidWeapon(weapon))
+                return;
+            if (Util.HasEffectiveAuthority(gameObject))
+                currentWeapon = weapon;
         }
 
-        /// <summary>
-        /// Sets ball form state. Server-only.
-        /// </summary>
-        [Server]
-        public void SetBallForm(bool ballForm)
+        private static bool IsValidWeapon(WeaponType weapon)
         {
-            Debug.Log($"[NemToolbot] SetBallForm: {_isBallForm} -> {ballForm}");
-            OnFormChanged(ballForm);
-            _isBallForm = ballForm;
+            if (weapon <= WeaponType.SniperLaser)
+                return true;
+            SS2Log.Error("NemToolbotController: Invalid weapon " + weapon);
+            return false;
         }
 
-        #region Ammo System
-
-        /// <summary>
-        /// Returns the max ammo for a given weapon type.
-        /// </summary>
         public static int GetMaxAmmo(WeaponType weapon)
         {
             switch (weapon)
@@ -125,133 +261,49 @@ namespace SS2.Components
                 case WeaponType.RapidLaser: return rapidLaserMaxAmmo;
                 case WeaponType.GrenadeLauncher: return grenadeLauncherMaxAmmo;
                 case WeaponType.SniperLaser: return sniperLaserMaxAmmo;
-                default: return 0;
+                default:
+                    SS2Log.Error("NemToolbotController: Invalid weapon " + weapon);
+                    return 0;
             }
         }
 
-        /// <summary>
-        /// Returns the current ammo for a given weapon type. Client-readable.
-        /// </summary>
         public int GetAmmo(WeaponType weapon)
         {
-            switch (weapon)
-            {
-                case WeaponType.Shotgun: return _shotgunAmmo;
-                case WeaponType.RapidLaser: return _rapidLaserAmmo;
-                case WeaponType.GrenadeLauncher: return _grenadeLauncherAmmo;
-                case WeaponType.SniperLaser: return _sniperLaserAmmo;
-                default: return 0;
-            }
+            return IsValidWeapon(weapon) ? ammo[(int)weapon] : 0;
         }
 
-        /// <summary>
-        /// Returns true if the given weapon has at least 1 ammo. Client-readable.
-        /// </summary>
         public bool HasAmmo(WeaponType weapon)
         {
-            return GetAmmo(weapon) > 0;
+            return enabled && GetAmmo(weapon) > 0;
         }
 
-        /// <summary>
-        /// Attempts to consume 1 ammo from the given weapon's pool. Server-only.
-        /// Returns true if ammo was consumed, false if the pool was empty.
-        /// </summary>
-        [Server]
         public bool TryConsumeAmmo(WeaponType weapon)
         {
-            switch (weapon)
-            {
-                case WeaponType.Shotgun:
-                    if (_shotgunAmmo <= 0) return false;
-                    _shotgunAmmo--;
-                    return true;
-                case WeaponType.RapidLaser:
-                    if (_rapidLaserAmmo <= 0) return false;
-                    _rapidLaserAmmo--;
-                    return true;
-                case WeaponType.GrenadeLauncher:
-                    if (_grenadeLauncherAmmo <= 0) return false;
-                    _grenadeLauncherAmmo--;
-                    return true;
-                case WeaponType.SniperLaser:
-                    if (_sniperLaserAmmo <= 0) return false;
-                    _sniperLaserAmmo--;
-                    return true;
-                default:
-                    return false;
-            }
+            if (!Util.HasEffectiveAuthority(gameObject) || !HasAmmo(weapon))
+                return false;
+            ammo[(int)weapon]--;
+            return true;
         }
 
-        /// <summary>
-        /// Regenerates ammo for all weapons. Called by BallMainState each tick.
-        /// Server-only. Uses float accumulators for sub-frame precision.
-        /// </summary>
-        public void RegenAllAmmo(float deltaTime)
+        private void RegenWeaponAmmo(WeaponType weapon, float regenRate)
         {
-            if (!NetworkServer.active)
-                return;
-
-            RegenWeaponAmmo(ref _shotgunAmmo, shotgunMaxAmmo, shotgunRegenRate, ref shotgunRegenAccumulator, deltaTime);
-            RegenWeaponAmmo(ref _rapidLaserAmmo, rapidLaserMaxAmmo, rapidLaserRegenRate, ref rapidLaserRegenAccumulator, deltaTime);
-            RegenWeaponAmmo(ref _grenadeLauncherAmmo, grenadeLauncherMaxAmmo, grenadeLauncherRegenRate, ref grenadeLauncherRegenAccumulator, deltaTime);
-            RegenWeaponAmmo(ref _sniperLaserAmmo, sniperLaserMaxAmmo, sniperLaserRegenRate, ref sniperLaserRegenAccumulator, deltaTime);
-        }
-
-        private static void RegenWeaponAmmo(ref int currentAmmo, int maxAmmo, float regenRate, ref float accumulator, float deltaTime)
-        {
-            if (currentAmmo >= maxAmmo)
+            int index = (int)weapon;
+            int maxAmmo = GetMaxAmmo(weapon);
+            if (ammo[index] >= maxAmmo)
             {
-                accumulator = 0f;
+                regenRemainders[index] = 0f;
                 return;
             }
-
-            accumulator += regenRate * deltaTime;
-            if (accumulator >= 1f)
-            {
-                int toAdd = Mathf.FloorToInt(accumulator);
-                accumulator -= toAdd;
-                currentAmmo = Mathf.Min(currentAmmo + toAdd, maxAmmo);
-            }
+            regenRemainders[index] += regenRate * Time.fixedDeltaTime;
+            int toAdd = Mathf.FloorToInt(regenRemainders[index]);
+            ammo[index] = Mathf.Min(ammo[index] + toAdd, maxAmmo);
+            regenRemainders[index] = ammo[index] == maxAmmo ? 0f : regenRemainders[index] - toAdd;
         }
 
-        /// <summary>
-        /// Resets all regen accumulators. Call when exiting ball form.
-        /// </summary>
-        public void ResetRegenAccumulators()
+        public float GetDamageMultiplierFromSpeed(float speed)
         {
-            shotgunRegenAccumulator = 0f;
-            rapidLaserRegenAccumulator = 0f;
-            grenadeLauncherRegenAccumulator = 0f;
-            sniperLaserRegenAccumulator = 0f;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// Returns a damage multiplier based on current velocity relative to base move speed.
-        /// Used by ball form attacks to scale damage with momentum.
-        /// </summary>
-        public float GetDamageMultiplierFromSpeed()
-        {
-            if (characterBody == null || characterMotor == null)
-                return 1f;
-
-            float currentSpeed = characterMotor.velocity.magnitude;
-            float baseSpeed = characterBody.baseMoveSpeed;
-            if (baseSpeed <= 0f)
-                return 1f;
-
-            return Mathf.Max(1f, currentSpeed / baseSpeed);
-        }
-
-        private void OnWeaponChanged(WeaponType newWeapon)
-        {
-            _currentWeapon = newWeapon;
-        }
-
-        private void OnFormChanged(bool newBallForm)
-        {
-            _isBallForm = newBallForm;
+            float baseSpeed = characterBody.baseMoveSpeed * (isBallForm ? BallMainState.moveSpeedMultiplier : 1f);
+            return baseSpeed > 0f ? Mathf.Max(1f, speed / baseSpeed) : 1f;
         }
     }
 }

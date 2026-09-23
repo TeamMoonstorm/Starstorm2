@@ -1,8 +1,8 @@
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -36,10 +36,13 @@ namespace EntityStates.NemToolbot
 
             if (!gameObject.TryGetComponent(out controller))
             {
-                Debug.LogError("NemToolbot RangeFinder: Failed to get NemToolbotController on " + gameObject.name);
+                SS2Log.Error("NemToolbot RangeFinder: Missing NemToolbotController on " + gameObject.name);
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
             }
 
-            Util.PlaySound(enterSoundString, gameObject);
+            // Util.PlaySound(enterSoundString, gameObject);
             characterBody.SetAimTimer(3f);
 
             muzzleTransform = FindModelChild(muzzleString);
@@ -54,22 +57,37 @@ namespace EntityStates.NemToolbot
             lineRenderer.positionCount = 2;
             lineRenderer.startWidth = 0.05f;
             lineRenderer.endWidth = 0.05f;
-            lineRenderer.material = laserMaterial;
+            lineRenderer.sharedMaterial = laserMaterial;
             lineRenderer.startColor = Color.red;
             lineRenderer.endColor = Color.red;
             lineRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             lineRenderer.receiveShadows = false;
             lineRenderer.textureMode = LineTextureMode.Tile;
+            UpdateRange();
+            UpdateLaserVisuals(lastLaserOrigin, lastLaserEndPoint);
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
+            if (!controller)
+                return;
+
+            UpdateRange();
+            if (isAuthority && !IsKeyDownAuthority())
+            {
+                controller.SetWeapon(pendingWeapon);
+                outer.SetNextStateToMain();
+            }
+        }
+
+        private void UpdateRange()
+        {
             Ray aimRay = GetAimRay();
             Vector3 endPoint;
 
-            if (Physics.Raycast(aimRay, out RaycastHit hit, maxRange, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
+            if (Util.CharacterRaycast(gameObject, aimRay, out RaycastHit hit, maxRange, LayerIndex.CommonMasks.bullet, QueryTriggerInteraction.Ignore))
             {
                 hitDistance = hit.distance;
                 endPoint = hit.point;
@@ -84,16 +102,6 @@ namespace EntityStates.NemToolbot
 
             lastLaserOrigin = aimRay.origin;
             lastLaserEndPoint = endPoint;
-
-            if (isAuthority && !IsKeyDownAuthority())
-            {
-                Debug.Log($"[NemToolbot] RangeFinder: Released at {hitDistance:F1}m -> selecting {pendingWeapon}");
-                if (NetworkServer.active && controller != null)
-                {
-                    controller.SetWeapon(pendingWeapon);
-                }
-                outer.SetNextStateToMain();
-            }
         }
 
         public override void Update()
@@ -114,7 +122,7 @@ namespace EntityStates.NemToolbot
 
         public override void OnExit()
         {
-            Util.PlaySound(exitSoundString, gameObject);
+            // Util.PlaySound(exitSoundString, gameObject);
             if (laserObject != null)
             {
                 EntityState.Destroy(laserObject);

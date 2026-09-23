@@ -1,4 +1,5 @@
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
 
@@ -32,30 +33,40 @@ namespace EntityStates.NemToolbot
         private float previousAirControl;
         private bool detonateNextFrame;
         private GameObject slamEffectInstance;
+        private float impactSpeed;
+        private bool completedSlam;
+        private bool subscribedMovementHit;
+        private bool initialized;
 
         public override void OnEnter()
         {
             base.OnEnter();
 
-            if (!gameObject.TryGetComponent(out controller))
+            if (!gameObject.TryGetComponent(out controller) || !controller.SetBallForm(true))
             {
-                Debug.LogError("NemToolbot BallSlam: Failed to get NemToolbotController on " + gameObject.name);
+                SS2Log.Error("NemToolbot BallSlam: Missing or unconfigured NemToolbotController.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
             }
 
-            PlayCrossfade("Body", "BallSlam", 0.1f);
+            // PlayCrossfade("Body", "BallSlam", 0.1f);
 
             if (isAuthority && characterMotor != null)
             {
                 characterMotor.onMovementHit += OnMovementHit;
+                subscribedMovementHit = true;
+                impactSpeed = characterMotor.velocity.magnitude;
             }
 
-            Util.PlaySound(enterSoundString, gameObject);
+            // Util.PlaySound(enterSoundString, gameObject);
 
             if (characterMotor != null)
             {
                 previousAirControl = characterMotor.airControl;
                 characterMotor.airControl = airControl;
             }
+            initialized = true;
 
             if (slamEffectPrefab != null)
             {
@@ -70,9 +81,19 @@ namespace EntityStates.NemToolbot
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (!initialized)
+                return;
 
             if (isAuthority && characterMotor != null)
             {
+                if (fixedAge >= minimumDuration && (detonateNextFrame || characterMotor.Motor.GroundingStatus.IsStableOnGround))
+                {
+                    completedSlam = true;
+                    DetonateAuthority();
+                    outer.SetNextStateToMain();
+                    return;
+                }
+
                 // Allow limited steering during descent
                 characterMotor.moveDirection = inputBank.moveVector;
                 if (characterDirection != null)
@@ -82,35 +103,33 @@ namespace EntityStates.NemToolbot
 
                 // Accelerate downward faster than normal gravity
                 characterMotor.velocity.y += verticalAcceleration * GetDeltaTime();
+                if (!detonateNextFrame)
+                    impactSpeed = characterMotor.velocity.magnitude;
 
                 // Safety timeout if we never hit the ground
                 if (fixedAge >= maxDuration)
                 {
+                    completedSlam = true;
                     DetonateAuthority();
                     outer.SetNextStateToMain();
                     return;
-                }
-
-                // Detonate when hitting the ground after minimum duration
-                if (fixedAge >= minimumDuration && (detonateNextFrame || characterMotor.Motor.GroundingStatus.IsStableOnGround))
-                {
-                    DetonateAuthority();
-                    outer.SetNextStateToMain();
                 }
             }
         }
 
         public override void OnExit()
         {
-            if (isAuthority && characterMotor != null)
-            {
+            if (subscribedMovementHit && characterMotor)
                 characterMotor.onMovementHit -= OnMovementHit;
+
+            if (isAuthority && completedSlam && characterMotor && characterBody.healthComponent.alive)
+            {
                 characterMotor.Motor.ForceUnground();
                 characterMotor.velocity *= exitSlowdownCoefficient;
                 characterMotor.velocity.y = exitVerticalVelocity;
             }
 
-            if (characterMotor != null)
+            if (initialized && characterMotor != null)
             {
                 characterMotor.airControl = previousAirControl;
             }
@@ -135,7 +154,7 @@ namespace EntityStates.NemToolbot
 
             Vector3 footPosition = characterBody.footPosition;
 
-            float speedMultiplier = controller != null ? controller.GetDamageMultiplierFromSpeed() : 1f;
+            float speedMultiplier = controller.GetDamageMultiplierFromSpeed(impactSpeed);
 
             if (blastEffectPrefab != null)
             {
@@ -163,7 +182,7 @@ namespace EntityStates.NemToolbot
                 blastAttack.impactEffect = EffectCatalog.FindEffectIndexFromPrefab(blastImpactEffectPrefab);
             }
             blastAttack.teamIndex = teamComponent.teamIndex;
-            blastAttack.damageType.damageSource = DamageSource.Special;
+            blastAttack.damageType.damageSource = DamageSource.Primary;
 
             return blastAttack.Fire();
         }

@@ -2,7 +2,6 @@
 using RoR2;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
-using UnityEngine.Networking;
 using RoR2.ContentManagement;
 using RoR2.Projectile;
 using SS2.Components;
@@ -31,7 +30,7 @@ namespace SS2.Survivors
         {
             if (!CharacterPrefab.TryGetComponent(out CharacterBody cb))
             {
-                Debug.LogError("NemToolbot.ModifyPrefab: Failed to get CharacterBody on " + CharacterPrefab.name);
+                SS2Log.Error("NemToolbot.ModifyPrefab: Failed to get CharacterBody on " + CharacterPrefab.name);
                 return;
             }
 
@@ -47,14 +46,6 @@ namespace SS2.Survivors
             }
         }
 
-        private static void EnsureNetworkIdentity(GameObject prefab)
-        {
-            if (!prefab.GetComponent<NetworkIdentity>())
-            {
-                prefab.AddComponent<NetworkIdentity>();
-            }
-        }
-
         private void CreateProjectiles()
         {
             CreateGrappleHookProjectile();
@@ -66,32 +57,10 @@ namespace SS2.Survivors
         {
             GameObject loaderHook = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Loader/LoaderHook.prefab").WaitForCompletion();
             grappleHookProjectile = loaderHook.InstantiateClone("NemToolbotGrappleHook", true);
-            EnsureNetworkIdentity(grappleHookProjectile);
 
-            // Null out ropeEndTransform before destroy to prevent vanilla OnDestroy
-            // from deleting the RopeEnd child we need for our controller
-            ProjectileGrappleController loaderGrapple = grappleHookProjectile.GetComponent<ProjectileGrappleController>();
-            if (loaderGrapple != null)
-            {
-                loaderGrapple.ropeEndTransform = null;
-                Object.DestroyImmediate(loaderGrapple);
-            }
-
-            // Reconfigure the projectile's ESM before adding our controller
-            // (RequireComponent won't duplicate it since one already exists from the clone)
-            if (grappleHookProjectile.TryGetComponent(out EntityStateMachine esm))
-            {
-                NemToolbotGrappleController.ConfigureProjectileESM(esm);
-            }
-            else
-            {
-                Debug.LogError("NemToolbot: Cloned LoaderHook missing EntityStateMachine.");
-            }
-
-            // Add our grapple controller and configure
-            NemToolbotGrappleController grappleController = grappleHookProjectile.AddComponent<NemToolbotGrappleController>();
+            ProjectileGrappleController grappleController = grappleHookProjectile.GetComponent<ProjectileGrappleController>();
+            grappleHookProjectile.AddComponent<NemToolbotGrappleController>();
             grappleController.ownerHookStateType = new EntityStates.SerializableEntityStateType(typeof(FireGrapplingHook));
-            grappleController.hookStateMachineName = "Hook";
             grappleController.acceleration = 45f;
             grappleController.lookAcceleration = 35f;
             grappleController.lookAccelerationRampUpDuration = 0.5f;
@@ -104,31 +73,18 @@ namespace SS2.Survivors
             grappleController.normalOffset = 1f;
             grappleController.yankMassLimit = 0f;
             grappleController.muzzleStringOnBody = "MuzzleLeft";
-            grappleController.deductStockSlot = NemToolbotGrappleController.DeductSlot.Secondary;
             grappleController.lookAccelerationRampUpCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
             grappleController.enterSoundString = "Play_loader_m2_travel_loop";
             grappleController.exitSoundString = "Stop_loader_m2_travel_loop";
             grappleController.hookDistanceRTPCstring = "loaderM2_grappleRemain";
             grappleController.minHookDistancePitchModifier = 3f;
             grappleController.maxHookDistancePitchModifier = 80f;
-
-            // Find and assign the rope end transform from the cloned prefab
-            Transform ropeEnd = grappleHookProjectile.transform.Find("RopeEnd");
-            if (ropeEnd != null)
-            {
-                grappleController.ropeEndTransform = ropeEnd;
-            }
-            else
-            {
-                Debug.LogError("NemToolbot: Cloned LoaderHook missing RopeEnd child transform.");
-            }
         }
 
         private void CreateGrenadeProjectile()
         {
             GameObject toolbotGrenade = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion();
             grenadeProjectile = toolbotGrenade.InstantiateClone("NemToolbotGrenadeProjectile", true);
-            EnsureNetworkIdentity(grenadeProjectile);
 
             // Enable gravity for arc trajectory
             if (grenadeProjectile.TryGetComponent(out Rigidbody rb))
@@ -137,7 +93,7 @@ namespace SS2.Survivors
             }
             else
             {
-                Debug.LogError("NemToolbot: Cloned grenade missing Rigidbody.");
+                SS2Log.Error("NemToolbot: Cloned grenade missing Rigidbody.");
             }
 
             // Set explosion VFX
@@ -151,17 +107,16 @@ namespace SS2.Survivors
         {
             GameObject toolbotGrenade = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/ToolbotGrenadeLauncherProjectile.prefab").WaitForCompletion();
             deployChargeProjectile = toolbotGrenade.InstantiateClone("NemToolbotDeployCharge", true);
-            EnsureNetworkIdentity(deployChargeProjectile);
 
             // Stationary: no forward movement, no gravity
             if (deployChargeProjectile.TryGetComponent(out ProjectileSimple ps))
             {
                 ps.desiredForwardSpeed = 0f;
-                ps.lifetime = 4f;
+                ps.lifetime = 5f;
             }
             else
             {
-                Debug.LogError("NemToolbot: Cloned deploy charge missing ProjectileSimple.");
+                SS2Log.Error("NemToolbot: Cloned deploy charge missing ProjectileSimple.");
             }
 
             if (deployChargeProjectile.TryGetComponent(out Rigidbody rb))
@@ -177,11 +132,12 @@ namespace SS2.Survivors
                 pie.destroyOnEnemy = false;
                 pie.timerAfterImpact = false;
                 pie.lifetime = 4f;
+                pie.lifetimeRandomOffset = 0f;
                 pie.impactEffect = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Toolbot/OmniExplosionVFXToolbotQuick.prefab").WaitForCompletion();
             }
             else
             {
-                Debug.LogError("NemToolbot: Cloned deploy charge missing ProjectileImpactExplosion.");
+                SS2Log.Error("NemToolbot: Cloned deploy charge missing ProjectileImpactExplosion.");
             }
         }
 

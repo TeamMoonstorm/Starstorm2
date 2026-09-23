@@ -1,4 +1,5 @@
 using RoR2;
+using SS2;
 using RoR2.Projectile;
 using UnityEngine;
 
@@ -37,13 +38,13 @@ namespace EntityStates.NemToolbot
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
-            Util.PlaySound(soundString, gameObject);
+            // Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
             {
                 EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, "Muzzle", transmit: false);
             }
 
-            PlayCrossfade("Gesture, Override", "DeployCharges", "DeployCharges.playbackRate", duration, 0.05f);
+            // PlayCrossfade("Gesture, Override", "DeployCharges", "DeployCharges.playbackRate", duration, 0.05f);
 
             if (isAuthority)
             {
@@ -55,7 +56,7 @@ namespace EntityStates.NemToolbot
         {
             if (chargeProjectilePrefab == null)
             {
-                Debug.LogError("NemToolbot DeployCharges: chargeProjectilePrefab is null.");
+                SS2Log.Error("NemToolbot DeployCharges: chargeProjectilePrefab is null.");
                 return;
             }
 
@@ -91,11 +92,6 @@ namespace EntityStates.NemToolbot
             {
                 outer.SetNextStateToMain();
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

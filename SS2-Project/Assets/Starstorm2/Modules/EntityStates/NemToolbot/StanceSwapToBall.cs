@@ -1,7 +1,7 @@
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -24,19 +24,16 @@ namespace EntityStates.NemToolbot
             base.OnEnter();
             duration = baseDuration / attackSpeedStat;
 
-            if (!gameObject.TryGetComponent(out controller))
+            if (!gameObject.TryGetComponent(out controller) || !controller.SetBallForm(true))
             {
-                Debug.LogError("NemToolbot StanceSwapToBall: Failed to get NemToolbotController on " + gameObject.name);
+                SS2Log.Error("NemToolbot StanceSwapToBall: Missing or unconfigured NemToolbotController.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
             }
 
-            Debug.Log($"[NemToolbot] StanceSwapToBall: Entering ball form (duration={duration:F2}s)");
-            if (NetworkServer.active && controller != null)
-            {
-                controller.SetBallForm(true);
-            }
-
-            Util.PlaySound(enterSoundString, gameObject);
-            PlayCrossfade("Body", "TransformToBall", "StanceSwap.playbackRate", duration, 0.1f);
+            // Util.PlaySound(enterSoundString, gameObject);
+            // PlayCrossfade("Body", "TransformToBall", "StanceSwap.playbackRate", duration, 0.1f);
         }
 
         public override void FixedUpdate()
@@ -46,23 +43,6 @@ namespace EntityStates.NemToolbot
             {
                 outer.SetNextState(new BallMainState());
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-        }
-
-        public override void OnSerialize(NetworkWriter writer)
-        {
-            base.OnSerialize(writer);
-            writer.Write(fixedAge);
-        }
-
-        public override void OnDeserialize(NetworkReader reader)
-        {
-            base.OnDeserialize(reader);
-            fixedAge = reader.ReadSingle();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

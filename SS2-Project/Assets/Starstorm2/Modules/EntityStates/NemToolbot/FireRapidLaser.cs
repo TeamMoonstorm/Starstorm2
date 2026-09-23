@@ -1,7 +1,7 @@
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -25,34 +25,46 @@ namespace EntityStates.NemToolbot
 
         private NemToolbotController controller;
         private float fireTimer;
-        private float duration;
+        // private float duration;
+        private float fireInterval;
 
         public override void OnEnter()
         {
             base.OnEnter();
-            duration = baseDuration / attackSpeedStat;
+            // duration = baseDuration / attackSpeedStat;
+            fireInterval = baseFireInterval / attackSpeedStat;
             characterBody.SetAimTimer(2f);
 
-            if (!gameObject.TryGetComponent(out controller))
+            if (!(fireInterval > 0f) || float.IsInfinity(fireInterval))
             {
-                Debug.LogError("FireRapidLaser: NemToolbotController not found.");
-            }
-
-            PlayCrossfade("Gesture, Override", "FireRapidLaser", "FireRapidLaser.playbackRate", duration, 0.05f);
-            FireBullet();
-        }
-
-        private void FireBullet()
-        {
-            fireTimer = baseFireInterval / attackSpeedStat;
-
-            if (isAuthority && controller != null && NetworkServer.active && !controller.TryConsumeAmmo(NemToolbotController.WeaponType.RapidLaser))
-            {
-                outer.SetNextStateToMain();
+                SS2Log.Error("FireRapidLaser: Fire interval must be finite and positive.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
                 return;
             }
 
-            Util.PlaySound(soundString, gameObject);
+            if (!gameObject.TryGetComponent(out controller))
+            {
+                SS2Log.Error("FireRapidLaser: NemToolbotController not found.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
+            }
+
+            // PlayCrossfade("Gesture, Override", "FireRapidLaser", "FireRapidLaser.playbackRate", duration, 0.05f);
+            FireBullet();
+            fireTimer = fireInterval;
+        }
+
+        private bool FireBullet()
+        {
+            if (isAuthority && !controller.TryConsumeAmmo(NemToolbotController.WeaponType.RapidLaser))
+            {
+                outer.SetNextStateToMain();
+                return false;
+            }
+
+            // Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
             {
                 EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleString, transmit: false);
@@ -99,27 +111,30 @@ namespace EntityStates.NemToolbot
             }
 
             characterBody.AddSpreadBloom(spreadBloomValue);
+            return true;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            fireTimer -= GetDeltaTime();
-            if (fireTimer <= 0f)
-            {
-                FireBullet();
-            }
+            if (!controller)
+                return;
 
             if (isAuthority && !IsKeyDownAuthority())
             {
                 outer.SetNextStateToMain();
+                return;
             }
-        }
 
-        public override void OnExit()
-        {
-            base.OnExit();
+            fireTimer -= GetDeltaTime();
+            int remainingShots = NemToolbotController.GetMaxAmmo(NemToolbotController.WeaponType.RapidLaser);
+            while (fireTimer <= 0f && remainingShots-- > 0)
+            {
+                if (!FireBullet())
+                    return;
+                fireTimer += fireInterval;
+            }
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

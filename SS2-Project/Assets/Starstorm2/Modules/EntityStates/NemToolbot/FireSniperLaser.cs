@@ -1,7 +1,7 @@
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
-using UnityEngine.Networking;
 
 namespace EntityStates.NemToolbot
 {
@@ -34,22 +34,24 @@ namespace EntityStates.NemToolbot
             {
                 if (!gameObject.TryGetComponent(out NemToolbotController controller))
                 {
-                    Debug.LogError("FireSniperLaser: NemToolbotController not found.");
+                    SS2Log.Error("FireSniperLaser: NemToolbotController not found.");
+                    outer.SetNextStateToMain();
+                    return;
                 }
-                else if (NetworkServer.active && !controller.TryConsumeAmmo(NemToolbotController.WeaponType.SniperLaser))
+                if (!controller.TryConsumeAmmo(NemToolbotController.WeaponType.SniperLaser))
                 {
                     outer.SetNextStateToMain();
                     return;
                 }
             }
 
-            Util.PlaySound(soundString, gameObject);
+            // Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
             {
                 EffectManager.SimpleMuzzleFlash(muzzleFlashPrefab, gameObject, muzzleString, transmit: false);
             }
 
-            PlayCrossfade("Gesture, Override", "FireSniper", "FireSniper.playbackRate", duration, 0.05f);
+            // PlayCrossfade("Gesture, Override", "FireSniper", "FireSniper.playbackRate", duration, 0.05f);
             AddRecoil(-2f * recoilAmplitude, -3f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
 
             if (isAuthority)
@@ -100,11 +102,6 @@ namespace EntityStates.NemToolbot
             {
                 outer.SetNextStateToMain();
             }
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
         }
 
         public override InterruptPriority GetMinimumInterruptPriority()

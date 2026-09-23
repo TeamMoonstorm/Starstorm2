@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using RoR2;
+using SS2;
 using SS2.Components;
 using UnityEngine;
 
@@ -24,8 +25,6 @@ namespace EntityStates.NemToolbot
         public static float upwardForceMagnitude = 500f;
         public static float hitPauseDuration = 0.1f;
         public static float recoilAmplitude = 1f;
-        public static float massThresholdForKnockback = 250f;
-        public static float knockbackForce = 3000f;
 
         public static string startSoundString = "";
         public static string endSoundString = "";
@@ -39,22 +38,27 @@ namespace EntityStates.NemToolbot
         private Vector3 idealDirection;
         private OverlapAttack attack;
         private bool inHitPause;
+        private bool startedBoost;
+        private bool completedBoost;
         private List<HurtBox> victimsStruck = new List<HurtBox>();
 
         public override void OnEnter()
         {
             base.OnEnter();
 
+            if (!gameObject.TryGetComponent(out controller) || !controller.SetBallForm(true))
+            {
+                SS2Log.Error("NemToolbot BallBoost: Missing or unconfigured NemToolbotController.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
+            }
+
             // If airborne, dispatch to BallSlam instead
             if (isAuthority && characterMotor != null && !characterMotor.isGrounded)
             {
                 outer.SetNextState(new BallSlam());
                 return;
-            }
-
-            if (!gameObject.TryGetComponent(out controller))
-            {
-                Debug.LogError("NemToolbot BallBoost: Failed to get NemToolbotController on " + gameObject.name);
             }
 
             duration = baseDuration;
@@ -64,9 +68,11 @@ namespace EntityStates.NemToolbot
                 idealDirection = inputBank.aimDirection;
                 idealDirection.y = 0f;
                 idealDirection.Normalize();
+                if (idealDirection == Vector3.zero)
+                    idealDirection = characterDirection.forward;
             }
 
-            if (characterDirection != null)
+            if (isAuthority && characterDirection != null)
             {
                 characterDirection.forward = idealDirection;
             }
@@ -79,9 +85,9 @@ namespace EntityStates.NemToolbot
                 }, transmit: false);
             }
 
-            Util.PlaySound(startSoundString, gameObject);
+            // Util.PlaySound(startSoundString, gameObject);
 
-            if (characterBody != null)
+            if (isAuthority && characterBody != null)
             {
                 characterBody.isSprinting = true;
             }
@@ -93,6 +99,13 @@ namespace EntityStates.NemToolbot
             {
                 hitBoxGroup = Array.Find(modelTransform.GetComponents<HitBoxGroup>(), (HitBoxGroup element) => element.groupName == "Charge");
             }
+            if (!hitBoxGroup)
+            {
+                SS2Log.Error("NemToolbot BallBoost: Model is missing the Charge HitBoxGroup.");
+                if (isAuthority)
+                    outer.SetNextStateToMain();
+                return;
+            }
 
             attack = new OverlapAttack();
             attack.attacker = gameObject;
@@ -103,18 +116,22 @@ namespace EntityStates.NemToolbot
             attack.forceVector = Vector3.up * upwardForceMagnitude;
             attack.pushAwayForce = awayForceMagnitude;
             attack.hitBoxGroup = hitBoxGroup;
-            attack.damageType.damageSource = DamageSource.Utility;
+            attack.damageType.damageSource = DamageSource.Primary;
             attack.isCrit = RollCrit();
+            startedBoost = true;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+            if (!startedBoost)
+                return;
 
             if (fixedAge >= duration)
             {
                 if (isAuthority)
                 {
+                    completedBoost = true;
                     outer.SetNextStateToMain();
                 }
                 return;
@@ -132,18 +149,20 @@ namespace EntityStates.NemToolbot
                     characterDirection.moveVector = idealDirection;
                 }
 
+                Vector3 boostVelocity = Vector3.zero;
                 if (characterMotor != null && !characterMotor.disableAirControlUntilCollision)
                 {
-                    characterMotor.rootMotion += GetIdealVelocity() * GetDeltaTime();
+                    boostVelocity = GetIdealVelocity();
+                    characterMotor.rootMotion += boostVelocity * GetDeltaTime();
                 }
 
                 // Scale damage by speed
-                float speedMultFromVelocity = controller != null ? controller.GetDamageMultiplierFromSpeed() : 1f;
+                float speedMultFromVelocity = controller.GetDamageMultiplierFromSpeed((characterMotor.velocity + boostVelocity).magnitude);
                 attack.damage = damageStat * (baseDamageCoefficient * speedMultFromVelocity);
 
                 if (attack.Fire(victimsStruck))
                 {
-                    Util.PlaySound(impactSoundString, gameObject);
+                    // Util.PlaySound(impactSoundString, gameObject);
                     inHitPause = true;
                     hitPauseTimer = hitPauseDuration;
                     AddRecoil(-0.5f * recoilAmplitude, -0.5f * recoilAmplitude, -0.5f * recoilAmplitude, 0.5f * recoilAmplitude);
@@ -165,16 +184,13 @@ namespace EntityStates.NemToolbot
 
         public override void OnExit()
         {
-            Util.PlaySound(endSoundString, gameObject);
+            // if (startedBoost)
+            //     Util.PlaySound(endSoundString, gameObject);
 
-            if (characterMotor != null && !characterMotor.disableAirControlUntilCollision)
+            if (isAuthority && completedBoost && characterBody.healthComponent.alive &&
+                characterMotor != null && !characterMotor.disableAirControlUntilCollision)
             {
                 characterMotor.velocity += GetIdealVelocity();
-            }
-
-            if (characterBody != null)
-            {
-                characterBody.isSprinting = false;
             }
 
             base.OnExit();
