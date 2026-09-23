@@ -33,7 +33,6 @@ namespace EntityStates.NemToolbot
             base.OnEnter();
             // duration = baseDuration / attackSpeedStat;
             fireInterval = baseFireInterval / attackSpeedStat;
-            characterBody.SetAimTimer(2f);
 
             if (!(fireInterval > 0f) || float.IsInfinity(fireInterval))
             {
@@ -64,6 +63,7 @@ namespace EntityStates.NemToolbot
                 return false;
             }
 
+            characterBody.SetAimTimer(2f);
             // Util.PlaySound(soundString, gameObject);
             if (muzzleFlashPrefab != null)
             {

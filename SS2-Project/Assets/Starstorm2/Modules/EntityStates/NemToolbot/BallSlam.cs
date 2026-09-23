@@ -37,6 +37,7 @@ namespace EntityStates.NemToolbot
         private bool completedSlam;
         private bool subscribedMovementHit;
         private bool initialized;
+        private bool addedFallDamageProtection;
 
         public override void OnEnter()
         {
@@ -48,6 +49,13 @@ namespace EntityStates.NemToolbot
                 if (isAuthority)
                     outer.SetNextStateToMain();
                 return;
+            }
+
+            // Landing damage is checked on the server, not just the motor's owner.
+            if ((characterBody.bodyFlags & CharacterBody.BodyFlags.IgnoreFallDamage) == 0)
+            {
+                characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
+                addedFallDamageProtection = true;
             }
 
             // PlayCrossfade("Body", "BallSlam", 0.1f);
@@ -122,6 +130,9 @@ namespace EntityStates.NemToolbot
             if (subscribedMovementHit && characterMotor)
                 characterMotor.onMovementHit -= OnMovementHit;
 
+            if (addedFallDamageProtection && characterBody)
+                characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+
             if (isAuthority && completedSlam && characterMotor && characterBody.healthComponent.alive)
             {
                 characterMotor.Motor.ForceUnground();
@@ -144,6 +155,8 @@ namespace EntityStates.NemToolbot
 
         private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
         {
+            if (!detonateNextFrame)
+                impactSpeed = movementHitInfo.velocity.magnitude;
             detonateNextFrame = true;
         }
 

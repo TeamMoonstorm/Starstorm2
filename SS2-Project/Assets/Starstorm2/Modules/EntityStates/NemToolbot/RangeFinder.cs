@@ -74,6 +74,7 @@ namespace EntityStates.NemToolbot
             if (!controller)
                 return;
 
+            characterBody.SetAimTimer(3f);
             UpdateRange();
             if (isAuthority && !IsKeyDownAuthority())
             {

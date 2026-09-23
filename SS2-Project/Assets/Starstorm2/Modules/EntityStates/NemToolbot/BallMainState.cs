@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace EntityStates.NemToolbot
 {
-    public class BallMainState : BaseCharacterMain
+    public class BallMainState : GenericCharacterMain
     {
         public static float moveSpeedMultiplier = 1.6f;
         public static float ballAirControl = 0.15f;
@@ -33,7 +33,6 @@ namespace EntityStates.NemToolbot
             if (!isAuthority)
                 return;
 
-            characterBody.isSprinting = true;
             if (characterMotor.isGrounded)
             {
                 float damping = Mathf.Pow(momentumDamping, GetDeltaTime() / 0.02f);
@@ -42,11 +41,6 @@ namespace EntityStates.NemToolbot
                 velocity.z *= damping;
                 characterMotor.velocity = velocity;
             }
-        }
-
-        public override InterruptPriority GetMinimumInterruptPriority()
-        {
-            return InterruptPriority.Skill;
         }
     }
 }
