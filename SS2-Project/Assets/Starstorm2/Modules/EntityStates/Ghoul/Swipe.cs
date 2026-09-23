@@ -162,18 +162,22 @@ namespace EntityStates.Ghoul
             base.FixedUpdate();
             float t = fixedAge / duration;
             bool inAttackWindow = t >= attackStartTime && t <= attackEndTime;
-            if (isAuthority && inAttackWindow)
+            if (inAttackWindow)
             {
                 if (!hasAttacked)
                 {
                     Util.PlayAttackSpeedSound(attackSoundString, base.gameObject, attackSpeedStat);
-                    EffectManager.SimpleMuzzleFlash(Swipe.effectPrefab, gameObject, "SwipeLeft", true);
+                    EffectManager.SimpleMuzzleFlash(Swipe.effectPrefab, gameObject, "SwipeLeft", false);
                     hasAttacked = true;
                 }
-                attack.forceVector = transform.forward * Swipe.forceMagnitude;
-                if (attack.Fire(null))
+
+                if (isAuthority)
                 {
-                    OnHitEnemyAuthority();
+                    attack.forceVector = transform.forward * Swipe.forceMagnitude;
+                    if (attack.Fire(null))
+                    {
+                        OnHitEnemyAuthority();
+                    }
                 }
             }
             if (fixedAge >= duration && isAuthority)
