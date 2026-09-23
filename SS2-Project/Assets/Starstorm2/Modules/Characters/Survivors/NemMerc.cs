@@ -41,6 +41,7 @@ namespace SS2.Survivors
 
             On.RoR2.CharacterAI.BaseAI.Target.GetBullseyePosition += HopefullyHarmlessAIFix;
             ModifyPrefab();
+            NemesisCatalog.AddNemesis(new NemesisCompatInfo(SS2Assets.LoadAsset<NemesisSpawnCard>("nscNemMercenaryBoss", SS2Bundle.Events)));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining | MethodImplOptions.NoOptimization)]

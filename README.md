@@ -6,6 +6,7 @@ Table of Contents
 3. [How to clone and develop](#how-to-clone-and-develop)
 4. [Branch Structure](#branch-structure)
 5. [Issues Q&A](#issues-qa)
+6. [Nemesis invasion integration](#nemesis-invasion-integration)
 
 ## About
 
@@ -87,6 +88,78 @@ That said, if you are looking to contribute to the project, set-up instructions 
 ![](https://files.catbox.moe/6odrmh.gif)
 
 * You're now ready to start development.
+
+## Nemesis invasion integration
+
+Use `SS2.NemesisCatalog.AddNemesis(SS2.NemesisCompatInfo)` to add an AI boss to
+SS2's invasion pool. Nemesis Commando and Nemesis Mercenary use this same entry
+point; there is no separate built-in registration path.
+
+Call once on **every peer**, after configuring your boss prefabs, normally during
+your content initialization and before starting a run:
+
+```csharp
+SS2.NemesisCatalog.AddNemesis(new SS2.NemesisCompatInfo
+{
+    masterPrefab = bossMasterPrefab,
+    droppedItem = bossDropItem, // Optional; omit for no drop.
+    selectionWeight = 1f
+});
+```
+
+`bossMasterPrefab` is your configured `CharacterMaster` prefab, not a survivor
+body or player master. Its `bodyPrefab` must contain a `CharacterBody`; both
+prefabs need `NetworkIdentity` components. Supply AI behavior yourself. Register
+your masters, bodies, SkillDefs and EntityStates in the game's content/network
+catalogs through your normal content provider. This API does not do that for you.
+If SS2 is an optional dependency, isolate the SS2-referencing call in your
+mod's optional compatibility code.
+
+The API does **not** register a playable survivor, grant achievements, or disable
+another mod's invasion events. Your mod owns those behaviors. SS2 retains its
+existing invasion timing, VoidRock requirement, encounter scaling and defeat
+event (`EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal`).
+
+Registration rules:
+
+- The first valid registration for a master wins. Repeated registrations warn
+  without adding another entry or changing its weight.
+- `droppedItem` suppresses eligibility while any player holds that item. With no
+  drop configured, the boss remains eligible for later invasions.
+- An omitted or finite non-positive weight becomes 1. Non-finite weights and
+  invalid overrides are rejected with an SS2 log error.
+- Registration is supported before or after catalog initialization. Additions
+  during a run affect the next pool construction, not an already scheduled event.
+- Register identical configuration on all peers. Boss setup uses the master
+  prefab's catalog-unique name, not registration order. Do not modify or destroy
+  registered cards or their referenced assets. A different master with an already
+  registered name is rejected.
+
+Optional descriptor fields:
+
+| Field | Behavior |
+| --- | --- |
+| `skillOverrides` | `NemesisSpawnCard.SkillOverride[]`: valid skill slots and SkillDefs, applied with Replacement priority to the spawned boss on each peer. |
+| `statModifiers` | `NemesisSpawnCard.StatModifier[]`: additive, multiplicative or override operations on writable instance `float` fields of `CharacterBody` whose names start with `base`, such as `baseMaxHealth`, `baseDamage` or `baseArmor`. Nonempty modifiers also recalculate vanilla level stats. Without modifiers, the prefab's authored base and level stats are preserved. |
+| `spawnStateOverride` | A concrete, parameterless `EntityState` registered in your content pack, applied to the boss's `Body` state machine. Omit to retain normal spawning. |
+| `nemesisInventory` | A `NemesisInventory` asset initialized through SS2's normal address-reference loading. Omit to grant only out-of-bounds teleport protection, in addition to the event's normal scaling items. |
+| `visualEffect` | A local prefab attached to the boss on each peer. It need not belong to an SS2 asset bundle. |
+
+For an existing authored `NemesisSpawnCard`, use
+`NemesisCatalog.AddNemesis(new NemesisCompatInfo(existingCard))`. This copies the
+Nemesis configuration into a descriptor and goes through the same validation
+and registration as the example above. It does not mutate the source asset or
+copy unrelated `CharacterSpawnCard` options.
+
+**Migration:** both obsolete `AddNemesisInvader` overloads have been removed.
+Pass your actual master prefab through `NemesisCompatInfo` instead of a name.
+
+For diagnostics, `list_nems` lists registrations and `spawn_nem [index]` directly
+spawns a boss near the command sender in an active server run (cheats required).
+The direct-spawn command is not a full invasion test: it does not exercise the
+event's scheduling, encounter or defeat/unlock notification. Verify those through
+a normal invasion. The existing boss-setup RPC handles live spawns; registration
+does not add late-join replay or synchronize dynamically added content.
 
 ## Branch Structure
 
