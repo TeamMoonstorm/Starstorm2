@@ -2,7 +2,6 @@
 using RoR2.HudOverlay;
 using RoR2.UI;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -10,17 +9,17 @@ namespace SS2.Components
 {
     public class SelfRepairController : NetworkBehaviour
     {
-        public CharacterBody characterBody;
         public float repairMax = 10f;
         public float repairGainPerUpdate = 0.10f;
 
-        public GameObject repairOverlayPrefab = SS2.Survivors.Toolbot.RepairOverlayPrefab;
-
+        public GameObject repairOverlayPrefab;
         public string repairOverlayChildLocatorEntry = "CrosshairExtras";
+
+        private CharacterBody characterBody;
         private OverlayController repairOverlayController;
         private List<ImageFillController> fillUiList = new List<ImageFillController>();
 
-        [SyncVar(hook = "OnRepairModified")]
+        [SyncVar(hook = nameof(OnRepairModified))]
         private float _repair;
         public float repair
         {
@@ -38,36 +37,24 @@ namespace SS2.Components
             }
         }
 
-        public float Network_charge
-        {
-            get
-            {
-                return _repair;
-            }
-            [param: In]
-            set
-            {
-                if (NetworkServer.localClientActive && syncVarHookGuard)
-                {
-                    syncVarHookGuard = true;
-                    OnRepairModified(value);
-                    syncVarHookGuard = false;
-                }
-                SetSyncVar<float>(value, ref _repair, 1U);
-            }
-        }
-
         public void OnEnable()
         {
-            OverlayCreationParams repairOverlayCreationParams = new OverlayCreationParams
+            if (!TryGetComponent(out characterBody))
             {
-                prefab = repairOverlayPrefab,
-                childLocatorEntry = repairOverlayChildLocatorEntry
-            };
-            repairOverlayController = HudOverlayManager.AddOverlay(gameObject, repairOverlayCreationParams);
-            repairOverlayController.onInstanceAdded += OnRepairOverlayInstanceAdded;
-            repairOverlayController.onInstanceRemove += OnRepairOverlayInstanceRemoved;
-            characterBody = GetComponent<CharacterBody>();
+                Debug.LogError("SelfRepairController: Missing CharacterBody on " + gameObject.name);
+            }
+
+            if (repairOverlayPrefab != null)
+            {
+                OverlayCreationParams repairOverlayCreationParams = new OverlayCreationParams
+                {
+                    prefab = repairOverlayPrefab,
+                    childLocatorEntry = repairOverlayChildLocatorEntry
+                };
+                repairOverlayController = HudOverlayManager.AddOverlay(gameObject, repairOverlayCreationParams);
+                repairOverlayController.onInstanceAdded += OnRepairOverlayInstanceAdded;
+                repairOverlayController.onInstanceRemove += OnRepairOverlayInstanceRemoved;
+            }
         }
 
         private void OnDisable()
@@ -85,13 +72,13 @@ namespace SS2.Components
         {
             if (NetworkServer.active)
             {
-                UpdateUI();
-
                 if (!isMaxRepair)
                 {
                     AddRepair(repairGainPerUpdate);
                 }
             }
+
+            UpdateUI();
         }
 
         private void UpdateUI()
@@ -104,70 +91,41 @@ namespace SS2.Components
 
         private void OnRepairOverlayInstanceAdded(OverlayController controller, GameObject instance)
         {
-            fillUiList.Add(instance.GetComponent<ImageFillController>());
+            if (instance.TryGetComponent(out ImageFillController ifc))
+            {
+                fillUiList.Add(ifc);
+            }
+            else
+            {
+                Debug.LogError("SelfRepairController: Overlay instance missing ImageFillController");
+            }
         }
 
         private void OnRepairOverlayInstanceRemoved(OverlayController controller, GameObject instance)
         {
-            fillUiList.Remove(instance.transform.GetComponent<ImageFillController>());
+            if (instance.TryGetComponent(out ImageFillController ifc))
+            {
+                fillUiList.Remove(ifc);
+            }
         }
 
         public void AddRepair(float amount)
         {
             if (!NetworkServer.active)
             {
-                SS2Log.Error("self repair controller add repair on client");
+                SS2Log.Error("SelfRepairController: AddRepair called on client");
                 return;
             }
 
             if (isMaxRepair && amount > 0)
                 amount = 0f;
 
-            Network_charge = Mathf.Clamp(repair + amount, 0f, repairMax);
+            _repair = Mathf.Clamp(repair + amount, 0f, repairMax);
         }
 
         private void OnRepairModified(float newRepair)
         {
-            Network_charge = newRepair;
-        }
-
-        //let him cook
-        public override bool OnSerialize(NetworkWriter writer, bool forceAll)
-        {
-            if (forceAll)
-            {
-                writer.Write(_repair);
-                return true;
-            }
-            bool flag = false;
-            if ((syncVarDirtyBits & 1U) != 0U)
-            {
-                if (!flag)
-                {
-                    writer.WritePackedUInt32(syncVarDirtyBits);
-                    flag = true;
-                }
-                writer.Write(_repair);
-            }
-            if (!flag)
-            {
-                writer.WritePackedUInt32(syncVarDirtyBits);
-            }
-            return flag;
-        }
-
-        public override void OnDeserialize(NetworkReader reader, bool initialState)
-        {
-            if (initialState)
-            {
-                _repair = reader.ReadSingle();
-                return;
-            }
-            int num = (int)reader.ReadPackedUInt32();
-            if ((num & 1) != 0)
-            {
-                OnRepairModified(reader.ReadSingle());
-            }
+            _repair = newRepair;
         }
     }
 }
