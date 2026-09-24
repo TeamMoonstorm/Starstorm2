@@ -12,7 +12,7 @@ namespace EntityStates.NemCroco
         public static GameObject effectPrefab;
 
         private static float baseDuration = 0.6f;
-        private static float damageCoefficient = 2.5f;
+        private static float damageCoefficient = 1.8f;
         private static float force = 200f;
         private static string attackString = "Play_acrid_R_shoot";
         private static float recoilAmplitude = 2f;

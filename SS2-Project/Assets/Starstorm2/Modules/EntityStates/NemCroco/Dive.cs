@@ -10,7 +10,7 @@ namespace EntityStates.NemCroco
     {
         private static float minimumDuration = 0.3f;
         private static float airControl = 0.15f;
-        private static float aimVelocity = 3f;
+        private static float aimVelocity = 2f;
         private static float upwardVelocity = 8f;
         private static float forwardVelocity = 4f;
         private static float minimumY = 0.05f;
@@ -19,7 +19,7 @@ namespace EntityStates.NemCroco
         private static float minYVelocityForAnim = 30f;
         private static float maxYVelocityForAnim = -30f;
 
-        private static float verticalSpeedFromGroundedTEMP = 20f;
+        private static float verticalSpeedFromGroundedTEMP = 35f;
 
         private static string leapSoundString = "Play_acrid_shift_jump";
         private static string soundLoopStartEvent = "Play_acrid_shift_fly_loop";
@@ -49,10 +49,11 @@ namespace EntityStates.NemCroco
             if (isGroundedTEMPSHIT)
             {
                 outer.SetNextState(new Swim { entryVerticalSpeed = verticalSpeedFromGroundedTEMP });
+                return;
             }
 
             Vector3 aimVector = GetAimRay().direction;
-            if (isAuthority && !isGroundedTEMPSHIT)
+            if (isAuthority)
             {
                 characterBody.isSprinting = true;
                 aimVector.y = Mathf.Max(aimVector.y, minimumY);
@@ -60,7 +61,9 @@ namespace EntityStates.NemCroco
                 Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
                 Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
                 characterMotor.Motor.ForceUnground(0.1f);
+                characterMotor.velocity.y = 0f;
                 characterMotor.velocity += aimVelocityVector + upwardVelocityVector + forwardVelocityVector;
+                // TODO: DOT PRODUCT, APPLY MORE VELOCITY FORWARDS IF WE ARE AIMING DIRECTLY AWAY FROM CURRENT VELOCITY
             }
             
             GetModelTransform().GetComponent<AimAnimator>().enabled = true;

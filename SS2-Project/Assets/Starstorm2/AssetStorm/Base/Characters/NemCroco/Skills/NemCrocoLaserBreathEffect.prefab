@@ -26,12 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 624682791264269490}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 11.72}
-  m_LocalScale: {x: 2, y: 2, z: 2}
-  m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 23.87}
+  m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3605377315020136782}
-  m_RootOrder: 2
+  m_Father: {fileID: 461836014791403185}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
 --- !u!198 &2822920350228318697
 ParticleSystem:
@@ -343,9 +343,9 @@ ParticleSystem:
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 0
     donutRadius: 0.2
-    m_Position: {x: 0, y: 0, z: 0}
+    m_Position: {x: 0, y: 0, z: 0.3}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 0.3, y: 0.3, z: 10.52}
+    m_Scale: {x: 0.6, y: 0.6, z: 0.6}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -2338,7 +2338,7 @@ Transform:
   - {fileID: 6511934177290890269}
   - {fileID: 6511374710996142658}
   m_Father: {fileID: 3605377315020136782}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1122148501275561717
 GameObject:
@@ -9375,7 +9375,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3428971653960481413}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9385,6 +9385,7 @@ Transform:
   - {fileID: 5138454391364563842}
   - {fileID: 8108159774138213383}
   - {fileID: 2280021218839259327}
+  - {fileID: 2204786399265816256}
   m_Father: {fileID: 3605377315020136782}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9402,6 +9403,10 @@ GameObject:
   - component: {fileID: 3715819886917335977}
   - component: {fileID: 6040772247217686656}
   - component: {fileID: 1336879961512644863}
+  - component: {fileID: 3185156028881036783}
+  - component: {fileID: 4821565473872861653}
+  - component: {fileID: 7242905714166714550}
+  - component: {fileID: 6145641092316953358}
   m_Layer: 0
   m_Name: NemCrocoLaserBreathEffect
   m_TagString: Untagged
@@ -9423,7 +9428,6 @@ Transform:
   m_Children:
   - {fileID: 461836014791403185}
   - {fileID: 6568570642582574057}
-  - {fileID: 2204786399265816256}
   - {fileID: 4261636915750013619}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -9498,6 +9502,70 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   particleSystem: {fileID: 0}
+--- !u!114 &3185156028881036783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603779001916397102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1180436019, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scale: {x: 1, y: 1, z: 1}
+  setOnStart: 1
+  ensureOnUpdate: 1
+--- !u!114 &4821565473872861653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603779001916397102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 2005159759, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 5353617688877972356}
+  pointTransforms:
+  - {fileID: 461836014791403185}
+  - {fileID: 4261636915750013619}
+--- !u!114 &7242905714166714550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603779001916397102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dedf01982fc4eba48a203644ec71b78a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endPoint: {fileID: 4261636915750013619}
+  startPoint: {fileID: 461836014791403185}
+  transformsToScale:
+  - {fileID: 2204786399265816256}
+  transformsToRotate:
+  - {fileID: 461836014791403185}
+--- !u!114 &6145641092316953358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3603779001916397102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: LaserEnd
+    transform: {fileID: 4261636915750013619}
 --- !u!1 &3652428238925346502
 GameObject:
   m_ObjectHideFlags: 0
@@ -25880,17 +25948,10 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 3.0125}
-  - {x: 0, y: 0, z: 6.025}
-  - {x: 0, y: 0, z: 9.0375}
-  - {x: 0, y: 0, z: 12.05}
-  - {x: 0, y: 0, z: 15.0625}
-  - {x: 0, y: 0, z: 18.075}
-  - {x: 0, y: 0, z: 21.087502}
-  - {x: 0, y: 0, z: 24.1}
+  - {x: 0, y: 0, z: 23.87}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1.820195
+    widthMultiplier: 2.0406704
     widthCurve:
       serializedVersion: 2
       m_Curve:

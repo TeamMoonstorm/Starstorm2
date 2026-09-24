@@ -41,6 +41,7 @@ namespace SS2.Survivors
         private static float radiationDuration = 5f;
         private static float radiationTickSpeed = 0.2f;
         private static DamageColorIndex radiationDamageColor = DamageColorIndex.WeakPoint;
+        private static Color maxRadiationColor = new Color(252f/255f, 32f/255f, 3f/255f);
 
         private static bool radiationNoiseActive = true;
         private static float radiationNoiseCutoffMax = 1f;
@@ -158,10 +159,14 @@ namespace SS2.Survivors
                 c.Emit(OpCodes.Ldarg_1); // damageInfo
                 c.EmitDelegate<Func<float, HealthComponent, DamageInfo, float>>((calculatedDamage, victim, damageInfo) =>
                 {
-                    if (damageInfo.HasModdedDamageType(NemCrocoExecute) && IsFullRadiation(victim))
+                    if (damageInfo.HasModdedDamageType(NemCrocoExecute) && IsMaxRadiation(victim))
                     {
                         victim.forceHideBody = true;
-                        EffectManager.SimpleEffect(executeEffectPrefab, victim.body.corePosition, Quaternion.identity, true); // TODO: dont force bullseye/core position  for executes!! and move this to nemcroco authority somehow bruh!!
+                        if (executeEffectPrefab)
+                        {
+                            EffectManager.SimpleEffect(executeEffectPrefab, victim.body.corePosition, Quaternion.identity, true); // TODO: dont force bullseye/core position  for executes!! and move this to nemcroco authority somehow bruh!!
+                        }
+                        
                         return victim.fullCombinedHealth + 1f;  // return calculated damage equal to enemy's remaining health.
                     }
 
@@ -207,7 +212,7 @@ namespace SS2.Survivors
             if (!healthComponent) return 0;
             return healthComponent.body.GetBuffCount(SS2Content.Buffs.bdNemCrocoRadValue); // ideally this is a syncvar'd value on healthcomponent instead of a buff
         }
-        public static bool IsFullRadiation(HealthComponent healthComponent)
+        public static bool IsMaxRadiation(HealthComponent healthComponent)
         {
             if (!healthComponent) return false;
             return GetRadiationValue(healthComponent) > healthComponent.health;
@@ -218,12 +223,12 @@ namespace SS2.Survivors
         {
             float radiation = GetRadiationValue(healthBar.source);
             barInfo.enabled = radiation > 0;
-            barInfo.color = RadiationBarStyle.baseColor;
+            barInfo.color = IsMaxRadiation(healthBar.source) ? maxRadiationColor : RadiationBarStyle.baseColor;
             barInfo.sprite = RadiationBarStyle.sprite;
             barInfo.imageType = RadiationBarStyle.imageType;
             barInfo.sizeDelta = RadiationBarStyle.sizeDelta;
             barInfo.normalizedXMin = 0f; // TODO: ADD ONTO CULL FRACTION ?
-            barInfo.normalizedXMax = healthBar.source ? radiation / healthBar.source.fullHealth : 0f;
+            barInfo.normalizedXMax = Mathf.Min(1f, healthBar.source ? radiation / healthBar.source.fullHealth : 0f);
         }
 
         // idk what this does
@@ -309,7 +314,8 @@ namespace SS2.Survivors
                 DotController.InflictDot(ref dotInfo);
             }
 
-            if (DamageAPI.HasModdedDamageType(damageInfo, RadiationOnHit))
+            if (DamageAPI.HasModdedDamageType(damageInfo, RadiationOnHit) ||
+                DamageAPI.HasModdedDamageType(damageInfo, DamageShareOnHit)) // TEMP. SPECIAL ISNT USING BOTH DAMAGETYPES FOR SOME REASON
             {
                 float targetTotalDamage = report.damageInfo.damage * radiationDamageCoefficient;
                 float damageMultiplier = SS2Util.GetDotDamageMultiplier(report.attackerBody, targetTotalDamage, radiationDuration, RadiationDotIndex);
@@ -322,11 +328,6 @@ namespace SS2.Survivors
                     damageMultiplier = damageMultiplier,
                 };
                 DotController.InflictDot(ref dotInfo);
-            }
-
-            if (DamageAPI.HasModdedDamageType(damageInfo, DamageShareOnHit))
-            {
-                victimBody.AddTimedBuff(SS2Content.Buffs.bdNemCrocoDamageShare, damageShareDuration);
             }
 
             if (report.victimBody && report.victimBody.HasBuff(SS2Content.Buffs.bdNemCrocoDamageShare)
@@ -364,6 +365,12 @@ namespace SS2.Survivors
                     orb.target = hurtbox;
                     OrbManager.instance.AddOrb(orb);
                 }
+            }
+
+            // apply buff after so it doesnt insta share
+            if (DamageAPI.HasModdedDamageType(damageInfo, DamageShareOnHit))
+            {
+                victimBody.AddTimedBuff(SS2Content.Buffs.bdNemCrocoDamageShare, damageShareDuration);
             }
         }
 
