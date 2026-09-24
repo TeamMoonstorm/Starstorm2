@@ -125,7 +125,8 @@ Registration rules:
 - The first valid registration for a master wins. Repeated registrations warn
   without adding another entry or changing its weight.
 - `droppedItem` suppresses eligibility while any player holds that item. With no
-  drop configured, the boss remains eligible for later invasions.
+  drop configured, the boss remains eligible for later invasions. Even if you Don't have a 
+  custom item to drop, you can simply plug in any ItemDef to be the reward. At least Boss tier is recommended. 
 - An omitted or finite non-positive weight becomes 1. Non-finite weights and
   invalid overrides are rejected with an SS2 log error.
 - Registration is supported before or after catalog initialization. Additions
