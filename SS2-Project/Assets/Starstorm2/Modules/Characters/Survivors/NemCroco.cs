@@ -14,6 +14,8 @@ using Mono.Cecil.Cil;
 using System;
 using System.Collections.Generic;
 using RoR2.Orbs;
+using RoR2.Projectile;
+using RiskOfOptions.Resources;
 
 namespace SS2.Survivors
 {
@@ -32,8 +34,8 @@ namespace SS2.Survivors
 
         private static ModdedProcType DamageShare;
 
-        private static float poisonDamageCoefficient = 3.6f;
-        private static float poisonTickDamageCoefficient = 0.9f;
+        private static float poisonDamageCoefficient = 2.4f;
+        private static float poisonTickDamageCoefficient = 0.8f;
 
         private static float radiationDamageCoefficient = 1f;
         private static float radiationDuration = 5f;
@@ -46,12 +48,15 @@ namespace SS2.Survivors
         private static float radiationNoiseStrength = 0.8f;
         private static float radiationNoiseFrequency = 3f;
 
-        private static float damageShareCoefficient = 1f;
+        private static GameObject executeEffectPrefab;
+
+        private static float damageShareDuration = 7f;
+        private static float damageShareCoefficient = 0.5f;
         private static float damageShareCoefficientPerBounce = 0.5f;
         private static float damageShareProcCoefficient = 0.5f;
         private static float damageShareRadius = 12f;
         private static float damageShareChainRadius = 18f;
-        private static float damageShareOrbSpeed = 120f;
+        private static float damageShareOrbSpeed = 90f;
         private static bool damageShareNonLethal = true;
         private static DamageColorIndex damageShareColor = DamageColorIndex.WeakPoint;
         private static GameObject damageShareOrbEffectPrefab;
@@ -64,9 +69,14 @@ namespace SS2.Survivors
         }
         public override void Initialize()
         {
-            SetupDefaultBody(CharacterPrefab);
-            damageShareOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("DamageShareOrbEffect", SS2Bundle.NemCroco);
+            CharacterBody cb = CharacterPrefab.GetComponent<CharacterBody>();
+            if (cb)
+            {
+                UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").Completed += (x) => { cb.preferredPodPrefab = x.Result; };
+            }
 
+            damageShareOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("DamageShareOrbEffect", SS2Bundle.NemCroco);
+            executeEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCrocoExecuteEffect", SS2Bundle.NemCroco);
             // lol
             NemesisPoisonOnHit = R2API.DamageAPI.ReserveDamageType(); // normal dot, but it has a proc coefficient
             DamageShareOnHit = R2API.DamageAPI.ReserveDamageType(); // applies damage sharing debuff
@@ -79,12 +89,14 @@ namespace SS2.Survivors
 
             DamageShare = R2API.ProcTypeAPI.ReserveProcType();
 
+            var projectileDamage = SS2Assets.LoadAsset<GameObject>("NemCrocoDiseaseProjectile", SS2Bundle.NemCroco)?.GetComponent<ProjectileDamage>();
+            projectileDamage?.damageType.AddModdedDamageType(DamageShareOnHit);
+            projectileDamage?.damageType.AddModdedDamageType(RadiationOnHit);
 
             On.RoR2.HealthComponent.TakeDamage += TakeDamage;
             IL.RoR2.HealthComponent.TakeDamageProcess += HealthComponent_TakeDamageProcess;
             On.RoR2.DotController.EvaluateDotStacksForType += DotController_EvaluateDotStacksForType;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
-
 
             var executeBarSprite = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/texUIHighlightExecute.png").WaitForCompletion();
             RadiationBarStyle = new RoR2.UI.HealthBarStyle.BarStyle
@@ -92,7 +104,7 @@ namespace SS2.Survivors
                 enabled = true,
                 baseColor = new Color(247f / 255f, 156f / 255f, 45f / 255f),
                 imageType = UnityEngine.UI.Image.Type.Sliced,
-                sizeDelta = 12f,
+                sizeDelta = 6f,
                 sprite = executeBarSprite,
             };
             var barInfo = new RoR2.UI.HealthBar.BarInfo
@@ -100,7 +112,7 @@ namespace SS2.Survivors
                 enabled = true,
                 color = new Color(247f / 255f, 156f / 255f, 45f / 255f),
                 imageType = UnityEngine.UI.Image.Type.Sliced,
-                sizeDelta = 12f,
+                sizeDelta = 6f,
                 sprite = executeBarSprite,
             };
 
@@ -120,6 +132,7 @@ namespace SS2.Survivors
         // pretty sure damage macros can do this instead. iykyk
         // Allow the Radiation damage type to calculate all of the damage modifiers, but instead of deducting from health, instead add buff stacks equal to the calculated damage. 
         // conveniently, the calculated damage is what gets used to spawn a damage number instead of the health deduction.
+        // Also, if the enemy is fully irradiated and is being hit by NemCrocoExecute, set the calculated damage value to the victim's remaining health.
         private void HealthComponent_TakeDamageProcess(MonoMod.Cil.ILContext il)
         {
             ILCursor c = new ILCursor(il);
@@ -142,7 +155,23 @@ namespace SS2.Survivors
             {
                 c.Emit(OpCodes.Ldloc, calculatedDamageVarIndex);
                 c.Emit(OpCodes.Ldarg_0); // healthComponent
-                c.Emit(OpCodes.Ldloc_0); // damageInfo
+                c.Emit(OpCodes.Ldarg_1); // damageInfo
+                c.EmitDelegate<Func<float, HealthComponent, DamageInfo, float>>((calculatedDamage, victim, damageInfo) =>
+                {
+                    if (damageInfo.HasModdedDamageType(NemCrocoExecute) && IsFullRadiation(victim))
+                    {
+                        victim.forceHideBody = true;
+                        EffectManager.SimpleEffect(executeEffectPrefab, victim.body.corePosition, Quaternion.identity, true); // TODO: dont force bullseye/core position  for executes!! and move this to nemcroco authority somehow bruh!!
+                        return victim.fullCombinedHealth + 1f;  // return calculated damage equal to enemy's remaining health.
+                    }
+
+                    return calculatedDamage;
+                });
+                c.Emit(OpCodes.Stloc, calculatedDamageVarIndex);
+
+                c.Emit(OpCodes.Ldloc, calculatedDamageVarIndex);
+                c.Emit(OpCodes.Ldarg_0); // healthComponent
+                c.Emit(OpCodes.Ldarg_1); // damageInfo
                 c.EmitDelegate<Func<float, HealthComponent, DamageInfo, float>>((calculatedDamage, victim, damageInfo) =>
                 {
                     if (damageInfo.HasModdedDamageType(Radiation))
@@ -153,6 +182,7 @@ namespace SS2.Survivors
 
                         return 0f; // return zero damage to health
                     }
+
 
                     return calculatedDamage;
                 });
@@ -192,7 +222,7 @@ namespace SS2.Survivors
             barInfo.sprite = RadiationBarStyle.sprite;
             barInfo.imageType = RadiationBarStyle.imageType;
             barInfo.sizeDelta = RadiationBarStyle.sizeDelta;
-            barInfo.normalizedXMin = 0f; // TODO: ADD ONTO CULL FRACTION
+            barInfo.normalizedXMin = 0f; // TODO: ADD ONTO CULL FRACTION ?
             barInfo.normalizedXMax = healthBar.source ? radiation / healthBar.source.fullHealth : 0f;
         }
 
@@ -258,6 +288,7 @@ namespace SS2.Survivors
 
         // apply DoTs
         // spawn damage share orbs
+        // apply damageshare
         private void OnServerDamageDealt(DamageReport report)
         {
             var victimBody = report.victimBody;
@@ -272,6 +303,7 @@ namespace SS2.Survivors
                     victimObject = victimBody.gameObject,
                     dotIndex = PoisonDotIndex,
                     totalDamage = poisonDamageCoefficient * attackerBody.damage,
+                    damageMultiplier = 1f,
                     maxStacksFromAttacker = 1,
                 };
                 DotController.InflictDot(ref dotInfo);
@@ -292,8 +324,13 @@ namespace SS2.Survivors
                 DotController.InflictDot(ref dotInfo);
             }
 
+            if (DamageAPI.HasModdedDamageType(damageInfo, DamageShareOnHit))
+            {
+                victimBody.AddTimedBuff(SS2Content.Buffs.bdNemCrocoDamageShare, damageShareDuration);
+            }
+
             if (report.victimBody && report.victimBody.HasBuff(SS2Content.Buffs.bdNemCrocoDamageShare)
-                && damageInfo.procCoefficient > 0 && damageInfo.procChainMask.HasModdedProc(DamageShare))
+                && damageInfo.procCoefficient > 0 && !damageInfo.procChainMask.HasModdedProc(DamageShare))
             {
                 DamageShareOrb orb = new DamageShareOrb();
                 orb.speed = damageShareOrbSpeed;

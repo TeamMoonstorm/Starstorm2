@@ -22,6 +22,10 @@ namespace EntityStates.NemCroco
         private static float leapDistanceIfNoTarget = 10f;
 
         public HurtBox target;
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return InterruptPriority.Frozen;
+        }
         public override void OnEnter()
         {
             base.OnEnter();
@@ -91,15 +95,16 @@ namespace EntityStates.NemCroco
     public class Chomp : BaseSkillState
     {
         private static float baseDuration = .4f;
-        private static float damageCoefficient = 1f;
+        private static float damageCoefficient = 2.4f;
         private static float procCoefficient = 1f;
         private static float pushForce = 300f;
         private static Vector3 bonusForce = Vector3.zero;
         private static float forceMagnitude = 16f;
         private static float hitHopVelocity = 7f;
         private static float hitVelocityMultiplier = 0.2f;
-        private static float bloom = 1f;
-        private static float recoil = 0f;
+        private static float hitPauseDuration = 0.22f;
+        private static float bloom = 3f;
+        private static float recoil = 3f;
 
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
@@ -107,22 +112,31 @@ namespace EntityStates.NemCroco
         private static string muzzleString = "MouthMuzzle";
         private static string attackSoundString = "Play_imp_attack";
 
-        private static float attackStartTime = 0.0f;
+        private static float attackStartTime = 0.1f;
         private static float attackEndTime = 0.5f;
 
         public HurtBox target;
 
         private OverlapAttack attack;
-        private Animator modelAnimator;
+        private float hitPauseTimer;
+        private Vector3 storedHitPauseVelocity;
+        private Animator animator;
         private float duration;
         private bool hasAttacked;
         private bool hasHit;
+        private GameObject swingEffectInstance;
+        protected EffectManagerHelper _emh_swingEffectInstance = null;
+
+        public override InterruptPriority GetMinimumInterruptPriority()
+        {
+            return hasAttacked ? InterruptPriority.PrioritySkill : InterruptPriority.Frozen;
+        }
         public override void OnEnter()
         {
             base.OnEnter();
 
             duration = baseDuration / attackSpeedStat;
-            modelAnimator = base.GetModelAnimator();
+            animator = base.GetModelAnimator();
             Transform modelTransform = base.GetModelTransform();
             attack = new OverlapAttack();
             attack.damageType = DamageTypeCombo.GenericPrimary;
@@ -141,7 +155,7 @@ namespace EntityStates.NemCroco
             attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemesisPoisonOnHit);
             attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemCrocoExecute);
 
-            if (modelAnimator)
+            if (animator)
             {
                 PlayCrossfade("FullBody, Override", "Bite", "Bite.playbackRate", duration, 0.05f);
             }
@@ -149,18 +163,52 @@ namespace EntityStates.NemCroco
             
         }
 
+        public override void OnExit()
+        {
+            if (_emh_swingEffectInstance != null && _emh_swingEffectInstance.OwningPool != null)
+            {
+                _emh_swingEffectInstance.OwningPool.ReturnObject(_emh_swingEffectInstance);
+            }
+            else
+            {
+                if (swingEffectInstance)
+                {
+                    EntityState.Destroy(swingEffectInstance);
+                }
+            }
+
+            if (animator)
+            {
+                animator.speed = 1f;
+            }
+
+            base.OnExit();
+        }
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (hitPauseTimer > 0)
+            {
+                hitPauseTimer -= Time.fixedDeltaTime;
+                if (characterMotor)
+                {
+                    characterMotor.velocity = Vector3.zero;
+                }
+                fixedAge -= Time.fixedDeltaTime;
+                if (hitPauseTimer <= 0)
+                {
+                    AuthorityExitHitPause();
+                }
+            }
+
             float t = fixedAge / duration;
             bool inAttackWindow = t >= attackStartTime && t <= attackEndTime;
             if (inAttackWindow)
             {
                 if (!hasAttacked)
                 {
-                    base.AddRecoil(0.9f * recoil, 1.1f * recoil, -0.1f * recoil, 0.1f * recoil);
-                    Util.PlayAttackSpeedSound(attackSoundString, gameObject, attackSpeedStat);
-                    EffectManager.SimpleMuzzleFlash(effectPrefab, gameObject, muzzleString, false);
+                    BeginMeleeAttackEffect();
                     hasAttacked = true;
                 }
 
@@ -169,6 +217,7 @@ namespace EntityStates.NemCroco
                     attack.forceVector = transform.forward * forceMagnitude;
                     if (attack.Fire(null))
                     {
+                        AuthorityTriggerHitPause();
                         OnHitEnemyAuthority();
                     }
                 }
@@ -177,6 +226,33 @@ namespace EntityStates.NemCroco
             {
                 outer.SetNextStateToMain();
                 return;
+            }
+        }
+
+        private void BeginMeleeAttackEffect()
+        {
+            AddRecoil(-0.4f * recoil, -0.8f * recoil, -0.3f * recoil, 0.3f * recoil);
+            Util.PlayAttackSpeedSound(attackSoundString, gameObject, attackSpeedStat);
+            if (effectPrefab)
+            {
+                Transform swingEffectParent = FindModelChild(muzzleString);
+                if (swingEffectParent)
+                {
+                    if (!EffectManager.ShouldUsePooledEffect(effectPrefab))
+                    {
+                        swingEffectInstance = UnityEngine.Object.Instantiate<GameObject>(effectPrefab, swingEffectParent);
+                    }
+                    else
+                    {
+                        _emh_swingEffectInstance = EffectManager.GetAndActivatePooledEffect(effectPrefab, swingEffectParent, true);
+                        swingEffectInstance = _emh_swingEffectInstance.gameObject;
+                    }
+                    ScaleParticleSystemDuration scaleParticleSystemDuration = swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
+                    if (scaleParticleSystemDuration)
+                    {
+                        scaleParticleSystemDuration.newDuration = scaleParticleSystemDuration.initialDuration;
+                    }
+                }
             }
         }
 
@@ -194,11 +270,49 @@ namespace EntityStates.NemCroco
             }
         }
 
-        public override InterruptPriority GetMinimumInterruptPriority()
+        protected void AuthorityTriggerHitPause()
         {
-            return InterruptPriority.PrioritySkill;
+            if (characterMotor)
+            {
+                storedHitPauseVelocity += characterMotor.velocity;
+                characterMotor.velocity = Vector3.zero;
+            }
+            if (animator)
+            {
+                animator.speed = 0f;
+            }
+            if (swingEffectInstance)
+            {
+                ScaleParticleSystemDuration scaleParticleSystemDuration = swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
+                if (scaleParticleSystemDuration)
+                {
+                    scaleParticleSystemDuration.newDuration = 20f;
+                }
+            }
+            hitPauseTimer = hitPauseDuration;
         }
 
-
+        protected void AuthorityExitHitPause()
+        {
+            hitPauseTimer = 0f;
+            storedHitPauseVelocity.y = Mathf.Max(storedHitPauseVelocity.y, hitHopVelocity);
+            if (characterMotor)
+            {
+                characterMotor.velocity = storedHitPauseVelocity;
+            }
+            storedHitPauseVelocity = Vector3.zero;
+            if (animator)
+            {
+                animator.speed = 1f;
+            }
+            if (swingEffectInstance)
+            {
+                ScaleParticleSystemDuration scaleParticleSystemDuration = swingEffectInstance.GetComponent<ScaleParticleSystemDuration>();
+                if (scaleParticleSystemDuration)
+                {
+                    scaleParticleSystemDuration.newDuration = scaleParticleSystemDuration.initialDuration;
+                }
+            }
+        }
     }
 }

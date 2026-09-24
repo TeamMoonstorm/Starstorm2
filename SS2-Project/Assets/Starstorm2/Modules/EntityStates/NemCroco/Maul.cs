@@ -12,7 +12,7 @@ using UnityEngine.Rendering.PostProcessing;
 
 namespace EntityStates.NemCroco
 {
-    public abstract class Maul : BaseSkillState, RoR2.Skills.SteppedSkillDef.IStepSetter
+    public class Maul : BaseSkillState, RoR2.Skills.SteppedSkillDef.IStepSetter
     {
         private static string hitboxGroupName = "Swipe";
         private static float damageCoefficient = 2.4f;
@@ -21,11 +21,11 @@ namespace EntityStates.NemCroco
         private static Vector3 bonusForce = Vector3.zero;
 
         private static float baseDuration = 1.33f;
-        private static float animDuration = 2.5f;
+        private static float animDuration = 1.33f;
 
         private static float attackStartTime = 0.15f;
-        private static float attackEndTime = 0.25f;
-        private static float earlyExitTime = 0.4f;
+        private static float attackEndTime = 0.33f;
+        private static float earlyExitTime = 0.5f;
 
         private static float hitStopDuration = 0.012f;
         private static float recoil = 0.75f;
@@ -37,7 +37,7 @@ namespace EntityStates.NemCroco
         private static string hitSoundString = "";
         private static string playbackRateParam = "Swipe.playbackRate";
 
-        private static float forwardSpeedCoefficient = 7f;
+        private static float forwardSpeedCoefficient = 3f;
         public static AnimationCurve forwardSpeedCurve;
         public static GameObject swingEffectPrefab;
         public static GameObject hitEffectPrefab;
@@ -102,8 +102,8 @@ namespace EntityStates.NemCroco
             else
             {
                 muzzleString = "SwipeRight";
-                PlayCrossfade("Gesture, Additive", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
-                PlayCrossfade("Gesture, Override", "SwipeLeft", "Swipe.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Additive", "SwipeRight", "Swipe.playbackRate", animDuration, 0.05f);
+                PlayCrossfade("Gesture, Override", "SwipeRight", "Swipe.playbackRate", animDuration, 0.05f);
             }
             
 
@@ -267,7 +267,7 @@ namespace EntityStates.NemCroco
             Vector3 targetVector = inputBank.aimDirection;
 
             characterDirection.targetVector = targetVector;
-            characterMotor.AddDisplacement(characterDirection.forward * forwardSpeed);
+            characterMotor.AddDisplacement(characterDirection.forward * forwardSpeed * Time.fixedDeltaTime);
         }
 
         private void RemoveHitstop()
