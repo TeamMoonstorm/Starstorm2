@@ -24,7 +24,7 @@ MonoBehaviour:
       PublicKeyToken=null
   interruptPriority: 1
   baseRechargeInterval: 6
-  baseMaxStock: 3
+  baseMaxStock: 2
   rechargeStock: 1
   requiredStock: 1
   stockToConsume: 1
@@ -33,7 +33,7 @@ MonoBehaviour:
   resetCooldownTimerOnUse: 0
   fullRestockOnAssign: 1
   dontAllowPastMaxStocks: 0
-  beginSkillCooldownOnSkillEnd: 0
+  beginSkillCooldownOnSkillEnd: 1
   isCooldownBlockedUntilManuallyReset: 0
   cancelSprintingOnActivation: 0
   forceSprintDuringState: 1
