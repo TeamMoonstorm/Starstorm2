@@ -11,16 +11,16 @@ namespace EntityStates.NemCroco
     public class Swim : BaseCharacterMain
     {
         private static float baseDuration = 1.5f;
-        private static float minimumDuration = 0.4f;
+        private static float minimumDuration = 0.6f;
         private static float exitBufferDuration = 0.2f;
         private static float maxGroundDistance = 12f;
 
         private static float verticalSpeedConversion = 1f;
         private static float maxVerticalSpeed = 90f;
         private static float conversionTurnSpeed = 360f;
-        private static float decceleration = 90f;
+        private static float decceleration = 70f;
         private static float acceleration = 45f;
-        private static float moveSpeedCoefficient = 2f;
+        private static float moveSpeedCoefficient = 2.5f;
         private static float characterDirectionCoefficient = 0.5f;
 
         private static float maxVelocityForAnim = 70f;
@@ -41,10 +41,10 @@ namespace EntityStates.NemCroco
         private static float speedForMaxBreach = 160f;
         private static float breachMinimumY = 0.05f;
 
-        private static float breachAimVelocity = 1f;
+        private static float breachAimVelocity = 1.2f;
         private static float breachForwardVelocity = 6f;
-        private static float breachUpwardVelocity = 14f;
-        private static float breachVelocityAimConversion = 0.5f;
+        private static float breachUpwardVelocity = 16f;
+        private static float breachVelocityAimConversion = 0.55f;
 
         private static float breachDamageCoefficient = 3f;
         private static float breachProcCoefficient = 1f;
@@ -100,7 +100,8 @@ namespace EntityStates.NemCroco
             currentVelocity = characterMotor.velocity;
             currentVelocity.y = 0;
 
-            characterBody.fakeActorCounter++;
+            gameObject.layer = LayerIndex.GetAppropriateFakeLayerForTeam(teamComponent.teamIndex).intVal;
+            characterMotor.Motor.RebuildCollidableLayers();
 
             if (damageTrailPrefab)
             {
@@ -242,6 +243,8 @@ namespace EntityStates.NemCroco
                 characterMotor.velocity = aimVelocityVector + upwardVelocityVector + forwardVelocityVector + breachVelocityVector;
 
                 Vector3 force = breachVerticalForce * characterMotor.velocity.normalized;
+                DamageTypeCombo damageType = DamageTypeCombo.GenericUtility;
+                damageType.AddModdedDamageType(SS2.Survivors.NemCroco.RadiationOnHit);
                 var blastAttack = new BlastAttack
                 {
                     attacker = gameObject,
@@ -273,7 +276,9 @@ namespace EntityStates.NemCroco
         public override void OnExit()
         {
             GetModelTransform().GetComponent<CharacterModel>().invisibilityCount--; ////
-            characterBody.fakeActorCounter--;
+
+            gameObject.layer = LayerIndex.GetAppropriateLayerForTeam(teamComponent.teamIndex);
+            characterMotor.Motor.RebuildCollidableLayers();
 
             Util.PlaySound(soundLoopStopEvent, gameObject);
 

@@ -19,7 +19,7 @@ namespace EntityStates.NemCroco
         private static float minYVelocityForAnim = 30f;
         private static float maxYVelocityForAnim = -30f;
 
-        private static float verticalSpeedFromGroundedTEMP = 35f;
+        private static float verticalSpeedFromGroundedTEMP = 45f;
 
         private static string leapSoundString = "Play_acrid_shift_jump";
         private static string soundLoopStartEvent = "Play_acrid_shift_fly_loop";
@@ -85,7 +85,8 @@ namespace EntityStates.NemCroco
                 characterBody.AddTimedBuff(JunkContent.Buffs.IgnoreFallDamage, 0.25f, 1);
             }
 
-            characterBody.fakeActorCounter++; // we only want to collide with flying enemies
+            gameObject.layer = LayerIndex.GetAppropriateFakeLayerForTeam(teamComponent.teamIndex).intVal;
+            characterMotor.Motor.RebuildCollidableLayers(); // we only want to collide with flying enemies
         }
 
         private void OnMovementHit(ref CharacterMotor.MovementHitInfo movementHitInfo)
@@ -150,7 +151,8 @@ namespace EntityStates.NemCroco
 
         public override void OnExit()
         {
-            characterBody.fakeActorCounter--;
+            gameObject.layer = LayerIndex.GetAppropriateLayerForTeam(teamComponent.teamIndex);
+            characterMotor.Motor.RebuildCollidableLayers();
 
             Util.PlaySound(soundLoopStopEvent, gameObject);
             if (isAuthority)
