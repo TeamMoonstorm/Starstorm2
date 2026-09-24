@@ -4989,6 +4989,7 @@ GameObject:
   - component: {fileID: 23527757666193308}
   - component: {fileID: 33115304580784647}
   - component: {fileID: 114435071850321440}
+  - component: {fileID: 562918727361068100}
   m_Layer: 0
   m_Name: Decal
   m_TagString: Untagged
@@ -5003,14 +5004,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974210267782569}
-  m_LocalRotation: {x: 0.00000043213362, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2, y: 0.8487698, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4067816798601224}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0.000049518865, y: -0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
 --- !u!23 &23527757666193308
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -5059,7 +5060,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974210267782569}
-  m_Mesh: {fileID: 4300000, guid: dbe9f87dc4258f0429554b2ba1035103, type: 2}
+  m_Mesh: {fileID: 4300000, guid: 7c59b96b6a12446439f1ffd89e913598, type: 2}
 --- !u!114 &114435071850321440
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5073,7 +5074,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RenderMode: 0
-  Material: {fileID: 2100000, guid: dc425c16cd6e7534289cb639ace95c04, type: 2}
+  Material: {fileID: 2100000, guid: 640f6484f62dce840bf9ff515d5b5a23, type: 2}
   Fade: 1.99
   LimitTo: {fileID: 0}
   UseTextureAtlas: 0
@@ -5082,3 +5083,18 @@ MonoBehaviour:
   UseLightProbes: 1
   DrawNormalAndGloss: 0
   HighQualityBlending: 0
+--- !u!114 &562918727361068100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1974210267782569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -455717551, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  setRandomXRotation: 0
+  setRandomYRotation: 1
+  setRandomZRotation: 0

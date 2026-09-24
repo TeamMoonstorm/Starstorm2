@@ -110,6 +110,8 @@ namespace SS2.Components
 
         public void SearchForTarget(Ray aimRay)
         {
+            trackingTarget = null;
+
             TeamMask filter = TeamMask.allButNeutral;
             filter.RemoveTeam(teamComponent.teamIndex);
             targetSearch.teamMaskFilter = filter;

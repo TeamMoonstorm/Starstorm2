@@ -15,11 +15,11 @@ namespace EntityStates.NemCroco
         private static float exitBufferDuration = 0.2f;
         private static float maxGroundDistance = 3f;
 
-        private static float verticalSpeedConversion = 1f;
+        private static float verticalSpeedConversion = 1.67f;
         private static float maxVerticalSpeed = 90f;
         private static float conversionTurnSpeed = 360f;
-        private static float decceleration = 50f;
-        private static float acceleration = 30f;
+        private static float decceleration = 66f;
+        private static float acceleration = 45f;
         private static float moveSpeedCoefficient = 1.8f;
         private static float characterDirectionCoefficient = 0.5f;
 
@@ -41,14 +41,14 @@ namespace EntityStates.NemCroco
         private static float speedForMaxBreach = 90f;
         private static float breachMinimumY = 0.05f;
 
-        private static float breachMinAimVelocity = 1f;
-        private static float breachMaxAimVelocity = 4f;
+        private static float breachMinAimVelocity = 2.5f;
+        private static float breachMaxAimVelocity = 5f;
 
         private static float breachMinForwardVelocity = 2.5f;
         private static float breachMaxForwardVelocity = 5f;
 
-        private static float breachMinUpwardVelocity = 4f;
-        private static float breachMaxUpwardVelocity = 12f;
+        private static float breachMinUpwardVelocity = 14f;
+        private static float breachMaxUpwardVelocity = 40f;
 
         private static float breachDamageCoefficient = 3f;
         private static float breachProcCoefficient = 1f;
@@ -63,6 +63,8 @@ namespace EntityStates.NemCroco
         private static string enterSoundString = "Play_acrid_shift_land";
         private static string soundLoopStartEvent = "Play_acrid_shift_fly_loop";
         private static string soundLoopStopEvent = "Stop_acrid_shift_fly_loop";
+
+        private static bool exitOnUngrounded = true;
 
         public float entryVerticalSpeed;
         private Vector3 convertedVelocity;
@@ -129,6 +131,8 @@ namespace EntityStates.NemCroco
                 if (skillLocator.utility) skillLocator.utility.SetSkillOverride(this, breachSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
                 if (skillLocator.special) skillLocator.special.SetSkillOverride(this, breachSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
             }
+
+            GetModelTransform().GetComponent<CharacterModel>().invisibilityCount++; /// TEMP. NEED SWIMMING ANIMATION
         }
         public override void UpdateAnimationParameters()
         {
@@ -145,9 +149,9 @@ namespace EntityStates.NemCroco
             if (isAuthority)
             {
                 ApplyMovement();
-                GatherInputs();
+                //GatherInputs();
 
-                bool exitInput = inputBank.skill2.justPressed || inputBank.skill3.justPressed || inputBank.skill4.justPressed || inputBank.jump.justPressed;
+                bool exitInput = inputBank.skill1.justPressed || inputBank.skill2.justPressed || inputBank.skill3.justPressed || inputBank.skill4.justPressed || inputBank.jump.justPressed;
                 if (exitInput)
                 {
                     exitBufferTime = Run.FixedTimeStamp.now;
@@ -161,8 +165,8 @@ namespace EntityStates.NemCroco
                     return;
                 }
 
-                // TODO: STICK TO GROUND BETTER, CHECK FOR GROUND BETTER. WALL RUNNING IS BEST BUT ANNOYING
-                if (!isGrounded)
+                // TODO: STICK TO GROUND BETTER, CHECK FOR GROUND BETTER. WALL RUNNING (SWIMMING) IS BEST BUT ANNOYING
+                if (exitOnUngrounded && !isGrounded)
                 {
                     if (!Physics.Raycast(characterBody.footPosition, Vector3.down, maxGroundDistance, LayerIndex.world.intVal, QueryTriggerInteraction.Ignore))
                     {
@@ -172,23 +176,23 @@ namespace EntityStates.NemCroco
                 }
             }
         }
-        private void GatherInputs()
-        {
-            HandleSkill(skillLocator.primary, ref inputBank.skill1);
-        }
-        private void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
-        {
-            if (skillSlot && buttonState.down)
-            {
-                if (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed)
-                {
-                    if (skillSlot.ExecuteIfReady())
-                    {
-                        buttonState.hasPressBeenClaimed = true;
-                    }
-                }
-            }
-        }
+        //private void GatherInputs()
+        //{
+        //    HandleSkill(skillLocator.primary, ref inputBank.skill1);
+        //}
+        //private void HandleSkill(GenericSkill skillSlot, ref InputBankTest.ButtonState buttonState)
+        //{
+        //    if (skillSlot && buttonState.down)
+        //    {
+        //        if (!skillSlot.mustKeyPress || !buttonState.hasPressBeenClaimed)
+        //        {
+        //            if (skillSlot.ExecuteIfReady())
+        //            {
+        //                buttonState.hasPressBeenClaimed = true;
+        //            }
+        //        }
+        //    }
+        //}
         private void ApplyMovement()
         {
             Vector3 moveDirection = inputBank.moveVector;
@@ -249,6 +253,7 @@ namespace EntityStates.NemCroco
                     baseDamage = damageStat * breachDamageCoefficient,
                     baseForce = breachPushForce,
                     bonusForce = verticalForce * Vector3.up,
+                    physForceFlags = PhysForceFlags.ignoreGroundStick | PhysForceFlags.massIsOne,
                     crit = RollCrit(),
                     damageType = DamageTypeCombo.GenericUtility,
                     falloffModel = BlastAttack.FalloffModel.None,
@@ -272,6 +277,7 @@ namespace EntityStates.NemCroco
 
         public override void OnExit()
         {
+            GetModelTransform().GetComponent<CharacterModel>().invisibilityCount++; ////
             characterBody.fakeActorCounter--;
 
             Util.PlaySound(soundLoopStopEvent, gameObject);
@@ -280,7 +286,7 @@ namespace EntityStates.NemCroco
 
             if (damageTrail)
             {
-                damageTrail.enabled = false;
+                damageTrail.active = false;
                 damageTrail.gameObject.AddComponent<DestroyOnTimer>().duration = trailLingerTime;
             }
 

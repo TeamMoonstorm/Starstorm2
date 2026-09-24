@@ -17,6 +17,7 @@ namespace EntityStates.NemCroco
         private static float baseDuration = 0.5f;
         public static GameObject effectPrefab;
         private static string enterSoundString = "";
+        private static string muzzleString = "MuzzleMouth";
         private float duration;
         private GameObject effectInstance;
         protected EffectManagerHelper _efhChargeEffect = null;
@@ -29,31 +30,27 @@ namespace EntityStates.NemCroco
         public override void OnEnter()
         {
             base.OnEnter();
+
+            StartAimMode();
             duration = baseDuration / attackSpeedStat;
-            Transform modelTransform = GetModelTransform();
+
             Util.PlayAttackSpeedSound(enterSoundString, gameObject, attackSpeedStat);
-            if (modelTransform)
+            Transform muzzleTransform = FindModelChild(muzzleString);
+            if (muzzleTransform)
             {
-                ChildLocator childLocator = modelTransform.GetComponent<ChildLocator>();
-                if (childLocator)
+                if (!EffectManager.ShouldUsePooledEffect(effectPrefab))
                 {
-                    Transform muzzleTransform = childLocator.FindChild("MuzzleMouth");
-                    if (muzzleTransform)
-                    {
-                        if (!EffectManager.ShouldUsePooledEffect(effectPrefab))
-                        {
-                            effectInstance = UnityEngine.Object.Instantiate<GameObject>(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
-                        }
-                        else
-                        {
-                            _efhChargeEffect = EffectManager.GetAndActivatePooledEffect(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
-                            effectInstance = _efhChargeEffect.gameObject;
-                        }
-                        effectInstance.transform.parent = muzzleTransform;
-                        effectInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = duration;
-                    }
+                    effectInstance = UnityEngine.Object.Instantiate<GameObject>(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
                 }
+                else
+                {
+                    _efhChargeEffect = EffectManager.GetAndActivatePooledEffect(effectPrefab, muzzleTransform.position, muzzleTransform.rotation);
+                    effectInstance = _efhChargeEffect.gameObject;
+                }
+                effectInstance.transform.parent = muzzleTransform;
+                effectInstance.GetComponent<ScaleParticleSystemDuration>().newDuration = duration;
             }
+
             //PlayAnimation("Gesture, Mouth", "ChargeLaserBreath", "ChargeLaserBreath.playbackRate", duration);
             PlayAnimation("Gesture, Override", "ChargeLaserBreath", "LaserBreath.playbackRate", duration);
         }
@@ -101,21 +98,22 @@ namespace EntityStates.NemCroco
         private static float ticksPerSecond = 6f;
         private static float procCoefficientPerSecond = 4f;
         private static float damageCoefficientPerSecond = 3f;
-        private static float spreadBloomPerSecond = 1f;
+        private static float spreadBloomPerSecond = 1.2f;
         private static float bulletRadius = 1.5f;
         private static float range = 32f;
         private static float force = 250f;
         private static float recoilForce = 30f;
-        private static float turnSpeed = 45f;
+        private static float turnSpeed = 360f;
         private static float recoil = 0.0f;
         private static float walkSpeedCoefficient = 0.5f;
         public static GameObject impactEffectPrefab;
 
         private static float exitDamageCoefficient = 1.5f;
         private static float exitProcCoefficient = 1f;
-        private static float exitRecoil = 1f;
+        private static float exitRecoil = 2f;
         private static float exitRecoilForce = 100f;
         private static float exitForce = 250f;
+        private static float exitSpreadBloom = 0.4f;
         public static GameObject exitMuzzleEffectPrefab;
         public static GameObject exitTracerPrefab;
 
@@ -150,10 +148,12 @@ namespace EntityStates.NemCroco
         {
             base.OnEnter();
 
-            stopwatch = 0f;
+            
             duration = baseDuration / attackSpeedStat;
             baseTickRate = 1f / ticksPerSecond;
             tickRate = baseTickRate / attackSpeedStat;
+            currentAimVector = inputBank.aimDirection;
+            stopwatch = tickRate;
 
             characterBody.SetAimTimer(2f);
             characterMotor.walkSpeedPenaltyCoefficient = walkSpeedCoefficient;
@@ -166,9 +166,14 @@ namespace EntityStates.NemCroco
             {
                 EffectManager.SimpleMuzzleFlash(muzzleEffectPrefab, gameObject, muzzleString, false);
             }
+
             if (beamEffectPrefab)
             {
-                beamTransform = GameObject.Instantiate(beamEffectPrefab, childLocator.FindChild(muzzleString)).transform;
+                Transform muzzle = FindModelChild(muzzleString);
+                if (muzzle)
+                {
+                    beamTransform = GameObject.Instantiate(beamEffectPrefab, muzzle).transform;
+                }
             }
 
             aimAnimator = GetAimAnimator();
@@ -176,7 +181,6 @@ namespace EntityStates.NemCroco
             {
                 animatorDirectionOverrideRequest = aimAnimator.RequestDirectionOverride(new Func<Vector3>(GetAimDirection));
             }
-            currentAimVector = inputBank.aimDirection;
 
             if (crosshairPrefab)
             {
@@ -300,6 +304,7 @@ namespace EntityStates.NemCroco
         {
             PlayCrossfade("Gesture, Mouth", "FireLaserBurst", 0.1f);
             AddRecoil(-0.4f * exitRecoil, -0.8f * exitRecoil, -0.3f * exitRecoil, 0.3f * exitRecoil);
+            characterBody.AddSpreadBloom(exitSpreadBloom);
             if (exitMuzzleEffectPrefab)
             {
                 EffectManager.SimpleMuzzleFlash(exitMuzzleEffectPrefab, gameObject, muzzleString, false);

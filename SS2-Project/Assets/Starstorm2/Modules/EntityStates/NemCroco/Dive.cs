@@ -10,14 +10,16 @@ namespace EntityStates.NemCroco
     {
         private static float minimumDuration = 0.3f;
         private static float airControl = 0.15f;
-        private static float aimVelocity = 1f;
-        private static float upwardVelocity = 4f;
-        private static float forwardVelocity = 1.5f;
+        private static float aimVelocity = 3f;
+        private static float upwardVelocity = 8f;
+        private static float forwardVelocity = 4f;
         private static float minimumY = 0.05f;
-        private static float verticalAcceleration = -90f;
+        private static float verticalAcceleration = 45f;
 
         private static float minYVelocityForAnim = 30f;
         private static float maxYVelocityForAnim = -30f;
+
+        private static float verticalSpeedFromGroundedTEMP = 20f;
 
         private static string leapSoundString = "Play_acrid_shift_jump";
         private static string soundLoopStartEvent = "Play_acrid_shift_fly_loop";
@@ -29,6 +31,9 @@ namespace EntityStates.NemCroco
         private Transform collisionTransform;
         private float previousAirControl;
         private bool detonateNextFrame;
+        private Vector3 previousVelocity;
+        private bool isGroundedTEMPSHIT; // if the state is started from the ground, we want to instantly start a swim with some bonus speed.
+                                         // ideally skilldef just goes straight to swim state instead of this
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;
@@ -40,8 +45,14 @@ namespace EntityStates.NemCroco
             previousAirControl = characterMotor.airControl;
             characterMotor.airControl = airControl;
 
+            isGroundedTEMPSHIT = isGrounded;
+            if (isGroundedTEMPSHIT)
+            {
+                outer.SetNextState(new Swim { entryVerticalSpeed = verticalSpeedFromGroundedTEMP });
+            }
+
             Vector3 aimVector = GetAimRay().direction;
-            if (isAuthority)
+            if (isAuthority && !isGroundedTEMPSHIT)
             {
                 characterBody.isSprinting = true;
                 aimVector.y = Mathf.Max(aimVector.y, minimumY);
@@ -49,7 +60,7 @@ namespace EntityStates.NemCroco
                 Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
                 Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
                 characterMotor.Motor.ForceUnground(0.1f);
-                characterMotor.velocity = aimVelocityVector + upwardVelocityVector + forwardVelocityVector;
+                characterMotor.velocity += aimVelocityVector + upwardVelocityVector + forwardVelocityVector;
             }
             
             GetModelTransform().GetComponent<AimAnimator>().enabled = true;
@@ -89,16 +100,18 @@ namespace EntityStates.NemCroco
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            if (isAuthority && characterMotor)
+            if (isAuthority && characterMotor && !isGroundedTEMPSHIT)
             {
                 bool hasCollided = CheckCollision();
                 characterMotor.moveDirection = inputBank.moveVector;
-                characterMotor.velocity += Physics.gravity * verticalAcceleration * Time.fixedDeltaTime;
+                characterMotor.velocity += Physics.gravity.normalized * verticalAcceleration * Time.fixedDeltaTime;
 
                 if (fixedAge >= minimumDuration && (hasCollided || isGrounded || detonateNextFrame || (characterMotor.Motor.GroundingStatus.IsStableOnGround && !characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
                 {
-                    outer.SetNextStateToMain();
+                    outer.SetNextState(new Swim { entryVerticalSpeed = Mathf.Abs(previousVelocity.y) });
                 }
+
+                previousVelocity = characterMotor.velocity;
             }
 
             if (NetworkServer.active)

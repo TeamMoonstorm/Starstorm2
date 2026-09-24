@@ -51,7 +51,7 @@ namespace SS2.Components
         private float nextTrailPointUpdate;
         private float nextTrailDamageUpdate;
         private Vector3 lastPlacedPosition;
-        private static float optimizedDamageUpdateinterval;
+        private static float optimizedDamageUpdateinterval = 0.2f;
         private struct TrailPoint
         {
             public Vector3 position;
@@ -145,27 +145,25 @@ namespace SS2.Components
                 }
             }
 
-            if (doStretchingThing)
+            if (segmentPrefab)
             {
-                if (segmentPrefab)
+                Vector3 previousPosition = transform.position;
+                for (int i = pointsList.Count - 1; i >= 0; i--)
                 {
-                    Vector3 previousPosition = transform.position;
-                    for (int i = pointsList.Count - 1; i >= 0; i--)
+                    Transform segmentTransform = pointsList[i].segmentTransform;
+                    if (segmentTransform)
                     {
-                        Transform segmentTransform = pointsList[i].segmentTransform;
-                        if (segmentTransform)
-                        {
-                            segmentTransform.LookAt(previousPosition, Vector3.up);
-                            Vector3 diff = pointsList[i].position - previousPosition;
-                            segmentTransform.position = previousPosition + diff * 0.5f;
-                            float t = Mathf.Clamp01(Mathf.InverseLerp(pointsList[i].localStartTime, pointsList[i].localEndTime, localTime));
-                            Vector3 segmentScale = new Vector3(radius * (1f - t), radius * (1f - t), diff.magnitude);
-                            segmentTransform.localScale = segmentScale;
-                            previousPosition = pointsList[i].position;
-                        }
+                        //segmentTransform.LookAt(previousPosition, Vector3.up);
+                        Vector3 diff = pointsList[i].position - previousPosition;
+                        segmentTransform.position = previousPosition + diff * 0.5f;
+                        //float t = Mathf.Clamp01(Mathf.InverseLerp(pointsList[i].localStartTime, pointsList[i].localEndTime, localTime));
+                        //Vector3 segmentScale = new Vector3(radius * (1f - t), radius * (1f - t), diff.magnitude);
+                        //segmentTransform.localScale = segmentScale;
+                        previousPosition = pointsList[i].position;
                     }
                 }
             }
+            
             
         }
 

@@ -24,16 +24,41 @@ namespace SS2
 
         public override void OnExecute([NotNull] GenericSkill skillSlot)
         {
-            EntityStateMachine defaultStateMachine = skillSlot.stateMachine;
-            EntityStateMachine overrideStateMachine = EntityStateMachine.FindByCustomName(skillSlot.gameObject, targetOverrideStateMachine);
-            if (overrideStateMachine && HasTarget(skillSlot))
+            EntityStateMachine stateMachine = skillSlot.stateMachine;
+            InterruptPriority priority = skillSlot.interruptPriority;
+            
+            if (HasTarget(skillSlot))
             {
-                skillSlot.stateMachine = overrideStateMachine;
+                priority = targetOverridePriority;
+                stateMachine = EntityStateMachine.FindByCustomName(skillSlot.gameObject, targetOverrideStateMachine) ?? skillSlot.stateMachine;
             }
 
-            base.OnExecute(skillSlot);
+            stateMachine.SetInterruptState(this.InstantiateNextState(skillSlot), priority);
 
-            skillSlot.stateMachine = defaultStateMachine;
+            if (cancelSprintingOnActivation)
+            {
+                skillSlot.characterBody.isSprinting = false;
+            }
+            skillSlot.stock -= this.stockToConsume;
+            if (resetCooldownTimerOnUse)
+            {
+                skillSlot.rechargeStopwatch = 0f;
+            }
+            if (!this.suppressSkillActivation && skillSlot.characterBody)
+            {
+                skillSlot.characterBody.OnSkillActivated(skillSlot);
+            }
+            if (isCooldownBlockedUntilManuallyReset)
+            {
+                skillSlot.SetBlockedCooldownSkillState(true);
+            }
+
+            InstanceData instanceData = (InstanceData)skillSlot.skillInstanceData;
+            instanceData.step++;
+            if (instanceData.step >= stepCount)
+            {
+                instanceData.step = 0;
+            }
         }
 
         public override EntityState InstantiateNextState([NotNull] GenericSkill skillSlot)

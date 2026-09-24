@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 135364722855381013}
   - component: {fileID: 114170608432267842}
   - component: {fileID: 114005801948155174}
-  - component: {fileID: -1020079071561478142}
   - component: {fileID: -913085124724944047}
   - component: {fileID: 2852359063759152464}
   - component: {fileID: 8347263518989427811}
@@ -105,7 +104,7 @@ MonoBehaviour:
   allowPrediction: 1
   owner: {fileID: 0}
   localCollisionHappened: 0
-  procCoefficient: 0
+  procCoefficient: 1
   combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
 --- !u!54 &54731739126516398
@@ -156,9 +155,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnEffect: {fileID: 0}
-  lifetime: 5
+  lifetime: 1
   lifetimeExpiredEffect: {fileID: 0}
-  desiredForwardSpeed: 160
+  desiredForwardSpeed: 90
   updateAfterFiring: 0
   enableVelocityOverLifetime: 0
   velocityOverLifetime:
@@ -218,20 +217,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
---- !u!114 &-1020079071561478142
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1933220239542740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1294804675, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groupName: 
-  hitBoxes: []
 --- !u!114 &-913085124724944047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -283,7 +268,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   groupName: Hitbox
-  hitBoxes: []
+  hitBoxes:
+  - {fileID: 4898236075667600084}
 --- !u!114 &8347263518989427811
 MonoBehaviour:
   m_ObjectHideFlags: 0
