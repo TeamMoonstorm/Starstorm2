@@ -50,27 +50,33 @@ namespace SS2
 		}
 
 		[ClientRpc]
-		public void RpcSetupNemBoss(GameObject bodyObject, string prefabName)
+		public void RpcSetupNemBoss(GameObject bodyObject, string masterName)
         {
-			CharacterBody body = bodyObject.GetComponent<CharacterBody>();
-			GameObject prefab = SS2Assets.LoadAsset<GameObject>(prefabName, SS2Bundle.Events);
-			if (prefab)
+			if (!bodyObject || !bodyObject.TryGetComponent(out CharacterBody body))
 			{
-				var effect = GameObject.Instantiate(prefab, body.corePosition, Quaternion.identity, body.coreTransform);
-				body.master.onBodyDeath.AddListener(RemoveEffect);
-				void RemoveEffect() => Destroy(effect);
+				SS2Log.Error($"RpcSetupNemBoss: Missing body for {masterName}.");
+				return;
 			}
-			else SS2Log.Warning("No effect prefab for " + body.GetDisplayName());
-			body.gameObject.AddComponent<Components.NemesisResistances>();
-			if (body.mainHurtBox)
-			{
-				CapsuleCollider capsuleCollider = body.mainHurtBox.GetComponent<CapsuleCollider>();
-				if (capsuleCollider)
-				{
-					capsuleCollider.height = 4f;
-					capsuleCollider.radius = 4f;
-				}
 
+			NemesisSpawnCard card = NemesisCatalog.FindSpawnCard(masterName);
+			if (!card)
+			{
+				SS2Log.Error($"RpcSetupNemBoss: {masterName} is not registered on this peer.");
+				return;
+			}
+
+			// The server configured its body during spawning; do not apply modifiers twice on the host.
+			if (!NetworkServer.active)
+				card.ApplyBodyConfiguration(body);
+
+			if (card.visualEffect)
+			{
+				var effect = GameObject.Instantiate(card.visualEffect, body.corePosition, Quaternion.identity, body.coreTransform);
+				if (body.master)
+				{
+					body.master.onBodyDeath.AddListener(RemoveEffect);
+					void RemoveEffect() => Destroy(effect);
+				}
 			}
 		}
         [ClientRpc]

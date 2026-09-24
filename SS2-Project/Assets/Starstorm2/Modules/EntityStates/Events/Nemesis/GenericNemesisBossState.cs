@@ -2,7 +2,6 @@
 using SS2;
 using SS2.Components;
 using SS2.ScriptableObjects;
-using R2API.Networking.Interfaces;
 using RoR2;
 using System;
 using System.Collections.Generic;
@@ -49,13 +48,20 @@ namespace EntityStates.Events
 
         private static int minimumLevel = 60;
 
-        private bool hasSpawned;
+        private bool eventFinished;
+        private CharacterMaster nemesisBossMaster;
         public override void OnEnter()
         {
             base.OnEnter();     
             rng = Run.instance.spawnRng;
             if (NetworkServer.active)
             {
+                if (!EventDirector.instance || EventDirector.instance.availableNemesisSpawnCards == null
+                    || EventDirector.instance.availableNemesisSpawnCards.Count == 0)
+                {
+                    FailEvent("No Nemesis invasion pool is available.");
+                    return;
+                }
                 this.spawnCard = EventDirector.instance.availableNemesisSpawnCards.Evaluate(EventDirector.instance.rng.nextNormalizedFloat);
                 FindSpawnTarget();
             }
@@ -84,12 +90,15 @@ namespace EntityStates.Events
         }
         public void StartEvent()
         {
-            if (musicOverridePrefab)
+            if (HasWarned || eventFinished)
+                return;
+
+            HasWarned = true;
+            if (musicTrack && mainTrack)
                 musicTrack.track = mainTrack;
-            if (NetworkServer.active && !hasSpawned)
+            if (NetworkServer.active)
             {
                 SpawnNemesisBoss();
-                hasSpawned = true;
             }
         }
         private void FindSpawnTarget()
@@ -115,9 +124,11 @@ namespace EntityStates.Events
         public virtual void SpawnNemesisBoss()
         {
             if (!this.spawnCard)
+            {
+                FailEvent("The selected Nemesis spawn card is missing.");
                 return;
+            }
 
-            var spawnCard = UnityEngine.Object.Instantiate(this.spawnCard);
             Transform spawnTarget = null;
             MonsterSpawnDistance distance = MonsterSpawnDistance.Far;
 
@@ -130,7 +141,12 @@ namespace EntityStates.Events
             }
             if (!spawnTarget)
             {
-                SS2Log.Error("Unable to spawn Nemesis Event. Returning.");
+                FailEvent($"No spawn target is available for {spawnCard.prefab.name}.");
+                return;
+            }
+            if (!encounterPrefab || !encounterPrefab.GetComponent<CombatSquad>() || !encounterPrefab.GetComponent<TeamFilter>())
+            {
+                FailEvent("The Nemesis encounter prefab is missing CombatSquad or TeamFilter.");
                 return;
             }
             DirectorPlacementRule directorPlacementRule = new DirectorPlacementRule
@@ -145,21 +161,23 @@ namespace EntityStates.Events
             directorSpawnRequest.teamIndexOverride = new TeamIndex?(TeamIndex.Monster);
             directorSpawnRequest.ignoreTeamMemberLimit = true;
             directorSpawnRequest.onSpawnedServer += OnBossSpawned;
-            DirectorCore.instance.TrySpawnObject(directorSpawnRequest);
-            UnityEngine.Object.Destroy(spawnCard);
+            if (!DirectorCore.instance.TrySpawnObject(directorSpawnRequest) && !eventFinished)
+                FailEvent($"Could not place {spawnCard.prefab.name}.");
         }
 
         private void OnBossSpawned(SpawnCard.SpawnResult spawnResult)
-        {          
+        {
+            if (!spawnResult.success || !spawnResult.spawnedInstance
+                || !spawnResult.spawnedInstance.TryGetComponent(out CharacterMaster master) || !master.GetBody())
+            {
+                FailEvent($"Failed to spawn {spawnCard.prefab.name} with a valid master and body.");
+                return;
+            }
+
             CombatSquad combatSquad = UnityEngine.Object.Instantiate(encounterPrefab).GetComponent<CombatSquad>();
-            CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
-            //master.gameObject.AddComponent<NemesisResistances>();
+            nemesisBossMaster = master;
             nemesisBossBody = master.GetBody();
             master.onBodyDeath.AddListener(OnBodyDeath);
-            master.onBodyStart += (body) =>
-            {
-                FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
-            };
             int itemCount = Run.instance.stageClearCount;
             master.inventory.GiveItem(SS2Content.Items.MaxHealthPerMinute, itemCount);
             //master.inventory.GiveItem(RoR2Content.Items.AdaptiveArmor);
@@ -188,7 +206,6 @@ namespace EntityStates.Events
             RoR2.CharacterAI.BaseAI ai = master.GetComponent<RoR2.CharacterAI.BaseAI>();
             if (ai)
                 ai.currentEnemy.gameObject = target;
-            new FriendManager.SyncBaseStats(nemesisBossBody).Send(R2API.Networking.NetworkDestination.Clients);
             combatSquad.AddMember(master);
             combatSquad.GetComponent<TeamFilter>().defaultTeam = TeamIndex.Monster;
             NetworkServer.Spawn(combatSquad.gameObject);
@@ -196,6 +213,10 @@ namespace EntityStates.Events
 
         public virtual void OnBodyDeath()
         {
+            if (!NetworkServer.active || eventFinished)
+                return;
+
+            eventFinished = true;
             GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
                 eventToken = "SS2_EVENT_GENERICNEMESIS_END",
@@ -203,7 +224,7 @@ namespace EntityStates.Events
                 textDuration = 7,
             };
             GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);           
-            if (musicOverridePrefab)
+            if (musicTrack && outroTrack)
                 musicTrack.track = outroTrack;
             outer.SetNextState(new IdleRestOfStage());
             onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
@@ -211,10 +232,20 @@ namespace EntityStates.Events
 
         public override void OnExit()
         {
-            base.OnExit();        
-            // need to do outro here instead of destroying
+            base.OnExit();
+            if (nemesisBossMaster)
+                nemesisBossMaster.onBodyDeath.RemoveListener(OnBodyDeath);
+            // TODO: need to do outro here instead of destroying
             if (musicTrack)
                 Destroy(musicTrack.gameObject);
+        }
+
+        private void FailEvent(string message)
+        {
+            SS2Log.Error($"GenericNemesisEvent: {message}");
+            eventFinished = true;
+            if (NetworkServer.active)
+                outer.SetNextState(new IdleRestOfStage());
         }
 
         public override void OnSerialize(NetworkWriter writer)
