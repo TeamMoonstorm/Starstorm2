@@ -27,17 +27,17 @@ namespace EntityStates.NemCroco
         private static float attackEndTime = 0.33f;
         private static float earlyExitTime = 0.5f;
 
-        private static float hitStopDuration = 0.012f;
+        private static float hitStopDuration = 0.125f;
         private static float recoil = 0.75f;
-        private static float bloom = 1f;
-        private static float hitHopVelocity = 4f;
+        private static float bloom = 0.5f;
+        private static float hitHopVelocity = 10f;
 
         private static string enterSoundString = "Play_acrid_m2_bite_shoot";
         private static string swingSoundString = "";
         private static string hitSoundString = "";
         private static string playbackRateParam = "Swipe.playbackRate";
 
-        private static float forwardSpeedCoefficient = 3f;
+        private static float forwardSpeedCoefficient = 1.5f;
         public static AnimationCurve forwardSpeedCurve;
         public static GameObject swingEffectPrefab;
         public static GameObject hitEffectPrefab;

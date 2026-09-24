@@ -9,10 +9,10 @@ namespace SS2.Components
     [RequireComponent(typeof(TeamComponent))]
     public class NemCrocoTracker : MonoBehaviour, ITargetTracker
     {
-        public float maxCandidateDistance = 60f;
-        public float maxTrackingDistance = 18f;
-        public float maxTrackingAngle = 40f;
-        public float trackerUpdateFrequency = 10f;
+        public static float maxCandidateDistance = 60f;
+        public static float maxTrackingDistance = 14f;
+        public static float maxTrackingAngle = 15f;
+        public static float trackerUpdateFrequency = 10f;
 
         public GameObject targetIndicatorPrefab;
         public GameObject radiationIndicatorPrefab;
@@ -83,7 +83,7 @@ namespace SS2.Components
             candidateSearch.FilterOutGameObject(gameObject);
             foreach (HurtBox hurtBox in candidateSearch.GetResults())
             {
-                if (!radiationCandidates.Contains(hurtBox) && hurtBox.healthComponent.alive && SS2.Survivors.NemCroco.IsFullRadiation(hurtBox.healthComponent))
+                if (!radiationCandidates.Contains(hurtBox) && hurtBox.healthComponent.alive && SS2.Survivors.NemCroco.IsMaxRadiation(hurtBox.healthComponent))
                 {
                     radiationCandidates.Add(hurtBox);
 
@@ -97,7 +97,7 @@ namespace SS2.Components
             for (int i = radiationCandidates.Count - 1; i > 0; i--)
             {
                 HurtBox hurtBox = radiationCandidates[i];
-                if (!hurtBox || !hurtBox.healthComponent.alive || !SS2.Survivors.NemCroco.IsFullRadiation(hurtBox.healthComponent))
+                if (!hurtBox || !hurtBox.healthComponent.alive || !SS2.Survivors.NemCroco.IsMaxRadiation(hurtBox.healthComponent))
                 {
                     radiationCandidates.RemoveAt(i);
 
@@ -125,7 +125,7 @@ namespace SS2.Components
             targetSearch.FilterOutGameObject(gameObject);
             foreach (HurtBox hurtBox in targetSearch.GetResults())
             {
-                if (hurtBox.healthComponent.alive && SS2.Survivors.NemCroco.IsFullRadiation(hurtBox.healthComponent))
+                if (hurtBox.healthComponent.alive && SS2.Survivors.NemCroco.IsMaxRadiation(hurtBox.healthComponent))
                 {
                     trackingTarget = hurtBox;
                     break;

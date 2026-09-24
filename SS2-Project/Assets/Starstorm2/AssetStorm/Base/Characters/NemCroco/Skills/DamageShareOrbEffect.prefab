@@ -255,7 +255,6 @@ GameObject:
   - component: {fileID: 114667910455967065}
   - component: {fileID: 7483953636519347778}
   - component: {fileID: 9179366552888050392}
-  - component: {fileID: 3507809709303513720}
   m_Layer: 0
   m_Name: DamageShareOrbEffect
   m_TagString: Untagged
@@ -450,45 +449,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Play_acrid_R_infect
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 7483953636519347778}
-        m_TargetAssemblyTypeName: RoR2.EventFunctions, RoR2
-        m_MethodName: PlaySound
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Stop_acrid_R_fly_loop
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &3507809709303513720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1424517451208866}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1630511094, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  action:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7483953636519347778}
-        m_TargetAssemblyTypeName: RoR2.EventFunctions, RoR2
-        m_MethodName: PlaySound
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Play_acrid_R_fly_loop
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &1987015555888469

@@ -9,7 +9,7 @@ namespace SS2.Components
         public Transform[] transformsToScale;
         public Transform[] transformsToRotate;
 
-        private void Update()
+        private void LateUpdate()
         {
             Vector3 between = endPoint.position - startPoint.position;
             float distance = between.magnitude;

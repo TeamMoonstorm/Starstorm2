@@ -14,10 +14,10 @@ namespace EntityStates.NemCroco
 {
     public class ChargeLaserBreath : BaseSkillState
     {
-        private static float baseDuration = 0.5f;
+        private static float baseDuration = 0.3f;
         public static GameObject effectPrefab;
         private static string enterSoundString = "";
-        private static string muzzleString = "MuzzleMouth";
+        private static string muzzleString = "MouthMuzzle";
         private float duration;
         private GameObject effectInstance;
         protected EffectManagerHelper _efhChargeEffect = null;
@@ -94,7 +94,7 @@ namespace EntityStates.NemCroco
 
     public class FireLaserBreath : BaseState
     {
-        private static float baseDuration = 1f;
+        private static float baseDuration = .66f;
         private static float ticksPerSecond = 6f;
         private static float procCoefficientPerSecond = 4f;
         private static float damageCoefficientPerSecond = 3f;
@@ -105,7 +105,7 @@ namespace EntityStates.NemCroco
         private static float recoilForce = 30f;
         private static float turnSpeed = 360f;
         private static float recoil = 0.0f;
-        private static float walkSpeedCoefficient = 0.5f;
+        private static float walkSpeedCoefficient = 0.6f;
         public static GameObject impactEffectPrefab;
 
         private static float exitDamageCoefficient = 1.5f;
@@ -124,10 +124,12 @@ namespace EntityStates.NemCroco
         private static string exitSoundString = "Play_acrid_m2_shoot";
         public static GameObject muzzleEffectPrefab;
         public static GameObject beamEffectPrefab;
+        private static float beamEffectDistance = 24f;
         public static GameObject crosshairPrefab;
 
         private Transform flamethrowerTransform;
         private Transform beamTransform;
+        private Transform beamEndTransform;
         private AimAnimator aimAnimator;
         private AimAnimator.DirectionOverrideRequest animatorDirectionOverrideRequest;
         private Vector3 currentAimVector;
@@ -173,6 +175,7 @@ namespace EntityStates.NemCroco
                 if (muzzle)
                 {
                     beamTransform = GameObject.Instantiate(beamEffectPrefab, muzzle).transform;
+                    beamEndTransform = beamTransform.Find("End");
                 }
             }
 
@@ -226,7 +229,14 @@ namespace EntityStates.NemCroco
             base.Update();
 
             currentAimVector = Vector3.RotateTowards(currentAimVector, inputBank.aimDirection, Mathf.Deg2Rad * turnSpeed * Time.deltaTime, 0);
-            if (beamTransform)
+
+            if (beamEndTransform)
+            {
+                Ray ray = GetAimRay();
+                ray.direction = currentAimVector;
+                beamEndTransform.position = ray.GetPoint(beamEffectDistance);
+            }
+            else if (beamTransform)
             {
                 beamTransform.transform.forward = currentAimVector;
             }

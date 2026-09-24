@@ -10,12 +10,6 @@ namespace SS2.Components
     // Copy of DamageTrail, but we also spawn points based on distance traveled
     public class NemCrocoDamageTrail : MonoBehaviour
     {
-        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
-        private static void Init()
-        {
-            RoR2Application.onUpdate += UpdateOptimizedDamageUpdateInterval;
-        }
-
         [Tooltip("How often to drop a new point onto the trail.")]
         public float pointUpdateInterval = 0.2f;
         [Tooltip("How often to drop a new point onto the trail, based on distance moved.")]
@@ -73,24 +67,6 @@ namespace SS2.Components
             AddPoint();
         }
 
-        private static void UpdateOptimizedDamageUpdateInterval()
-        {
-            float MaxDamageUpdateInterval = 0.4f;
-            float MinDamageUpdateInterval = 0.2f;
-            float standardFPS = 60f;
-            float fps = 1f / Time.deltaTime;
-            if (fps > standardFPS)
-            {
-                optimizedDamageUpdateinterval = MinDamageUpdateInterval;
-            }
-            else
-            {
-                float slowRatio = (standardFPS - fps) / 30f;
-                slowRatio = Mathf.Min(slowRatio, 1f);
-                optimizedDamageUpdateinterval = Mathf.Lerp(MinDamageUpdateInterval, MaxDamageUpdateInterval, slowRatio);
-            }
-        }
-
         private void OnDisable()
         {
             if (EffectManager.UsePools)
@@ -145,7 +121,7 @@ namespace SS2.Components
                 }
             }
 
-            if (segmentPrefab)
+            if (active && segmentPrefab)
             {
                 Vector3 previousPosition = transform.position;
                 for (int i = pointsList.Count - 1; i >= 0; i--)
@@ -227,9 +203,9 @@ namespace SS2.Components
                             if (healthComponent)
                             {
                                 GameObject hitGameObject = healthComponent.gameObject;
-                                if (ignoredObjects.Contains(hitGameObject))
+                                if (!ignoredObjects.Contains(hitGameObject))
                                 {
-                                    if (!FriendlyFireManager.ShouldSplashHitProceed(healthComponent, teamIndex))
+                                    if (FriendlyFireManager.ShouldSplashHitProceed(healthComponent, teamIndex))
                                     {
                                         ignoredObjects.Add(hitGameObject);
                                         damageInfo.position = hits[hitIndex].transform.position;

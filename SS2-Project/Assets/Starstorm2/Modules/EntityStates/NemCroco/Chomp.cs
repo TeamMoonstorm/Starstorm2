@@ -16,10 +16,12 @@ namespace EntityStates.NemCroco
         private static string enterSoundString = "Play_acrid_shift_jump";
         public static GameObject leapEffectPrefab;
 
-        private static float flightDuration = 0.4f;
-        private static float maxHeight = 10f;
+        private static float flightDuration = 0.25f;
+        private static float maxHeight = 14f;
+        private static float yOffset = -2f;
+        private static float minTargetDistance = 2.8f;
 
-        private static float leapDistanceIfNoTarget = 10f;
+        private static float leapDistanceIfNoTarget = 14f;
 
         public HurtBox target;
         public override InterruptPriority GetMinimumInterruptPriority()
@@ -73,20 +75,34 @@ namespace EntityStates.NemCroco
             }
             Util.PlaySound(enterSoundString, gameObject);
             PlayCrossfade("FullBody, Override", "ChompLeap", 0.05f);
-        }
 
+            characterBody.fakeActorCounter++; // TEMP. NEED TO TRACK THE TARGET BETTER AND NOT JUST SET VELOCITY IN ONENTER
+        }
+        public override void OnExit()
+        {
+            characterBody.fakeActorCounter--;
+
+            base.OnExit();
+        }
         private Vector3 GetHighestPoint(HurtBox hurtBox)
         {
-            return hurtBox.transform.position;
+            return hurtBox.transform.position + Vector3.up * yOffset;
         }
 
         public override void FixedUpdate()
         {
             base.FixedUpdate();
 
-            characterDirection.forward = characterMotor.velocity;
+            characterDirection.moveVector = characterMotor.velocity;
 
-            if (isAuthority && fixedAge >= flightDuration)
+            bool targetInRange = false;
+            if (isAuthority && target)
+            {
+                characterDirection.moveVector = target.transform.position - characterBody.corePosition;
+                targetInRange = Vector3.Distance(target.transform.position, characterBody.corePosition) < minTargetDistance;
+            }
+
+            if (isAuthority && (targetInRange || fixedAge >= flightDuration))
             {
                 outer.SetNextState(new Chomp { target = target });
             }
@@ -101,16 +117,17 @@ namespace EntityStates.NemCroco
         private static Vector3 bonusForce = Vector3.zero;
         private static float forceMagnitude = 16f;
         private static float hitHopVelocity = 7f;
-        private static float hitVelocityMultiplier = 0.2f;
+        private static float hitVelocityMultiplier = 0.4f;
         private static float hitPauseDuration = 0.22f;
         private static float bloom = 3f;
         private static float recoil = 3f;
 
         public static GameObject hitEffectPrefab;
         public static GameObject effectPrefab;
+        public static NetworkSoundEventDef impactSound;
         private static string hitboxGroupName = "Bite";
         private static string muzzleString = "MouthMuzzle";
-        private static string attackSoundString = "Play_imp_attack";
+        private static string attackSoundString = "Play_blindVermin_attack1_bite";
 
         private static float attackStartTime = 0.1f;
         private static float attackEndTime = 0.5f;
@@ -129,7 +146,7 @@ namespace EntityStates.NemCroco
 
         public override InterruptPriority GetMinimumInterruptPriority()
         {
-            return hasAttacked ? InterruptPriority.PrioritySkill : InterruptPriority.Frozen;
+            return InterruptPriority.Frozen;
         }
         public override void OnEnter()
         {
@@ -151,6 +168,7 @@ namespace EntityStates.NemCroco
             attack.hitBoxGroup = FindHitBoxGroup(hitboxGroupName);
             attack.isCrit = RollCrit();
             attack.maximumOverlapTargets = 1000;
+            if (impactSound) attack.impactSound = impactSound.index;
 
             attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemesisPoisonOnHit);
             attack.AddModdedDamageType(SS2.Survivors.NemCroco.NemCrocoExecute);
@@ -159,8 +177,6 @@ namespace EntityStates.NemCroco
             {
                 PlayCrossfade("FullBody, Override", "Bite", "Bite.playbackRate", duration, 0.05f);
             }
-            characterBody.SetAimTimer(2f);
-            
         }
 
         public override void OnExit()
@@ -187,6 +203,15 @@ namespace EntityStates.NemCroco
         public override void FixedUpdate()
         {
             base.FixedUpdate();
+
+            if (!hasAttacked)
+            {
+                //characterDirection.forward = characterMotor.velocity;
+            }
+            else
+            {
+                StartAimMode(2f);
+            }
 
             if (hitPauseTimer > 0)
             {
@@ -295,10 +320,11 @@ namespace EntityStates.NemCroco
         protected void AuthorityExitHitPause()
         {
             hitPauseTimer = 0f;
-            storedHitPauseVelocity.y = Mathf.Max(storedHitPauseVelocity.y, hitHopVelocity);
+            
             if (characterMotor)
             {
-                characterMotor.velocity = storedHitPauseVelocity;
+                characterMotor.velocity = storedHitPauseVelocity * hitVelocityMultiplier;
+                storedHitPauseVelocity.y = Mathf.Max(storedHitPauseVelocity.y, hitHopVelocity);
             }
             storedHitPauseVelocity = Vector3.zero;
             if (animator)

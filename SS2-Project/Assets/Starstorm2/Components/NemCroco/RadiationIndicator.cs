@@ -257,7 +257,7 @@ namespace SS2.Components
                 foreach (RadiationIndicator indicator in runningIndicators)
                 {
                     bool visible = cameraTarget == indicator.owner;
-                    indicator.SetVisible(cameraTarget == indicator.owner);
+                    indicator.SetVisible(cameraTarget == indicator.owner && uiCam.cameraRigController.targetBody && CanSeeRadiation(uiCam.cameraRigController.targetBody.bodyIndex));
                     if (visible)
                     {
                         indicator.PositionForUI(sceneCam, uiCam.camera);
