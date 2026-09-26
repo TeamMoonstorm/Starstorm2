@@ -19818,6 +19818,7 @@ GameObject:
   - component: {fileID: 7791597133354900402}
   - component: {fileID: 3161212227841810675}
   - component: {fileID: 4861455992032152870}
+  - component: {fileID: -2535762419455281775}
   m_Layer: 0
   m_Name: NemCrocoBody
   m_TagString: Player
@@ -20603,14 +20604,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52b76e0b1c2cbfd44ba4bbc1e26dc033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxCandidateDistance: 60
-  maxTrackingDistance: 24
-  maxTrackingAngle: 30
-  trackerUpdateFrequency: 10
   targetIndicatorPrefab: {fileID: 2530527808331208186, guid: c41856c6fec4672468b1fe8d177b9cea,
     type: 3}
   radiationIndicatorPrefab: {fileID: 2530527808331208186, guid: b94c7730f065e6a4d9a6a9e0569893a2,
     type: 3}
+--- !u!114 &-2535762419455281775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8477274550451897653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -465513409, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundbankStrings:
+  - char_Mage
+  - char_Croco
+  decodeBank: 0
+  saveDecodedBank: 0
 --- !u!1 &8747923168262989928
 GameObject:
   m_ObjectHideFlags: 0

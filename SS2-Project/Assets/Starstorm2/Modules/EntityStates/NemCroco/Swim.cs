@@ -11,7 +11,7 @@ namespace EntityStates.NemCroco
     public class Swim : BaseCharacterMain
     {
         private static float baseDuration = 1.5f;
-        private static float minimumDuration = 0.6f;
+        private static float minimumDuration = 0.4f;
         private static float exitBufferDuration = 0.2f;
         private static float maxGroundDistance = 12f;
 
@@ -22,6 +22,7 @@ namespace EntityStates.NemCroco
         private static float acceleration = 45f;
         private static float moveSpeedCoefficient = 2.5f;
         private static float characterDirectionCoefficient = 0.5f;
+        private static float gravityCoefficient = 1.6f;
 
         private static float maxVelocityForAnim = 70f;
         private static float minVelocityForAnim = 0f;
@@ -30,11 +31,11 @@ namespace EntityStates.NemCroco
         private static float trailUpdateDistance = 4f;
         private static float trailRadius = 4f;
         private static float trailHeight = 1f;
-        private static float trailDamageCoefficientPerSecond = 1f;
+        private static float trailDamageCoefficientPerSecond = .5f;
         private static float trailProcCoefficientPerSecond = 2f;
         private static float trailDamageInterval = 0.25f;
         private static float trailLifetime = 5f;
-        private static float trailLingerTime = 8f;
+        private static float trailLingerTime = 5f;
         public static GameObject damageTrailPrefab;
 
 
@@ -48,9 +49,11 @@ namespace EntityStates.NemCroco
 
         private static float breachDamageCoefficient = 3f;
         private static float breachProcCoefficient = 1f;
-        private static float breachRadius = 8f;
-        private static float breachPushForce = 7f;
+        private static float breachRadius = 9f;
+        private static float breachPushForce = 2.5f;
+        private static float breachKnockupForce = 6f;
         private static float breachVerticalForce = 18f;
+        private static float breachNonJumpExitCoefficient = 0.5f;
         public static GameObject breachEffectPrefab;
         public static GameObject breachImpactEffectPrefab;
         public static SkillDef breachSkillOverride;
@@ -60,7 +63,12 @@ namespace EntityStates.NemCroco
         private static string soundLoopStopEvent = "Stop_acrid_shift_fly_loop";
 
         private static bool exitOnUngrounded = false;
+        private static bool invincibleTEST = true;
+        private static float extraReSwimTime = 0.8f;
+        private static int maxReSwims = 1;
 
+        public float swimAge;
+        public int reSwimCount;
         public float entryVerticalSpeed;
         private Vector3 convertedVelocity;
         private Vector3 currentVelocity;
@@ -69,6 +77,7 @@ namespace EntityStates.NemCroco
         private Run.FixedTimeStamp exitBufferTime;
         private NemCrocoDamageTrail damageTrail;
         private bool hasBreached;
+        private bool jumpExit;
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.Pain;
@@ -87,6 +96,7 @@ namespace EntityStates.NemCroco
             base.OnEnter();
 
             duration = baseDuration;
+            swimAge = Mathf.Max(0f, swimAge - extraReSwimTime);
 
             GetModelTransform().GetComponent<AimAnimator>().enabled = true;
             PlayCrossfade("Gesture, Override", "Swim", 0.1f);
@@ -99,6 +109,8 @@ namespace EntityStates.NemCroco
             convertedVelocity = Vector3.down * speedToConvert * verticalSpeedConversion;
             currentVelocity = characterMotor.velocity;
             currentVelocity.y = 0;
+
+            characterBody.bodyFlags |= CharacterBody.BodyFlags.IgnoreFallDamage;
 
             gameObject.layer = LayerIndex.GetAppropriateFakeLayerForTeam(teamComponent.teamIndex).intVal;
             characterMotor.Motor.RebuildCollidableLayers();
@@ -129,6 +141,15 @@ namespace EntityStates.NemCroco
             }
 
             GetModelTransform().GetComponent<CharacterModel>().invisibilityCount++; /// TEMP. NEED SWIMMING ANIMATION
+
+            if (NetworkServer.active)
+            {
+                if (invincibleTEST)
+                {
+                    characterBody.AddBuff(RoR2Content.Buffs.HiddenInvincibility);
+                }
+                characterBody.AddBuff(RoR2Content.Buffs.ArmorBoost);
+            }
         }
         public override void UpdateAnimationParameters()
         {
@@ -142,10 +163,16 @@ namespace EntityStates.NemCroco
         {
             base.FixedUpdate();
 
+            swimAge += Time.fixedDeltaTime;
             if (isAuthority)
             {
                 ApplyMovement();
                 //GatherInputs();
+
+                if (fixedAge >= minimumDuration - exitBufferDuration && (inputBank.jump.justPressed || swimAge >= baseDuration))
+                {
+                    jumpExit = true;
+                }
 
                 bool exitInput = inputBank.skill1.justPressed || inputBank.skill2.justPressed || inputBank.skill3.justPressed || inputBank.skill4.justPressed || inputBank.jump.justPressed;
                 if (exitInput)
@@ -154,19 +181,28 @@ namespace EntityStates.NemCroco
                 }
                 exitInput |= exitBufferTime.timeSince <= exitBufferDuration;
 
-                if (fixedAge >= minimumDuration && (exitInput || fixedAge >= baseDuration))
+                if (fixedAge >= minimumDuration && (exitInput || swimAge >= baseDuration))
                 {
                     Breach();
                     outer.SetNextStateToMain();
                     return;
                 }
 
-                // TODO: STICK TO GROUND BETTER, CHECK FOR GROUND BETTER. WALL RUNNING (SWIMMING) IS BEST BUT ANNOYING
+
+                // TODO: BETTER GROUND STICKING, BETTER RE-DIVE CONDITIONS
                 if (exitOnUngrounded && !isGrounded)
                 {
                     if (!Physics.Raycast(characterBody.footPosition, Vector3.down, maxGroundDistance, LayerIndex.world.intVal, QueryTriggerInteraction.Ignore))
                     {
-                        outer.SetNextStateToMain();
+                        if (reSwimCount >= maxReSwims)
+                        {
+                            Breach();
+                            outer.SetNextStateToMain();
+                        }
+                        else
+                        {
+                            outer.SetNextState(new Dive { enteredFromSwim = true, swimAge = this.swimAge, reSwimCount = reSwimCount + 1 });
+                        }
                         return;
                     }
                 }
@@ -207,8 +243,12 @@ namespace EntityStates.NemCroco
             float bonusHorizontalSpeed = new Vector3(convertedVelocity.x, 0f, convertedVelocity.z).magnitude;
 
             finalVelocity = currentVelocity + bonusHorizontalSpeed * currentVelocity.normalized;
+
             characterMotor.AddDisplacement(finalVelocity * Time.fixedDeltaTime); //////////////////////////////
             characterDirection.moveVector = finalVelocity;
+
+            // add gravity
+            characterMotor.velocity += Physics.gravity * gravityCoefficient * Time.fixedDeltaTime;
         }
 
         private void Breach()
@@ -224,7 +264,7 @@ namespace EntityStates.NemCroco
             EffectManager.SpawnEffect(breachEffectPrefab, new EffectData
             {
                 origin = footPosition,
-                rotation = Util.QuaternionSafeLookRotation(characterMotor.velocity)
+                //rotation = Util.QuaternionSafeLookRotation(characterMotor.velocity)
             }, false);
 
             if (isAuthority)
@@ -239,11 +279,20 @@ namespace EntityStates.NemCroco
                 Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
                 Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
                 Vector3 breachVelocityVector = breachVelocityAimConversion * finalVelocity.magnitude * aimVector.normalized;
+
+                if (jumpExit == false)
+                {
+                    // if we exit without a jump (i.e use a combat skill), dont leap as far forwards.
+                    aimVelocityVector *= breachNonJumpExitCoefficient;
+                    breachVelocityVector *= breachNonJumpExitCoefficient;
+                }
+
                 characterMotor.Motor.ForceUnground(0.1f);
                 characterMotor.velocity = aimVelocityVector + upwardVelocityVector + forwardVelocityVector + breachVelocityVector;
 
-                Vector3 force = breachVerticalForce * characterMotor.velocity.normalized;
-                DamageTypeCombo damageType = DamageTypeCombo.GenericUtility;
+                Vector3 force = Vector3.up * breachKnockupForce + characterMotor.velocity.normalized * breachPushForce;
+                DamageTypeCombo damageType = DamageType.Stun1s;
+                damageType.damageSource = DamageSource.Utility;
                 damageType.AddModdedDamageType(SS2.Survivors.NemCroco.RadiationOnHit);
                 var blastAttack = new BlastAttack
                 {
@@ -251,9 +300,9 @@ namespace EntityStates.NemCroco
                     baseDamage = damageStat * breachDamageCoefficient,
                     baseForce = breachPushForce,
                     bonusForce = force,
-                    physForceFlags = PhysForceFlags.ignoreGroundStick | PhysForceFlags.massIsOne,
+                    physForceFlags = PhysForceFlags.ignoreGroundStick | PhysForceFlags.massIsOne,// TODO: SIMPLIFIEDMASS
                     crit = RollCrit(),
-                    damageType = DamageTypeCombo.GenericUtility,
+                    damageType = damageType,
                     falloffModel = BlastAttack.FalloffModel.None,
                     procCoefficient = breachProcCoefficient,
                     radius = breachRadius,
@@ -275,7 +324,16 @@ namespace EntityStates.NemCroco
 
         public override void OnExit()
         {
+            characterBody.bodyFlags &= ~CharacterBody.BodyFlags.IgnoreFallDamage;
+
             GetModelTransform().GetComponent<CharacterModel>().invisibilityCount--; ////
+            if (NetworkServer.active)
+            {
+                if (invincibleTEST)
+                    characterBody.RemoveBuff(RoR2Content.Buffs.HiddenInvincibility);
+
+                characterBody.RemoveBuff(RoR2Content.Buffs.ArmorBoost);
+            }
 
             gameObject.layer = LayerIndex.GetAppropriateLayerForTeam(teamComponent.teamIndex);
             characterMotor.Motor.RebuildCollidableLayers();

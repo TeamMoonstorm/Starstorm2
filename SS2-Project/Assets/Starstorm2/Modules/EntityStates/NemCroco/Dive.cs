@@ -28,6 +28,13 @@ namespace EntityStates.NemCroco
         private static bool enemyCollisionActive = true;
         private static bool enemyCollisionFliersOnly = true;
 
+        private static float reswimUpwardVelocity = 16f;
+        private static float reswimForwardVelocity = 6f;
+        public bool enteredFromSwim = false;
+        public float swimAge = 0f;
+        public int reSwimCount;
+       
+
         private Transform collisionTransform;
         private float previousAirControl;
         private bool detonateNextFrame;
@@ -45,7 +52,7 @@ namespace EntityStates.NemCroco
             previousAirControl = characterMotor.airControl;
             characterMotor.airControl = airControl;
 
-            isGroundedTEMPSHIT = isGrounded;
+            isGroundedTEMPSHIT = isGrounded && !enteredFromSwim;
             if (isGroundedTEMPSHIT)
             {
                 outer.SetNextState(new Swim { entryVerticalSpeed = verticalSpeedFromGroundedTEMP });
@@ -60,6 +67,14 @@ namespace EntityStates.NemCroco
                 Vector3 aimVelocityVector = aimVector.normalized * aimVelocity * moveSpeedStat;
                 Vector3 upwardVelocityVector = Vector3.up * upwardVelocity;
                 Vector3 forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * forwardVelocity;
+
+                if (enteredFromSwim)
+                {
+                    aimVelocityVector = Vector3.zero;
+                    upwardVelocityVector = Vector3.up * reswimUpwardVelocity;
+                    forwardVelocityVector = new Vector3(aimVector.x, 0f, aimVector.z).normalized * reswimForwardVelocity;
+                }
+
                 characterMotor.Motor.ForceUnground(0.1f);
                 characterMotor.velocity.y = 0f;
                 characterMotor.velocity += aimVelocityVector + upwardVelocityVector + forwardVelocityVector;
@@ -112,7 +127,8 @@ namespace EntityStates.NemCroco
 
                 if (fixedAge >= minimumDuration && (hasCollided || isGrounded || detonateNextFrame || (characterMotor.Motor.GroundingStatus.IsStableOnGround && !characterMotor.Motor.LastGroundingStatus.IsStableOnGround)))
                 {
-                    outer.SetNextState(new Swim { entryVerticalSpeed = Mathf.Abs(previousVelocity.y) });
+                    var swimState = new Swim { entryVerticalSpeed = Mathf.Abs(previousVelocity.y), swimAge = swimAge, reSwimCount = reSwimCount };
+                    outer.SetNextState(swimState);
                 }
 
                 previousVelocity = characterMotor.velocity;
