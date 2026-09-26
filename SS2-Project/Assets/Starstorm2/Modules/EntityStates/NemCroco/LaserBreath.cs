@@ -100,8 +100,8 @@ namespace EntityStates.NemCroco
         private static float damageCoefficientPerSecond = 3f;
         private static float spreadBloomPerSecond = 1.2f;
         private static float bulletRadius = 1.5f;
-        private static float range = 32f;
-        private static float force = 250f;
+        private static float range = 48f;
+        private static float force = 125f;
         private static float recoilForce = 30f;
         private static float turnSpeed = 360f;
         private static float recoil = 0.0f;
@@ -112,7 +112,7 @@ namespace EntityStates.NemCroco
         private static float exitProcCoefficient = 1f;
         private static float exitRecoil = 2f;
         private static float exitRecoilForce = 100f;
-        private static float exitForce = 250f;
+        private static float exitForce = 150f;
         private static float exitSpreadBloom = 0.4f;
         public static GameObject exitMuzzleEffectPrefab;
         public static GameObject exitTracerPrefab;
@@ -124,7 +124,7 @@ namespace EntityStates.NemCroco
         private static string exitSoundString = "Play_acrid_m2_shoot";
         public static GameObject muzzleEffectPrefab;
         public static GameObject beamEffectPrefab;
-        private static float beamEffectDistance = 24f;
+        private static float beamEffectDistance = 32f;
         public static GameObject crosshairPrefab;
 
         private Transform flamethrowerTransform;
@@ -141,6 +141,8 @@ namespace EntityStates.NemCroco
         private float baseTickRate;
         private float tickRate;
         private float stopwatch;
+
+        private Transform muzzleTransform;
         public override InterruptPriority GetMinimumInterruptPriority()
         {
             return InterruptPriority.PrioritySkill;
@@ -171,10 +173,11 @@ namespace EntityStates.NemCroco
 
             if (beamEffectPrefab)
             {
-                Transform muzzle = FindModelChild(muzzleString);
-                if (muzzle)
+                muzzleTransform = FindModelChild(muzzleString);
+                if (muzzleTransform)
                 {
-                    beamTransform = GameObject.Instantiate(beamEffectPrefab, muzzle).transform;
+                    ////////// TODO: PARENT THIS TO HEAD INSTEAD OF UPDATING POSITION
+                    beamTransform = GameObject.Instantiate(beamEffectPrefab, muzzleTransform.transform.position, Quaternion.identity).transform;
                     beamEndTransform = beamTransform.Find("End");
                 }
             }
@@ -230,6 +233,10 @@ namespace EntityStates.NemCroco
 
             currentAimVector = Vector3.RotateTowards(currentAimVector, inputBank.aimDirection, Mathf.Deg2Rad * turnSpeed * Time.deltaTime, 0);
 
+            if (beamTransform && muzzleTransform)
+            {
+                beamTransform.position = muzzleTransform.position;
+            }
             if (beamEndTransform)
             {
                 Ray ray = GetAimRay();
@@ -238,6 +245,7 @@ namespace EntityStates.NemCroco
             }
             else if (beamTransform)
             {
+                beamTransform.position = muzzleTransform.position;
                 beamTransform.transform.forward = currentAimVector;
             }
         }

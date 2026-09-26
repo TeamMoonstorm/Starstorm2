@@ -41,7 +41,7 @@ namespace SS2.Survivors
         private static float radiationDuration = 5f;
         private static float radiationTickSpeed = 0.2f;
         private static DamageColorIndex radiationDamageColor = DamageColorIndex.WeakPoint;
-        private static Color maxRadiationColor = new Color(252f/255f, 32f/255f, 3f/255f);
+        private static Color maxRadiationColor = new Color(255f/255f, 32f/255f, 0f/255f);
 
         private static bool radiationNoiseActive = true;
         private static float radiationNoiseCutoffMax = 1f;
@@ -55,14 +55,17 @@ namespace SS2.Survivors
         private static float damageShareCoefficient = 0.5f;
         private static float damageShareCoefficientPerBounce = 0.5f;
         private static float damageShareProcCoefficient = 0.5f;
-        private static float damageShareRadius = 12f;
-        private static float damageShareChainRadius = 18f;
+        private static float damageShareRadius = 18f;
+        private static float damageShareChainRadius = 24f;
         private static float damageShareOrbSpeed = 90f;
         private static bool damageShareNonLethal = true;
         private static DamageColorIndex damageShareColor = DamageColorIndex.WeakPoint;
         private static GameObject damageShareOrbEffectPrefab;
+        private static GameObject damageShareEffectPrefab;
 
         public static RoR2.UI.HealthBarStyle.BarStyle RadiationBarStyle;
+        public static BurnEffectController.EffectParams PoisonEffectParams;
+        public static BurnEffectController.EffectParams RadiationEffectParams;
 
         public override bool IsAvailable(ContentPack contentPack)
         {
@@ -78,6 +81,8 @@ namespace SS2.Survivors
 
             damageShareOrbEffectPrefab = SS2Assets.LoadAsset<GameObject>("DamageShareOrbEffect", SS2Bundle.NemCroco);
             executeEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCrocoExecuteEffect", SS2Bundle.NemCroco);
+            damageShareEffectPrefab = SS2Assets.LoadAsset<GameObject>("DamageShareEffect", SS2Bundle.NemCroco);
+
             // lol
             NemesisPoisonOnHit = R2API.DamageAPI.ReserveDamageType(); // normal dot, but it has a proc coefficient
             DamageShareOnHit = R2API.DamageAPI.ReserveDamageType(); // applies damage sharing debuff
@@ -85,8 +90,9 @@ namespace SS2.Survivors
             RadiationOnHit = R2API.DamageAPI.ReserveDamageType(); // applies a DoT that deals radiation damage
             Radiation = R2API.DamageAPI.ReserveDamageType(); // the damage type of the radiation DoT. applies a buff instead of taking away health.
 
-            PoisonDotIndex = DotAPI.RegisterDotDef(0.33f, poisonTickDamageCoefficient, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("bdNemCrocoPoison"));
-            RadiationDotIndex = DotAPI.RegisterDotDef(radiationTickSpeed, 1f, DamageColorIndex.WeakPoint, AssetCollection.FindAsset<BuffDef>("bdNemCrocoRadiation"), customDotBehaviour: new DotAPI.CustomDotBehaviour(AddDot));
+
+            PoisonDotIndex = DotAPI.RegisterDotDef(0.33f, poisonTickDamageCoefficient, DamageColorIndex.Poison, AssetCollection.FindAsset<BuffDef>("bdNemCrocoPoison"), customDotVisual: new R2API.DotAPI.CustomDotVisual(UpdateDotVisuals));
+            RadiationDotIndex = DotAPI.RegisterDotDef(radiationTickSpeed, 1f, DamageColorIndex.WeakPoint, AssetCollection.FindAsset<BuffDef>("bdNemCrocoRadiation"), customDotBehaviour: new DotAPI.CustomDotBehaviour(AddDot), customDotVisual: new R2API.DotAPI.CustomDotVisual(UpdateDotVisuals));
 
             DamageShare = R2API.ProcTypeAPI.ReserveProcType();
 
@@ -99,11 +105,20 @@ namespace SS2.Survivors
             On.RoR2.DotController.EvaluateDotStacksForType += DotController_EvaluateDotStacksForType;
             GlobalEventManager.onServerDamageDealt += OnServerDamageDealt;
 
+            PoisonEffectParams = new BurnEffectController.EffectParams
+            {
+                fireEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCrocoPoisonEffect", SS2Bundle.NemCroco),
+            };
+            RadiationEffectParams = new BurnEffectController.EffectParams
+            {
+                fireEffectPrefab = SS2Assets.LoadAsset<GameObject>("NemCrocoRadiationEffect", SS2Bundle.NemCroco),
+            };
+
             var executeBarSprite = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<Sprite>("RoR2/Base/Common/texUIHighlightExecute.png").WaitForCompletion();
             RadiationBarStyle = new RoR2.UI.HealthBarStyle.BarStyle
             {
                 enabled = true,
-                baseColor = new Color(247f / 255f, 156f / 255f, 45f / 255f),
+                baseColor = new Color(255f / 255f, 128f / 255f, 12f / 255f),
                 imageType = UnityEngine.UI.Image.Type.Sliced,
                 sizeDelta = 6f,
                 sprite = executeBarSprite,
@@ -111,7 +126,7 @@ namespace SS2.Survivors
             var barInfo = new RoR2.UI.HealthBar.BarInfo
             {
                 enabled = true,
-                color = new Color(247f / 255f, 156f / 255f, 45f / 255f),
+                color = new Color(255f / 255f, 128f / 255f, 12f / 255f),
                 imageType = UnityEngine.UI.Image.Type.Sliced,
                 sizeDelta = 6f,
                 sprite = executeBarSprite,
@@ -127,7 +142,56 @@ namespace SS2.Survivors
         }
 
 
-        
+        private void UpdateDotVisuals(DotController dotController)
+        {
+            if (!dotController.victimObject)
+            {
+                return;
+            }
+
+            ExtraBurnEffects burnHolder = dotController.gameObject.GetComponent<ExtraBurnEffects>();
+            if (!burnHolder) burnHolder = dotController.gameObject.AddComponent<ExtraBurnEffects>();
+            ModelLocator modelLocator = null;
+
+            if (dotController.HasDotActive(PoisonDotIndex))
+            {
+                modelLocator = modelLocator ? modelLocator : dotController.victimObject.GetComponent<ModelLocator>();
+                if (modelLocator && modelLocator.modelTransform && !burnHolder.poisonEffect)
+                {
+                    var effect = dotController.gameObject.AddComponent<BurnEffectController>();
+                    effect.target = modelLocator.modelTransform.gameObject;
+                    effect.effectType = PoisonEffectParams;
+
+                    burnHolder.poisonEffect = effect;
+                }
+            }
+            else if (burnHolder.poisonEffect)
+            {
+                burnHolder.poisonEffect.HandleDestroy();
+                burnHolder.poisonEffect = null;
+            }
+
+            if (dotController.HasDotActive(RadiationDotIndex))
+            {
+                modelLocator = modelLocator ? modelLocator : dotController.victimObject.GetComponent<ModelLocator>();
+                if (modelLocator && modelLocator.modelTransform && !burnHolder.radiationEffect)
+                {
+                    var effect = dotController.gameObject.AddComponent<BurnEffectController>();
+                    effect.target = modelLocator.modelTransform.gameObject;
+                    effect.effectType = RadiationEffectParams;
+
+                    burnHolder.radiationEffect = effect;
+                }
+            }
+            else if (burnHolder.radiationEffect)
+            {
+                burnHolder.radiationEffect.HandleDestroy();
+                burnHolder.radiationEffect = null;
+            }
+        }
+
+        private class ExtraBurnEffects : MonoBehaviour { public BurnEffectController poisonEffect; public BurnEffectController radiationEffect; } 
+
         
 
         // pretty sure damage macros can do this instead. iykyk
@@ -319,6 +383,8 @@ namespace SS2.Survivors
             {
                 float targetTotalDamage = report.damageInfo.damage * radiationDamageCoefficient;
                 float damageMultiplier = SS2Util.GetDotDamageMultiplier(report.attackerBody, targetTotalDamage, radiationDuration, RadiationDotIndex);
+                // TODO: if damage per tick is less than one, reduce the dot duration!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                // dot damage gets rounded up to 1 so it does way too much dmg early when it stacks!!!!!!!!!!!!!!!
                 var dotInfo = new InflictDotInfo()
                 {
                     attackerObject = report.attacker,
@@ -351,6 +417,19 @@ namespace SS2.Survivors
                 orb.damageColorIndex = damageShareColor;
                 orb.procCoefficient = damageShareProcCoefficient * damageInfo.procCoefficient;
                 orb.origin = report.damageInfo.position;
+
+                // spawn from head
+                if (victimBody.modelLocator && victimBody.modelLocator.modelTransform 
+                    && victimBody.modelLocator.modelTransform.TryGetComponent(out ChildLocator childLocator) 
+                    && childLocator.TryFindChild("Head", out Transform head))
+                {
+                    orb.origin = head.position;
+                }
+                //else if (victimBody.TryGetComponent(out DamageShareBehavior behavior) && behavior.effectInstance) 
+                //{
+                //    orb.origin = behavior.effectInstance.transform.position;
+                //}
+
                 orb.teamIndex = report.attackerTeamIndex;
                 orb.attacker = report.attacker;
                 damageInfo.procChainMask.AddModdedProc(DamageShare);
@@ -512,6 +591,87 @@ namespace SS2.Survivors
                     bouncedObjects.Add(target.healthComponent);
                 }
                 return target;
+            }
+        }
+
+
+        // handles vfx
+        public sealed class DamageShareBehavior : BaseBuffBehaviour
+        {
+            [BuffDefAssociation()]
+            private static BuffDef GetBuffDef() => SS2Content.Buffs.bdNemCrocoDamageShare;
+
+            public GameObject effectInstance;
+            private TemporaryOverlayInstance overlayInstance;
+            private CharacterModel model;
+            private Collider bodyCollider;
+
+            private void LateUpdate()
+            {
+                UpdateEffect();
+            }
+            private void UpdateEffect()
+            {
+                if (effectInstance)
+                {
+                    Vector3 a = transform.position;
+                    if (bodyCollider)
+                    {
+                        a = bodyCollider.bounds.center + new Vector3(0f, bodyCollider.bounds.extents.y, 0f);
+                    }
+                    effectInstance.transform.position = a;
+                }
+            }
+
+            private void OnEnable()
+            {
+                if (!bodyCollider)
+                {
+                    bodyCollider = characterBody.GetComponent<Collider>();
+                }
+                if (!model && characterBody.modelLocator && characterBody.modelLocator.modelTransform)
+                {
+                    model = characterBody.modelLocator.modelTransform.GetComponent<CharacterModel>();
+                }
+
+                if(damageShareEffectPrefab)
+                {
+                    effectInstance = GameObject.Instantiate(damageShareEffectPrefab, characterBody.coreTransform.position, Quaternion.identity);
+                }
+                UpdateEffect();
+
+
+                if (model)
+                {
+                    overlayInstance = TemporaryOverlayManager.AddOverlay(gameObject);
+                    overlayInstance.duration = 0.3f;
+                    overlayInstance.animateShaderAlpha = true;
+                    overlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+                    overlayInstance.destroyComponentOnEnd = false;
+                    overlayInstance.originalMaterial = SS2Assets.LoadAsset<Material>("matNemCrocoGooDebuff", SS2Bundle.NemCroco);
+                    overlayInstance.AddToCharacterModel(model);
+                }
+            }
+            private void OnDisable()
+            {
+                if (effectInstance)
+                {
+                    Destroy(effectInstance);
+                }
+                if (overlayInstance.isAssigned)
+                {
+                    overlayInstance.RemoveFromCharacterModel();
+                }
+                if (model)
+                {
+                    TemporaryOverlayInstance temporaryOverlayInstance = TemporaryOverlayManager.AddOverlay(gameObject);
+                    temporaryOverlayInstance.duration = 0.6f;
+                    temporaryOverlayInstance.animateShaderAlpha = true;
+                    temporaryOverlayInstance.alphaCurve = AnimationCurve.EaseInOut(0f, 1f, 1f, 0f);
+                    temporaryOverlayInstance.destroyComponentOnEnd = true;
+                    temporaryOverlayInstance.originalMaterial = SS2Assets.LoadAsset<Material>("matNemCrocoGooDebuff", SS2Bundle.NemCroco);
+                    temporaryOverlayInstance.AddToCharacterModel(model);
+                }
             }
         }
     }

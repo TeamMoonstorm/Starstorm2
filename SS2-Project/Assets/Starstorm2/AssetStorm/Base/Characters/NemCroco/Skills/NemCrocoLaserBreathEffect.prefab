@@ -25882,7 +25882,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6568570642582574057}
   - component: {fileID: 5353617688877972356}
-  - component: {fileID: 8746358249786844258}
+  - component: {fileID: 761924620100506462}
   m_Layer: 0
   m_Name: Beam
   m_TagString: Untagged
@@ -26020,9 +26020,9 @@ LineRenderer:
     textureMode: 0
     shadowBias: 0
     generateLightingData: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
---- !u!114 &8746358249786844258
+--- !u!114 &761924620100506462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -26039,35 +26039,26 @@ MonoBehaviour:
     m_Curve:
     - serializedVersion: 3
       time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
       value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.85
-      value: 0.9966202
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 0.99627686
-      value: -0.006755829
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 0
-  timeMax: 3
+    m_RotationOrder: 4
+  timeMax: 0.3
   decal: {fileID: 0}
   pauseTime: 0
   destroyOnEnd: 0
