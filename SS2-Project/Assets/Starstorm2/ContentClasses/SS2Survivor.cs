@@ -16,7 +16,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="ISurvivorContentPiece"/>
     /// </summary>
-    public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier
+    public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier, IAsyncContentInitializer
     {
         public  SurvivorAssetCollection AssetCollection { get; set; }
         public SurvivorDef survivorDef { get; protected  set; }
@@ -71,8 +71,32 @@ namespace SS2
             masterPrefab = AssetCollection.masterPrefab;
             survivorDef = AssetCollection.survivorDef;
 
+            ParallelCoroutine helper = new ParallelCoroutine();
+            foreach(var uberSkinDef in AssetCollection.FindAssets<UberSkinDef>())
+            {
+                SS2Log.Debug("Loading uberskindef " + uberSkinDef.name);
+                helper.Add(uberSkinDef.PreBake());
+            }
+
+            while(!helper.IsDone())
+            {
+                yield return null;
+            }
         }
 
+        public virtual IEnumerator InitializeAsync()
+        {
+            ParallelCoroutine helper = new ParallelCoroutine();
+            foreach(var uberSkinDef in AssetCollection.FindAssets<UberSkinDef>())
+            {
+                helper.Add(uberSkinDef.PreBake());
+            }
+
+            while(!helper.IsDone())
+            {
+                yield return null;
+            }
+        }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {

@@ -1,6 +1,8 @@
 using System;
+using System.Collections;
 using System.Linq;
 using HG;
+using MSU;
 using UnityEngine;
 using RoR2;
 using RoR2.Skills;
@@ -42,16 +44,11 @@ namespace SS2.Modules
         private static Material matLunarGolem;
         
         //chirr,.,.
-        private static GameObject chirrIsopodWingPrefab;
-        private static Material chirrIsopodWingMat;
         private static int isopodLocalSkinIndex = -1;
         
-        //projectile catalog for FMJRampingPrefab or others ./,..
-        [SystemInitializer(typeof(ProjectileCatalog))]
+        [SystemInitializer]
         public static void Initialize()
         {
-            LoadBasePrefabs();
-            
             //Generic Hooks
             On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
             On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
@@ -109,6 +106,8 @@ namespace SS2.Modules
             }
         }
 
+        //projectile catalog for FMJRampingPrefab or others ./,..
+        [SystemInitializer(typeof(ProjectileCatalog), typeof(EffectCatalog))]
         public static void LoadBasePrefabs()
         {
             //mult gm
