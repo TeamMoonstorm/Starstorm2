@@ -30,7 +30,7 @@ MonoBehaviour:
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
   - renderer:
-      reference: {fileID: 9043460027140582536, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
+      reference: {fileID: 5218681181562548080, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
         type: 3}
       transformPath: 
     defaultMaterial: {fileID: 2100000, guid: f576c601e7105d7adb717b730a16d8f7, type: 2}
@@ -38,13 +38,24 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
-  gameObjectActivations: []
+  gameObjectActivations:
+  - spawnPrefabOnModelObject: 0
+    gameObject:
+      reference: {fileID: 8516716843654758260, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
+        type: 3}
+      transformPath: 
+    shouldActivate: 1
+    prefab: {fileID: 5458996556343446974, guid: 20855fafeae9a6df8b0381e190be4795,
+      type: 3}
+    localPosition: {x: 0, y: 0, z: 0}
+    localRotation: {x: 0, y: 0, z: 0}
+    localScale: {x: 1, y: 1, z: 1}
   meshReplacements:
   - renderer:
       reference: {fileID: 8483864543906087496, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
         type: 3}
       transformPath: 
-    mesh: {fileID: 3358598082796879040, guid: f333fecb9a339406081fa1c4b8c54e52, type: 3}
+    mesh: {fileID: 4795731943053386245, guid: 1db0ee5fe8470f20286963c3da375473, type: 3}
   projectileGhostReplacements:
   - projectilePrefab:
       _asset: {fileID: 2861417616241238631, guid: 2d275feeb422b3c40bcac2f17f8b4f54,

@@ -31,6 +31,133 @@ Transform:
   m_Father: {fileID: 7809484488289586153}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &874230514729816078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6642502533433020114}
+  - component: {fileID: 6335027034961945621}
+  m_Layer: 0
+  m_Name: isopodWings
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6642502533433020114
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874230514729816078}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1669903399136239596}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &6335027034961945621
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874230514729816078}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: f576c601e7105d7adb717b730a16d8f7, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 3511253480239921702, guid: 1db0ee5fe8470f20286963c3da375473, type: 3}
+  m_Bones:
+  - {fileID: 1803431448674440773}
+  - {fileID: 3979971864326392801}
+  - {fileID: 3437470343201726670}
+  - {fileID: 1522939639537251082}
+  - {fileID: 1076261998156137290}
+  - {fileID: 8746902469637519850}
+  - {fileID: 5814952756894291557}
+  - {fileID: 2123087815190349399}
+  - {fileID: 2417799280474114618}
+  - {fileID: 1963446285773285015}
+  - {fileID: 1044192930185943130}
+  - {fileID: 6588314609647555098}
+  - {fileID: 8370342943085181182}
+  - {fileID: 8656095949286344767}
+  - {fileID: 645132509833493838}
+  - {fileID: 2891346890233123098}
+  - {fileID: 6766242102636814358}
+  - {fileID: 1510331579331562223}
+  - {fileID: 8889145123536825019}
+  - {fileID: 5845655060254031608}
+  - {fileID: 2289745667682187375}
+  - {fileID: 8098374644766321266}
+  - {fileID: 1061205058346096420}
+  - {fileID: 6845127690013271241}
+  - {fileID: 7357208263688942634}
+  - {fileID: 5856362442709476762}
+  - {fileID: 8181896020517365422}
+  - {fileID: 5607381820313691315}
+  - {fileID: 5747106720038956724}
+  - {fileID: 7809484488289586153}
+  - {fileID: 2989930219293888543}
+  - {fileID: 3672912202459487628}
+  - {fileID: 3023364232296107680}
+  - {fileID: 1372380579419973250}
+  - {fileID: 2938304687452225289}
+  - {fileID: 3158620100897282918}
+  - {fileID: 2492107235080683973}
+  - {fileID: 3934858315522273906}
+  - {fileID: 613108127294411336}
+  - {fileID: 6649707048655857933}
+  - {fileID: 7100329907282858442}
+  - {fileID: 7493709208429682691}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 1803431448674440773}
+  m_AABB:
+    m_Center: {x: -0.00000035762787, y: 2.5966663, z: -0.87330794}
+    m_Extent: {x: 2.1538582, y: 2.6438117, z: 2.982173}
+  m_DirtyAABB: 0
 --- !u!1 &2978405650740029795
 GameObject:
   m_ObjectHideFlags: 0
@@ -233,133 +360,6 @@ Transform:
   m_Father: {fileID: 1522939639537251082}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -156.316, y: 0, z: 0}
---- !u!1 &7362471111308853258
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5237764269181521573}
-  - component: {fileID: 1829335093335046693}
-  m_Layer: 0
-  m_Name: ChirrIsopodWings
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5237764269181521573
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7362471111308853258}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1669903399136239596}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!137 &1829335093335046693
-SkinnedMeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7362471111308853258}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 3
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: f576c601e7105d7adb717b730a16d8f7, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  serializedVersion: 2
-  m_Quality: 0
-  m_UpdateWhenOffscreen: 0
-  m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 5768007529377610555, guid: f333fecb9a339406081fa1c4b8c54e52, type: 3}
-  m_Bones:
-  - {fileID: 1803431448674440773}
-  - {fileID: 3979971864326392801}
-  - {fileID: 3437470343201726670}
-  - {fileID: 1522939639537251082}
-  - {fileID: 1076261998156137290}
-  - {fileID: 8746902469637519850}
-  - {fileID: 5814952756894291557}
-  - {fileID: 2123087815190349399}
-  - {fileID: 2417799280474114618}
-  - {fileID: 1963446285773285015}
-  - {fileID: 1044192930185943130}
-  - {fileID: 6588314609647555098}
-  - {fileID: 8370342943085181182}
-  - {fileID: 8656095949286344767}
-  - {fileID: 645132509833493838}
-  - {fileID: 2891346890233123098}
-  - {fileID: 6766242102636814358}
-  - {fileID: 1510331579331562223}
-  - {fileID: 8889145123536825019}
-  - {fileID: 5845655060254031608}
-  - {fileID: 2289745667682187375}
-  - {fileID: 8098374644766321266}
-  - {fileID: 1061205058346096420}
-  - {fileID: 6845127690013271241}
-  - {fileID: 7357208263688942634}
-  - {fileID: 5856362442709476762}
-  - {fileID: 8181896020517365422}
-  - {fileID: 5607381820313691315}
-  - {fileID: 5747106720038956724}
-  - {fileID: 7809484488289586153}
-  - {fileID: 2989930219293888543}
-  - {fileID: 3672912202459487628}
-  - {fileID: 3023364232296107680}
-  - {fileID: 1372380579419973250}
-  - {fileID: 2938304687452225289}
-  - {fileID: 3158620100897282918}
-  - {fileID: 2492107235080683973}
-  - {fileID: 3934858315522273906}
-  - {fileID: 613108127294411336}
-  - {fileID: 6649707048655857933}
-  - {fileID: 7100329907282858442}
-  - {fileID: 7493709208429682691}
-  m_BlendShapeWeights: []
-  m_RootBone: {fileID: 1803431448674440773}
-  m_AABB:
-    m_Center: {x: -0.00000035762787, y: 2.5966663, z: -0.87330794}
-    m_Extent: {x: 2.1538582, y: 2.6438117, z: 2.982173}
-  m_DirtyAABB: 0
 --- !u!1001 &1199656479280789511
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1103,7 +1103,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 0.49438083, z: -0.00000025331977}
+  m_ConnectedAnchor: {x: -2.842171e-14, y: 0.49438107, z: -0.0000003129244}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1521,16 +1521,6 @@ MonoBehaviour:
     ignoreOverlays: 0
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
-  - renderer: {fileID: 1829335093335046693}
-    defaultMaterialAddress:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-    defaultMaterial: {fileID: 2100000, guid: f576c601e7105d7adb717b730a16d8f7, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
-    ignoresMaterialOverrides: 0
   fullBodyPing: 0
   baseLightInfos: []
   constraintItemDisplaysScale: 0
@@ -1630,7 +1620,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000005066396, y: 0.6591699, z: 0.00000025331977}
+  m_ConnectedAnchor: {x: -0.0000005513431, y: 0.6591699, z: 0.00000008940698}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1711,7 +1701,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.29150036, y: 0.56287956, z: 0.49829152}
+  m_ConnectedAnchor: {x: 0.29150036, y: 0.56287926, z: 0.4982917}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -1905,7 +1895,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.37680224, y: 0.21769664, z: 0.10714899}
+  m_ConnectedAnchor: {x: 0.3768023, y: 0.21769664, z: 0.10714899}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2111,7 +2101,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000005364418, y: 1.0530177, z: 0}
+  m_ConnectedAnchor: {x: -0.0000005066395, y: 1.0530177, z: -0.00000011920929}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2357,7 +2347,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000009834769, y: 1.7560179, z: -0.00000003608875}
+  m_ConnectedAnchor: {x: 0.0000011026862, y: 1.7560184, z: 0.000000024912879}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2469,7 +2459,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.0000005662441, y: 1.7560192, z: 0.00000040815218}
+  m_ConnectedAnchor: {x: -0.0000005662441, y: 1.7560195, z: 0.00000028987418}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2562,7 +2552,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 2.5579538e-13, y: 0.6284245, z: -0.00000065565115}
+  m_ConnectedAnchor: {x: 1.7053026e-13, y: 0.62842476, z: -0.0000005662442}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2655,7 +2645,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.29150072, y: 0.56287944, z: 0.4982914}
+  m_ConnectedAnchor: {x: -0.29150072, y: 0.5628793, z: 0.49829134}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2737,7 +2727,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 1.9895197e-13, y: 0.53524506, z: 0.00000016391276}
+  m_ConnectedAnchor: {x: 1.8474111e-13, y: 0.53524506, z: -0.00000022351739}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:
@@ -2837,7 +2827,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.0000014901174, y: 0.65916955, z: 0.00000035762798}
+  m_ConnectedAnchor: {x: 0.0000011622916, y: 0.6591697, z: 0.0000002607704}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 1, z: 0}
   m_TwistLimitSpring:

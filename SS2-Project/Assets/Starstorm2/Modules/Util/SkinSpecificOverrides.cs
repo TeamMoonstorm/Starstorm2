@@ -16,6 +16,7 @@ using Object = UnityEngine.Object;
 
 namespace SS2.Modules
 {
+    // note for future starstormers .,., a lot of these effects can be done through r2api skinvfx but they appear to be broken atm so uhhh .,,.,. :soybrokenheart: ,.,
     public static class SkinSpecificOverrides
     {
         //base for overrides
@@ -53,7 +54,6 @@ namespace SS2.Modules
             On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
             On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
             CharacterBody.onBodyStartGlobal += BodyStartGlobal;
-            On.RoR2.ModelSkinController.Awake += ModelSkinControllerOnAwake;
 
             //MUL-T specific
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
@@ -63,51 +63,8 @@ namespace SS2.Modules
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
         }
 
-        private static void ModelSkinControllerOnAwake(On.RoR2.ModelSkinController.orig_Awake orig, ModelSkinController self)
-        {
-            orig(self);
-
-            if (self.gameObject.name == "mdlChirr")
-            {
-                for (int i = 0; i < self.skins.Length; i++)
-                {
-                    if (self.skins[i].nameToken != "SS2_SKIN_CHIRR_ISOPOD") continue;
-                    
-                    isopodLocalSkinIndex = i;
-                    break;
-                }
-
-                if (self.currentSkinIndex == isopodLocalSkinIndex)
-                {
-                    Transform isopodTransform = self.gameObject.transform.Find("ChirrIsopodWings");
-                    if (isopodTransform)
-                    {
-                        isopodTransform.gameObject.SetActive(true);
-                        if (isopodTransform.gameObject.TryGetComponent(out SkinnedMeshRenderer skinnedMeshRenderer))
-                        {
-                            skinnedMeshRenderer.enabled = true;
-                        }
-                    }
-                }
-                
-                self.onSkinApplied += i =>
-                {
-                    bool enableWings = isopodLocalSkinIndex == i;
-                    Transform isopodTransform = self.gameObject.transform.Find("ChirrIsopodWings");
-                    if (isopodTransform)
-                    {
-                        isopodTransform.gameObject.SetActive(enableWings);
-                        if (isopodTransform.gameObject.TryGetComponent(out SkinnedMeshRenderer skinnedMeshRenderer))
-                        {
-                            skinnedMeshRenderer.enabled = enableWings;
-                        }
-                    }
-                };
-            }
-        }
-
         //projectile catalog for FMJRampingPrefab or others ./,..
-        [SystemInitializer(typeof(ProjectileCatalog), typeof(EffectCatalog))]
+        [SystemInitializer(typeof(ProjectileCatalog), typeof(EffectCatalog), typeof(SurvivorCatalog))]
         public static void LoadBasePrefabs()
         {
             //mult gm
@@ -152,13 +109,9 @@ namespace SS2.Modules
             tracerCommandoShotgunSpecialist = SS2Assets.LoadAsset<GameObject>("TracerCommandoShotgunSpecialist", SS2Bundle.Vanilla);
             muzzleflashCommandoSpecialist = SS2Assets.LoadAsset<GameObject>("MuzzleflashCommandoSpecialist", SS2Bundle.Vanilla);
             hitsparkCommandoSpecialist = SS2Assets.LoadAsset<GameObject>("HitsparkCommandoShotgunSpecialist", SS2Bundle.Vanilla);
-            
-            //chirr ,..,
-            chirrIsopodWingPrefab = SS2Assets.LoadAsset<GameObject>("ChirrIsopodWings", SS2Bundle.Chirr);
-            chirrIsopodWingMat = SS2Assets.LoadAsset<Material>("matChirrIsopodWing", SS2Bundle.Chirr);
         }
         
-        private static string GetSkinName(CharacterBody body)
+        public static string GetSkinName(CharacterBody body)
         {
             return body?.modelLocator?.modelTransform?.GetComponentInChildren<ModelSkinController>()?.skins[body.skinIndex].nameToken;
         }

@@ -2,6 +2,8 @@
 using System.Linq;
 using UnityEngine;
 using RoR2;
+using SS2.Modules;
+
 namespace SS2.Components
 {
     // just a bullseyesearch to find someone to use Befriend on. ChirrFriendController handles friend behavior
@@ -41,6 +43,8 @@ namespace SS2.Components
         }
 		private bool _isScepter;
 
+		private string skinToken;
+
 		private CharacterMaster master;
 		public ChirrFriendController friendOwnership;
 
@@ -68,10 +72,18 @@ namespace SS2.Components
 				
 			this.inputBank = base.GetComponent<InputBankTest>();
 			this.teamComponent = base.GetComponent<TeamComponent>();
+
+			skinToken = SkinSpecificOverrides.GetSkinName(characterBody);
+			if (skinToken == "SS2_SKIN_CHIRR_ISOPOD")
+			{
+				this.indicator.visualizerPrefab = SS2Assets.LoadAsset<GameObject>("ChirrBefriendIndicatorIsopod", SS2Bundle.Chirr);
+			}
 		}
 		private void UpdateScepter()
         {
-			string asset = this.isScepter ? "ChirrBefriendScepterIndicator" : "ChirrBefriendIndicator";
+	        string asset = skinToken == "SS2_SKIN_CHIRR_ISOPOD" ? "ChirrBefriendIndicatorIsopod" : "ChirrBefriendIndicator";
+	        if (isScepter)
+		        asset = "ChirrBefriendScepterIndicator";
 			this.indicator.visualizerPrefab = SS2Assets.LoadAsset<GameObject>(asset, SS2Bundle.Chirr);
 			if(this.friendOwnership)
 				this.friendOwnership.isScepter = this.isScepter;
