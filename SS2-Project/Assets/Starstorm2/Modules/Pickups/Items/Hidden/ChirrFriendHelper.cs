@@ -10,6 +10,7 @@ using MSU;
 using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
+using SS2.Modules;
 using SS2.Survivors;
 
 namespace SS2.Items
@@ -47,7 +48,13 @@ namespace SS2.Items
             private void Start()
             {
                 if (NetworkServer.active)
-                    base.body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
+                {
+                    CharacterBody ownerBody = body.master?.minionOwnership?.ownerMaster?.GetBody();
+                    if (!ownerBody)
+                        body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
+                    else
+                        body.AddBuff(SkinSpecificOverrides.GetSkinName(ownerBody) == "SS2_SKIN_CHIRR_ISOPOD" ? SS2Content.Buffs.BuffChirrFriendIsopod : SS2Content.Buffs.BuffChirrFriend);
+                }
 
                 CharacterModel model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
                 SkinnedMeshRenderer renderer = model.mainSkinnedMeshRenderer;
@@ -64,15 +71,17 @@ namespace SS2.Items
             private void OnDestroy()
             {
                 if (this.jitterBonesEffect) Destroy(this.jitterBonesEffect);
-                if (NetworkServer.active && base.body.enabled) base.body.RemoveBuff(SS2Content.Buffs.BuffChirrFriend);
+                if (NetworkServer.active && base.body.enabled)
+                {
+                    body.RemoveBuff(SS2Content.Buffs.BuffChirrFriend);
+                    body.RemoveBuff(SS2Content.Buffs.BuffChirrFriendIsopod);
+                }
             }
             private void FixedUpdate()
             {
                 // get owner
-                CharacterMaster master = base.body.master;
-                CharacterMaster ownerMaster = master ? master.minionOwnership.ownerMaster : null;
-                GameObject ownerBodyObject = ownerMaster ? ownerMaster.GetBodyObject() : null;
-                if (!ownerBodyObject) return;
+                GameObject ownerBodyObject = body.master?.minionOwnership?.ownerMaster?.GetBodyObject();
+                if (!ownerBodyObject.AsValidOrNull()) return;
 
                 // if we are too far away from chirr, "respawn" next to her
                 Vector3 ownerPosition = ownerBodyObject.transform.position;

@@ -65,6 +65,11 @@ namespace SS2.Survivors
             Material _matFriendOverlay = AssetCollection.FindAsset<Material>("matFriendOverlay");
             BuffDef friendBuffDef = AssetCollection.FindAsset<BuffDef>("BuffChirrFriend");
             BuffOverlays.AddBuffOverlay(friendBuffDef, _matFriendOverlay);
+            
+            //evillllll .,.,.,
+            Material _matFriendOverlayIsopod = AssetCollection.FindAsset<Material>("matFriendOverlayIsopod");
+            BuffDef friendBuffDefIsopod = AssetCollection.FindAsset<BuffDef>("BuffChirrFriendIsopod");
+            BuffOverlays.AddBuffOverlay(friendBuffDefIsopod, _matFriendOverlayIsopod);
         }    
 
         private void ModifyPrefab()
