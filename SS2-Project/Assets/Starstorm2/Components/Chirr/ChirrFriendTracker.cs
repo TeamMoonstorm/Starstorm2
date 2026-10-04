@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using RoR2;
@@ -15,6 +16,9 @@ namespace SS2.Components
 		public float maxTrackingDistance = 70f;
 		public float maxTrackingAngle = 75f;
 		public float trackerUpdateFrequency = 10f;
+		public List<string> skinBefriendIndicatorTokens = new();
+		public List<GameObject> skinBefriendIndicatorObjects = new();
+		public GameObject scepterIndicator;
 		[NonSerialized]
 		public HurtBox trackingTarget;
 		[NonSerialized]
@@ -74,20 +78,21 @@ namespace SS2.Components
 			this.teamComponent = base.GetComponent<TeamComponent>();
 
 			skinToken = SkinSpecificOverrides.GetSkinName(characterBody);
-			if (skinToken == "SS2_SKIN_CHIRR_ISOPOD")
-			{
-				this.indicator.visualizerPrefab = SS2Assets.LoadAsset<GameObject>("ChirrBefriendIndicatorIsopod", SS2Bundle.Chirr);
-			}
+			this.indicator.visualizerPrefab = GetIndicatorString();
 		}
 		private void UpdateScepter()
         {
-	        string asset = skinToken == "SS2_SKIN_CHIRR_ISOPOD" ? "ChirrBefriendIndicatorIsopod" : "ChirrBefriendIndicator";
 	        if (isScepter)
-		        asset = "ChirrBefriendScepterIndicator";
-			this.indicator.visualizerPrefab = SS2Assets.LoadAsset<GameObject>(asset, SS2Bundle.Chirr);
+		        this.indicator.visualizerPrefab = scepterIndicator;
 			if(this.friendOwnership)
 				this.friendOwnership.isScepter = this.isScepter;
         }
+
+		private GameObject GetIndicatorString()
+		{
+			int tokenIndex = skinBefriendIndicatorTokens.IndexOf(skinToken);
+			return tokenIndex != -1 ? skinBefriendIndicatorObjects[tokenIndex] : skinBefriendIndicatorObjects[0];
+		}
 
 		private bool ShouldShowTracker()
         {

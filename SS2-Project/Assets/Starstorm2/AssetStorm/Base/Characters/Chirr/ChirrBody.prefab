@@ -1370,6 +1370,14 @@ MonoBehaviour:
   maxTrackingDistance: 70
   maxTrackingAngle: 75
   trackerUpdateFrequency: 10
+  skinBefriendIndicatorTokens:
+  - SS2_SKIN_CHIRR_DEFAULT
+  - SS2_SKIN_CHIRR_ISOPOD
+  skinBefriendIndicatorObjects:
+  - {fileID: 7176679306960743933, guid: 3ae6902c739467c4097d16782bb1f6b8, type: 3}
+  - {fileID: 7176679306960743933, guid: d46d57c61064a31cc900a904a90ee5a6, type: 3}
+  scepterIndicator: {fileID: 7176679306960743933, guid: 824f28409fb672345ba8485084abf603,
+    type: 3}
   friendOwnership: {fileID: 0}
 --- !u!114 &4219017455933194736
 MonoBehaviour:
@@ -2885,7 +2893,6 @@ MonoBehaviour:
   _avatar: {fileID: 0}
   skins:
   - {fileID: 11400000, guid: 81666155377897646b71916d18b7ccfc, type: 2}
-  - {fileID: 11400000, guid: 94d49b55b6e8b94438a0a5e4996e5b3d, type: 2}
   - {fileID: 11400000, guid: 17d9f79ad25cb3b8281efbfe17784943, type: 2}
   prefabInstantiationDatas: []
 --- !u!114 &3006740090765532883

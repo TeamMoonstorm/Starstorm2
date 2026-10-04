@@ -12,6 +12,7 @@ using RoR2.ContentManagement;
 using System.Collections;
 using SS2.Modules;
 using SS2.Survivors;
+using UnityEngine.PlayerLoop;
 
 namespace SS2.Items
 {
@@ -45,6 +46,11 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.ChirrFriendHelper;
             private float leashTimer = 2f;
             private GameObject jitterBonesEffect;
+            private static Dictionary<string, BuffDef> skinBuffReplacements = new()
+            {
+                { "SS2_SKIN_CHIRR_ISOPOD", SS2Content.Buffs.BuffChirrFriendIsopod }
+            };
+            
             private void Start()
             {
                 if (NetworkServer.active)
@@ -53,7 +59,12 @@ namespace SS2.Items
                     if (!ownerBody)
                         body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
                     else
-                        body.AddBuff(SkinSpecificOverrides.GetSkinName(ownerBody) == "SS2_SKIN_CHIRR_ISOPOD" ? SS2Content.Buffs.BuffChirrFriendIsopod : SS2Content.Buffs.BuffChirrFriend);
+                    {
+                        if (skinBuffReplacements.TryGetValue(SkinSpecificOverrides.GetSkinName(ownerBody), out BuffDef buffDef))
+                            body.AddBuff(buffDef);
+                        else
+                            body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
+                    }
                 }
 
                 CharacterModel model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();

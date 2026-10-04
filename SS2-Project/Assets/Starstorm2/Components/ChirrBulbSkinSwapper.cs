@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using RoR2;
 using SS2;
 using SS2.Modules;
@@ -11,7 +12,9 @@ namespace Starstorm2.Components
         [SerializeField]
         public ItemDisplay itemDisplay;
         [SerializeField]
-        public Material isopodBulb;
+        public List<string> skinBulbTokens = new();
+        [SerializeField]
+        public List<Material> skinBulbMaterials = new();
         
         private CharacterModel characterModel;
 
@@ -20,11 +23,11 @@ namespace Starstorm2.Components
             if (gameObject.transform.root?.TryGetComponent(out characterModel) != true) return;
 
             CharacterBody ownerBody = characterModel.body?.master?.minionOwnership?.ownerMaster?.GetBody();
-            if (SkinSpecificOverrides.GetSkinName(ownerBody) == "SS2_SKIN_CHIRR_ISOPOD")
-            {
-                itemDisplay.rendererInfos[0].renderer.material = isopodBulb;
-                itemDisplay.rendererInfos[0].defaultMaterial = isopodBulb;
-            }
+            int tokenIndex = skinBulbTokens.IndexOf(SkinSpecificOverrides.GetSkinName(ownerBody));
+            if (tokenIndex == -1) return;
+            
+            itemDisplay.rendererInfos[0].renderer.material = skinBulbMaterials[tokenIndex];
+            itemDisplay.rendererInfos[0].defaultMaterial = skinBulbMaterials[tokenIndex];
         }
     }
 }
