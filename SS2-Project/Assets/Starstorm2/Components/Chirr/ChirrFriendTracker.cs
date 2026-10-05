@@ -78,17 +78,18 @@ namespace SS2.Components
 			this.teamComponent = base.GetComponent<TeamComponent>();
 
 			skinToken = SkinSpecificOverrides.GetSkinName(characterBody);
-			this.indicator.visualizerPrefab = GetIndicatorString();
+			this.indicator.visualizerPrefab = GetIndicatorObject();
 		}
 		private void UpdateScepter()
         {
+	        this.indicator.visualizerPrefab = GetIndicatorObject();
 	        if (isScepter)
 		        this.indicator.visualizerPrefab = scepterIndicator;
 			if(this.friendOwnership)
 				this.friendOwnership.isScepter = this.isScepter;
         }
 
-		private GameObject GetIndicatorString()
+		private GameObject GetIndicatorObject()
 		{
 			int tokenIndex = skinBefriendIndicatorTokens.IndexOf(skinToken);
 			return tokenIndex != -1 ? skinBefriendIndicatorObjects[tokenIndex] : skinBefriendIndicatorObjects[0];

@@ -10,6 +10,7 @@ using MSU;
 using System.Collections.Generic;
 using RoR2.ContentManagement;
 using System.Collections;
+using System.Linq;
 using SS2.Modules;
 using SS2.Survivors;
 using UnityEngine.PlayerLoop;
@@ -28,8 +29,7 @@ namespace SS2.Items
         public static float leashTeleportOffset = 10f;
 
         private static GameObject _jitterEffect;
-
-
+        
         public override void Initialize()
         {
             _jitterEffect = AssetCollection.FindAsset<GameObject>("FriendJitterEffect");
@@ -46,10 +46,7 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.ChirrFriendHelper;
             private float leashTimer = 2f;
             private GameObject jitterBonesEffect;
-            private static Dictionary<string, BuffDef> skinBuffReplacements = new()
-            {
-                { "SS2_SKIN_CHIRR_ISOPOD", SS2Content.Buffs.BuffChirrFriendIsopod }
-            };
+            public static Dictionary<string, BuffDef> skinBuffReplacements = new();
             
             private void Start()
             {
@@ -85,7 +82,10 @@ namespace SS2.Items
                 if (NetworkServer.active && base.body.enabled)
                 {
                     body.RemoveBuff(SS2Content.Buffs.BuffChirrFriend);
-                    body.RemoveBuff(SS2Content.Buffs.BuffChirrFriendIsopod);
+                    foreach (BuffDef buffDef in skinBuffReplacements.Values.ToArray())
+                    {
+                        body.RemoveBuff(buffDef);
+                    }
                 }
             }
             private void FixedUpdate()
