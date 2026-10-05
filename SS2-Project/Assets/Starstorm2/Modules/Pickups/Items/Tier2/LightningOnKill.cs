@@ -19,7 +19,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Total damage of Man O' War's lightning. (1 = 100%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 0)]
-        public static float damageCoeff = 2f;
+        public static float damageCoeff = 1.5f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Number of bounces.")]
         [FormatToken(token, 1)]

@@ -25,6 +25,7 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
 
+        private static float burnDuration = 4f;
         public override void Initialize()
         {
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
@@ -38,17 +39,20 @@ namespace SS2.Items
             {
                 if (Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
                 {
+                    float targetTotalDamage = report.damageInfo.damage * damageCoeff;
+                    float damageMultiplier = SS2Util.GetDotDamageMultiplier(report.attackerBody, targetTotalDamage, burnDuration, DotController.DotIndex.Burn);
+
                     var dotInfo = new InflictDotInfo()
                     {
                         attackerObject = body.gameObject,
                         victimObject = report.victim.gameObject,
                         dotIndex = DotController.DotIndex.Burn,
-                        duration = report.damageInfo.procCoefficient * 4f,
-                        damageMultiplier = stack * damageCoeff
+                        duration = burnDuration,
+                        damageMultiplier = damageMultiplier
                     };
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                     DotController.InflictDot(ref dotInfo);
-                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain));
+                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain, Stage.instance ? Stage.instance.entryDifficultyCoefficient : Run.instance.difficultyCoefficient));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
                     EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);

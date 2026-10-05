@@ -16,52 +16,71 @@ namespace SS2.Items
         public override SS2AssetRequest AssetRequest => SS2Assets.LoadAssetAsync<ItemAssetCollection>("acBloodTester", SS2Bundle.Items);
 
         
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Time, in seconds, between health regeneration boosts.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of gold required to proc.")]
+        public static float goldRequirement = 25f;
+
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Flat amount of health restored on proc.")]
         [FormatToken(token, 0)]
-        public static float cooldown = 30f;
+        public static float healthRegen = 25f;
 
-        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of health restored per 25 gold, per stack.")]
+        [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Percentage of health total restored on proc, per stack.")]
         [FormatToken(token, 1)]
-        public static float healthRegen = 15f;
+        public static float percentHealthRegen = 8f;
 
-        public static float buffDuration = 1.5f;
+        public static float buffDuration = 2f;
+        public static GameObject effectPrefab;
 
         public override void Initialize()
         {
+            effectPrefab = SS2Assets.LoadAsset<GameObject>("BloodTesterProc", SS2Bundle.Items);
         }
 
         public sealed class Behavior : BaseItemBodyBehavior
         {
             [ItemDefAssociation]
             private static ItemDef GetItemDef() => SS2Content.Items.BloodTester;
-            private float stopwatch;
 
-            private void FixedUpdate()
+            private float storedGold;
+
+            private void OnEnable()
             {
-                if(NetworkServer.active && body.master)
+                if (NetworkServer.active && body.master)
                 {
-                    stopwatch += Time.fixedDeltaTime;
-                    if (stopwatch >= cooldown)
-                    {
-                        // NEED SOUNDS REALLY BAD
-                        stopwatch -= cooldown;
-                        
-                        body.AddTimedBuff(SS2Content.Buffs.BuffBloodTesterRegen, buffDuration);
+                    body.master.OnGoldCollected += OnGoldCollected;
+                }
+            }
+            private void OnDisable()
+            {
+                if (body.master)
+                {
+                    body.master.OnGoldCollected -= OnGoldCollected;
+                }
+            }
 
-                        Transform modelTransform = body.modelLocator.modelTransform;
-                        if(modelTransform)
+            private void OnGoldCollected(float gold)
+            {
+                storedGold += gold;
+
+                float scaledGoldRequirement = Stage.instance ? Run.instance.GetDifficultyScaledCost((int)goldRequirement, Stage.instance.entryDifficultyCoefficient) : Run.instance.GetDifficultyScaledCost((int)goldRequirement);
+                if (storedGold >= scaledGoldRequirement)
+                {
+                    storedGold = 0;
+                    body.AddTimedBuff(SS2Content.Buffs.BuffBloodTesterRegen, buffDuration);
+                    if (effectPrefab)
+                    {
+                        EffectData effectData = new EffectData
                         {
-                            TemporaryOverlayInstance temporaryOverlay = TemporaryOverlayManager.AddOverlay(modelTransform.gameObject);
-                            temporaryOverlay.duration = buffDuration;
-                            temporaryOverlay.animateShaderAlpha = true;
-                            temporaryOverlay.alphaCurve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(.15f, 1f), new Keyframe(.85f, 1f), new Keyframe(1f, 0f));
-                            temporaryOverlay.destroyComponentOnEnd = true;
-                            temporaryOverlay.originalMaterial = SS2Assets.LoadAsset<Material>("matHealOverlayBright", SS2Bundle.Items);
-                            temporaryOverlay.AddToCharacterModel(modelTransform.gameObject.GetComponent<CharacterModel>());
-                        }
-                        
+                            origin = body.corePosition,
+                            scale = Mathf.Max(1f, body.radius),
+                        };
+                        if (body.mainHurtBox)
+                            effectData.SetHurtBoxReference(body.mainHurtBox);
+                        else
+                            effectData.SetNetworkedObjectReference(body.gameObject);
+
+                        EffectManager.SpawnEffect(effectPrefab, effectData, true);
                     }
-                }               
+                }
             }
         }
 
@@ -71,15 +90,21 @@ namespace SS2.Items
             private static BuffDef GetBuffDef() => SS2Content.Buffs.BuffBloodTesterRegen;
             private static float healInterval = 0.2f;
             private float healStopwatch;
+
+            private void OnEnable()
+            {
+
+            }
             private void FixedUpdate()
             {
-                if (NetworkServer.active && characterBody.master)
+                if (NetworkServer.active)
                 {
-                    healStopwatch += Time.fixedDeltaTime;
-                    if(healStopwatch >= healInterval)
+                    healStopwatch -= Time.fixedDeltaTime;
+                    if(healStopwatch <= 0f)
                     {
-                        healStopwatch -= healInterval;
-                        float totalHealing = healthRegen * characterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+                        healStopwatch += healInterval;
+                        float totalHealing = healthRegen + characterBody.healthComponent.fullHealth * percentHealthRegen * 0.01f;
+                        totalHealing *= buffCount;
                         float healPerTick = totalHealing / buffDuration * healInterval;
                         characterBody.healthComponent.Heal(healPerTick, default(ProcChainMask));
                     }
@@ -87,10 +112,10 @@ namespace SS2.Items
             }
             private void OnDisable()
             {
-                if(NetworkServer.active && characterBody.master)
+                if(NetworkServer.active)
                 {
                     float fractionRemaining = healStopwatch / healInterval;
-                    float totalHealing = healthRegen * characterBody.master.money / Run.instance.GetDifficultyScaledCost(25, Stage.instance.entryDifficultyCoefficient);
+                    float totalHealing = healthRegen + characterBody.healthComponent.fullHealth * percentHealthRegen * 0.01f;
                     float healPerTick = totalHealing / buffDuration * healInterval;
                     characterBody.healthComponent.Heal(healPerTick * fractionRemaining, default(ProcChainMask));
                 }              

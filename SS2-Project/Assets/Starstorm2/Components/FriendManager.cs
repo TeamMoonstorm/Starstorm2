@@ -25,6 +25,7 @@ namespace SS2
         {
 			base.transform.SetParent(Run.instance.transform); // 
 		}
+
         // am i fucking stupid? i couldnt think of any other way to do this
         // couldnt be in ChirrFriendController since its a monobehavior added to the player master at runtime
         // couldnt be in ChirrFriendTracker since it could only be used if the master's body object was ChirrBody
