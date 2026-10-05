@@ -32,8 +32,6 @@ namespace SS2.Components
             if (i > currentStage)
             {
                 stageUpEffectSystem.Play();
-                if(Util.HasEffectiveAuthority(this.characterModel.body.gameObject))
-                    Util.PlaySound("ActivateBloodTester", RoR2Application.instance.gameObject);
             }
             currentStage = i;
             ParticleSystem.EmissionModule emission = healEffectSystem.emission;
