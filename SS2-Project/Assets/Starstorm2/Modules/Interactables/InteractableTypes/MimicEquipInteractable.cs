@@ -15,7 +15,7 @@ namespace SS2.Interactables
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return true;
+            return false;
         }
     }
 }
