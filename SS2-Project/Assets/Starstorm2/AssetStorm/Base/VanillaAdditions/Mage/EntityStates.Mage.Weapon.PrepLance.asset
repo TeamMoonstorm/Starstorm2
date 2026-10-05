@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Mage.Weapon.PrepLance
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Mage.Weapon.PrepSpear, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: areaIndicatorPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1066090947033593, guid: e20f8c88ed4232b4dafe7b1df1080588,
+          type: 3}
+    - fieldName: originIndicatorPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1066090947033593, guid: 1b3cfafb9e2c4b94aaa48f78705dfc62,
+          type: 3}
+    - fieldName: trajectoryIndicatorPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4346569551158061602, guid: 9480590b4658326489292267d50befaf,
+          type: 3}
+    - fieldName: projectilePrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 7300098830703625281, guid: 5b1f19ca8180bcf408c85f8209b978b8,
+          type: 3}
+    - fieldName: muzzleflashEffect
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6736928958808638813, guid: 3207abbc4a5e25e4bb2470a416bc794a,
+          type: 3}
+    - fieldName: fireEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 6736928958808638813, guid: 3207abbc4a5e25e4bb2470a416bc794a,
+          type: 3}
+    - fieldName: goodCrosshairPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 1377413600312903, guid: aecea233f2d413c4e867b41faddfa7b0,
+          type: 3}
+    - fieldName: badCrosshairPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
