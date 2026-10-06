@@ -85,7 +85,7 @@ namespace SS2.Modules
         
         public static string GetSkinName(CharacterBody body)
         {
-            return body?.AsValidOrNull()?.modelLocator?.modelTransform.AsValidOrNull()?.GetComponent<ModelSkinController>()?.skins[body.skinIndex].nameToken;
+            return body.AsValidOrNull()?.modelLocator.AsValidOrNull()?.modelTransform.AsValidOrNull()?.GetComponent<ModelSkinController>().AsValidOrNull()?.skins[body.skinIndex].nameToken;
         }
 
         private static void BodyStartGlobal(CharacterBody body)
