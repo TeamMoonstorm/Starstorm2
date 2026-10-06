@@ -1,30 +1,15 @@
-using System;
-using System.Collections;
-using System.Linq;
-using HG;
 using MSU;
 using UnityEngine;
 using RoR2;
-using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 using RoR2.Projectile;
 using UnityEngine.Networking;
-using UnityEngine.Rendering;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using AffixBeadAttachment = On.RoR2.AffixBeadAttachment;
-using Object = UnityEngine.Object;
 
 namespace SS2.Modules
 {
     // note for future starstormers .,., a lot of these effects can be done through r2api skinvfx but they appear to be broken atm so uhhh .,,.,. :soybrokenheart: ,.,
     public static class SkinSpecificOverrides
     {
-        //base for overrides
-        private static GameObject FMJRampingPrefab;
-        private static GameObject tracerCommandoShotgun; 
-        private static GameObject muzzleflashFMJ; 
-        private static GameObject hitsparkCommandoShotgun; 
-        
         //nemmando. ,.
         private static GameObject FMJRampingGhostRed;
         private static GameObject omniExplosionVFXFMJRed;
@@ -51,9 +36,11 @@ namespace SS2.Modules
         public static void Initialize()
         {
             //Generic Hooks
-            On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
-            On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
             CharacterBody.onBodyStartGlobal += BodyStartGlobal;
+            
+            //commando ,.
+            On.EntityStates.Commando.CommandoWeapon.FireShotgunBlast.OnEnter += FireShotgunBlastOnModifyBulletAttack;
+            On.EntityStates.Commando.CommandoWeapon.FireFMJ.ModifyProjectileInfo += FireFMJOnEnter;
 
             //MUL-T specific
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
@@ -81,21 +68,6 @@ namespace SS2.Modules
                 lunarWispMinigunTracer = handle.Result;
             };
             
-            //commando 
-            FMJRampingPrefab = ProjectileCatalog.GetProjectilePrefab(ProjectileCatalog.FindProjectileIndex("FMJRamping"));
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").Completed += handle =>
-            {
-                tracerCommandoShotgun = handle.Result;
-            };
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").Completed += handle =>
-            {
-                muzzleflashFMJ = handle.Result;
-            };
-            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").Completed += handle =>
-            {
-                hitsparkCommandoShotgun = handle.Result;
-            };
-            
             //nem commando skin .,,
             FMJRampingGhostRed = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostRed", SS2Bundle.Vanilla);
             omniExplosionVFXFMJRed = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJRed", SS2Bundle.Vanilla);
@@ -113,41 +85,7 @@ namespace SS2.Modules
         
         public static string GetSkinName(CharacterBody body)
         {
-            return body?.modelLocator?.modelTransform?.GetComponentInChildren<ModelSkinController>()?.skins[body.skinIndex].nameToken;
-        }
-        
-        public static void GPBS_FireProjectile(On.EntityStates.GenericProjectileBaseState.orig_FireProjectile orig, EntityStates.GenericProjectileBaseState self)
-        {
-            //There might be a better way to do this to ensure compatiability with mods that edit Phase Round, such as RiskyMod. Whatever that way is, I do not know of it.
-            if (self.characterBody.baseNameToken == "COMMANDO_BODY_NAME") //name tokens never change :D
-            {
-                if (self.projectilePrefab == FMJRampingPrefab)
-                {
-                    string skinName = GetSkinName(self.characterBody);
-                    if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
-                    {
-                        GameObject projectileInstance = self.projectilePrefab;
-                        ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
-                        ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
-                        
-                        pc.ghostPrefab = FMJRampingGhostRed;
-                        poa.impactEffect = omniExplosionVFXFMJRed;
-                        self.effectPrefab = muzzleflashNemCommandoRed;
-                    }
-                    else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
-                    {
-                        GameObject projectileInstance = self.projectilePrefab;
-                        ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
-                        ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
-                        
-                        pc.ghostPrefab = FMJRampingGhostSpecialist;
-                        poa.impactEffect = omniExplosionVFXFMJSpecialist;
-                        self.effectPrefab = muzzleflashCommandoSpecialist;
-                    }
-                }
-            }
-
-            orig(self);
+            return body?.AsValidOrNull()?.modelLocator?.modelTransform.AsValidOrNull()?.GetComponent<ModelSkinController>()?.skins[body.skinIndex].nameToken;
         }
 
         private static void BodyStartGlobal(CharacterBody body)
@@ -171,38 +109,50 @@ namespace SS2.Modules
             }
         }
         
-        public static void GBBS_FireBullet(On.EntityStates.GenericBulletBaseState.orig_FireBullet orig, EntityStates.GenericBulletBaseState self, Ray aimRay)
+         private static void FireShotgunBlastOnModifyBulletAttack(On.EntityStates.Commando.CommandoWeapon.FireShotgunBlast.orig_OnEnter orig, EntityStates.Commando.CommandoWeapon.FireShotgunBlast self)
         {
-            //Commando
-            if (self.characterBody.baseNameToken == "COMMANDO_BODY_NAME")
+            string skinName = GetSkinName(self.characterBody);
+            if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
             {
-                //if using the skin, update vfx to use nemcommando variants
-                string skinName = GetSkinName(self.characterBody);
-                if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
-                {
-                    if (self.tracerEffectPrefab == tracerCommandoShotgun)
-                        self.tracerEffectPrefab = tracerNemCommandoShotgunRed;
-                    
-                    if (self.muzzleFlashPrefab == muzzleflashFMJ)
-                        self.muzzleFlashPrefab = muzzleflashNemCommandoRed;
-                    
-                    if (self.hitEffectPrefab == hitsparkCommandoShotgun)
-                        self.hitEffectPrefab = hitsparkNemCommandoRed;
-                }
-                else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
-                {
-                    if (self.tracerEffectPrefab == tracerCommandoShotgun)
-                        self.tracerEffectPrefab = tracerCommandoShotgunSpecialist;
-                    
-                    if (self.muzzleFlashPrefab == muzzleflashFMJ)
-                        self.muzzleFlashPrefab = muzzleflashCommandoSpecialist;
-                    
-                    if (self.hitEffectPrefab == hitsparkCommandoShotgun)
-                        self.hitEffectPrefab = hitsparkCommandoSpecialist;
-                }
+                self.tracerEffectPrefab = tracerNemCommandoShotgunRed;
+                self.muzzleFlashPrefab = muzzleflashNemCommandoRed;
+                self.hitEffectPrefab = hitsparkNemCommandoRed;
+            }
+            else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
+            {
+                self.tracerEffectPrefab = tracerCommandoShotgunSpecialist;
+                self.muzzleFlashPrefab = muzzleflashCommandoSpecialist;
+                self.hitEffectPrefab = hitsparkCommandoSpecialist;
             }
             
-            orig(self, aimRay);  
+            orig(self);
+        }
+
+        private static void FireFMJOnEnter(On.EntityStates.Commando.CommandoWeapon.FireFMJ.orig_ModifyProjectileInfo orig, EntityStates.Commando.CommandoWeapon.FireFMJ self, ref FireProjectileInfo fireProjectileInfo)
+        {
+            string skinName = GetSkinName(self.characterBody);
+            if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
+            {
+                GameObject projectileInstance = self.projectilePrefab;
+                ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
+                ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
+                        
+                pc.ghostPrefab = FMJRampingGhostRed;
+                poa.impactEffect = omniExplosionVFXFMJRed;
+                self.effectPrefab = muzzleflashNemCommandoRed;
+            }
+            else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
+            {
+                GameObject projectileInstance = self.projectilePrefab;
+                ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
+                ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
+                        
+                pc.ghostPrefab = FMJRampingGhostSpecialist;
+                poa.impactEffect = omniExplosionVFXFMJSpecialist;
+                self.effectPrefab = muzzleflashCommandoSpecialist;
+            }
+            
+            orig(self, ref fireProjectileInfo);
         }
 
         //unsure what this one does and the code looks a little scary and overcomplicated to 

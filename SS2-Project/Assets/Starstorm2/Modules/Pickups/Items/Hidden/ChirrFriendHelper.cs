@@ -9,11 +9,7 @@ using UnityEngine.Networking;
 using MSU;
 using System.Collections.Generic;
 using RoR2.ContentManagement;
-using System.Collections;
-using System.Linq;
 using SS2.Modules;
-using SS2.Survivors;
-using UnityEngine.PlayerLoop;
 
 namespace SS2.Items
 {
@@ -46,22 +42,18 @@ namespace SS2.Items
             private static ItemDef GetItemDef() => SS2Content.Items.ChirrFriendHelper;
             private float leashTimer = 2f;
             private GameObject jitterBonesEffect;
+            private BuffDef friendBuff;
             public static Dictionary<string, BuffDef> skinBuffReplacements = new();
             
             private void Start()
             {
                 if (NetworkServer.active)
                 {
-                    CharacterBody ownerBody = body.master?.minionOwnership?.ownerMaster?.GetBody();
-                    if (!ownerBody)
-                        body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
-                    else
-                    {
-                        if (skinBuffReplacements.TryGetValue(SkinSpecificOverrides.GetSkinName(ownerBody), out BuffDef buffDef))
-                            body.AddBuff(buffDef);
-                        else
-                            body.AddBuff(SS2Content.Buffs.BuffChirrFriend);
-                    }
+                    CharacterBody ownerBody = body.AsValidOrNull()?.master.AsValidOrNull()?.minionOwnership.AsValidOrNull()?.ownerMaster.AsValidOrNull()?.GetBody();
+                    friendBuff = SS2Content.Buffs.BuffChirrFriend;
+                    if(ownerBody && skinBuffReplacements.TryGetValue(SkinSpecificOverrides.GetSkinName(ownerBody), out BuffDef buffDef))
+                        friendBuff = buffDef;
+                    body.AddBuff(friendBuff);
                 }
 
                 CharacterModel model = body.modelLocator.modelTransform.GetComponent<CharacterModel>();
@@ -80,18 +72,12 @@ namespace SS2.Items
             {
                 if (this.jitterBonesEffect) Destroy(this.jitterBonesEffect);
                 if (NetworkServer.active && base.body.enabled)
-                {
-                    body.RemoveBuff(SS2Content.Buffs.BuffChirrFriend);
-                    foreach (BuffDef buffDef in skinBuffReplacements.Values.ToArray())
-                    {
-                        body.RemoveBuff(buffDef);
-                    }
-                }
+                    body.RemoveBuff(friendBuff);
             }
             private void FixedUpdate()
             {
                 // get owner
-                GameObject ownerBodyObject = body.master?.minionOwnership?.ownerMaster?.GetBodyObject();
+                GameObject ownerBodyObject = body.AsValidOrNull()?.master.AsValidOrNull()?.minionOwnership.AsValidOrNull()?.ownerMaster.AsValidOrNull()?.GetBodyObject();
                 if (!ownerBodyObject.AsValidOrNull()) return;
 
                 // if we are too far away from chirr, "respawn" next to her

@@ -71,7 +71,7 @@ namespace SS2.Unlocks.Chirr
                 cursor.Emit(OpCodes.Ldarg_0);
                 cursor.EmitDelegate<Action<EntityStates.VoidInfestor.Infest>>((state) =>
                 {
-                    CharacterBody ownerBody = state.characterBody?.master?.minionOwnership?.ownerMaster?.GetBody();
+                    CharacterBody ownerBody = state.characterBody.AsValidOrNull()?.master.AsValidOrNull()?.minionOwnership.AsValidOrNull()?.ownerMaster.AsValidOrNull()?.GetBody();
                     if (ownerBody?.bodyIndex == BodyCatalog.FindBodyIndex("ChirrBody"))
                     {
                         Grant();

@@ -1,4 +1,4 @@
-﻿using MSU;
+using MSU;
 using RoR2;
 using System;
 using System.Collections;
@@ -72,16 +72,6 @@ namespace SS2
             survivorDef = AssetCollection.survivorDef;
 
             ParallelCoroutine helper = new ParallelCoroutine();
-            foreach(var uberSkinDef in AssetCollection.FindAssets<UberSkinDef>())
-            {
-                SS2Log.Debug("Loading uberskindef " + uberSkinDef.name);
-                helper.Add(uberSkinDef.PreBake());
-            }
-
-            while(!helper.IsDone())
-            {
-                yield return null;
-            }
         }
 
         public virtual IEnumerator InitializeAsync()

@@ -835,7 +835,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemDisplay: {fileID: 560585769608919035}
-  isopodBulb: {fileID: 2100000, guid: 0f7880f7216a63d1495cfeacb6f9381d, type: 2}
+  skinBulbTokens:
+  - SS2_SKIN_CHIRR_ISOPOD
+  skinBulbMaterials:
+  - {fileID: 2100000, guid: 0f7880f7216a63d1495cfeacb6f9381d, type: 2}
 --- !u!1 &8923014097099011546
 GameObject:
   m_ObjectHideFlags: 0
