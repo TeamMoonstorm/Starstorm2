@@ -727,6 +727,8 @@ namespace SS2
             public static BuffDef bdNemCrocoRadValue;
 
             public static BuffDef bdNemCrocoDamageShare;
+
+            public static BuffDef bdPetrified;
         }
 
         public static class Elites
