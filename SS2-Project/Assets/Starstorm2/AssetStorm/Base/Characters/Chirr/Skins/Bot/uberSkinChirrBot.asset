@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05c26ef4e3114a64892825359a123b70, type: 3}
+  m_Name: uberSkinChirrBot
+  m_EditorClassIdentifier: 
+  targetSkinDef: {fileID: 11400000, guid: 665b0bd781b9108d0a157cc6e9340791, type: 2}
+  baseSkins: []
+  targetObject:
+    _asset: {fileID: 5486166245231735535, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
+      type: 3}
+    _address: 
+    _useDirectReference: 1
+  rendererInfos:
+  - renderer:
+      reference: {fileID: 8483864543906087496, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
+        type: 3}
+      transformPath: 
+    defaultMaterial: {fileID: 2100000, guid: 793b97c2dd302ce4cbd0d2f71222e1cc, type: 2}
+    defaultShadowCastingMode: 1
+    ignoreOverlays: 0
+    hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  gameObjectActivations: []
+  meshReplacements:
+  - renderer:
+      reference: {fileID: 8483864543906087496, guid: e2a9bcebef4867e4490dda09d2cf7bbe,
+        type: 3}
+      transformPath: 
+    mesh: {fileID: 9107121713100649384, guid: bd2d2c050bbaae034a10fe273ee3b187, type: 3}
+  projectileGhostReplacements: []
+  minionSkinReplacements: []
+  lightReplacements: []
+  vfxOverrides: []
