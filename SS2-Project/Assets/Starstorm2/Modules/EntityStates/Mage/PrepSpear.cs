@@ -22,10 +22,11 @@ namespace EntityStates.Mage.Weapon
         private static float damageCoefficient = 3f;
         private static float force = 400f;
         private static float blastRadius = 5f;
+        private static float indicatorRadius = 6f;
 
         private static float projectileSpeed = 200f;
         private static float projectileLifetime = 0.6f;
-        private static float projectileRadius = 3f;
+        private static float projectileRadius = 2.4f;
         private static float projectileCollisionRadius = 0.15f;
         private static float maxDistance = 600f;
         private static float maxAngle = 76f;
@@ -49,6 +50,7 @@ namespace EntityStates.Mage.Weapon
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
         private bool placementFailed;
 
+        private bool sprintCancelled;
         private static int PrepWallStateHash = Animator.StringToHash("PrepWall");
         private static int PrepWallParamHash = Animator.StringToHash("PrepWall.playbackRate");
         public override void OnEnter()
@@ -60,7 +62,19 @@ namespace EntityStates.Mage.Weapon
             PlayAnimation("Gesture, Additive", PrepWallStateHash, PrepWallParamHash, duration);
             Util.PlaySound(prepWallSoundString, gameObject);
 
-            areaIndicatorInstance = GameObject.Instantiate(areaIndicatorPrefab);
+            if (areaIndicatorPrefab)
+            {
+                areaIndicatorInstance = GameObject.Instantiate(areaIndicatorPrefab);
+                areaIndicatorInstance.transform.localScale = Vector3.one * indicatorRadius;
+
+                var indicator = areaIndicatorInstance.GetComponentInChildren<UnseenHandIndicator>();
+                if (indicator)
+                {
+                    indicator.teamMask = TeamMask.GetUnprotectedTeams(characterBody.teamComponent.teamIndex);
+                }
+            }
+            
+
             PlaceOriginIndicator();
             UpdateAreaIndicator();
 
@@ -99,6 +113,11 @@ namespace EntityStates.Mage.Weapon
                 trajectoryIndicatorInstance = GameObject.Instantiate(trajectoryIndicatorPrefab);
                 trajectoryIndicatorInstance.transform.position = originIndicatorInstance.transform.position;
                 trajectoryIndicatorInstance.transform.forward = originIndicatorInstance.transform.forward;
+
+                if (trajectoryIndicatorInstance.TryGetComponent(out TeamFilter teamFilter))
+                {
+                    teamFilter.teamIndex = teamComponent.teamIndex;
+                }
                 trajectoryEndTransform = trajectoryIndicatorInstance.transform.Find("BeamEnd");
                 if (trajectoryEndTransform)
                 {
@@ -120,7 +139,9 @@ namespace EntityStates.Mage.Weapon
             bool wasGoodPlacement = goodPlacement;
             goodPlacement = false;
 
-            areaIndicatorInstance.SetActive(true);
+            if (areaIndicatorInstance)
+                areaIndicatorInstance.SetActive(true);
+
             if (areaIndicatorInstance && originIndicatorInstance)
             {
                 RaycastHit hit;
@@ -193,11 +214,21 @@ namespace EntityStates.Mage.Weapon
         public override void FixedUpdate()
         {
             base.FixedUpdate();
-            stopwatch += GetDeltaTime();
-            if ((stopwatch >= duration && !inputBank.skill3.down) && isAuthority)
+            stopwatch += Time.fixedDeltaTime;
+
+            if (isAuthority)
             {
-                outer.SetNextStateToMain();
+                if (characterBody.isSprinting)
+                {
+                    sprintCancelled = true;
+                    outer.SetNextStateToMain();
+                }
+                if ((stopwatch >= duration && !inputBank.skill3.down))
+                {
+                    outer.SetNextStateToMain();
+                }
             }
+            
         }
 
         private void Fire()
@@ -275,9 +306,13 @@ namespace EntityStates.Mage.Weapon
         }
         public override void OnExit()
         {
-            if (!outer.destroying)
+            if (!outer.destroying && !sprintCancelled)
             {
                 Fire();
+            }
+            if (sprintCancelled)
+            {
+                skillLocator.utility.AddOneStock();
             }
 
             if (areaIndicatorInstance)

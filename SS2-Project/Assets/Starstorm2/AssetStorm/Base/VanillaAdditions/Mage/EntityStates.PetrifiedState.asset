@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.PetrifiedState
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.PetrifiedState, Starstorm2, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: enterEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4533902520882914074, guid: 575051392707041418214b312d9fa5a7,
+          type: 3}
+    - fieldName: exitEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4533902520882914074, guid: 575051392707041418214b312d9fa5a7,
+          type: 3}
+    - fieldName: modelEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 9084435260839525755, guid: 15751aafe0543c446a4b394d1ec8c320,
+          type: 3}
+    - fieldName: overlayMaterial
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 2100000, guid: 69dc9f74a5da5a247923f1d34c6709a8, type: 2}

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 5317810486608259225}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.6, y: 3.6, z: 12}
+  m_LocalScale: {x: 4.4, y: 4.4, z: 12}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1733646294177752983}
@@ -121,7 +121,7 @@ MonoBehaviour:
     i14: 0
     i15: 0
   m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  m_LocalPlayerAuthority: 1
 --- !u!114 &2756688160268074374
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0.5
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
   m_Constraints: 112
@@ -289,7 +289,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.6, z: 1.3}
+  m_Size: {x: 0.3, y: 0.3, z: 1.3}
   m_Center: {x: 0, y: 0, z: 0.81}
 --- !u!114 &7227813720973320390
 MonoBehaviour:
@@ -390,7 +390,7 @@ MonoBehaviour:
   maxDistance: 0
   impactOnWorld: 1
   timerAfterImpact: 0
-  lifetime: 1
+  lifetime: 3
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   minimumPhysicsStepsToKeepAliveAfterImpact: 0
