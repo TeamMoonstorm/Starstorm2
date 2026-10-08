@@ -528,6 +528,8 @@ namespace SS2
             public static BuffDef BuffChirrConvert;
 
             public static BuffDef BuffChirrFriend;
+            
+            public static BuffDef BuffChirrFriendIsopod;
 
             public static BuffDef BuffChirrGrabFriend;
 

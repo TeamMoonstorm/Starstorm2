@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 using UnityEngine;
 using RoR2;
 using RoR2.Projectile;
+using SS2;
+using SS2.Modules;
 
 namespace EntityStates.Chirr
 {
@@ -9,6 +11,7 @@ namespace EntityStates.Chirr
 	{
 
 		public static GameObject projectilePrefab;
+		public static GameObject projectilePrefabIsopod;
 		public string soundString;
 		public GameObject muzzleEffectPrefab = null;
 		public string muzzleName;
@@ -80,7 +83,7 @@ namespace EntityStates.Chirr
 					
 
 				FireProjectileInfo fireProjectileInfo = default(FireProjectileInfo);
-				fireProjectileInfo.projectilePrefab = projectilePrefab;
+				fireProjectileInfo.projectilePrefab = SkinSpecificOverrides.GetSkinName(characterBody) == "SS2_SKIN_CHIRR_ISOPOD" ? projectilePrefabIsopod : projectilePrefab;
 				fireProjectileInfo.position = aimRay.origin;
 				fireProjectileInfo.rotation = Util.QuaternionSafeLookRotation(direction);
 				fireProjectileInfo.owner = base.gameObject;

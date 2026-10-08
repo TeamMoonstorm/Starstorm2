@@ -12,6 +12,7 @@ using Assets.Starstorm2;
 using static R2API.DamageAPI;
 using R2API;
 using RoR2.ContentManagement;
+using SS2.Items;
 
 namespace SS2.Survivors
 {
@@ -65,6 +66,12 @@ namespace SS2.Survivors
             Material _matFriendOverlay = AssetCollection.FindAsset<Material>("matFriendOverlay");
             BuffDef friendBuffDef = AssetCollection.FindAsset<BuffDef>("BuffChirrFriend");
             BuffOverlays.AddBuffOverlay(friendBuffDef, _matFriendOverlay);
+            
+            //evillllll .,.,.,
+            Material _matFriendOverlayIsopod = AssetCollection.FindAsset<Material>("matFriendOverlayIsopod");
+            BuffDef friendBuffDefIsopod = AssetCollection.FindAsset<BuffDef>("BuffChirrFriendIsopod");
+            BuffOverlays.AddBuffOverlay(friendBuffDefIsopod, _matFriendOverlayIsopod);
+            ChirrFriendHelper.BodyBehavior.skinBuffReplacements.Add("SS2_SKIN_CHIRR_ISOPOD", friendBuffDefIsopod);
         }    
 
         private void ModifyPrefab()

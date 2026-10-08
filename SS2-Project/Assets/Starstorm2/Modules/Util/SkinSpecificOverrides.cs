@@ -1,40 +1,46 @@
+using MSU;
 using UnityEngine;
 using RoR2;
-using RoR2.Skills;
 using UnityEngine.AddressableAssets;
 using RoR2.Projectile;
 using UnityEngine.Networking;
-using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace SS2.Modules
 {
+    // note for future starstormers .,., a lot of these effects can be done through r2api skinvfx but they appear to be broken atm so uhhh .,,.,. :soybrokenheart: ,.,
     public static class SkinSpecificOverrides
     {
-        public static SkillDef phaseRoundDef;
-        public static EntityStateConfiguration phaseRoundESC;
+        //nemmando. ,.
+        private static GameObject FMJRampingGhostRed;
+        private static GameObject omniExplosionVFXFMJRed;
+        private static GameObject tracerNemCommandoShotgunRed; 
+        private static GameObject muzzleflashNemCommandoRed; 
+        private static GameObject hitsparkNemCommandoRed; 
+        
+        //specialistt. ,.
+        private static GameObject FMJRampingGhostSpecialist;
+        private static GameObject omniExplosionVFXFMJSpecialist;
+        private static GameObject tracerCommandoShotgunSpecialist; 
+        private static GameObject muzzleflashCommandoSpecialist; 
+        private static GameObject hitsparkCommandoSpecialist; 
 
+        //mult .,,.
         private static GameObject toolbotLunarSpear;
-
-        internal static Material matLunarGolem;
+        private static GameObject lunarWispMinigunTracer;
+        private static Material matLunarGolem;
+        
+        //chirr,.,.
+        private static int isopodLocalSkinIndex = -1;
+        
         [SystemInitializer]
         public static void Initialize()
         {
-            AsyncOperationHandle<Material> matLunarGolemAddresable = Addressables.LoadAssetAsync<Material>("RoR2/Base/LunarGolem/matLunarGolem.mat");
-            matLunarGolemAddresable.Completed += _ =>
-            {
-                matLunarGolem = matLunarGolemAddresable.Result;
-            };
-
-            AsyncOperationHandle<GameObject> toolbotLunarSpearAddressable = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab");
-            toolbotLunarSpearAddressable.Completed += _ =>
-            {
-                toolbotLunarSpear = toolbotLunarSpearAddressable.Result;
-            };
-            
-            //Generic Hooks (Currently all Commando - subject to change)
-            On.EntityStates.GenericProjectileBaseState.FireProjectile += GPBS_FireProjectile;
-            On.EntityStates.GenericBulletBaseState.FireBullet += GBBS_FireBullet;
+            //Generic Hooks
             CharacterBody.onBodyStartGlobal += BodyStartGlobal;
+            
+            //commando ,.
+            On.EntityStates.Commando.CommandoWeapon.FireShotgunBlast.OnEnter += FireShotgunBlastOnModifyBulletAttack;
+            On.EntityStates.Commando.CommandoWeapon.FireFMJ.ModifyProjectileInfo += FireFMJOnEnter;
 
             //MUL-T specific
             On.EntityStates.Toolbot.BaseNailgunState.FireBullet += BaseNailgunState_FireBullet;
@@ -42,86 +48,111 @@ namespace SS2.Modules
             On.EntityStates.Toolbot.ToolbotDualWield.OnEnter += ToolbotDualWield_OnEnter;
             On.EntityStates.Toolbot.ToolbotDash.OnEnter += ToolbotDash_OnEnter;
             //On.EntityStates.Toolbot.ToolbotDash.OnExit += ToolbotDash_OnExit;
-
-            //merc specific - to my knowledge this one doesnt work .,., wolfoqol already adds support for it so oh wells !! 
-            //On.RoR2.SkinDef.Apply += ModifiyLighting;
         }
 
-        public static void GPBS_FireProjectile(On.EntityStates.GenericProjectileBaseState.orig_FireProjectile orig, EntityStates.GenericProjectileBaseState self)
+        //projectile catalog for FMJRampingPrefab or others ./,..
+        [SystemInitializer(typeof(ProjectileCatalog), typeof(EffectCatalog), typeof(SurvivorCatalog))]
+        public static void LoadBasePrefabs()
         {
-            //Debug.Log("firing projectile");
-
-            //There might be a better way to do this to ensure compatiability with mods that edit Phase Round, such as RiskyMod. Whatever that way is, I do not know of it.
-            if (self.characterBody.baseNameToken == "COMMANDO_BODY_NAME") //name tokens never change :D
+            //mult gm
+            Addressables.LoadAssetAsync<Material>("RoR2/Base/LunarGolem/matLunarGolem.mat").Completed += handle =>
             {
-                if (self.projectilePrefab == ProjectileCatalog.GetProjectilePrefab(ProjectileCatalog.FindProjectileIndex("FMJRamping")) && self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
-                {
-                    //grab the projectile prefab & modify it to use red vfx
-                    GameObject projectileInstance;
-                    projectileInstance = self.projectilePrefab;
-                    ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
-                    ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
-
-                    pc.ghostPrefab = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostRed", SS2Bundle.NemCommando);
-                    poa.impactEffect = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJRed", SS2Bundle.NemCommando);
-                    self.effectPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
-                }
-            }
-
-            orig(self);
+                matLunarGolem = handle.Result;
+            };
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Huntress/TracerHuntressSnipe.prefab").Completed += handle =>
+            {
+                toolbotLunarSpear = handle.Result;
+            };
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/LunarWisp/TracerLunarWispMinigun.prefab").Completed += handle =>
+            {
+                lunarWispMinigunTracer = handle.Result;
+            };
+            
+            //nem commando skin .,,
+            FMJRampingGhostRed = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostRed", SS2Bundle.Vanilla);
+            omniExplosionVFXFMJRed = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJRed", SS2Bundle.Vanilla);
+            tracerNemCommandoShotgunRed = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.NemCommando);
+            muzzleflashNemCommandoRed = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
+            hitsparkNemCommandoRed = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.NemCommando);
+            
+            //specialist .,,.
+            FMJRampingGhostSpecialist = SS2Assets.LoadAsset<GameObject>("FMJRampingGhostSpecialist", SS2Bundle.Vanilla);
+            omniExplosionVFXFMJSpecialist = SS2Assets.LoadAsset<GameObject>("OmniExplosionVFXFMJSpecialist", SS2Bundle.Vanilla);
+            tracerCommandoShotgunSpecialist = SS2Assets.LoadAsset<GameObject>("TracerCommandoShotgunSpecialist", SS2Bundle.Vanilla);
+            muzzleflashCommandoSpecialist = SS2Assets.LoadAsset<GameObject>("MuzzleflashCommandoSpecialist", SS2Bundle.Vanilla);
+            hitsparkCommandoSpecialist = SS2Assets.LoadAsset<GameObject>("HitsparkCommandoShotgunSpecialist", SS2Bundle.Vanilla);
+        }
+        
+        public static string GetSkinName(CharacterBody body)
+        {
+            return body.AsValidOrNull()?.modelLocator.AsValidOrNull()?.modelTransform.AsValidOrNull()?.GetComponent<ModelSkinController>().AsValidOrNull()?.skins[body.skinIndex].nameToken;
         }
 
         private static void BodyStartGlobal(CharacterBody body)
         {
-            if (!NetworkServer.active)
-                return;
-            
-            if (body && body.modelLocator && body.modelLocator.modelBaseTransform && body.baseNameToken == "TOOLBOT_BODY_NAME")
+            if (!NetworkServer.active) return;
+
+            if (body.baseNameToken == "TOOLBOT_BODY_NAME")
             {
-                ModelSkinController msc = body.modelLocator.modelBaseTransform.GetComponentInChildren<ModelSkinController>();
-                //Debug.Log("is toolbot");
-                if (msc && msc.skins[body.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+                if (GetSkinName(body) == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
                 {
-                    //Debug.Log("is lunar");
                     LoopSoundWhileCharacterMoving lswcm = body.GetComponent<LoopSoundWhileCharacterMoving>();
 
                     if (lswcm != null)
                     {
-                        //lswcm.enabled = false;
                         lswcm.startSoundName = "Play_lunar_golem_idle_loop";
                         lswcm.stopSoundName = "Stop_lunar_golem_idle_loop";
                         lswcm.minSpeed = 0;
                         //it's just like an idle sound except i couldn't get it to actually work as an idle sound for some reason..
-
-                        //Debug.Log("modified lunar idle sounds! :)");
                     }
                 }
             }
         }
-
-        public static void GBBS_FireBullet(On.EntityStates.GenericBulletBaseState.orig_FireBullet orig, EntityStates.GenericBulletBaseState self, Ray aimRay)
+        
+         private static void FireShotgunBlastOnModifyBulletAttack(On.EntityStates.Commando.CommandoWeapon.FireShotgunBlast.orig_OnEnter orig, EntityStates.Commando.CommandoWeapon.FireShotgunBlast self)
         {
-            //Commando
-            if (self.characterBody.baseNameToken == "COMMANDO_BODY_NAME")
+            string skinName = GetSkinName(self.characterBody);
+            if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
             {
-                //if using the skin, update vfx to use nemcommando variants
-                if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_COMMANDO_VESTIGE")
-                {
-                    if (self.tracerEffectPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/TracerCommandoShotgun.prefab").WaitForCompletion())
-                    {
-                        self.tracerEffectPrefab = SS2Assets.LoadAsset<GameObject>("TracerNemCommandoShotgunRed", SS2Bundle.NemCommando);
-                    }
-                    if (self.muzzleFlashPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/MuzzleflashFMJ.prefab").WaitForCompletion())
-                    {
-                        self.muzzleFlashPrefab = SS2Assets.LoadAsset<GameObject>("MuzzleflashNemCommandoRed", SS2Bundle.NemCommando);
-                    }
-                    if (self.hitEffectPrefab == Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Commando/HitsparkCommandoShotgun.prefab").WaitForCompletion())
-                    {
-                        self.hitEffectPrefab = SS2Assets.LoadAsset<GameObject>("HitsparkNemCommandoRed", SS2Bundle.NemCommando);
-                    }
-                }
+                self.tracerEffectPrefab = tracerNemCommandoShotgunRed;
+                self.muzzleFlashPrefab = muzzleflashNemCommandoRed;
+                self.hitEffectPrefab = hitsparkNemCommandoRed;
             }
-            orig(self, aimRay);  
+            else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
+            {
+                self.tracerEffectPrefab = tracerCommandoShotgunSpecialist;
+                self.muzzleFlashPrefab = muzzleflashCommandoSpecialist;
+                self.hitEffectPrefab = hitsparkCommandoSpecialist;
+            }
+            
+            orig(self);
+        }
+
+        private static void FireFMJOnEnter(On.EntityStates.Commando.CommandoWeapon.FireFMJ.orig_ModifyProjectileInfo orig, EntityStates.Commando.CommandoWeapon.FireFMJ self, ref FireProjectileInfo fireProjectileInfo)
+        {
+            string skinName = GetSkinName(self.characterBody);
+            if (skinName == "SS2_SKIN_COMMANDO_VESTIGE")
+            {
+                GameObject projectileInstance = self.projectilePrefab;
+                ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
+                ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
+                        
+                pc.ghostPrefab = FMJRampingGhostRed;
+                poa.impactEffect = omniExplosionVFXFMJRed;
+                self.effectPrefab = muzzleflashNemCommandoRed;
+            }
+            else if (skinName == "SS2_SKIN_COMMANDO_SPECIALIST")
+            {
+                GameObject projectileInstance = self.projectilePrefab;
+                ProjectileController pc = projectileInstance.GetComponent<ProjectileController>();
+                ProjectileOverlapAttack poa = projectileInstance.GetComponent<ProjectileOverlapAttack>();
+                        
+                pc.ghostPrefab = FMJRampingGhostSpecialist;
+                poa.impactEffect = omniExplosionVFXFMJSpecialist;
+                self.effectPrefab = muzzleflashCommandoSpecialist;
+            }
+            
+            orig(self, ref fireProjectileInfo);
         }
 
         //unsure what this one does and the code looks a little scary and overcomplicated to 
@@ -151,14 +182,11 @@ namespace SS2.Modules
 
         public static void ToolbotDash_OnEnter(On.EntityStates.Toolbot.ToolbotDash.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDash self)
         {
-            bool isLunar = false;
             string oldEnterSound = EntityStates.Toolbot.ToolbotDash.startSoundString;
             string oldExitSound = EntityStates.Toolbot.ToolbotDash.endSoundString;
-            string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            if (GetSkinName(self.characterBody) == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
-                isLunar = true;
                 EntityStates.Toolbot.ToolbotDash.startSoundString = EntityStates.LunarGolem.ChargeTwinShot.chargeSoundString;
                 EntityStates.Toolbot.ToolbotDash.endSoundString = "Play_lunar_golem_death";
 
@@ -180,30 +208,27 @@ namespace SS2.Modules
 
             orig(self);
 
-            if (isLunar)
+            if (EntityStates.Toolbot.ToolbotDash.startSoundString != oldEnterSound)
             {
                 EntityStates.Toolbot.ToolbotDash.startSoundString = oldEnterSound;
                 EntityStates.Toolbot.ToolbotDash.endSoundString = oldExitSound;
             }    
         }
 
-        public static void ToolbotDualWield_OnEnter(On.EntityStates.Toolbot.ToolbotDualWield.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDualWield self)
+        private static void ToolbotDualWield_OnEnter(On.EntityStates.Toolbot.ToolbotDualWield.orig_OnEnter orig, EntityStates.Toolbot.ToolbotDualWield self)
         {
-            bool isLunar = false;
             string oldSound = EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx;
-            string skinNameToken = self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken;
 
-            if (skinNameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            if (GetSkinName(self.characterBody) == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
                 //if using the lunar skin, set to lunar & update sound
-                isLunar = true;
                 EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx = EntityStates.LunarGolem.ChargeTwinShot.chargeSoundString;
             }
 
             //call self
             orig(self);
 
-            if (isLunar)
+            if (EntityStates.Toolbot.ToolbotDualWieldStart.enterSfx != oldSound)
             {
                 //change mats of dual wield guns to lunar
                 self.coverLeftInstance.GetComponentInChildren<SkinnedMeshRenderer>().material = matLunarGolem;
@@ -216,42 +241,30 @@ namespace SS2.Modules
 
         public static void FireSpear_FireBullet(On.EntityStates.Toolbot.FireSpear.orig_FireBullet orig, EntityStates.Toolbot.FireSpear self, Ray aimRay)
         {
-            bool isLunar = false;
-            GameObject oldTracer = self.tracerEffectPrefab;
-
             //check skin; update tracer if in use
-            if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            if (GetSkinName(self.characterBody) == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
-                isLunar = true;
                 self.tracerEffectPrefab = toolbotLunarSpear;
             }
 
             //call self
             orig(self, aimRay);
-
-            //change tracer back
-            if (isLunar)
-            {
-                self.tracerEffectPrefab = oldTracer;
-            }
         }
 
         private static void BaseNailgunState_FireBullet(On.EntityStates.Toolbot.BaseNailgunState.orig_FireBullet orig, EntityStates.Toolbot.BaseNailgunState self, Ray aimRay, int bulletCount, float spreadPitchScale, float spreadYawScale)
         {
-            bool isLunar = false;
             GameObject oldTracer = EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab;
             string oldSound = EntityStates.Toolbot.BaseNailgunState.fireSoundString;
 
-            if (self.GetModelTransform().GetComponentInChildren<ModelSkinController>().skins[self.characterBody.skinIndex].nameToken == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
+            if (GetSkinName(self.characterBody) == "SS2_SKIN_TOOLBOT_GRANDMASTERY")
             {
-                isLunar = true;
-                EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab = Resources.Load<GameObject>("Prefabs/Effects/Tracers/TracerLunarWispMinigun"); // and also this
+                EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab = lunarWispMinigunTracer; // and also this
                 EntityStates.Toolbot.BaseNailgunState.fireSoundString = EntityStates.LunarWisp.FireLunarGuns.fireSound;
             }
 
             orig(self, aimRay, bulletCount, spreadPitchScale, spreadYawScale);
 
-            if (isLunar)
+            if (EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab != oldTracer)
             {
                 EntityStates.Toolbot.BaseNailgunState.tracerEffectPrefab = oldTracer;
                 EntityStates.Toolbot.BaseNailgunState.fireSoundString = oldSound;

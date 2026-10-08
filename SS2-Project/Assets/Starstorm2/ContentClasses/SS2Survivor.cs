@@ -1,4 +1,4 @@
-﻿using MSU;
+using MSU;
 using RoR2;
 using System;
 using System.Collections;
@@ -16,7 +16,7 @@ namespace SS2
     /// <summary>
     /// <inheritdoc cref="ISurvivorContentPiece"/>
     /// </summary>
-    public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier
+    public abstract class SS2Survivor : ISurvivorContentPiece, IContentPackModifier, IAsyncContentInitializer
     {
         public  SurvivorAssetCollection AssetCollection { get; set; }
         public SurvivorDef survivorDef { get; protected  set; }
@@ -70,9 +70,21 @@ namespace SS2
             CharacterPrefab = AssetCollection.bodyPrefab;
             masterPrefab = AssetCollection.masterPrefab;
             survivorDef = AssetCollection.survivorDef;
-
         }
 
+        public virtual IEnumerator InitializeAsync()
+        {
+            ParallelCoroutine helper = new ParallelCoroutine();
+            foreach(var uberSkinDef in AssetCollection.FindAssets<UberSkinDef>())
+            {
+                helper.Add(uberSkinDef.PreBake());
+            }
+
+            while(!helper.IsDone())
+            {
+                yield return null;
+            }
+        }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
         {

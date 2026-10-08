@@ -2,12 +2,16 @@
 using System;
 using RoR2;
 using RoR2.Projectile;
+using SS2;
+using SS2.Modules;
+
 namespace EntityStates.Chirr
 {
 
     public class FireTriLeaf : BaseSkillState
     {
         public static GameObject projectilePrefab;
+        public static GameObject projectilePrefabIsopod;
         public string soundString;
         public GameObject muzzleEffectPrefab = null;
 
@@ -90,7 +94,7 @@ namespace EntityStates.Chirr
                 float maxSpreadLerped = Mathf.Lerp(FireTriLeaf.minSpread, FireTriLeaf.maxSpread, (float)shotsFired / (float)numShots);
                 Ray aimRay = base.GetAimRay();
                 aimRay.direction = Util.ApplySpread(aimRay.direction, minSpreadLerped, maxSpreadLerped, 1f, pitchCoefficient);
-                ProjectileManager.instance.FireProjectile(projectilePrefab, aimRay.origin, 
+                ProjectileManager.instance.FireProjectile(SkinSpecificOverrides.GetSkinName(characterBody) == "SS2_SKIN_CHIRR_ISOPOD" ? projectilePrefabIsopod : projectilePrefab, aimRay.origin, 
                     Util.QuaternionSafeLookRotation(aimRay.direction), base.gameObject, 
                     this.damageStat * damageCoefficient, force, this.isCrit, damageType: new DamageTypeCombo(DamageType.Generic, DamageTypeExtended.Generic, DamageSource.Primary));
             }

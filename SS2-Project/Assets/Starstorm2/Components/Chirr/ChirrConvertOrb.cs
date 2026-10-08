@@ -1,5 +1,6 @@
 ﻿using RoR2;
 using RoR2.Orbs;
+using SS2.Modules;
 using UnityEngine;
 namespace SS2.Components
 {
@@ -11,7 +12,7 @@ namespace SS2.Components
 
         public override GameObject GetOrbEffect()
         {
-            return UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseOrbEffect.prefab").WaitForCompletion();
+            return SkinSpecificOverrides.GetSkinName(tracker.characterBody) == "SS2_SKIN_CHIRR_ISOPOD" ? SS2Assets.LoadAsset<GameObject>("BefriendOrbEffectIsopod", SS2Bundle.Chirr) : UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Croco/CrocoDiseaseOrbEffect.prefab").WaitForCompletion();
         }
 
         public override void OnArrival()
