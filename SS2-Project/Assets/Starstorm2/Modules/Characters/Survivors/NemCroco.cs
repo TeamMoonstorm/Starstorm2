@@ -292,7 +292,7 @@ namespace SS2.Survivors
             barInfo.imageType = RadiationBarStyle.imageType;
             barInfo.sizeDelta = RadiationBarStyle.sizeDelta;
             barInfo.normalizedXMin = 0f; // TODO: ADD ONTO CULL FRACTION ?
-            barInfo.normalizedXMax = Mathf.Min(1f, healthBar.source ? radiation / healthBar.source.fullHealth : 0f);
+            barInfo.normalizedXMax = Mathf.Min(1f, healthBar.source ? radiation / healthBar.source.fullCombinedHealth : 0f);
         }
 
         // idk what this does
