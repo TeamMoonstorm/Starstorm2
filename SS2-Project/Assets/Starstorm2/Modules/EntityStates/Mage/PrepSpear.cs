@@ -337,6 +337,8 @@ namespace EntityStates.Mage.Weapon
         }
         public override void OnExit()
         {
+            PlayCrossfade("Gesture, Additive", "BufferEmpty", 0.2f);
+
             if (!outer.destroying && !cancelled)
             {
                 Fire();
