@@ -19,6 +19,13 @@ namespace SS2
             DLC2 = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<ExpansionDef>("RoR2/DLC1/Common/DLC1.asset").WaitForCompletion();
         }
 
+        // if you want a DoT to deal a specific amount of damage over a set duration, this method will return the necessary value for InflictDotInfo.damageMultiplier
+        // using InflictDotInfo.totalDamage would make the DoT have a variable duration with a static damage-per-tick
+        public static float GetDotDamageMultiplier(CharacterBody attackerBody, float desiredTotalDamage, float desiredDuration, DotController.DotIndex dotIndex)
+        {
+            var dotDef = DotController.GetDotDef(dotIndex);
+            return (desiredTotalDamage * dotDef.interval) / (desiredDuration * dotDef.damageCoefficient) / attackerBody.damage;
+        }
         public static bool HasFearBuff(this CharacterBody body)
         {
             return body.HasBuff(SS2Content.Buffs.BuffFear) || body.HasBuff(SS2Content.Buffs.BuffFearRed);
