@@ -23,6 +23,9 @@ namespace SS2.Survivors
 
         private static R2API.DamageAPI.ModdedDamageType PetrifyOnHit;
         private static R2API.ModdedProcType Shatter;
+
+        public override bool IsAvailable(ContentPack contentPack) => true;
+
         public override void Initialize()
         {
             GameObject railgunnerBodyPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Mage/MageBody.prefab").WaitForCompletion();
@@ -60,6 +63,7 @@ namespace SS2.Survivors
                         if (setStateOnHurt.canBeFrozen)
                         {
                             // TODO: Custom daataa!!!!!!!!!!!!!
+                            float duration = damageInfo.procCoefficient * 5f;
                             setStateOnHurt.SetCustomState(EntityStateCatalog.GetStateIndex(typeof(EntityStates.PetrifiedState)), EntityStates.InterruptPriority.Frozen);
                         }
                     }
@@ -77,7 +81,7 @@ namespace SS2.Survivors
                 inPetrifiedState = true;
             }
 
-            if (inPetrifiedState && damageInfo.damage >= attackerBody.damage * 4f && !damageInfo.HasModdedDamageType(PetrifyOnHit) && !damageInfo.procChainMask.HasModdedProc(Shatter))
+            if (damageInfo.procCoefficient > 0f && inPetrifiedState && damageInfo.damage >= attackerBody.damage * 4f && !damageInfo.HasModdedDamageType(PetrifyOnHit) && !damageInfo.procChainMask.HasModdedProc(Shatter))
             {
                 Vector3 position = victimBody.corePosition;
                 float radius = shatterRadius + victimBody.radius;
@@ -123,7 +127,5 @@ namespace SS2.Survivors
         {
             contentPack.AddContentFromAssetCollection(assetCollection);
         }
-
-        public override bool IsAvailable(ContentPack contentPack) => SS2Config.enableBeta;
     }
 }
