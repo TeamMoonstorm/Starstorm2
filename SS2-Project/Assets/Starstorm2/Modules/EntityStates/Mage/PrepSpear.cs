@@ -4,7 +4,7 @@ using RoR2.UI;
 using RoR2.Projectile;
 using System;
 using UnityEngine.Networking;
-
+using RoR2.Skills;
 namespace EntityStates.Mage.Weapon
 {
     public class PrepSpear : BaseState
@@ -18,6 +18,9 @@ namespace EntityStates.Mage.Weapon
         public static GameObject goodCrosshairPrefab;
         public static GameObject badCrosshairPrefab;
 
+        public static SkillDef fireSkillOverride;
+        public static SkillDef cancelSkillOverride;
+
         private static float baseDuration = 0.5f;
         private static float damageCoefficient = 3f;
         private static float force = 400f;
@@ -29,7 +32,7 @@ namespace EntityStates.Mage.Weapon
         private static float projectileRadius = 2.4f;
         private static float projectileCollisionRadius = 0.15f;
         private static float maxDistance = 600f;
-        private static float maxAngle = 76f;
+        private static float maxAngle = 78.5f;
        
         private static float bounceForce = 1300f;
         private static float bounceUpForce = 1000f;
@@ -50,7 +53,13 @@ namespace EntityStates.Mage.Weapon
         private CrosshairUtils.OverrideRequest crosshairOverrideRequest;
         private bool placementFailed;
 
-        private bool sprintCancelled;
+
+        private int primaryStock;
+        private float primaryRecharge;
+        private int secondaryStock;
+        private float secondaryRecharge;
+
+        private bool cancelled;
         private static int PrepWallStateHash = Animator.StringToHash("PrepWall");
         private static int PrepWallParamHash = Animator.StringToHash("PrepWall.playbackRate");
         public override void OnEnter()
@@ -78,6 +87,20 @@ namespace EntityStates.Mage.Weapon
             PlaceOriginIndicator();
             UpdateAreaIndicator();
 
+            if (fireSkillOverride && skillLocator.primary)
+            {
+                primaryStock = skillLocator.primary.stock;
+                primaryRecharge = skillLocator.primary.rechargeStopwatch;
+                skillLocator.primary.SetSkillOverride(this, fireSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
+            }
+            if (cancelSkillOverride && skillLocator.secondary)
+            {
+                secondaryStock = skillLocator.secondary.stock;
+                secondaryRecharge = skillLocator.secondary.rechargeStopwatch;
+                skillLocator.secondary.SetSkillOverride(this, cancelSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
+            }
+            
+
 
             // TODO: figure out what to do when failing to place the origin (when terrain is out of range)
             // Loader style range indicator?
@@ -88,6 +111,7 @@ namespace EntityStates.Mage.Weapon
             // All of the above?
             if (placementFailed)
             {
+                cancelled = true;
                 outer.SetNextStateToMain();
                 skillLocator.utility.stock++;
                 return;
@@ -218,9 +242,16 @@ namespace EntityStates.Mage.Weapon
 
             if (isAuthority)
             {
-                if (characterBody.isSprinting)
+                ///// s
+                if (fireSkillOverride && inputBank.skill1.justPressed)
                 {
-                    sprintCancelled = true;
+                    inputBank.skill1.hasPressBeenClaimed = true;
+                    outer.SetNextStateToMain();
+                }
+                if (cancelSkillOverride && inputBank.skill2.justPressed)
+                {
+                    cancelled = true;
+                    inputBank.skill2.hasPressBeenClaimed = true;
                     outer.SetNextStateToMain();
                 }
                 if ((stopwatch >= duration && !inputBank.skill3.down))
@@ -306,11 +337,11 @@ namespace EntityStates.Mage.Weapon
         }
         public override void OnExit()
         {
-            if (!outer.destroying && !sprintCancelled)
+            if (!outer.destroying && !cancelled)
             {
                 Fire();
             }
-            if (sprintCancelled)
+            if (cancelled)
             {
                 skillLocator.utility.AddOneStock();
             }
@@ -329,6 +360,29 @@ namespace EntityStates.Mage.Weapon
             }
 
             crosshairOverrideRequest?.Dispose();
+
+            if (fireSkillOverride && skillLocator.primary)
+            {
+                skillLocator.primary.UnsetSkillOverride(this, fireSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
+
+                skillLocator.primary.stock = primaryStock;
+                skillLocator.primary.rechargeStopwatch = primaryRecharge;
+                if (skillLocator.primary.stock >= skillLocator.primary.maxStock)
+                {
+                    skillLocator.primary.rechargeStopwatch = 0f;
+                }
+            }
+            if (cancelSkillOverride && skillLocator.secondary)
+            {
+                skillLocator.secondary.UnsetSkillOverride(this, cancelSkillOverride, GenericSkill.SkillOverridePriority.Contextual);
+
+                skillLocator.secondary.stock = secondaryStock;
+                skillLocator.secondary.rechargeStopwatch = secondaryRecharge;
+                if (skillLocator.secondary.stock >= skillLocator.secondary.maxStock)
+                {
+                    skillLocator.secondary.rechargeStopwatch = 0f;
+                }
+            }
 
             base.OnExit();
         }
