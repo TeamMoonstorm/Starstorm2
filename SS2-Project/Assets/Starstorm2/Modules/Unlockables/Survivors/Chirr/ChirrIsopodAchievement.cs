@@ -74,6 +74,7 @@ namespace SS2.Unlocks.Chirr
                     CharacterBody ownerBody = state.characterBody.AsValidOrNull()?.master.AsValidOrNull()?.minionOwnership.AsValidOrNull()?.ownerMaster.AsValidOrNull()?.GetBody();
                     if (ownerBody?.bodyIndex == BodyCatalog.FindBodyIndex("ChirrBody"))
                     {
+                        // this grants all chirrs connected in multiplayer the achievement at once but i dont think theres a way to grant to a single body/pcmc here ?,.,
                         Grant();
                     }
                 });

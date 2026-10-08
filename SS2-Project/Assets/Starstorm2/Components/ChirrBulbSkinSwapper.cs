@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using MSU;
 using RoR2;
 using SS2;
 using SS2.Modules;
@@ -22,7 +23,7 @@ namespace Starstorm2.Components
         {
             if (gameObject.transform.root?.TryGetComponent(out characterModel) != true) return;
 
-            CharacterBody ownerBody = characterModel.body?.master?.minionOwnership?.ownerMaster?.GetBody();
+            CharacterBody ownerBody = characterModel.AsValidOrNull()?.body.AsValidOrNull()?.master.AsValidOrNull()?.minionOwnership.AsValidOrNull()?.ownerMaster.AsValidOrNull()?.GetBody();
             int tokenIndex = skinBulbTokens.IndexOf(SkinSpecificOverrides.GetSkinName(ownerBody));
             if (tokenIndex == -1) return;
             

@@ -70,8 +70,6 @@ namespace SS2
             CharacterPrefab = AssetCollection.bodyPrefab;
             masterPrefab = AssetCollection.masterPrefab;
             survivorDef = AssetCollection.survivorDef;
-
-            ParallelCoroutine helper = new ParallelCoroutine();
         }
 
         public virtual IEnumerator InitializeAsync()
