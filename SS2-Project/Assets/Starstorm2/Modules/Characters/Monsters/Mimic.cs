@@ -99,7 +99,7 @@ namespace SS2.Monsters
                 {
                     placementMode = DirectorPlacementRule.PlacementMode.Random
                 };
-				var spawnCard = SS2Assets.LoadAsset<SpawnCard>("iscMimic", SS2Bundle.Monsters);
+				var spawnCard = SS2Assets.LoadAsset<InteractableSpawnCard>("iscMimic", SS2Bundle.Monsters);
                 GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(spawnCard, placementRule, Run.instance.stageRng));
                 if (gameObject)
                 {
