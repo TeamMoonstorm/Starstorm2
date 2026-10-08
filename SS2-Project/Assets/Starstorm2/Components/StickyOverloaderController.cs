@@ -57,7 +57,7 @@ namespace SS2.Components
             set => _stuckBody = value;
         }
         private CharacterBody _stuckBody;
-        private GameObject owner;
+        public GameObject owner { get; private set; }
         private TeamIndex teamIndex;
         private float baseDamage;
         private bool crit;
@@ -110,6 +110,15 @@ namespace SS2.Components
             indicatorRenderer = indicator.GetComponentInChildren<Renderer>();
             this.materials = indicatorRenderer.materials;
             SetBuffCount(buffCount);
+        }
+
+        private void OnEnable()
+        {
+            InstanceTracker.Add(this);
+        }
+        private void OnDisable()
+        {
+            InstanceTracker.Remove(this);
         }
         private void FixedUpdate()
         {
