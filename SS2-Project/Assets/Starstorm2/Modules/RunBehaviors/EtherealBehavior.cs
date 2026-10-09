@@ -59,9 +59,15 @@ namespace SS2
             SS2Content.SS2ContentPack.networkedObjectPrefabs.Add(new GameObject[] { shrinePrefab });
         }
 
+        private static bool hasFixedDifficulty = false;
         private static void RuleBookViewerStrip_SetData(On.RoR2.UI.RuleBookViewerStrip.orig_SetData orig, RuleBookViewerStrip self, List<RuleChoiceDef> newChoices, int choiceIndex)
         {
             orig(self, newChoices, choiceIndex);
+
+            if (hasFixedDifficulty)
+            {
+                return;
+            }
 
             // >>>>>>
             if (self.transform.parent.parent.TryGetComponent(out RuleCategoryController rcc) && rcc.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
@@ -85,28 +91,8 @@ namespace SS2
             {
                 omfg.OnClick();
             }
-        }
 
-        private static void RuleCategoryController_AllocateResultIcons(On.RoR2.UI.RuleCategoryController.orig_AllocateResultIcons orig, RuleCategoryController self, int desiredCount)
-        {
-            orig(self, desiredCount);
-
-            // ughhhhhh
-            if (self.categoryHeaderLanguageController.textMeshPro.text == "Difficulty")
-            {
-                SS2Log.Info("found difficulty slider");
-                Transform SC = self.transform.Find("StripContainer");
-                if (SC != null)
-                {
-                    Transform RSP = SC.Find("RuleStripPrefab(Clone)");
-                    if (RSP != null && RSP.TryGetComponent(out RuleBookViewerStrip rbvs)) // shinji screaming gif
-                    {
-                        SS2Log.Info("rbvs edit?");
-                        SS2Log.Info("rbvs is " + rbvs.currentDisplayChoiceIndex);
-                        rbvs.currentDisplayChoiceIndex = 1;
-                    }
-                }
-            }
+            hasFixedDifficulty = true;
         }
 
         private void AmbientLevelDisplay_Update(On.RoR2.UI.AmbientLevelDisplay.orig_Update orig, RoR2.UI.AmbientLevelDisplay self)

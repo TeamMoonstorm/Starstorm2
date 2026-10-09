@@ -45,6 +45,8 @@ namespace SS2.Items
 
         public static float buffDuration = 1f;
 
+        private static int maxBombsPerAttacker = 1;
+
         private static GameObject _procEffect;
 
         private static R2API.ModdedProcType sticky;
@@ -55,12 +57,8 @@ namespace SS2.Items
             On.RoR2.Orbs.VineOrb.OnArrival += VineOrb_OnArrival;
             sticky = ProcTypeAPI.ReserveProcType();
         }
-
-        // too lazy to ilhook. its beta code so i dont want to keep fixing it
-        // noxious throsn spreads bomba :3
         private void VineOrb_OnArrival(On.RoR2.Orbs.VineOrb.orig_OnArrival orig, VineOrb self)
         {
-            //vanilla doesnt nullcheck. neither shall i >:3
             if (self.target.healthComponent.body.HasBuff(SS2Content.Buffs.BuffStickyOverloader)) // dont add bomba if already bomba
             {
                 orig(self);
@@ -83,20 +81,45 @@ namespace SS2.Items
             return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
+        public static bool CanSpawnBomb(CharacterBody attacker)
+        {
+            var instancesList = InstanceTracker.GetInstancesList<StickyOverloaderController>();
+            if (instancesList == null) return true;
+
+            int bombsFromAttacker = 0;
+            for (int i = 0; i < instancesList.Count; i++)
+            {
+                if (instancesList[i].owner == attacker.gameObject)
+                {
+                    bombsFromAttacker++;
+                }
+                if (bombsFromAttacker >= maxBombsPerAttacker)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
 
         private void OnServerDamageDealt(DamageReport report)
         {
-            CharacterBody body = report.attackerBody;
-            if (!body || !body.inventory || report.damageInfo.procChainMask.HasModdedProc(sticky)) return;
-            //if (!report.damageInfo.damageType.IsDamageSourceSkillBased) return;
+            CharacterBody attackerBody = report.attackerBody;
+            if (!attackerBody || !attackerBody.inventory || report.damageInfo.procChainMask.HasModdedProc(sticky)) return;
 
-            int stack = body.inventory.GetItemCount(SS2Content.Items.StickyOverloader);
+
+            int stack = attackerBody.inventory.GetItemCount(SS2Content.Items.StickyOverloader);
             if (stack <= 0) return;
             int buffStacks = report.victimBody.GetBuffCount(SS2Content.Buffs.BuffStickyOverloader);
             float chance = buffStacks > 0 ? 100f : procChance; // 100% chance if already applied, * proc coefficient
-            if (Util.CheckRoll(chance * report.damageInfo.procCoefficient, body.master))
+            if (Util.CheckRoll(chance * report.damageInfo.procCoefficient, attackerBody.master))
             {
-                if(buffStacks == 0) StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
+                if (buffStacks == 0 && CanSpawnBomb(attackerBody))
+                {
+                    StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
+                }
+
                 if (buffStacks < maxStacks + maxStacksPerStack * (stack - 1))
                 {
                     report.victimBody.AddBuff(SS2Content.Buffs.BuffStickyOverloader);                 

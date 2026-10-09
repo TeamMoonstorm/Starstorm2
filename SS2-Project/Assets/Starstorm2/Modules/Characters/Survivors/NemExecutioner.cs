@@ -30,7 +30,7 @@ namespace SS2.Survivors
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false;
+            return base.IsAvailable(contentPack) && SS2Config.enableBeta;
         }
 
         public override void Initialize()
@@ -71,7 +71,7 @@ namespace SS2.Survivors
 
         private static int GetMaxGhouls(CharacterMaster master, int deployableCountMultiplier)
         {
-            return master.GetBody().skillLocator.secondary.maxStock;
+            return master.GetBody()?.skillLocator.secondary.maxStock ?? 10;
         }
 
         public class RemoveAllSecondaryStock : MonoBehaviour
@@ -205,6 +205,11 @@ namespace SS2.Survivors
                         body.master.aiComponents[0].stateMachine.SetNextState(new EntityStates.AI.Walker.Fear { fearTarget = damageReport.attacker });
                     }
                 }
+            }
+
+            if (bodyIndex == BodyIndex.None) // ??????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????????
+            {
+                bodyIndex = bodyPrefab.GetComponent<CharacterBody>().bodyIndex;
             }
 
             if (damageReport.attacker && damageReport.attackerBodyIndex == bodyIndex && damageReport.victim.gameObject != damageReport.attacker && (damageReport.victimBody.bodyFlags & CharacterBody.BodyFlags.Masterless) == 0)

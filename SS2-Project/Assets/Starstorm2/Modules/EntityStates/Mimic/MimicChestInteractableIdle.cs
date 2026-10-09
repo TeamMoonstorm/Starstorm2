@@ -31,6 +31,16 @@ namespace EntityStates.Mimic
         public bool rechest = false;
         public float healthPrevious;
 
+        private int animIndex;
+        public override void OnSerialize(NetworkWriter writer)
+        {
+            writer.Write((byte)animIndex);
+        }
+
+        public override void OnDeserialize(NetworkReader reader)
+        {
+            animIndex = reader.ReadByte();
+        }
 
         public override void OnEnter()
         {
@@ -84,7 +94,13 @@ namespace EntityStates.Mimic
                 effectData.SetNetworkedObjectReference(impact);
                 EffectManager.SpawnEffect(impact, effectData, transmit: true);
 
-                PlayAnimation("Body", "IntermediateIdle");
+                if (isAuthority)
+                {
+                    animIndex = UnityEngine.Random.Range(0, 3);
+                }
+
+                string animState = "ChestIdle" + animIndex;
+                PlayAnimation("Body", animState);
 
                 GetComponent<HologramProjector>().enabled = true;
 

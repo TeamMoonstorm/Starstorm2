@@ -732,6 +732,8 @@ namespace SS2
             public static BuffDef bdTacticalDecisionMaking;
             
             public static BuffDef bdTotalReset;
+
+            public static BuffDef bdPetrified;
         }
 
         public static class Elites

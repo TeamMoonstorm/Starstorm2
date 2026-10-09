@@ -1,4 +1,28 @@
 **Warning: content spoilers below!**
+### 0.6.46 or whatever
+* Enemies
+	* Fixed various material issues with Security Chests. They should now appear identical to regular chests.
+* Items
+	* New effect for Broken Blood Tester
+		* OLD: Every 30 seconds, rapidly heal for 15 (+15 per stack) health for every 25 gold you currently have. Scales with time.
+		* NEW: After gaining $25, rapidly heal for 25 plus an additional 8% (+8% per stack) of maximum health.
+	* Coffee Bag pickups now work with Collector's Compulsion.
+	* Molten Coin now deals TOTAL damage instead of base damage.
+	* New effect for Needles
+		* OLD: +4% chance on hit to guarantee critical strikes on an enemy for the next 3 (+3 per stack) hits.
+		* NEW: Gain 5% (+5% per stack) critical chance. Critical strikes have a 10% chance to needle an enemy for 3x20% (+20% per stack) TOTAL damage.
+	* Adjusted Prototype Jet Boots
+		* OLD: Gain +1 extra jump that ignites enemies for 500% base damage in a 7.5m (+5m per stack) radius. Recharges 5 seconds after landing. 
+		* NEW: Gain +1 extra jump that ignites enemies for 400% (+200% per stack) base damage in a 7.5m (+2.5m per stack) radius. Recharges after 10 seconds.
+		* Increased jump height to match Hopoo Feather's bonus jump.
+	* Lowered Man O' War damage from 200% -> 150%
+* Survivors
+	* New Artificer alternate skill - Seismic Spear
+* Beta
+	* Pedestal will now display its item's name when pinged.
+	* Added Snowy and Sandy pedestal variants.
+	* Added Archer Bugs to the Larva family event.
+
 ### 0.6.42
 * 0.6.41 was accidentally a debug build.... Same changes applied instead this is a production build now!
 

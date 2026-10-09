@@ -12,6 +12,8 @@ namespace EntityStates.Mimic
 {
     public class MimicChestDeath : GenericCharacterDeath
     {
+        private static string enterSoundString = "Play_UI_chest_unlock";
+
         GameObject lVFX;
         GameObject rVFX;
         bool hasDropped = false;
@@ -25,6 +27,7 @@ namespace EntityStates.Mimic
         {
             base.OnEnter();
 
+            Util.PlaySound(enterSoundString, gameObject);
             PlayAnimation("Gesture, Override", "BufferEmpty");
 
             if(characterBody.modelLocator.modelTransform.TryGetComponent<CharacterModel>(out var cmodel))

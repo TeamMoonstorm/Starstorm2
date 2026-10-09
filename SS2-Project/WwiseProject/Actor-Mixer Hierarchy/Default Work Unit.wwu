@@ -10104,6 +10104,7 @@
 									<ChildrenList>
 										<Sound Name="item_proc_bloodtester_proc_01" ID="{E2C9A0A1-A93C-43AA-8486-51DE83535140}" ShortID="438550835">
 											<PropertyList>
+												<Property Name="OverridePositioning" Type="bool" Value="True"/>
 												<Property Name="Volume" Type="Real64">
 													<ValueList>
 														<Value>-1.5</Value>
@@ -10111,6 +10112,9 @@
 												</Property>
 											</PropertyList>
 											<ReferenceList>
+												<Reference Name="Attenuation">
+													<ObjectRef Name="ItemClose" ID="{C7AA6F50-8CB9-4A9A-A613-88FAF1DC82E9}" WorkUnitID="{01E36904-BE25-433F-9547-3A046044CA56}"/>
+												</Reference>
 												<Reference Name="Conversion">
 													<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{94E9A332-4F75-42A2-884C-469412070470}"/>
 												</Reference>

@@ -39,7 +39,7 @@ namespace SS2.Components
 			{
 				return;
 			}
-			if (!FriendlyFireManager.ShouldSplashHitProceed(characterModel2.body.healthComponent, teamFilter.teamIndex))
+			if (teamFilter && !FriendlyFireManager.ShouldSplashHitProceed(characterModel2.body.healthComponent, teamFilter.teamIndex))
 			{
 				return;
 			}

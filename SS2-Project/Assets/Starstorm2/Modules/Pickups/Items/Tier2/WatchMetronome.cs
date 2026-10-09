@@ -50,7 +50,7 @@ namespace SS2.Items
                 // While sprinting with the watch buff, body can sprint in any direction and their skills can be used while sprinting
                 // skills that only animate the upper body will look weird with the sprint animation
                 // skills that only animate the upper body also usually set the aim timer
-                if (self.characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome) && self.characterBody.aimTimer > 0)
+                if (self.characterBody.HasBuff(SS2Content.Buffs.BuffWatchMetronome) && self.modelAnimator && self.characterBody.aimTimer > 0)
                 {
                     self.modelAnimator.SetBool(AnimationParameters.isSprinting, false);
                 }
