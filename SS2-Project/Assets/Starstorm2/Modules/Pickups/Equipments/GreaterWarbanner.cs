@@ -83,7 +83,7 @@ namespace SS2.Equipments
             _warbannerObject = AssetCollection.FindAsset<GameObject>("GreaterWarbannerWard");
             gwbVFX = AssetCollection.FindAsset<GameObject>("GreaterBannerBuffEffect");
             RegisterTempVisualEffects();
-            On.RoR2.GenericSkill.RunRecharge += FasterTickrateBannerHook;
+            On.RoR2.GenericSkill.RunRecharge_float += FasterTickrateBannerHook;
         }
 
         public override void OnEquipmentLost(CharacterBody body)
@@ -94,7 +94,7 @@ namespace SS2.Equipments
         {
         }
 
-        private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge orig, GenericSkill self, float dt)
+        private void FasterTickrateBannerHook(On.RoR2.GenericSkill.orig_RunRecharge_float orig, GenericSkill self, float dt)
         {
             if (self)
             {

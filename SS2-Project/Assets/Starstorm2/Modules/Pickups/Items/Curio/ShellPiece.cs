@@ -21,7 +21,7 @@ namespace SS2.Items
             int itemCount = self.inventory.GetItemCount(SS2Content.Items.ShellPieceConsumed);
             if (itemCount > 0)
             {
-                self.inventory.RemoveItem(SS2Content.Items.ShellPieceConsumed, itemCount);
+                self.inventory.RemoveItemPermanent(SS2Content.Items.ShellPieceConsumed, itemCount);
                 self.inventory.GiveItem(SS2Content.Items.ShellPiece, itemCount);
                 CharacterMasterNotificationQueue.SendTransformNotification(self, SS2Content.Items.ShellPieceConsumed.itemIndex, SS2Content.Items.ShellPiece.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
             }

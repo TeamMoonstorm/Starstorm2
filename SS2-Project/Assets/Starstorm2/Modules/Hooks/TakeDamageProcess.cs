@@ -59,7 +59,7 @@ namespace SS2.Hooks
                 healthComponent.Networkhealth = combinedHealthBeforeDamage;
                 if (healthComponent.Networkhealth < 1) healthComponent.Networkhealth = 1;
                 body.AddTimedBuff(RoR2Content.Buffs.HiddenInvincibility, 3f);
-                body.inventory.RemoveItem(SS2Content.Items.ShellPiece);
+                body.inventory.RemoveItemPermanent(SS2Content.Items.ShellPiece);
                 body.inventory.GiveItem(SS2Content.Items.ShellPieceConsumed);
                 CharacterMasterNotificationQueue.SendTransformNotification(body.master, SS2Content.Items.ShellPiece.itemIndex, SS2Content.Items.ShellPieceConsumed.itemIndex, CharacterMasterNotificationQueue.TransformationType.Default);
                 //
