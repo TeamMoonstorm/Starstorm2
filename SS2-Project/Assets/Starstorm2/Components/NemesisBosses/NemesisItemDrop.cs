@@ -1,4 +1,5 @@
 ﻿using RoR2;
+using SS2;
 using UnityEngine;
 namespace SS2.Components
 {
@@ -9,26 +10,21 @@ namespace SS2.Components
         private CharacterBody body;
         private void Awake()
         {
-            body = GetComponent<CharacterBody>();
+            if (!TryGetComponent(out body))
+            {
+                SS2Log.Error("NemesisItemDrop.Awake: CharacterBody missing on " + gameObject.name);
+            }
         }
 
         public void OnKilledServer(DamageReport damageReport)
         {
-            //SS2Log.Info("itemdef: " + itemDef.name + " | " + itemDef.tier + " | " + itemDef.deprecatedTier + " | " + (int)itemDef.deprecatedTier + " | " + itemDef._itemTierDef + " | "); 
+            if (!itemDef || !body)
+                return;
 
-            //itemdef: StirringSoul | 11 | AssignedAtRuntime | 10 | Sibylline (RoR2.ItemTierDef) | (enabled)
-            //itemdef: StirringSoul | 11 | NoTier | 5 | Sibylline (RoR2.ItemTierDef) | (disabled) 
-
-            //SS2Log.Info(itemDef.name + " stuff: " + (int)itemDef.deprecatedTier + " | " + (int)ItemTier.NoTier);
-            if (itemDef.deprecatedTier != ItemTier.NoTier) //sorry using itemDef.tier doesnt change when the item gets notiered :(
+            if (itemDef.deprecatedTier != ItemTier.NoTier)
             {
                 PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(itemDef.itemIndex), body.corePosition, Vector3.up);
             }
-            else
-            {
-                //SS2Log.Info("Item is disabled: " + itemDef.nameToken);
-            }
-            //PickupDropletController.CreatePickupDroplet(PickupCatalog.FindPickupIndex(itemDef.itemIndex), body.corePosition, Vector3.up);
         }
     }
 }
