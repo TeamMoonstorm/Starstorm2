@@ -24,8 +24,6 @@ namespace SS2.Components
 				CharacterBody body = other.GetComponent<CharacterBody>();
 				if (body)
 				{
-					body.OnPickup(CharacterBody.PickupClass.Minor);
-
                     int stack = Mathf.Max(itemStacks, 1);
 					if (body.GetBuffCount(SS2Content.Buffs.BuffCoffeeBag) < CoffeeBag.maxStax * stack)
 						body.AddTimedBuff(SS2Content.Buffs.BuffCoffeeBag, CoffeeBag.buffDuration);
