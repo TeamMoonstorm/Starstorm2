@@ -54,7 +54,7 @@ namespace SS2.UI
                 float angle = Mathf.Deg2Rad * angleBetweenElements * i;
                 element.transform.localPosition = new Vector3(Mathf.Cos(angle) * elementDistance, Mathf.Sin(angle) * elementDistance, 0); ///////////////
                 Image visual = element.FindChild("Icon").GetComponent<Image>();
-                visual.sprite = pickupDef.iconSprite;
+                visual.sprite = pickupDef.GetIconAODR(true).WaitForCompletion();
             }
         }
         private void Update()

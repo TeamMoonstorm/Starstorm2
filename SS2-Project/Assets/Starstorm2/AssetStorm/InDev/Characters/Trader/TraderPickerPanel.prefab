@@ -6482,6 +6482,7 @@ GameObject:
   - component: {fileID: 7253062090496969605}
   - component: {fileID: 7251441048046947450}
   - component: {fileID: 7358996981686173551}
+  - component: {fileID: 1480124257706771187}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -6547,6 +6548,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1480124257706771187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7472320891768167040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 7358996981686173551}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!1 &7472377745401502246
 GameObject:
   m_ObjectHideFlags: 0
@@ -7243,7 +7262,6 @@ GameObject:
   - component: {fileID: 7359650413931426281}
   - component: {fileID: 7359911955044419019}
   - component: {fileID: 7359021727314131078}
-  - component: {fileID: 1125976197262227867}
   m_Layer: 5
   m_Name: PickupButtonTemplate
   m_TagString: Untagged
@@ -7444,24 +7462,6 @@ MonoBehaviour:
     transform: {fileID: 7253301809255760536}
   - name: HoverOutline
     transform: {fileID: 7253550810367782155}
---- !u!114 &1125976197262227867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7473249009684163213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadOnAssigned: 1
-  unloadType: 2
-  disableWhileLoading: 0
-  renderer: {fileID: 7362601339464817741}
-  secondaryRenderers: []
-  initialized: 0
 --- !u!1 &7573848927079415195
 GameObject:
   m_ObjectHideFlags: 0

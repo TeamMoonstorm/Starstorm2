@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 678514445698944430}
   - component: {fileID: 675777401064622673}
   - component: {fileID: 856515168709163332}
+  - component: {fileID: 8949250926299524855}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -76,6 +77,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8949250926299524855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752550302005435563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 0}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!1 &752782049621963514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,7 +1905,6 @@ GameObject:
   - component: {fileID: 856497037607665325}
   - component: {fileID: 678754700548458149}
   - component: {fileID: 678754700548458150}
-  - component: {fileID: 477648600381529492}
   m_Layer: 5
   m_Name: PickupButtonTemplate
   m_TagString: Untagged
@@ -2041,24 +2059,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &477648600381529492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 753452029530369190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loadOnAssigned: 1
-  unloadType: 2
-  disableWhileLoading: 0
-  renderer: {fileID: 860093147838569062}
-  secondaryRenderers: []
-  initialized: 0
 --- !u!1 &6336697010107478510
 GameObject:
   m_ObjectHideFlags: 0
