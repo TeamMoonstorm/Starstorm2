@@ -61,7 +61,7 @@ namespace SS2.Items
             {
                 storedGold += gold;
 
-                float scaledGoldRequirement = Stage.instance ? Run.instance.GetDifficultyScaledCost((int)goldRequirement, Stage.instance.entryDifficultyCoefficient) : Run.instance.GetDifficultyScaledCost((int)goldRequirement);
+                float scaledGoldRequirement = Run.instance.GetDifficultyScaledCost((int)goldRequirement);
                 if (storedGold >= scaledGoldRequirement)
                 {
                     storedGold = 0;
