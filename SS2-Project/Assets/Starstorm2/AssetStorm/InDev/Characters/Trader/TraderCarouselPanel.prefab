@@ -464,6 +464,7 @@ MonoBehaviour:
   updateTextOnHover: 0
   hoverLanguageTextMeshController: {fileID: 0}
   hoverToken: 
+  hoverHighlightGameObject: {fileID: 0}
   uiClickSoundOverride: Play_UI_menuBack
 --- !u!114 &856360572451391359
 MonoBehaviour:
@@ -665,6 +666,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -910,6 +912,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 3
   canvas: {fileID: 678998157588895055}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!114 &855910632538365330
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1086,6 +1090,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -1104,6 +1109,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 679680762816758955}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!114 &678731577638791982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1118,6 +1125,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -1216,6 +1225,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.4
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &678731577638791983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1449,6 +1461,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1584,6 +1597,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -1682,6 +1697,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.5
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &859966099161163889
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1868,6 +1886,7 @@ GameObject:
   - component: {fileID: 856497037607665325}
   - component: {fileID: 678754700548458149}
   - component: {fileID: 678754700548458150}
+  - component: {fileID: 477648600381529492}
   m_Layer: 5
   m_Name: PickupButtonTemplate
   m_TagString: Untagged
@@ -2022,6 +2041,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &477648600381529492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 753452029530369190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 860093147838569062}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!1 &6336697010107478510
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,6 +2290,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -2271,6 +2309,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 6120293248000430246}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!1 &6337357186585737401
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,6 +2424,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -2482,6 +2524,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 1
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &6227958049617001596
 MonoBehaviour:
   m_ObjectHideFlags: 0

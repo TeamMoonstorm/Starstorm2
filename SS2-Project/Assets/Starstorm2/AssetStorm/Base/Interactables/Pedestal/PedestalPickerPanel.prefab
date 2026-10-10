@@ -1486,6 +1486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
   resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
@@ -1587,6 +1588,7 @@ MonoBehaviour:
   timeMax: 1
   ignoreResetOnEnable: 0
   loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &2990344549552452931
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1700,6 +1702,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -3537,6 +3540,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
   resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
@@ -3638,6 +3642,7 @@ MonoBehaviour:
   timeMax: 0.5
   ignoreResetOnEnable: 0
   loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &8430394093507240270
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3845,6 +3850,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -4473,6 +4479,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -5789,6 +5796,24 @@ MonoBehaviour:
   transformPairs:
   - name: Icon
     transform: {fileID: 3341022245771894048}
+--- !u!114 &540018504426336220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262783294277223501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 3230280752827993149}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!224 &3341022245771894048 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9076091882709083889, guid: 70177c8e16aa0ac4fa8e05e2fc6bf330,

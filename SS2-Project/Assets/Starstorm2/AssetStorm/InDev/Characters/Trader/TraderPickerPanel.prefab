@@ -961,6 +961,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -1059,6 +1061,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 1
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &4300016359498283607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1389,6 +1394,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -1407,6 +1413,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 4120013597075986061}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!1 &4193116575754634148
 GameObject:
   m_ObjectHideFlags: 0
@@ -4519,6 +4527,7 @@ MonoBehaviour:
   updateTextOnHover: 0
   hoverLanguageTextMeshController: {fileID: 0}
   hoverToken: 
+  hoverHighlightGameObject: {fileID: 0}
   uiClickSoundOverride: Play_UI_menuBack
 --- !u!114 &7359158484386595156
 MonoBehaviour:
@@ -5054,6 +5063,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -5219,6 +5229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -5317,6 +5329,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.5
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &7362728284382490202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5512,6 +5527,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -5551,9 +5567,14 @@ MonoBehaviour:
   coloredImages: []
   darkColoredImages: []
   maxColumnCount: 5
+  useLockSpriteForUnavailableOptions: 1
   shouldRemoveChoice: 0
   needsNetworking: 0
   networkMultiOptionPickupPicker: {fileID: 0}
+  shouldChangeButtonFrameColor: 0
+  shouldLeaveDisabledButtonsInteractable: 0
+  automaticButtonNavigation: 0
+  excludedItemsDropTable: {fileID: 0}
   pickupSelected:
     m_PersistentCalls:
       m_Calls:
@@ -5817,6 +5838,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 3
   canvas: {fileID: 7254971327798104932}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!114 &7359535925796936633
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6234,6 +6257,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -6252,6 +6276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 7254220158123360896}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!1 &7472028602862163536
 GameObject:
   m_ObjectHideFlags: 0
@@ -7217,6 +7243,7 @@ GameObject:
   - component: {fileID: 7359650413931426281}
   - component: {fileID: 7359911955044419019}
   - component: {fileID: 7359021727314131078}
+  - component: {fileID: 1125976197262227867}
   m_Layer: 5
   m_Name: PickupButtonTemplate
   m_TagString: Untagged
@@ -7384,6 +7411,7 @@ MonoBehaviour:
   updateTextOnHover: 0
   hoverLanguageTextMeshController: {fileID: 0}
   hoverToken: 
+  hoverHighlightGameObject: {fileID: 0}
   uiClickSoundOverride: Play_UI_commandHUD_select
 --- !u!114 &7359911955044419019
 MonoBehaviour:
@@ -7416,6 +7444,24 @@ MonoBehaviour:
     transform: {fileID: 7253301809255760536}
   - name: HoverOutline
     transform: {fileID: 7253550810367782155}
+--- !u!114 &1125976197262227867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7473249009684163213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 7362601339464817741}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!1 &7573848927079415195
 GameObject:
   m_ObjectHideFlags: 0
