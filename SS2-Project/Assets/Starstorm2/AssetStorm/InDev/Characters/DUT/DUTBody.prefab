@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 7577970568914555809}
   - component: {fileID: 350213891987490030}
   - component: {fileID: 6210167037253006836}
+  - component: {fileID: -4178449291125340643}
   m_Layer: 0
   m_Name: DUTBody
   m_TagString: Player
@@ -112,6 +113,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyIndex: -1
+  altDeathEventBodyIndex: -1
   CharacterIsVisible: 0
   cost: -1
   dontCull: 0
@@ -122,6 +124,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_DUT_SUBTITLE
   bodyFlags: 18
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 200
@@ -149,14 +152,16 @@ MonoBehaviour:
   levelArmor: 0
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
-  lowerHealthHigherDamageEffectUpdater: {fileID: 0}
-  canBoostAllStats: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
-  solitudeLevelCount: 0
+  boostAllStatsDisplay: {fileID: 0}
+  alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve: []
@@ -165,22 +170,40 @@ MonoBehaviour:
     m_RotationOrder: 4
   _defaultCrosshairPrefab: {fileID: 0}
   hideCrosshair: 0
-  increasePrimaryDamageEffectUpdater: {fileID: 0}
-  protectFromOneShot: 0
-  hasTeleported: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
+  canAddIncrasePrimaryDamage: 0
+  knockBackFinGroundedTimer: 0
+  runicLensPosition: {x: 0, y: 0, z: 0}
+  meteorVictimBody: {fileID: 0}
+  runicLensStartTime: 0
+  runicLensImpactTime: 0
   runicLensMeteorReady: 0
+  spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 6298387738238932214}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 5e9bd672627ce664b8809a524a7303bf, type: 3}
   bodyColor: {r: 0.4509804, g: 0.8980392, b: 0.77254903, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
+  altDeathBodyName: 
+  vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: EntityStates.Uninitialized, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   skinIndex: 0
+  requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &308169725067821790
@@ -196,6 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: -1
 --- !u!114 &1499786981183578919
 MonoBehaviour:
@@ -211,11 +235,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
+  echoDamage: 0
   barrier: 0
   magnetiCharge: 0
   dontShowHealthbar: 0
+  isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 512358622610276887}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &2193845743271501430
 MonoBehaviour:
@@ -273,6 +301,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &5479429187712693737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,9 +360,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 8823503061cf6c3419af89b53b310ad1, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &409918554950025506
 MonoBehaviour:
@@ -348,9 +382,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: d223e59967469b540818b36baa9facc4, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &7536965215266177768
 MonoBehaviour:
@@ -366,9 +404,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 03cbba26ceb256f40b5671df684c4fa1, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &4849249763406974445
 MonoBehaviour:
@@ -384,9 +426,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 281f5eaa6911fae4fa3188660c7037c3, type: 2}
   skillName: 
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &747372404987301215
 MonoBehaviour:
@@ -510,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 0.1
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 8809726012718075203}
   idleStateMachine: []
   hurtState:
@@ -518,6 +565,7 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &4553531712622406636
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -539,6 +587,10 @@ MonoBehaviour:
   - {fileID: 7004874563467878258}
   - {fileID: 7672523126827999694}
   - {fileID: -4268907198275528608}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!136 &4911544170806287438
 CapsuleCollider:
@@ -625,6 +677,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
+  gravityScale: 1
   characterDirection: {fileID: 5280059098109951703}
   muteWalkMotion: 0
   mass: 100
@@ -632,10 +686,16 @@ MonoBehaviour:
   disableAirControlUntilCollision: 1
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
+  useHangtimeGravity: 0
+  gravityMultiplier: 1
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &5280059098109951703
@@ -656,6 +716,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 0}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 720
   turnSoundName: 
 --- !u!114 &5430000998883685234
@@ -687,11 +748,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 4700677646297005715}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 6913934177176440545}
-  modelScaleCompensation: 1
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -700,6 +762,8 @@ MonoBehaviour:
   normalizeToFloor: 1
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 50
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &7577970568914555809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -715,6 +779,7 @@ MonoBehaviour:
   deathSound: Play_ui_player_death
   barkSound: 
   openSound: 
+  jumpSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage
   aliveLoopStart: 
@@ -769,6 +834,18 @@ MonoBehaviour:
   thresholdMultiplier: 0.5
   threshold2Multiplier: 0.5
   chargeMax: 70
+--- !u!114 &-4178449291125340643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768686348761891691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3113390010865843836
 GameObject:
   m_ObjectHideFlags: 0

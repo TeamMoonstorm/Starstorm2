@@ -179,6 +179,7 @@ GameObject:
   - component: {fileID: 5278585593546160489}
   - component: {fileID: 4608135033383063149}
   - component: {fileID: 1394626647}
+  - component: {fileID: -832838577233055520}
   m_Layer: 0
   m_Name: KnightBody
   m_TagString: Player
@@ -289,15 +290,16 @@ MonoBehaviour:
   levelArmor: 0
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
   boostAllStatsDisplay: {fileID: 0}
-  currentGrowthNectarBuffCount: 0
-  maxGrowthNectarBuffCount: 0
   alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -344,14 +346,19 @@ MonoBehaviour:
   bodyColor: {r: 0.9150943, g: 0.5655347, b: 0.25467247, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
   altDeathBodyName: 
   vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: 
   skinIndex: 0
   requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &6359193300256925937
@@ -366,12 +373,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 2553515950558735303}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 7287274351398289365}
-  modelScaleCompensation: 1
-  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -603,6 +610,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: -1
 --- !u!114 &9036600056123788589
 MonoBehaviour:
@@ -617,6 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
   gravityScale: 1
   characterDirection: {fileID: 1301156465497949038}
   muteWalkMotion: 0
@@ -632,6 +641,7 @@ MonoBehaviour:
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  gravityMultiplier: 1
   useCustomGravity: 0
   CustomGravity: 0
   _flightParameters:
@@ -702,6 +712,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
   echoDamage: 0
   barrier: 0
   magnetiCharge: 0
@@ -725,6 +736,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
   isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &1597189476404624147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -908,7 +920,6 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
-  isFrozen: 1
   canBeTaunted: 1
 --- !u!114 &4608135033383063149
 MonoBehaviour:
@@ -939,6 +950,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6368af8e47d438d4b8ea719b84679de0, type: 2}
   - {fileID: 11400000, guid: 7b56915308c78fd439b452fe7ba7e586, type: 2}
   - {fileID: 11400000, guid: 49835b9801d843a4cb542f0aeafcf7d3, type: 2}
+--- !u!114 &-832838577233055520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7725647466612521720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3409225305625246073
 PrefabInstance:
   m_ObjectHideFlags: 0

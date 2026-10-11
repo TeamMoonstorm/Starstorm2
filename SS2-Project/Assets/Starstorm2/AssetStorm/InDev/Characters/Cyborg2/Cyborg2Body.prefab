@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 8467841194318990007}
   - component: {fileID: 4269496153077987429}
   - component: {fileID: 1004718732815417702}
+  - component: {fileID: -1424993977774824720}
   m_Layer: 0
   m_Name: Cyborg2Body
   m_TagString: Player
@@ -147,15 +148,16 @@ MonoBehaviour:
   levelArmor: 0
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
   boostAllStatsDisplay: {fileID: 0}
-  currentGrowthNectarBuffCount: 0
-  maxGrowthNectarBuffCount: 0
   alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -202,8 +204,10 @@ MonoBehaviour:
   bodyColor: {r: 0.43529415, g: 0.58431375, b: 0.5647059, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
   altDeathBodyName: 
   vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -211,6 +215,9 @@ MonoBehaviour:
       PublicKeyToken=null
   skinIndex: 0
   requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &5906391180362532192
@@ -225,12 +232,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 5677010006892963226}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 8665420764453311449}
-  modelScaleCompensation: 1
-  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -443,6 +450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: -1
 --- !u!114 &6214931767848826454
 MonoBehaviour:
@@ -457,6 +465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
   gravityScale: 1
   characterDirection: {fileID: 2409229758586498619}
   muteWalkMotion: 0
@@ -472,6 +481,7 @@ MonoBehaviour:
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  gravityMultiplier: 1
   useCustomGravity: 0
   CustomGravity: 0
   _flightParameters:
@@ -542,6 +552,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
   echoDamage: 0
   barrier: 0
   magnetiCharge: 0
@@ -565,6 +576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
   isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &7927503961054320866
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -747,8 +759,19 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
-  isFrozen: 1
   canBeTaunted: 1
+--- !u!114 &-1424993977774824720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2260960647979714696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4426841502502991441
 GameObject:
   m_ObjectHideFlags: 0
@@ -873,6 +896,8 @@ MonoBehaviour:
   healthComponent: {fileID: 5877733378612987477}
   isBullseye: 1
   isSniperTarget: 1
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
   bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3913214122629329438}
@@ -1658,7 +1683,6 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
-  UseTransformedAimVector: 0
 --- !u!114 &2294898117050698684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1712,6 +1736,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelTransformOverride: {fileID: 0}
   baseFootstepString: Play_player_footstep
   baseFootliftString: 
   sprintFootstepOverrideString: 
@@ -1734,6 +1759,7 @@ MonoBehaviour:
   hurtBoxes:
   - {fileID: 937228765377335665}
   mainHurtBox: {fileID: 937228765377335665}
+  ignoreDeactivateHurtboxes: []
   bullseyeCount: 1
 --- !u!114 &5652153021394497937
 MonoBehaviour:
@@ -1778,10 +1804,12 @@ MonoBehaviour:
     ignoresMaterialOverrides: 0
   fullBodyPing: 0
   baseLightInfos: []
+  visbilityAffectedByHollow: 0
   constraintItemDisplaysScale: 0
   ignoreJitterBones: 0
   corpseFade: 1
   speedFade: 1
+  disableFade: 0
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
   useHullForFadeCalc: 0
