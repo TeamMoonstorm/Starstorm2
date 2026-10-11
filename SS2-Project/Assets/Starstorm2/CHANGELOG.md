@@ -1,5 +1,5 @@
 **Warning: content spoilers below!**
-### 0.6.46 or whatever
+### 0.6.45
 * Enemies
 	* Fixed various material issues with Security Chests. They should now appear identical to regular chests.
 * Items
@@ -10,7 +10,7 @@
 	* Molten Coin now deals TOTAL damage instead of base damage.
 	* New effect for Needles
 		* OLD: +4% chance on hit to guarantee critical strikes on an enemy for the next 3 (+3 per stack) hits.
-		* NEW: Gain 5% (+5% per stack) critical chance. Critical strikes have a 10% chance to needle an enemy for 3x20% (+20% per stack) TOTAL damage.
+		* NEW: Gain 5% (+5% per stack) critical chance. Critical strikes have a 20% chance to needle an enemy for 3x10% (+10% per stack) TOTAL damage.
 	* Adjusted Prototype Jet Boots
 		* OLD: Gain +1 extra jump that ignites enemies for 500% base damage in a 7.5m (+5m per stack) radius. Recharges 5 seconds after landing. 
 		* NEW: Gain +1 extra jump that ignites enemies for 400% (+200% per stack) base damage in a 7.5m (+2.5m per stack) radius. Recharges after 10 seconds.
