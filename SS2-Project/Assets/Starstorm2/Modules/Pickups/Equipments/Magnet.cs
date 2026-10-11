@@ -1,7 +1,6 @@
 ﻿using MSU;
 using MSU.Config;
 using RoR2;
-using RoR2.ContentManagement;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -33,11 +32,6 @@ namespace SS2.Equipments
         public override bool Execute(EquipmentSlot slot)
         {
             NetworkServer.Spawn(GameObject.Instantiate<GameObject>(_magnetPrefab, slot.characterBody.corePosition + (Vector3.up * 3f), Quaternion.identity));
-            return true;
-        }
-
-        public override bool IsAvailable(ContentPack conentPack)
-        {
             return true;
         }
 

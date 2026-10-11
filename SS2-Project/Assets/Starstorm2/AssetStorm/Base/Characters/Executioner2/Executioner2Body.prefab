@@ -61,6 +61,8 @@ MonoBehaviour:
   healthComponent: {fileID: 9011166777397608905}
   isBullseye: 0
   isSniperTarget: 1
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
   bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 8586043491750221363}
@@ -127,6 +129,8 @@ MonoBehaviour:
   healthComponent: {fileID: 9011166777397608905}
   isBullseye: 1
   isSniperTarget: 1
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
   bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 8586043491750221363}
@@ -373,6 +377,7 @@ GameObject:
   - component: {fileID: 9011166777397608952}
   - component: {fileID: 1250754454161288130}
   - component: {fileID: 6533427204412895867}
+  - component: {fileID: 6228311577923423776}
   m_Layer: 0
   m_Name: Executioner2Body
   m_TagString: Player
@@ -484,15 +489,16 @@ MonoBehaviour:
   levelArmor: 0
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
   boostAllStatsDisplay: {fileID: 0}
-  currentGrowthNectarBuffCount: 0
-  maxGrowthNectarBuffCount: 0
   alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.5
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -539,14 +545,19 @@ MonoBehaviour:
   bodyColor: {r: 0.5803922, g: 0.34901962, b: 0.50980395, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
   altDeathBodyName: 
   vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
     _typeName: EntityStates.Uninitialized, Assembly-CSharp
   skinIndex: 0
   requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &9011166777397608918
@@ -562,6 +573,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: -1
 --- !u!114 &9011166777397608905
 MonoBehaviour:
@@ -577,6 +589,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
   echoDamage: 0
   barrier: 0
   magnetiCharge: 0
@@ -643,6 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
   isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &4646082266616658578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -900,7 +914,6 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
-  isFrozen: 1
   canBeTaunted: 1
 --- !u!114 &9011166777397608900
 MonoBehaviour:
@@ -1011,6 +1024,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
   gravityScale: 1
   characterDirection: {fileID: 9011166777397608906}
   muteWalkMotion: 0
@@ -1026,6 +1040,7 @@ MonoBehaviour:
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  gravityMultiplier: 1
   useCustomGravity: 0
   CustomGravity: 0
   _flightParameters:
@@ -1080,12 +1095,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 6560994912336682537}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 5830578774801424287}
-  modelScaleCompensation: 1
-  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -1148,6 +1163,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredExpansion: {fileID: 11400000, guid: 59a1ba2efde60ad44a82ed4c314d08ba, type: 2}
   requireEntitlementIfPlayerControlled: 1
+--- !u!114 &6228311577923423776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9011166777397608954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6667560973441989058
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2762,6 +2789,8 @@ MonoBehaviour:
   pauseTime: 0
   destroyOnEnd: 0
   disableOnEnd: 1
+  disableObjectOnEnd: 0
+  resetOnEnable: 0
   time: 0
   initialyEnabled: 0
   OnFinished:
@@ -2809,6 +2838,8 @@ MonoBehaviour:
   pauseTime: 0
   destroyOnEnd: 0
   disableOnEnd: 1
+  disableObjectOnEnd: 0
+  resetOnEnable: 0
   time: 0
   initialyEnabled: 0
   OnFinished:
@@ -3715,6 +3746,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelTransformOverride: {fileID: 0}
   baseFootstepString: Play_captain_step
   baseFootliftString: 
   sprintFootstepOverrideString: Play_captain_step_sprint
@@ -3858,7 +3890,6 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
-  UseTransformedAimVector: 0
 --- !u!114 &8586043491750221363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3875,6 +3906,7 @@ MonoBehaviour:
   - {fileID: 6479709520399913495}
   - {fileID: 8045668714052455389}
   mainHurtBox: {fileID: 6479709520399913495}
+  ignoreDeactivateHurtboxes: []
   bullseyeCount: 1
 --- !u!114 &8804272743074305254
 MonoBehaviour:
@@ -3946,10 +3978,12 @@ MonoBehaviour:
     ignoresMaterialOverrides: 0
   fullBodyPing: 0
   baseLightInfos: []
+  visbilityAffectedByHollow: 0
   constraintItemDisplaysScale: 0
   ignoreJitterBones: 0
   corpseFade: 1
   speedFade: 1
+  disableFade: 0
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
   useHullForFadeCalc: 0

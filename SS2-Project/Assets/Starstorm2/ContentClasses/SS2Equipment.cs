@@ -39,7 +39,7 @@ namespace SS2
                 }
             }
         }
-        public virtual bool IsAvailable(ContentPack conentPack)
+        public virtual bool IsAvailable(ContentPack contentPack)
         {
             ConfiguredBool isDisabled = SS2Config.ConfigFactory.MakeConfiguredBool(false, b =>
             {

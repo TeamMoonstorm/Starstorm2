@@ -23,7 +23,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 942585478837593267}
+  m_GameObject: {fileID: 1411843420469206995}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &1479459457953052363
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +114,7 @@ GameObject:
   - component: {fileID: 6643032618993098790}
   - component: {fileID: 1644424127973027857}
   - component: {fileID: -1894089289567177897}
+  - component: {fileID: -5325893806998252229}
   m_Layer: 0
   m_Name: NukeBody
   m_TagString: Player
@@ -194,6 +196,7 @@ MonoBehaviour:
   subtitleNameToken: SS2_NUKE_BODY_SUBTITLE
   bodyFlags: 16
   lavaCooldown: 0.2
+  shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
   baseMaxHealth: 220
@@ -219,18 +222,18 @@ MonoBehaviour:
   levelAttackSpeed: 0
   levelCrit: 0
   levelArmor: 0
-  amputatedMaxHealth: 0
-  amputateMaxHealthMinimum: 1
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
   boostAllStatsDisplay: {fileID: 0}
-  currentGrowthNectarBuffCount: 0
-  maxGrowthNectarBuffCount: 0
+  alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0.7
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve:
@@ -258,6 +261,8 @@ MonoBehaviour:
   _defaultCrosshairPrefab: {fileID: 4065240185429966408, guid: 1de6b0ea1b76e764fa374440d963b981,
     type: 3}
   hideCrosshair: 0
+  sprintCrosshairPrefabOverride: {fileID: 0}
+  useSprintCrosshair: 1
   canAddIncrasePrimaryDamage: 0
   knockBackFinGroundedTimer: 0
   runicLensPosition: {x: 0, y: 0, z: 0}
@@ -266,13 +271,20 @@ MonoBehaviour:
   runicLensImpactTime: 0
   runicLensMeteorReady: 0
   spawnedPickupCount: 0
+  useTemporaryPathfindingFootposition: 0
   aimOriginTransform: {fileID: 2035198859716438208}
+  scanOverrideTransform: {fileID: 0}
+  limitCooldown: 0
+  minCooldownCoefficient: 0
   hullClassification: 0
   portraitIcon: {fileID: 2800000, guid: 3ca7a9e7bf17dcb40a2fb38197af9596, type: 3}
   bodyColor: {r: 0.6348462, g: 1, b: 0, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
   altDeathBodyName: 
+  vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -280,6 +292,9 @@ MonoBehaviour:
       PublicKeyToken=null
   skinIndex: 0
   requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &5142088099896263475
@@ -294,11 +309,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 1455277377798807156}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 9145381829550409786}
-  modelScaleCompensation: 1
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -307,6 +323,8 @@ MonoBehaviour:
   normalizeToFloor: 0
   normalSmoothdampTime: 0.1
   normalMaxAngleDelta: 90
+  shouldOverrideLogbookModel: 0
+  logbookOverrideBodyName: 
 --- !u!114 &8864397054703191850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -400,9 +418,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: b1c1a31b2b931b14eb5c565e0d8120ff, type: 2}
   skillName: NukeIrradiate
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &839640459391379173
 MonoBehaviour:
@@ -418,9 +440,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 401d8b31f4302934e8d3c6ded9d08bd6, type: 2}
   skillName: NukeQuarantine
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &5496303023538818828
 MonoBehaviour:
@@ -436,9 +462,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: ff8a4ab817ef975478a8d7963586b5c1, type: 2}
   skillName: NukeFusionImpulse
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &2053387569735770873
 MonoBehaviour:
@@ -454,9 +484,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _skillFamily: {fileID: 11400000, guid: 24b5f8f49460731408d16e41908f92a3, type: 2}
   skillName: NukeSurge
+  loadoutTitleToken: 
   hideInCharacterSelect: 0
-  baseStock: 0
-  baseRechargeStopwatch: 0
+  hideInLoadoutSelect: 0
+  skillAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   hasExecutedSuccessfully: 0
 --- !u!114 &8224343196787055223
 MonoBehaviour:
@@ -473,6 +507,7 @@ MonoBehaviour:
   deathSound: Play_ui_player_death
   barkSound: 
   openSound: 
+  jumpSound: 
   landingSound: Play_char_land
   fallDamageSound: Play_char_land_fall_damage
   aliveLoopStart: 
@@ -492,6 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: 1
 --- !u!114 &4983530402403160975
 MonoBehaviour:
@@ -506,6 +542,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
   gravityScale: 1
   characterDirection: {fileID: 7084199255585225353}
   muteWalkMotion: 0
@@ -514,11 +551,16 @@ MonoBehaviour:
   disableAirControlUntilCollision: 0
   generateParametersOnAwake: 1
   doNotTriggerJumpVolumes: 0
+  ignoredRigidbodies: []
+  minWalkSpeedPenaltyCoefficient: 0.1
   _gravityParameters:
     environmentalAntiGravityGranterCount: 0
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  gravityMultiplier: 1
+  useCustomGravity: 0
+  CustomGravity: 0
   _flightParameters:
     channeledFlightGranterCount: 0
 --- !u!114 &4256054803697361099
@@ -570,6 +612,7 @@ MonoBehaviour:
   rootMotionAccumulator: {fileID: 0}
   modelAnimator: {fileID: 2411077182181043490}
   driveFromRootRotation: 0
+  shouldDirectPitch: 0
   turnSpeed: 720
   turnSoundName: 
 --- !u!114 &5948491894790339010
@@ -586,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
   echoDamage: 0
   barrier: 0
   magnetiCharge: 0
@@ -593,6 +637,7 @@ MonoBehaviour:
   isDefaultGodMode: 0
   globalDeathEventChanceCoefficient: 1
   body: {fileID: 1679090673574041123}
+  isRepairing: 0
   forceCulled: 0
 --- !u!114 &4718173286877401359
 MonoBehaviour:
@@ -607,6 +652,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
+  isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &8785383061675499278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -643,6 +690,10 @@ MonoBehaviour:
   idleStateMachine:
   - {fileID: 11372792272438086}
   - {fileID: 11372792272438086}
+  deathAkEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 0}
   bypassDeathLayerChange: 0
 --- !u!114 &1011503310221288582
 MonoBehaviour:
@@ -758,6 +809,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitThreshold: 5
+  hitStunCumulative: 0
   targetStateMachine: {fileID: 8938698264579123999}
   idleStateMachine:
   - {fileID: 11372792272438086}
@@ -766,6 +818,7 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
+  canBeTaunted: 1
 --- !u!114 &1644424127973027857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -796,6 +849,18 @@ MonoBehaviour:
   _selfDamageColor: {fileID: 11400000, guid: 631e35fb76ab19c41b026980e5ac5349, type: 2}
   _maxHPCoefficientAsDamage: 0.25
   _timeBetweenTicks: 0.25
+--- !u!114 &-5325893806998252229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649388427615043806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2735202152708560007
 GameObject:
   m_ObjectHideFlags: 0
@@ -836,10 +901,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 272433082335854226}
-  - {fileID: 6989274154417676573}
-  - {fileID: 5331363747114580850}
   m_Father: {fileID: 9145381829550409786}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7356016742055110739
 MonoBehaviour:
@@ -857,6 +920,7 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: c1d3fe6980b74bf4197eabd66ccc3cc4, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 2230972565893923575}
     defaultMaterialAddress:
@@ -878,10 +942,17 @@ MonoBehaviour:
     ignoreOverlays: 1
     hideOnDeath: 0
     ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos: []
+  visbilityAffectedByHollow: 0
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
+  disableFade: 0
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0
@@ -920,9 +991,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hurtBoxes:
-  - {fileID: 1767703824560670566}
-  mainHurtBox: {fileID: 1767703824560670566}
-  bullseyeCount: 1
+  - {fileID: 0}
+  mainHurtBox: {fileID: 0}
+  ignoreDeactivateHurtboxes: []
+  bullseyeCount: 0
 --- !u!114 &4118076556014829313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -935,6 +1007,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelTransformOverride: {fileID: 0}
   baseFootstepString: Play_player_footstep
   baseFootliftString: 
   sprintFootstepOverrideString: 
@@ -1004,7 +1077,6 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
-  UseTransformedAimVector: 0
 --- !u!114 &4677322442282021310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1045,8 +1117,12 @@ MonoBehaviour:
   focusPointTransform: {fileID: 0}
   cameraPositionTransform: {fileID: 0}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  modelPositionOffset: {x: 0, y: 0, z: 0}
   minDistance: 0.75
   maxDistance: 2
+  triggerOnLogbook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8236894309719850765
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1074,7 +1150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   groupName: FissionLaunchHitbox
   hitBoxes:
-  - {fileID: 7831295423259838892}
+  - {fileID: 0}
 --- !u!1 &3096295708174971565
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,7 +1182,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 272433082335854226}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7899318217190032275
 MeshFilter:
@@ -1187,6 +1263,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8617058688027244376}
+  - {fileID: 1455277377798807156}
   m_Father: {fileID: 8684971115604686679}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -0, z: -0}
@@ -1250,7 +1327,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 272433082335854226}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7587492300474973297
 GameObject:
@@ -1282,7 +1359,6 @@ Transform:
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2610393969830695242}
   - {fileID: 7121964965450060789}
   - {fileID: 2106768582195341372}
   m_Father: {fileID: 1455277377798807156}
@@ -1362,7 +1438,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339306702705207079}
+  m_GameObject: {fileID: 7704852812998583058}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.75}
   m_LocalScale: {x: 4, y: 4, z: 4}
@@ -1377,7 +1453,7 @@ CapsuleCollider:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339306702705207079}
+  m_GameObject: {fileID: 7704852812998583058}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
@@ -1391,7 +1467,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8339306702705207079}
+  m_GameObject: {fileID: 7704852812998583058}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -202159943, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
@@ -1400,6 +1476,9 @@ MonoBehaviour:
   healthComponent: {fileID: 5948491894790339010}
   isBullseye: 1
   isSniperTarget: 0
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3039520530990975406}
   indexInGroup: 1
@@ -1464,6 +1543,9 @@ MonoBehaviour:
   healthComponent: {fileID: 5948491894790339010}
   isBullseye: 0
   isSniperTarget: 1
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
+  bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 3039520530990975406}
   indexInGroup: 0
@@ -1531,12 +1613,6 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 1b876d103d128bb4aa803a09336b873b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75423322a84b5c145a0741f758ded2b2, type: 3}
---- !u!4 &1495479816139738845 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7268329028190559854, guid: 75423322a84b5c145a0741f758ded2b2,
-    type: 3}
-  m_PrefabInstance: {fileID: 8079255720974078131}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &2411077182181043490 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 75423322a84b5c145a0741f758ded2b2,
@@ -1613,31 +1689,59 @@ MonoBehaviour:
   itemDisplayRuleSet: {fileID: 11400000, guid: c1d3fe6980b74bf4197eabd66ccc3cc4, type: 2}
   autoPopulateLightInfos: 1
   gameObjectActivationTransforms: []
+  customGameObjectActivationTransforms: []
   baseRendererInfos:
   - renderer: {fileID: 4551868493548988434}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: fa8c24aa0b9f2eb4f9b8f374837605e1, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 7557264525493641604}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: fa8c24aa0b9f2eb4f9b8f374837605e1, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 7403626583996829153}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: fa8c24aa0b9f2eb4f9b8f374837605e1, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
   - renderer: {fileID: 5957000935751382723}
+    defaultMaterialAddress:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: fa8c24aa0b9f2eb4f9b8f374837605e1, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
+    ignoresMaterialOverrides: 0
+  fullBodyPing: 0
   baseLightInfos: []
+  visbilityAffectedByHollow: 0
+  constraintItemDisplaysScale: 0
+  ignoreJitterBones: 0
   corpseFade: 1
+  speedFade: 1
+  disableFade: 0
   CharacterOnScreen: 0
   visibilityChecker: {fileID: 0}
+  useHullForFadeCalc: 0
   activeOverlays: 0
   oldOverlays: 0
   hitFlashValue: 0
@@ -1689,6 +1793,7 @@ MonoBehaviour:
   - {fileID: 2544335802458759549}
   - {fileID: 1322891571994002369}
   mainHurtBox: {fileID: 1322891571994002369}
+  ignoreDeactivateHurtboxes: []
   bullseyeCount: 1
 --- !u!114 &5857373691443288786
 MonoBehaviour:
@@ -1702,6 +1807,7 @@ MonoBehaviour:
   m_Script: {fileID: 1480773730, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modelTransformOverride: {fileID: 0}
   baseFootstepString: Play_player_footstep
   baseFootliftString: 
   sprintFootstepOverrideString: 
@@ -1741,8 +1847,12 @@ MonoBehaviour:
   focusPointTransform: {fileID: 0}
   cameraPositionTransform: {fileID: 0}
   modelRotation: {x: 0, y: 0, z: 0, w: 1}
+  modelPositionOffset: {x: 0, y: 0, z: 0}
   minDistance: 0.75
   maxDistance: 2
+  triggerOnLogbook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8755921361431863660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1755,7 +1865,19 @@ MonoBehaviour:
   m_Script: {fileID: 1533710874, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DelayLoadingAnimatorUntilMaterialsHaveCompleted: 0
+  _animatorControllerAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _animatorController: {fileID: 0}
+  _avatarAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
+  _avatar: {fileID: 0}
   skins: []
+  prefabInstantiationDatas: []
 --- !u!114 &8790003456248425341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1783,4 +1905,3 @@ MonoBehaviour:
   fullYaw: 0
   aimType: 0
   enableAimWeight: 0
-  UseTransformedAimVector: 0

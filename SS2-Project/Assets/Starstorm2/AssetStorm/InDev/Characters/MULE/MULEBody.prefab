@@ -62,6 +62,8 @@ MonoBehaviour:
   healthComponent: {fileID: 1499786981183578919}
   isBullseye: 1
   isSniperTarget: 0
+  isPriorityTarget: 0
+  isIgnoredByFriendlyProjectiles: 0
   bypassInvulnerable: 0
   damageModifier: 0
   hurtBoxGroup: {fileID: 1511294296465048143}
@@ -104,6 +106,7 @@ GameObject:
   - component: {fileID: 6994039106817414258}
   - component: {fileID: 7577970568914555809}
   - component: {fileID: 350213891987490030}
+  - component: {fileID: -8456200703476184572}
   m_Layer: 0
   m_Name: MULEBody
   m_TagString: Player
@@ -214,15 +217,16 @@ MonoBehaviour:
   levelArmor: 0
   extraSecondaryFromSkill: 0
   extraSpecialFromSkill: 0
+  hasConsumedSprintDamageReadyBuffServer: 0
   increaseDamageOnMultiKillItemDisplayUpdater: {fileID: 0}
   allSkillsDisabled: 0
   isTeleporting: 0
   boostAllStatsDisplay: {fileID: 0}
-  currentGrowthNectarBuffCount: 0
-  maxGrowthNectarBuffCount: 0
   alwaysAim: 0
+  canAimWhileRunning: 0
   wasLucky: 0
   spreadBloomDecayTime: 0
+  spreadBloomDecayWithAttackSpeed: 0
   spreadBloomCurve:
     serializedVersion: 2
     m_Curve: []
@@ -251,8 +255,10 @@ MonoBehaviour:
   bodyColor: {r: 0.23137257, g: 0.18823531, b: 0.5254902, a: 1}
   doNotReassignToTeamBasedCollisionLayer: 0
   isChampion: 0
+  hideExtraEffects: 0
   altDeathBodyName: 
   vehicleIdleStateMachine: []
+  isNotFlying: 0
   currentVehicle: {fileID: 0}
   preferredPodPrefab: {fileID: 0}
   preferredInitialStateType:
@@ -260,6 +266,9 @@ MonoBehaviour:
       PublicKeyToken=null
   skinIndex: 0
   requestEquipmentFire: 0
+  requestKeyItemFire: 0
+  suspendEquipmentInputCount: 0
+  suspendKeyItemInputCount: 0
   customKillTotalStatName: 
   overrideCoreTransform: {fileID: 0}
 --- !u!114 &308169725067821790
@@ -275,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hideAllyCardDisplay: 0
+  hideIndicator: 0
   _teamIndex: -1
 --- !u!114 &1499786981183578919
 MonoBehaviour:
@@ -290,6 +300,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   shield: 0
+  regainableHealth: 0
   echoDamage: 0
   barrier: 0
   magnetiCharge: 0
@@ -356,6 +367,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxInteractionDistance: 3
   isRemoteOp: 0
+  playInteractionAnimation: 0
 --- !u!114 &5479429187712693737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -577,7 +589,6 @@ MonoBehaviour:
   canBeHitStunned: 0
   canBeStunned: 0
   canBeFrozen: 1
-  isFrozen: 1
   canBeTaunted: 1
 --- !u!114 &4553531712622406636
 MonoBehaviour:
@@ -687,6 +698,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeedPenaltyCoefficient: 1
+  jumpPowerPenaltyCoefficient: 1
   gravityScale: 1
   characterDirection: {fileID: 5280059098109951703}
   muteWalkMotion: 0
@@ -702,6 +714,7 @@ MonoBehaviour:
     antiGravityNeutralizerCount: 0
     channeledAntiGravityGranterCount: 0
   useHangtimeGravity: 0
+  gravityMultiplier: 1
   useCustomGravity: 0
   CustomGravity: 0
   _flightParameters:
@@ -756,12 +769,12 @@ MonoBehaviour:
   m_Script: {fileID: -1699741063, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  forcedAnimatorAtStart: {fileID: 0}
   _modelTransform: {fileID: 4700677646297005715}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 6913934177176440545}
-  modelScaleCompensation: 1
-  initialScale: {x: 0, y: 0, z: 0}
   autoUpdateModelTransform: 1
+  compensateForInitialScale: 1
   dontDetatchFromParent: 0
   noCorpse: 0
   dontReleaseModelOnDeath: 0
@@ -812,6 +825,18 @@ MonoBehaviour:
   requireGrounded: 0
   disableWhileSprinting: 0
   applyScale: 1
+--- !u!114 &-8456200703476184572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768686348761891691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1700696475, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3113390010865843836
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +3026,7 @@ MonoBehaviour:
   hurtBoxes:
   - {fileID: 695059299900060625}
   mainHurtBox: {fileID: 695059299900060625}
+  ignoreDeactivateHurtboxes: []
   bullseyeCount: 1
 --- !u!114 &3536650498854520179
 MonoBehaviour:

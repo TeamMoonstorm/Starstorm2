@@ -13,6 +13,7 @@ namespace SS2.Components
     public class BirthrightAnimator : MonoBehaviour
     {
         public ItemDisplay birthrightIDR;
+        public Material birthrightGlowersMat;
         private Material overlayMat;
         private CharacterModel characterModel;
         private float timer;
@@ -24,7 +25,7 @@ namespace SS2.Components
         {
             gameObject.transform.parent?.TryGetComponent(out characterModel);
             
-            overlayMat = new Material(birthrightIDR.rendererInfos[0].defaultMaterial);
+            overlayMat = new Material(birthrightGlowersMat);
             birthrightIDR.rendererInfos[0].defaultMaterial = overlayMat;
             overlayMat.SetFloat(propertyID, 0);
             
