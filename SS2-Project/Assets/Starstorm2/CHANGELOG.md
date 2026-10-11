@@ -17,7 +17,9 @@
 		* Increased jump height to match Hopoo Feather's bonus jump.
 	* Lowered Man O' War damage from 200% -> 150%
 * Survivors
-	* New Artificer alternate skill - Seismic Spear
+	* New Artificer Utility skill - Seismic Spear
+	* New Chirr skin - "Isopod"
+	* New Commando skin - "Specialist"
 * Beta
 	* Pedestal will now display its item's name when pinged.
 	* Added Snowy and Sandy pedestal variants.
