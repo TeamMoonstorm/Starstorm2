@@ -171,7 +171,7 @@ namespace SS2.Items
             }
         }
 
-        private void TeleporterInteractionPrimalOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)
+        private void TeleporterInteractionPrimalOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, TeleporterInteraction.IdleState self, Interactor activator)
         {
             self.outer.gameObject.TryGetComponent<PrimalPrevention>(out var tc);
             if (tc)

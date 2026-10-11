@@ -11,7 +11,6 @@ Material:
   m_Shader: {fileID: 4800000, guid: 9b2024ee08a5bfc418ff897991e84323, type: 2}
   m_ValidKeywords:
   - FORCE_SPEC
-  - FRESNEL_EMISSION
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -71,7 +70,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FresnelRamp:
-        m_Texture: {fileID: 2800000, guid: 3688104508608cb4e89a0858a4485d14, type: 3}
+        m_Texture: {fileID: 2800000, guid: c44a1b55f9271414e812cbd8d49b04af, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _GreenChannelNormalTex:
@@ -133,7 +132,7 @@ Material:
     - _EliteIndex: 0
     - _EmPower: 1.49
     - _EnableCutout: 0
-    - _FEON: 1
+    - _FEON: 0
     - _Fade: 1
     - _FadeBias: 0
     - _FlowEmissionStrength: 1

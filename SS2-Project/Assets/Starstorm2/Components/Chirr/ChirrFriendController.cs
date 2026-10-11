@@ -292,7 +292,7 @@ namespace SS2.Components
 			master.minionOwnership.SetOwner(this.master); // this apparently unsets the owner if you call it again
 			master.onBodyDeath.RemoveListener(OnFriendDeath);
 
-			master.inventory.RemoveItem(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
+			master.inventory.RemoveItemPermanent(SS2Content.Items.ChirrFriendHelper, 1); // dont think its necessary. just being overly safe
 
 			if(this.currentFriend.permanentItemStacks != null && this.currentFriend.permanentItemStacks.Length > 0) // ........
             {

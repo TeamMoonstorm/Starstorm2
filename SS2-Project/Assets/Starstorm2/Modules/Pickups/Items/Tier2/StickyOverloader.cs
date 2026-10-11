@@ -81,26 +81,26 @@ namespace SS2.Items
             return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
 
-        public static bool CanSpawnBomb(CharacterBody attacker)
-        {
-            var instancesList = InstanceTracker.GetInstancesList<StickyOverloaderController>();
-            if (instancesList == null) return true;
+        //public static bool CanSpawnBomb(CharacterBody attacker)
+        //{
+        //    var instancesList = InstanceTracker.GetInstancesList<StickyOverloaderController>();
+        //    if (instancesList == null) return true;
 
-            int bombsFromAttacker = 0;
-            for (int i = 0; i < instancesList.Count; i++)
-            {
-                if (instancesList[i].owner == attacker.gameObject)
-                {
-                    bombsFromAttacker++;
-                }
-                if (bombsFromAttacker >= maxBombsPerAttacker)
-                {
-                    return false;
-                }
-            }
+        //    int bombsFromAttacker = 0;
+        //    for (int i = 0; i < instancesList.Count; i++)
+        //    {
+        //        if (instancesList[i].owner == attacker.gameObject)
+        //        {
+        //            bombsFromAttacker++;
+        //        }
+        //        if (bombsFromAttacker >= maxBombsPerAttacker)
+        //        {
+        //            return false;
+        //        }
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
 
         private void OnServerDamageDealt(DamageReport report)
@@ -115,7 +115,7 @@ namespace SS2.Items
             float chance = buffStacks > 0 ? 100f : procChance; // 100% chance if already applied, * proc coefficient
             if (Util.CheckRoll(chance * report.damageInfo.procCoefficient, attackerBody.master))
             {
-                if (buffStacks == 0 && CanSpawnBomb(attackerBody))
+                if (buffStacks == 0)// && CanSpawnBomb(attackerBody))
                 {
                     StickyOverloaderController.TrySpawnBomb(report.victimBody, report.attackerBody);
                 }

@@ -828,12 +828,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InspectPanel: {fileID: 569766365}
   InspectVisual: {fileID: 933659268}
+  asyncIconImage: {fileID: 0}
   InspectTitle: {fileID: 1122979022}
   InspectTitleText: {fileID: 216192321}
   InspectDescription: {fileID: 373475428}
   InspectFlavor: {fileID: 0}
   Sidecar: {fileID: 0}
   SidecarInspectImage: {fileID: 0}
+  sidecarAsyncIconImage: {fileID: 0}
   TestItems: []
   isAutopauseCandidate: 0
   MissingInspectDefFallback: {fileID: 11400000, guid: 319cf044821a4f14bb8381d8e87fcabb,
@@ -1609,6 +1611,7 @@ GameObject:
   - component: {fileID: 224388355147328338}
   - component: {fileID: 222738803132324050}
   - component: {fileID: 114012191606832981}
+  - component: {fileID: 419252242963273473}
   m_Layer: 5
   m_Name: Icon
   m_TagString: Untagged
@@ -1674,6 +1677,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &419252242963273473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1045907761234361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 154454898, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadOnAssigned: 1
+  unloadType: 2
+  disableWhileLoading: 0
+  renderer: {fileID: 0}
+  secondaryRenderers: []
+  initialized: 0
 --- !u!1 &1050373689776084
 GameObject:
   m_ObjectHideFlags: 0
@@ -1891,6 +1912,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1936,9 +1958,14 @@ MonoBehaviour:
   - {fileID: 114924650528714625}
   - {fileID: 114135936700970049}
   maxColumnCount: 5
+  useLockSpriteForUnavailableOptions: 1
   shouldRemoveChoice: 0
   needsNetworking: 0
   networkMultiOptionPickupPicker: {fileID: 0}
+  shouldChangeButtonFrameColor: 0
+  shouldLeaveDisabledButtonsInteractable: 0
+  automaticButtonNavigation: 0
+  excludedItemsDropTable: {fileID: 0}
   pickupSelected:
     m_PersistentCalls:
       m_Calls:
@@ -2154,6 +2181,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 3
   canvas: {fileID: 223251662187067529}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!114 &114672652253017960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2624,6 +2653,7 @@ MonoBehaviour:
   updateTextOnHover: 0
   hoverLanguageTextMeshController: {fileID: 0}
   hoverToken: 
+  hoverHighlightGameObject: {fileID: 0}
   uiClickSoundOverride: Play_UI_menuBack
 --- !u!114 &114780050159709192
 MonoBehaviour:
@@ -2763,6 +2793,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -2781,6 +2812,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 223726842283068880}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!1 &1262313233942023
 GameObject:
   m_ObjectHideFlags: 0
@@ -2871,6 +2904,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3197,6 +3231,7 @@ MonoBehaviour:
   updateTextOnHover: 0
   hoverLanguageTextMeshController: {fileID: 0}
   hoverToken: 
+  hoverHighlightGameObject: {fileID: 0}
   uiClickSoundOverride: Play_UI_arenaMode_voidCollapse_select
 --- !u!114 &114221442981030568
 MonoBehaviour:
@@ -4346,6 +4381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -4444,6 +4481,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.5
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &114736506126348597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5237,6 +5277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -5335,6 +5377,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 1
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!114 &5428066120458406004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5494,6 +5539,7 @@ Canvas:
   m_OverrideSorting: 1
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 1
@@ -5512,6 +5558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvasSortingOrderDelta: 1
   canvas: {fileID: 5321069698764191659}
+  enableRectClipping: 0
+  rectClipper: {fileID: 0}
 --- !u!1 &5388206651064134150
 GameObject:
   m_ObjectHideFlags: 0

@@ -71,7 +71,7 @@ namespace EntityStates.MULE
                 falloffModel = BlastAttack.FalloffModel.None,
                 attackerFiltering = AttackerFiltering.NeverHitSelf,
                 damageType = DamageType.Generic,
-                impactEffect = EntityStates.Bison.Headbutt.hitEffectPrefab.GetComponent<EffectIndex>()
+                impactEffect = EntityStates.Bison.Headbutt.hitEffectPrefab.gameObject.GetComponent<EffectIndex>()
                 
         };
 

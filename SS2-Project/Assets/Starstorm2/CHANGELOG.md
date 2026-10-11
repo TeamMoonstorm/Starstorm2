@@ -1,5 +1,5 @@
 **Warning: content spoilers below!**
-### 0.6.46 or whatever
+### 0.6.45
 * Enemies
 	* Fixed various material issues with Security Chests. They should now appear identical to regular chests.
 * Items
@@ -10,14 +10,16 @@
 	* Molten Coin now deals TOTAL damage instead of base damage.
 	* New effect for Needles
 		* OLD: +4% chance on hit to guarantee critical strikes on an enemy for the next 3 (+3 per stack) hits.
-		* NEW: Gain 5% (+5% per stack) critical chance. Critical strikes have a 10% chance to needle an enemy for 3x20% (+20% per stack) TOTAL damage.
+		* NEW: Gain 5% (+5% per stack) critical chance. Critical strikes have a 20% chance to needle an enemy for 3x10% (+10% per stack) TOTAL damage.
 	* Adjusted Prototype Jet Boots
 		* OLD: Gain +1 extra jump that ignites enemies for 500% base damage in a 7.5m (+5m per stack) radius. Recharges 5 seconds after landing. 
 		* NEW: Gain +1 extra jump that ignites enemies for 400% (+200% per stack) base damage in a 7.5m (+2.5m per stack) radius. Recharges after 10 seconds.
 		* Increased jump height to match Hopoo Feather's bonus jump.
 	* Lowered Man O' War damage from 200% -> 150%
 * Survivors
-	* New Artificer alternate skill - Seismic Spear
+	* New Artificer Utility skill - Seismic Spear
+	* New Chirr skin - "Isopod"
+	* New Commando skin - "Specialist"
 * Beta
 	* Pedestal will now display its item's name when pinged.
 	* Added Snowy and Sandy pedestal variants.
@@ -1677,102 +1679,4 @@ This update is largely thanks to long time SS2 community members bread and Lordr
    	* Nkota's Heritage: adjust rarity scaling to work similarly to RoR1 Starstorm, add chance for red items, prevent Engineer turrets from dropping items
    	* Erratic Gadget: add non-stacking 10% crit chance
    	* Greater Warbanner: only one banner may be placed at a time (previous banner is removed when a new one is placed)
-
-### 0.2.7
-* hotfix for nemmando networking for real this time
-
-### 0.2.6
-* hotfix for networking
-* fix for strides of heresy breaking on nemmando
-
-### 0.2.5
-* Nemesis Commando
-   	* Fixed networking issues
-   	* Lowered Decisive Strike (Special) charge time from 2s to 1.75s and buffed damage per hit from 350% to 375%
-   	* Removed auto-aim and Awareness buff on Submission, added proper attack speed sclaing.
-
-### 0.2.4
-* Executioner
-   	* Primary is slower but more powerful
-   	* Special now deals 1200% flat on groups, and 2400% to solo targets (from 1500% to solo target, split between # of targets)
-* Nemesis Commando
-   	* New animations for pretty much everything
-   	* Primary has had damage / attack speed adjustments, hitbox changes, is now a one-two combo like Loader's
-	   * Secondary is now a proper sword beam, visually
-   	* Secondary now applies Gouge
-   	* Adjusted interrupt priorities for abilities to make them flow together better
-   	* New alternate special ability, WIP.
-
-### 0.2.3
-* Nemesis Commando
-   	* Fix sword combo not resetting when not using primary
-   	* Fix slightly bad aim on special
-   	* Fix gouge applying twice
-   	* Adjust skill priorities so other skills can be used while holding primary attack
-* Executioner
-   	* Add some more item displays
-* Items
-   	* Diary: increase exp gain rate (3 per 3sec -> 3 per 2sec)
-   	* Molten Coin: scale earnings by number of stages cleared ($1 per stage)
-   	* Hottest Sauce: increase burn damage (50% -> 100% damage/sec)
-   	* Nkota's Heritage: chance of uncommon item scales with level
-   	* Pressurized Canister: fix poor thrust force when used with heavy characters e.g. Acrid
-   	* Update item descriptions to match item behavior
-* Gameplay
-   	* Typhoon: increase soft cap on enemy spawns to 80. This is an experimental feature and can be disabled in config.
-
-### 0.2.2
-* Executioner
-	   * Fix bad aim on secondary
-   	* Add some item displays
-
-### 0.2.1
-* Executioner
-   	* Increase aim snapping on secondary again
-   	* Add display rules for equipment that needs them to work
-* Nemesis Commando
-   	* Primary is now agile (can be used while sprinting)
-   	* All hits of primary apply gouge status
-   	* Gouge duration resets when reapplied
-   	* New secondary: a chargeable sword beam which behaves like Commando's Phase Round
-   	* Add more item display rules
-* Items
-   	* Broken Jet Boots: change vfx to something less visually intrusive
-   	* Watch Metronome: increase base decay duration (2 -> 4sec)
-   	* Fix some typos in item logbook entries
-   	* Broken Blood Tester: disable proc while run timer is paused
-   	* Molten Coin: fix missing texture
-* Other
-   	* Fix known multiplayer incompatibilities (e.g. Executioner's secondary not storing charges)
-
-### 0.2.0
-* Items
-   	* Add Malice, Fork, Coffee Bag, Watch Metronome, Hunter's Sigil, Green Chocolate, Droid Head, Pressurized Canister, and Cloaking Headband
-   	* Disable Nucleator until he is more finished
-   	* New icons for items that were missing them
-   	* Add logbook entries for items
-   	* Fix Molten Coin not working
-   	* Hottest Sauce: Increase range, fix missing stacking behavior, fix proc on unusable equipment e.g. fuel array
-   	* Change Dormant Fungus healing (10% per 5sec -> 2% per sec)
-   	* Fix oddities on some item models
-   	* Add debuff icons for Trematode, Strange Can
-* Executioner
-   	* Utility procs fear for its entire duration
-   	* Activating utility causes stun and slight pushback
-   	* Slightly decrease fear proc radius on utility
-   	* Enemies under fear debuff take 20% more damage from all sources
-   	* Tone down particles/VFX on utility
-   	* Slightly increase aim snapping while using secondary (easier to land shots)
-* Nemesis Commando
-   	* Add mastery achievement + skin
-   	* Adjust base stats to more closely match Commando's
-   	* Fix attacks having 0 proc coefficient
-   	* Add skill icons
-   	* Add descriptions for survivor and skills
-   	* Add logbook entry
-   	* Add sounds
-   	* Ragdoll, animation tweaks, some item displays, and lots of other quality-of-life details
-   	* Fix jogging in place on character select screen
-
-### 0.1.0
-* Initial release - includes Executioner, Nemesis Commando, Nucleator (WIP), 11 items, and typhoon difficulty
+	

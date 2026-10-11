@@ -25,7 +25,7 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Chance for the debuff to be applied on hit. (1 = 1%)")]
         [FormatToken(token, 1)]
-        public static float needleStrikeChance = 10f;
+        public static float needleStrikeChance = 20f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [FormatToken(token, 2)]
@@ -33,10 +33,10 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
-        public static float needleDamageCoefficient = 0.2f;
+        public static float needleDamageCoefficient = 0.1f;
 
         public static float needleProcCoefficient = 0.3f;
-        public static float needleStrikeInterval = 0.1f;
+        public static float needleStrikeInterval = 0.115f;
 
         private static GameObject _procEffect;
         private static GameObject _critEffect;
@@ -171,13 +171,26 @@ namespace SS2.Items
                     if (target)
                     {
                         origin = target.transform.position;
-                        Strike();
-                    }
+                    } 
+                    Strike();
                 }
             }
 
             private void Strike()
             {
+                if (effectPrefab)
+                {
+                    Quaternion rotation = Util.QuaternionSafeLookRotation(hitNormal);
+                    EffectData effectData = new EffectData
+                    {
+                        origin = origin,
+                        rotation = rotation,
+                        genericFloat = 0.1f
+                    };
+                    effectData.SetHurtBoxReference(target);
+                    EffectManager.SpawnEffect(effectPrefab, effectData, true);
+                }
+
                 if (target)
                 {
                     HealthComponent healthComponent = target.healthComponent;
@@ -198,19 +211,6 @@ namespace SS2.Items
                         healthComponent.TakeDamage(damageInfo);
                         GlobalEventManager.instance.OnHitEnemy(damageInfo, healthComponent.gameObject);
                         GlobalEventManager.instance.OnHitAll(damageInfo, healthComponent.gameObject);
-   
-                        if (effectPrefab)
-                        {
-                            Quaternion rotation = Util.QuaternionSafeLookRotation(hitNormal);
-                            EffectData effectData = new EffectData
-                            {
-                                origin = target.transform.position,
-                                rotation = rotation,
-                                genericFloat = 0.1f
-                            };
-                            effectData.SetHurtBoxReference(target);
-                            EffectManager.SpawnEffect(effectPrefab, effectData, true);
-                        }
                     }
                 }
             }

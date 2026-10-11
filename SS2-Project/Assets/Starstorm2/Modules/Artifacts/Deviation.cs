@@ -24,7 +24,7 @@ namespace SS2.Artifacts
             return false;
         }
 
-        private void DeviationOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, BaseState self, Interactor activator)
+        private void DeviationOverride(On.RoR2.TeleporterInteraction.IdleState.orig_OnInteractionBegin orig, TeleporterInteraction.IdleState self, Interactor activator)
         {
             SS2Log.Info(self.outer.gameObject.name);
             var tc = self.outer.gameObject.GetComponent<TestComponent>();
@@ -46,7 +46,6 @@ namespace SS2.Artifacts
         {
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += DeviationOverride;
         }
-
         public override void OnArtifactDisabled()
         {
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin -= DeviationOverride;

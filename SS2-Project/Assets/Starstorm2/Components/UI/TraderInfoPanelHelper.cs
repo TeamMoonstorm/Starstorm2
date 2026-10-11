@@ -42,13 +42,13 @@ namespace SS2.UI
         }
         public void UpdateFavoriteItem()
         {
-            wantedItemImage.sprite = PickupCatalog.GetPickupDef(favoriteItem).iconSprite;
+            wantedItemImage.sprite = PickupCatalog.GetPickupDef(favoriteItem).GetIconAODR(true).WaitForCompletion();
         }
         public void ShowInfo(MPButton button, PickupDef pickupDef)
         {
             inspectPanel.SetActive(false);
             bool isSpecial = traderController.IsSpecial(pickupDef.pickupIndex);
-            inspectVisual.sprite = pickupDef.iconSprite;
+            inspectVisual.sprite = pickupDef.GetIconAODR(true).WaitForCompletion();
             float value = traderController.GetValue(pickupDef.pickupIndex);
             if (isSpecial) value = 999f; // "Special" or %999
             float t = Mathf.Clamp01(value / 200f);

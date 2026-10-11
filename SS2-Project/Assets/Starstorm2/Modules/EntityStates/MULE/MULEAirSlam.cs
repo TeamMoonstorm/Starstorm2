@@ -89,7 +89,7 @@ namespace EntityStates.MULE
                 falloffModel = BlastAttack.FalloffModel.None,
                 attackerFiltering = AttackerFiltering.NeverHitSelf,
                 damageType = DamageType.Generic,
-                impactEffect = Bison.Headbutt.hitEffectPrefab.GetComponent<EffectIndex>()
+                impactEffect = Bison.Headbutt.hitEffectPrefab.gameObject.GetComponent<EffectIndex>()
             };
 
             EffectManager.SimpleMuzzleFlash(slamEffectVFX, gameObject, muzzleString, true);

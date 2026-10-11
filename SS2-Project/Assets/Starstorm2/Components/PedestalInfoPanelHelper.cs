@@ -32,7 +32,7 @@ namespace SS2.UI
         }
         public void UpdateCurrentItem()
         {
-            currentItemImage.sprite = PickupCatalog.GetPickupDef(currentPickup).iconSprite;
+            currentItemImage.sprite = PickupCatalog.GetPickupDef(currentPickup).GetIconAODR(true).WaitForCompletion();
         }
     }
 }

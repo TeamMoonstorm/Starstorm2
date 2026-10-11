@@ -21,7 +21,7 @@ namespace EntityStates.NemCommando
 
 
         [HideInInspector]
-        public static GameObject tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldGat/TracerGoldGat.prefab").WaitForCompletion();
+        public static GameObject tracerEffectPrefab;
         
 
         private float fireTime;
@@ -45,6 +45,10 @@ namespace EntityStates.NemCommando
             characterBody.SetAimTimer(2f);
             animator = GetModelAnimator();
 
+            if (!tracerEffectPrefab)
+            {
+                tracerEffectPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldGat/TracerGoldGat.prefab").WaitForCompletion();
+            }
             if (skinNameToken == "SS2_SKIN_NEMCOMMANDO_GM")
             {
                 muzzleString = "Suppressor";
