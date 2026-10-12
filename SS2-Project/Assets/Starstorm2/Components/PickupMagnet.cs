@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using MSU;
 using UnityEngine;
 using RoR2;
 using SS2.Equipments;
@@ -64,7 +65,16 @@ namespace SS2.Components
                     target = raycastHit.point;
                 }
                 GenericPickupController pickup = pickups[i];
-                pickupsToPull.Add(new Pickup { rigidbody = pickup.GetComponent<Rigidbody>(), target = target, layer = LayerIndex.fakeActor.intVal });
+                Rigidbody pickupRigidbody = pickup.GetComponent<Rigidbody>();
+                if (pickup.gameObject.name == "PagePotentialHidden(Clone)" && pickupRigidbody.AsValidOrNull()) // dlc4 page pickup edgecase ,,.
+                {
+                    pickupRigidbody.useGravity = true;
+                    pickupRigidbody.isKinematic = false;
+                    pickupRigidbody.freezeRotation = false;
+                    if(pickup.gameObject.TryGetComponent(out SphereCollider sphereCollider))
+                        sphereCollider.enabled = false;
+                }
+                pickupsToPull.Add(new Pickup { rigidbody = pickupRigidbody, target = target, layer = LayerIndex.fakeActor.intVal });
                 pickup.gameObject.layer = LayerIndex.noCollision.intVal;
             }
             foreach (GravitatePickup pickup in trackedPickups)
