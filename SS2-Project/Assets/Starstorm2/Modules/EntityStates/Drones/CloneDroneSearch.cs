@@ -2,26 +2,30 @@
 using UnityEngine;
 using RoR2;
 using HG;
+using MSU;
+using SS2.Interactables;
+using Starstorm2.Components;
 using UnityEngine.Networking;
 namespace EntityStates.CloneDrone
 {
     public class CloneDroneSearch : BaseSkillState
     {
-        public static float duration = 0.6f;
+        private static float duration = 0.6f;
         //public static float damageCoefficient = 1.0f;
-        public static float radius = 18f;
+        private static float radius = 18f;
         public static string muzzleString = "Muzzle";
         public static GameObject blastEffect;
         private ChildLocator childLocator;
         private SphereSearch sphereSearch;
-        public GenericPickupController gpc;
-        public ItemTier pickupTier;
+        private GenericPickupController gpc;
+        private CloneDroneClonedPickups clonedPickupChecker;
 
         public override void OnEnter()
         {
             base.OnEnter();
             //Animator = GetModelAnimator(); does this thing even need an animator?
             childLocator = GetModelChildLocator();
+            clonedPickupChecker = gameObject.GetComponent<CloneDroneClonedPickups>();
 
             if (NetworkServer.active)
             {
@@ -32,7 +36,6 @@ namespace EntityStates.CloneDrone
                 sphereSearch.radius = radius;
                 Search();
             }
-
             
             //this doesn't work - intent is to prevent player from cloning the new clone.
             //unsure how to implement.
@@ -41,7 +44,8 @@ namespace EntityStates.CloneDrone
             //looking back on this months later ... wtf was bro on about.
             //shit.
         }
-        public void Search()
+
+        private void Search()
         {
             List<Collider> list = CollectionPool<Collider, List<Collider>>.RentCollection();
             sphereSearch.mask = LayerIndex.CommonMasks.interactable;
@@ -51,8 +55,7 @@ namespace EntityStates.CloneDrone
             sphereSearch.OrderCandidatesByDistance();
             sphereSearch.FilterCandidatesByDistinctColliderEntities();
             sphereSearch.GetColliders(list);
-            List<GameObject> objectList;
-            objectList = new List<GameObject>();
+            var objectList = new List<GameObject>();
 
             foreach (Collider c in list)
             {
@@ -66,18 +69,18 @@ namespace EntityStates.CloneDrone
             {
                 //bypass non-items
                 var tempGPC = obj.GetComponent<GenericPickupController>();
-                if (tempGPC && !tempGPC.Duplicated && (!obj.TryGetComponent<SS2.Interactables.CloneDroneDamaged.ClonedPickup>(out var c) || c.CanBeCloned(base.gameObject)) && IsWhitelistTier(tempGPC.pickupIndex.pickupDef))
+                if (tempGPC && !tempGPC.Duplicated && !tempGPC._pickupState.isRental && !tempGPC._pickupState.isTempItem && (IsWhitelistTier(tempGPC._pickupState.pickupIndex.pickupDef) || tempGPC._pickupState.pickupIndex.pickupDef.equipmentIndex != EquipmentIndex.None) && clonedPickupChecker.CanBeCloned(tempGPC.gameObject))
                 {
                     float distance = Vector3.Distance(transform.position, obj.transform.position);
                     //if no closest object or obj is closer than old closest object
-                    if (closestObject == null || distance < Vector3.Distance(transform.position, closestObject.transform.position))
+                    if (!closestObject || distance < Vector3.Distance(transform.position, closestObject.transform.position))
                     {
                         closestObject = obj;
                     }                                        
                 }
             }
 
-            if (closestObject != null)
+            if (closestObject)
             {
                 gpc = closestObject.GetComponent<GenericPickupController>();
                 Clone();
@@ -86,27 +89,30 @@ namespace EntityStates.CloneDrone
                 outer.SetNextStateToMain();
         }
 
-        public bool IsWhitelistTier(PickupDef pickupDef)
+        private bool IsWhitelistTier(PickupDef pickupDef)
         {
             if (pickupDef == null)
                 return false;
 
-            if (pickupTier == ItemTier.Tier1 || pickupTier == ItemTier.Tier2 || pickupTier == ItemTier.Tier3 || pickupTier == ItemTier.Boss || pickupTier == ItemTier.VoidTier1 || pickupTier == ItemTier.VoidTier2 || pickupTier == ItemTier.VoidTier3 || pickupTier == ItemTier.VoidBoss)
-                return true;
-            else
-                return false;
+            return pickupDef.itemTier == ItemTier.Tier1 || 
+                   pickupDef.itemTier == ItemTier.Tier2 || 
+                   pickupDef.itemTier == ItemTier.Tier3 || 
+                   pickupDef.itemTier == ItemTier.Boss || 
+                   pickupDef.itemTier == ItemTier.VoidTier1 || 
+                   pickupDef.itemTier == ItemTier.VoidTier2 || 
+                   pickupDef.itemTier == ItemTier.VoidTier3 || 
+                   pickupDef.itemTier == ItemTier.VoidBoss || 
+                   pickupDef.itemTier == ItemTier.Cursed || 
+                   pickupDef.itemTier == ItemTier.Hex || 
+                   pickupDef.itemTier == ItemTier.FoodTier;
         }
 
         public override void OnExit()
         {
             base.OnExit();
-            if (gpc != null)
-            {
-                //Clone();
-            }
         }
 
-        public void Clone()
+        private void Clone()
         {
             CloneDroneCook nextState = new CloneDroneCook();
             nextState.target = gpc.gameObject;

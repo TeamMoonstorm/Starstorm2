@@ -1,8 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using MSU;
+using UnityEngine;
 using RoR2;
 using SS2;
 using UnityEngine.Networking;
 using SS2.Interactables;
+using Starstorm2.Components;
+using Object = UnityEngine.Object;
+
 namespace EntityStates.CloneDrone
 {
     public class CloneDroneCook : BaseSkillState
@@ -15,6 +20,17 @@ namespace EntityStates.CloneDrone
         public static GameObject targetIndicatorVfxPrefab;
         public GenericPickupController gpc;
         public GameObject target;
+
+        public Material t1Mat;
+        public Material t2Mat;
+        public Material t3Mat;
+        public Material bossMat;
+        public Material voidMat;
+        public Material lunarMat;
+        public Material equipMat;
+        public Material hexMat;
+        public Material curseMat;
+        public Material foodMat;
 
         private ChildLocator childLocator;
         private ItemTier pickupTier;
@@ -44,7 +60,7 @@ namespace EntityStates.CloneDrone
             targetIndicatorVfxPrefab = SS2Assets.LoadAsset<GameObject>("DuplicatingCircleVFX", SS2Bundle.Interactables);
 
             this.gpc = this.target.GetComponent<GenericPickupController>(); 
-            pickupTier = gpc.pickupIndex.pickupDef.itemTier;
+            pickupTier = gpc._pickupState.pickupIndex.pickupDef.itemTier;
 
             originalMoveSpeed = characterBody.moveSpeed;
 
@@ -54,6 +70,8 @@ namespace EntityStates.CloneDrone
                 ChildLocator cl = targetIndicatorVfxInstance.GetComponent<ChildLocator>();
                 if (cl)
                 {
+                    Color pickupColor = gpc._pickupState.pickupIndex.pickupDef.baseColor;
+                    
                     //move + set end effect
                     Transform lineEndTransform = cl.FindChild("LineEnd");
                     if (lineEndTransform)
@@ -69,7 +87,8 @@ namespace EntityStates.CloneDrone
                         if (sparksTransform.GetComponent<ParticleSystem>() != null)
                         {
                             ParticleSystem sparksps = sparksTransform.GetComponent<ParticleSystem>();
-                            sparksps.startColor = gpc.pickupIndex.GetPickupColor();
+                            var main = sparksps.main;
+                            main.startColor = pickupColor;
                         }
                         sparksTransform.position = FindModelChild(spawnMuzzle2).position;
                         sparksTransform.SetParent(FindModelChild(spawnMuzzle2).transform);
@@ -83,7 +102,7 @@ namespace EntityStates.CloneDrone
                         if (lightTransform.GetComponent<Light>() != null)
                         {
                             Light light = lightTransform.GetComponent<Light>();
-                            light.color = gpc.pickupIndex.GetPickupColor();
+                            light.color = pickupColor;
                         }
                         lightTransform.position = FindModelChild(spawnMuzzle2).position;
                         lightTransform.SetParent(FindModelChild(spawnMuzzle2).transform);
@@ -104,75 +123,42 @@ namespace EntityStates.CloneDrone
             float cooldown = 60f;
             duration = baseDuration;
 
-            switch (pickupTier)
+            Material lightMat = (pickupTier) switch
             {
-                case ItemTier.Tier1:
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT1", SS2Bundle.Interactables);
-                    break;
+                ItemTier.Tier1 => t1Mat,
+                ItemTier.Tier2 => t2Mat,
+                ItemTier.Tier3 => t3Mat,
+                ItemTier.Lunar => lunarMat,
+                ItemTier.Boss => bossMat,
+                ItemTier.VoidTier1 => voidMat,
+                ItemTier.VoidTier2 => voidMat,
+                ItemTier.VoidTier3 => voidMat,
+                ItemTier.VoidBoss => voidMat,
+                ItemTier.FoodTier => foodMat,
+                ItemTier.Hex => hexMat,
+                ItemTier.Cursed => curseMat,
+            };
+            if (gpc._pickupState.pickupIndex.pickupDef.equipmentIndex != EquipmentIndex.None)
+                lightMat = equipMat;
 
-                case ItemTier.Tier2:
-                    duration *= 1.5f;
-                    cooldown *= 1.5f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT2", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.Tier3:
-                    duration *= 2f;
-                    cooldown *= 2f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT3", SS2Bundle.Interactables); 
-                    break;
-
-                case ItemTier.Boss:
-                    duration *= 2f;
-                    cooldown *= 2f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightT4", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.VoidTier1:
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.VoidTier2:
-                    duration *= 1.5f;
-                    cooldown *= 1.5f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.VoidTier3:
-                    duration *= 2f;
-                    cooldown *= 2f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.VoidBoss:
-                    duration *= 2f;
-                    cooldown *= 2f;
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightVoid", SS2Bundle.Interactables);
-                    break;
-
-                case ItemTier.Lunar:
-                    if (charModel)
-                        charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightLunar", SS2Bundle.Interactables);
-                    break;
-
-                default: //lol its an equipment 
-                    if (charModel){
-                        if (gpc.pickupIndex.pickupDef.isLunar){ //lunar
-                            charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightLunar", SS2Bundle.Interactables);
-                        }else{ //normal
-                            charModel.baseRendererInfos[2].defaultMaterial = SS2Assets.LoadAsset<Material>("matCloneDroneLightEquip", SS2Bundle.Interactables);
-                        }
-                    }
-                    break;
-            }
+            float multiplier = pickupTier switch
+            {
+                ItemTier.Tier2 => 1.5f,
+                ItemTier.Tier3 => 2f,
+                ItemTier.Boss => 2f,
+                ItemTier.VoidTier2 => 1.5f,
+                ItemTier.VoidTier3 => 2f,
+                ItemTier.VoidBoss => 2f,
+                ItemTier.FoodTier => 2f,
+                ItemTier.Cursed => 2f,
+                ItemTier.Hex => 2f,
+                _ => 1f
+            };
+            
+            duration *= multiplier;
+            cooldown *= multiplier;
+            if (charModel)
+                charModel.baseRendererInfos[2].defaultMaterial = lightMat;
 
             //add the cooldown amount to the primary cooldown
             skillLocator.primary.stock = 0;
@@ -206,13 +192,12 @@ namespace EntityStates.CloneDrone
         {
             GenericPickupController.CreatePickupInfo info = new GenericPickupController.CreatePickupInfo
             {
-                prefabOverride = CloneDroneDamaged.clonedPickupPrefab,
-                pickupIndex = gpc.pickupIndex,
+                prefabOverride = CloneDroneDamaged.pickupPrefab,
+                _pickupState = gpc._pickupState,
                 position = transform.position,
+                duplicated = true
             };
-            var component = this.gpc.gameObject.GetComponent<CloneDroneDamaged.ClonedPickup>();
-            if (!component) component = gpc.gameObject.AddComponent<CloneDroneDamaged.ClonedPickup>();
-            component.OnCloned(base.gameObject);
+            gameObject.GetComponent<CloneDroneClonedPickups>().AsValidOrNull()?.OnCloned(gpc.gameObject);
             PickupDropletController.CreatePickupDroplet(info, transform.position, Vector3.up * dropUpVelocityStrength + transform.forward * dropForwardVelocityStrength);
         }
         

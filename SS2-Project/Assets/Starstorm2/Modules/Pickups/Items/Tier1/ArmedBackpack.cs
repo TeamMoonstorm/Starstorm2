@@ -50,7 +50,7 @@ namespace SS2.Items
                         float missileDamage = body.damage * damageCoefficient;
 
                         var attacker = damageReport.attacker;
-                        if (damageReport.attackerBody == null)
+                        if (!damageReport.attackerBody || damageReport.attackerTeamIndex == body.teamComponent.teamIndex)
                         {
                             attacker = null;
                         }
