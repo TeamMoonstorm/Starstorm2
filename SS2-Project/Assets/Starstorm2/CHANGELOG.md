@@ -1,11 +1,15 @@
 **Warning: content spoilers below!**
 ### 0.6.46
-* Survivors:
+* Survivors
     * All SS2 Survivors now have KeyItemComponent and should be able to use N'Tormant
     * Nemesis Commando no longer throws his gun if just sword special is equipped
-* Items:
-    * Fixes an issue where Primal Birthright item display spawns in pink but becomes normal after stage transition or character respawn
-    * Magnet equipment can now be disabled 
+* Items
+    * Tagged items with canBeRental to allow them to properly be obtained in trials.
+    * Fixed Armed Backpack targeting yourself while using self damage items such as Helfire Tincture
+    * Fixed an issue where Primal Birthright item display spawns in pink but becomes normal after stage transition or character respawn
+    * Simple Magnet can now be disabled 
+* Drones
+    * Duplicator Drone no longer duplicates ethereal items and pages
 
 ### 0.6.45
 * Enemies
@@ -28,6 +32,7 @@
 	* New Artificer Utility skill - Seismic Spear
 	* New Chirr skin - "Isopod"
 	* New Commando skin - "Specialist"
+        * Huge thank you to FORCED_REASSEMBLY and Redacted for their work on the model!
 * Beta
 	* Pedestal will now display its item's name when pinged.
 	* Added Snowy and Sandy pedestal variants.
@@ -43,7 +48,9 @@
     * Fixes shock drones being too big in trishops (sorry we left this bug in the mod for so long!)
 * Items
     * Coffee Bag pick-ups now trigger Collector's Compulsion
-    * Primal Birthright rework! We will leave the rework as a surprise and update the changelog next version. Should have a more noticable downside
+    * Primal Birthright rework!
+    	* OLD: Grants 1 (+1 per stack) Legendary Chest(s) on each stage, but you cannot leave without claiming your birthright. 
+		* NEW: Grants 1 (+1 per stack) Legendary Chest(s) on each stage, but you cannot leave without claiming your birthright and must claim it within 200 seconds (+125s per stack) of entering the stage or face punishment. 
     * Fixed a bug with Drifter being able to throw Primal Birthright chest off the map
     * Birthright chests should now properly display the name of the player with the item
 * Survivors
