@@ -33,10 +33,10 @@ namespace SS2.Items
             //???
             _objectPrefab = AssetCollection.FindAsset<GameObject>("ObjectFieldAccelerator"); // 
             
-            On.RoR2.TeleporterInteraction.Awake += TeleporterInteractionAwakeAddFieldAcceleratorTeleporter;
+            On.RoR2.TeleporterInteraction.Start += TeleporterInteractionAwakeAddFieldAcceleratorTeleporter;
         }
 
-        private void TeleporterInteractionAwakeAddFieldAcceleratorTeleporter(On.RoR2.TeleporterInteraction.orig_Awake orig, TeleporterInteraction self)
+        private void TeleporterInteractionAwakeAddFieldAcceleratorTeleporter(On.RoR2.TeleporterInteraction.orig_Start orig, TeleporterInteraction self)
         {
             orig(self);
             self.gameObject.AddComponent<FieldAcceleratorTeleporterBehavior>();
