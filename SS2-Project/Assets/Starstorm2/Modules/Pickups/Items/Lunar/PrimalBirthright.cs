@@ -70,7 +70,7 @@ namespace SS2.Items
             On.RoR2.TeleporterInteraction.IdleState.OnInteractionBegin += TeleporterInteractionPrimalOverride;
             On.RoR2.SceneDirector.PopulateScene += PopulateSceneAddPrimalChest;
             On.RoR2.PurchaseInteraction.GetDisplayName += GetDisplayNameAlterPrimalName;
-            On.RoR2.CombatDirector.Spawn += CombatDirectorOnSpawnPerfected;
+            On.RoR2.CombatDirector.Spawn_SpawnCard_EliteDef_Transform_MonsterSpawnDistance_bool_float_PlacementMode_bool += CombatDirectorOnSpawnPerfected;
             On.RoR2.TeleporterInteraction.Awake += TeleporterInteractionAwakeAddPrimalPrevention;
 
             var tempChest = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/GoldChest/GoldChest.prefab").WaitForCompletion();
@@ -135,7 +135,7 @@ namespace SS2.Items
             self.gameObject.AddComponent<PrimalPrevention>();
         }
 
-        private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn orig, CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
+        private bool CombatDirectorOnSpawnPerfected(On.RoR2.CombatDirector.orig_Spawn_SpawnCard_EliteDef_Transform_MonsterSpawnDistance_bool_float_PlacementMode_bool orig, CombatDirector self, SpawnCard spawncard, EliteDef elitedef, Transform spawntarget, DirectorCore.MonsterSpawnDistance spawndistance, bool preventoverhead, float valuemultiplier, DirectorPlacementRule.PlacementMode placementmode, bool singlescaledboss)
         {
             if (NetworkServer.active && BirthrightObjectiveTimer.instance?.spawnedMeteors == true && !elitedef && Run.instance.spawnRng.RangeFloat(0, 100) <= perfectedReplacementChance && spawncard.prefab.GetComponent<CharacterMaster>()?.bodyPrefab?.GetComponent<CharacterBody>()?.isChampion != true)
             {

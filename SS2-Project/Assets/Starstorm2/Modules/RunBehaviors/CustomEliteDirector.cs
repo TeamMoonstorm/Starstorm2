@@ -38,7 +38,7 @@ namespace SS2.Components
         [SystemInitializer]
         private static void Init()
         {
-            IL.RoR2.CombatDirector.Spawn += SpawnEliteIL;
+            IL.RoR2.CombatDirector.Spawn_SpawnCard_EliteDef_Transform_MonsterSpawnDistance_bool_float_PlacementMode_bool += SpawnEliteIL;
             
         }
         // 5 ish credits per second, up to 10 per second giga late game.
