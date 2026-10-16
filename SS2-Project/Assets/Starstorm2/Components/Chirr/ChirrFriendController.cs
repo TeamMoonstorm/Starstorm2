@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using RoR2;
@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 using JetBrains.Annotations;
 using RoR2.UI;
 using System.Runtime.CompilerServices;
+using HG;
 using RoR2.CharacterAI;
 namespace SS2.Components
 {
@@ -169,11 +170,10 @@ namespace SS2.Components
 
 			CharacterBody body = master.GetBody();
 			if(body)
-			this.FriendRewards(body.GetComponent<DeathRewards>());
+				this.FriendRewards(body.GetComponent<DeathRewards>());
 			TeamIndex oldTeam = body ? body.teamComponent.teamIndex : TeamIndex.Monster;
 			TeamIndex newTeam = this.master.teamIndex;
 			master.teamIndex = newTeam;
-
 			//indicator and dontdestroyonload
 			FriendManager.instance.RpcSetupFriend(master.gameObject, false, this.isScepter);
 
@@ -241,7 +241,23 @@ namespace SS2.Components
 			if (master.TryGetComponent(out BaseAI ai))
             {
 				ai.leader.gameObject = this.master.GetBodyObject();
+				ai.currentEnemy.mainHurtBox = null;
+				ai.currentEnemy.Reset();
+				ai.targetRefreshTimer = 0f;
             }
+
+			foreach (CharacterMaster charMaster in CharacterMaster.instancesList)
+			{
+				foreach (BaseAI baseAI in charMaster.AiComponents)
+				{
+					if (baseAI.AsValidOrNull()?.currentEnemy.characterBody == body)
+					{
+						baseAI.currentEnemy.mainHurtBox = null;
+						baseAI.currentEnemy.Reset();
+						baseAI.targetRefreshTimer = 0f;
+					}
+				}
+			}
 		}
 		
 		public void RemoveFriend([NotNull] CharacterMaster master)
@@ -310,9 +326,8 @@ namespace SS2.Components
 					}
 					master.inventory.UpdateAllEffectiveItemStacks();
 				}
-				
-				
 			}
+			
 			if (master.TryGetComponent(out BaseAI ai))
 			{
 				ai.leader.gameObject = this.currentFriend.leaderObject;

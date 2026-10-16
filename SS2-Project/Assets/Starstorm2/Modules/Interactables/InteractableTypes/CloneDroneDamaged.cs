@@ -1,4 +1,4 @@
-﻿using RoR2;
+using RoR2;
 using RoR2.Skills;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -15,8 +15,8 @@ namespace SS2.Interactables
     {
         public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acCloneDrone", SS2Bundle.Interactables);
 
-        public static GameObject clonedPickupPrefab;
-
+        public static GameObject pickupPrefab;
+        
         private SummonMasterBehavior smb;
         private CharacterMaster cm;
         private GameObject bodyPrefab;
@@ -31,9 +31,6 @@ namespace SS2.Interactables
             smb = InteractablePrefab.GetComponent<SummonMasterBehavior>();
             cm = smb.masterPrefab.GetComponent<CharacterMaster>();
             bodyPrefab = cm.bodyPrefab;
-
-            clonedPickupPrefab = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").WaitForCompletion().InstantiateClone("ClonedPickup", false);
-            clonedPickupPrefab.AddComponent<ClonedPickup>();
 
             var droneBody = Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Drones/Drone1Body.prefab").WaitForCompletion();
 
@@ -53,6 +50,8 @@ namespace SS2.Interactables
                 }
             }
 
+            Addressables.LoadAssetAsync<GameObject>("RoR2/Base/Common/GenericPickup.prefab").Completed += handle => { pickupPrefab = handle.Result; };
+
             //Temporary assignment of the Generic Command (Equipment Drone's Ram) until a proper Command is made
             var/*stinky var*/ skillFamily = SS2Assets.LoadAsset<SkillFamily>("sfCloneDroneCommand", SS2Bundle.Interactables);
             skillFamily.variants = new SkillFamily.Variant[1];
@@ -67,8 +66,6 @@ namespace SS2.Interactables
 
         public override void ModifyContentPack(ContentPack contentPack)
         {
-            contentPack.networkedObjectPrefabs.AddSingle(clonedPickupPrefab);
-
             //Future proof in case this code is forgotten and not removed when the DroneDef is added to the AssetCollection after MSU supports it
             if (AssetCollection.FindAsset<DroneDef>("ddCloneDrone") == null)
             {
@@ -84,25 +81,6 @@ namespace SS2.Interactables
         public override bool IsAvailable(ContentPack contentPack)
         {
             return true;
-        }
-
-
-        // if a pickup doesnt have this component, it can be cloned and have this component added with one cloner. the cloned pickup will also have this component but with no cloners
-        // if a pickup does have this component but no cloners, it means the pickup was the result of a clone and therefore cannot be cloned
-        // if a pickup does have this component but with a cloner, it means the pickup was NOT the result of a clone and therefore CAN be cloned
-        public class ClonedPickup : MonoBehaviour 
-        { 
-            private List<GameObject> cloners = new List<GameObject>();
-            public bool CanBeCloned(GameObject cloner) => cloners.Count >= 1 && !cloners.Contains(cloner);
-            public bool OnCloned(GameObject cloner)
-            {
-                if(!cloners.Contains(cloner))
-                {
-                    cloners.Add(cloner);
-                    return true;
-                }
-                return false;
-            }
         }
 
         private void SpawnCloneCorpse(On.EntityStates.Drone.DeathState.orig_OnImpactServer orig, EntityStates.Drone.DeathState self, Vector3 contactPoint)
