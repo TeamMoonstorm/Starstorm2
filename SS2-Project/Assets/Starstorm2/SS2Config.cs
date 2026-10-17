@@ -55,13 +55,12 @@ namespace SS2
 
         internal static IEnumerator RegisterToModSettingsManager()
         {
-            SS2AssetRequest<Sprite> spriteRequest = SS2Assets.LoadAssetAsync<Sprite>("icon", SS2Bundle.Main);
+            using SS2AssetRequest<Sprite> spriteRequest = SS2Assets.LoadAssetAsync<Sprite>("icon", SS2Bundle.Main);
             
             while (!spriteRequest.IsComplete)
                 yield return null;
             
             Sprite icon = spriteRequest.Asset;
-            spriteRequest.Dispose();
 
             ModSettingsManager.SetModIcon(icon, GUID(ID_MAIN), MODNAME(ID_MAIN));
             ModSettingsManager.SetModIcon(icon, GUID(ID_ITEM), MODNAME(ID_ITEM));

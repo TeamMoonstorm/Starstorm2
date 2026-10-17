@@ -30,7 +30,7 @@ namespace SS2
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<EliteAssetCollection> request = AssetRequest;
+            using SS2AssetRequest<EliteAssetCollection> request = AssetRequest;
 
             while (!request.IsComplete)
                 yield return null;
@@ -40,8 +40,6 @@ namespace SS2
             EliteDefs = AssetCollection.eliteDefs;
             EquipmentDef = AssetCollection.equipmentDef;
             ItemDisplayPrefabs = AssetCollection.itemDisplayPrefabs;
-
-            request.Dispose();
         }
 
         public virtual void ModifyContentPack(ContentPack contentPack)

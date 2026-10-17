@@ -27,7 +27,7 @@ namespace SS2
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest request = AssetRequest;
+            using SS2AssetRequest request = AssetRequest;
 
             while (!request.IsComplete)
                 yield return null;
@@ -45,8 +45,6 @@ namespace SS2
             {
                 SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.BoxedAsset.GetType());
             }
-
-            request.Dispose();
         }
 
 

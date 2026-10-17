@@ -14,15 +14,13 @@ namespace SS2.Modules
         public static System.Collections.IEnumerator Initialize()
         {
 
-            SS2AssetRequest request = SS2Assets.LoadAssetAsync<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
+            using SS2AssetRequest request = SS2Assets.LoadAssetAsync<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
             while (!request.IsComplete)
                 yield return null;
 
             var compound = request.BoxedAsset;
             //compound.decalMaterial.shader = Resources.Load<ArtifactCompoundDef>("artifactcompound/acdCircle").decalMaterial.shader;
             ArtifactCodeAPI.AddCompound(compound as ArtifactCompoundDef);
-
-            request.Dispose();
         }
 
     }

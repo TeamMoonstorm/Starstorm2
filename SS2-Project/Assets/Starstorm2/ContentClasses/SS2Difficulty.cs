@@ -26,14 +26,13 @@ namespace SS2
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            var assetRequest = AssetRequest;
+            using var assetRequest = AssetRequest;
 
             while (!assetRequest.IsComplete)
                 yield return null;
 
             difficultyDef = assetRequest.Asset;
 
-            assetRequest.Dispose();
             yield break;
         }
         public abstract void OnRunEnd(Run run);

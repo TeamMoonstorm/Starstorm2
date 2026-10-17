@@ -58,13 +58,12 @@ namespace SS2
 
         public IEnumerator LoadContentAsync()
         {
-            var assetRequest = this.assetRequest;
+            using var assetRequest = this.assetRequest;
 
             while (!assetRequest.IsComplete)
                 yield return null;
 
             assetCollection = assetRequest.Asset;
-            assetRequest.Dispose();
 
             var request = Addressables.LoadAssetAsync<SurvivorDef>(assetCollection.survivorDefAddress);
             while (!request.IsDone)

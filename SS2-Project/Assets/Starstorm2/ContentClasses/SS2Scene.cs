@@ -36,7 +36,7 @@ namespace SS2
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<SceneAssetCollection> request = assetRequest;
+            using SS2AssetRequest<SceneAssetCollection> request = assetRequest;
 
             while (!request.IsComplete)
                 yield return null;
@@ -53,8 +53,6 @@ namespace SS2
             weightRelativeToSiblings = assetCollection.stageWeightRelativeToSiblings;
             preLoop = assetCollection.appearsPreLoop;
             postLoop = assetCollection.appearsPostLoop;
-
-            request.Dispose();
         }
 
 
