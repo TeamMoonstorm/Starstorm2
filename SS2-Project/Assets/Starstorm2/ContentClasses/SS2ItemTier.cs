@@ -32,9 +32,8 @@ namespace SS2
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<ItemTierAssetCollection> request = AssetRequest;
+            using SS2AssetRequest<ItemTierAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 

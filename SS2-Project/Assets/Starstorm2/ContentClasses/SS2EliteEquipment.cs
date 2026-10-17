@@ -30,9 +30,8 @@ namespace SS2
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<EliteAssetCollection> request = AssetRequest;
+            using SS2AssetRequest<EliteAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 

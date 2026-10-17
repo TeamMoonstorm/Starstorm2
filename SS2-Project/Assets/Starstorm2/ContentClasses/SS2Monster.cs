@@ -54,7 +54,7 @@ namespace SS2
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<MonsterAssetCollection> request = AssetRequest;
+            using SS2AssetRequest<MonsterAssetCollection> request = AssetRequest;
 
             if (request == null)
             {
@@ -62,7 +62,6 @@ namespace SS2
                 yield break;
             }
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 

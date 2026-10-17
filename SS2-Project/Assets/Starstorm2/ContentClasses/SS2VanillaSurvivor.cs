@@ -58,9 +58,8 @@ namespace SS2
 
         public IEnumerator LoadContentAsync()
         {
-            var assetRequest = this.assetRequest;
+            using var assetRequest = this.assetRequest;
 
-            assetRequest.StartLoad();
             while (!assetRequest.IsComplete)
                 yield return null;
 
