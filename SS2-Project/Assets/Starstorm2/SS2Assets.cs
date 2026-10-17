@@ -99,7 +99,7 @@ namespace SS2
 
         public static SS2AssetRequest<TAsset> LoadAssetAsync<TAsset>(string name, SS2Bundle bundle) where TAsset : UObject
         {
-            return new SS2AssetRequest<TAsset>(name, bundle);
+            return SS2AssetRequest<TAsset>.RequestFromPool(bundle, name);
         }
 
         public static TAsset[] LoadAllAssets<TAsset>(SS2Bundle bundle) where TAsset : UObject
@@ -121,7 +121,7 @@ namespace SS2
 
         public static SS2AssetRequest<TAsset> LoadAllAssetsAsync<TAsset>(SS2Bundle bundle) where TAsset : UObject
         {
-            return new SS2AssetRequest<TAsset>(bundle);
+            return SS2AssetRequest<TAsset>.RequestFromPool(bundle);
         }
 
         internal static AssetBundle GetLoadingScreenBundle()
@@ -335,7 +335,7 @@ namespace SS2
         }
     }
 
-    public abstract class SS2AssetRequest : IEnumerator
+    public abstract class SS2AssetRequest : IEnumerator, IDisposable
     {
         public abstract UObject BoxedAsset { get; }
         public abstract IEnumerable<UObject> BoxedAssets { get; }
@@ -345,7 +345,7 @@ namespace SS2
         public NullableRef<string> AssetName { get; protected set; }
 
         //This is a single asset load if AssetName is not null or whitespace
-        protected bool SingleAssetLoad => !string.IsNullOrWhiteSpace(AssetName);
+        protected bool SingleAssetLoad => AssetName.hasValue && !string.IsNullOrWhiteSpace(AssetName.value);
 
         public bool IsComplete
         {
@@ -353,7 +353,7 @@ namespace SS2
             {
                 internalCoroutine ??= GetLoadCoroutine();
 
-                return internalCoroutine.MoveNext();
+                return !internalCoroutine.MoveNext();
             }
         }
         object IEnumerator.Current => internalCoroutine?.Current;
@@ -398,9 +398,11 @@ namespace SS2
             AssetName = assetName;
             TargetBundle = ss2Bundle;
         }
+
+        public abstract void Dispose();
     }
 
-    public class SS2AssetRequest<TAsset> : SS2AssetRequest, IDisposable where TAsset : UObject
+    public class SS2AssetRequest<TAsset> : SS2AssetRequest where TAsset : UObject
     {
         #region Pool Implementation
         private static Stack<SS2AssetRequest<TAsset>> _stack = new Stack<SS2AssetRequest<TAsset>>();
@@ -598,19 +600,29 @@ namespace SS2
             _assets = null;
         }
 
-        public void Dispose()
-        {
-            ThrowIfUninitialized();
-            Reset();
-            ReturnToPool(this);
-        }
-
         private void ThrowIfUninitialized()
         {
             if (this.TargetBundle == SS2Bundle.Invalid || (TargetBundle == SS2Bundle.Invalid && AssetName.hasValue == false))
                 throw new InvalidOperationException("You should not use an SS2AssetRequest that has been disposed of.");
         }
 
+        public override void Dispose()
+        {
+            ThrowIfUninitialized();
+            Reset();
+            ReturnToPool(this);
+        }
+
         private SS2AssetRequest() { }
+
+#if DEBUG
+        ~SS2AssetRequest()
+        {
+            if(this.TargetBundle != SS2Bundle.Invalid || (TargetBundle != SS2Bundle.Invalid && AssetName.hasValue == true))
+            {
+                SS2Log.Error($"An SS2AssetRequest with TargetBundle={TargetBundle} and AssetName={AssetName.value} has been collected by the GarbageCollector. This means it wasnt disposed. Consider disposing your SS2AssetRequest once you're done with it to have less strain on the GarbageCollector");
+            }
+        }
+#endif
     }
 }

@@ -60,11 +60,11 @@ namespace SS2
         {
             var assetRequest = this.assetRequest;
 
-            assetRequest.StartLoad();
             while (!assetRequest.IsComplete)
                 yield return null;
 
             assetCollection = assetRequest.Asset;
+            assetRequest.Dispose();
 
             var request = Addressables.LoadAssetAsync<SurvivorDef>(assetCollection.survivorDefAddress);
             while (!request.IsDone)

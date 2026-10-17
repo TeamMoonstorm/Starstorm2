@@ -61,7 +61,6 @@ namespace SS2
         {
             SS2AssetRequest<SurvivorAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -70,6 +69,8 @@ namespace SS2
             CharacterPrefab = AssetCollection.bodyPrefab;
             masterPrefab = AssetCollection.masterPrefab;
             survivorDef = AssetCollection.survivorDef;
+
+            request.Dispose();
         }
 
         public virtual IEnumerator InitializeAsync()

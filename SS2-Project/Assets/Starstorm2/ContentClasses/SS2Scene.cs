@@ -38,7 +38,6 @@ namespace SS2
         {
             SS2AssetRequest<SceneAssetCollection> request = assetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -54,6 +53,8 @@ namespace SS2
             weightRelativeToSiblings = assetCollection.stageWeightRelativeToSiblings;
             preLoop = assetCollection.appearsPreLoop;
             postLoop = assetCollection.appearsPostLoop;
+
+            request.Dispose();
         }
 
 

@@ -62,7 +62,6 @@ namespace SS2
         {
             SS2AssetRequest request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -81,6 +80,8 @@ namespace SS2
             {
                 SS2Log.Error("Invalid AssetRequest " + request.AssetName + " of type " + request.BoxedAsset.GetType());
             }
+
+            request.Dispose();
         }
 
         public virtual void ModifyContentPack(ContentPack contentPack)

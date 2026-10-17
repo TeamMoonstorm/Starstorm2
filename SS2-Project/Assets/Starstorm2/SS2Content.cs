@@ -89,18 +89,18 @@ namespace SS2
             SS2ContentPack.entityStateTypes.Add(typeof(SS2Content).Assembly.GetTypes().Where(type => typeof(EntityStates.EntityState).IsAssignableFrom(type)).ToArray());
 
             SS2Log.Info("Populating EntityStateConfiguration array...");
-            SS2AssetRequest<EntityStateConfiguration> escRequest = new SS2AssetRequest<EntityStateConfiguration>(SS2Bundle.All);
-            escRequest.StartLoad();
+            SS2AssetRequest<EntityStateConfiguration> escRequest = SS2Assets.LoadAllAssetsAsync<EntityStateConfiguration>(SS2Bundle.All);
             while (!escRequest.IsComplete) yield return null;
             SS2ContentPack.entityStateConfigurations.Clear();
             SS2ContentPack.entityStateConfigurations.Add(escRequest.Assets.ToArray());
+            escRequest.Dispose();
 
             SS2Log.Info($"Populating EffectDefs array...");
-            SS2AssetRequest<GameObject> gameObjectRequest = new SS2AssetRequest<GameObject>(SS2Bundle.All);
-            gameObjectRequest.StartLoad();
+            SS2AssetRequest<GameObject> gameObjectRequest = SS2Assets.LoadAllAssetsAsync<GameObject>(SS2Bundle.All);
             while (!gameObjectRequest.IsComplete) yield return null;
             SS2ContentPack.effectDefs.Clear();
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
+            gameObjectRequest.Dispose();
 
             SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");
             ParallelMultiStartCoroutine asyncAssetLoadCoroutines = AsyncAssetLoadAttribute.CreateCoroutineForMod(SS2Main.Instance);
@@ -112,12 +112,12 @@ namespace SS2
         private IEnumerator AddSS2ExpansionDef()
         {
             var expansionRequest = SS2Assets.LoadAssetAsync<ExpansionDef>("SS2ExpansionDef", SS2Bundle.Main);
-            expansionRequest.StartLoad();
 
             while (!expansionRequest.IsComplete)
                 yield return null;
 
             SS2ContentPack.expansionDefs.AddSingle(expansionRequest.Asset);
+            expansionRequest.Dispose();
         }
 
         internal SS2Content()

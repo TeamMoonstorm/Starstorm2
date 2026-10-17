@@ -62,7 +62,6 @@ namespace SS2
                 yield break;
             }
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -100,6 +99,8 @@ namespace SS2
             {
                 SS2Log.Warning($"monsterCardProvider is null in AssetCollection for {GetType().Name}");
             }
+
+            request.Dispose();
         }
 
 

@@ -34,7 +34,6 @@ namespace SS2
         {
             SS2AssetRequest<ItemTierAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -47,6 +46,8 @@ namespace SS2
                 darkColorIndex = AssetCollection.darkColorIndex;
 
             pickupDisplayVFX = AssetCollection.pickupDisplayVFX;
+
+            request.Dispose();
         }
 
         public void ModifyContentPack(ContentPack contentPack)

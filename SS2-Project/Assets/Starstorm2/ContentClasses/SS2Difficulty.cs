@@ -28,11 +28,12 @@ namespace SS2
         {
             var assetRequest = AssetRequest;
 
-            assetRequest.StartLoad();
             while (!assetRequest.IsComplete)
                 yield return null;
 
             difficultyDef = assetRequest.Asset;
+
+            assetRequest.Dispose();
             yield break;
         }
         public abstract void OnRunEnd(Run run);

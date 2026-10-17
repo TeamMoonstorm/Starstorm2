@@ -32,7 +32,6 @@ namespace SS2
         {
             SS2AssetRequest<InteractableAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -41,6 +40,7 @@ namespace SS2
             CardProvider = AssetCollection.interactableCardProvider;
             InteractablePrefab = AssetCollection.interactablePrefab;
 
+            request.Dispose();
         }
 
         public virtual void ModifyContentPack(ContentPack contentPack)
