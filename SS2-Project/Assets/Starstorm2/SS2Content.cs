@@ -20,9 +20,9 @@ namespace SS2
 
         internal static event Action onLoadStaticContentFinished;
 
-        internal static ParallelMultiStartCoroutine _parallelPreLoadDispatchers = new ParallelMultiStartCoroutine();
+        internal static ParallelCoroutine _parallelPreLoadDispatchers = ParallelCoroutine.RequestFromPool();
         private static Func<IEnumerator>[] _loadDispatchers;
-        internal static ParallelMultiStartCoroutine _parallelPostLoadDispatchers = new ParallelMultiStartCoroutine();
+        internal static ParallelCoroutine _parallelPostLoadDispatchers = ParallelCoroutine.RequestFromPool();
 
         private static Func<IEnumerator>[] _fieldAssignDispatchers;
         public IEnumerator LoadStaticContentAsync(LoadStaticContentAsyncArgs args)
@@ -38,7 +38,6 @@ namespace SS2
                 yield break;
             }
 
-            _parallelPreLoadDispatchers.Start();
             while (!_parallelPreLoadDispatchers.IsDone()) yield return null;
 
             for (int i = 0; i < _loadDispatchers.Length; i++)
@@ -57,7 +56,6 @@ namespace SS2
                 while (enumerator?.MoveNext() ?? false) yield return null;
             }
 
-            _parallelPostLoadDispatchers.Start();
             while (!_parallelPostLoadDispatchers.IsDone()) yield return null;
 
             loadStaticContentFinished = true;
@@ -101,10 +99,10 @@ namespace SS2
             SS2ContentPack.effectDefs.Add(gameObjectRequest.Assets.Where(go => go.GetComponent<EffectComponent>()).Select(go => new EffectDef(go)).ToArray());
 
             SS2Log.Info($"Calling AsyncAssetLoad Attribute Methods...");
-            ParallelMultiStartCoroutine asyncAssetLoadCoroutines = AsyncAssetLoadAttribute.CreateCoroutineForMod(SS2Main.Instance);
-            asyncAssetLoadCoroutines.Start();
+            ParallelCoroutine asyncAssetLoadCoroutines = AsyncAssetLoadAttribute.CreateParallelCoroutineForMod(SS2Main.Instance);
             while (!asyncAssetLoadCoroutines.isDone)
                 yield return null;
+            ParallelCoroutine.ReturnToPool(asyncAssetLoadCoroutines);
         }
 
         private IEnumerator AddSS2ExpansionDef()
@@ -122,7 +120,7 @@ namespace SS2
             ContentManager.collectContentPackProviders += AddSelf;
             SS2Assets.assetsAvailability.CallWhenAvailable(() =>
             {
-                _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef);
+                _parallelPreLoadDispatchers.Add(AddSS2ExpansionDef());
             });
         }
 
@@ -191,42 +189,42 @@ namespace SS2
             {
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Artifacts), SS2ContentPack.artifactDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Artifacts), SS2ContentPack.artifactDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Items), SS2ContentPack.itemDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Items), SS2ContentPack.itemDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Equipments), SS2ContentPack.equipmentDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Equipments), SS2ContentPack.equipmentDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Elites), SS2ContentPack.eliteDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Elites), SS2ContentPack.eliteDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Buffs), SS2ContentPack.buffDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Buffs), SS2ContentPack.buffDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Scenes), SS2ContentPack.sceneDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Scenes), SS2ContentPack.sceneDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(Survivors), SS2ContentPack.survivorDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(Survivors), SS2ContentPack.survivorDefs);
                     return null;
                 },
                 () =>
                 {
-                    ContentUtil.PopulateTypeFields(typeof(ItemTierDefs), SS2ContentPack.itemTierDefs);
+                    ContentLoadHelper.PopulateTypeFields(typeof(ItemTierDefs), SS2ContentPack.itemTierDefs);
                     return null;
                 }
             };

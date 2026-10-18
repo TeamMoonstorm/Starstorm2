@@ -47,19 +47,20 @@ namespace SS2
 
             List<IContentPiece<SerializableDifficultyDef>> difficulties = new List<IContentPiece<SerializableDifficultyDef>>();
 
-            var helper = new ParallelMultiStartCoroutine();
+            var helper = ParallelCoroutine.RequestFromPool();
             foreach (var difficulty in content)
             {
                 if (!difficulty.IsAvailable(_contentPieceProvider.contentPack))
                     continue;
 
                 difficulties.Add(difficulty);
-                helper.Add(difficulty.LoadContentAsync);
+                helper.Add(difficulty.LoadContentAsync());
             }
 
-            helper.Start();
             while (!helper.isDone)
                 yield return null;
+
+            ParallelCoroutine.ReturnToPool(helper);
 
             InitializeDifficulties(difficulties);
         }
