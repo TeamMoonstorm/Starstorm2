@@ -30,9 +30,8 @@ namespace SS2
         public abstract bool IsAvailable(ContentPack contentPack);
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest<InteractableAssetCollection> request = AssetRequest;
+            using SS2AssetRequest<InteractableAssetCollection> request = AssetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 
@@ -40,7 +39,6 @@ namespace SS2
 
             CardProvider = AssetCollection.interactableCardProvider;
             InteractablePrefab = AssetCollection.interactablePrefab;
-
         }
 
         public virtual void ModifyContentPack(ContentPack contentPack)

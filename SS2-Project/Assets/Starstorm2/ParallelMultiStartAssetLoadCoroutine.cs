@@ -35,8 +35,7 @@ namespace SS2
 
         private IEnumerator LoadFunc<T>(string assetName, SS2Bundle bundle) where T : UnityEngine.Object
         {
-            var request = SS2Assets.LoadAssetAsync<T>(assetName, bundle);
-            request.StartLoad();
+            using var request = SS2Assets.LoadAssetAsync<T>(assetName, bundle);
             while (!request.IsComplete)
                 yield return null;
 

@@ -13,14 +13,13 @@ namespace SS2.Orbs
         public DUTController dutController;
 
         private const float speed = 65f;
-        private static GameObject _orbEffect = SS2Assets.LoadAsset<GameObject>("DUTOrbEffectGreen", SS2Bundle.Indev);
+        private static GameObject _orbEffect;
 
         [AsyncAssetLoad]
         private static IEnumerator LoadAssets()
         {
-            var request = SS2Assets.LoadAssetAsync<GameObject>("DUTOrbEffectGreen", SS2Bundle.Indev);
+            using var request = SS2Assets.LoadAssetAsync<GameObject>("DUTOrbEffectGreen", SS2Bundle.Indev);
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 

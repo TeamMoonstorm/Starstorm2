@@ -17,17 +17,21 @@ namespace SS2.Orbs
         [AsyncAssetLoad]
         private static IEnumerator LoadAssetsAsync()
         {
-            ParallelMultiStartAssetLoadCoroutine helper = new ParallelMultiStartAssetLoadCoroutine();
+            ParallelCoroutine helper = ParallelCoroutine.RequestFromPool();
 
-            helper.AddAssetToLoad<GameObject>("ExecutionerIonSuperOrbEffect", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<NetworkSoundEventDef>("ExecutionerGainCharge", SS2Bundle.Executioner2);
+            using var executionerIonSuperOrbEffect = SS2Assets.LoadAssetAsync<GameObject>("ExecutionerIonSuperOrbEffect", SS2Bundle.Executioner2);
+            using var executionerGainCharge = SS2Assets.LoadAssetAsync<NetworkSoundEventDef>("ExecutionerGainCharge", SS2Bundle.Executioner2);
 
-            helper.Start();
-            while (!helper.IsDone)
+            helper.Add(executionerIonSuperOrbEffect);
+            helper.Add(executionerGainCharge);
+
+            while (!helper.isDone)
                 yield return null;
 
-            orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonSuperOrbEffect");
-            sound = helper.GetLoadedAsset<NetworkSoundEventDef>("ExecutionerGainCharge");
+            orbEffect = executionerIonSuperOrbEffect.Asset;
+            sound = executionerGainCharge.Asset;
+
+            ParallelCoroutine.ReturnToPool(helper);
         }
         public override void Begin()
         {

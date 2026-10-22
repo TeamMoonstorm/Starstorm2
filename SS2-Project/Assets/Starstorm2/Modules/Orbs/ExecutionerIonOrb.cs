@@ -20,16 +20,23 @@ namespace SS2.Orbs
         [AsyncAssetLoad]
         private static IEnumerator LoadAssets()
         {
-            var helper = new ParallelMultiStartAssetLoadCoroutine();
-            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
-            helper.AddAssetToLoad<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner2);
+            ParallelCoroutine parallelCoroutine = ParallelCoroutine.RequestFromPool();
 
-            helper.Start();
-            while (!helper.IsDone)
+            using SS2AssetRequest<GameObject> executionerIonOrbEffect = SS2Assets.LoadAssetAsync<GameObject>("ExecutionerIonOrbEffect", SS2Bundle.Executioner2);
+            using SS2AssetRequest<GameObject> executionerIonOrbEffectMastery = SS2Assets.LoadAssetAsync<GameObject>("ExecutionerIonOrbEffectMastery", SS2Bundle.Executioner2);
+
+            parallelCoroutine.Add(executionerIonOrbEffectMastery);
+            parallelCoroutine.Add(executionerIonOrbEffect);
+
+            while(!parallelCoroutine.isDone)
+            {
                 yield return null;
+            }
 
-            _orbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffect");
-            _masteryOrbEffect = helper.GetLoadedAsset<GameObject>("ExecutionerIonOrbEffectMastery");
+            _orbEffect = executionerIonOrbEffect.Asset;
+            _masteryOrbEffect = executionerIonOrbEffectMastery.Asset;
+
+            ParallelCoroutine.ReturnToPool(parallelCoroutine);
             yield break;
         }
 
