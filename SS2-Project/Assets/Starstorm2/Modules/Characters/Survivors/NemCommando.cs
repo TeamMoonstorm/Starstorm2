@@ -48,6 +48,8 @@ namespace SS2.Survivors
             ModifyProjectiles();
             CreatePod();
 
+            NemesisCatalog.AddNemesis(new NemesisCompatInfo(SS2Assets.LoadAsset<NemesisSpawnCard>("nscNemCommandoBoss", SS2Bundle.Events)));
+
             //characterBody.preferredPodPrefab = nemesisPodPrefab;
             // https://tenor.com/view/larry-david-unsure-uncertain-cant-decide-undecided-gif-3529136
         }

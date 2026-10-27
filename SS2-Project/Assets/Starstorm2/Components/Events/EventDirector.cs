@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using SS2.Components;
+using EntityStates;
 
 namespace SS2
 {
@@ -150,8 +152,8 @@ namespace SS2
                 WeightedSelection<NemesisSpawnCard> selection = new WeightedSelection<NemesisSpawnCard>();
                 foreach(NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
                 {                    
-                    if(SS2Util.GetItemCountForPlayers(card.itemDef) == 0) // check card.IsAvailable()
-                        selection.AddChoice(card, 1);
+                    if(card.itemDef == null || SS2Util.GetItemCountForPlayers(card.itemDef) == 0)
+                        selection.AddChoice(card, card.selectionWeight > 0f ? card.selectionWeight : 1f);
                 }
                 // pick one at random
                 availableNemesisSpawnCards = selection;
@@ -254,88 +256,243 @@ namespace SS2
 
     public class NemesisCatalog
     {
-        private static List<NemesisSpawnCard> externalSpawnCards = new List<NemesisSpawnCard>();
-        private static List<string> externalMasterNames = new List<string>();
         public static NemesisSpawnCard[] readonlySpawnCards
         {
-            get => allSpawnCards;
+            get => (NemesisSpawnCard[])allSpawnCards.Clone();
         }
-        private static NemesisSpawnCard[] allSpawnCards;
+        private static NemesisSpawnCard[] allSpawnCards = Array.Empty<NemesisSpawnCard>();
 
-        [SystemInitializer(typeof(MasterCatalog))]
-        private static void Init()
+        internal static NemesisSpawnCard FindSpawnCard(string masterName)
         {
-            // collect master names from config
-            FromNames();
-            allSpawnCards = SS2Assets.LoadAllAssets<NemesisSpawnCard>(SS2Bundle.All);
-            HG.ArrayUtils.Join(allSpawnCards, externalSpawnCards.ToArray());
-            
-        }
-
-        private static void FromNames()
-        {
-            foreach (string master in externalMasterNames)
+            foreach (NemesisSpawnCard card in allSpawnCards)
             {
-                string b1 = !master.EndsWith("Body") ? master : master.Remove(master.Length - 3);
-                string m1 = master.EndsWith("Master") ? b1 : b1 + "Master";
-                var master1 = MasterCatalog.FindMasterIndex(master);
-                if (master1 == MasterCatalog.MasterIndex.none)
-                {
-                    string m2 = master.EndsWith("MonsterMaster") ? b1 : b1 + "MonsterMaster";
-                    master1 = MasterCatalog.FindMasterIndex(m2);
-                }
-                GameObject masterPrefab = MasterCatalog.GetMasterPrefab(master1);
-                if (masterPrefab)
-                {
-                    AddNemesisInvader(masterPrefab);
-                }
-                else
-                {
-                    SS2Log.Error($"NemesisCatalog.FromNames: Could not find master prefab \"{master}\". Nemesis invasion was not added.");
-                    return;
-                }
+                if (card.prefab.name == masterName)
+                    return card;
             }
+            return null;
         }
 
-        public static void AddNemesisInvader(string masterName)
+        /// <summary>
+        /// Adds an AI boss to the invasion pool. Call once on every peer after configuring its prefabs,
+        /// normally during content initialization and before starting a run.
+        /// The caller must register its content with the game's catalogs; this does not register a survivor or unlock.
+        /// Duplicate masters retain their first registration. Late additions affect the next invasion pool selection.
+        /// </summary>
+        public static void AddNemesis(NemesisCompatInfo info)
         {
-            externalMasterNames.Add(masterName);
-        }
-        public static void AddNemesisInvader(GameObject masterPrefab, ItemDef itemDef = null, NemesisSpawnCard.SkillOverride[] skillOverrides = null, EntityStates.SerializableEntityStateType spawnState = default(EntityStates.SerializableEntityStateType))
-        {
-            if (!masterPrefab)
+            if (!info.masterPrefab)
             {
-                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Null master prefab. Nemesis invasion was not added.");
+                SS2Log.Error("NemesisCatalog.AddNemesis: Null masterPrefab. Nemesis invasion was not added.");
                 return;
             }
-            if (masterPrefab.TryGetComponent(out CharacterBody _))
+            if (string.IsNullOrEmpty(info.masterPrefab.name))
             {
-                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Expected a CharacterMaster component, but {masterPrefab} is a body prefab. Nemesis invasion was not added.");
+                SS2Log.Error("NemesisCatalog.AddNemesis: The master prefab must have a catalog-unique name. Nemesis invasion was not added.");
                 return;
             }
-            if (!masterPrefab.TryGetComponent(out CharacterMaster master))
+            if (info.masterPrefab.TryGetComponent(out CharacterBody _))
             {
-                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): Did not find a CharacterMaster component for {masterPrefab}. Nemesis invasion was not added.");
+                SS2Log.Error($"NemesisCatalog.AddNemesis: Expected a CharacterMaster component, but {info.masterPrefab} is a body prefab. Nemesis invasion was not added.");
+                return;
+            }
+            if (!info.masterPrefab.TryGetComponent(out CharacterMaster master))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesis: Did not find a CharacterMaster component for {info.masterPrefab}. Nemesis invasion was not added.");
                 return;
             }
             if (!master.bodyPrefab || !master.bodyPrefab.TryGetComponent(out CharacterBody body))
             {
-                SS2Log.Error($"NemesisCatalog.AddNemesisInvader(GameObject): {masterPrefab} did not have a valid body prefab. Nemesis invasion was not added.");
+                SS2Log.Error($"NemesisCatalog.AddNemesis: {info.masterPrefab} did not have a valid body prefab. Nemesis invasion was not added.");
                 return;
             }
-            // TODO: base stats
+
+            if (!info.masterPrefab.GetComponent<NetworkIdentity>() || !master.bodyPrefab.GetComponent<NetworkIdentity>())
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesis: {info.masterPrefab.name} and its body must have NetworkIdentity components. Nemesis invasion was not added.");
+                return;
+            }
+
+            if (!IsFinite(info.selectionWeight))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesis: {info.masterPrefab.name} has a non-finite selection weight. Nemesis invasion was not added.");
+                return;
+            }
+
+            if (info.statModifiers != null)
+            {
+                foreach (var modifier in info.statModifiers)
+                {
+                    if (!NemesisSpawnCard.TryGetStatField(modifier.fieldName, out _)
+                        || !Enum.IsDefined(typeof(NemesisSpawnCard.StatModifierType), modifier.statModifierType)
+                        || !IsFinite(modifier.modifier))
+                    {
+                        SS2Log.Error($"NemesisCatalog.AddNemesis: Invalid stat modifier \"{modifier.fieldName}\" on {info.masterPrefab.name}. Expected a writable float base-stat field, valid operation and finite amount. Nemesis invasion was not added.");
+                        return;
+                    }
+                }
+            }
+
+            if (info.skillOverrides != null && info.skillOverrides.Length > 0)
+            {
+                SkillLocator skillLocator = master.bodyPrefab.GetComponent<SkillLocator>();
+                foreach (var skillOverride in info.skillOverrides)
+                {
+                    if (!skillLocator || !skillLocator.GetSkill(skillOverride.skillSlot) || !skillOverride.skillDef)
+                    {
+                        SS2Log.Error($"NemesisCatalog.AddNemesis: Invalid {skillOverride.skillSlot} skill override on {info.masterPrefab.name}. Nemesis invasion was not added.");
+                        return;
+                    }
+                }
+            }
+
+            Type spawnStateType = info.spawnStateOverride.stateType;
+            if (!string.IsNullOrEmpty(info.spawnStateOverride.typeName)
+                && (spawnStateType == null || spawnStateType.IsAbstract || spawnStateType.ContainsGenericParameters
+                    || !typeof(EntityState).IsAssignableFrom(spawnStateType) || spawnStateType.GetConstructor(Type.EmptyTypes) == null
+                    || !EntityStateMachine.FindByCustomName(master.bodyPrefab, "Body")))
+            {
+                SS2Log.Error($"NemesisCatalog.AddNemesis: Invalid spawn state or missing Body state machine on {info.masterPrefab.name}. Nemesis invasion was not added.");
+                return;
+            }
+
+            foreach (NemesisSpawnCard card in allSpawnCards)
+            {
+                if (card.prefab == info.masterPrefab)
+                {
+                    SS2Log.Warning($"NemesisCatalog.AddNemesis: {info.masterPrefab.name} is already registered. Keeping its first registration.");
+                    return;
+                }
+                if (card.prefab.name == info.masterPrefab.name)
+                {
+                    SS2Log.Error($"NemesisCatalog.AddNemesis: Another master is already registered as {info.masterPrefab.name}. Master names must be unique for peer setup. Nemesis invasion was not added.");
+                    return;
+                }
+            }
+
+            if (!info.masterPrefab.TryGetComponent(out RoR2.CharacterAI.BaseAI _))
+            {
+                SS2Log.Warning($"NemesisCatalog.AddNemesis: {info.masterPrefab} does not have a BaseAI component. The boss will spawn but will not act without AI.");
+            }
+
             NemesisSpawnCard spawnCard = ScriptableObject.CreateInstance<NemesisSpawnCard>();
-            spawnCard.prefab = masterPrefab;
+            spawnCard.name = "nsc" + info.masterPrefab.name;
+            spawnCard.prefab = info.masterPrefab;
+            spawnCard.sendOverNetwork = true;
             spawnCard.hullSize = body.hullClassification;
             spawnCard.nodeGraphType = body.isFlying ? RoR2.Navigation.MapNodeGroup.GraphType.Air : RoR2.Navigation.MapNodeGroup.GraphType.Ground;
-            spawnCard.itemDef = itemDef;
-            if (skillOverrides != null)
-                spawnCard.skillOverrides = skillOverrides;
-            if (spawnState.stateType != null)
-                spawnCard.overrideSpawnState = spawnState;
-            externalSpawnCards.Add(spawnCard);
+            spawnCard.itemDef = info.droppedItem;
+            spawnCard.nemesisInventory = info.nemesisInventory;
+            spawnCard.visualEffect = info.visualEffect;
+            spawnCard.selectionWeight = info.selectionWeight > 0f ? info.selectionWeight : 1f;
+
+            spawnCard.skillOverrides = info.skillOverrides != null ? (NemesisSpawnCard.SkillOverride[])info.skillOverrides.Clone() : Array.Empty<NemesisSpawnCard.SkillOverride>();
+            spawnCard.statModifiers = info.statModifiers != null ? (NemesisSpawnCard.StatModifier[])info.statModifiers.Clone() : Array.Empty<NemesisSpawnCard.StatModifier>();
+            if (spawnStateType != null)
+            {
+                spawnCard.overrideSpawnState = info.spawnStateOverride;
+                spawnCard.useOverrideState = true;
+            }
+
+            HG.ArrayUtils.ArrayAppend(ref allSpawnCards, spawnCard);
         }
 
+        private static bool IsFinite(float value)
+        {
+            return !float.IsNaN(value) && !float.IsInfinity(value);
+        }
 
+        [ConCommand(commandName = "list_nems", flags = ConVarFlags.None, helpText = "Lists all registered nemesis spawn cards with their index.")]
+        public static void CCListNemeses(ConCommandArgs args)
+        {
+            var cards = readonlySpawnCards;
+            if (cards == null || cards.Length == 0)
+            {
+                SS2Log.Info("No nemesis spawn cards registered.");
+                return;
+            }
+
+            for (int i = 0; i < cards.Length; i++)
+            {
+                var card = cards[i];
+                string masterName = card.prefab ? card.prefab.name : "null";
+                string itemName = card.itemDef ? Language.GetString(card.itemDef.nameToken) : "none";
+                SS2Log.Info($"[{i}] {masterName} (drops: {itemName}, weight: {card.selectionWeight})");
+            }
+        }
+
+        [ConCommand(commandName = "spawn_nem", flags = ConVarFlags.Cheat | ConVarFlags.ExecuteOnServer, helpText = "Spawns a nemesis boss by catalog index. If no index given, picks randomly. Format: {index}")]
+        public static void CCSpawnNemesis(ConCommandArgs args)
+        {
+            if (!NetworkServer.active) return;
+            if (!Run.instance || !DirectorCore.instance || !SceneInfo.instance)
+            {
+                SS2Log.Error("how tf you callin commands from here");
+                return;
+            }
+
+            var cards = readonlySpawnCards;
+            if (cards == null || cards.Length == 0)
+            {
+                SS2Log.Error("spawn_nem: No nemesis spawn cards registered.");
+                return;
+            }
+
+            NemesisSpawnCard spawnCard;
+            if (args.Count > 0)
+            {
+                int index = args.GetArgInt(0);
+                if (index < 0 || index >= cards.Length)
+                {
+                    SS2Log.Error($"spawn_nem: Index {index} out of range. Valid range: 0-{cards.Length - 1}. Use list_nems to see available entries.");
+                    return;
+                }
+                spawnCard = cards[index];
+            }
+            else
+            {
+                spawnCard = cards[UnityEngine.Random.Range(0, cards.Length)];
+            }
+
+            if (!spawnCard)
+            {
+                SS2Log.Error("spawn_nem: Selected spawn card is null.");
+                return;
+            }
+
+            CharacterMaster senderMaster = args.GetSenderMaster();
+            if (!senderMaster || !senderMaster.GetBody())
+            {
+                SS2Log.Error("spawn_nem: No valid body found.");
+                return;
+            }
+
+            DirectorPlacementRule placementRule = new DirectorPlacementRule
+            {
+                spawnOnTarget = senderMaster.GetBody().coreTransform,
+                placementMode = DirectorPlacementRule.PlacementMode.NearestNode
+            };
+            DirectorCore.GetMonsterSpawnDistance(DirectorCore.MonsterSpawnDistance.Close, out placementRule.minDistance, out placementRule.maxDistance);
+
+            DirectorSpawnRequest request = new DirectorSpawnRequest(spawnCard, placementRule, Run.instance.spawnRng);
+            request.teamIndexOverride = TeamIndex.Monster;
+            request.ignoreTeamMemberLimit = true;
+            request.onSpawnedServer += (result) =>
+            {
+                if (!result.success || !result.spawnedInstance) return;
+
+                if (result.spawnedInstance.TryGetComponent(out CharacterMaster master))
+                {
+                    master.inventory.GiveItem(RoR2Content.Items.UseAmbientLevel);
+                    int level = Mathf.FloorToInt(Run.instance.ambientLevel);
+                    if (level < 60)
+                        master.inventory.GiveItem(RoR2Content.Items.LevelBonus, 60 - level);
+                }
+            };
+
+            if (DirectorCore.instance.TrySpawnObject(request))
+                SS2Log.Info($"spawn_nem: Spawned {spawnCard.prefab.name}.");
+            else
+                SS2Log.Error($"spawn_nem: Could not spawn {spawnCard.prefab.name}.");
+        }
     }
 }
