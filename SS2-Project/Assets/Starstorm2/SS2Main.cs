@@ -14,11 +14,12 @@ using Unity.Burst;
 namespace SS2
 {
     #region R2API
-    [BepInDependency("com.bepis.r2api.dot")]
-    [BepInDependency("com.bepis.r2api.networking")]
-    [BepInDependency("com.bepis.r2api.prefab")]
-    [BepInDependency("com.bepis.r2api.difficulty")]
-    [BepInDependency("com.bepis.r2api.tempvisualeffect")]
+    [BepInDependency(R2API.DotAPI.PluginGUID)]
+    [BepInDependency(R2API.Networking.NetworkingAPI.PluginGUID)]
+    [BepInDependency(R2API.PrefabAPI.PluginGUID)]
+    [BepInDependency(R2API.DifficultyAPI.PluginGUID)]
+    [BepInDependency(R2API.TempVisualEffectAPI.PluginGUID)]
+    [BepInDependency(R2API.ProcTypeAPI.PluginGUID)]
     #endregion
     [BepInDependency(MSU.MSUMain.GUID, BepInDependency.DependencyFlags.HardDependency)]
     [BepInDependency("com.DestroyedClone.AncientScepter", BepInDependency.DependencyFlags.SoftDependency)]

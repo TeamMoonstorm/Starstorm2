@@ -27,9 +27,8 @@ namespace SS2
 
         public virtual IEnumerator LoadContentAsync()
         {
-            SS2AssetRequest request = assetRequest;
+            using SS2AssetRequest request = assetRequest;
 
-            request.StartLoad();
             while (!request.IsComplete)
                 yield return null;
 

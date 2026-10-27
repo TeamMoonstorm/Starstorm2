@@ -14,8 +14,7 @@ namespace SS2.Modules
         public static System.Collections.IEnumerator Initialize()
         {
 
-            SS2AssetRequest request = SS2Assets.LoadAssetAsync<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
-            request.StartLoad();
+            using SS2AssetRequest request = SS2Assets.LoadAssetAsync<ArtifactCompoundDef>("acdStar", SS2Bundle.Artifacts);
             while (!request.IsComplete)
                 yield return null;
 
