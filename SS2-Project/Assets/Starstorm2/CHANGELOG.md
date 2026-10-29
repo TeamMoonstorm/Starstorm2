@@ -1,4 +1,7 @@
 **Warning: content spoilers below!**
+### 0.6.47
+* Peepeepoopoo
+
 ### 0.6.46
 * Survivors
     * All SS2 Survivors now have KeyItemComponent and should be able to use N'Tormant
