@@ -69,9 +69,12 @@ namespace SS2.Components
 
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
+            // Self is null on soulbound??? Rejoice!
+            if (orig == null || self == null) return;
+
             orig(self);
 
-            if (NetworkServer.active)
+            if (NetworkServer.active && directorPrefab != null && directorInstance == null)
             {
                 directorInstance = Instantiate(directorPrefab);
                 NetworkServer.Spawn(directorInstance);

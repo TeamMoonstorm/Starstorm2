@@ -47,6 +47,9 @@ namespace SS2.Components
 
         public static void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
+            // Self is null on soulbound??? Rejoice!
+            if (orig == null || self == null) return;
+
             orig(self);
 
             var currStage = SceneManager.GetActiveScene().name;

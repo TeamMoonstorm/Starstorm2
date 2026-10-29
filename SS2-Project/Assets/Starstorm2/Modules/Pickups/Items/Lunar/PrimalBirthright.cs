@@ -239,6 +239,10 @@ namespace SS2.Items
         private void PopulateSceneAddPrimalChest(On.RoR2.SceneDirector.orig_PopulateScene orig, SceneDirector self)
         {
             primalToken = null;
+
+            // Self is null on soulbound??? Rejoice!
+            if (orig == null || self == null) return;
+
             orig(self); //things after orig occur after PlaceTeleporter
 
             if (self.teleporterInstance){

@@ -160,7 +160,11 @@ namespace SS2
         // probably not the right hook but new async stage stuff makes timing a headache so im not going to bother changing it
         public void SceneDirector_Start(On.RoR2.SceneDirector.orig_Start orig, SceneDirector self)
         {
+            // Self is null on soulbound??? Rejoice!
+            if (orig == null || self == null) return;
+
             orig(self);
+            
             if (self.teleporterInstance && NetworkServer.active)
             {
                 SpawnShrine();
