@@ -61,7 +61,11 @@ namespace SS2.Components
             }
             
             newAlpha = ((closestBirthrightDistance - timer) / closestBirthrightDistance) * 3;
-            overlayMat.SetFloat(propertyID, newAlpha);
+
+            // No clue how this was becoming null but we are doing nuclear checks here because YOLO
+            // Someone reported an NRE here! Likely just overlayMat or propertyID being null
+            if (overlayMat != null && propertyID != null && newAlpha != null)
+                overlayMat.SetFloat(propertyID, newAlpha);
         }
         
         private void PlayRadar()
