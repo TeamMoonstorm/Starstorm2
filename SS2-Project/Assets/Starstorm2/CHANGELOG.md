@@ -1,6 +1,9 @@
 **Warning: content spoilers below!**
 ### 0.6.47
-* Peepeepoopoo
+* General
+    * Fixed incompat bug with R2API.Director and SS2 that caused players to spawn and fall down the pit in Soulbound
+* Items
+    * Fixed NRE spam with Primal Birthright's animator
 
 ### 0.6.46
 * Survivors

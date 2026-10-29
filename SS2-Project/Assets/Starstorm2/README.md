@@ -50,11 +50,11 @@ Additional thanks to...
 
 ## Cross-Compatibility 
 * [StarstormSquared](https://thunderstore.io/package/LordVGames/StarstormSquared/) Rebalances aspects of Starstorm 2, and sometimes applies extra fixes before we get to them. 
+* [Elemental Reactions](https://thunderstore.io/c/riskofrain2/p/ds_gaming/ElementalReactions/) Has unique interactions with Storms (non-beta 0.7 Storms)
 * [Driver](https://thunderstore.io/package/public_ParticleSystem/Driver/) Adds support for Relic of Termination and has NemMerc's shotgun as a new primary for Driver.
 * [Icons](https://thunderstore.io/package/DTEE/Icons/) Replaces character select screen icons with amazing hand drawn portraits. Supports SS2 characters, and most other modded survivors.
 * [ZetAspects](https://thunderstore.io/package/William758/ZetAspects/) Adds support for SS2's elites as part of its aspects rework.
 * [Videogame Mod 2 Unofficial](https://thunderstore.io/package/Risky_Lives/Videogame_Mod_2_Unofficial/) VGM2U (aka SS2U) is an older pre-SOTV build of SS2. When playing with VGM2 and SS2 installed. VGM2 will auto-disable all duplicate content (except duplicate survivors). Maintained by longtime modder Moffein.
-
 
 ## Feedback, Bug Reporting
 
