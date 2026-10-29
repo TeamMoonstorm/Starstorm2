@@ -136,12 +136,12 @@ namespace SS2
             var loadRoutine = LoadAssetBundles();
             while (loadRoutine.MoveNext()) yield return null;
 
-            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
-            helper.Add(SwapShaders);
-            helper.Add(SwapAddressableShaders);
+            ParallelCoroutine helper = ParallelCoroutine.RequestFromPool();
+            helper.Add(SwapShaders());
+            helper.Add(SwapAddressableShaders());
 
-            helper.Start();
             while (!helper.IsDone()) yield return null;
+            ParallelCoroutine.ReturnToPool(helper);
 
             assetsAvailability.MakeAvailable();
             yield break;
@@ -149,7 +149,7 @@ namespace SS2
 
         private static IEnumerator LoadAssetBundles()
         {
-            ParallelMultiStartCoroutine helper = new ParallelMultiStartCoroutine();
+            ParallelCoroutine helper = ParallelCoroutine.RequestFromPool();
 
             List<(string path, SS2Bundle bundleEnum, AssetBundle loadedBundle)> pathsAndBundles = new List<(string path, SS2Bundle bundleEnum, AssetBundle loadedBundle)>();
 
@@ -157,12 +157,13 @@ namespace SS2
             for (int i = 0; i < paths.Length; i++)
             {
                 string path = paths[i];
-                helper.Add(LoadFromPath, pathsAndBundles, path, i, paths.Length);
+                helper.Add(LoadFromPath(pathsAndBundles, path, i, paths.Length));
             }
 
-            helper.Start();
             while (!helper.IsDone())
                 yield return null;
+
+            ParallelCoroutine.ReturnToPool(helper);
 
             foreach ((string path, SS2Bundle bundleEnum, AssetBundle assetBundle) in pathsAndBundles)
             {
