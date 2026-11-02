@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 
 namespace SS2
 {
+    [Obsolete("ParallelMultiStartLoadCoroutine is obsolete. Utilize \"ParallelCoroutine\" and add instances of SS2AssetRequest to it instead", error: true)]
     public class ParallelMultiStartAssetLoadCoroutine
     {
-        private ParallelMultiStartCoroutine _internalCoroutineHelper = new ParallelMultiStartCoroutine();
+        private ParallelCoroutine _internalCoroutineHelper = ParallelCoroutine.RequestFromPool();
         private Dictionary<int, UnityEngine.Object> _assetsLoaded = new Dictionary<int, UnityEngine.Object>();
 
-        public void Start() => _internalCoroutineHelper.Start();
+        public void Start() { }
 
         public bool IsDone => _internalCoroutineHelper.isDone;
 
         public void AddAssetToLoad<T>(string assetName, SS2Bundle bundle) where T : UnityEngine.Object
         {
-            _internalCoroutineHelper.Add(LoadFunc<T>, assetName, bundle);
+            _internalCoroutineHelper.Add(LoadFunc<T>(assetName, bundle));
         }
 
         public T GetLoadedAsset<T>(string assetName) where T : UnityEngine.Object

@@ -23,7 +23,7 @@ namespace SS2
 
         public virtual IEnumerator InitializeAsync()
         {
-            ParallelCoroutine helper = new ParallelCoroutine();
+            ParallelCoroutine helper = ParallelCoroutine.RequestFromPool();
             foreach(var uberSkinDef in assetCollection.FindAssets<UberSkinDef>())
             {
                 helper.Add(uberSkinDef.PreBake());
@@ -34,6 +34,7 @@ namespace SS2
             {
                 yield return null;
             }
+            ParallelCoroutine.ReturnToPool(helper);
         }
 
         private void AddToModelSkinControllers(SkinDef skinDef)
