@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6947189756495981586}
   - component: {fileID: 3761284757570909935}
-  - component: {fileID: 3357764871274742481}
   - component: {fileID: 4168872804087163119}
   - component: {fileID: 7733327007235859963}
   - component: {fileID: 4752081119500657112}
@@ -71,80 +70,6 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
---- !u!114 &3357764871274742481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497164848161409612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9965a9c4e8ebf274a99ec345999d6bb8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  beginOnStart: 0
-  _announcementDuration: 6
-  _eventDuration: -1
-  _eventStartToken: SS2_EVENT_BLAZINGELITE_START
-  _eventStartSfx: {fileID: 0}
-  _eventEndToken: SS2_EVENT_BLAZINGELITE_END
-  _eventEndSfx: {fileID: 0}
-  _eventColor: {r: 0.8784314, g: 0.28235295, b: 0.19607843, a: 1}
-  _onEventStart:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7727090895957467320}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 6495162198617894604}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-  _onEventEnd:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7727090895957467320}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 6495162198617894604}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!114 &4168872804087163119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,15 +82,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c2f76830a6da854e9547d7e0ec35f91, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactableDirectorCards: {fileID: 11400000, guid: 8f0f6e9d60e13574ca2dfef865b82f94,
+    type: 2}
+  baseInteractableCredit: 180
   bossEliteEquipment: {fileID: 11400000, guid: a79fa394c47368540970d219c4803112, type: 2}
   bossDrop: {fileID: 11400000, guid: 8aa3284c8ba900e43928b5e4174d7c90, type: 2}
   eliteEquipmentAddress: RoR2/Base/EliteFire/EliteFireEquipment.asset
   eliteEquipment: {fileID: 0}
   eliteParticles: {fileID: 1078799968878447801}
-  baseBossCredit: 8
-  maxDuration: 180
-  bossWaitDuration: 3
-  requiredEliteKills: 25
+  startToken: 
+  warningToken: SS2_EVENT_BLAZINGELITE_WARNING
+  bossTriggerToken: SS2_EVENT_BLAZINGELITE_BOSS
+  endToken: 
 --- !u!114 &7733327007235859963
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,8 +109,8 @@ MonoBehaviour:
   customName: 
   monsterCredit: 0
   refundedMonsterCredit: 0
-  expRewardCoefficient: 3
-  goldRewardCoefficient: 3
+  expRewardCoefficient: 0.2
+  goldRewardCoefficient: 1
   minSeriesSpawnInterval: 0.5
   maxSeriesSpawnInterval: 0.5
   minRerollSpawnInterval: 0.1
@@ -199,16 +127,26 @@ MonoBehaviour:
   maxConsecutiveCheapSkips: 2147483647
   resetMonsterCardIfFailed: 1
   maximumNumberToSpawnBeforeSkipping: 1
+  maximumNumberOfSpawnsPerWaveOverride: -1
   eliteBias: 1
+  increaseSpawnDistanceOnFailure: 0
   onSpawnedServer:
     m_PersistentCalls:
       m_Calls: []
+  onSpawnedWithDirectorServer:
+    m_PersistentCalls:
+      m_Calls: []
   combatSquad: {fileID: 4752081119500657112}
+  maxSquadCount: 0
   spawnEffectPrefab: {fileID: 0}
   ignoreTeamSizeLimit: 1
   _monsterCards: {fileID: 0}
+  _backupMonsterCards: {fileID: 0}
   fallBackToStageMonsterCards: 1
+  ActiveEliteDefOverride: {fileID: 0}
+  ActiveEliteDefOverrideCostMultiplier: -1
   currentSpawnTarget: {fileID: 0}
+  _customPlacementBase: {fileID: 0}
 --- !u!114 &4752081119500657112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,7 +184,14 @@ MonoBehaviour:
   dropTable: {fileID: 0}
   scaleRewardsByPlayerCount: 1
   shouldDisplayHealthBarOnHud: 1
+  thresholdController: {fileID: 0}
+  shouldCreateObjectiveEntry: 1
+  barrageOnBossDelayOverride: -1
+  shouldGenerateSpecialNameForHealthBar: 0
+  specialNameForHealthBar: 
   forceTier3Reward: 0
+  currentPriority: 0
+  bodiesOfCurrentPriority: 0
 --- !u!1 &3438911642821096029
 GameObject:
   m_ObjectHideFlags: 0
@@ -4874,7 +4819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1078799968878447801
 Transform:
   m_ObjectHideFlags: 0

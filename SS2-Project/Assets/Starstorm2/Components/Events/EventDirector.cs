@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using RoR2;
 using SS2.Components;
+using System;
 
 namespace SS2
 {
@@ -12,12 +13,14 @@ namespace SS2
 
         private void OnEnable()
         {
+            SceneDirector.onPrePopulateSceneServer += OnPrePopulateSceneServer;
             Stage.onStageStartGlobal += OnStageStartGlobal;
             instance = this;
         }
 
         private void OnDisable()
         {
+            SceneDirector.onPrePopulateSceneServer -= OnPrePopulateSceneServer;
             Stage.onStageStartGlobal -= OnStageStartGlobal;
             instance = null;
         }
@@ -25,9 +28,9 @@ namespace SS2
         public EventSelection currentEventSelection;
         private bool finalStage;
         private bool simulacrumRun;
-        public EventTimeline currentTimeline;
-        public float eliteEventChance;
-        public int stagesUntilInvasion = 5;
+
+        [NonSerialized]  public float eliteEventChance;
+        [NonSerialized] public int stagesUntilInvasion = 5;
         public Xoroshiro128Plus rng { get; private set; }
         private Dictionary<GameObject, int> eventsToMostRecentStage = new Dictionary<GameObject, int>();
         public WeightedSelection<NemesisSpawnCard> availableNemesisSpawnCards { get; private set; }
@@ -37,87 +40,65 @@ namespace SS2
             // pick event timeline
             if (NetworkServer.active)
             {
-                stagesUntilInvasion--;
-                currentEventSelection = EventSelection.GetEventSelectionForStage(stage);
                 finalStage = (stage.sceneDef.stageOrder == 6);
                 simulacrumRun = (GameModeCatalog.GetGameModeName(Run.instance.gameModeIndex) == "InfiniteTowerRun");
-                this.rng = new Xoroshiro128Plus((ulong)Run.instance.stageRng.nextUint);
-                currentTimeline = CreateEventTimeline();
             }
-
         }
 
-        public void PickEventTimeline()
+        private void OnPrePopulateSceneServer(SceneDirector sceneDirector)
         {
-            // create multiple event timelines, then do random selection weighted by some kind of score given to each timeline
-            // score increases with event count, overlapping events, and earlier storm times.
-            // would want to set a "target" score per stage, based on a variety of things. create low and high-event stages
+            if (NetworkServer.active)
+            {
+                rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
+                SpawnEvents();
+            }
         }
 
-        // want to create these at the start of each stage rather than randomly spawn them thruout
-        // ^want to have a visible timeline in the HUD ( behind ruleset/debug/weather radio )
-        // ^^ might also make it easier to iterate without having to play each time
-        // going  with almost entirely random events for now. will hopefully improve later
-        public EventTimeline CreateEventTimeline()
+        public void SpawnEvents()
         {
-            
-            EventTimeline eventTimeline = new EventTimeline();
-            if (currentEventSelection == null || Run.instance.stageClearCount == 0) return eventTimeline;
+            stagesUntilInvasion--;
+            currentEventSelection = EventSelection.GetEventSelectionForStage(Stage.instance);
+
+            if (currentEventSelection == null || Run.instance.stageClearCount == 0) return;
+
             float stormTime = 0; // jank ass bandaid for now. push back storm with more events
+
             // nemesis invasions always appear when available.
-            if (TryAddNemesisInvader(ref eventTimeline))
+            if (TryAddNemesisInvader())
             {
                 stormTime += 45f;
             }
             
-            bool useFinalStageEliteEvents = (!finalStage || finalStage && Events.EnableMoon2EliteEvents);
-            //bool useSimulacrumEliteEvents = (!simulacrumRun || simulacrumRun && Events.EnableSimulacrumEliteEvents);
-            if (SS2Config.enableBeta && useFinalStageEliteEvents) // FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (SS2Config.enableBeta) // FUCK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             {
                 // pick elite event. should be mostly normalized across the run as the rewards are important
                 WeightedSelection<EventCard> eliteEvents = currentEventSelection.GenerateEliteEventWeightedSelection();
-                if (EtherealBehavior.instance.runIsEthereal)
-                    eliteEventChance += 17.5f;
                 if (eliteEvents.Count > 0)
                 {
+                    eliteEventChance += 20f;
+                    if (EtherealBehavior.instance.runIsEthereal)
+                        eliteEventChance += 13f;
+
                     if (Util.CheckRoll(eliteEventChance))
                     {
-                        eliteEventChance = 25f;
+                        eliteEventChance = 0f;
                         EventCard eliteEvent = eliteEvents.Evaluate(this.rng.nextNormalizedFloat);
-                        float startTime = UnityEngine.Random.Range(30f, 120f);//////////////////////////////////////////////////////////////////////////////////////////////////////
-                        eventTimeline.AddEvent(eliteEvent.eventPrefab, startTime);
+
+
+                        eliteEvent = SS2Assets.LoadAsset<EventCard>("BlazingElite", SS2Bundle.Events); // temp
+
+
+                        GameObject eventInstance = GameObject.Instantiate(eliteEvent.eventPrefab);
+                        NetworkServer.Spawn(eventInstance);
+
                         stormTime += 45f;
-                    }
-                    else
-                    {
-                        eliteEventChance += 25f;
-                    }
-                }
-                // misc events can be thrown in mostly randomly
-                int miscEventCount = UnityEngine.Random.Range(0, 1 + Run.instance.loopClearCount);      /// ??? lmao   
-                if (miscEventCount > 0)
-                {
-                    float startTime = 0f;
-                    WeightedSelection<EventCard> miscEvents = currentEventSelection.GenerateMiscEventWeightedSelection();
-                    if (miscEvents.Count > 0)
-                    {
-                        for (int i = 0; i < miscEventCount; i++)
-                        {
-                            int index = miscEvents.EvaluateToChoiceIndex(this.rng.nextNormalizedFloat);
-                            EventCard miscEvent = miscEvents.GetChoice(index).value;
-                            miscEvents.RemoveChoice(index);
-                            startTime += UnityEngine.Random.Range(90f, 300f); /////////////////////////////////////////////////////////////////////////////////////////////
-                            eventTimeline.AddEvent(miscEvent.eventPrefab, startTime);
-                        }
                     }
                 }
             }
             
 
-            bool useFinalStageStorms = (!finalStage || finalStage && Events.EnableMoon2Storms);
-            bool useSimulacrumStorms = (!simulacrumRun || simulacrumRun && Events.EnableSimulacrumStorms);
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm && useFinalStageStorms && useSimulacrumStorms)
+            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm && TeleporterInteraction.instance != null)
             {
                 float startTime = UnityEngine.Random.Range(120f, 360f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
@@ -125,81 +106,39 @@ namespace SS2
                 var evt = stormController.GetComponent<StormController>();
                 evt.stormStartTime = Run.FixedTimeStamp.now + startTime;
                 NetworkServer.Spawn(stormController);
-                // add to timeline (???)?
             }
-
-            return eventTimeline;
         }
 
-        private bool IsTeleporterIdle()
-        {
-            bool idle = !TeleporterInteraction.instance;
-            idle |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
-            return idle;
-        }
-
-        public bool TryAddNemesisInvader(ref EventTimeline timeline)
+        public bool TryAddNemesisInvader()
         {
             // check if any player has voidrock
             // check if its the first stage or every third stage after
             if (SS2Util.GetItemCountForPlayers(SS2Content.Items.VoidRock) > 0 && stagesUntilInvasion <= 0)
             {
-                // get list of possible nemesis invaders
-                // doing it by drop makes more sense imo? dont want two stirring souls with ss2u.
-                // also cool thematically. like they keep reviving if you dont claim the item
+                bool anyNemsAvailable = false;
                 WeightedSelection<NemesisSpawnCard> selection = new WeightedSelection<NemesisSpawnCard>();
-                foreach(NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
-                {                    
-                    if(SS2Util.GetItemCountForPlayers(card.itemDef) == 0) // check card.IsAvailable()
-                        selection.AddChoice(card, 1);
-                }
-                // pick one at random
-                availableNemesisSpawnCards = selection;
-                if (selection.Count == 0) return false;
-                NemesisSpawnCard nemesisSpawnCard = selection.Evaluate(rng.nextNormalizedFloat);
-                if(nemesisSpawnCard)
+                foreach (NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
                 {
-                    timeline.AddEvent(SS2Assets.LoadAsset<GameObject>("NemesisInvasionEventController", SS2Bundle.Events), 3);
+                    if (SS2Util.GetItemCountForPlayers(card.itemDef) == 0) // no player has the nem's item = this nem can spawn
+                    {
+                        anyNemsAvailable = true;
+                    }
+                }
+
+                if (anyNemsAvailable)
+                {
+                    StartEvent(SS2Assets.LoadAsset<GameObject>("NemesisInvasionEventController", SS2Bundle.Events));
                     stagesUntilInvasion = 3;
                     return true;
-                }
-                else
-                {
-                    SS2Log.Error("null NemesisSpawnCard");
                 }
             }                             
             
             return false;
         }
 
-        private void FixedUpdate()
-        {
-            if (currentTimeline == null || currentTimeline.events == null) // TODO: FIGURE OUT WTF THIS MEANS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            {
-                return;
-            }
-            // start events when their starttimes have passed
-            if (!NetworkServer.active || !Stage.instance || currentTimeline.events.Count == 0) return; // lol wtf
-            for (int i = 0; i < currentTimeline.events.Count; i++)
-            {
-                EventInfo eventInfo = currentTimeline.events[i];
-                bool teleporter = (eventInfo.canStartDuringTeleporterEvent || IsTeleporterIdle());
-                if (!eventInfo.hasStarted && eventInfo.startTime.hasPassed && teleporter)
-                {
-                    eventInfo.hasStarted = true;
-                    StartEvent(eventInfo.eventPrefab);
-                }
-                if(eventInfo.hasStarted && eventInfo.endTime.hasPassed)
-                {
-                    EndEvent(); /////////////////////////////////////////////////////////////////////
-                }
-            }
-        }
-
-        // ?
         private void StartEvent(GameObject eventPrefab)
         {
-            if(!eventPrefab)
+            if (!eventPrefab)
             {
                 return;
             }
@@ -213,42 +152,6 @@ namespace SS2
             GameObject e = GameObject.Instantiate(eventPrefab);
             // fire event here?
             NetworkServer.Spawn(e);
-        }
-
-        private void EndEvent()
-        {
-            // destroy it?
-            // tell the object to end itself?
-        }
-
-        public class EventTimeline
-        {
-            public List<EventInfo> events = new List<EventInfo>();
-            public float viability;
-
-            public bool AddEvent(GameObject eventPrefab, float startTime, float endTime = Mathf.Infinity, bool canStartDuringTeleporterEvent = false)
-            {
-                events.Add(new EventInfo(eventPrefab, startTime, endTime, canStartDuringTeleporterEvent));
-                return true;
-            }
-        }
-
-        // use this info to display on timeline
-        public class EventInfo
-        {
-            public EventInfo(GameObject eventPrefab, float startTime, float endTime, bool canStartDuringTeleporterEvent)
-            {
-                this.eventPrefab = eventPrefab;
-                this.startTime = Run.FixedTimeStamp.now + startTime;
-                this.endTime = this.startTime + endTime;
-                this.canStartDuringTeleporterEvent = canStartDuringTeleporterEvent;
-                hasStarted = false;
-            }
-            public GameObject eventPrefab;
-            public Run.FixedTimeStamp startTime;
-            public Run.FixedTimeStamp endTime;
-            public bool hasStarted;
-            public bool canStartDuringTeleporterEvent;
         }
     }
 

@@ -6,67 +6,72 @@ using RoR2.UI;
 using UnityEngine.Networking;
 using MSU;
 using R2API.Networking.Interfaces;
+
 namespace SS2
 {
     public class EliteEventMissionController : NetworkBehaviour
     {
+        private static int baseBossCredit = 8;
+        private static float bossWaitDuration = 4.5f;
+        private static float warningProgress = 75;
+        private static readonly WeightedSelection<DirectorCard> cardSelector = new WeightedSelection<DirectorCard>(8);
+
+        public DirectorCardCategorySelection interactableDirectorCards;
+        public int baseInteractableCredit = 180;
+
         public EquipmentDef bossEliteEquipment;
         public ItemDef bossDrop;
         public string eliteEquipmentAddress;
         public EquipmentDef eliteEquipment;
         public Transform eliteParticles;
-        public int baseBossCredit = 12;
-        public float maxDuration = 180f;
-        public float bossWaitDuration = 3f;
+
+        [Header("Tokens")]
+        public string startToken = "";
+        public string warningToken = "";
+        public string bossTriggerToken = "";
+        public string endToken = "";
+
         private float bossCredit
         {
             get
             {
-                return (float)this.baseBossCredit * Stage.instance.entryDifficultyCoefficient;
+                return (float)baseBossCredit * Stage.instance.entryDifficultyCoefficient;
             }
         }
-        [SyncVar]
-        public int requiredEliteKills = 25;
+
         [SyncVar]
         [NonSerialized]
-        public int currentEliteKills;
+        public int currentProgress;
         [NonSerialized]
         [SyncVar]
         public bool hasStarted;
 
-        
-        private BuffIndex eliteBuffIndex;
-
-        private GameplayEvent gameplayEvent;
         private CombatDirector bossDirector;
         private CombatSquad bossSquad;
         private DirectorCard chosenBossCard;
-        private float stopwatch;
+        private Xoroshiro128Plus rng;
         private float bossWaitStopwatch;
         private bool hasSpawnedBoss;
-        
-        private Dictionary<CombatDirector, float> directorToOriginalEliteBias = new Dictionary<CombatDirector, float>();
+        private bool hasWarned;
+        private bool hasTriggered;
+
         private void Awake()
         {
-            if(!eliteEquipment && !string.IsNullOrWhiteSpace(eliteEquipmentAddress))
+            if (NetworkServer.active)
             {
-                eliteEquipment = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<EquipmentDef>(eliteEquipmentAddress).WaitForCompletion();
-                if(eliteEquipment && eliteEquipment.passiveBuffDef)
+                if (!eliteEquipment && !string.IsNullOrWhiteSpace(eliteEquipmentAddress))
                 {
-                    eliteBuffIndex = eliteEquipment.passiveBuffDef.buffIndex;
+                    eliteEquipment = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<EquipmentDef>(eliteEquipmentAddress).WaitForCompletion();
                 }
-                else
-                {
-                    SS2Log.Error("Invalid Equipment " + eliteEquipmentAddress);
-                }
-                
+
+                rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
             }
+            
         }
         private void Start()
         {       
             if(NetworkServer.active)
             {
-                gameplayEvent = base.GetComponent<GameplayEvent>();
                 bossDirector = base.GetComponent<CombatDirector>();
                 bossSquad = base.GetComponent<CombatSquad>();
                 bossDirector.onSpawnedServer.AddListener(OnBossSpawned);
@@ -74,64 +79,95 @@ namespace SS2
                 WeightedSelection<DirectorCard> weightedSelection = Util.CreateReasonableDirectorCardSpawnList(bossCredit, 1, 1);
                 if (weightedSelection.Count > 0)
                 {
-                    chosenBossCard = weightedSelection.Evaluate(bossDirector.rng.nextNormalizedFloat);
+                    chosenBossCard = weightedSelection.Evaluate(rng.nextNormalizedFloat);
                 }
                 else
                 {
                     SS2Log.Error("Failed to find reasonable DirectorCard. too bad so sad. bossCredit = " + bossCredit);
                 }
-                StartEvent();
+
+                PopulateScene();
             }
         }
         public void OnEnable()
         {
-            ObjectivePanelController.collectObjectiveSources += EliteObjective;
-            TeleporterInteraction.onTeleporterBeginChargingGlobal += OnTeleporterBeginChargingGlobal;
+            EntityStates.Destructible.EliteCrystalDeath.onEliteCrystalDestroyed += OnEliteCrystalDestroyed;
         }
 
-        
 
         private void OnDisable()
         {
-            if (hasStarted)
-                StopEvent();
-            ObjectivePanelController.collectObjectiveSources -= EliteObjective;
-            TeleporterInteraction.onTeleporterBeginChargingGlobal -= OnTeleporterBeginChargingGlobal;
+            EntityStates.Destructible.EliteCrystalDeath.onEliteCrystalDestroyed -= OnEliteCrystalDestroyed;
         }
-        public void StartEvent()
-        {
-            hasStarted = true;
-            foreach (CombatDirector director in allCombatDirectors)
-            {
-                if (director == bossDirector)
-                {
-                    continue;
-                }
-                // apparently this makes monsters rarely ever spawn ??? idk
-                //directorToOriginalEliteBias.Add(director, director.eliteBias);
-                //director.eliteBias = Mathf.Infinity; // stop credits from being spent on elites
-                director.onSpawnedServer.AddListener(OnSpawnedServer);
-            }
-            GlobalEventManager.onCharacterDeathGlobal += OnCharacterDeathGlobal;
-            gameplayEvent.StartEvent();
-                
-        }
-        public void StopEvent()
-        {
-            hasStarted = false;
-            foreach (CombatDirector director in allCombatDirectors)
-            {
-                if (director == bossDirector)
-                {
-                    continue;
-                }
 
-                //director.eliteBias = directorToOriginalEliteBias.TryGetValue(director, out float eliteBias) ? eliteBias : 1;
-                director.onSpawnedServer.RemoveListener(OnSpawnedServer);
+        private void PopulateScene()
+        {
+            while (this.baseInteractableCredit > 0)
+            {
+                var deck = interactableDirectorCards.GenerateDirectorCardWeightedSelection();
+                DirectorCard directorCard = this.SelectCard(deck, this.baseInteractableCredit);
+                if (directorCard == null)
+                {
+                    break;
+                }
+                if (directorCard.IsAvailable())
+                {
+                    this.baseInteractableCredit -= directorCard.cost;
+                    if (Run.instance)
+                    {
+                        int i = 0;
+                        while (i < 10)
+                        {
+                            DirectorPlacementRule placementRule = new DirectorPlacementRule
+                            {
+                                placementMode = DirectorPlacementRule.PlacementMode.Random,
+                            };
+                            GameObject gameObject = DirectorCore.instance.TrySpawnObject(new DirectorSpawnRequest(directorCard.GetSpawnCard(), placementRule, this.rng));
+                            if (gameObject)
+                            {
+                                PurchaseInteraction component = gameObject.GetComponent<PurchaseInteraction>();
+                                if (component && component.costType == CostTypeIndex.Money)
+                                {
+                                    component.Networkcost = Run.instance.GetDifficultyScaledCost(component.cost);
+                                }
+                                break;
+                            }
+                            else
+                            {
+                                i++;
+                            }
+                        }
+                    }
+                }
             }
-            GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
-            gameplayEvent.EndEvent();
-            
+        }
+        private DirectorCard SelectCard(WeightedSelection<DirectorCard> deck, int maxCost)
+        {
+            EliteEventMissionController.cardSelector.Clear();
+            int i = 0;
+            int count = deck.Count;
+            while (i < count)
+            {
+                WeightedSelection<DirectorCard>.ChoiceInfo choice = deck.GetChoice(i);
+                if (choice.value.cost <= maxCost)
+                {
+                    EliteEventMissionController.cardSelector.AddChoice(choice);
+                }
+                i++;
+            }
+            if (EliteEventMissionController.cardSelector.Count == 0)
+            {
+                return null;
+            }
+            return EliteEventMissionController.cardSelector.Evaluate(this.rng.nextNormalizedFloat);
+        }
+
+        private void OnEliteCrystalDestroyed(int progress)
+        {
+            if (NetworkServer.active)
+            {
+                currentProgress += progress;
+            }
         }
 
         private void FixedUpdate()
@@ -139,25 +175,42 @@ namespace SS2
             if (!NetworkServer.active) return;
             if (hasStarted)
             {
-                stopwatch += Time.fixedDeltaTime;
-                if (!hasSpawnedBoss && stopwatch >= maxDuration)
+                if (!hasWarned && currentProgress >= warningProgress)
                 {
-                    StopEvent();
-                    return;
+                    hasWarned = true;
+                    if (!string.IsNullOrEmpty(warningToken))
+                    {
+                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                        {
+                            baseToken = warningToken,
+                        });
+                    }
                 }
-                if (!hasSpawnedBoss && currentEliteKills >= requiredEliteKills)
+
+                if (!hasSpawnedBoss && currentProgress >= 100)
                 {
+                    if (!hasTriggered)
+                    {
+                        hasTriggered = true;
+                        if (!string.IsNullOrEmpty(bossTriggerToken))
+                        {
+                            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                            {
+                                eventToken = bossTriggerToken,
+                                eventColor = bossEliteEquipment.passiveBuffDef.buffColor,
+                                textDuration = 6,
+                            };
+                            GameplayEventTextController.instance.EnqueueNewTextRequest(request, true);
+                        }
+                    }
+
                     bossWaitStopwatch += Time.fixedDeltaTime;
                     if (bossWaitStopwatch > bossWaitDuration)
                     {
                         SpawnBoss();
                     }
                 }
-                else
-                    bossWaitStopwatch = 0;
-            }
-            else
-                stopwatch = 0;           
+            }         
         }
 
         public void SpawnBoss()
@@ -168,25 +221,11 @@ namespace SS2
             bossDirector.monsterCredit += bossCredit;
             bossDirector.OverrideCurrentMonsterCard(chosenBossCard);
             bossDirector.monsterSpawnTimer = 0f;
-            CharacterMaster component = chosenBossCard.spawnCard.prefab.GetComponent<CharacterMaster>();
-            if (component)
-            {
-                CharacterBody component2 = component.bodyPrefab.GetComponent<CharacterBody>();
-                if (component2)
-                {
-                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                    {
-                        eventToken = "yooooooooooo mama " + Util.GetBestBodyName(component.bodyPrefab),
-                        eventColor = bossEliteEquipment.passiveBuffDef.buffColor,
-                        textDuration = 6,
-                    };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, true);
-                }
-            }
         }
 
         public void OnBossSpawned(GameObject masterObject)
         {
+            // TODO: REBALANCE !!!!!!!!!!!!!!!!!!!!!!!!!!!
             Inventory inventory = masterObject.GetComponent<Inventory>();
             if (inventory)
             {
@@ -201,7 +240,9 @@ namespace SS2
             body.PerformAutoCalculateLevelStats();           
             new FriendManager.SyncBaseStats(body).Send(R2API.Networking.NetworkDestination.Clients);
             if (bossDrop && bossDrop.itemIndex != ItemIndex.None)
+            {
                 body.gameObject.AddComponent<OnBossKilledServer>().drop = PickupCatalog.FindPickupIndex(bossDrop.itemIndex);
+            }
             else
             {
                 SS2Log.Error("Elite Event " + base.name + " has no boss drop"!);
@@ -210,50 +251,24 @@ namespace SS2
 
         private void OnBossDefeatedServer()
         {
-            StopEvent(); //////////////////////
+
         }
 
-        private void OnCharacterDeathGlobal(DamageReport damageReport)
+        private string GetBossName()
         {
-            if (damageReport.victimTeamIndex != TeamIndex.Player && damageReport.victimBody.HasBuff(eliteBuffIndex))
+            string name = "Dummy";
+            CharacterMaster component = chosenBossCard.spawnCard.prefab.GetComponent<CharacterMaster>();
+            if (component)
             {
-                switch(damageReport.victimBody.hullClassification)
+                CharacterBody component2 = component.bodyPrefab.GetComponent<CharacterBody>();
+                if (component2)
                 {
-                    case HullClassification.Human:
-                        currentEliteKills++;
-                        break;
-                    case HullClassification.Golem:
-                        currentEliteKills += 2;
-                        break;
-                    case HullClassification.BeetleQueen:
-                        currentEliteKills += 3;
-                        break;
+                    name = Util.GetBestBodyName(component.bodyPrefab);
                 }
             }
-        }
-        private void OnTeleporterBeginChargingGlobal(TeleporterInteraction obj)
-        {
-            StopEvent(); // should we?
+            return name;
         }
 
-        public void OnSpawnedServer(GameObject masterObject)
-        {
-            Inventory inventory = masterObject.GetComponent<Inventory>();
-            if(inventory)
-            {
-                inventory.GiveItemPermanent(SS2Content.Items.MultiElite); // enables multiple buffs from elite equipments, enables multiple elite equipment displays, fixes elite overlays after first slot
-                
-                // TODO: Use the non-obsolete method here
-                inventory.SetEquipmentIndex(eliteEquipment.equipmentIndex, isRemovingEquipment: false); // set the last equipment slot
-                
-                int boostDamage = inventory.GetItemCountPermanent(RoR2Content.Items.BoostDamage) - 10;
-                if (boostDamage > 0)
-                    inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, boostDamage);
-                int boostHp = inventory.GetItemCountPermanent(RoR2Content.Items.BoostHp) - 10;
-                if (boostHp > 0)
-                    inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, boostHp);
-            }    
-        }
         private class OnBossKilledServer : MonoBehaviour, IOnKilledServerReceiver
         {
             public PickupIndex drop = PickupIndex.none;
@@ -267,7 +282,6 @@ namespace SS2
                     float angle = 360f / (float)playerCount;
                     Vector3 vector = Quaternion.AngleAxis((float)UnityEngine.Random.Range(0, 360), Vector3.up) * (Vector3.up * 40f + Vector3.forward * 5f);
                     Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.up);
-                    PickupIndex drop = PickupCatalog.FindPickupIndex(SS2Content.Items.ShardStorm.itemIndex);
                     int i = 0;
                     while (i < playerCount)
                     {
@@ -280,75 +294,7 @@ namespace SS2
                 {
                     PickupDropletController.CreatePickupDroplet(drop, damageReport.victimBody.corePosition, Vector3.up * 20f);
                 }
-                    
-                
             }
         }
-
-        #region ObjectiveTracker
-        private void EliteObjective(CharacterMaster master, List<ObjectivePanelController.ObjectiveSourceDescriptor> dest)
-        {
-            if(hasStarted && requiredEliteKills > currentEliteKills)
-            {
-                dest.Add(new ObjectivePanelController.ObjectiveSourceDescriptor
-                {
-                    master = master,
-                    objectiveType = typeof(EliteObjectiveTracker),
-                    source = this
-                });
-            }       
-        }
-
-        private class EliteObjectiveTracker : ObjectivePanelController.ObjectiveTracker
-        {
-            private int eliteKills = -1;
-            private int requiredEliteKills = 25;
-            public override string GenerateString()
-            {
-                EliteEventMissionController mission = (EliteEventMissionController)sourceDescriptor.source;
-                eliteKills = mission.currentEliteKills;
-                requiredEliteKills = mission.requiredEliteKills;
-                return string.Format("elite kills heehaw: {0}%", (float)mission.currentEliteKills / (float)mission.requiredEliteKills * 100f);
-            }
-            public override bool shouldConsiderComplete => IsComplete();
-            bool IsComplete()
-            {
-                return eliteKills != -1 ? eliteKills >= requiredEliteKills : base.shouldConsiderComplete;               
-            }
-
-            public override bool IsDirty()
-            {
-                return ((EliteEventMissionController)sourceDescriptor.source).currentEliteKills != eliteKills;
-            }
-        }
-        #endregion
-
-        #region Init
-        [SystemInitializer]
-        private static void Init()
-        {
-            On.RoR2.CombatDirector.Awake += (orig, self) =>
-            {
-                orig(self);
-                if(NetworkServer.active)
-                {
-                    allCombatDirectors.Add(self);
-                    self.gameObject.AddComponent<OnDestroyCallback>().onDestroy += () => { allCombatDirectors.Remove(self); };
-                }            
-            };
-        }
-
-        private class OnDestroyCallback : MonoBehaviour
-        {
-            public Action onDestroy;
-            private void OnDestroy()
-            {
-                onDestroy?.Invoke();
-            }
-        }
-
-        // list of all combatdirectors, including disabled
-        private static List<CombatDirector> allCombatDirectors = new List<CombatDirector>();
-        #endregion
     }
 }

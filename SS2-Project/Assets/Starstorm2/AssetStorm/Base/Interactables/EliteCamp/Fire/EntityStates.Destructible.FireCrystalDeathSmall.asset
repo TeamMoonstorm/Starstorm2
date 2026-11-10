@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 89795172, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: EntityStates.Destructible.FireCrystalDeathSmall
+  m_EditorClassIdentifier: 
+  targetType:
+    assemblyQualifiedName: EntityStates.Destructible.FireCrystalDeathSmall, Starstorm2,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  serializedFieldsCollection:
+    serializedFields:
+    - fieldName: explosionEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 7547518407551755799, guid: 3d1a2ecaa9e975c468ea43d65123a666,
+          type: 3}
+    - fieldName: monsterSpawnEffectPrefab
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 4451118990819613249, guid: ddf13f8720593a94ab4f0ac5b2db41b0,
+          type: 3}
+    - fieldName: eliteDef
+      fieldValue:
+        stringValue: 
+        objectValue: {fileID: 0}
+  preloadGUIDReferences:
+  - 
+  - 

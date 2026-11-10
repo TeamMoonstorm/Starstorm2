@@ -24,7 +24,7 @@ namespace EntityStates.Events
         public float warningDur = 10f;
 
         public static GameObject musicOverridePrefab;
-        public bool HasWarned { get; protected set; }
+        public bool hasStarted { get; protected set; }
 
         [SerializeField]
         public MusicTrackDef introTrack;
@@ -32,6 +32,7 @@ namespace EntityStates.Events
         public MusicTrackDef mainTrack;
         [SerializeField]
         public MusicTrackDef outroTrack;
+
         public static GameObject encounterPrefab;
         [SerializeField]
         public NemesisSpawnCard spawnCard;
@@ -45,21 +46,86 @@ namespace EntityStates.Events
 
         public CharacterBody nemesisBossBody;
 
-        public static event Action<CharacterBody> onNemesisDefeatedGlobal;
+        public static event Action<CharacterBody> onNemesisDefeatedServer;
 
         private static int minimumLevel = 60;
+        private static Color textColor = new Color(.67f, .168f, .168f);
+        private static float textDuration = 7f;
+        private static float waitDuration = 3f;
 
         private bool hasSpawned;
+        private bool hasWarned;
+        private float stopwatch;
+        private ChildLocator childLocator;
         public override void OnEnter()
         {
-            base.OnEnter();     
-            rng = Run.instance.spawnRng;
+            base.OnEnter();
+
+            childLocator = GetComponent<ChildLocator>();
+
             if (NetworkServer.active)
             {
-                this.spawnCard = EventDirector.instance.availableNemesisSpawnCards.Evaluate(EventDirector.instance.rng.nextNormalizedFloat);
+                rng = new Xoroshiro128Plus(Run.instance.stageRng.nextUint);
+
+                // get list of possible nemesis invaders
+                // doing it by drop makes more sense imo? dont want two stirring souls with ss2u.
+                // also cool thematically. like they keep reviving if you dont claim the item
+                WeightedSelection<NemesisSpawnCard> selection = new WeightedSelection<NemesisSpawnCard>();
+                foreach (NemesisSpawnCard card in NemesisCatalog.readonlySpawnCards)
+                {
+                    if (SS2Util.GetItemCountForPlayers(card.itemDef) == 0)
+                        selection.AddChoice(card, 1);
+                }
+                // pick one at random
+                spawnCard = selection.Evaluate(rng.nextNormalizedFloat);
+
+                if (!spawnCard)
+                {
+                    Destroy(base.gameObject);
+                    return;
+                }
+
                 FindSpawnTarget();
             }
+        }
+
+        public override void FixedUpdate()
+        {
+            base.FixedUpdate();
+
+            if (fixedAge >= waitDuration)
+            {
+                if (!hasWarned)
+                {
+                    hasWarned = true;
+                    StartWarning();
+                }
+                stopwatch += Time.fixedDeltaTime;
+            }
+
+            if (!hasStarted && stopwatch >= warningDur)
+            {
+                StartEvent();
+            }
                 
+        }
+
+        private void StartWarning()
+        {
+            if (hasWarned)
+            {
+                return;
+            }
+            hasWarned = true;
+
+            if (childLocator)
+            {
+                if (childLocator.TryFindChild("EventEffect", out Transform effect))
+                {
+                    effect.gameObject.SetActive(true);
+                }
+            }
+
             if (musicOverridePrefab && introTrack && mainTrack)
             {
                 musicTrack = GameObject.Instantiate(musicOverridePrefab, Stage.instance.transform).GetComponent<MusicTrackOverride>();
@@ -69,19 +135,12 @@ namespace EntityStates.Events
             GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
             {
                 eventToken = "SS2_EVENT_GENERICNEMESIS_START",
-                eventColor = new Color(.67f, .168f, .168f),
-                textDuration = 7,
+                eventColor = textColor,
+                textDuration = textDuration
             };
             GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-
         }
 
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (!HasWarned && fixedAge >= warningDur)
-                StartEvent();
-        }
         public void StartEvent()
         {
             if (musicOverridePrefab)
@@ -155,7 +214,7 @@ namespace EntityStates.Events
             CharacterMaster master = spawnResult.spawnedInstance.GetComponent<CharacterMaster>();
             //master.gameObject.AddComponent<NemesisResistances>();
             nemesisBossBody = master.GetBody();
-            master.onBodyDeath.AddListener(OnBodyDeath);
+            master.onBodyDeath.AddListener(OnBossDefeated);
             master.onBodyStart += (body) =>
             {
                 FriendManager.instance.RpcSetupNemBoss(body.gameObject, spawnCard.visualEffect?.name); // lol. lmao
@@ -194,27 +253,34 @@ namespace EntityStates.Events
             NetworkServer.Spawn(combatSquad.gameObject);
         }
 
-        public virtual void OnBodyDeath()
+        public void OnBossDefeated()
         {
-            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-            {
-                eventToken = "SS2_EVENT_GENERICNEMESIS_END",
-                eventColor = new Color(.67f, .168f, .168f),
-                textDuration = 7,
-            };
-            GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);           
-            if (musicOverridePrefab)
-                musicTrack.track = outroTrack;
             outer.SetNextState(new IdleRestOfStage());
-            onNemesisDefeatedGlobal?.Invoke(nemesisBossBody);
+            onNemesisDefeatedServer?.Invoke(nemesisBossBody);
         }
 
         public override void OnExit()
         {
-            base.OnExit();        
-            // need to do outro here instead of destroying
-            if (musicTrack)
-                Destroy(musicTrack.gameObject);
+            if (!outer.destroying)
+            {
+                GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
+                {
+                    eventToken = "SS2_EVENT_GENERICNEMESIS_END",
+                    eventColor = textColor,
+                    textDuration = textDuration,
+                };
+                GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
+
+                if (musicOverridePrefab)
+                    musicTrack.track = outroTrack;
+
+                if (childLocator && childLocator.TryFindChild("LerpEnd", out Transform child))
+                {
+                    child.gameObject.SetActive(true);
+                }
+            }
+
+            base.OnExit();
         }
 
         public override void OnSerialize(NetworkWriter writer)

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -104859921, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: dccsBlazingEliteEvent
+  m_EditorClassIdentifier: 
+  expansionsInEffect: []
+  categories:
+  - name: Elite Stuff
+    cards:
+    - spawnCardReference:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+      spawnCard: {fileID: 11400000, guid: e862cf3a8af56a845a221e1fbefeb89b, type: 2}
+      selectionWeight: 4
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockable: 
+      forbiddenUnlockable: 
+      requiredUnlockableDef: {fileID: 0}
+      forbiddenUnlockableDef: {fileID: 0}
+      isExclusivelyElite: 0
+      eliteDef: {fileID: 0}
+    - spawnCardReference:
+        m_AssetGUID: 
+        m_SubObjectName: 
+        m_SubObjectType: 
+      spawnCard: {fileID: 11400000, guid: cdabbb93886d5934c929a2691dcc29f7, type: 2}
+      selectionWeight: 1
+      spawnDistance: 0
+      preventOverhead: 0
+      minimumStageCompletions: 0
+      requiredUnlockable: 
+      forbiddenUnlockable: 
+      requiredUnlockableDef: {fileID: 0}
+      forbiddenUnlockableDef: {fileID: 0}
+      isExclusivelyElite: 0
+      eliteDef: {fileID: 0}
+    selectionWeight: 2
