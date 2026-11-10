@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using RoR2;
+using RoR2.Navigation;
 using UnityEngine;
 using UnityEngine.Networking;
+using UnityEngine.UIElements;
 
 namespace SS2
 {
@@ -38,6 +40,18 @@ namespace SS2
                 foreach (var ambushBehavior in InstanceTracker.GetInstancesList<AmbushBehavior>())
                 {
                     ambushBehavior.SetActive(false);
+                }
+            }
+        }
+
+        // when an ambush is triggered, reset all other ambushes and move them somewhere else
+        private static void OnAmbushTriggered(AmbushBehavior triggeredAmbush)
+        {
+            if (NetworkServer.active)
+            {
+                foreach (var ambushBehavior in InstanceTracker.GetInstancesList<AmbushBehavior>())
+                {
+                    ambushBehavior.OnAnyAmbushTriggered(triggeredAmbush);
                 }
             }
         }
@@ -139,6 +153,45 @@ namespace SS2
             GlobalEventManager.onCharacterDeathGlobal -= OnCharacterDeathGlobal;
         }
 
+        // we dont want ambushes to stack on top of each other and trigger at the same time.
+        // spreading out ambushes on spawn would take some annoying iteration
+        // instead just move each ambush to a new, far away spot when any other ambush triggers. theyre invisible to the player anyways.
+        private static float ambushGoAwayNumberValueCoefficient = 0.5f; // closer to 1 = pick a farther node on average
+        public void OnAnyAmbushTriggered(AmbushBehavior ambushBehavior)
+        {
+            if (!NetworkServer.active)
+            {
+                return;
+            }
+
+            if (ambushBehavior && ambushBehavior != this)
+            {
+                NodeGraph groundNodes = SceneInfo.instance.groundNodes;
+                List<NodeGraph.NodeIndex> nodes = groundNodes.GetActiveNodesForHullMaskWithFlagConditions(HullMask.BeetleQueen, NodeFlags.TeleporterOK, NodeFlags.NoChestSpawn);
+                Vector3 position = ambushBehavior.transform.position;
+                List<SceneDirector.NodeDistanceSqrPair> sortedNodes = new List<SceneDirector.NodeDistanceSqrPair>();
+                for (int j = 0; j < nodes.Count; j++)
+                {
+                    Vector3 b2;
+                    groundNodes.GetNodePosition(nodes[j], out b2);
+                    sortedNodes.Add(new SceneDirector.NodeDistanceSqrPair
+                    {
+                        nodeIndex = nodes[j],
+                        distanceSqr = (position - b2).sqrMagnitude
+                    });
+                }
+                sortedNodes.Sort((SceneDirector.NodeDistanceSqrPair a, SceneDirector.NodeDistanceSqrPair b) => a.distanceSqr.CompareTo(b.distanceSqr));
+                int index = rng.RangeInt(Mathf.FloorToInt(sortedNodes.Count * ambushGoAwayNumberValueCoefficient), sortedNodes.Count);
+                var nodeIndex = sortedNodes[index].nodeIndex;
+
+                if (groundNodes.GetNodePosition(nodeIndex, out Vector3 newPosition))
+                {
+                    transform.position = newPosition;
+                    currentRage = 0; /////// ? ?
+                }
+            }
+            
+        }
         
         public void SetActive(bool newActive)
         {
@@ -244,7 +297,13 @@ namespace SS2
 
         private DirectorCard SelectMonsterCard(float monsterCredit, int maxMonsters, int minMonsters)
         {
-            var weightedSelection = Util.CreateReasonableDirectorCardSpawnList(monsterCredit, maxMonsters, minMonsters);
+            var args = new CombatShrineUtils.CreateReasonableDirectorCardSpawnListArgs
+            {
+                minimumToSpawn = minMonsters,
+                maximumNumberToSpawnBeforeSkipping = maxMonsters,
+                availableCredit = monsterCredit,
+            };
+            var weightedSelection = CombatShrineUtils.CreateReasonableDirectorCardSpawnList(args);
             if (weightedSelection.Count == 0)
             {
                 return null;
@@ -323,6 +382,8 @@ namespace SS2
             effectData.SetNetworkedObjectReference(activator.gameObject);
             EffectManager.SpawnEffect(activatorEffectPrefab, effectData, true);
 
+
+            OnAmbushTriggered(this);
         }
 
         private void ActivateCombatDirector(CombatDirector director, float monsterCredit, DirectorCard directorCard)
@@ -332,6 +393,29 @@ namespace SS2
             director.OverrideCurrentMonsterCard(directorCard);
             director.monsterSpawnTimer = 0;
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         // thank you moonstorm shared utilities
