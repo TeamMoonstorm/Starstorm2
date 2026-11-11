@@ -84,7 +84,7 @@ MonoBehaviour:
   eliteDef: {fileID: 0}
   eliteDefAddress: 
   campDirectors:
-  - director: {fileID: 3879859419382017826}
+  - director: {fileID: 0}
     minInteractableCredit: 20
     maxInteractableCredit: 20
   - director: {fileID: 3872567592266077877}
@@ -184,8 +184,8 @@ MonoBehaviour:
   moneyWaveIntervals: []
   teamIndex: 2
   creditMultiplier: 1
-  spawnDistanceMultiplier: 1
-  maxSpawnDistance: 40
+  spawnDistanceMultiplier: 0.5
+  maxSpawnDistance: Infinity
   minSpawnRange: 0
   shouldSpawnOneWave: 0
   targetPlayers: 0
@@ -222,7 +222,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7756427666491069333}
-  - component: {fileID: 3879859419382017826}
+  - component: {fileID: 6364441123397785698}
   m_Layer: 0
   m_Name: Camp 1 - Main Crystal
   m_TagString: Untagged
@@ -245,7 +245,7 @@ Transform:
   m_Father: {fileID: 4725701445012798}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3879859419382017826
+--- !u!114 &6364441123397785698
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -254,17 +254,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 7402542723664360142}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 182758366, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Script: {fileID: 488037260, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactableDirectorCards: {fileID: 11400000, guid: 084babb1c3084f54999ea714d6622187,
-    type: 2}
-  baseMonsterCredit: 0
-  baseInteractableCredit: 20
-  campMinimumRadius: 1
-  campMaximumRadius: 2
-  campCenterTransform: {fileID: 4725701445012798}
-  combatDirector: {fileID: 0}
-  eliteDef: {fileID: 0}
-  scaleMonsterCreditWithDifficultyCoefficient: 0
-  monsterCreditPenaltyCoefficient: 0.5
+  networkedObjectPrefab: {fileID: 1712717097420822, guid: 8bb20b30f835d9e489acd6792f22abbd,
+    type: 3}

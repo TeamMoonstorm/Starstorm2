@@ -6,13 +6,13 @@ namespace EntityStates.Destructible
 {
     public class FindSurface : BaseState
     {
-        public static int raycastCount = 12;
+        public static int raycastCount = 6;
 
-        public static float maxRaycastLength = 50;
+        public static float maxRaycastLength = 16;
 
-        public static float raycastSphereYOffset = 0;
+        public static float raycastSphereYOffset = 1;
 
-        public static float raycastMinimumAngle = 10;
+        public static float raycastMinimumAngle = 16;
 
         public static float raycastMaximumAngle = 90;
         public override void OnEnter()

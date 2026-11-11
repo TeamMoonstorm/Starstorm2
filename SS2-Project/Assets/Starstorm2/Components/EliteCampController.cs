@@ -8,7 +8,7 @@ using MSU;
 
 namespace SS2
 {
-    public class EliteCrystalCampController : MonoBehaviour
+    public class EliteCampController : MonoBehaviour
     {
         [SerializeField]
         public EliteDef eliteDef;
@@ -45,7 +45,8 @@ namespace SS2
                         if (info.director)
                         {
                             info.director.eliteDef = eliteDef;
-                            info.director.baseMonsterCredit = rng.RangeInt(info.minInteractableCredit, info.maxInteractableCredit);
+                            if (info.maxInteractableCredit > info.minInteractableCredit)
+                                info.director.baseInteractableCredit = rng.RangeInt(info.minInteractableCredit, info.maxInteractableCredit);
                         }
                     }
                 }

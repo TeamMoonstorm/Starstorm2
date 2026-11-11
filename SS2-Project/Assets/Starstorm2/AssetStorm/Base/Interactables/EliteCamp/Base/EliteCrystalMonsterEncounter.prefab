@@ -116,7 +116,7 @@ MonoBehaviour:
   monsterCredit: 0
   refundedMonsterCredit: 0
   expRewardCoefficient: 0.2
-  goldRewardCoefficient: 1
+  goldRewardCoefficient: 0.5
   minSeriesSpawnInterval: 0.5
   maxSeriesSpawnInterval: 0.5
   minRerollSpawnInterval: 0.1
@@ -124,7 +124,7 @@ MonoBehaviour:
   moneyWaveIntervals: []
   teamIndex: 2
   creditMultiplier: 1
-  spawnDistanceMultiplier: 1
+  spawnDistanceMultiplier: 0.3
   maxSpawnDistance: Infinity
   minSpawnRange: 0
   shouldSpawnOneWave: 1
@@ -144,7 +144,7 @@ MonoBehaviour:
       m_Calls: []
   combatSquad: {fileID: 636860476674440795}
   maxSquadCount: 0
-  spawnEffectPrefab: {fileID: 8795920184722906967, guid: cdc6e4ac3d552bf4d937dd948dcf0e4e,
+  spawnEffectPrefab: {fileID: 4945547606774389940, guid: f37670bca7ffddb40ba9d53486e04ba3,
     type: 3}
   ignoreTeamSizeLimit: 0
   _monsterCards: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   fallBackToStageMonsterCards: 1
   ActiveEliteDefOverride: {fileID: 0}
   ActiveEliteDefOverrideCostMultiplier: -1
-  currentSpawnTarget: {fileID: 0}
+  currentSpawnTarget: {fileID: 6090457314249559637}
   _customPlacementBase: {fileID: 0}
 --- !u!114 &7705186642903343565
 MonoBehaviour:

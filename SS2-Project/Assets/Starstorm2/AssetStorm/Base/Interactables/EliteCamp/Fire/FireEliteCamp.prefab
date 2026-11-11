@@ -147,10 +147,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 17c2c2c211faf4c47b87d17d1623a1d7,
         type: 2}
+    - target: {fileID: 6364441123397785698, guid: 6364abeb57e80f14396f24c6a5055f46,
+        type: 3}
+      propertyPath: networkedObjectPrefab
+      value: 
+      objectReference: {fileID: 467203328038532429, guid: 2620b83a71dd2b740ac88d98636181b3,
+        type: 3}
     - target: {fileID: 6641045874541542592, guid: 6364abeb57e80f14396f24c6a5055f46,
         type: 3}
       propertyPath: eliteDefAddress
       value: RoR2/Base/EliteFire/edFire.asset
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641045874541542592, guid: 6364abeb57e80f14396f24c6a5055f46,
+        type: 3}
+      propertyPath: campDirectors.Array.data[0].minInteractableCredit
+      value: 20
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6364abeb57e80f14396f24c6a5055f46, type: 3}

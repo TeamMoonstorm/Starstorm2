@@ -2555,7 +2555,7 @@ MonoBehaviour:
   shieldBrokeSinceDangerCheck: 0
   rootMotionInMainState: 0
   mainRootSpeed: 0
-  baseMaxHealth: 480
+  baseMaxHealth: 360
   baseRegen: 0
   baseMaxShield: 0
   baseMoveSpeed: 0
@@ -2569,7 +2569,7 @@ MonoBehaviour:
   baseJumpCount: 1
   sprintingSpeedMultiplier: 1.45
   autoCalculateLevelStats: 1
-  levelMaxHealth: 144
+  levelMaxHealth: 108
   levelRegen: 0
   levelMaxShield: 0
   levelMoveSpeed: 0
@@ -2746,7 +2746,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   forcedAnimatorAtStart: {fileID: 0}
-  _modelTransform: {fileID: 0}
+  _modelTransform: {fileID: 1389658104116658853}
   modelVisibility: {fileID: 0}
   modelBaseTransform: {fileID: 463025003026303162}
   autoUpdateModelTransform: 0
@@ -2933,7 +2933,7 @@ GameObject:
   - component: {fileID: 8325224321633943734}
   - component: {fileID: 1204087020024340618}
   - component: {fileID: 3455049585645504149}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: EliteCrystalMound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3019,6 +3019,37 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -634128305124423180, guid: 3b856a068c5a2e4439afde1fb1284cae, type: 3}
+--- !u!1 &4195562176186472154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4773012974647037522}
+  m_Layer: 0
+  m_Name: Muzzle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4773012974647037522
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4195562176186472154}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 4.76, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1389658104116658853}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4565274661022535662
 GameObject:
   m_ObjectHideFlags: 0
@@ -3030,6 +3061,7 @@ GameObject:
   - component: {fileID: 1389658104116658853}
   - component: {fileID: 5555021311072167340}
   - component: {fileID: 8653618735552619717}
+  - component: {fileID: 5213892594234537787}
   m_Layer: 0
   m_Name: mdlEliteCrystal
   m_TagString: Untagged
@@ -3053,6 +3085,7 @@ Transform:
   - {fileID: 6676771286438499308}
   - {fileID: 464434591186625528}
   - {fileID: 8966957360270904872}
+  - {fileID: 4773012974647037522}
   m_Father: {fileID: 463025003026303162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3080,16 +3113,6 @@ MonoBehaviour:
       m_SubObjectName: 
       m_SubObjectType: 
     defaultMaterial: {fileID: 2100000, guid: 043dc953e55f1b0439cc5ece2dc0cd1b, type: 2}
-    defaultShadowCastingMode: 1
-    ignoreOverlays: 0
-    hideOnDeath: 0
-    ignoresMaterialOverrides: 0
-  - renderer: {fileID: 1204087020024340618}
-    defaultMaterialAddress:
-      m_AssetGUID: 
-      m_SubObjectName: 
-      m_SubObjectType: 
-    defaultMaterial: {fileID: 2100000, guid: e1fc8544f0d0e1f428496a9964b80670, type: 2}
     defaultShadowCastingMode: 1
     ignoreOverlays: 0
     hideOnDeath: 0
@@ -3132,6 +3155,23 @@ MonoBehaviour:
   mainHurtBox: {fileID: 1451329931397225836}
   ignoreDeactivateHurtboxes: []
   bullseyeCount: 1
+--- !u!114 &5213892594234537787
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4565274661022535662}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -226763392, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transformPairs:
+  - name: Corpse
+    transform: {fileID: 8924448580846930970}
+  - name: Muzzle
+    transform: {fileID: 4773012974647037522}
 --- !u!1 &6768803196490244381
 GameObject:
   m_ObjectHideFlags: 0
@@ -3227,7 +3267,7 @@ GameObject:
   - component: {fileID: 7249769672213972282}
   - component: {fileID: 9143976561532336622}
   - component: {fileID: 2854926921901540010}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: EliteCrystalLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}

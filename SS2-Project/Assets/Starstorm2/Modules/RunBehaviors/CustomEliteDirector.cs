@@ -70,9 +70,6 @@ namespace SS2.Components
                 if (allElites[i].IsAvailable())
                     allElites[i].eliteCredit += initialCredits * Run.instance.difficultyCoefficient; //////////
             }
-#if DEBUG
-            shouldLog = true;
-#endif
         }
 
         public void FixedUpdate()

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114179003590882906}
   - component: {fileID: 114580705475816679}
   - component: {fileID: 2455387682263787815}
+  - component: {fileID: 3309781643289604343}
   m_Layer: 14
   m_Name: SuperEarthSunder
   m_TagString: Untagged
@@ -92,6 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+  maintainDefault: 0
 --- !u!114 &114757335906734241
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -107,9 +109,14 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 1590272024798926, guid: c8e9b6cd57685b444bd62b177eaf42fe,
     type: 3}
+  ghostPrefabAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  doNotPerformImpactOnCollision: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: 9038a684ba10a804b93241cc32346092, type: 2}
   canImpactOnTrigger: 0
@@ -117,7 +124,9 @@ MonoBehaviour:
   owner: {fileID: 0}
   localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
+  CanBeParried: 1
 --- !u!114 &114394217749071958
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,7 +203,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yAxisOnly: 1
+  useAuthorityNotServer: 0
   rotationSpeed: 60
+  modifySpeedOverTime: 0
+  maxRotationSpeed: 0
+  minRotationSpeed: 0
+  rotationChangePerSecond: 0
 --- !u!114 &114641388333734811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,6 +229,7 @@ MonoBehaviour:
     damageType: 0
     damageTypeExtended: 0
     damageSource: 0
+    attackIdentityIndex: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &114778156996682278
@@ -239,6 +254,8 @@ MonoBehaviour:
   projectileHealthComponent: {fileID: 0}
   explosionEffect: {fileID: 1907596298012455, guid: d84cddf90df0b05469d9313c5fc29b0d,
     type: 3}
+  preserveExplosionScale: 0
+  blastImpactEffect: {fileID: 0}
   preserveExplosionOrientation: 0
   explosionSoundString: 
   fireChildren: 1
@@ -253,7 +270,11 @@ MonoBehaviour:
   rangeRollDegrees: 0
   minPitchDegrees: 0
   rangePitchDegrees: 0
+  minYawDegrees: 0
+  rangeYawDegrees: 0
   useLocalSpaceForChildren: 0
+  useChildRotation: 0
+  childInheritsRotation: 0
   applyDot: 0
   dotIndex: -1
   dotDuration: 0
@@ -262,11 +283,14 @@ MonoBehaviour:
   maxStacksFromAttacker: 4294967295
   calculateTotalDamage: 0
   totalDamageMultiplier: 0
+  timedDebuffs: []
   impactEffect: {fileID: 0}
+  expiredEffect: {fileID: 0}
   lifetimeExpiredSoundString: 
   lifetimeExpiredSound: {fileID: 0}
   offsetForLifetimeExpiredSound: 0
   destroyOnEnemy: 1
+  detonateOnEnemy: 0
   destroyOnWorld: 0
   destroyOnDistance: 0
   maxDistance: 0
@@ -276,8 +300,8 @@ MonoBehaviour:
   lifetimeAfterImpact: 0
   lifetimeRandomOffset: 0
   minimumPhysicsStepsToKeepAliveAfterImpact: 0
+  onlyFireChildrenOnWorld: 0
   transformSpace: 0
-  explodeOnLifeTimeExpiration: 0
 --- !u!54 &54931206569382046
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -336,6 +360,8 @@ MonoBehaviour:
   allowTargetLoss: 0
   testLoS: 0
   ignoreAir: 0
+  ignoreNeutral: 0
+  requireAlive: 0
   flierAltitudeTolerance: Infinity
   onNewTargetFound:
     m_PersistentCalls:
@@ -343,6 +369,38 @@ MonoBehaviour:
   onTargetLost:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &3309781643289604343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287147829759215}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679506310, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0.8
+  _timeStepType: 2
+  resetTimerOnEnable: 1
+  playTimerOnEnable: 1
+  loop: 0
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1986978171741252}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1986978171741252
 GameObject:
   m_ObjectHideFlags: 0
@@ -360,7 +418,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4283124084843442
 Transform:
   m_ObjectHideFlags: 0
@@ -414,7 +472,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 3
+  m_Radius: 5
   m_Height: 40
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

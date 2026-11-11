@@ -7,6 +7,9 @@ using System;
 
 namespace SS2
 {
+    // fuck the timeline garbage
+    // this will behave more like an extra SceneDirector by spawning everything on stage start
+    // but with some extra logic to make runs feel smooth, instead of total RNG chaos
     public class EventDirector : NetworkBehaviour
     {
         public static EventDirector instance;
@@ -57,7 +60,7 @@ namespace SS2
         public void SpawnEvents()
         {
             stagesUntilInvasion--;
-            currentEventSelection = EventSelection.GetEventSelectionForStage(Stage.instance);
+            currentEventSelection = EventSelection.GetEventSelectionForStage(SceneCatalog.GetSceneDefForCurrentScene());
 
             if (currentEventSelection == null || Run.instance.stageClearCount == 0) return;
 

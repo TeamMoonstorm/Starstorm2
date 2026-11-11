@@ -17,7 +17,7 @@ namespace SS2
         private static readonly WeightedSelection<DirectorCard> cardSelector = new WeightedSelection<DirectorCard>(8);
 
         public DirectorCardCategorySelection interactableDirectorCards;
-        public int baseInteractableCredit = 180;
+        public int baseInteractableCredit = 150;
 
         public EquipmentDef bossEliteEquipment;
         public ItemDef bossDrop;
@@ -173,44 +173,42 @@ namespace SS2
         private void FixedUpdate()
         {
             if (!NetworkServer.active) return;
-            if (hasStarted)
+
+            if (!hasWarned && currentProgress >= warningProgress)
             {
-                if (!hasWarned && currentProgress >= warningProgress)
+                hasWarned = true;
+                if (!string.IsNullOrEmpty(warningToken))
                 {
-                    hasWarned = true;
-                    if (!string.IsNullOrEmpty(warningToken))
+                    Chat.SendBroadcastChat(new Chat.SimpleChatMessage
                     {
-                        Chat.SendBroadcastChat(new Chat.SimpleChatMessage
+                        baseToken = warningToken,
+                    });
+                }
+            }
+
+            if (!hasSpawnedBoss && currentProgress >= 100)
+            {
+                if (!hasTriggered)
+                {
+                    hasTriggered = true;
+                    if (!string.IsNullOrEmpty(bossTriggerToken))
+                    {
+                        GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
                         {
-                            baseToken = warningToken,
-                        });
+                            eventToken = bossTriggerToken,
+                            eventColor = bossEliteEquipment.passiveBuffDef.buffColor,
+                            textDuration = 6,
+                        };
+                        GameplayEventTextController.instance.EnqueueNewTextRequest(request, true);
                     }
                 }
 
-                if (!hasSpawnedBoss && currentProgress >= 100)
+                bossWaitStopwatch += Time.fixedDeltaTime;
+                if (bossWaitStopwatch > bossWaitDuration)
                 {
-                    if (!hasTriggered)
-                    {
-                        hasTriggered = true;
-                        if (!string.IsNullOrEmpty(bossTriggerToken))
-                        {
-                            GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                            {
-                                eventToken = bossTriggerToken,
-                                eventColor = bossEliteEquipment.passiveBuffDef.buffColor,
-                                textDuration = 6,
-                            };
-                            GameplayEventTextController.instance.EnqueueNewTextRequest(request, true);
-                        }
-                    }
-
-                    bossWaitStopwatch += Time.fixedDeltaTime;
-                    if (bossWaitStopwatch > bossWaitDuration)
-                    {
-                        SpawnBoss();
-                    }
+                    SpawnBoss();
                 }
-            }         
+            }
         }
 
         public void SpawnBoss()

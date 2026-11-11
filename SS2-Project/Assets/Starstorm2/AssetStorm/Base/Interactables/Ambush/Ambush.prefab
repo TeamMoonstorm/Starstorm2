@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 8612620679153526939}
   - component: {fileID: 7473824359763123603}
   - component: {fileID: 8894705976861187568}
+  - component: {fileID: 2969322073305313528}
   m_Layer: 0
   m_Name: Ambush
   m_TagString: Untagged
@@ -166,6 +167,7 @@ MonoBehaviour:
   maxConsecutiveCheapSkips: 2147483647
   resetMonsterCardIfFailed: 1
   maximumNumberToSpawnBeforeSkipping: 6
+  maximumNumberOfSpawnsPerWaveOverride: -1
   eliteBias: 1
   increaseSpawnDistanceOnFailure: 0
   onSpawnedServer:
@@ -183,6 +185,7 @@ MonoBehaviour:
   _backupMonsterCards: {fileID: 0}
   fallBackToStageMonsterCards: 1
   ActiveEliteDefOverride: {fileID: 0}
+  ActiveEliteDefOverrideCostMultiplier: -1
   currentSpawnTarget: {fileID: 2458143419988473396}
   _customPlacementBase: {fileID: 0}
 --- !u!114 &7473824359763123603
@@ -218,6 +221,7 @@ MonoBehaviour:
   maxConsecutiveCheapSkips: 2147483647
   resetMonsterCardIfFailed: 1
   maximumNumberToSpawnBeforeSkipping: 6
+  maximumNumberOfSpawnsPerWaveOverride: -1
   eliteBias: 1
   increaseSpawnDistanceOnFailure: 0
   onSpawnedServer:
@@ -235,6 +239,7 @@ MonoBehaviour:
   _backupMonsterCards: {fileID: 0}
   fallBackToStageMonsterCards: 1
   ActiveEliteDefOverride: {fileID: 0}
+  ActiveEliteDefOverrideCostMultiplier: -1
   currentSpawnTarget: {fileID: 0}
   _customPlacementBase: {fileID: 0}
 --- !u!114 &8894705976861187568
@@ -257,6 +262,20 @@ MonoBehaviour:
   onDefeatedServerLogicEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2969322073305313528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2458143419988473396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac2a2e4443e346246a4687d4f5a1ecb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 75
+  center: {fileID: 7082514876920772129}
 --- !u!1 &5706358394333072723
 GameObject:
   m_ObjectHideFlags: 0

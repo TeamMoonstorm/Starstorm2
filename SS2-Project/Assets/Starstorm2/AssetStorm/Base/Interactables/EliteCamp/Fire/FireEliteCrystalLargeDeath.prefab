@@ -50,6 +50,8 @@ GameObject:
   - component: {fileID: 2062518938696054993}
   - component: {fileID: 2061860661306068561}
   - component: {fileID: 2062233478391476789}
+  - component: {fileID: 7490674855849030665}
+  - component: {fileID: -4068284551373333727}
   m_Layer: 0
   m_Name: FireEliteCrystalLargeDeath
   m_TagString: Untagged
@@ -90,7 +92,7 @@ MonoBehaviour:
   parentToReferencedTransform: 0
   noEffectData: 0
   applyScale: 0
-  soundName: Play_item_use_BFG_explode
+  soundName: FollowerDeath
   disregardZScale: 0
   applyScaleFirst: 0
 --- !u!114 &2062518938696054993
@@ -149,6 +151,45 @@ MonoBehaviour:
   radius: 90
   scaleShakeRadiusWithLocalScale: 0
   amplitudeTimeDecay: 1
+--- !u!114 &7490674855849030665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093850896707588791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 733712478, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &-4068284551373333727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093850896707588791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1630511094, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7490674855849030665}
+        m_TargetAssemblyTypeName: RoR2.EventFunctions, RoR2
+        m_MethodName: PlaySound
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Play_item_use_BFG_explode
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2540162674822251386
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,8 +367,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.5
+      scalar: 1.4
+      minScalar: 0.7
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -586,7 +627,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 12
+        scalar: 14
         minScalar: 0
         maxCurve:
           serializedVersion: 2
@@ -2877,8 +2918,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.6
+      scalar: 1.6
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -2894,8 +2935,8 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1
-      minScalar: 0.6
+      scalar: 1.6
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve: []
@@ -2911,8 +2952,8 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.4
-      minScalar: 0.8
+      scalar: 0.6
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve: []

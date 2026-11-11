@@ -87,9 +87,14 @@ MonoBehaviour:
   catalogIndex: 48
   ghostPrefab: {fileID: 695968452701256898, guid: e316914228545b54ca6dbb2efb7f924f,
     type: 3}
+  ghostPrefabAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  doNotPerformImpactOnCollision: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: 94574db8abe5787458fafacb7fa43acd, type: 2}
   canImpactOnTrigger: 0
@@ -97,7 +102,9 @@ MonoBehaviour:
   owner: {fileID: 0}
   localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
+  CanBeParried: 1
 --- !u!114 &217590893822329453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,11 +117,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203d4f6f6850ba54c9a397543e482b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blastRadius: 6
+  blastRadius: 4
   maxBounces: 1
   minBounceDistance: 3
   maxBounceDistance: 18
-  bounceVelocity: 12
+  bounceVelocity: 30
   targetDuration: 10
   maxOffsetToTarget: 8
   childrenCount: 0
@@ -194,6 +201,7 @@ MonoBehaviour:
     damageType: 0
     damageTypeExtended: 0
     damageSource: 0
+    attackIdentityIndex: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &114041286794554703
@@ -209,3 +217,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+  maintainDefault: 0

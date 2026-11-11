@@ -23,11 +23,13 @@ namespace SS2
 
 		public float blastRadius = 12f;
 		[Header("Bounce Properties")]
+		public bool shouldBounce = true;
 		public int maxBounces = 2;
 		public float minBounceDistance = 5f;
 		public float maxBounceDistance = 50f;
 		public float bounceVelocity = 24f;
 		public float targetDuration = 10f;
+		public float targetSearchDistance = 128f;
 		public float maxOffsetToTarget = 4f;
 		[Header("Child Properties")]
 		public int childrenCount = 4;
@@ -45,7 +47,7 @@ namespace SS2
 			this.damage = base.GetComponent<ProjectileDamage>();
 			this.rigidbody = base.GetComponent<Rigidbody>();
 			this.sphereSearch = new SphereSearch();
-			sphereSearch.radius = 128f;
+			sphereSearch.radius = targetSearchDistance;
 			sphereSearch.mask = LayerIndex.entityPrecise.mask;
 		}
         private void Start()
@@ -79,6 +81,11 @@ namespace SS2
         }
 		public void DoBounce()
         {
+			if (!shouldBounce)
+			{
+				return;
+			}
+
 			// get target
 			Vector3 origin = base.transform.position;
 			Vector3 targetPosition = origin;

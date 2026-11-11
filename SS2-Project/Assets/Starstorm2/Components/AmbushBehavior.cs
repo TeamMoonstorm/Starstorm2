@@ -57,7 +57,8 @@ namespace SS2
         }
 
         private static bool debug;
-        public static float sceneDirectorMonsterCreditSubtractionCoefficient = 0.75f;
+        public static float combatDirectorMonsterCreditSubtractionCoefficient = 0.3f; // each monster spawn will be subtracted from both of the scene's combat directors, so this value will be "doubled"
+        public static float sceneDirectorMonsterCreditSubtractionCoefficient = 0.7f;
         private static float maxRage = 100f;
 
         public float radius = 50f;
@@ -115,6 +116,7 @@ namespace SS2
         private bool active = true;
         // {You have been ambushed by }{___}{___ and ___}{___, ___, and ___}
 
+        private CombatDirector[] coreDirectors;
         
         
         private void Awake()
@@ -136,6 +138,11 @@ namespace SS2
             {
                 chosenSmallCard = SelectMonsterCard(smallMonsterCredit, maxSmallMonsters, minSmallMonsters);
                 chosenLargeCard = SelectMonsterCard(largeMonsterCredit, maxLargeMonsters, minLargeMonsters);
+
+                if (DirectorCore.instance)
+                {
+                    coreDirectors = DirectorCore.instance.GetComponents<CombatDirector>();
+                }
             }
         }
         private void OnDestroy()
@@ -392,6 +399,14 @@ namespace SS2
             director.monsterCredit += monsterCredit;
             director.OverrideCurrentMonsterCard(directorCard);
             director.monsterSpawnTimer = 0;
+
+            if (coreDirectors != null)
+            {
+                foreach (CombatDirector coreDirector in coreDirectors)
+                {
+                    coreDirector.monsterCredit -= monsterCredit * combatDirectorMonsterCreditSubtractionCoefficient;
+                }
+            }
         }
 
 
