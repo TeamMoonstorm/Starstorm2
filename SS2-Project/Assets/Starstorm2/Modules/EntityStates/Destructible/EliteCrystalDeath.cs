@@ -177,7 +177,7 @@ namespace EntityStates.Destructible
     {
         private static int _eventProgress = 18;
 
-        private static float _baseMonsterCredit = 35f;
+        private static float _baseMonsterCredit = 30f;
         private static int _maxMonsters = 6;
 
         private static int _maxPickups = 1;
