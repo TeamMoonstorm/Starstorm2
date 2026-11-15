@@ -323,7 +323,6 @@ namespace EntityStates.Events
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
                     if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(true);
-                    BossGroup.onBossGroupDefeatedServer += OnBossGroupDefeatedServer;
                     bossDirector.onSpawnedServer.AddListener(ModifySpawnedBoss);
                 }
 
@@ -350,7 +349,6 @@ namespace EntityStates.Events
                 CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
                 if (bossDirector && stormLevel >= bossEliteLevel)
                 {
-                    BossGroup.onBossGroupDefeatedServer -= OnBossGroupDefeatedServer;
                     bossDirector.onSpawnedServer.RemoveListener(ModifySpawnedBoss);
                 }
                 if (!stormController.IsPermanent)
@@ -413,102 +411,6 @@ namespace EntityStates.Events
             }
         }
 
-        private void OnBossGroupDefeatedServer(BossGroup bossGroup)
-        {
-            if (bossGroup == TeleporterInteraction.instance.bossGroup && Run.instance.participatingPlayerCount > 0)
-            {
-                if (stormLevel == stormController.MaxStormLevel && !stormController.IsPermanent)
-                {
-                    outer.SetNextState(new Calm());
-                    if (TeleporterUpgradeController.instance) TeleporterUpgradeController.instance.UpgradeStorm(false);
-                    GameplayEventTextController.EventTextRequest request = new GameplayEventTextController.EventTextRequest
-                    {
-                        eventToken = "ermmmm..... bye storm",
-                        eventColor = textColor,
-                        textDuration = 6,
-                    };
-                    GameplayEventTextController.instance.EnqueueNewTextRequest(request, false);
-                    return;
-                }
-
-                this.stormController.OnStormLevelCompleted();
-                outer.SetNextState(new Storm { stormLevel = stormLevel + 1, lerpDuration = 8f });
-                return;
-            }
-        }
-
-        }
-
-        private string GETDUMBASSTOKENDELETELATER()
-        {
-            string fuk;
-            switch (R2API.DirectorAPI.GetStageEnumFromSceneDef(Stage.instance.sceneDef))
-            {
-                case R2API.DirectorAPI.Stage.RallypointDelta:
-                case R2API.DirectorAPI.Stage.SiphonedForest:
-                case R2API.DirectorAPI.Stage.PretendersPrecipice:
-                    fuk = "SS2_EVENT_BLIZZARD";
-                    break;
-                case R2API.DirectorAPI.Stage.AbyssalDepths:
-                case R2API.DirectorAPI.Stage.ScorchedAcres:
-                case R2API.DirectorAPI.Stage.HelminthHatchery:
-                    fuk = "SS2_EVENT_ASHSTORM";
-                    break;
-                case R2API.DirectorAPI.Stage.AbandonedAqueduct:
-                case R2API.DirectorAPI.Stage.IronAlluvium:
-                case R2API.DirectorAPI.Stage.IronAuroras:
-                case R2API.DirectorAPI.Stage.RepurposedCrater:
-                    fuk = "SS2_EVENT_SANDSTORM";
-                    break;
-                default:
-                    fuk = "SS2_EVENT_THUNDERSTORM";
-                    break;
-            }
-            return fuk;
-        }
-        private bool ShouldCharge()
-        {
-            bool shouldCharge = !TeleporterInteraction.instance;
-            shouldCharge |= TeleporterInteraction.instance && TeleporterInteraction.instance.isIdle;
-            return shouldCharge;
-        }
-
-        public override void OnExit()
-        {
-            base.OnExit();
-
-            CharacterBody.onBodyStartGlobal -= BuffEnemy;
-            TeleporterInteraction.onTeleporterChargedGlobal += OnTeleporterChargedGlobal;
-            if (NetworkServer.active)
-            {
-                // removelistener makes it so we cant add it back in the next state's onenter. (wtf?????)
-                CombatDirector bossDirector = TeleporterInteraction.instance?.bossDirector;
-                if (bossDirector && stormLevel >= 4)
-                {
-                    BossGroup.onBossGroupDefeatedServer -= OnBossGroupDefeatedServer;
-                    bossDirector.onSpawnedServer.RemoveListener(ModifySpawnedBoss);
-                }
-                if (!stormController.IsPermanent)
-                {
-                    foreach (CombatDirector combatDirector in CombatDirector.instancesList)
-                    {
-                        if (combatDirector != bossDirector)
-                            combatDirector.onSpawnedServer.RemoveListener(ModifySpawnedMasters);
-                    }
-                }
-
-                if (this.outer.nextState is Calm) // un buff
-                {
-                    var enemies = TeamComponent.GetTeamMembers(TeamIndex.Monster).Concat(TeamComponent.GetTeamMembers(TeamIndex.Lunar)).Concat(TeamComponent.GetTeamMembers(TeamIndex.Void));
-                    foreach (var teamMember in enemies)
-                    {
-                        teamMember.body.SetBuffCount(SS2Content.Buffs.BuffStorm.buffIndex, 0);
-                    }
-                }
-            }
-        }
-       
-
         // am i just stupid? where the fuck is the event
         private class OnBossKilled : MonoBehaviour, IOnKilledServerReceiver
         {
@@ -522,7 +424,9 @@ namespace EntityStates.Events
             }
         }
         #endregion
-
     }
 
+
 }
+
+
