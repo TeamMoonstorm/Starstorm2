@@ -734,6 +734,11 @@ namespace SS2
             public static BuffDef bdTotalReset;
 
             public static BuffDef bdPetrified;
+
+            public static BuffDef bdPowerupFire;
+            public static BuffDef bdPowerupIce;
+            public static BuffDef bdPowerupLightning;
+            public static BuffDef bdPowerupEarth;
         }
 
         public static class Elites

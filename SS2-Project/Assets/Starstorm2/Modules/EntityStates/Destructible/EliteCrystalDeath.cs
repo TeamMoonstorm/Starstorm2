@@ -3,18 +3,16 @@ using RoR2;
 using RoR2.AsyncManagement;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using SS2;
 namespace EntityStates.Destructible
 {
     public class EliteCrystalDeath : BaseState
     {
         public static Action<int> onEliteCrystalDestroyed;
 
-        public static GameObject monsterEncounterPrefab;
-        public static GameObject pickupPrefab;
-
         [SerializeField] public GameObject explosionEffectPrefab;
         [SerializeField] public GameObject monsterSpawnEffectPrefab;
+        [SerializeField] public GameObject pickupPrefab;
         [SerializeField] public EliteDef eliteDef;
 
         private static float expMultiplier = 0.2f;
@@ -148,6 +146,7 @@ namespace EntityStates.Destructible
         }
         private void SpawnMonsters()
         {
+            var monsterEncounterPrefab = SS2Assets.LoadAsset<GameObject>("EliteCrystalMonsterEncounter", SS2Bundle.Interactables);
             if (monsterEncounterPrefab && NetworkServer.active)
             {
                 if (baseMonsterCredit > 0)
@@ -181,7 +180,7 @@ namespace EntityStates.Destructible
         private static float _baseMonsterCredit = 50f;
         private static int _maxMonsters = 6;
 
-        private static int _maxPickups = 3;
+        private static int _maxPickups = 1;
         public override void OnEnter()
         {
             eventProgress = _eventProgress;

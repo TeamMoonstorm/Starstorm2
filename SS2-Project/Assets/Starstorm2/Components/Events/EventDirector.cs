@@ -101,7 +101,7 @@ namespace SS2
             
 
             // pick mostly random storm start time.
-            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm && TeleporterInteraction.instance != null)
+            if (Run.instance.stageClearCount >= 1 && currentEventSelection.canStorm)
             {
                 float startTime = UnityEngine.Random.Range(120f, 360f) + stormTime;////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// :(
                 GameObject stormController = GameObject.Instantiate(SS2Assets.LoadAsset<GameObject>("StormController", SS2Bundle.Events));
