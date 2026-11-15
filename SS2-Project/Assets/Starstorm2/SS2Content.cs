@@ -731,6 +731,14 @@ namespace SS2
             public static BuffDef bdTotalReset;
 
             public static BuffDef bdPetrified;
+
+            public static BuffDef bdNemCrocoPoison;
+
+            public static BuffDef bdNemCrocoRadiation;
+
+            public static BuffDef bdNemCrocoRadValue;
+
+            public static BuffDef bdNemCrocoDamageShare;
         }
 
         public static class Elites
@@ -776,6 +784,8 @@ namespace SS2
             public static SurvivorDef NemMerc;
 
             public static SurvivorDef NemExecutioner;
+
+            public static SurvivorDef NemCroco;
         }
 
         public static class ItemTierDefs

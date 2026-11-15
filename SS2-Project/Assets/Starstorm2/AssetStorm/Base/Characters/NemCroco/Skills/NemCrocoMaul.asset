@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362d52f05548a884babde8b192930d98, type: 3}
+  m_Name: NemCrocoMaul
+  m_EditorClassIdentifier: 
+  skillName: Maul
+  skillNameToken: SS2_NEMCROCO_PRIMARY_NAME
+  skillDescriptionToken: SS2_NEMCROCO_PRIMARY_DESCRIPTION
+  keywordTokens:
+  - KEYWORD_RAPID_REGEN
+  icon: {fileID: 21300000, guid: 38b1b442fe03c9b4b87350329b48fb15, type: 3}
+  activationStateMachineName: Weapon
+  activationState:
+    _typeName: EntityStates.NemCroco.Maul, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  interruptPriority: 0
+  baseRechargeInterval: 0
+  baseMaxStock: 1
+  rechargeStock: 1
+  requiredStock: 0
+  stockToConsume: 0
+  attackSpeedBuffsRestockSpeed: 0
+  attackSpeedBuffsRestockSpeed_Multiplier: 1
+  resetCooldownTimerOnUse: 0
+  fullRestockOnAssign: 0
+  dontAllowPastMaxStocks: 0
+  beginSkillCooldownOnSkillEnd: 0
+  isCooldownBlockedUntilManuallyReset: 0
+  cancelSprintingOnActivation: 0
+  forceSprintDuringState: 0
+  canceledFromSprinting: 0
+  isCombatSkill: 1
+  mustKeyPress: 0
+  triggeredByPressRelease: 0
+  autoHandleLuminousShot: 1
+  suppressSkillActivation: 0
+  hideStockCount: 0
+  hideCooldown: 0
+  stepCount: 2
+  stepGraceDuration: 1.5
+  targetOverrideIcon: {fileID: 21300000, guid: a52c04a6932073a4d847b2e0f593e914, type: 3}
+  targetOverrideState:
+    _typeName: EntityStates.NemCroco.ChompLeap, Starstorm2, Version=1.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  targetOverridePriority: 3
+  targetOverrideStateMachine: Weapon
