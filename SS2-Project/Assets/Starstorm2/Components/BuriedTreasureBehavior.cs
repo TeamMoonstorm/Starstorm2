@@ -68,6 +68,11 @@ namespace SS2
 
         public void SpawnTreasure(Vector3 position)
         {
+            if (!active)
+            {
+                return;
+            }
+
             if (Run.instance)
             {
                 int i = 0;
@@ -113,6 +118,9 @@ namespace SS2
                             splat.minGreenBias = 0.4f;
                             splat.maxGreenBias = 0.6f;
                         }
+
+                        active = false;
+
                         break;
                     }
                     else

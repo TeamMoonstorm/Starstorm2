@@ -25,7 +25,7 @@ namespace SS2.Items
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
 
-        private static float burnDuration = 4f;
+        private static float burnDuration = 3f;
         public override void Initialize()
         {
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");

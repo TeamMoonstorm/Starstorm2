@@ -2339,6 +2339,7 @@ GameObject:
   - component: {fileID: 114880677090435021}
   - component: {fileID: 114949916041942819}
   - component: {fileID: 114044984874977407}
+  - component: {fileID: 2311881275823234361}
   m_Layer: 0
   m_Name: BuriedTreasureSpawn
   m_TagString: Untagged
@@ -2432,6 +2433,30 @@ MonoBehaviour:
   particleSystems:
   - {fileID: 198420877262516856}
   effectComponent: {fileID: 114949916041942819}
+--- !u!114 &2311881275823234361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1799853939753279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -565067572, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeOnStart: 1
+  shakeOnEnable: 0
+  shakeOnDelay: 0
+  startDelay: 1
+  wave:
+    amplitude: 2
+    frequency: 16
+    cycleOffset: 0
+  duration: 0.3
+  radius: 30
+  scaleShakeRadiusWithLocalScale: 0
+  amplitudeTimeDecay: 1
 --- !u!1 &1687981084546979313
 GameObject:
   m_ObjectHideFlags: 0

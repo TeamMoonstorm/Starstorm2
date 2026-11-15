@@ -12,6 +12,8 @@ namespace SS2
 	public class SuperFireballController : MonoBehaviour, IProjectileImpactBehavior
 	{
 		private static float stupidUpThing = 3f;
+		private static bool useNodes = false;
+
 		private float targetSwitchTimer;
 		private HurtBox currentTarget;
 		private SphereSearch sphereSearch;
@@ -75,6 +77,7 @@ namespace SS2
         {
 			sphereSearch.origin = base.transform.position;
 			TeamMask mask = TeamMask.GetEnemyTeams(controller.teamFilter.teamIndex);
+			mask.RemoveTeam(TeamIndex.Neutral);
 			HurtBox hurtBox = sphereSearch.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().OrderCandidatesByDistance().GetHurtBoxes().FirstOrDefault();
 			this.currentTarget = hurtBox;
 			return this.currentTarget;
@@ -99,7 +102,7 @@ namespace SS2
 			Vector3 between = targetPosition - origin;
 			float distance = Mathf.Min(between.magnitude, maxBounceDistance);
 			Vector3 target = between.normalized * distance + origin;
-			if (SceneInfo.instance && SceneInfo.instance.groundNodes)
+			if (useNodes && SceneInfo.instance && SceneInfo.instance.groundNodes)
 			{
 				NodeGraph nodes = SceneInfo.instance.groundNodes;
 				if (nodes.GetNodePosition(nodes.FindClosestNode(target, HullClassification.Human), out Vector3 node))
