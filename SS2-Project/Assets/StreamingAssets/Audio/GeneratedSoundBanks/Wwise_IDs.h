@@ -103,6 +103,7 @@ namespace AK
         static const AkUniqueID PLAY_CHIRRSPITBOMBLOOP = 2747610824U;
         static const AkUniqueID PLAY_ETHEREAL_FIREPILLAR_LOOP = 1371804952U;
         static const AkUniqueID PLAY_ITEM_PROC_ARMEDBACKPACK = 1624772560U;
+        static const AkUniqueID PLAY_ITEM_USE_MAGNET_DIG = 4233032477U;
         static const AkUniqueID PLAY_NEMMERC_CLONE_SPAWN = 3212416563U;
         static const AkUniqueID PLAY_NEMMERC_DASH = 280596056U;
         static const AkUniqueID PLAY_NEMMERC_DASH_START = 1211800949U;
@@ -123,6 +124,7 @@ namespace AK
         static const AkUniqueID PLAY_RUNSHROOM_STEP = 1108501478U;
         static const AkUniqueID PLAY_SOFT_RAIN = 263522455U;
         static const AkUniqueID PLAY_SS2_MUSIC_SYSTEM = 3480457898U;
+        static const AkUniqueID PLAY_UI_BURIEDTREASURE_UNLOCK = 1448182382U;
         static const AkUniqueID PLAY_WAYFARERBIGLAMPLOOP = 1229124563U;
         static const AkUniqueID PROCAMULET = 3464571447U;
         static const AkUniqueID PROCARMEDBACKPACK = 3890594904U;
