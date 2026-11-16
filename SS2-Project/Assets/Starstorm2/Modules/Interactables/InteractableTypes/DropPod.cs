@@ -103,7 +103,7 @@ namespace SS2.Interactables
                 list.Sort((SpawnPoint a, SpawnPoint b) => (teleporterPosition - a.transform.position).sqrMagnitude.CompareTo((teleporterPosition - b.transform.position).sqrMagnitude));
                 for (int i = list.Count; i >= 0; i--)
                 {
-                    if (i < list.Count - RoR2Application.maxPlayers)
+                    if (i > list.Count - RoR2Application.maxPlayers)
                     {
                         list.RemoveAt(i);
                     }
