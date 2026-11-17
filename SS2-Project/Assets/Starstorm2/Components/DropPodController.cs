@@ -32,23 +32,23 @@ namespace SS2.Components
         // itme drop values
         public BasicPickupDropTable itemDropTable; // set from DropPod.cs
         public float itemDropForwardVelocity = 4f;
-        public float itemDropUpwardVelocity = 7f;
+        public float itemDropUpwardVelocity = 15f;
 
         // single monster values
         public int monsterCredit = 12;
         public int monsterGoldReward = 25;
         public float monsterExpRewardCoefficient = 0.2f;
         public float monsterSpawnUpVelocity = 7f;
-        public float monsterSpawnForwardVelocity = 7f;
+        public float monsterSpawnForwardVelocity = 10f;
 
         // swarm values
         public int swarmMinSpawnCount = 3;
         public int swarmMaxSpawnCount = 8;
         public int swarmTotalGoldReward = 40;
         public float swarmExpRewardCoefficient = 0.1f;
-        public float swarmSpawnUpVelocity = 18f;
+        public float swarmSpawnUpVelocity = 12f;
         public float swarmSpawnForwardVelocity = 15f;
-        public float swarmSpawnSpreadAngle = 130f;
+        public float swarmSpawnSpreadAngle = 100f;
         public float swarmSpawnVelocityVariance = 0.67f;
 
         private Xoroshiro128Plus rng;
@@ -185,6 +185,10 @@ namespace SS2.Components
 
             if (dCard != null)
             {
+                int scaledMonsterCredit = (int)(monsterCredit * Run.instance.compensatedDifficultyCoefficient) / 3;
+                int extraCredit = scaledMonsterCredit - dCard.cost;
+                EliteDef eliteDef = SelectEliteDef(ref extraCredit, dCard);
+
                 DirectorSpawnRequest spawnRequest = new DirectorSpawnRequest(dCard.spawnCard, new DirectorPlacementRule
                 {
                     placementMode = DirectorPlacementRule.PlacementMode.Direct,
@@ -198,6 +202,12 @@ namespace SS2.Components
                     var body = spawnResult.spawnedInstance.GetComponent<CharacterMaster>().GetBody();
                     if (body)
                     {
+                        if (body.inventory)
+                        {
+                            body.inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, Mathf.RoundToInt((eliteDef.healthBoostCoefficient - 1f) * 10f));
+                            body.inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, Mathf.RoundToInt((eliteDef.damageBoostCoefficient - 1f) * 10f));
+                        }
+
                         var rewards = body.GetComponent<DeathRewards>();
                         if (rewards)
                         {
@@ -255,12 +265,17 @@ namespace SS2.Components
 
             if (dCard != null)
             {
+                int scaledMonsterCredit = (int)(monsterCredit * Run.instance.compensatedDifficultyCoefficient);
                 int minSpawns = swarmMinSpawnCount;
-                int maxSpawns = Mathf.Min(swarmMaxSpawnCount, (int)(monsterCredit * Run.instance.compensatedDifficultyCoefficient)); // smaller swarms early on, capped at swarmMaxSpawnCount later on
-                int monsterCount = rng.RangeInt(minSpawns, maxSpawns+ 1);
+                int maxSpawns = Mathf.Min(swarmMaxSpawnCount, (int)((float)scaledMonsterCredit / (float)dCard.cost)); // smaller swarms early on, capped at swarmMaxSpawnCount later on
+                int monsterCount = rng.RangeInt(minSpawns, maxSpawns + 1);
+                int extraCredit = scaledMonsterCredit - (monsterCount * dCard.cost); // leftover credit to create elites with
+
 
                 for (int i = 0; i < monsterCount; i++)
                 {
+                    EliteDef eliteDef = SelectEliteDef(ref extraCredit, dCard);
+
                     DirectorSpawnRequest spawnRequest = new DirectorSpawnRequest(dCard.spawnCard, new DirectorPlacementRule
                     {
                         placementMode = DirectorPlacementRule.PlacementMode.Direct,
@@ -274,6 +289,13 @@ namespace SS2.Components
                         var body = spawnResult.spawnedInstance.GetComponent<CharacterMaster>().GetBody();
                         if (body)
                         {
+                            if (body.inventory)
+                            {
+                                body.inventory.GiveItemPermanent(RoR2Content.Items.BoostHp, Mathf.RoundToInt((eliteDef.healthBoostCoefficient - 1f) * 10f));
+                                body.inventory.GiveItemPermanent(RoR2Content.Items.BoostDamage, Mathf.RoundToInt((eliteDef.damageBoostCoefficient - 1f) * 10f));
+                            }
+                            
+
                             var rewards = body.GetComponent<DeathRewards>();
                             if (rewards)
                             {
@@ -324,6 +346,31 @@ namespace SS2.Components
                 
             }
         }
+
+        private EliteDef SelectEliteDef(ref int credit, DirectorCard monsterCard)
+        {
+            CombatDirector.EliteTierDef tier = null;
+            for (int i = 0; i < CombatDirector.eliteTiers.Length; i++)
+            {
+                CombatDirector.EliteTierDef eliteTierDef = CombatDirector.eliteTiers[i];
+                bool canAfford = eliteTierDef.costMultiplier * monsterCard.cost < (credit / 2);
+                bool canSelect = eliteTierDef.CanSelect(monsterCard.GetSpawnCard().eliteRules);
+                if (canSelect && canAfford)
+                {
+                    credit -= (int)(eliteTierDef.costMultiplier * monsterCard.cost);
+                    tier = eliteTierDef;
+                    break;
+                }
+            }
+
+            if (tier == null)
+            {
+                return null;
+            }
+            return tier.GetRandomAvailableEliteDef(this.rng);
+        }
+
+        
 
 
         [Server]

@@ -13,6 +13,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using SS2.Items;
 using RoR2.Navigation;
+using HG;
 
 namespace SS2.Interactables
 {
@@ -22,6 +23,7 @@ namespace SS2.Interactables
 
         public static GameObject interactablePrefab;
 
+        
         public override bool IsAvailable(ContentPack contentPack)
         {
             return SS2Config.enableBeta;
@@ -45,20 +47,45 @@ namespace SS2.Interactables
 
             IL.RoR2.SceneDirector.PopulateScene += SceneDirector_PopulateScene;
             SceneDirector.onGenerateInteractableCardSelection += SceneDirector_onGenerateInteractableCardSelection;
-            DirectorCardCategorySelection.calcCardWeight += DirectorCardCategorySelection_calcCardWeight;
         }
 
-        // i dont think this event ever gets called
-        private void DirectorCardCategorySelection_calcCardWeight(DirectorCard card, ref float weight)
-        {
 
-        }
-
+        public static bool higherStage1Weight = true;
+        private static int stage1Weight = 6;
+        private static int stage1MaxSpawns = 3;
+        private static int standardWeight = 2;
+        private static int standardMaxSpawns = -1;
         // spawn more early, spawn less later
         // the dccs arg is a duplicate that gets deleted after, so we can modify it safely.
         private void SceneDirector_onGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
         {
+            if (!higherStage1Weight)
+            {
+                return;
+            }
 
+            for (int i = 0; i < dccs.categories.Length; i++)
+            {
+                ref DirectorCardCategorySelection.Category category = ref dccs.categories[i];
+                for (int j = category.cards.Length - 1; j >= 0; j--)
+                {
+                    DirectorCard directorCard = category.cards[j];
+                    var spawnCard = directorCard.GetSpawnCard();
+                    if (spawnCard.prefab == interactablePrefab)
+                    {
+                        if (Run.instance && Run.instance.stageClearCount == 0)
+                        {
+                            directorCard.selectionWeight = stage1Weight;
+                            (spawnCard as InteractableSpawnCard).maxSpawnsPerStage = stage1MaxSpawns;
+                        }
+                        else
+                        {
+                            directorCard.selectionWeight = standardWeight;
+                            (spawnCard as InteractableSpawnCard).maxSpawnsPerStage = standardMaxSpawns;
+                        }
+                    }
+                }
+            }
         }
 
         // instead of spawning randomly, drop pods will try to pick a player spawn location
@@ -92,7 +119,7 @@ namespace SS2.Interactables
                 c.EmitDelegate<Action<DirectorPlacementRule, DirectorCard, SceneDirector>>((directorPlacementRule, directorCard, sceneDirector) =>
                 {
                     var spawnCard = directorCard.GetSpawnCard();
-                    if (directorCard.GetSpawnCard().name.Contains("DropPod")) SS2Log.Info("VEUBRHIUBGQWEHFKAGU!!!!!!!!!!!!!!   " + directorCard.GetSpawnCard().prefab);
+
                     if (spawnCard.prefab == interactablePrefab)
                     {
                         SS2Log.Info("Placing DropPod!");
@@ -127,7 +154,7 @@ namespace SS2.Interactables
                 // get a list of SpawnPoints the stage WONT use for player spawns.
                 Vector3 teleporterPosition = sceneDirector.teleporterInstance.transform.position;
                 list.Sort((SpawnPoint a, SpawnPoint b) => (teleporterPosition - a.transform.position).sqrMagnitude.CompareTo((teleporterPosition - b.transform.position).sqrMagnitude));
-                for (int i = list.Count; i >= 0; i--)
+                for (int i = list.Count - 1; i >= 0; i--)
                 {
                     if (i > list.Count - RoR2Application.maxPlayers)
                     {
@@ -192,7 +219,7 @@ namespace SS2.Interactables
             modelLocator.modelBaseTransform = null;
 
             var exitPos = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
-            exitPos.transform.localPosition = new Vector3(0, -2.5f, 0);
+            exitPos.transform.localPosition = new Vector3(0, -2.33f, -0.6f);
             var cLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
             HG.ArrayUtils.ArrayAppend(ref cLocator.transformPairs, new ChildLocator.NameTransformPair { name = "ExitPos", transform = exitPos });
         }
