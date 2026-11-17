@@ -44,6 +44,21 @@ namespace SS2.Interactables
             SS2Content.SS2ContentPack.networkedObjectPrefabs.AddSingle(interactablePrefab);
 
             IL.RoR2.SceneDirector.PopulateScene += SceneDirector_PopulateScene;
+            SceneDirector.onGenerateInteractableCardSelection += SceneDirector_onGenerateInteractableCardSelection;
+            DirectorCardCategorySelection.calcCardWeight += DirectorCardCategorySelection_calcCardWeight;
+        }
+
+        // i dont think this event ever gets called
+        private void DirectorCardCategorySelection_calcCardWeight(DirectorCard card, ref float weight)
+        {
+
+        }
+
+        // spawn more early, spawn less later
+        // the dccs arg is a duplicate that gets deleted after, so we can modify it safely.
+        private void SceneDirector_onGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
+        {
+
         }
 
         // instead of spawning randomly, drop pods will try to pick a player spawn location
@@ -56,24 +71,35 @@ namespace SS2.Interactables
             // if the selected itneractable is a DropPod, replace the directorReplacementRule with our own
             int directorPlacementRuleVarIndex = -1;
             int directorCardVarIndex = -1;
-            bool b = c.TryGotoNext(MoveType.Before,
-                x => x.MatchNewobj<DirectorPlacementRule>(),
-                x => x.MatchStloc(out directorPlacementRuleVarIndex),
-                x => x.MatchLdloc(out directorCardVarIndex));
+
+            bool a = c.TryGotoNext(MoveType.After,
+                x => x.MatchCall<SceneDirector>(nameof(SceneDirector.SelectCard)),
+                x => x.MatchStloc(out directorCardVarIndex));
+            if (!a)
+            {
+                SS2Log.Fatal("DropPod.SceneDirector_PopulateScene: ILHook failed 1.");
+                return;
+            }
+
+            bool b = c.TryGotoNext(MoveType.After,
+                x => x.MatchStfld<DirectorPlacementRule>(nameof(DirectorPlacementRule.placementMode)),
+                x => x.MatchStloc(out directorPlacementRuleVarIndex));
             if (b)
             {
-                c.Index += 2;
                 c.Emit(OpCodes.Ldloc, directorPlacementRuleVarIndex);
                 c.Emit(OpCodes.Ldloc, directorCardVarIndex);
                 c.Emit(OpCodes.Ldarg_0);
                 c.EmitDelegate<Action<DirectorPlacementRule, DirectorCard, SceneDirector>>((directorPlacementRule, directorCard, sceneDirector) =>
                 {
                     var spawnCard = directorCard.GetSpawnCard();
+                    if (directorCard.GetSpawnCard().name.Contains("DropPod")) SS2Log.Info("VEUBRHIUBGQWEHFKAGU!!!!!!!!!!!!!!   " + directorCard.GetSpawnCard().prefab);
                     if (spawnCard.prefab == interactablePrefab)
                     {
+                        SS2Log.Info("Placing DropPod!");
                         bool foundSpawnPoint = TryGetDropPodSpawnPoint(sceneDirector, out Vector3 spawnPosition, out Quaternion spawnRotation);
                         if (foundSpawnPoint)
                         {
+                            SS2Log.Info("Found SpawnPoint at " + spawnPosition);
                             directorPlacementRule.placementMode = DirectorPlacementRule.PlacementMode.Direct;
                             directorPlacementRule.position = spawnPosition;
                             directorPlacementRule.rotation = spawnRotation;
@@ -83,7 +109,7 @@ namespace SS2.Interactables
             }
             else
             {
-                SS2Log.Fatal("DropPod.SceneDirector_PopulateScene: ILHook failed.");
+                SS2Log.Fatal("DropPod.SceneDirector_PopulateScene: ILHook failed 2.");
             }
         }
 
@@ -109,6 +135,8 @@ namespace SS2.Interactables
                     }
                 }
             }
+
+            SS2Log.Info("DropPod spawnpoint count: " + list.Count);
 
             if (list.Count > 0)
             {
@@ -141,12 +169,15 @@ namespace SS2.Interactables
             GameObject.Destroy(donut.gameObject);
 
             var mdl = interactablePrefab.transform.Find("Base/mdlEscapePod");
-            GameObject.Destroy(mdl.GetComponent<Animator>());
+            // the default spawn anim plays an endless loop sound with AnimationEvents. deleting this will make DropPod spit out a warning on spawn but its fine
+            // the alternative is unity animator fuckery
+            GameObject.Destroy(mdl.GetComponent<AnimationEvents>()); 
         }
 
         private void EnableObjects()
         {
             var debris = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/DebrisParent");
+            debris.transform.localPosition = new Vector3(debris.transform.localPosition.x, 0, debris.transform.localPosition.z);
             debris.gameObject.SetActive(true);
         }
 
@@ -161,7 +192,7 @@ namespace SS2.Interactables
             modelLocator.modelBaseTransform = null;
 
             var exitPos = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
-            exitPos.transform.localPosition = new Vector3(0, -2, 0);
+            exitPos.transform.localPosition = new Vector3(0, -2.5f, 0);
             var cLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
             HG.ArrayUtils.ArrayAppend(ref cLocator.transformPairs, new ChildLocator.NameTransformPair { name = "ExitPos", transform = exitPos });
         }

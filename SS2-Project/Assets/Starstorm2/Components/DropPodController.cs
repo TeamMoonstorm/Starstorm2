@@ -23,16 +23,16 @@ namespace SS2.Components
         public string displayNameToken = "SS2_INTERACTABLE_DROPPOD_NAME";
 
         public float itemWeight = 0.25f;
-        public float enemyWeight = 0.6f;
-        public float swarmWeight = 0.1f;
+        public float enemyWeight = 0.5f;
+        public float swarmWeight = 0.2f;
         public float corpseWeight = 0.05f;
 
         public Transform dropTransform; // set from DropPod.cs
 
         // itme drop values
         public BasicPickupDropTable itemDropTable; // set from DropPod.cs
-        public float itemDropForwardVelocity = 3f;
-        public float itemDropUpwardVelocity = 3f;
+        public float itemDropForwardVelocity = 4f;
+        public float itemDropUpwardVelocity = 7f;
 
         // single monster values
         public int monsterCredit = 12;
@@ -47,7 +47,7 @@ namespace SS2.Components
         public int swarmTotalGoldReward = 40;
         public float swarmExpRewardCoefficient = 0.1f;
         public float swarmSpawnUpVelocity = 18f;
-        public float swarmSpawnForwardVelocity = 10f;
+        public float swarmSpawnForwardVelocity = 15f;
         public float swarmSpawnSpreadAngle = 130f;
         public float swarmSpawnVelocityVariance = 0.67f;
 
@@ -165,7 +165,7 @@ namespace SS2.Components
             PickupIndex pickupReward = itemDropTable.GeneratePickup(this.rng).pickupIndex;
             if (pickupReward.isValid)
             {
-                PickupDropletController.CreatePickupDroplet(pickupReward, exitSpot.position, Vector3.up * 3 + exitSpot.transform.forward * 3f);
+                PickupDropletController.CreatePickupDroplet(pickupReward, exitSpot.position, Vector3.up * itemDropUpwardVelocity + exitSpot.transform.forward * itemDropForwardVelocity);
             }
             
         }
@@ -214,11 +214,26 @@ namespace SS2.Components
                         info.force = exitSpot.transform.forward * monsterSpawnForwardVelocity + Vector3.up * monsterSpawnUpVelocity;
                         info.massIsOne = true;
                         info.ignoreGroundStick = true;
+
+                        CharacterMotor motor = body.GetComponent<CharacterMotor>();
+                        if (motor)
+                        {
+                            motor.Motor.ForceUnground(0.2f);
+
+                            // applying force instantly is too early. wait until CharacterMotor starts
+                            motor.onMotorStart += (cb) =>
+                            {
+                                cb.healthComponent.TakeDamageForce(info);
+                            };
+                        }
+
+                        // fliers can be pushed instantly
                         if (body.isFlying)
                         {
-                            info.force = exitSpot.transform.forward * monsterSpawnForwardVelocity;
+                            info.force = exitSpot.transform.forward * monsterSpawnForwardVelocity * 1.3f;
+                            body.healthComponent.TakeDamageForce(info);
                         }
-                        body.healthComponent.TakeDamageForce(info);
+                        
                     }
                 });
                 DirectorCore.instance?.TrySpawnObject(spawnRequest);
@@ -240,7 +255,9 @@ namespace SS2.Components
 
             if (dCard != null)
             {
-                int monsterCount = rng.RangeInt(swarmMinSpawnCount, swarmMaxSpawnCount + 1);
+                int minSpawns = swarmMinSpawnCount;
+                int maxSpawns = Mathf.Min(swarmMaxSpawnCount, (int)(monsterCredit * Run.instance.compensatedDifficultyCoefficient)); // smaller swarms early on, capped at swarmMaxSpawnCount later on
+                int monsterCount = rng.RangeInt(minSpawns, maxSpawns+ 1);
 
                 for (int i = 0; i < monsterCount; i++)
                 {
@@ -269,14 +286,11 @@ namespace SS2.Components
                                 entityStateMachine.initialStateType = entityStateMachine.mainStateType;
                             }
 
+
                             PhysForceInfo info = new PhysForceInfo();
                             info.force = exitSpot.transform.forward * swarmSpawnForwardVelocity + Vector3.up * swarmSpawnUpVelocity;
                             info.massIsOne = true;
                             info.ignoreGroundStick = true;
-                            if (body.isFlying)
-                            {
-                                info.force = exitSpot.transform.forward * swarmSpawnForwardVelocity;
-                            }
 
                             // apply random spread
                             info.force = Util.ApplySpread(info.force, 0f, swarmSpawnSpreadAngle, 1f, 0.5f);
@@ -285,7 +299,24 @@ namespace SS2.Components
                             float variance = rng.RangeFloat(1 / (1 + swarmSpawnVelocityVariance), 1 + swarmSpawnVelocityVariance);
                             info.force *= variance;
 
-                            body.healthComponent.TakeDamageForce(info);
+                            CharacterMotor motor = body.GetComponent<CharacterMotor>();
+                            if (motor)
+                            {
+                                motor.Motor.ForceUnground(0.2f);
+
+                                // applying force instantly is too early. wait until CharacterMotor starts
+                                motor.onMotorStart += (cb) =>
+                                {
+                                    cb.healthComponent.TakeDamageForce(info);
+                                };
+                            }
+
+                            // fliers can be pushed instantly
+                            if (body.isFlying)
+                            {
+                                info.force = exitSpot.transform.forward * monsterSpawnForwardVelocity * 1.3f;
+                                body.healthComponent.TakeDamageForce(info);
+                            }
                         }
                     });
                     DirectorCore.instance?.TrySpawnObject(spawnRequest);
