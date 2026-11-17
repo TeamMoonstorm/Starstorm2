@@ -18,16 +18,16 @@ namespace EntityStates.Lamp
         private static DamageType damageType = DamageType.Generic;
         private static float procCoefficientPerTick = 0.4f;
         private static float totalHealCoefficient = 8f;
+        private static float percentHealPerSecond = 0.167f; 
         private static float enemyPrioritySearchRadius = 19f;
         private static float searchRadius = 27f;
         private static float beamBreakDistance = 36f;
         private static int maxBeams = 1;
         private static bool ignoreMass = true;
 
-        private static float forceMagnitude = -1.25f;
-        private static float forceDamping = 0.4f;
-        private static float maxHeightDiff = 15f;
-        private static float forceCoefficientAtMaxHeightDiff = 2f;
+        private static float minForceMagnitude = -3f;
+        private static float maxForceMagnitude = -9f;
+        private static float distanceForMaxForce = 12f;
 
         private static float selfUpSpeed = 3f;
 
@@ -140,7 +140,11 @@ namespace EntityStates.Lamp
 
             if (!ShouldDamage(target))
             {
-                target.healthComponent.Heal(healRate * tickInterval, default(ProcChainMask));
+                float percentHealthValue = target.healthComponent.fullCombinedHealth * percentHealPerSecond * tickInterval;
+                float flatHealthValue = healRate * tickInterval;
+                target.healthComponent.AddBarrier(percentHealthValue + flatHealthValue);
+
+                FriendManager.instance.SpawnDamageNumber(gameObject, percentHealthValue + flatHealthValue, target.transform.position, false, SS2.Monsters.Lamp.barrierDamageColor);
             }
             else
             {
@@ -245,9 +249,6 @@ namespace EntityStates.Lamp
             }
         }
 
-        // TODO: Add forces if multiple beams are targetting one body, instead of separate damage
-        // ALSO todo::::::::::::::::: fizz force flags
-        
         protected void Lifto(HurtBox hurtBox)
         {
             if (!NetworkServer.active)
@@ -265,22 +266,19 @@ namespace EntityStates.Lamp
             {
                 CharacterMotor characterMotor = healthComponent.body.characterMotor;
 
-                Vector3 between = hurtBox.transform.position - transform.position;  
-                float heightDiff = Mathf.Abs(between.y);
-                Vector3 forceDirection = new Vector3(0, between.y, 0);
-                forceDirection = forceDirection.normalized;
+                Vector3 forceDirection = Vector3.up;
 
-                float forceCoefficient = Mathf.Clamp(heightDiff / maxHeightDiff, 1f, forceCoefficientAtMaxHeightDiff);
-                Vector3 forceVector = forceDirection * forceMagnitude * forceCoefficient;
+                float yDistance = hurtBox.transform.position.y - transform.position.y;
+                yDistance = Mathf.Clamp(yDistance, 0, distanceForMaxForce);
+                float t = Mathf.Clamp01(yDistance / distanceForMaxForce);
+                float forceMagnitude = Mathf.Lerp(minForceMagnitude, maxForceMagnitude, t);
 
-                Vector3 currentVerticalVelocity = Vector3.zero;
-                float mass = 0f;
+                Vector3 forceVector = forceDirection * forceMagnitude;
+
                 bool useGravity = false;
                 if (characterMotor)
                 {
                     useGravity = characterMotor.useGravity;
-                    currentVerticalVelocity = Vector3.up * characterMotor.velocity.y;
-                    mass = characterMotor.mass;
                 }
                 else
                 {
@@ -288,19 +286,19 @@ namespace EntityStates.Lamp
                     if (rigidbody)
                     {
                         useGravity = rigidbody.useGravity;
-                        currentVerticalVelocity = Vector3.up * rigidbody.velocity.y;
-                        mass = rigidbody.mass;
                     }
                 }
                 if (useGravity)
                 {
-                    currentVerticalVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
+                    forceVector -= Physics.gravity * Time.fixedDeltaTime;
                 }
-                if (ignoreMass)
-                {
-                    forceVector *= mass;
-                }
-                healthComponent.TakeDamageForce(forceVector - currentVerticalVelocity * forceDamping * mass * forceCoefficient, true, false);
+
+                PhysForceInfo info = new PhysForceInfo();
+                info.massIsOne = true;
+                info.ignoreGroundStick = true;
+                info.doNotExceed = true;
+
+                healthComponent.TakeDamageForce(forceVector, true, false);
             }
         }
 
