@@ -27,7 +27,8 @@ namespace SS2.Components
         public float swarmWeight = 0.2f;
         public float corpseWeight = 0.05f;
 
-        public Transform dropTransform; // set from DropPod.cs
+        public Transform itemDropTransform; // set from DropPod.cs
+        public Transform monsterSpawnTransform; // set from DropPod.cs
 
         // itme drop values
         public BasicPickupDropTable itemDropTable; // set from DropPod.cs
@@ -145,16 +146,16 @@ namespace SS2.Components
             switch (GetRewardType())
             {
                 case RewardType.Item:
-                    SpawnItem(dropTransform);
+                    SpawnItem(itemDropTransform);
                     break;
                 case RewardType.Enemy:
-                    SpawnEnemy(dropTransform);
+                    SpawnEnemy(monsterSpawnTransform);
                     break;
                 case RewardType.Swarm:
-                    SpawnSwarm(dropTransform);
+                    SpawnSwarm(monsterSpawnTransform);
                     break;
                 case RewardType.Corpse:
-                    SpawnCorpse(dropTransform);
+                    SpawnCorpse(monsterSpawnTransform);
                     break;
             }
         }

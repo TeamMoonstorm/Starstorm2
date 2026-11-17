@@ -50,15 +50,19 @@ namespace SS2.Interactables
         }
 
 
+        private static int debugSpawnsConsumed = 0;
+
         public static bool higherStage1Weight = true;
-        private static int stage1Weight = 6;
+        private static int stage1Weight = 50; // idk why it has to be like 3x more than chests but its the only way they spawn semi-consistently
         private static int stage1MaxSpawns = 3;
-        private static int standardWeight = 2;
+        private static int standardWeight = 4;
         private static int standardMaxSpawns = -1;
         // spawn more early, spawn less later
         // the dccs arg is a duplicate that gets deleted after, so we can modify it safely.
         private void SceneDirector_onGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
         {
+            debugSpawnsConsumed = 0;
+
             if (!higherStage1Weight)
             {
                 return;
@@ -140,30 +144,17 @@ namespace SS2.Interactables
             }
         }
 
-        // if a stage has preplaced spawnpoints (aka survivor pod locations), use any of them EXCEPT the furthest away ones (which the stage uses for player spawns)
-        // consume or destroy the spawnpoints we do use for droppods. destroy is probably safer
+        // if a stage has preplaced spawnpoints (aka survivor pod locations), use a random one
+        // consume other spawnpoints in a radius, so players dont spawn next to a drop pod.
+        // destroy the spawnpoint we use for the droppod itself.
+
+        private static float spawnPointConsumeRadiusSqr = 30f * 30f; // spawnpoints are seemingly clustered abt this close together
         private bool TryGetDropPodSpawnPoint(SceneDirector sceneDirector, out Vector3 position, out Quaternion rotation)
         {
             position = Vector3.zero;
             rotation = Quaternion.identity;
 
             List<SpawnPoint> list = new List<SpawnPoint>(SpawnPoint.readOnlyInstancesList);
-            if (sceneDirector.teleporterInstance)
-            {
-                // inverse logic of SceneDirector spawnpoint usage
-                // get a list of SpawnPoints the stage WONT use for player spawns.
-                Vector3 teleporterPosition = sceneDirector.teleporterInstance.transform.position;
-                list.Sort((SpawnPoint a, SpawnPoint b) => (teleporterPosition - a.transform.position).sqrMagnitude.CompareTo((teleporterPosition - b.transform.position).sqrMagnitude));
-                for (int i = list.Count - 1; i >= 0; i--)
-                {
-                    if (i > list.Count - RoR2Application.maxPlayers)
-                    {
-                        list.RemoveAt(i);
-                    }
-                }
-            }
-
-            SS2Log.Info("DropPod spawnpoint count: " + list.Count);
 
             if (list.Count > 0)
             {
@@ -171,6 +162,18 @@ namespace SS2.Interactables
                 position = spawnPoint.transform.position;
                 rotation = spawnPoint.transform.rotation;
                 GameObject.Destroy(spawnPoint.gameObject);
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var otherSpawnPoint = list[i];
+                    if (otherSpawnPoint && otherSpawnPoint != spawnPoint && (otherSpawnPoint.transform.position - position).sqrMagnitude < spawnPointConsumeRadiusSqr)
+                    {
+                        debugSpawnsConsumed++;
+                        SS2Log.Debug($"DropPod consumed spawnpoint {i} @ {otherSpawnPoint.transform.position} \nTotal spawns consumed: {debugSpawnsConsumed}/{list.Count} ");
+                        
+                        otherSpawnPoint.consumed = true;
+                    }
+                }
                 return true;
             }
 
@@ -230,9 +233,19 @@ namespace SS2.Interactables
             networkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncTransform;
             interactablePrefab.AddComponent<GenericDisplayNameProvider>().displayToken = "SS2_INTERACTABLE_DROPPOD_NAME";
 
+
             var dropPodController = interactablePrefab.AddComponent<DropPodController>();
-            dropPodController.dropTransform = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
+            var exitTransform = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
+            dropPodController.monsterSpawnTransform = exitTransform;
+
+            Transform dropTransform = GameObject.Instantiate(exitTransform.gameObject).transform;
+            dropTransform.gameObject.name = "DropPosition";
+            dropTransform.parent = exitTransform.parent;
+            dropTransform.localPosition = new Vector3(0, -2.33f, -0.75f);
+            dropPodController.itemDropTransform = dropTransform;
+
             dropPodController.itemDropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtDropPod", SS2Bundle.Interactables);
+
 
             PaintDetailsBelow details = interactablePrefab.AddComponent<PaintDetailsBelow>();
             details.influenceOuter = 2;
