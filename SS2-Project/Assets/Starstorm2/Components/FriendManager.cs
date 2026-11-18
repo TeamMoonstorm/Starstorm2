@@ -50,7 +50,28 @@ namespace SS2
 
 		}
 
-		[ClientRpc]
+        public void SpawnDamageNumber(GameObject attacker, float damage, Vector3 position, bool crit, DamageColorIndex damageColorIndex)
+        {
+            TeamComponent teamComponent = null;
+            if (attacker)
+            {
+                teamComponent = attacker.GetComponent<TeamComponent>();
+            }
+            DamageNumberManager.instance.SpawnDamageNumber(damage, position, crit, teamComponent ? teamComponent.teamIndex : TeamIndex.None, damageColorIndex);
+        }
+
+        [ClientRpc]
+        public void RpcSpawnDamageNumber(GameObject attacker, float damage, Vector3 position, bool crit, int damageColorIndex)
+        {
+            TeamComponent teamComponent = null;
+            if (attacker)
+            {
+                teamComponent = attacker.GetComponent<TeamComponent>();
+            }
+            DamageNumberManager.instance.SpawnDamageNumber(damage, position, crit, teamComponent ? teamComponent.teamIndex : TeamIndex.None, (DamageColorIndex)damageColorIndex);
+        }
+
+        [ClientRpc]
 		public void RpcSetupNemBoss(GameObject bodyObject, string prefabName)
         {
 			CharacterBody body = bodyObject.GetComponent<CharacterBody>();

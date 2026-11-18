@@ -21,12 +21,12 @@ namespace SS2.Unlocks.NemExecutioner
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemExecutionerDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedServer += OnNemExecutionerDefeated;
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemExecutionerDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedServer -= OnNemExecutionerDefeated;
                 base.OnUninstall();
             }
 

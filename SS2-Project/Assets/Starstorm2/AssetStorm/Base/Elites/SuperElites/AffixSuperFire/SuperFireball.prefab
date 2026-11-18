@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 92272301288496016}
   - component: {fileID: 7009144000793497114}
   - component: {fileID: -8831878626300678870}
+  - component: {fileID: 6613312317302116379}
   m_Layer: 14
   m_Name: SuperFireball
   m_TagString: Untagged
@@ -85,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+  maintainDefault: 0
 --- !u!114 &8841618105036927035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -100,9 +102,14 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 3519305036670422378, guid: 0b96ed3f693ac8d408b958de1fb16b8c,
     type: 3}
+  ghostPrefabAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: Play_lemurianBruiser_m1_shoot
   cannotBeDeleted: 0
+  doNotPerformImpactOnCollision: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: 94574db8abe5787458fafacb7fa43acd, type: 2}
   canImpactOnTrigger: 0
@@ -110,7 +117,9 @@ MonoBehaviour:
   owner: {fileID: 0}
   localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
+  CanBeParried: 1
 --- !u!114 &5047798171908285467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +140,7 @@ MonoBehaviour:
     damageType: 128
     damageTypeExtended: 0
     damageSource: 0
+    attackIdentityIndex: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &-8831652176304773295
@@ -145,17 +155,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 203d4f6f6850ba54c9a397543e482b0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blastRadius: 12
+  blastRadius: 9
   maxBounces: 3
   minBounceDistance: 5
   maxBounceDistance: 75
   bounceVelocity: 45
   targetDuration: 10
   maxOffsetToTarget: 5
-  childrenCount: 4
+  childrenCount: 3
   minChildSpeed: 5
   maxChildSpeed: 15
-  childUpSpeed: 25
+  childUpSpeed: 75
   childDamageCoefficient: 0.5
   childPrefab: {fileID: 1815958616721259, guid: 31658e8ea281c5542a905ec0544f394a,
     type: 3}
@@ -172,7 +182,7 @@ SphereCollider:
   m_GameObject: {fileID: 3222690275679103419}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -211,3 +221,35 @@ MonoBehaviour:
   singletonArrayIndex: -1
   serverPosition: {x: 0, y: 0, z: 0}
   serverRotation: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6613312317302116379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3222690275679103419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679506310, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0.2
+  _timeStepType: 2
+  resetTimerOnEnable: 1
+  playTimerOnEnable: 1
+  loop: 0
+  action:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 92272301288496016}
+        m_TargetAssemblyTypeName: UnityEngine.Collider, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2

@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0
 --- !u!1 &1705670771434268797
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,9 +133,14 @@ MonoBehaviour:
   catalogIndex: -1
   ghostPrefab: {fileID: 1978271999074252, guid: 7e6c58d0562308d49a1b8328ab9ac9f9,
     type: 3}
+  ghostPrefabAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: EtherealPillarImpact
   cannotBeDeleted: 1
+  doNotPerformImpactOnCollision: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: a0361ae487a83024daab796f63d3f55e, type: 2}
   canImpactOnTrigger: 0
@@ -142,7 +148,9 @@ MonoBehaviour:
   owner: {fileID: 0}
   localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
+  CanBeParried: 1
 --- !u!114 &2121329208279106582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,6 +171,7 @@ MonoBehaviour:
     damageType: 0
     damageTypeExtended: 0
     damageSource: 0
+    attackIdentityIndex: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!114 &4297714973760147785
@@ -178,6 +187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+  maintainDefault: 0
 --- !u!114 &755029581321650570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,7 +219,7 @@ MonoBehaviour:
   damageCoefficient: 1
   attackerFiltering: 0
   impactEffect: {fileID: 0}
-  forceVector: {x: 0, y: -5000, z: 0}
+  forceVector: {x: 0, y: -500, z: 0}
   overlapProcCoefficient: 0.2
   fireFrequency: 6
   resetFrequency: 6
@@ -220,6 +230,10 @@ MonoBehaviour:
   onEnd:
     m_PersistentCalls:
       m_Calls: []
+  onImpact:
+    m_PersistentCalls:
+      m_Calls: []
+  isSphereOverlap: 0
   soundLoopString: 
   soundLoopStopString: 
 --- !u!114 &8744764635411030314
@@ -237,6 +251,10 @@ MonoBehaviour:
   maxDistance: 12
   offsetDistance: 6
   changePositionOnly: 1
+  realignOnEnable: 0
+  resetOnDisable: 0
+  protectForHorizontalPlacement: 0
+  randomYRotationMax: 0
 --- !u!1 &5355165692132385978
 GameObject:
   m_ObjectHideFlags: 0
@@ -281,3 +299,4 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0

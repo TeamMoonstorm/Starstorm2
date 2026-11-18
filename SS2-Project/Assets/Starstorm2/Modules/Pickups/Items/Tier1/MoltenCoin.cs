@@ -19,13 +19,13 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float damageCoeff = 2f;
+        public static float damageCoeff = 1.2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
 
-        private static float burnDuration = 4f;
+        private static float burnDuration = 3f;
         public override void Initialize()
         {
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
