@@ -39,7 +39,8 @@ namespace SS2.Items
             {
                 if (Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
                 {
-                    float targetTotalDamage = report.damageInfo.damage * damageCoeff;
+                    float damageCoefficient = damageCoeff * stack;
+                    float targetTotalDamage = report.damageInfo.damage * damageCoefficient;
                     float damageMultiplier = SS2Util.GetDotDamageMultiplier(report.attackerBody, targetTotalDamage, burnDuration, DotController.DotIndex.Burn);
 
                     var dotInfo = new InflictDotInfo()
@@ -52,7 +53,7 @@ namespace SS2.Items
                     };
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                     DotController.InflictDot(ref dotInfo);
-                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain, Stage.instance ? Stage.instance.entryDifficultyCoefficient : Run.instance.difficultyCoefficient));
+                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain * stack, Stage.instance ? Stage.instance.entryDifficultyCoefficient : Run.instance.difficultyCoefficient));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
                     EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);
