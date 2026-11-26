@@ -27,7 +27,7 @@ namespace SS2.Items
         public static float procChance = 20f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of each revolver shot. (1 = 1%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 2)]
         public static float damageCoefficient = 0.5f;
 
         public static int minShots = 1;
