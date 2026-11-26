@@ -1,7 +1,4 @@
-﻿//Kill this once we make a proper drop pod, i hate my old code -N
-
-/*
-namespace EntityStates.DropPod
+﻿namespace EntityStates.DropPod
 {
     public class Idle : DropPodBaseState
     {
@@ -16,4 +13,4 @@ namespace EntityStates.DropPod
             base.OnExit();
         }
     }
-}*/
+}

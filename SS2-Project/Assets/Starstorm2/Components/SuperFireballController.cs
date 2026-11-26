@@ -12,6 +12,8 @@ namespace SS2
 	public class SuperFireballController : MonoBehaviour, IProjectileImpactBehavior
 	{
 		private static float stupidUpThing = 3f;
+		private static bool useNodes = false;
+
 		private float targetSwitchTimer;
 		private HurtBox currentTarget;
 		private SphereSearch sphereSearch;
@@ -23,11 +25,13 @@ namespace SS2
 
 		public float blastRadius = 12f;
 		[Header("Bounce Properties")]
+		public bool shouldBounce = true;
 		public int maxBounces = 2;
 		public float minBounceDistance = 5f;
 		public float maxBounceDistance = 50f;
 		public float bounceVelocity = 24f;
 		public float targetDuration = 10f;
+		public float targetSearchDistance = 128f;
 		public float maxOffsetToTarget = 4f;
 		[Header("Child Properties")]
 		public int childrenCount = 4;
@@ -45,7 +49,7 @@ namespace SS2
 			this.damage = base.GetComponent<ProjectileDamage>();
 			this.rigidbody = base.GetComponent<Rigidbody>();
 			this.sphereSearch = new SphereSearch();
-			sphereSearch.radius = 128f;
+			sphereSearch.radius = targetSearchDistance;
 			sphereSearch.mask = LayerIndex.entityPrecise.mask;
 		}
         private void Start()
@@ -73,12 +77,18 @@ namespace SS2
         {
 			sphereSearch.origin = base.transform.position;
 			TeamMask mask = TeamMask.GetEnemyTeams(controller.teamFilter.teamIndex);
+			mask.RemoveTeam(TeamIndex.Neutral);
 			HurtBox hurtBox = sphereSearch.RefreshCandidates().FilterCandidatesByHurtBoxTeam(mask).FilterCandidatesByDistinctHurtBoxEntities().OrderCandidatesByDistance().GetHurtBoxes().FirstOrDefault();
 			this.currentTarget = hurtBox;
 			return this.currentTarget;
         }
 		public void DoBounce()
         {
+			if (!shouldBounce)
+			{
+				return;
+			}
+
 			// get target
 			Vector3 origin = base.transform.position;
 			Vector3 targetPosition = origin;
@@ -92,7 +102,7 @@ namespace SS2
 			Vector3 between = targetPosition - origin;
 			float distance = Mathf.Min(between.magnitude, maxBounceDistance);
 			Vector3 target = between.normalized * distance + origin;
-			if (SceneInfo.instance && SceneInfo.instance.groundNodes)
+			if (useNodes && SceneInfo.instance && SceneInfo.instance.groundNodes)
 			{
 				NodeGraph nodes = SceneInfo.instance.groundNodes;
 				if (nodes.GetNodePosition(nodes.FindClosestNode(target, HullClassification.Human), out Vector3 node))

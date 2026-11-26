@@ -10,7 +10,8 @@ namespace SS2.Equipments
     {
         public override SS2AssetRequest<EliteAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<EliteAssetCollection>("acSuperFire", SS2Bundle.Equipments);
         public static GameObject projectilePrefab;
-        public static float projectileDamageCoefficient = 2f; // fucking jank ass number. theres a billion instances of damage
+        public static float projectileDamageCoefficient = 1f; // fucking jank ass number. theres a billion instances of damage
+        public static float yOffset = 4f;
         public override void Initialize()
         {
             projectilePrefab = SS2Assets.LoadAsset<GameObject>("SuperFireball", SS2Bundle.Equipments);
@@ -74,7 +75,7 @@ namespace SS2.Equipments
 
             void FireProjectiles()
             {
-                Vector3 origin = base.characterBody.corePosition + Vector3.up * 2f;
+                Vector3 origin = base.characterBody.corePosition + Vector3.up * yOffset;
                 if (characterBody.characterMotor) origin = characterBody.characterMotor.capsuleHeight * Vector3.up + base.characterBody.footPosition;
                 ProjectileManager.instance.FireProjectile(projectilePrefab, origin, Util.QuaternionSafeLookRotation(base.transform.forward), base.gameObject, base.characterBody.damage * projectileDamageCoefficient, 0f, false, DamageColorIndex.Default);
             }

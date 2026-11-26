@@ -2,128 +2,267 @@
 using SS2.Components;
 using R2API;
 using RoR2;
+using RoR2.ContentManagement;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Networking;
+using MSU;
+using System;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
+using SS2.Items;
+using RoR2.Navigation;
+using HG;
+
 namespace SS2.Interactables
 {
-#if DEBUG
-    //This fucking thing sucks ass and unironically is awful, i hate and will forever hate having to clone prefabs.
-    //Not to mention, using the default survivor pod doesnt really make sense since these are supposed to be leftover pods from contact light, so again, this shit should just be re-written and homemade instead of cloned.
-    // - Nebby -
-    /*public sealed class DropPod : SS2Interactable
+    public sealed class DropPod : SS2Interactable
     {
-        public override GameObject Interactable { get => interactable; }
+        public override SS2AssetRequest<InteractableAssetCollection> AssetRequest => SS2Assets.LoadAssetAsync<InteractableAssetCollection>("acDropPod", SS2Bundle.Interactables);
 
-        private static GameObject interactable;
+        public static GameObject interactablePrefab;
 
-        public override List<MSInteractableDirectorCard> InteractableDirectorCards => new List<MSInteractableDirectorCard>()
+        
+        public override bool IsAvailable(ContentPack contentPack)
         {
-            SS2Assets.LoadAsset<MSInteractableDirectorCard>("msidcDropPod", SS2Bundle.Indev)
-        };
-
+            return SS2Config.enableBeta;
+        }
         public override void Initialize()
         {
-            //DirectorAPI.MonsterActions += HandleAvailableMonsters;
-            
-            var survivorPod = Resources.Load<GameObject>("prefabs/networkedobjects/SurvivorPod");
-            interactable = PrefabAPI.InstantiateClone(survivorPod, "DropPod", false);
+            var survivorPod = UnityEngine.AddressableAssets.Addressables.LoadAssetAsync<GameObject>("RoR2/Base/SurvivorPod/SurvivorPod.prefab").WaitForCompletion();
+            interactablePrefab = PrefabAPI.InstantiateClone(survivorPod, "DropPod", false);
 
-            Interactable.transform.position = Vector3.zero;
+            interactablePrefab.transform.position = Vector3.zero;
+
+            var spawnCard = SS2Assets.LoadAsset<SpawnCard>("iscDropPod", SS2Bundle.Interactables);
+            spawnCard.prefab = interactablePrefab;
 
             DestroyUneededObjectsAndComponents();
             EnableObjects();
             ModifyExistingComponents();
             AddNewComponents();
 
-            HG.ArrayUtils.ArrayAppend(ref SS2Content.Instance.SerializableContentPack.networkedObjectPrefabs, Interactable);
-            InteractableDirectorCards[0].prefab = Interactable;
-            InteractableDirectorCards[0].maxSpawnsPerStage = 2;
+            SS2Content.SS2ContentPack.networkedObjectPrefabs.AddSingle(interactablePrefab);
 
-            DirectorAPI.MonsterActions += HandleAvailableMonsters2;
-
-            SS2Log.Info("Finished setting up Drop Pod.");
+            IL.RoR2.SceneDirector.PopulateScene += SceneDirector_PopulateScene;
+            SceneDirector.onGenerateInteractableCardSelection += SceneDirector_onGenerateInteractableCardSelection;
         }
 
-        private void HandleAvailableMonsters2(DccsPool arg1, List<DirectorAPI.DirectorCardHolder> arg2, DirectorAPI.StageInfo arg3) //i mean maybe this works lol
+
+        private static int debugSpawnsConsumed = 0;
+
+        public static bool higherStage1Weight = true;
+        private static int stage1Weight = 50; // idk why it has to be like 3x more than chests but its the only way they spawn semi-consistently
+        private static int stage1MaxSpawns = 3;
+        private static int standardWeight = 4;
+        private static int standardMaxSpawns = -1;
+        // spawn more early, spawn less later
+        // the dccs arg is a duplicate that gets deleted after, so we can modify it safely.
+        private void SceneDirector_onGenerateInteractableCardSelection(SceneDirector sceneDirector, DirectorCardCategorySelection dccs)
         {
-            DropPodController.currentStageMonsters = arg2.Where(cardHolder => cardHolder.MonsterCategory == DirectorAPI.MonsterCategory.BasicMonsters)
-                                                         .Select(cardHolder => cardHolder.Card)
-                                                         .ToArray();
-            //throw new System.NotImplementedException();
+            debugSpawnsConsumed = 0;
+
+            if (!higherStage1Weight)
+            {
+                return;
+            }
+
+            for (int i = 0; i < dccs.categories.Length; i++)
+            {
+                ref DirectorCardCategorySelection.Category category = ref dccs.categories[i];
+                for (int j = category.cards.Length - 1; j >= 0; j--)
+                {
+                    DirectorCard directorCard = category.cards[j];
+                    var spawnCard = directorCard.GetSpawnCard();
+                    if (spawnCard.prefab == interactablePrefab)
+                    {
+                        if (Run.instance && Run.instance.stageClearCount == 0)
+                        {
+                            directorCard.selectionWeight = stage1Weight;
+                            (spawnCard as InteractableSpawnCard).maxSpawnsPerStage = stage1MaxSpawns;
+                        }
+                        else
+                        {
+                            directorCard.selectionWeight = standardWeight;
+                            (spawnCard as InteractableSpawnCard).maxSpawnsPerStage = standardMaxSpawns;
+                        }
+                    }
+                }
+            }
         }
 
-        private void HandleAvailableMonsters(List<DirectorAPI.DirectorCardHolder> arg1, DirectorAPI.StageInfo arg2)
+        // instead of spawning randomly, drop pods will try to pick a player spawn location
+        // if no spawnpoints found, default to normal random spawning
+        private void SceneDirector_PopulateScene(ILContext il)
         {
-            DropPodController.currentStageMonsters = arg1.Where(cardHolder => cardHolder.MonsterCategory == DirectorAPI.MonsterCategory.BasicMonsters)
-                                                         .Select(cardHolder => cardHolder.Card)
-                                                         .ToArray();
+            ILCursor c = new ILCursor(il);
+
+            // directly before DirectorCore.instance.TrySpawnObject
+            // if the selected itneractable is a DropPod, replace the directorReplacementRule with our own
+            int directorPlacementRuleVarIndex = -1;
+            int directorCardVarIndex = -1;
+
+            bool a = c.TryGotoNext(MoveType.After,
+                x => x.MatchCall<SceneDirector>(nameof(SceneDirector.SelectCard)),
+                x => x.MatchStloc(out directorCardVarIndex));
+            if (!a)
+            {
+                SS2Log.Fatal("DropPod.SceneDirector_PopulateScene: ILHook failed 1.");
+                return;
+            }
+
+            bool b = c.TryGotoNext(MoveType.After,
+                x => x.MatchStfld<DirectorPlacementRule>(nameof(DirectorPlacementRule.placementMode)),
+                x => x.MatchStloc(out directorPlacementRuleVarIndex));
+            if (b)
+            {
+                c.Emit(OpCodes.Ldloc, directorPlacementRuleVarIndex);
+                c.Emit(OpCodes.Ldloc, directorCardVarIndex);
+                c.Emit(OpCodes.Ldarg_0);
+                c.EmitDelegate<Action<DirectorPlacementRule, DirectorCard, SceneDirector>>((directorPlacementRule, directorCard, sceneDirector) =>
+                {
+                    var spawnCard = directorCard.GetSpawnCard();
+
+                    if (spawnCard.prefab == interactablePrefab)
+                    {
+                        SS2Log.Info("Placing DropPod!");
+                        bool foundSpawnPoint = TryGetDropPodSpawnPoint(sceneDirector, out Vector3 spawnPosition, out Quaternion spawnRotation);
+                        if (foundSpawnPoint)
+                        {
+                            SS2Log.Info("Found SpawnPoint at " + spawnPosition);
+                            directorPlacementRule.placementMode = DirectorPlacementRule.PlacementMode.Direct;
+                            directorPlacementRule.position = spawnPosition;
+                            directorPlacementRule.rotation = spawnRotation;
+                        }
+                    }
+                });
+            }
+            else
+            {
+                SS2Log.Fatal("DropPod.SceneDirector_PopulateScene: ILHook failed 2.");
+            }
+        }
+
+        // if a stage has preplaced spawnpoints (aka survivor pod locations), use a random one
+        // consume other spawnpoints in a radius, so players dont spawn next to a drop pod.
+        // destroy the spawnpoint we use for the droppod itself.
+
+        private static float spawnPointConsumeRadiusSqr = 30f * 30f; // spawnpoints are seemingly clustered abt this close together
+        private bool TryGetDropPodSpawnPoint(SceneDirector sceneDirector, out Vector3 position, out Quaternion rotation)
+        {
+            position = Vector3.zero;
+            rotation = Quaternion.identity;
+
+            List<SpawnPoint> list = new List<SpawnPoint>(SpawnPoint.readOnlyInstancesList);
+
+            if (list.Count > 0)
+            {
+                var spawnPoint = sceneDirector.rng.NextElementUniform(list);
+                position = spawnPoint.transform.position;
+                rotation = spawnPoint.transform.rotation;
+                GameObject.Destroy(spawnPoint.gameObject);
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var otherSpawnPoint = list[i];
+                    if (otherSpawnPoint && otherSpawnPoint != spawnPoint && (otherSpawnPoint.transform.position - position).sqrMagnitude < spawnPointConsumeRadiusSqr)
+                    {
+                        debugSpawnsConsumed++;
+                        SS2Log.Debug($"DropPod consumed spawnpoint {i} @ {otherSpawnPoint.transform.position} \nTotal spawns consumed: {debugSpawnsConsumed}/{list.Count} ");
+                        
+                        otherSpawnPoint.consumed = true;
+                    }
+                }
+                return true;
+            }
+
+            return false;
         }
 
         private void DestroyUneededObjectsAndComponents()
         {
-            Object.Destroy(Interactable.GetComponent<SurvivorPodController>());
-            Object.Destroy(Interactable.GetComponent<VehicleSeat>());
-            //Interactable.GetComponents<InstantiatePrefabOnStart>().ToList().ForEach(component => Object.Destroy(component));
-            Object.Destroy(Interactable.GetComponent<BuffPassengerWhileSeated>());
+            GameObject.Destroy(interactablePrefab.GetComponent<SurvivorPodController>());
+            GameObject.Destroy(interactablePrefab.GetComponent<VehicleSeat>());
+            GameObject.Destroy(interactablePrefab.GetComponent<BuffPassengerWhileSeated>());
 
-            var flames = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/Flames");
-            Object.Destroy(flames.gameObject);
+            var components = interactablePrefab.GetComponents<InstantiatePrefabBehavior>();
+            for (int i = components.Length - 1; i >= 0; i--)
+            {
+                components[i].enabled = false;
+            }
 
-            var donut = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/FireDonut");
-            Object.Destroy(donut.gameObject);
+            var flames = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/Flames");
+            GameObject.Destroy(flames.gameObject);
 
-            /*var mdl = Interactable.transform.Find("Base/mdlEscapePod");
-            Object.Destroy(mdl.GetComponent<Animator>());
+            var donut = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/FireDonut");
+            GameObject.Destroy(donut.gameObject);
+
+            var mdl = interactablePrefab.transform.Find("Base/mdlEscapePod");
+            // the default spawn anim plays an endless loop sound with AnimationEvents. deleting this will make DropPod spit out a warning on spawn but its fine
+            // the alternative is unity animator fuckery
+            GameObject.Destroy(mdl.GetComponent<AnimationEvents>()); 
         }
 
         private void EnableObjects()
         {
-            var debris = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/DebrisParent");
+            var debris = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base/DebrisParent");
+            debris.transform.localPosition = new Vector3(debris.transform.localPosition.x, 0, debris.transform.localPosition.z);
             debris.gameObject.SetActive(true);
         }
 
         private void ModifyExistingComponents()
         {
-            var stateMachine = Interactable.GetComponent<EntityStateMachine>();
+            var stateMachine = interactablePrefab.GetComponent<EntityStateMachine>();
             stateMachine.initialStateType = new SerializableEntityStateType(typeof(EntityStates.DropPod.Idle));
             stateMachine.mainStateType = new SerializableEntityStateType(typeof(Idle));
 
-            var modelLocator = Interactable.GetComponent<ModelLocator>();
+            var modelLocator = interactablePrefab.GetComponent<ModelLocator>();
             modelLocator.enabled = true;
             modelLocator.modelBaseTransform = null;
 
-            var exitPos = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
-            exitPos.transform.localPosition = new Vector3(0, -2, 0);
+            var exitPos = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
+            exitPos.transform.localPosition = new Vector3(0, -2.33f, -0.6f);
             var cLocator = modelLocator.modelTransform.GetComponent<ChildLocator>();
             HG.ArrayUtils.ArrayAppend(ref cLocator.transformPairs, new ChildLocator.NameTransformPair { name = "ExitPos", transform = exitPos });
         }
 
         private void AddNewComponents()
         {
-            var networkTransform = Interactable.AddComponent<NetworkTransform>();
+            var networkTransform = interactablePrefab.AddComponent<NetworkTransform>();
             networkTransform.transformSyncMode = NetworkTransform.TransformSyncMode.SyncTransform;
-            Interactable.AddComponent<GenericDisplayNameProvider>().displayToken = "SS2_INTERACTABLE_DROPPOD_NAME";
-            Interactable.AddComponent<DropPodController>();
+            interactablePrefab.AddComponent<GenericDisplayNameProvider>().displayToken = "SS2_INTERACTABLE_DROPPOD_NAME";
 
-            PaintDetailsBelow details = Interactable.AddComponent<PaintDetailsBelow>();
+
+            var dropPodController = interactablePrefab.AddComponent<DropPodController>();
+            var exitTransform = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/ExitPosition");
+            dropPodController.monsterSpawnTransform = exitTransform;
+
+            Transform dropTransform = GameObject.Instantiate(exitTransform.gameObject).transform;
+            dropTransform.gameObject.name = "DropPosition";
+            dropTransform.parent = exitTransform.parent;
+            dropTransform.localPosition = new Vector3(0, -2.33f, -0.75f);
+            dropPodController.itemDropTransform = dropTransform;
+
+            dropPodController.itemDropTable = SS2Assets.LoadAsset<BasicPickupDropTable>("dtDropPod", SS2Bundle.Interactables);
+
+
+            PaintDetailsBelow details = interactablePrefab.AddComponent<PaintDetailsBelow>();
             details.influenceOuter = 2;
             details.influenceInner = 1;
             details.layer = 0;
             details.density = 0.5f;
             details.densityPower = 3;
 
-            details = Interactable.AddComponent<PaintDetailsBelow>();
+            details = interactablePrefab.AddComponent<PaintDetailsBelow>();
             details.influenceOuter = 2;
             details.influenceInner = 1;
             details.layer = 1;
             details.density = 0.3f;
             details.densityPower = 3;
 
-            var podMesh = Interactable.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base").gameObject;
-            podMesh.AddComponent<EntityLocator>().entity = Interactable;
+            var podMesh = interactablePrefab.transform.Find("Base/mdlEscapePod/EscapePodArmature/Base").gameObject;
+            podMesh.AddComponent<EntityLocator>().entity = interactablePrefab;
         }
-    }*/
-#endif
+    }
 }

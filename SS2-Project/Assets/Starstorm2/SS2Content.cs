@@ -451,6 +451,7 @@ namespace SS2
 
             public static ItemDef GalvanicCore;
 
+            public static ItemDef Revolver;
         }
 
         public static class Equipments
@@ -490,6 +491,8 @@ namespace SS2
             public static EquipmentDef WhiteFlag;
 
             public static EquipmentDef SeismicOscillator;
+
+            public static EquipmentDef BallLightning;
         }
 
         public static class Buffs
@@ -726,11 +729,18 @@ namespace SS2
 
             public static BuffDef bdDUTDrift;
 
+            public static BuffDef bdBallLightningTimer;
+            
             public static BuffDef bdTacticalDecisionMaking;
             
             public static BuffDef bdTotalReset;
 
             public static BuffDef bdPetrified;
+
+            public static BuffDef bdPowerupFire;
+            public static BuffDef bdPowerupIce;
+            public static BuffDef bdPowerupLightning;
+            public static BuffDef bdPowerupEarth;
         }
 
         public static class Elites

@@ -19,13 +19,13 @@ namespace SS2.Items
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Base Damage per stack. (1 = 100%)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 1)]
-        public static float damageCoeff = 2f;
+        public static float damageCoeff = 1.2f;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Coin gain on proc. Scales with time. (1 = 1$)")]
         [FormatToken("SS2_ITEM_MOLTENCOIN_DESC", 2)]
         public static int coinGain = 1;
 
-        private static float burnDuration = 4f;
+        private static float burnDuration = 3f;
         public override void Initialize()
         {
             _impactEffect = AssetCollection.FindAsset<GameObject>("MoltenCoinEffect");
@@ -39,7 +39,8 @@ namespace SS2.Items
             {
                 if (Util.CheckRoll(procChance * report.damageInfo.procCoefficient, body.master))
                 {
-                    float targetTotalDamage = report.damageInfo.damage * damageCoeff;
+                    float damageCoefficient = damageCoeff * stack;
+                    float targetTotalDamage = report.damageInfo.damage * damageCoefficient;
                     float damageMultiplier = SS2Util.GetDotDamageMultiplier(report.attackerBody, targetTotalDamage, burnDuration, DotController.DotIndex.Burn);
 
                     var dotInfo = new InflictDotInfo()
@@ -52,7 +53,7 @@ namespace SS2.Items
                     };
                     StrengthenBurnUtils.CheckDotForUpgrade(report.attackerBody.inventory, ref dotInfo);
                     DotController.InflictDot(ref dotInfo);
-                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain, Stage.instance ? Stage.instance.entryDifficultyCoefficient : Run.instance.difficultyCoefficient));
+                    body.master.GiveMoney((uint)Run.instance.GetDifficultyScaledCost(coinGain * stack, Stage.instance ? Stage.instance.entryDifficultyCoefficient : Run.instance.difficultyCoefficient));
 
                     EffectManager.SimpleEffect(MoltenCoin._impactEffect, report.victimBody.transform.position, Quaternion.identity, true);
                     EffectManager.SimpleImpactEffect(HealthComponent.AssetReferences.gainCoinsImpactEffectPrefab, report.victimBody.transform.position, UnityEngine.Vector3.up, true);

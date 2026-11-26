@@ -133,7 +133,7 @@ namespace EntityStates.AffixStorm
 			OrbManager.instance.AddOrb(new AffixStormStrikeOrb
 			{
 				attacker = this.killer, // SHOULD WE LET KILLER PROC ITEMS FROM THIS DAMAGE????????????????????????????????
-				damageColorIndex = DamageColorIndex.Default,
+				damageColorIndex = DamageColorIndex.Electrocution,
 				teamIndex = teamIndex,
 				damageValue = damage,
 				isCrit = Util.CheckRoll(this.characterBody.crit, this.characterBody.master),

@@ -125,6 +125,8 @@ MonoBehaviour:
   pauseTime: 0
   destroyOnEnd: 0
   disableOnEnd: 0
+  disableObjectOnEnd: 0
+  resetOnEnable: 0
   time: 0
   initialyEnabled: 0
   OnFinished:
@@ -157,7 +159,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538624022235294380}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
@@ -167,7 +169,7 @@ Transform:
   - {fileID: 536041125429119940}
   m_Father: {fileID: 535581973468408535}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: -0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -0, z: 0}
 --- !u!114 &498212137102396533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -209,6 +211,8 @@ MonoBehaviour:
   pauseTime: 0
   destroyOnEnd: 1
   disableOnEnd: 0
+  disableObjectOnEnd: 0
+  resetOnEnable: 0
   time: 0
   initialyEnabled: 0
   OnFinished:
@@ -256,6 +260,8 @@ MonoBehaviour:
   pauseTime: 0
   destroyOnEnd: 0
   disableOnEnd: 1
+  disableObjectOnEnd: 0
+  resetOnEnable: 0
   time: 0
   initialyEnabled: 0
   OnFinished:
@@ -277,6 +283,10 @@ MonoBehaviour:
   maxDistance: 7
   offsetDistance: 3
   changePositionOnly: 0
+  realignOnEnable: 0
+  resetOnDisable: 0
+  protectForHorizontalPlacement: 0
+  randomYRotationMax: 0
 --- !u!1 &538824396699905566
 GameObject:
   m_ObjectHideFlags: 0
@@ -2630,6 +2640,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 0
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -2737,6 +2749,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.1
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!1 &539021696924276660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2806,6 +2821,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useOverallCurveOnly: 1
   resetOnAwake: 1
+  resetOnReady: 0
+  resetOnDisable: 0
   useUnscaledTime: 0
   curveX:
     serializedVersion: 2
@@ -2859,6 +2876,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   timeMax: 0.2
+  ignoreResetOnEnable: 0
+  loop: 0
+  playOnlyWhenReady: 0
 --- !u!1 &539042082804289074
 GameObject:
   m_ObjectHideFlags: 0
@@ -3048,6 +3068,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultTeam: -1
+  maintainDefault: 0
 --- !u!114 &498319089616686072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3062,9 +3083,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   catalogIndex: 124
   ghostPrefab: {fileID: 0}
+  ghostPrefabAddress:
+    m_AssetGUID: 
+    m_SubObjectName: 
+    m_SubObjectType: 
   ghostTransformAnchor: {fileID: 0}
   startSound: 
   cannotBeDeleted: 0
+  doNotPerformImpactOnCollision: 0
   authorityHandlesCollisionEvents: 0
   flightSoundLoop: {fileID: 11400000, guid: 1106606e654f5c4419f49dcd3862783e, type: 2}
   canImpactOnTrigger: 0
@@ -3072,7 +3098,9 @@ MonoBehaviour:
   owner: {fileID: 0}
   localCollisionHappened: 0
   procCoefficient: 1
+  combo: 0
   CheckChildrenForCollidersAndIncludeDisabled: 0
+  CanBeParried: 1
 --- !u!114 &497775125341843670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3100,7 +3128,7 @@ MonoBehaviour:
   m_Script: {fileID: -848926067, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageCoefficient: 0.6
+  damageCoefficient: 0.1
   attackerFiltering: 2
   impactEffect: {fileID: 0}
   forceVector: {x: 0, y: 0, z: 0}
@@ -3150,6 +3178,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+  onImpact:
+    m_PersistentCalls:
+      m_Calls: []
+  isSphereOverlap: 0
   soundLoopString: 
   soundLoopStopString: 
 --- !u!114 &498314341039051570
@@ -3172,6 +3204,7 @@ MonoBehaviour:
     damageType: 0
     damageTypeExtended: 0
     damageSource: 0
+    attackIdentityIndex: 0
   useDotMaxStacksFromAttacker: 0
   dotMaxStacksFromAttacker: 4294967295
 --- !u!1 &539175204989999533
@@ -3336,3 +3369,4 @@ MonoBehaviour:
   m_Script: {fileID: 1783796254, guid: 951ce57ad999ac1f040a4dceb5f8b763, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showAsSphere: 0

@@ -28,9 +28,8 @@ namespace SS2
             public float weight;           
         }
 
-        public static EventSelection GetEventSelectionForStage(Stage stage)
+        public static EventSelection GetEventSelectionForStage(SceneDef sceneDef)
         {
-            SceneDef sceneDef = stage.sceneDef;
             foreach(EventSelection eventSelection in instancesList)
             {
                 var stageFlags = (DirectorAPI.Stage)eventSelection.stage;

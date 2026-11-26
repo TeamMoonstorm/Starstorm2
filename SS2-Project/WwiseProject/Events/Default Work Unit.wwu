@@ -974,6 +974,34 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Play_item_use_magnet_dig" ID="{8A1B9BE3-9A7B-4777-828A-6949A0FB1277}">
+							<ChildrenList>
+								<Action Name="" ID="{CC1B1908-8265-4B0F-ABF0-31052B215C3F}" ShortID="860660111">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="item_use_magnet_dig" ID="{A26564CB-105A-428F-B31F-A54D5875CCC4}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_UI_buriedTreasure_unlock" ID="{3EB9A14A-0090-4FC9-972A-29BFD60F2212}">
+							<ChildrenList>
+								<Action Name="" ID="{1A3D6201-8B8A-44C1-B08A-FC74B0D52B69}" ShortID="587911262">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="UI_buriedTreasure_unlock" ID="{70CDB8B0-1FAB-4DDE-A1A0-6F9EFC281FA1}" WorkUnitID="{3D683E44-DAC0-4717-B7E2-3D4C4555FE6A}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 				<Event Name="VoidAmbient" ID="{096E8867-684C-49FD-9847-D8B99D9E53EC}">

@@ -20,121 +20,165 @@ namespace SS2.Items
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Armor per stack.")]
         [FormatToken(token, 0)]
         public static float armor = 5f;
-        public override void Initialize()
-        {
-            //RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
-            //On.EntityStates.Scrapper.WaitToBeginScrapping.FixedUpdate += CheckNanobots;
-            //On.RoR2.UI.ScrapperInfoPanelHelper.ShowInfo += ReplaceScrapIcon;
-            //On.RoR2.ScrapperController.BeginScrapping_int += ReturnNanobots;
-        }
 
         public override bool IsAvailable(ContentPack contentPack)
         {
-            return false; //SS2Config.enableBeta && base.IsAvailable(contentPack);
+            return SS2Config.enableBeta && base.IsAvailable(contentPack);
         }
-        // give back original nanobots and make it so only one orb spawns
-    //    private void ReturnNanobots(On.RoR2.ScrapperController.orig_BeginScrapping_int orig, ScrapperController self, int intPickupIndex)
-    //    {
-    //        bool isNanobots = false;
-    //        PickupDef pickupDef = PickupCatalog.GetPickupDef(new PickupIndex(intPickupIndex));
-    //        if (pickupDef != null && pickupDef.itemIndex == SS2Content.Items.Nanobots.itemIndex)
-    //            isNanobots = true;
-    //        int originalMax = self.maxItemsToScrapAtATime;
-    //        int nanobotCount = 0;
-    //        if(self.interactor.TryGetComponent(out CharacterBody body) && body.inventory && isNanobots)
-    //        {
-    //            self.maxItemsToScrapAtATime = 1;
-    //            nanobotCount = Mathf.Min(self.maxItemsToScrapAtATime, body.inventory.GetItemCount(SS2Content.Items.Nanobots.itemIndex));
-    //        }
-    //        orig(self, intPickupIndex);
-            
-    //        if(body && body.inventory && isNanobots)
-    //        {
-    //            body.inventory.GiveItem(SS2Content.Items.Nanobots, nanobotCount);
-    //            // TODO: Below broke post-AC
-    //            self.itemsEaten -= nanobotCount;
-    //        }
-    //        self.maxItemsToScrapAtATime = originalMax;
-    //    }
-    //    // lazy but fine
-    //    private void CheckNanobots(On.EntityStates.Scrapper.WaitToBeginScrapping.orig_FixedUpdate orig, WaitToBeginScrapping self)
-    //    {
-    //        orig(self);
-    //        // TODO: Below broke post-AC
-    //        if (self.scrapperController && self.scrapperController.lastScrappedItemIndex == SS2Content.Items.Nanobots.itemIndex && self.fixedAge > WaitToBeginScrapping.duration)
-    //        {
-    //            self.outer.SetNextState(new Disassemble());
-    //        }
-    //    }
-    //    // replace scrap icon in info panel with nanobots
-    //    private void ReplaceScrapIcon(On.RoR2.UI.ScrapperInfoPanelHelper.orig_ShowInfo orig, RoR2.UI.ScrapperInfoPanelHelper self, RoR2.UI.MPButton button, PickupDef pickupDef)
-    //    {
-    //        orig(self, button, pickupDef);
-    //        if (pickupDef.itemIndex == SS2Content.Items.Nanobots.itemIndex)
-    //        {
-    //            self.correspondingScrapImage.sprite = pickupDef.iconSprite;
-    //        }
-    //    }
+        public override void Initialize()
+        {
+            RecalculateStatsAPI.GetStatCoefficients += GetStatCoefficients;
+            On.RoR2.UI.ScrapperInfoPanelHelper.ShowInfo += ReplaceScrapIcon;
+            On.RoR2.ScrapperController.BeginScrapping_UniquePickup += ReturnNanobots;
+        }
 
-    //    private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
-    //    {
-    //        int stack = sender.inventory ? sender.inventory.GetItemCount(ItemDef) : 0;
-    //        args.armorAdd += armor * stack;
-    //    }        
-    //    public class Disassemble : ScrapperBaseState
-    //    {
-    //        public static float duration = 2f;
-    //        public static float maxPrintHeight = 0.5f;
-    //        public static float minPrintHeight = -1.8f;
-    //        private MaterialPropertyBlock propBlock;
-    //        private Renderer mesh;
-    //        public override bool enableInteraction => false;
-    //        public override void OnEnter()
-    //        {
-    //            // NEED SOUND EFFECT
-    //            base.OnEnter();
-    //            propBlock = new MaterialPropertyBlock();
-    //            Material print = SS2Assets.LoadAsset<Material>("matTrimsheetScrapperPrint", SS2Bundle.Items);
-    //            if(base.modelLocator.modelTransform.Find("ScrapperMesh").TryGetComponent(out SkinnedMeshRenderer renderer))
-    //            {
-    //                mesh = renderer;
-    //                mesh.material = print;
-    //            }                             
-    //        }
-    //        public override void FixedUpdate()
-    //        {
-    //            base.FixedUpdate();
-    //            float t = base.fixedAge / duration;
-    //            float height = Mathf.Lerp(maxPrintHeight, minPrintHeight, t);
-    //            if (mesh)
-    //            {
-    //                mesh.GetPropertyBlock(this.propBlock);
-    //                this.propBlock.SetFloat(PrintController.sliceHeightShaderPropertyId, height);
-    //                mesh.SetPropertyBlock(this.propBlock);
+        private void ReturnNanobots(On.RoR2.ScrapperController.orig_BeginScrapping_UniquePickup orig, ScrapperController self, UniquePickup pickupToTake)
+        {
+            // Check if we are about to try to scrap nanobots
+            bool isNanobots = false;
+            PickupDef pickupDef = PickupCatalog.GetPickupDef(pickupToTake.pickupIndex);
+            if (pickupDef != null && pickupDef.itemIndex == SS2Content.Items.Nanobots.itemIndex)
+                isNanobots = true;
 
-    //            }
-    //            if (base.fixedAge >= duration)
-    //            {
-    //                this.outer.SetNextState(new EntityStates.Scrapper.Idle());
-    //            }
-    //        }
+            // ensure the scrapper only takes one stack of nanobots instead of all of them
+            // make scrapper get set to custom state
+            int originalMax = self.maxItemsToScrapAtATime;
+            var originalState = self.entityStateOnScrap;
+            int nanobotCount = 0;
+            if (self.interactor.TryGetComponent(out CharacterBody body) && body.inventory && isNanobots)
+            {
+                self.maxItemsToScrapAtATime = 1;
+                nanobotCount = Mathf.Min(self.maxItemsToScrapAtATime, body.inventory.GetItemCount(SS2Content.Items.Nanobots.itemIndex));
 
-    //        public override void OnExit()
-    //        {
-    //            base.OnExit();
+                self.entityStateOnScrap = new SerializableEntityStateType(typeof(WaitToBeginDisassembling));
+            }
 
-    //            PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(SS2Content.Items.Nanobots.itemIndex);
-    //            if (pickupIndex != PickupIndex.none)
-    //            {
-    //                Transform transform = base.FindModelChild(ScrappingToIdle.muzzleString);
-    //                PickupDropletController.CreatePickupDroplet(pickupIndex, transform.position, Vector3.up * ScrappingToIdle.dropUpVelocityStrength + transform.forward * ScrappingToIdle.dropForwardVelocityStrength);
-    //                // TODO: Below broke post-AC
-    //                this.scrapperController.itemsEaten--;
-    //            }
+            // run original method to take items from the player's inventory and set the Scrapper's state to its entityStateOnScrap
+            orig(self, pickupToTake);
 
-    //            Destroy(base.modelLocator.modelTransform.gameObject);
-    //            Destroy(base.gameObject);
-    //        }
-    //    }
+            // give back nanobot stacks that got taken by the scrapper
+            // commented out for now. scrapper will drop 2 nanobot stacks instead of keeping one in the inventory
+            //if (body && body.inventory && isNanobots)
+            //{
+            //    body.inventory.GiveItemPermanent(SS2Content.Items.Nanobots, nanobotCount);
+            //}
+
+            // restore original scrapper behavior
+            self.maxItemsToScrapAtATime = originalMax;
+            self.entityStateOnScrap = originalState;
+        }
+
+        // replace scrap icon in info panel with nanobots
+        private void ReplaceScrapIcon(On.RoR2.UI.ScrapperInfoPanelHelper.orig_ShowInfo orig, RoR2.UI.ScrapperInfoPanelHelper self, RoR2.UI.MPButton button, PickupDef pickupDef)
+        {
+            orig(self, button, pickupDef);
+            if (pickupDef.itemIndex == SS2Content.Items.Nanobots.itemIndex)
+            {
+                self.correspondingScrapImage.sprite = pickupDef.iconSprite;
+            }
+        }
+
+        private void GetStatCoefficients(CharacterBody sender, RecalculateStatsAPI.StatHookEventArgs args)
+        {
+            int stack = sender.inventory ? sender.inventory.GetItemCountEffective(ItemDef) : 0;
+            args.armorAdd += armor * stack;
+        }
+
+        public class WaitToBeginDisassembling : ScrapperBaseState
+        {
+            public static float duration = 1.5f;
+
+            public override bool enableInteraction
+            {
+                get
+                {
+                    return _impatient;
+                }
+            }
+
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                if (fixedAge > duration)
+                {
+                    outer.SetNextState(new Disassemble());
+                }
+            }
+        }
+
+        public class Disassemble : ScrapperBaseState
+        {
+            public static float duration = 2f;
+            public static float maxPrintHeight = 0.5f;
+            public static float minPrintHeight = -1.8f;
+            public static float dropAngle = 30f;
+            public static int maxDrops = 2;
+
+            private MaterialPropertyBlock propBlock;
+            private Renderer mesh;
+            public override bool enableInteraction => false;
+            public override void OnEnter()
+            {
+                // NEED SOUND EFFECT
+                base.OnEnter();
+                propBlock = new MaterialPropertyBlock();
+                Material print = SS2Assets.LoadAsset<Material>("matTrimsheetScrapperPrint", SS2Bundle.Items);
+                if (base.modelLocator.modelTransform.Find("ScrapperMesh").TryGetComponent(out SkinnedMeshRenderer renderer))
+                {
+                    mesh = renderer;
+                    mesh.material = print;
+                }
+            }
+            public override void FixedUpdate()
+            {
+                base.FixedUpdate();
+                float t = base.fixedAge / duration;
+                float height = Mathf.Lerp(maxPrintHeight, minPrintHeight, t);
+                if (mesh)
+                {
+                    mesh.GetPropertyBlock(this.propBlock);
+                    this.propBlock.SetFloat(PrintController.sliceHeightShaderPropertyId, height);
+                    mesh.SetPropertyBlock(this.propBlock);
+
+                }
+                if (base.fixedAge >= duration)
+                {
+                    this.outer.SetNextState(new EntityStates.Scrapper.Idle());
+                }
+            }
+
+            public override void OnExit()
+            {
+                base.OnExit();
+
+                PickupIndex pickupIndex = PickupCatalog.FindPickupIndex(SS2Content.Items.Nanobots.itemIndex);
+                if (pickupIndex != PickupIndex.none)
+                {
+                    Transform transform = base.FindModelChild(ScrappingToIdle.muzzleString);
+
+                    float angle = -dropAngle / maxDrops;
+                    for (int i = 0; i < maxDrops; i++)
+                    {
+                        float d = ScrappingToIdle.dropForwardVelocityStrength;
+                        Vector3 velocity = Quaternion.Euler(0f, angle, 0f) * transform.forward * d;
+                        velocity.y = ScrappingToIdle.dropUpVelocityStrength;
+
+                        PickupDropletController.CreatePickupDroplet(new GenericPickupController.CreatePickupInfo
+                        {
+                            pickup = new UniquePickup(pickupIndex),
+                            position = transform.position
+                        }, transform.position, velocity);
+
+                        angle += dropAngle / maxDrops;
+                    }
+                    // TODO: Below broke post-AC
+                    // itemsEaton doesnt exist anymore and i dont remember what it did
+                    //this.scrapperController.itemsEaten--;
+                }
+
+                Destroy(base.modelLocator.modelTransform.gameObject);
+                Destroy(base.gameObject);
+            }
+        }
     }
 }

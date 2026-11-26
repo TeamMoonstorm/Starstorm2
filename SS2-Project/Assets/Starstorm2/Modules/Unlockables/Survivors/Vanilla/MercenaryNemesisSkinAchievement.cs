@@ -25,12 +25,12 @@ namespace SS2.Unlocks.VanillaSurvivors
             public override void OnInstall()
             {
                 base.OnInstall();
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal += OnNemCommandoDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedServer += OnNemCommandoDefeated;
             }
 
             public override void OnUninstall()
             {
-                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedGlobal -= OnNemCommandoDefeated;
+                EntityStates.Events.GenericNemesisEvent.onNemesisDefeatedServer -= OnNemCommandoDefeated;
                 base.OnUninstall();
             }
 

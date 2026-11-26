@@ -1,6 +1,4 @@
-﻿//Kill this once we make a proper drop pod, i hate my old code -N
-
-/*using SS2.Components;
+﻿using SS2.Components;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -27,39 +25,9 @@ namespace EntityStates.DropPod
             }
             if (PodController && NetworkServer.active)
             {
-                switch (PodController.GetRewardType())
-                {
-                    case DropPodController.RewardType.Item:
-                        Debug.Log("Item");
-                        PodController.SpawnItem(cLocator.FindChild("ExitPos"));
-                        spawnedRandom = true;
-                        break;
-                    case DropPodController.RewardType.Enemy:
-                        Debug.Log("enemy");
-                        PodController.SpawnEnemy(cLocator.FindChild("ExitPos"));
-                        spawnedRandom = true;
-                        break;
-                    case DropPodController.RewardType.Corpse:
-                        Debug.Log("Corpse");
-                        PodController.SpawnCorpse(cLocator.FindChild("ExitPos"));
-                        spawnedRandom = true;
-                        break;
-                    case DropPodController.RewardType.Nothing:
-                        Debug.Log("Nothing");
-                        spawnedRandom = true;
-                        break;
-                }
-            }
-        }
-
-        public override void FixedUpdate()
-        {
-            base.FixedUpdate();
-            if (NetworkServer.active && spawnedRandom)
-            {
+                PodController.DropReward();
                 outer.SetNextState(new ReleaseFinished());
             }
         }
     }
 }
-*/
