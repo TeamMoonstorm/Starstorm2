@@ -454,6 +454,7 @@ namespace SS2
 
             public static ItemDef GalvanicCore;
 
+            public static ItemDef Revolver;
         }
 
         public static class Equipments

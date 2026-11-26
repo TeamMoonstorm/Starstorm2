@@ -28,15 +28,15 @@ namespace SS2.Items
         public static int crits = 3;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Amount of guaranteed critical hits per stack of this item. (1 = 1 critical hit per stack before the buff is cleared)")]
-        [FormatToken(token, 1)]
+        [FormatToken(token, 2)]
         public static int critsPerStack = 1;
 
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of the mini-crit. (1 = 1%)")]
         [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
         public static float needleDamageCoefficient = 0.5f;
         [RiskOfOptionsConfigureField(SS2Config.ID_ITEM, configDescOverride = "Damage coefficient of the mini-crit, per stack of this item. (1 = 1%)")]
-        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 3)]
-        public static float needleDamageCoefficientPerStack = 0.3f;
+        [FormatToken(token, FormatTokenAttribute.OperationTypeEnum.MultiplyByN, 100, 4)]
+        public static float needleDamageCoefficientPerStack = 0.25f;
 
         public static float needleProcCoefficient = 0.7f;
         public static float needleStrikeInterval = 0.115f;
